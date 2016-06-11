@@ -5,6 +5,7 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.RGB;
 
 import edu.kit.infomatik.config.c;
+import edu.kit.informatik.ragnarok.gui.Field;
 import edu.kit.informatik.ragnarok.logic.Direction;
 import edu.kit.informatik.ragnarok.logic.Frame;
 import edu.kit.informatik.ragnarok.logic.Vec2D;
@@ -22,16 +23,11 @@ public class Inanimate extends GameElement {
 	}
 
 	@Override
-	public void render(GC gc) {
+	public void render(Field f) {
 		Vec2D pos = this.getPos();
 		
-		gc.setBackground(new Color(gc.getDevice(), this.color));
-		gc.fillRectangle(
-				(int) ((pos.getX() - 0.5f + 0.01f) * c.pxPerUnit),
-				(int) ((pos.getY() - 0.5f + 0.01f) * c.pxPerUnit),
-				(int) ((this.size.getX() - 0.02f) * c.pxPerUnit),
-				(int) ((this.size.getY() - 0.02f) * c.pxPerUnit) 
-			);
+		f.drawRectangle(pos, size, this.color);
+		
 	}
 
 	public void reactToCollision(GameElement element, Direction dir) {

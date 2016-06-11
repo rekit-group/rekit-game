@@ -40,10 +40,12 @@ public class c {
 	public static final float g = 0.5f;
 	
 	
-	public static final float playerWalkAccel = g;
+	public static final float playerWalkAccel = 0.8f * g;
 	public static final float playerStopAccel = 0.1f*g;
 	
-	public static final float playerWalkMaxSpeed = 9*playerWalkAccel;
+	public static final float playerWalkMaxSpeed = 13*playerWalkAccel;
 	
 	public static final float playerJumpBoost = -20*g;
+	
+	public static final float playerDist = 3f;
 }

@@ -5,6 +5,7 @@ import java.util.Iterator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -44,10 +45,10 @@ public class GameView {
 	private Canvas canvas;
 	
 	/**
-	 * Graphic context, that allows graphic operation on the canvas
+	 * The Field that manages the graphic context
 	 */
-	private GC gc;
-
+	private Field field;
+	
 	/**
 	 * Constructor that creates a new window with a canvas and prepares all required attributes
 	 */
@@ -67,7 +68,10 @@ public class GameView {
 		shell.setSize(c.gridW * c.pxPerUnit, c.gridH * c.pxPerUnit);
 
 		// Create Graphic context
-		this.gc = new GC(canvas);
+		GC gc = new GC(canvas);
+		this.field = new Field(gc, this);
+		
+		
 	}
 	
 	/**
@@ -136,14 +140,15 @@ public class GameView {
 	 */
 	public void renderLoop() {
 		// Draw background
-		gc.setBackground(new Color(display, 100, 100, 255));
-		gc.fillRectangle(0, 0, c.gridW * c.pxPerUnit, c.gridH * c.pxPerUnit);
+		this.field.setBackground(new RGB(110, 170, 255));
 
 		// Iterate all GameElements
-		Iterator<GameElement> it = this.model.getGameElementIterator();
-		while (it.hasNext()) {
-			// Render next element
-			it.next().render(this.gc);
+		synchronized (GameModel.SYNC) {
+			Iterator<GameElement> it = this.model.getGameElementIterator();
+			while (it.hasNext()) {
+				// Render next element
+				it.next().render(this.field);
+			}
 		}
 	}
 

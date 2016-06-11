@@ -1,8 +1,9 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.player;
 
-import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.RGB;
 
 import edu.kit.infomatik.config.c;
+import edu.kit.informatik.ragnarok.gui.Field;
 import edu.kit.informatik.ragnarok.logic.Direction;
 import edu.kit.informatik.ragnarok.logic.Frame;
 import edu.kit.informatik.ragnarok.logic.Vec2D;
@@ -33,11 +34,8 @@ public class Player extends Entity {
 	}
 
 	@Override
-	public void render(GC gc) {
-		Vec2D pos = this.getPos();
-		gc.drawOval((int) ((pos.getX() - 0.5f) * c.pxPerUnit),
-				(int) ((pos.getY() - 0.5f) * c.pxPerUnit), 1 * c.pxPerUnit,
-				1 * c.pxPerUnit);
+	public void render(Field f) {
+		f.drawCircle(this.getPos(), this.getSize(), new RGB(200, 50, 0));
 	}
 
 	@Override
@@ -45,7 +43,6 @@ public class Player extends Entity {
 		// calculate new position
 		// s1 = s0 + v*t because physics, thats why!
 		this.setPos(this.getPos().add(this.getVel().multiply(deltaTime)));
-
 		
 		Vec2D newVel = this.getVel();
 		// apply gravity

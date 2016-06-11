@@ -2,12 +2,13 @@ package edu.kit.informatik.ragnarok.logic.gameelements;
 
 import org.eclipse.swt.graphics.GC;
 
+import edu.kit.informatik.ragnarok.gui.Field;
 import edu.kit.informatik.ragnarok.logic.Direction;
 import edu.kit.informatik.ragnarok.logic.Frame;
 
 public class TryHardTriangle extends Entity {
 	@Override
-	public void render(GC gc) {
+	public void render(Field f) {
 		// TODO implement this operation
 		throw new UnsupportedOperationException("not implemented");
 	}

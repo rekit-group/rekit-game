@@ -2,6 +2,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements;
 
 import org.eclipse.swt.graphics.GC;
 
+import edu.kit.informatik.ragnarok.gui.Field;
 import edu.kit.informatik.ragnarok.logic.Direction;
 import edu.kit.informatik.ragnarok.logic.Frame;
 import edu.kit.informatik.ragnarok.logic.GameModel;
@@ -86,6 +87,6 @@ public abstract class GameElement implements Collidable {
 		return new Frame(v1, v2);
 	}
 
-	public abstract void render(GC gc);
+	public abstract void render(Field f);
 
 }
