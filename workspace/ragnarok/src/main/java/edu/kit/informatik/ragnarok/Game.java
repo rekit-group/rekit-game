@@ -1,5 +1,6 @@
 package edu.kit.informatik.ragnarok;
 
+import edu.kit.informatik.ragnarok.controller.InputHelper;
 import edu.kit.informatik.ragnarok.gui.GameView;
 import edu.kit.informatik.ragnarok.logic.GameModel;
 
@@ -37,6 +38,7 @@ public class Game {
 			GameModel model = new GameModel();
 			
 			view.setModel(model);
+			InputHelper.init(view.getShell());
 			
 			model.start();
 			view.start();

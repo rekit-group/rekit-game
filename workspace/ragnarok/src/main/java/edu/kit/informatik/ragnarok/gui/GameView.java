@@ -117,6 +117,14 @@ public class GameView {
 	}
 	
 	/**
+	 * Getter for the shell which represents a window
+	 * @return the shell
+	 */
+	public Shell getShell() {
+		return this.shell;
+	}
+	
+	/**
 	 * Games main render loop that is periodically called.
 	 * It updates the canvas by iterating over all GameElements that
 	 * GameMode.getGameElementIterator() supplies and invoking each render()

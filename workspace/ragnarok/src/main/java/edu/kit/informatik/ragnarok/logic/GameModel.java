@@ -60,13 +60,26 @@ public class GameModel {
 		t.start();
 	}
 	
-	public void addGameElement(GameElement e) {
-		this.gameElements.add(e);
+	/**
+	 * Adds a GameElement to the Model
+	 * @param element the GameElement to add
+	 */
+	public void addGameElement(GameElement element) {
+		this.gameElements.add(element);
 	}
-	public void removeGameElement(GameElement e) {
-		this.gameElements.remove(e);
+	
+	/**
+	 * Removes a GameElement from the Model
+	 * @param element the GameElement to remove
+	 */
+	public void removeGameElement(GameElement element) {
+		this.gameElements.remove(element);
 	}
-
+	
+	/**
+	 * Supplies an Iterator for all saved GameElements
+	 * @return
+	 */
 	public Iterator<GameElement> getGameElementIterator() {
 		return this.gameElements.iterator();
 	}
@@ -105,6 +118,14 @@ public class GameModel {
 				
 		// update time
 		this.lastTime = timeNow;
+	}
+	
+	/**
+	 * Return players current x-coordinate
+	 * @return the players x-coordinate
+	 */
+	public float getPlayerX() {
+		return this.player.getPos().getX();
 	}
 
 }
