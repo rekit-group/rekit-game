@@ -1,10 +1,10 @@
-package edu.kit.informatik.ragnarok.logic.gameelements;
+package edu.kit.informatik.ragnarok.logic.gameelements.player;
 
 import org.eclipse.swt.graphics.GC;
 
 import edu.kit.infomatik.config.c;
-import edu.kit.informatik.ragnarok.logic.PlayerState;
 import edu.kit.informatik.ragnarok.logic.Vec2D;
+import edu.kit.informatik.ragnarok.logic.gameelements.Entity;
 
 public class Player extends Entity {
 	/**

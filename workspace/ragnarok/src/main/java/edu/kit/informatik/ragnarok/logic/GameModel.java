@@ -6,7 +6,7 @@ import java.util.Set;
 
 import edu.kit.infomatik.config.c;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
-import edu.kit.informatik.ragnarok.logic.gameelements.Player;
+import edu.kit.informatik.ragnarok.logic.gameelements.player.Player;
 
 public class GameModel {
 

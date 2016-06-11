@@ -1,7 +1,7 @@
 package edu.kit.informatik.ragnarok.controller;
 
 import edu.kit.informatik.ragnarok.logic.GameModel;
-import edu.kit.informatik.ragnarok.logic.gameelements.Player;
+import edu.kit.informatik.ragnarok.logic.gameelements.player.Player;
 
 public abstract class InputCommand {
 	private GameModel model;

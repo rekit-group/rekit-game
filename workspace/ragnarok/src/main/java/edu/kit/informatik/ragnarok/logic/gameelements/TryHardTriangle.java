@@ -1,9 +1,8 @@
-package edu.kit.informatik.ragnarok.logic;
+package edu.kit.informatik.ragnarok.logic.gameelements;
 
 import org.eclipse.swt.graphics.GC;
 
-import edu.kit.informatik.ragnarok.logic.gameelements.Entity;
-import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.logic.Direction;
 
 public class TryHardTriangle extends Entity {
 	@Override

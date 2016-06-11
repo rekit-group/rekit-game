@@ -1,4 +1,4 @@
-package edu.kit.informatik.ragnarok.logic;
+package edu.kit.informatik.ragnarok.logic.gameelements.player;
 
 public class JumpState extends PlayerState {
 	@Override

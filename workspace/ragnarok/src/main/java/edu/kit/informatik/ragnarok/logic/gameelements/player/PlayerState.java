@@ -1,6 +1,5 @@
-package edu.kit.informatik.ragnarok.logic;
+package edu.kit.informatik.ragnarok.logic.gameelements.player;
 
-import edu.kit.informatik.ragnarok.logic.gameelements.Player;
 
 public abstract class PlayerState {
 	/**
