@@ -12,6 +12,11 @@ public class LevelCreator {
 		for (int x = 1; x < 40; x++) {
 			Inanimate inanim = new Inanimate(new Vec2D(x, 7), new Vec2D(1,1), new RGB(100, 0, 0));
 			model.addGameElement(inanim);
+			
+			if (x % 5 == 0) {
+				inanim = new Inanimate(new Vec2D(x, 3), new Vec2D(1,1), new RGB(100, 0, 0));
+				model.addGameElement(inanim);
+			}
 		}
 	}
 	

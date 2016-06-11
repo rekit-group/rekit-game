@@ -25,7 +25,7 @@ public class Frame {
 		return vec1.getX() < otherFrame.vec2.getX()
 				&& vec1.getY() < otherFrame.vec2.getY()
 				&& vec2.getX() > otherFrame.vec1.getX()
-				&& vec2.getX() > otherFrame.vec1.getX();
+				&& vec2.getY() > otherFrame.vec1.getY();
 	}
 
 	public boolean collidesWith(Vec2D vec) {

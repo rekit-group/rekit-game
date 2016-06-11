@@ -21,6 +21,7 @@ public class Player extends Entity {
 	public Player(Vec2D startPos) {
 		this.setPos(startPos);
 		this.setVel(new Vec2D(0, 0));
+		this.setPlayerState(new DefaultState());
 	}
 
 	public void setPlayerState(PlayerState value) {
@@ -65,24 +66,29 @@ public class Player extends Entity {
 
 	@Override
 	public void collidedWith(Frame collision, Direction dir) {
-		//System.out.println("COL " + dir.toString());
-
 		switch (dir) {
 		case UP:
 			this.setPos(this.getPos().setY(
-					collision.getBorder(dir) + this.getSize().getY() / 2.0f));
+					collision.getBorder(dir) + this.getSize().getY() / 1.9f));
+			// if he was jumping, stop his jump boost
+			if (this.getVel().getY() < 0) {
+				this.setVel(this.getVel().setY(0));
+			}
 			break;
 		case RIGHT:
 			this.setPos(this.getPos().setX(
-					collision.getBorder(dir) - this.getSize().getX() / 2.0f));
+					collision.getBorder(dir.getOpposite()) - this.getSize().getX() / 1.9f));
 			break;
 		case DOWN:
 			this.setPos(this.getPos().setY(
-					collision.getBorder(dir) - this.getSize().getY() / 2.0f));
+					collision.getBorder(dir) - this.getSize().getY() / 1.9f));
+			if (this.getPlayerState() instanceof JumpState) {
+				this.setPlayerState(new DefaultState());
+			}
 			break;
 		case LEFT:
 			this.setPos(this.getPos().setX(
-					collision.getBorder(dir) + this.getSize().getX() / 2.0f));
+					collision.getBorder(dir.getOpposite()) + this.getSize().getX() / 1.9f));
 			break;
 		}
 

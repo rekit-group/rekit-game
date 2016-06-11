@@ -51,11 +51,11 @@ public abstract class GameElement implements Collidable {
 	private Vec2D lastPos;
 
 	public void setLastPos(Vec2D value) {
-		this.pos = value;
+		this.lastPos = value;
 	}
 
 	public Vec2D getLastPos() {
-		return this.pos;
+		return this.lastPos;
 	}
 
 	public Vec2D getSize() {

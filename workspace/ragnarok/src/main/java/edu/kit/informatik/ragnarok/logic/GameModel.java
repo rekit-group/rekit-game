@@ -31,7 +31,7 @@ public class GameModel {
 		this.gameElements = new HashSet<GameElement>();
 
 		// Create Player and add him to game
-		this.player = new Player(new Vec2D(3, 3));
+		this.player = new Player(new Vec2D(3, 0));
 		this.addGameElement(player);
 
 		// Create LevelCreator
@@ -114,43 +114,8 @@ public class GameModel {
 			while (it2.hasNext()) {
 				GameElement e2 = it2.next();
 				if (e1 != e2) {
-					if (e1.getCollisionFrame().collidesWith(
-							e2.getCollisionFrame())) {
-						if (e1 instanceof Inanimate && e2 instanceof Player) {
-							// hook
-							// System.out.println("hook");
-						}
-						
-						// Reset e2s y-component to last
-						Vec2D e2lastYVec = new Vec2D(e2.getPos().getX(), e2
-								.getLastPos().getY());
-						Frame e2lastYFrame = new Frame(e2lastYVec.add(e2
-								.getSize().multiply(-0.5f)), e2lastYVec.add(e2
-								.getSize().multiply(0.5f)));
-
-						// It he doesnt collide anymore it means he collided because of going up or down 
-						if (!e1.getCollisionFrame().collidesWith(e2lastYFrame)) {
-							e1.reactToCollision(e2, (e2.getPos().getY() > e2
-									.getLastPos().getY()) ? Direction.DOWN
-									: Direction.UP);
-						} else {
-							Vec2D e2lastXVec = new Vec2D(
-									e2.getLastPos().getX(), e2.getPos().getY());
-							Frame e2lastXFrame = new Frame(e2lastXVec.add(e2
-									.getSize().multiply(-0.5f)),
-									e2lastXVec.add(e2.getSize().multiply(0.5f)));
-							
-							if (!e1.getCollisionFrame().collidesWith(e2lastXFrame)) {
-								e1.reactToCollision(e2, (e2.getPos().getX() > e2
-										.getLastPos().getX()) ? Direction.RIGHT
-										: Direction.LEFT);
-							} else {
-								// TODO - does this happen?
-								e1.reactToCollision(e2, Direction.DOWN);
-							}
-						}
-
-						// e1.reactToCollision(e2, Direction.DOWN);
+					if (e1.getCollisionFrame().collidesWith(e2.getCollisionFrame())) {
+						processCollision(e1, e2);
 					}
 				}
 			}
@@ -158,6 +123,40 @@ public class GameModel {
 
 		// update time
 		this.lastTime = timeNow;
+	}
+	
+	private void processCollision(GameElement e1, GameElement e2) {
+
+		// Reset e2s y-component to last
+		Vec2D e2lastYVec = new Vec2D(e2.getPos().getX(), e2
+				.getLastPos().getY());
+		Frame e2lastYFrame = new Frame(
+				e2lastYVec.add(e2.getSize().multiply(-0.5f)),
+				e2lastYVec.add(e2.getSize().multiply(0.5f)));
+
+		// It he doesnt collide anymore it means he collided because of going up or down 
+		if (!e1.getCollisionFrame().collidesWith(e2lastYFrame)) {
+			e1.reactToCollision(e2, (e2.getPos().getY() > e2
+					.getLastPos().getY()) ? Direction.DOWN
+					: Direction.UP);
+		} else {
+			Vec2D e2lastXVec = new Vec2D(
+					e2.getLastPos().getX(), e2.getPos().getY());
+			Frame e2lastXFrame = new Frame(e2lastXVec.add(e2
+					.getSize().multiply(-0.5f)),
+					e2lastXVec.add(e2.getSize().multiply(0.5f)));
+			
+			if (!e1.getCollisionFrame().collidesWith(e2lastXFrame)) {
+				e1.reactToCollision(e2, (e2.getPos().getX() > e2
+						.getLastPos().getX()) ? Direction.RIGHT
+						: Direction.LEFT);
+			} else {
+				// TODO - does this happen?
+				e1.reactToCollision(e2, Direction.DOWN);
+			}
+		}
+
+		// e1.reactToCollision(e2, Direction.DOWN);
 	}
 
 	/**

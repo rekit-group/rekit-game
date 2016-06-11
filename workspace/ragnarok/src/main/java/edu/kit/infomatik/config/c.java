@@ -37,13 +37,13 @@ public class c {
 	 * Gravitational constant g in pxPerUnit/s^2.
 	 * Determines how fast something accelerates upon falling.
 	 */
-	public static final float g = 0.0981f;
+	public static final float g = 0.5f;
 	
 	
-	public static final float playerWalkAccel = 7*g;
-	public static final float playerStopAccel = g;
+	public static final float playerWalkAccel = g;
+	public static final float playerStopAccel = 0.1f*g;
 	
 	public static final float playerWalkMaxSpeed = 9*playerWalkAccel;
 	
-	public static final float playerJumpBoost = -50*g;
+	public static final float playerJumpBoost = -20*g;
 }

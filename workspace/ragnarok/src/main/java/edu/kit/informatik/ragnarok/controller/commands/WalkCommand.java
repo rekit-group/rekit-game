@@ -3,7 +3,9 @@ package edu.kit.informatik.ragnarok.controller.commands;
 import edu.kit.infomatik.config.c;
 import edu.kit.informatik.ragnarok.logic.Direction;
 import edu.kit.informatik.ragnarok.logic.Vec2D;
+import edu.kit.informatik.ragnarok.logic.gameelements.player.JumpState;
 import edu.kit.informatik.ragnarok.logic.gameelements.player.Player;
+import edu.kit.informatik.ragnarok.logic.gameelements.player.WalkState;
 
 public class WalkCommand extends InputCommand {
 	private Direction dir;
@@ -34,8 +36,13 @@ public class WalkCommand extends InputCommand {
 			newVel = newVel.setX(Math.signum(newVel.getX())
 					* c.playerWalkMaxSpeed);
 		}
-
+		
 		// Save new velocity
 		player.setVel(newVel);
+		
+		// Update PlayerState
+		if (!(player.getPlayerState() instanceof JumpState)) {
+			player.setPlayerState(new WalkState());
+		}
 	}
 }

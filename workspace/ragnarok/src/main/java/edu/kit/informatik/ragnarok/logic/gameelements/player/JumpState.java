@@ -6,5 +6,9 @@ public class JumpState extends PlayerState {
 		// TODO implement this operation
 		throw new UnsupportedOperationException("not implemented");
 	}
+	
+	public boolean canJump() {
+		return false;
+	}
 
 }

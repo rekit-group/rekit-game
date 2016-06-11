@@ -34,6 +34,20 @@ public enum Direction {
 	 * @return
 	 */
 	public Vec2D getVector() {
-		return vec;
+		return this.vec;
+	}
+	
+	/**
+	 * Get the opposite direction to a direction
+	 * @return
+	 */
+	public Direction getOpposite() {
+		switch(this) {
+		case UP: return Direction.DOWN;
+		case RIGHT: return Direction.LEFT;
+		case DOWN: return Direction.UP;
+		default: return Direction.RIGHT;
+		}
+		
 	}
 }

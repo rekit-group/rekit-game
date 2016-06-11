@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.swt.events.KeyAdapter;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Shell;
+
+import edu.kit.infomatik.config.c;
 
 public final class InputHelper {
 
@@ -67,18 +67,23 @@ public final class InputHelper {
 
 		// Save that we just initialized
 		InputHelper.init = true;
-	}
-	
-	private static void recursiveAddListener(Composite c) {
 		
-		
-	    for (final Control cc : c.getChildren()) {
-	    	if (cc instanceof Composite) {
-	    		//recursiveAddListener((Composite)cc);
-	    	}
-	        
-	    }
-	    
+		Thread t = new Thread() {
+			public void run() {
+
+				while (true) {
+					InputHelper.notifyObservers();
+					try {
+						Thread.sleep(c.logicDelta);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+		t.setDaemon(true);
+		t.start();
 	}
 	
 	/**
@@ -89,7 +94,6 @@ public final class InputHelper {
 	 */
 	private static final void press(int code) {
 		InputHelper.keys.add(code);
-		InputHelper.notifyObservers();
 	}
 
 	/**
@@ -100,8 +104,6 @@ public final class InputHelper {
 	 */
 	private static final void release(int code) {
 		InputHelper.keys.remove(code);
-		InputHelper.notifyObservers();
-
 	}
 
 	/**

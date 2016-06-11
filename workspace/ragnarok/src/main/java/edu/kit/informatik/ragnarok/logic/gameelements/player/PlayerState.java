@@ -19,21 +19,8 @@ public abstract class PlayerState {
 		return this.player;
 	}
 
-	/**
-	 * return true
-	 */
-	/**
-	 * return true
-	 */
-	/**
-	 * return true
-	 */
-	/**
-	 * return true
-	 */
 	public boolean canJump() {
-		// TODO implement this operation
-		throw new UnsupportedOperationException("not implemented");
+		return true;
 	}
 
 	public abstract void render();
