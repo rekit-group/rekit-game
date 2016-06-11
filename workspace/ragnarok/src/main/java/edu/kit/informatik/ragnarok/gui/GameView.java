@@ -39,6 +39,11 @@ public class GameView {
 	private Shell shell;
 	
 	/**
+	 * The canvas that is drawn upon
+	 */
+	private Canvas canvas;
+	
+	/**
 	 * Graphic context, that allows graphic operation on the canvas
 	 */
 	private GC gc;
@@ -53,7 +58,7 @@ public class GameView {
 		this.shell.setText("Project Ragnarok");
 
 		// Create and position a canvas
-		Canvas canvas = new Canvas(shell, SWT.NONE);
+		this.canvas = new Canvas(shell, SWT.NONE);
 		canvas.setSize(c.gridW * c.pxPerUnit, c.gridH * c.pxPerUnit);
 		canvas.setLocation(0, 0);
 
@@ -117,11 +122,11 @@ public class GameView {
 	}
 	
 	/**
-	 * Getter for the shell which represents a window
-	 * @return the shell
+	 * Getter for the canvas
+	 * @return the canvas
 	 */
-	public Shell getShell() {
-		return this.shell;
+	public Canvas getCanvas() {
+		return this.canvas;
 	}
 	
 	/**

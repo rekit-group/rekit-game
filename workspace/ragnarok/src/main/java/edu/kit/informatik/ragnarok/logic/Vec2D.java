@@ -1,45 +1,109 @@
 package edu.kit.informatik.ragnarok.logic;
 
+/**
+ * A two dimensional Vector with operations
+ * @author Angelo Aracri
+ * @version 1.0
+ */
 public class Vec2D {
+	/**
+	 * The x-component of the vector
+	 */
 	private float x;
-
+	/**
+	 * The y-component of the vector
+	 */
+	private float y;
+	
+	/**
+	 * Constructor that takes the initial coordinates an saves them
+	 * @param x the initial x-component of the vector
+	 * @param y the initial y-component of the vector
+	 */
 	public Vec2D(float x, float y) {
-		this.setX(x);
-		this.setY(y);
+		this.x = x;
+		this.y = y;
+	}
+	/**
+	 * Short-hand constructor that takes the default value (0|0)
+	 */
+	public Vec2D() {
+		this.x = 0;
+		this.y = 0;
 	}
 
-	private void setX(float value) {
-		this.x = value;
+	/**
+	 * Sets number to the x-component and <b>returns a new Vector</b>
+	 * @param x the new x-component of the vector
+	 * @return the vector with the new x-component
+	 */
+	public Vec2D setX(float x) {
+		return new Vec2D(x, this.getY());
+	}
+	
+	/**
+	 * Adds a given number to the x-component and <b>returns a new Vector</b>
+	 * @param deltaX the number to add to the original x-component of the vector
+	 * @return the vector with the new x-component
+	 */
+	public Vec2D addX(float deltaX) {
+		return new Vec2D(this.getX() + deltaX, this.getY());
 	}
 
-	public void addX(float value) {
-		this.x += value;
-	}
-
+	/**
+	 * Getter for the x-component of the vector
+	 * @return the x-component
+	 */
 	public float getX() {
 		return this.x;
 	}
 
-	private float y;
-
-	private void setY(float value) {
-		this.y = value;
+	/**
+	 * Sets number to the y-component and <b>returns a new Vector</b>
+	 * @param y the new y-component of the vector
+	 * @return the vector with the new y-component
+	 */
+	public Vec2D setY(float y) {
+		return new Vec2D(this.getX(), y);
 	}
-
-	public void addY(float value) {
-		this.y += value;
+	
+	/**
+	 * Adds a given number to the y-component and <b>returns a new Vector</b>
+	 * @param deltaY the number to add to the original y-component of the vector
+	 * @return the vector with the new y-component
+	 */
+	public Vec2D addY(float deltaY) {
+		return new Vec2D(this.getX(), this.getY() + deltaY);
 	}
-
+	
+	/**
+	 * Getter for the y-component of the vector
+	 * @return the y-component
+	 */
 	public float getY() {
 		return this.y;
 	}
-
+	
+	/**
+	 * Adds another vector to this vector and <b>returns a new Vector</b>
+	 * @param vec the other vector to add
+	 * @return the sum of the vectors
+	 */
 	public Vec2D add(Vec2D vec) {
 		return new Vec2D(this.getX() + vec.getX(), this.getY() + vec.getY());
 	}
-
-	public Vec2D multiply(float val) {
-		return new Vec2D(this.getX() * val, this.getY() * val);
+	
+	/**
+	 * Multiplies the vector with a scalar and <b>returns a new Vector</b>
+	 * @param scalar the scalar to multiply the vector with
+	 * @return the resulting vector
+	 */
+	public Vec2D multiply(float scalar) {
+		return new Vec2D(this.getX() * scalar, this.getY() * scalar);
+	}
+	
+	public String toString() {
+		return "(" + this.getX() + "|" + this.getY() + ")"; 
 	}
 
 }

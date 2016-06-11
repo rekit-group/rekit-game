@@ -6,6 +6,7 @@ import org.eclipse.swt.graphics.RGB;
 
 import edu.kit.infomatik.config.c;
 import edu.kit.informatik.ragnarok.logic.Direction;
+import edu.kit.informatik.ragnarok.logic.Frame;
 import edu.kit.informatik.ragnarok.logic.Vec2D;
 
 public class Inanimate extends GameElement {
@@ -34,19 +35,18 @@ public class Inanimate extends GameElement {
 	}
 
 	public void reactToCollision(GameElement element, Direction dir) {
-		element.resetPosition();
+		element.collidedWith(this.getCollisionFrame(), dir);
 	}
 	
 	@Override
 	public void damage(int damage) {
 		// Do nothing, blocks cannot be damaged
-
 	}
 	
 	
 
 	@Override
-	public void resetPosition() {
+	public void collidedWith(Frame collision, Direction dir) {
 		// Do nothing, blocks cannot collide
 	}
 

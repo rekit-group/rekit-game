@@ -22,23 +22,42 @@ public class Frame {
 	}
 
 	public boolean collidesWith(Frame otherFrame) {
-		/*
-		leftBottom1.X < rightTop2.X &&
-        leftBottom1.Y < rightTop2.Y &&
-        leftBottom2.X < rightTop1.X &&
-        leftBottom2.Y < rightTop1.Y;
-		*/
-		
-		return
-				vec1.getX() < otherFrame.vec2.getX() &&
-				vec1.getY() < otherFrame.vec2.getY() &&
-				vec2.getX() > otherFrame.vec1.getX() &&
-				vec2.getX() > otherFrame.vec1.getX();
+		return vec1.getX() < otherFrame.vec2.getX()
+				&& vec1.getY() < otherFrame.vec2.getY()
+				&& vec2.getX() > otherFrame.vec1.getX()
+				&& vec2.getX() > otherFrame.vec1.getX();
 	}
 
 	public boolean collidesWith(Vec2D vec) {
 		return vec.getX() > vec1.getX() && vec.getX() < vec2.getX()
 				&& vec.getY() > vec1.getY() && vec.getY() < vec2.getY();
+	}
+	
+	/**
+	 * Gets the component of the frames border at given direction
+	 * @param dir The direction of border
+	 * @return the corresponding coordinate component of the border
+	 */
+	public float getBorder(Direction dir) {
+		switch (dir) {
+		case UP:
+			// In case we want the upper border: take highest y
+			return this.vec1.getY() > this.vec2.getY() ? this.vec1.getY()
+					: this.vec2.getY();
+		case RIGHT:
+			// In case we want the right border: take highest x
+			return this.vec1.getX() > this.vec2.getX() ? this.vec1.getX()
+					: this.vec2.getX();
+		case DOWN:
+			// In case we want the lower border: take lowest y
+			return this.vec1.getY() > this.vec2.getY() ? this.vec2.getY()
+					: this.vec1.getY();
+		case LEFT:
+			// In case we want the left border: take lowest x
+			return this.vec1.getX() > this.vec2.getX() ? this.vec2.getX()
+					: this.vec1.getX();
+		}
+		return -1;
 	}
 
 }

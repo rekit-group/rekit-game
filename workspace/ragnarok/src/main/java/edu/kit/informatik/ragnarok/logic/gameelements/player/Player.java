@@ -3,6 +3,8 @@ package edu.kit.informatik.ragnarok.logic.gameelements.player;
 import org.eclipse.swt.graphics.GC;
 
 import edu.kit.infomatik.config.c;
+import edu.kit.informatik.ragnarok.logic.Direction;
+import edu.kit.informatik.ragnarok.logic.Frame;
 import edu.kit.informatik.ragnarok.logic.Vec2D;
 import edu.kit.informatik.ragnarok.logic.gameelements.Entity;
 
@@ -16,8 +18,6 @@ public class Player extends Entity {
 	 */
 	private PlayerState playerState;
 
-	private Vec2D lastPos; 
-	
 	public Player(Vec2D startPos) {
 		this.setPos(startPos);
 		this.setVel(new Vec2D(0, 0));
@@ -41,15 +41,19 @@ public class Player extends Entity {
 
 	@Override
 	public void logicLoop(float deltaTime) {
-		// save position in case we have to reset
-		this.lastPos = new Vec2D(this.getPos().getX(), this.getPos().getY());
-		
 		// calculate new position
-		// s1 = s0 + v*t
+		// s1 = s0 + v*t because physics, thats why!
 		this.setPos(this.getPos().add(this.getVel().multiply(deltaTime)));
+
 		
+		Vec2D newVel = this.getVel();
 		// apply gravity
-		this.getVel().addY(c.g);
+		newVel = newVel.addY(c.g);
+		// apply slowing down walk
+		newVel = newVel.addX(-Math.signum(newVel.getX()) * c.playerStopAccel);
+		// save new velocity
+		this.setVel(newVel);
+
 	}
 
 	@Override
@@ -60,8 +64,27 @@ public class Player extends Entity {
 	}
 
 	@Override
-	public void resetPosition() {
-		this.setPos(this.lastPos);
+	public void collidedWith(Frame collision, Direction dir) {
+		//System.out.println("COL " + dir.toString());
+
+		switch (dir) {
+		case UP:
+			this.setPos(this.getPos().setY(
+					collision.getBorder(dir) + this.getSize().getY() / 2.0f));
+			break;
+		case RIGHT:
+			this.setPos(this.getPos().setX(
+					collision.getBorder(dir) - this.getSize().getX() / 2.0f));
+			break;
+		case DOWN:
+			this.setPos(this.getPos().setY(
+					collision.getBorder(dir) - this.getSize().getY() / 2.0f));
+			break;
+		case LEFT:
+			this.setPos(this.getPos().setX(
+					collision.getBorder(dir) + this.getSize().getX() / 2.0f));
+			break;
+		}
 
 	}
 

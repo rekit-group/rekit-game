@@ -1,5 +1,9 @@
 package edu.kit.informatik.ragnarok;
 
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+
+import edu.kit.informatik.ragnarok.controller.Controller;
 import edu.kit.informatik.ragnarok.controller.InputHelper;
 import edu.kit.informatik.ragnarok.gui.GameView;
 import edu.kit.informatik.ragnarok.logic.GameModel;
@@ -34,16 +38,23 @@ public class Game {
 	 */
 	private Game() {
 		try {
+			// Create MVC
 			GameView view = new GameView();
 			GameModel model = new GameModel();
+			Controller controller = new Controller();
+
+			// Instantiate InputHelper that requires a shell
+			InputHelper.init(view.getCanvas());
 			
+			// Set References:
+			// V----> M <----C
 			view.setModel(model);
-			InputHelper.init(view.getShell());
+			controller.setModel(model);
 			
+			// Start MVC
 			model.start();
+			controller.start();
 			view.start();
-			
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

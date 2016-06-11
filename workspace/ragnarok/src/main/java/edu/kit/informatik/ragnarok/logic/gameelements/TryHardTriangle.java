@@ -3,6 +3,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements;
 import org.eclipse.swt.graphics.GC;
 
 import edu.kit.informatik.ragnarok.logic.Direction;
+import edu.kit.informatik.ragnarok.logic.Frame;
 
 public class TryHardTriangle extends Entity {
 	@Override
@@ -35,7 +36,7 @@ public class TryHardTriangle extends Entity {
 	}
 
 	@Override
-	public void resetPosition() {
+	public void collidedWith(Frame collision, Direction dir) {
 		// TODO implement this operation
 		throw new UnsupportedOperationException("not implemented");
 

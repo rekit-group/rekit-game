@@ -38,4 +38,12 @@ public class c {
 	 * Determines how fast something accelerates upon falling.
 	 */
 	public static final float g = 0.0981f;
+	
+	
+	public static final float playerWalkAccel = 7*g;
+	public static final float playerStopAccel = g;
+	
+	public static final float playerWalkMaxSpeed = 9*playerWalkAccel;
+	
+	public static final float playerJumpBoost = -50*g;
 }
