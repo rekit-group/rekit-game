@@ -1,11 +1,19 @@
 package edu.kit.informatik.ragnarok;
 
 import edu.kit.informatik.ragnarok.gui.GameView;
-import edu.kit.informatik.ragnarok.gui.MainFrame;
 import edu.kit.informatik.ragnarok.logic.GameModel;
 
+/**
+ * Game class that instantiates all necessary classes that are required for a game.
+ * implements a singleton to prevent multiple instantiation.
+ * @author Angelo Aracri
+ * @version 1.0
+ */
 public class Game {
 	
+	/**
+	 * The (only) saved instance of Game
+	 */
 	private static Game instance = null;
 	
 	/**
@@ -20,7 +28,8 @@ public class Game {
 	}
 	
 	/**
-	 * private constructor to prevent instantiation of this class from outside
+	 * Private constructor to prevent instantiation of this class from outside.
+	 * Instantiates the View, the Model and the Controller, sets required references and starts the game
 	 */
 	private Game() {
 		try {
@@ -28,7 +37,10 @@ public class Game {
 			GameModel model = new GameModel();
 			
 			view.setModel(model);
+			
+			model.start();
 			view.start();
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();

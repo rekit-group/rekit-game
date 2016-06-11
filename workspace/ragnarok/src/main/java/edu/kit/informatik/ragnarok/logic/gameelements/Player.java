@@ -2,7 +2,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements;
 
 import org.eclipse.swt.graphics.GC;
 
-import config.c;
+import edu.kit.infomatik.config.c;
 import edu.kit.informatik.ragnarok.logic.PlayerState;
 import edu.kit.informatik.ragnarok.logic.Vec2D;
 

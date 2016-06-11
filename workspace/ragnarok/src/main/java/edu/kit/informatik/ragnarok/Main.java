@@ -1,11 +1,9 @@
 package edu.kit.informatik.ragnarok;
 
-import edu.kit.informatik.ragnarok.gui.MainFrame;
-
 public class Main {
 	/**
-	 * Launch the application.
-	 * @param args
+	 * Launches the application by starting the game
+	 * @param args not used
 	 */
 	public static void main(String[] args) {
 		Game.getGame();

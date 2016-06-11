@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import config.c;
+import edu.kit.infomatik.config.c;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.Player;
 
@@ -26,16 +26,22 @@ public class GameModel {
 	private LevelCreator levelCreator;
 	
 	public GameModel () {
+		// Initialize Set of all gameElements that need rendering and logic 
 		this.gameElements = new HashSet<GameElement>();
 		
+		// Create Player and add him to game
 		this.player = new Player(new Vec2D(3, 3));
-		
-		this.levelCreator = new LevelCreator(this);
-		
 		this.addGameElement(player);
 		
-		this.lastTime = System.currentTimeMillis();
+		// Create LevelCreator
+		this.levelCreator = new LevelCreator(this);
 		
+		// Initialize all other attributes
+		this.lastTime = System.currentTimeMillis();
+	}
+	
+	
+	public void start() {
 		Thread t = new Thread() {
 			public void run() {
 				

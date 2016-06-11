@@ -1,6 +1,6 @@
 package edu.kit.informatik.ragnarok.logic.gameelements;
 
-import config.c;
+import edu.kit.infomatik.config.c;
 import edu.kit.informatik.ragnarok.logic.Vec2D;
 
 public abstract class Entity extends GameElement {

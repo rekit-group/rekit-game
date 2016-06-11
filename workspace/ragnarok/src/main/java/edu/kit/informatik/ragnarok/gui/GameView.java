@@ -9,29 +9,44 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-import config.c;
+import edu.kit.infomatik.config.c;
 import edu.kit.informatik.ragnarok.logic.GameModel;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 
+/**
+ * Main class of the View.
+ * Manages the window and a canvas an periodically renders all
+ * GameElements that GameModel.getGameElementIterator() provides
+ *
+ * @author Angelo Aracri
+ * @version 1.0
+ */
 public class GameView {
 	/**
 	 * Reference to the model, that holds all information that are required for
 	 * rendering
 	 */
 	private GameModel model;
-
+	
 	/**
-	 * Reference to the window, where the view renders everything we need
+	 * Display object holds the shell 
 	 */
-	private MainFrame window;
-
-	private Shell shell;
 	private Display display;
-
+	
+	/**
+	 * Represents a graphic window 
+	 */
+	private Shell shell;
+	
+	/**
+	 * Graphic context, that allows graphic operation on the canvas
+	 */
 	private GC gc;
 
+	/**
+	 * Constructor that creates a new window with a canvas and prepares all required attributes
+	 */
 	public GameView() {
-
 		// Create window
 		this.display = new Display();
 		this.shell = new Shell(display);
@@ -48,15 +63,11 @@ public class GameView {
 
 		// Create Graphic context
 		this.gc = new GC(canvas);
-		/*
-		 * gc.drawRectangle(10, 10, 40, 45); gc.drawOval(65, 10, 30, 35);
-		 * gc.drawLine(130, 10, 90, 80); gc.drawPolygon(new int[] { 20, 70, 45,
-		 * 90, 70, 70 }); gc.drawPolyline(new int[] { 10, 120, 70, 100, 100,
-		 * 130, 130, 75 }); gc.dispose();
-		 */
-
 	}
-
+	
+	/**
+	 * Starts the View by periodically invoking renderLoop()
+	 */
 	public void start() {
 		Thread updateThread = new Thread() {
 			public void run() {
@@ -80,7 +91,7 @@ public class GameView {
 		updateThread.setDaemon(true);
 		updateThread.start();
 
-		// Wait for window to be closed
+		// Wait for window to be closed, holds the window open
 		while (!shell.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
@@ -88,25 +99,38 @@ public class GameView {
 		}
 		display.dispose();
 	}
-
-	public void setModel(GameModel value) {
-		this.model = value;
+	
+	/**
+	 * Setter for the GameModel
+	 * @param value the GameModel to set
+	 */
+	public void setModel(GameModel model) {
+		this.model = model;
 	}
 
+	/**
+	 * Getter for the GameModel
+	 * @return the reference to the GameModel
+	 */
 	public GameModel getModel() {
 		return this.model;
 	}
-
+	
+	/**
+	 * Games main render loop that is periodically called.
+	 * It updates the canvas by iterating over all GameElements that
+	 * GameMode.getGameElementIterator() supplies and invoking each render()
+	 */
 	public void renderLoop() {
-		
+		// Draw background
 		gc.setBackground(new Color(display, 100, 100, 255));
 		gc.fillRectangle(0, 0, c.gridW * c.pxPerUnit, c.gridH * c.pxPerUnit);
 
-		// iterate all GameElements
+		// Iterate all GameElements
 		Iterator<GameElement> it = this.model.getGameElementIterator();
 		while (it.hasNext()) {
-			GameElement e = it.next();
-			e.render(this.gc);
+			// Render next element
+			it.next().render(this.gc);
 		}
 	}
 

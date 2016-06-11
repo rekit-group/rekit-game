@@ -1,3 +1,5 @@
 .DS_Store
 workspace/ragnarok/target
 workspace/.metadata
+workspace/.recommenders
+workspace/ragnarok/src/**/*.class
