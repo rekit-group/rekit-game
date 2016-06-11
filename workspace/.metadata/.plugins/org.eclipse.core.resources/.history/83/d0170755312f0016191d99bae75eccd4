@@ -1,0 +1,21 @@
+package edu.kit.informatik.ragnarok;
+
+public class Game {
+	
+	private static Game instance = null;
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public static Game getGame() {
+		if (Game.instance == null) {
+			Game.instance = new Game();
+		}
+		return Game.instance;
+	}
+	
+	private Game() {
+		
+	}
+}

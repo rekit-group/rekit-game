@@ -1,0 +1,25 @@
+INDEX VERSION 1.127+/Users/angeloaracri/Documents/Uni/Tutorium/Zusatztermin/.metadata/.plugins/org.eclipse.jdt.core
+308786522.index
+3302703152.index
+156905802.index
+4122244616.index
+4133420628.index
+3912572268.index
+1833648217.index
+1749520324.index
+2276114108.index
+3321539481.index
+2545238116.index
+3966064240.index
+3630079742.index
+353965938.index
+1384487945.index
+1271342938.index
+3266567714.index
+1819685514.index
+1852345425.index
+886486710.index
+1660167734.index
+2817301838.index
+3712507179.index
+1989473878.index

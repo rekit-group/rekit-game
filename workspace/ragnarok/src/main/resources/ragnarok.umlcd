@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<com.yattasolutions.uml.diagrams.classifier:ClassDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:com.yattasolutions.uml.diagrams.classifier="http://ns.yatta-solutions.com/umllab/diagrams/classifier/1.1.0" xmi:id="_8jYbQC77EeaxuvBEMP9jug">
+  <modelElement href="ragnarok.uml#_8LhU4C77EeaxuvBEMP9jug"/>
+  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_90mLgC77EeaxuvBEMP9jug" name="Main">
+    <modelElement href="ragnarok.uml#_8LsUAC77EeaxuvBEMP9jug"/>
+    <visualProperties xmi:id="_90mykC77EeaxuvBEMP9jug" position="50.0,50.0" size="-1.0,-1.0"/>
+    <visibility xmi:id="_90mykS77EeaxuvBEMP9jug" label="+"/>
+    <operations xmi:id="_90myki77EeaxuvBEMP9jug" name="main" staticOperation="true">
+      <modelElement href="ragnarok.uml#_8L9ZwC77EeaxuvBEMP9jug"/>
+      <visibility xmi:id="_90myky77EeaxuvBEMP9jug" label="+"/>
+      <cardinality xmi:id="_90mylC77EeaxuvBEMP9jug" label="1" max="1" min="1"/>
+      <parameters xmi:id="_90mylS77EeaxuvBEMP9jug" name="args">
+        <modelElement href="ragnarok.uml#_8L9ZwS77EeaxuvBEMP9jug"/>
+        <cardinality xmi:id="_90myli77EeaxuvBEMP9jug" label="1..*" max="-1" min="1"/>
+        <type xmi:id="_90myly77EeaxuvBEMP9jug" name="String">
+          <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        </type>
+      </parameters>
+    </operations>
+  </nodes>
+  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:PackageVisual" xmi:id="_9221UC77EeaxuvBEMP9jug" name="gui">
+    <modelElement href="ragnarok.uml#_8Lh78C77EeaxuvBEMP9jug"/>
+    <visualProperties xmi:id="_9221US77EeaxuvBEMP9jug" position="-113.0,50.0" size="-1.0,-1.0"/>
+  </nodes>
+</com.yattasolutions.uml.diagrams.classifier:ClassDiagram>

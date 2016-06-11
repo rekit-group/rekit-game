@@ -1,0 +1,53 @@
+package edu.kit.informatik.ragnarok.logic;
+
+import org.eclipse.swt.graphics.GC;
+
+public class Player extends Entity {
+	/**
+	 * <pre>
+	 *           1..1     1..1
+	 * Player ------------------------- PlayerState
+	 *           player        &gt;       playerState
+	 * </pre>
+	 */
+	private PlayerState playerState;
+
+	public Player(Vec2D startPos) {
+		this.po
+	}
+	
+	public void setPlayerState(PlayerState value) {
+		this.playerState = value;
+	}
+
+	public PlayerState getPlayerState() {
+		return this.playerState;
+	}
+
+	@Override
+	public void render(GC gc) {
+		// TODO implement this operation
+		throw new UnsupportedOperationException("not implemented");
+	}
+
+	@Override
+	public void logicLoop(float deltaTime) {
+		// TODO implement this operation
+		throw new UnsupportedOperationException("not implemented");
+	}
+
+	@Override
+	public void damage(int damage) {
+		// TODO implement this operation
+		throw new UnsupportedOperationException("not implemented");
+
+	}
+
+	@Override
+	public void resetPosition() {
+		// TODO implement this operation
+		throw new UnsupportedOperationException("not implemented");
+
+	}
+
+}

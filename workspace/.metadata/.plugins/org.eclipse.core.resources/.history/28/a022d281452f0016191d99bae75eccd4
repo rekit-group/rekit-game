@@ -1,0 +1,49 @@
+package edu.kit.informatik.ragnarok.logic;
+
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
+public class GameModel {
+
+	/**
+	 * <pre>
+	 *           1..1     1..*
+	 * GameModel ------------------------- GameElement
+	 *           gameModel        &gt;       gameElement
+	 * </pre>
+	 */
+	private Set<GameElement> gameElement;
+
+	public Set<GameElement> getGameElement() {
+		if (this.gameElement == null) {
+			this.gameElement = new HashSet<GameElement>();
+		}
+		return this.gameElement;
+	}
+
+	private float timeStamp;
+
+	private void setTimeStamp(float value) {
+		this.timeStamp = value;
+	}
+
+	private float getTimeStamp() {
+		return this.timeStamp;
+	}
+
+	public Iterator<GameElement> getGameElementIterator() {
+		// TODO implement this operation
+		throw new UnsupportedOperationException("not implemented");
+	}
+
+	/**
+	 * Calculate DeltaTime Get Collisions .. & Invoke ReactCollision Iterate
+	 * over Elemets --> invoke GameElement:logicLoop()
+	 */
+	public void logicLoop() {
+		// TODO implement this operation
+		throw new UnsupportedOperationException("not implemented");
+	}
+
+}

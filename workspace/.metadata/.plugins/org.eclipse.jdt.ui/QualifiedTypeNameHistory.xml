@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="edu.kit.informatik.ragnarok.gui.GameView"/>
+<fullyQualifiedTypeName name="org.eclipse.swt.SWT"/>
+<fullyQualifiedTypeName name="java.awt.Canvas"/>
+<fullyQualifiedTypeName name="org.eclipse.swt.widgets.Display"/>
+<fullyQualifiedTypeName name="org.eclipse.swt.widgets.Shell"/>
+<fullyQualifiedTypeName name="org.eclipse.swt.widgets.Canvas"/>
+<fullyQualifiedTypeName name="edu.kit.informatik.ragnarok.logic.GameModel"/>
+<fullyQualifiedTypeName name="org.eclipse.swt.graphics.GC"/>
+<fullyQualifiedTypeName name="java.util.Iterator"/>
+<fullyQualifiedTypeName name="edu.kit.informatik.ragnarok.logic.GameElement"/>
+<fullyQualifiedTypeName name="java.awt.Color"/>
+<fullyQualifiedTypeName name="org.eclipse.swt.graphics.Color"/>
+<fullyQualifiedTypeName name="edu.kit.informatik.ragnarok.logic.gameelements.Inanimate"/>
+<fullyQualifiedTypeName name="org.eclipse.swt.graphics.RGB"/>
+<fullyQualifiedTypeName name="config.c"/>
+<fullyQualifiedTypeName name="edu.kit.informatik.ragnarok.logic.Direction"/>
+</qualifiedTypeNameHistroy>

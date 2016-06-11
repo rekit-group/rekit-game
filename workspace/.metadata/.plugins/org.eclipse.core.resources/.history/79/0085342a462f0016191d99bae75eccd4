@@ -1,0 +1,28 @@
+package edu.kit.informatik.ragnarok.logic;
+
+public class Inanimate extends GameElement {
+	public Inanimate(Vec2D size, int color) {
+		// TODO implement this operation
+		throw new UnsupportedOperationException("not implemented");
+	}
+
+	@Override
+	public void render() {
+		// TODO implement this operation
+		throw new UnsupportedOperationException("not implemented");
+	}
+
+	@Override
+	public void damage(int damage) {
+		// TODO implement this operation
+		throw new UnsupportedOperationException("not implemented");
+
+	}
+
+	@Override
+	public void resetPosition() {
+		// TODO implement this operation
+		throw new UnsupportedOperationException("not implemented");
+	}
+
+}

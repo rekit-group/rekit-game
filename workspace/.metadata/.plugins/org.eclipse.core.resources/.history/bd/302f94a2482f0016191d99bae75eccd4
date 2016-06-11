@@ -1,0 +1,12 @@
+package config;
+
+public class c {
+	
+	public static final int windowX = 800;
+	public static final int windowY = 600;
+	
+	public static final int pxPerUnit = 50;
+	
+	public static final int renderDelta = 50;
+	public static final int logicDelta = 200;
+}

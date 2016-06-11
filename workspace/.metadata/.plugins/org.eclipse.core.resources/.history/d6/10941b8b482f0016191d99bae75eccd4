@@ -1,0 +1,5 @@
+package config;
+
+public class c {
+	public static int pxPerUnit = 50;
+}

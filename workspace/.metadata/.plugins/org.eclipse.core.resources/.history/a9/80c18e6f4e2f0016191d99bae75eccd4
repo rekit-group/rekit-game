@@ -1,0 +1,80 @@
+package edu.kit.informatik.ragnarok.logic.gameelements;
+
+import org.eclipse.swt.graphics.GC;
+
+import edu.kit.informatik.ragnarok.logic.Direction;
+import edu.kit.informatik.ragnarok.logic.Frame;
+import edu.kit.informatik.ragnarok.logic.GameModel;
+import edu.kit.informatik.ragnarok.logic.Vec2D;
+
+public abstract class GameElement implements Collidable {
+	public void destroy() {
+		// TODO implement this operation
+		throw new UnsupportedOperationException("not implemented");
+	}
+
+	private int team;
+
+	private void setTeam(int value) {
+		this.team = value;
+	}
+
+	private int getTeam() {
+		return this.team;
+	}
+
+	public void reactToCollision(GameElement element, Direction dir) {
+		// TODO implement this operation
+		throw new UnsupportedOperationException("not implemented");
+	}
+
+	public void logicLoop(float deltaTime) {
+		// TODO implement this operation
+		throw new UnsupportedOperationException("not implemented");
+	}
+
+	private Vec2D pos;
+
+	public void setPos(Vec2D value) {
+		this.pos = value;
+	}
+
+	public Vec2D getPos() {
+		return this.pos;
+	}
+
+	private Vec2D size;
+
+	public void setSize(Vec2D value) {
+		this.size = value;
+	}
+
+	public Vec2D getSize() {
+		return this.size;
+	}
+
+	/**
+	 * <pre>
+	 *           1..*     1..1
+	 * GameElement ------------------------- GameModel
+	 *           gameElement        &lt;       gameModel
+	 * </pre>
+	 */
+	private GameModel gameModel;
+
+	public void setGameModel(GameModel value) {
+		this.gameModel = value;
+	}
+
+	public GameModel getGameModel() {
+		return this.gameModel;
+	}
+
+	public Frame getCollisionFrame() {
+		// TODO implement this operation
+		throw new UnsupportedOperationException("not implemented");
+	}
+
+	public abstract void render(GC gc);
+
+}

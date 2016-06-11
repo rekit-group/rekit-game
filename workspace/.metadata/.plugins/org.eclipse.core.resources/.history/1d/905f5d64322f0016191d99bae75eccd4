@@ -1,0 +1,38 @@
+package edu.kit.informatik.ragnarok.gui;
+
+import edu.kit.informatik.ragnarok.logic.GameModel;
+
+public class GameView {
+   private GameModel model;
+   
+   public void setModel(GameModel value) {
+      this.model = value;
+   }
+   
+   public GameModel getModel() {
+      return this.model;
+   }
+   
+   /**
+    * <pre>
+    *           1..1     1..1
+    * GameView ------------------------> Canvas
+    *           gameView        &gt;       canvas
+    * </pre>
+    */
+   private Canvas canvas;
+   
+   public void setCanvas(Canvas value) {
+      this.canvas = value;
+   }
+   
+   public Canvas getCanvas() {
+      return this.canvas;
+   }
+   
+   public void renderLoop() {
+      // TODO implement this operation
+      throw new UnsupportedOperationException("not implemented");
+   }
+   
+   }

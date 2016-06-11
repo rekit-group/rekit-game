@@ -1,0 +1,24 @@
+package edu.kit.informatik.ragnarok.logic;
+
+public class Vec2D {
+	private float x;
+
+	private void setX(float value) {
+		this.x = value;
+	}
+
+	private float getX() {
+		return this.x;
+	}
+
+	private float y;
+
+	private void setY(float value) {
+		this.y = value;
+	}
+
+	private float getY() {
+		return this.y;
+	}
+
+}

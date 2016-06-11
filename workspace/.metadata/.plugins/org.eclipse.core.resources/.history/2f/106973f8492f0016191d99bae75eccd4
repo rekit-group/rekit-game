@@ -1,0 +1,9 @@
+package edu.kit.informatik.ragnarok.logic;
+
+public class LevelCreator {
+
+	public LevelCreator(GameModel) {
+		
+	}
+	
+}

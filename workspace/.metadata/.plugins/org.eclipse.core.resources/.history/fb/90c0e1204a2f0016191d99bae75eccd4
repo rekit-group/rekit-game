@@ -1,0 +1,5 @@
+package edu.kit.informatik.ragnarok.logic.gameelements.inanimates;
+
+public class Block {
+
+}

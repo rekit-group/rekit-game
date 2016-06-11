@@ -1,0 +1,17 @@
+package edu.kit.informatik.ragnarok.logic;
+
+
+public abstract class Entity extends GameElement {
+   private Vec2D vel;
+   
+   private void setVel(Vec2D value) {
+      this.vel = value;
+   }
+   
+   private Vec2D getVel() {
+      return this.vel;
+   }
+   
+   public abstract void logicLoop(float deltaTime);
+   
+   }

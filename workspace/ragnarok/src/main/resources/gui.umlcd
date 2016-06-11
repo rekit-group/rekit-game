@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<com.yattasolutions.uml.diagrams.classifier:ClassDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:com.yattasolutions.uml.diagrams.classifier="http://ns.yatta-solutions.com/umllab/diagrams/classifier/1.1.0" xmi:id="_8jhlMC77EeaxuvBEMP9jug">
+  <modelElement href="ragnarok.uml#_8Lh78C77EeaxuvBEMP9jug"/>
+  <edges xsi:type="com.yattasolutions.uml.diagrams.classifier:AssociationVisual" xmi:id="_-DIWwC77EeaxuvBEMP9jug" source="_-DI90C77EeaxuvBEMP9jug">
+    <modelElement href="ragnarok.uml#_8M2KkC77EeaxuvBEMP9jug"/>
+    <visualProperties xmi:id="_-DPEcC77EeaxuvBEMP9jug" position="70.0,70.0"/>
+    <stereotypes xmi:id="_-DIWwS77EeaxuvBEMP9jug" name="Reference">
+      <modelElement href="ragnarok.uml#_8M3_wC77EeaxuvBEMP9jug"/>
+    </stereotypes>
+    <nameVisual xmi:id="_-DIWwi77EeaxuvBEMP9jug" text=""/>
+    <sourceRole xmi:id="_-DIWwy77EeaxuvBEMP9jug" aggregationKind="NONE" name="">
+      <modelElement href="ragnarok.uml#_8M2KkS77EeaxuvBEMP9jug"/>
+      <visibility xmi:id="_-DIWxC77EeaxuvBEMP9jug" label="+"/>
+      <cardinality xmi:id="_-DIWxS77EeaxuvBEMP9jug" label="1" max="1" min="1"/>
+    </sourceRole>
+    <targetRole xmi:id="_-DIWxi77EeaxuvBEMP9jug" aggregationKind="NONE" name="shell" navigable="true">
+      <modelElement href="ragnarok.uml#_8MY3kC77EeaxuvBEMP9jug"/>
+      <stereotypes xmi:id="_s7ENIC78EeaxuvBEMP9jug" name="LegacyStyledElement">
+        <modelElement href="ragnarok.uml#_8MZeoC77EeaxuvBEMP9jug"/>
+      </stereotypes>
+      <visibility xmi:id="_-DIWxy77EeaxuvBEMP9jug" label="#"/>
+      <cardinality xmi:id="_-DIWyC77EeaxuvBEMP9jug" label="1" max="1" min="1"/>
+    </targetRole>
+  </edges>
+  <edges xsi:type="com.yattasolutions.uml.diagrams.classifier:AssociationVisual" xmi:id="_8RsY4C78EeaxuvBEMP9jug" sourceAnchor="344.0,106.0" targetAnchor="0.0,56.0" target="_xNC_sC78EeaxuvBEMP9jug" source="_veDuUC78EeaxuvBEMP9jug">
+    <modelElement href="ragnarok.uml#_8RZd8C78EeaxuvBEMP9jug"/>
+    <visualProperties xmi:id="_8RsY4S78EeaxuvBEMP9jug"/>
+    <nameVisual xmi:id="_8RsY4i78EeaxuvBEMP9jug" text="">
+      <visualProperties xmi:id="_8XxLsC78EeaxuvBEMP9jug" position="10.5,-11.0"/>
+    </nameVisual>
+    <sourceRole xmi:id="_8RsY4y78EeaxuvBEMP9jug" aggregationKind="NONE" name="gameView">
+      <modelElement href="ragnarok.uml#_8RaFAC78EeaxuvBEMP9jug"/>
+      <visualProperties xmi:id="_8XwkoC78EeaxuvBEMP9jug" position="5.5,-66.5"/>
+      <visibility xmi:id="_8RsY5C78EeaxuvBEMP9jug" label="+"/>
+      <cardinality xmi:id="_8RsY5S78EeaxuvBEMP9jug" label="1" max="1" min="1"/>
+    </sourceRole>
+    <targetRole xmi:id="_8RsY5i78EeaxuvBEMP9jug" aggregationKind="NONE" name="canvas" navigable="true">
+      <modelElement href="ragnarok.uml#_8RaFAy78EeaxuvBEMP9jug"/>
+      <visualProperties xmi:id="_8XxLsS78EeaxuvBEMP9jug" position="-65.0,11.5"/>
+      <visibility xmi:id="_8RsY5y78EeaxuvBEMP9jug" label="+"/>
+      <cardinality xmi:id="_8RsY6C78EeaxuvBEMP9jug" label="1" max="1" min="1"/>
+    </targetRole>
+  </edges>
+  <edges xsi:type="com.yattasolutions.uml.diagrams.classifier:AssociationVisual" xmi:id="_fdVe4C8LEeaxuvBEMP9jug" sourceAnchor="87.0,0.0" targetAnchor="172.0,212.0" target="_veDuUC78EeaxuvBEMP9jug" source="_-DI90C77EeaxuvBEMP9jug">
+    <modelElement href="ragnarok.uml#_fdUQwC8LEeaxuvBEMP9jug"/>
+    <visualProperties xmi:id="_fdVe4S8LEeaxuvBEMP9jug"/>
+    <nameVisual xmi:id="_fdVe4i8LEeaxuvBEMP9jug" text="">
+      <visualProperties xmi:id="_ff3OcS8LEeaxuvBEMP9jug" position="-5.5,-9.0"/>
+    </nameVisual>
+    <sourceRole xmi:id="_fdVe4y8LEeaxuvBEMP9jug" aggregationKind="NONE" name="mainFrame">
+      <modelElement href="ragnarok.uml#_fdUQwS8LEeaxuvBEMP9jug"/>
+      <visualProperties xmi:id="_ff3OcC8LEeaxuvBEMP9jug" position="-97.0,-60.0"/>
+      <visibility xmi:id="_fdVe5C8LEeaxuvBEMP9jug" label="+"/>
+      <cardinality xmi:id="_fdVe5S8LEeaxuvBEMP9jug" label="1" max="1" min="1"/>
+    </sourceRole>
+    <targetRole xmi:id="_fdVe5i8LEeaxuvBEMP9jug" aggregationKind="NONE" name="gameView" navigable="true">
+      <modelElement href="ragnarok.uml#_fdU30S8LEeaxuvBEMP9jug"/>
+      <visualProperties xmi:id="_ff31gC8LEeaxuvBEMP9jug" position="9.0,5.5"/>
+      <visibility xmi:id="_fdVe5y8LEeaxuvBEMP9jug" label="+"/>
+      <cardinality xmi:id="_fdVe6C8LEeaxuvBEMP9jug" label="1" max="1" min="1"/>
+    </targetRole>
+  </edges>
+  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_xNC_sC78EeaxuvBEMP9jug" name="Canvas" associationsIn="_8RsY4C78EeaxuvBEMP9jug">
+    <modelElement href="ragnarok.uml#_xNCYoC78EeaxuvBEMP9jug"/>
+    <visualProperties xmi:id="_xNC_sS78EeaxuvBEMP9jug" position="629.0,81.0" size="174.0,112.0"/>
+    <visibility xmi:id="_xNC_si78EeaxuvBEMP9jug" label="+"/>
+  </nodes>
+  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_veDuUC78EeaxuvBEMP9jug" name="GameView" associationsIn="_fdVe4C8LEeaxuvBEMP9jug" associationsOut="_8RsY4C78EeaxuvBEMP9jug">
+    <modelElement href="ragnarok.uml#_veDHQC78EeaxuvBEMP9jug"/>
+    <visualProperties xmi:id="_veDuUS78EeaxuvBEMP9jug" position="11.0,31.0" size="345.0,213.0"/>
+    <visibility xmi:id="_veDuUi78EeaxuvBEMP9jug" label="+"/>
+    <attributes xmi:id="_2ZnyQC78EeaxuvBEMP9jug" name="model">
+      <modelElement href="ragnarok.uml#_2ZmkIC78EeaxuvBEMP9jug"/>
+      <visibility xmi:id="_2ZnyQS78EeaxuvBEMP9jug" label="+"/>
+      <cardinality xmi:id="_2ZnyQi78EeaxuvBEMP9jug" label="1" max="1" min="1"/>
+      <type xmi:id="_2ZnyQy78EeaxuvBEMP9jug" name="GameModel">
+        <modelElement href="ragnarok.uml#_p8C3QC78EeaxuvBEMP9jug"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_8Rs_8C78EeaxuvBEMP9jug" name="canvas">
+      <modelElement href="ragnarok.uml#_8RaFAy78EeaxuvBEMP9jug"/>
+      <visibility xmi:id="_8Rs_8S78EeaxuvBEMP9jug" label="+"/>
+      <cardinality xmi:id="_8Rs_8i78EeaxuvBEMP9jug" label="1" max="1" min="1"/>
+      <type xmi:id="_8Rs_8y78EeaxuvBEMP9jug" name="Canvas">
+        <modelElement href="ragnarok.uml#_xNCYoC78EeaxuvBEMP9jug"/>
+      </type>
+    </attributes>
+    <operations xmi:id="_55DGgC78EeaxuvBEMP9jug" name="renderLoop">
+      <modelElement href="ragnarok.uml#_55B4YC78EeaxuvBEMP9jug"/>
+      <visibility xmi:id="_55DGgS78EeaxuvBEMP9jug" label="+"/>
+      <cardinality xmi:id="_55DGgi78EeaxuvBEMP9jug" label="1" max="1" min="1"/>
+    </operations>
+  </nodes>
+  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_-DI90C77EeaxuvBEMP9jug" name="MainFrame" associationsOut="_-DIWwC77EeaxuvBEMP9jug _fdVe4C8LEeaxuvBEMP9jug">
+    <modelElement href="ragnarok.uml#_8L_O8C77EeaxuvBEMP9jug"/>
+    <visualProperties xmi:id="_-DI90S77EeaxuvBEMP9jug" position="96.0,495.0" size="-1.0,-1.0"/>
+    <visibility xmi:id="_-DI90i77EeaxuvBEMP9jug" label="+"/>
+    <attributes xmi:id="_-DI90y77EeaxuvBEMP9jug" name="shell">
+      <modelElement href="ragnarok.uml#_8MY3kC77EeaxuvBEMP9jug"/>
+      <stereotypes xmi:id="_s7GCUC78EeaxuvBEMP9jug" name="LegacyStyledElement"/>
+      <stereotypes xmi:id="_s7GpYC78EeaxuvBEMP9jug" name="LegacyStyledElement"/>
+      <stereotypes xmi:id="_s7HQcC78EeaxuvBEMP9jug" name="LegacyStyledElement"/>
+      <stereotypes xmi:id="_V1ez0S8LEeaxuvBEMP9jug" name="LegacyStyledElement"/>
+      <stereotypes xmi:id="_V1fa4C8LEeaxuvBEMP9jug" name="LegacyStyledElement"/>
+      <stereotypes xmi:id="_V1fa4S8LEeaxuvBEMP9jug" name="LegacyStyledElement"/>
+      <visibility xmi:id="_-DI91S77EeaxuvBEMP9jug" label="#"/>
+      <cardinality xmi:id="_-DI91i77EeaxuvBEMP9jug" label="1" max="1" min="1"/>
+      <type xmi:id="_-DI91y77EeaxuvBEMP9jug" name="Shell">
+        <modelElement href="ragnarok.uml#_8MVNMC77EeaxuvBEMP9jug"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_fdWF8C8LEeaxuvBEMP9jug" name="gameView">
+      <modelElement href="ragnarok.uml#_fdU30S8LEeaxuvBEMP9jug"/>
+      <visibility xmi:id="_fdWF8S8LEeaxuvBEMP9jug" label="+"/>
+      <cardinality xmi:id="_fdWF8i8LEeaxuvBEMP9jug" label="1" max="1" min="1"/>
+      <type xmi:id="_fdWF8y8LEeaxuvBEMP9jug" name="GameView">
+        <modelElement href="ragnarok.uml#_veDHQC78EeaxuvBEMP9jug"/>
+      </type>
+    </attributes>
+    <operations xmi:id="_-DI92C77EeaxuvBEMP9jug" name="open">
+      <modelElement href="ragnarok.uml#_8MAdEC77EeaxuvBEMP9jug"/>
+      <visibility xmi:id="_-DI92S77EeaxuvBEMP9jug" label="+"/>
+      <cardinality xmi:id="_-DI92i77EeaxuvBEMP9jug" label="1" max="1" min="1"/>
+    </operations>
+    <operations xmi:id="_-DI92y77EeaxuvBEMP9jug" name="createContents">
+      <modelElement href="ragnarok.uml#_8MBEIC77EeaxuvBEMP9jug"/>
+      <visibility xmi:id="_-DI93C77EeaxuvBEMP9jug" label="#"/>
+      <cardinality xmi:id="_-DI93S77EeaxuvBEMP9jug" label="1" max="1" min="1"/>
+    </operations>
+  </nodes>
+</com.yattasolutions.uml.diagrams.classifier:ClassDiagram>

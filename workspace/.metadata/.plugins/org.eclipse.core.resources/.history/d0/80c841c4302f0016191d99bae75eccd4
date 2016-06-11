@@ -1,0 +1,27 @@
+package edu.kit.informatik.ragnarok.logic;
+
+import java.util.Set;
+import java.util.HashSet;
+
+public class Frame {
+   /**
+    * <pre>
+    *           1..1     2..2
+    * Frame ------------------------> Vec2D
+    *           frame        &gt;       vec2D
+    * </pre>
+    */
+   private Set<Vec2D> vec2D;
+   
+   public Set<Vec2D> getVec2D() {
+      if (this.vec2D == null) {
+         this.vec2D = new HashSet<Vec2D>();
+      }
+      return this.vec2D;
+   }
+   
+   public void SetFrame(Vec2D v1, Vec2D v2) {
+	   
+   }
+   
+}

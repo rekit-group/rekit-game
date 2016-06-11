@@ -1,0 +1,88 @@
+package edu.kit.informatik.ragnarok.logic;
+
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
+import config.c;
+import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.logic.gameelements.Player;
+
+public class GameModel {
+
+	/**
+	 * <pre>
+	 *           1..1     1..*
+	 * GameModel ------------------------- GameElement
+	 *           gameModel        &gt;       gameElement
+	 * </pre>
+	 */
+	private Set<GameElement> gameElements;
+	
+	private Player player;
+	
+	private float lastTime;
+	
+	private LevelCreator levelCreator;
+	
+	public GameModel () {
+		this.gameElements = new HashSet<GameElement>();
+		
+		this.player = new Player(new Vec2D(3, 3));
+		
+		this.levelCreator = new LevelCreator(this);
+		
+		this.addGameElement(player);
+		
+		this.lastTime = System.currentTimeMillis() / 1000.0f;
+		
+		Thread t = new Thread() {
+			public void run() {
+				while (true) {
+					logicLoop();
+					try {
+						Thread.sleep(c.logicDelta);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+		
+		t.start();
+	}
+	
+	public void addGameElement(GameElement e) {
+		this.gameElements.add(e);
+	}
+	public void removeGameElement(GameElement e) {
+		this.gameElements.remove(e);
+	}
+
+	public Iterator<GameElement> getGameElementIterator() {
+		return this.gameElements.iterator();
+	}
+
+	/**
+	 * Calculate DeltaTime Get Collisions .. & Invoke ReactCollision Iterate
+	 * over Elements --> invoke GameElement:logicLoop()
+	 */
+	public void logicLoop() {
+		
+		// calculate time difference since last physics loop
+		float timeNow = System.currentTimeMillis() / 1000.0f;
+		float timeDelta = timeNow - this.lastTime;
+		System.out.println(timeNow + " - " + this.lastTime + " = " + timeDelta);
+		// iterate all GameElements
+		Iterator<GameElement> it = this.getGameElementIterator();
+		while (it.hasNext()) {
+			GameElement e = it.next();
+			e.logicLoop(timeDelta);
+		}
+		
+		// update time
+		this.lastTime = timeNow;
+	}
+
+}
