@@ -12,7 +12,7 @@ public abstract class GameElement implements Collidable {
 		this.deleteMe = true;
 	}
 
-	private int team;
+	private int team = 1;
 
 	protected void setTeam(int value) {
 		this.team = value;
@@ -20,6 +20,10 @@ public abstract class GameElement implements Collidable {
 
 	protected int getTeam() {
 		return this.team;
+	}
+	
+	protected boolean isHostile(GameElement other) {
+		return this.getTeam() != other.getTeam();
 	}
 
 	public void reactToCollision(GameElement element, Direction dir) {
@@ -30,6 +34,16 @@ public abstract class GameElement implements Collidable {
 		// Do nothing
 	}
 
+	private Vec2D vel;
+	
+	public void setVel(Vec2D value) {
+		this.vel = value;
+	}
+
+	public Vec2D getVel() {
+		return this.vel;
+	}
+	
 	private Vec2D pos;
 
 	public void setPos(Vec2D value) {
@@ -46,6 +60,8 @@ public abstract class GameElement implements Collidable {
 	public Vec2D getPos() {
 		return this.pos;
 	}
+	
+	
 	
 	private Vec2D lastPos;
 

@@ -16,7 +16,7 @@ public class c {
 	 * Grid width.
 	 * Determines how broad the window game will be
 	 */
-	public static final int gridW = 16;
+	public static final int gridW = 22;
 	/**
 	 * Grid height.
 	 * Determines how high the window game will be
@@ -46,7 +46,8 @@ public class c {
 	public static final float playerWalkMaxSpeed = 13*playerWalkAccel;
 	
 	public static final float playerJumpBoost = -20*g;
+	public static final float playerBottomBoost = -8*g;
 	
-	public static final float playerDist = 3f;
+	public static final float playerDist = 5f;
 	public static final int playerLifes = 5;
 }

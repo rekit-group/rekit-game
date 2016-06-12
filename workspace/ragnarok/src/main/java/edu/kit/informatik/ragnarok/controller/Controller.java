@@ -20,15 +20,15 @@ public class Controller implements Observer {
 		
 		// Initialize jump command
 		InputCommand jmpCmd = new JumpCommand();
-		jmpCmd.setModel(model);
+		jmpCmd.setEntity(model.getPlayer());
 		
 		// Initialize left walking command
 		InputCommand leftCmd = new WalkCommand(Direction.LEFT);
-		leftCmd.setModel(model);
+		leftCmd.setEntity(model.getPlayer());
 		
 		// Initialize right walking command
 		InputCommand rightCmd = new WalkCommand(Direction.RIGHT);
-		rightCmd.setModel(model);
+		rightCmd.setEntity(model.getPlayer());
 		
 		this.mpCmd.put(119, jmpCmd);
 		this.mpCmd.put(97, leftCmd);

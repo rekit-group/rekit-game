@@ -1,4 +1,4 @@
-package edu.kit.informatik.ragnarok.logic.gameelements.enemies;
+package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies;
 
 import edu.kit.informatik.ragnarok.logic.GameModel;
 import edu.kit.informatik.ragnarok.logic.Vec2D;
@@ -14,8 +14,12 @@ public class EnemyFactory {
 	
 	public static void generate(int x, int y) {
 		// Create Enemy
-		Entity enemy = new TryHardTriangle();
-		enemy.setPos(new Vec2D(x, y));
+		Entity enemy = new RektKiller(new Vec2D(x, y));
+		
+		// Move to the very bottom to prevent initial falling
+		float moveY = (1 - enemy.getSize().getY()) / 2f;
+		float moveX = (1 - enemy.getSize().getX()) / 2f;
+		enemy.setPos(enemy.getPos().addY(moveY).addX(moveX)); 
 		
 		// Add enemy to model
 		model.addGameElement(enemy);

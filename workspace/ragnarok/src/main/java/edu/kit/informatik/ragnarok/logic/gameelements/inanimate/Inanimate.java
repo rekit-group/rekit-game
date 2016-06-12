@@ -1,20 +1,18 @@
-package edu.kit.informatik.ragnarok.logic.gameelements;
+package edu.kit.informatik.ragnarok.logic.gameelements.inanimate;
 
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.RGB;
 
-import edu.kit.infomatik.config.c;
 import edu.kit.informatik.ragnarok.gui.Field;
 import edu.kit.informatik.ragnarok.logic.Direction;
 import edu.kit.informatik.ragnarok.logic.Frame;
 import edu.kit.informatik.ragnarok.logic.Vec2D;
+import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 
 public class Inanimate extends GameElement {
 	
-	private Vec2D size;
+	protected Vec2D size;
 	
-	private RGB color;
+	protected RGB color;
 	
 	public Inanimate(Vec2D pos, Vec2D size, RGB color) {
 		this.setPos(pos);
@@ -26,8 +24,7 @@ public class Inanimate extends GameElement {
 	public void render(Field f) {
 		Vec2D pos = this.getPos();
 		
-		f.drawRectangle(pos, size, this.color);
-		
+		f.drawRectangle(pos, size.multiply(0.95f), this.color);
 	}
 
 	public void reactToCollision(GameElement element, Direction dir) {

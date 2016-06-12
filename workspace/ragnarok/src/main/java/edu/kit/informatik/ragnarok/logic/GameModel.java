@@ -8,8 +8,8 @@ import java.util.Set;
 
 import edu.kit.infomatik.config.c;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
-import edu.kit.informatik.ragnarok.logic.gameelements.enemies.EnemyFactory;
-import edu.kit.informatik.ragnarok.logic.gameelements.player.Player;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.EnemyFactory;
 
 public class GameModel {
 	
@@ -160,7 +160,7 @@ public class GameModel {
 				e.logicLoop(timeDelta / 1000.f);
 				
 				// check if we can delete this
-				if (e.getPos().getX() < this.currentOffset - c.playerDist) {
+				if (e.getPos().getX() < this.currentOffset - c.playerDist - 1) {
 					gameElementsToDelete.add(e);
 				}
 			}

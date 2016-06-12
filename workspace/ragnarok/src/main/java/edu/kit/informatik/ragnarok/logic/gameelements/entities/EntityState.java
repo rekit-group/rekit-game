@@ -1,8 +1,9 @@
-package edu.kit.informatik.ragnarok.controller.commands;
+package edu.kit.informatik.ragnarok.logic.gameelements.entities;
 
 import edu.kit.informatik.ragnarok.logic.gameelements.Entity;
 
-public abstract class InputCommand {
+
+public abstract class EntityState {
 	private Entity entity;
 
 	public void setEntity(Entity entity) {
@@ -13,6 +14,10 @@ public abstract class InputCommand {
 		return this.entity;
 	}
 
-	public abstract void apply();
+	public boolean canJump() {
+		return true;
+	}
+
+	public abstract void render();
 
 }
