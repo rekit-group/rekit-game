@@ -1,5 +1,7 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies;
 
+import java.util.Random;
+
 import edu.kit.informatik.ragnarok.logic.GameModel;
 import edu.kit.informatik.ragnarok.logic.Vec2D;
 import edu.kit.informatik.ragnarok.logic.gameelements.Entity;
@@ -13,8 +15,10 @@ public class EnemyFactory {
 	}
 	
 	public static void generate(int x, int y) {
+		Random r = new Random();
+		
 		// Create Enemy
-		Entity enemy = new RektKiller(new Vec2D(x, y));
+		Entity enemy = new RektKiller(new Vec2D(x, y), r.nextInt(6));
 		
 		// Move to the very bottom to prevent initial falling
 		float moveY = (1 - enemy.getSize().getY()) / 2f;
