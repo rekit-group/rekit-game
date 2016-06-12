@@ -1,22 +1,21 @@
-package edu.kit.informatik.ragnarok.logic.gameelements;
+package edu.kit.informatik.ragnarok.logic.gameelements.enemies;
 
-import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.RGB;
 
 import edu.kit.informatik.ragnarok.gui.Field;
 import edu.kit.informatik.ragnarok.logic.Direction;
 import edu.kit.informatik.ragnarok.logic.Frame;
+import edu.kit.informatik.ragnarok.logic.gameelements.Entity;
+import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 
 public class TryHardTriangle extends Entity {
 	@Override
 	public void render(Field f) {
-		// TODO implement this operation
-		throw new UnsupportedOperationException("not implemented");
+		f.drawCircle(this.getPos(), this.getSize(), new RGB(50, 200, 50));
 	}
 
 	@Override
 	public void logicLoop(float deltaTime) {
-		// TODO implement this operation
-		throw new UnsupportedOperationException("not implemented");
 	}
 
 	/**
@@ -25,8 +24,15 @@ public class TryHardTriangle extends Entity {
 	 */
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
-		// TODO implement this operation
-		throw new UnsupportedOperationException("not implemented");
+		System.out.println("ENEMY collision " + dir.toString());
+		if (dir == Direction.DOWN) {
+			element.addPoints(40);
+			this.addDamage(1);
+		} else {
+			// Give player damage
+			element.addDamage(1);
+			this.addDamage(1);
+		}
 	}
 
 	@Override

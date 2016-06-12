@@ -69,10 +69,6 @@ public class Player extends Entity {
 
 	@Override
 	public void collidedWith(Frame collision, Direction dir) {
-		if (dir != Direction.DOWN) {
-			System.out.println("Collision " + dir.toString() + " with " + collision.toString() + " while at " + this.getPos().toString());
-		}
-		
 		// saving last position
 		Vec2D lastPos = this.getLastPos();
 		

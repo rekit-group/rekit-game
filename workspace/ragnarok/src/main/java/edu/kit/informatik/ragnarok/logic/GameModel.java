@@ -8,6 +8,7 @@ import java.util.Set;
 
 import edu.kit.infomatik.config.c;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.logic.gameelements.enemies.EnemyFactory;
 import edu.kit.informatik.ragnarok.logic.gameelements.player.Player;
 
 public class GameModel {
@@ -49,7 +50,10 @@ public class GameModel {
 		this.player = new Player(new Vec2D(3, 0));
 		this.currentOffset = 3;
 		this.addGameElement(player);
-
+		
+		// Init EnemyFactory with model
+		EnemyFactory.init(this);
+		
 		// Create LevelCreator
 		this.levelCreator = new LevelCreator(this);
 		this.levelCreator.generate();

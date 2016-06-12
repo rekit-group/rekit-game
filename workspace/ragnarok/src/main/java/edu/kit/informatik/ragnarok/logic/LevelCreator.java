@@ -6,6 +6,7 @@ import org.eclipse.swt.graphics.RGB;
 
 import edu.kit.infomatik.config.c;
 import edu.kit.informatik.ragnarok.logic.gameelements.Inanimate;
+import edu.kit.informatik.ragnarok.logic.gameelements.enemies.EnemyFactory;
 
 public class LevelCreator {
 
@@ -35,7 +36,7 @@ public class LevelCreator {
 					{1, 1, 1}
 			},
 			new int[][] {
-					{0, 0, 1},
+					{0, 2, 1},
 					{1, 1, 1}
 			},
 			new int[][] {
@@ -50,7 +51,7 @@ public class LevelCreator {
 			},
 			new int[][] {
 					{1, 1},
-					{0, 0}
+					{2, 0}
 			},
 			new int[][] {
 					{1, 1},
@@ -62,7 +63,7 @@ public class LevelCreator {
 					{0, 0, 1}
 			},
 			new int[][] {
-					{0, 0, 0, 0, 1, 1, 1},
+					{0, 2, 0, 0, 1, 1, 1},
 					{1, 1, 1, 0, 0, 1, 0},
 					{0, 1, 0, 0, 0, 1, 0}
 			},
@@ -96,7 +97,7 @@ public class LevelCreator {
 					{0, 0, 1, 1, 1},
 					{0, 0, 0, 1, 0},
 					{1, 0, 0, 1, 0},
-					{1, 0, 0, 1, 0}
+					{1, 2, 0, 1, 0}
 			},
 			new int[][] {
 					{0, 0, 0, 0, 1},
@@ -155,6 +156,9 @@ public class LevelCreator {
 						int randCol = r.nextInt(60) + 50;
 						i = new Inanimate(new Vec2D(ix + x, iy + (y - ah)), new Vec2D(1, 1), new RGB(randCol, randCol, randCol));
 						this.model.addGameElement(i);
+					}
+					else if (struc[y][x] == 2) {
+						EnemyFactory.generate(ix + x, iy + (y - ah));
 					}
 					
 				}
