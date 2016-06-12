@@ -1,6 +1,8 @@
 package edu.kit.informatik.ragnarok.gui;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.RGB;
 
@@ -47,6 +49,27 @@ public class Field {
 				units2pixel(size.getX() - 0.02f),
 				units2pixel(size.getY() - 0.02f) 
 			);
+	}
+	
+	
+	public void refreshUI(int lifes, int points) {
+		
+		// Set color to red
+		gc.setBackground(new Color(gc.getDevice(), new RGB(200, 50, 0)));
+		// Iterate lifes
+		for (int i = 0; i < lifes; i++) {
+			gc.fillOval(10 + 30*i, 10, 20, 20);
+		}
+		
+		// Set color to red and set font
+		gc.setForeground(new Color(gc.getDevice(), new RGB(200, 50, 0)));
+		Font font = new Font(gc.getDevice(), "Tahoma", 18, SWT.BOLD);
+        gc.setFont(font);
+		// There is no alignment, so we need to calculate the text width
+		String text = points + " Points";
+		int textWidth = gc.stringExtent(text).x; 
+		// And draw the text
+		gc.drawText(text, units2pixel(c.gridW) - textWidth - 10, 10, true);
 	}
 	
 }

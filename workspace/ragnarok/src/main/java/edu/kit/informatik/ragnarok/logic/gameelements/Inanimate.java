@@ -35,15 +35,28 @@ public class Inanimate extends GameElement {
 	}
 	
 	@Override
-	public void damage(int damage) {
+	public void addDamage(int damage) {
 		// Do nothing, blocks cannot be damaged
 	}
 	
+	@Override
+	public void addPoints(int points) {
+		// Do nothing, blocks cannot get points
+	}
 	
+	@Override
+	public int getPoints() {
+		return 0;
+	}
 
 	@Override
 	public void collidedWith(Frame collision, Direction dir) {
 		// Do nothing, blocks cannot collide
+	}
+
+	@Override
+	public int getLifes() {
+		return 0;
 	}
 
 }

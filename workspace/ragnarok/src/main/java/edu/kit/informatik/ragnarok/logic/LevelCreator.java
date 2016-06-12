@@ -141,9 +141,11 @@ public class LevelCreator {
 			
 			// build floor under this structure and under the gap
 			for (int x = 0; x < aw + gap; x++) {
-				int randCol = r.nextInt(60) + 50;
-				i = new Inanimate(new Vec2D(ix + x, iy), new Vec2D(1, 1), new RGB(randCol, randCol, randCol));
-				this.model.addGameElement(i);
+				if (r.nextInt(8) != 0) {
+					int randCol = r.nextInt(60) + 50;
+					i = new Inanimate(new Vec2D(ix + x, iy), new Vec2D(1, 1), new RGB(randCol, randCol, randCol));
+					this.model.addGameElement(i);
+				}
 			}
 			
 			// build structure

@@ -30,17 +30,23 @@ public class TryHardTriangle extends Entity {
 	}
 
 	@Override
-	public void damage(int damage) {
-		// TODO implement this operation
-		throw new UnsupportedOperationException("not implemented");
-
+	public void addDamage(int damage) {
+		this.destroy();
+	}
+	
+	@Override
+	public void addPoints(int points) {
+		// Do nothing, blocks cannot get points
+	}
+	
+	@Override
+	public int getPoints() {
+		return 0;
 	}
 
 	@Override
 	public void collidedWith(Frame collision, Direction dir) {
-		// TODO implement this operation
-		throw new UnsupportedOperationException("not implemented");
-
+		// Do nothing, blocks cannot collide
 	}
 
 }

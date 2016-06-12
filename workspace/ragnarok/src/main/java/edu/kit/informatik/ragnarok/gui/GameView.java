@@ -150,6 +150,8 @@ public class GameView {
 				it.next().render(this.field);
 			}
 		}
+		
+		this.field.refreshUI(this.getModel().getPlayer().getLifes(), this.getModel().getPoints());
 	}
 
 }
