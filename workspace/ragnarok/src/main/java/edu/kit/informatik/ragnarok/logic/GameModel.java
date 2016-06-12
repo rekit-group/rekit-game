@@ -127,7 +127,7 @@ public class GameModel {
 				e.logicLoop(timeDelta / 1000.f);
 				
 				// check if we can delete this
-				if (e.getPos().getX() < this.currentOffset - c.playerDist + 1) {
+				if (e.getPos().getX() < this.currentOffset - c.playerDist) {
 					gameElementsToDelete.add(e);
 				}
 			}
@@ -156,9 +156,7 @@ public class GameModel {
 				while (it2.hasNext()) {
 					GameElement e2 = it2.next();
 					if (e1 != e2) {
-						if (e1.getCollisionFrame().collidesWith(e2.getCollisionFrame())) {
-							processCollision(e1, e2);
-						}
+						checkCollision(e1, e2, e2.getLastPos());
 					}
 				}
 			}
@@ -169,35 +167,57 @@ public class GameModel {
 		
 	}
 	
-	private void processCollision(GameElement e1, GameElement e2) {
-
-		// Reset e2s y-component to last
-		Vec2D e2lastYVec = new Vec2D(e2.getPos().getX(), e2
-				.getLastPos().getY());
+	private void checkCollision(GameElement e1, GameElement e2, Vec2D e2lastPos) {
+		// Return if there is no collision
+		if (!e1.getCollisionFrame().collidesWith(e2.getCollisionFrame())) {
+			return;
+		}
+		
+		// Simulate CollisionFrame with last Y position
+		Vec2D e2lastYVec = new Vec2D(e2.getPos().getX(), e2lastPos.getY());
 		Frame e2lastYFrame = new Frame(
 				e2lastYVec.add(e2.getSize().multiply(-0.5f)),
 				e2lastYVec.add(e2.getSize().multiply(0.5f)));
+		
+		// Simulate CollisionFrame with last X position
+		Vec2D e2lastXVec = new Vec2D(e2lastPos.getX(), e2.getPos().getY());
+		Frame e2lastXFrame = new Frame(e2lastXVec.add(e2
+				.getSize().multiply(-0.5f)),
+				e2lastXVec.add(e2.getSize().multiply(0.5f)));
 
-		// It he doesnt collide anymore it means he collided because of going up or down 
-		if (!e1.getCollisionFrame().collidesWith(e2lastYFrame)) {
-			e1.reactToCollision(e2, (e2.getPos().getY() > e2
-					.getLastPos().getY()) ? Direction.DOWN
-					: Direction.UP);
-		} else {
-			Vec2D e2lastXVec = new Vec2D(
-					e2.getLastPos().getX(), e2.getPos().getY());
-			Frame e2lastXFrame = new Frame(e2lastXVec.add(e2
-					.getSize().multiply(-0.5f)),
-					e2lastXVec.add(e2.getSize().multiply(0.5f)));
-			
-			if (!e1.getCollisionFrame().collidesWith(e2lastXFrame)) {
-				e1.reactToCollision(e2, (e2.getPos().getX() > e2
-						.getLastPos().getX()) ? Direction.RIGHT
-						: Direction.LEFT);
-			} else {
-				// TODO - does this happen with enemies?
-				e1.reactToCollision(e2, Direction.DOWN);
+		// If he still collides with the old x position:
+		// it must be because of the y position
+		if (e1.getCollisionFrame().collidesWith(e2lastXFrame)) {
+			// If he moved in positive y direction (down)
+			if (e2.getPos().getY() > e2lastPos.getY()) { 
+				e1.reactToCollision(e2, Direction.DOWN);	
+			} else
+			// If he moved in negative y direction (up)
+			if (e2.getPos().getY() < e2lastPos.getY()) {
+				e1.reactToCollision(e2, Direction.UP);
 			}
+			else {
+				return;
+			}
+			// check if he is still colliding even with last x position
+			checkCollision(e1, e2, new Vec2D(e2lastPos.getX(), e2.getPos().getY()));
+		} else
+		// If he still collides with the old y position:
+		// it must be because of the x position
+		if (e1.getCollisionFrame().collidesWith(e2lastYFrame)) {
+			// If he moved in positive x direction (right)
+			if (e2.getPos().getX() > e2lastPos.getX()) { 
+				e1.reactToCollision(e2, Direction.RIGHT);	
+			} else
+			// If he moved in negative x direction (left)
+			if (e2.getPos().getX() < e2lastPos.getX()) {
+				e1.reactToCollision(e2, Direction.LEFT);
+			}
+			else {
+				return;
+			}
+			// check if he is still colliding even with last x position
+			checkCollision(e1, e2, new Vec2D(e2.getPos().getX(), e2lastPos.getY()));
 		}
 	}
 
@@ -211,6 +231,10 @@ public class GameModel {
 	
 	public float getCurrentOffset() {
 		return this.currentOffset;
+	}
+	
+	public int getPoints() {
+		return (int) this.getCurrentOffset() + this.getPlayer().getPoints();
 	}
 
 }

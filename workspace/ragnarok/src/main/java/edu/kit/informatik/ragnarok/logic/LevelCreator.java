@@ -62,9 +62,9 @@ public class LevelCreator {
 					{0, 0, 1}
 			},
 			new int[][] {
-					{1, 1, 1},
-					{0, 1, 0},
-					{0, 1, 0}
+					{0, 0, 0, 0, 1, 1, 1},
+					{1, 1, 1, 0, 0, 1, 0},
+					{0, 1, 0, 0, 0, 1, 0}
 			},
 			new int[][] {
 					{0, 0, 0, 0, 1, 1},
@@ -106,11 +106,18 @@ public class LevelCreator {
 					{0, 0, 1, 0, 1},
 					{1, 0, 1, 0, 1}
 			}
-			
+			/*
+			new int[][] {
+					{0, 0, 0, 0, 1},
+			},
+			new int[][] {
+					{0, 0, 0, 0, 1},
+					{0, 0, 0, 0, 1},
+			}
+			*/
 	};
 	
 	public void generate() {
-		System.out.println(this.model.getCurrentOffset());
 		int max = (int) this.model.getCurrentOffset() + c.gridW + 1;
 		
 		while (this.generatedUntil < max) {
@@ -119,7 +126,7 @@ public class LevelCreator {
 			Random r = new Random();
 			int randId = r.nextInt(structures.length);
 			
-			// Randomly determine gab between this structure and the next
+			// Randomly determine gap between this structure and the next
 			int gap = r.nextInt(3) + 2;
 			
 			// Get structure and all required info

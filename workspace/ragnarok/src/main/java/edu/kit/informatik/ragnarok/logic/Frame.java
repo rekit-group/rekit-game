@@ -59,5 +59,9 @@ public class Frame {
 		}
 		return -1;
 	}
+	
+	public String toString() {
+		return "(" + this.vec1.toString() + ", " + this.vec2.toString() + ")";
+	}
 
 }

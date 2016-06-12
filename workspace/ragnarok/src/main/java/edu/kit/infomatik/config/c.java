@@ -48,4 +48,5 @@ public class c {
 	public static final float playerJumpBoost = -20*g;
 	
 	public static final float playerDist = 3f;
+	public static final int playerLifes = 5;
 }

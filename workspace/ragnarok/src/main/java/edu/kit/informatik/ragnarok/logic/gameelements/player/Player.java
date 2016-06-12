@@ -18,11 +18,12 @@ public class Player extends Entity {
 	 * </pre>
 	 */
 	private PlayerState playerState;
-
+	
 	public Player(Vec2D startPos) {
 		this.setPos(startPos);
 		this.setVel(new Vec2D(0, 0));
 		this.setPlayerState(new DefaultState());
+		this.lifes = c.playerLifes;
 	}
 
 	public void setPlayerState(PlayerState value) {
@@ -31,6 +32,10 @@ public class Player extends Entity {
 
 	public PlayerState getPlayerState() {
 		return this.playerState;
+	}
+	
+	public Vec2D getSize() {
+		return new Vec2D(0.8f, 0.8f);
 	}
 
 	@Override
@@ -49,20 +54,24 @@ public class Player extends Entity {
 		newVel = newVel.addY(c.g);
 		// apply slowing down walk
 		newVel = newVel.addX(-Math.signum(newVel.getX()) * c.playerStopAccel);
+		// we dont want weird floating point velocities
+		if (Math.abs(newVel.getX()) < 0.01) {
+			newVel = newVel.setX(0);
+		}
 		// save new velocity
 		this.setVel(newVel);
 
 	}
 
 	@Override
-	public void damage(int damage) {
-		// TODO implement this operation
-		throw new UnsupportedOperationException("not implemented");
-
-	}
-
-	@Override
 	public void collidedWith(Frame collision, Direction dir) {
+		if (dir != Direction.DOWN) {
+			System.out.println("Collision " + dir.toString() + " with " + collision.toString() + " while at " + this.getPos().toString());
+		}
+		
+		// saving last position
+		Vec2D lastPos = this.getLastPos();
+		
 		switch (dir) {
 		case UP:
 			this.setPos(this.getPos().setY(
@@ -88,6 +97,9 @@ public class Player extends Entity {
 					collision.getBorder(dir.getOpposite()) + this.getSize().getX() / 1.9f));
 			break;
 		}
+		
+		// resetting lastPos
+		this.setLastPos(lastPos);
 
 	}
 
