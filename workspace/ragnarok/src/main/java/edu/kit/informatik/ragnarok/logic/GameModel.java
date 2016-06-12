@@ -3,15 +3,11 @@ package edu.kit.informatik.ragnarok.logic;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.swt.graphics.RGB;
-
 import edu.kit.infomatik.config.c;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
-import edu.kit.informatik.ragnarok.logic.gameelements.Inanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.player.Player;
 
 public class GameModel {
@@ -38,8 +34,14 @@ public class GameModel {
 	private LevelCreator levelCreator;
 	
 	private float currentOffset;	
+	
+	private Thread loopThread;
 
 	public GameModel() {
+		this.init();
+	}
+	
+	public void init() {
 		// Initialize Set of all gameElements that need rendering and logic
 		this.gameElements = new HashSet<GameElement>();
 
@@ -55,24 +57,44 @@ public class GameModel {
 		// Initialize all other attributes
 		this.lastTime = System.currentTimeMillis();
 	}
+	
+	public void restart() {
+		final GameModel that = this;
+		Thread restartThread = new Thread() {
+			public void run() {
+				// wait 2 seconds
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				// reset all data structures
+				that.init();
+				// restart logic thread
+				that.start();
+			}
+		};
+		restartThread.start();
+	}
 
 	public void start() {
-		Thread t = new Thread() {
+		this.loopThread = new Thread() {
 			public void run() {
-
-				while (true) {
-					logicLoop();
+				// repeat until player is dead
+				while (!getPlayer().deleteMe) {
 					try {
+						logicLoop();
 						Thread.sleep(c.logicDelta);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
+				// restart game
+				restart();
 			}
 		};
-		t.setDaemon(true);
-		t.start();
+		loopThread.setDaemon(true);
+		loopThread.start();
 	}
 
 	/**
@@ -111,9 +133,10 @@ public class GameModel {
 	/**
 	 * Calculate DeltaTime Get Collisions .. & Invoke ReactCollision Iterate
 	 * over Elements --> invoke GameElement:logicLoop()
+	 * @throws InterruptedException 
 	 */
-	public void logicLoop() {
-	
+	public void logicLoop() throws InterruptedException {
+		
 		// calculate time difference since last physics loop
 		long timeNow = System.currentTimeMillis();
 		long timeDelta = timeNow - this.lastTime;
@@ -124,6 +147,12 @@ public class GameModel {
 			Iterator<GameElement> it = this.getGameElementIterator();
 			while (it.hasNext()) {
 				GameElement e = it.next();
+				
+				// if this GameElement is marked for destruction
+				if (e.deleteMe) {
+					it.remove();
+				}
+				
 				e.logicLoop(timeDelta / 1000.f);
 				
 				// check if we can delete this

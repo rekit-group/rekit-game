@@ -1,6 +1,5 @@
 package edu.kit.informatik.ragnarok.logic.gameelements;
 
-import edu.kit.infomatik.config.c;
 import edu.kit.informatik.ragnarok.logic.Vec2D;
 
 public abstract class Entity extends GameElement {
@@ -20,6 +19,10 @@ public abstract class Entity extends GameElement {
 	@Override
 	public void addDamage(int damage) {
 		this.lifes -= damage;
+		if (this.lifes <= 0) {
+			this.lifes = 0;
+			this.destroy();
+		}
 	}
 	
 	@Override
@@ -30,7 +33,7 @@ public abstract class Entity extends GameElement {
 	@Override
 	public void addPoints(int points) {
 		this.points += points;
-	}
+	}	
 	
 	@Override
 	public int getPoints() {

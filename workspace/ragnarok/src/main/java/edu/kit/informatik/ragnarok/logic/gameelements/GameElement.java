@@ -1,7 +1,5 @@
 package edu.kit.informatik.ragnarok.logic.gameelements;
 
-import org.eclipse.swt.graphics.GC;
-
 import edu.kit.informatik.ragnarok.gui.Field;
 import edu.kit.informatik.ragnarok.logic.Direction;
 import edu.kit.informatik.ragnarok.logic.Frame;
@@ -9,18 +7,18 @@ import edu.kit.informatik.ragnarok.logic.GameModel;
 import edu.kit.informatik.ragnarok.logic.Vec2D;
 
 public abstract class GameElement implements Collidable {
+	public boolean deleteMe = false;
 	public void destroy() {
-		// TODO implement this operation
-		throw new UnsupportedOperationException("not implemented");
+		this.deleteMe = true;
 	}
 
 	private int team;
 
-	private void setTeam(int value) {
+	protected void setTeam(int value) {
 		this.team = value;
 	}
 
-	private int getTeam() {
+	protected int getTeam() {
 		return this.team;
 	}
 

@@ -24,6 +24,7 @@ public class Player extends Entity {
 		this.setVel(new Vec2D(0, 0));
 		this.setPlayerState(new DefaultState());
 		this.lifes = c.playerLifes;
+		this.setTeam(0);
 	}
 
 	public void setPlayerState(PlayerState value) {
@@ -60,7 +61,10 @@ public class Player extends Entity {
 		}
 		// save new velocity
 		this.setVel(newVel);
-
+		// check if player fell out of the world
+		if (this.getPos().getY() > c.gridH) {
+			this.addDamage(this.getLifes());
+		}
 	}
 
 	@Override
@@ -100,7 +104,6 @@ public class Player extends Entity {
 		
 		// resetting lastPos
 		this.setLastPos(lastPos);
-
 	}
 
 }
