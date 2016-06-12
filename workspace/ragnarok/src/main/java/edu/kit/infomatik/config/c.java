@@ -21,7 +21,7 @@ public class c {
 	 * Grid height.
 	 * Determines how high the window game will be
 	 */
-	public static final int gridH = 8;
+	public static final int gridH = 9;
 	
 	/**
 	 * Time in milliseconds to wait after each renderLoop, that refreshes all graphical elements

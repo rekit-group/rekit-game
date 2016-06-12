@@ -14,19 +14,25 @@ public class EnemyFactory {
 		EnemyFactory.model = model;
 	}
 	
-	public static void generate(int x, int y) {
+	public static void generate(int enemyId, int x, int y) {
 		Random r = new Random();
 		
 		// Create Enemy
-		Entity enemy = new RektKiller(new Vec2D(x, y), r.nextInt(6));
+		Entity enemy = null;
+		switch (enemyId) {
+		case 2:
+			enemy = new RektKiller(new Vec2D(x, y), r.nextInt(14));
+			break;
+		case 3:
+			enemy = new Rocket(new Vec2D(x, y));
+			break;
+		}
 		
-		// Move to the very bottom to prevent initial falling
-		float moveY = (1 - enemy.getSize().getY()) / 2f;
-		float moveX = (1 - enemy.getSize().getX()) / 2f;
-		enemy.setPos(enemy.getPos().addY(moveY).addX(moveX)); 
+		if (enemy != null) {
+			// Add enemy to model
+			model.addGameElement(enemy);	
+		}
 		
-		// Add enemy to model
-		model.addGameElement(enemy);
 	}
 	
 }

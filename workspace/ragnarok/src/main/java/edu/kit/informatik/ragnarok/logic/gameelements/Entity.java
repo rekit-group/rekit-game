@@ -75,6 +75,10 @@ public abstract class Entity extends GameElement {
 			return;
 		}
 		
+		// calculate new position
+		// s1 = s0 + v*t because physics, thats why!
+		this.setPos(this.getPos().add(this.getVel().multiply(deltaTime)));
+		
 		Vec2D newVel = this.getVel();
 		// apply gravity
 		newVel = newVel.addY(c.g);
@@ -90,10 +94,6 @@ public abstract class Entity extends GameElement {
 		if (this.getPos().getY() > c.gridH) {
 			this.addDamage(this.getLifes());
 		}
-		
-		// calculate new position
-		// s1 = s0 + v*t because physics, thats why!
-		this.setPos(this.getPos().add(this.getVel().multiply(deltaTime)));
 	}
 	
 	@Override
@@ -102,9 +102,9 @@ public abstract class Entity extends GameElement {
 		Vec2D lastPos = this.getLastPos();
 		
 		switch (dir) {
-		case UP:
+		case DOWN:
 			this.setPos(this.getPos().setY(
-					collision.getBorder(dir) + this.getSize().getY() / 1.9f));
+					collision.getBorder(dir.getOpposite()) + this.getSize().getY() / 1.9f));
 			// stop velocity in y dimension 
 			this.setVel(this.getVel().setY(0));
 			break;
@@ -114,8 +114,8 @@ public abstract class Entity extends GameElement {
 			// stop velocity in x dimension
 			this.setVel(this.getVel().setX(0));
 			break;
-		case DOWN:
-			this.setPos(this.getPos().setY(collision.getBorder(dir) - this.getSize().getY() / 1.9f));
+		case UP:
+			this.setPos(this.getPos().setY(collision.getBorder(dir.getOpposite()) - this.getSize().getY() / 1.9f));
 			if (this.getEntityState() instanceof JumpState) {
 				this.setEntityState(new DefaultState());
 			}

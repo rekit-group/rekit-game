@@ -157,11 +157,11 @@ public class GameModel {
 					it.remove();
 				}
 				
-				e.logicLoop(timeDelta / 1000.f);
-				
 				// check if we can delete this
 				if (e.getPos().getX() < this.currentOffset - c.playerDist - 1) {
 					gameElementsToDelete.add(e);
+				} else {
+					e.logicLoop(timeDelta / 1000.f);
 				}
 			}
 		}
@@ -189,7 +189,7 @@ public class GameModel {
 				while (it2.hasNext()) {
 					GameElement e2 = it2.next();
 					if (e1 != e2) {
-						checkCollision(e1, e2, e2.getLastPos());
+						checkCollision(e1, e2, e1.getLastPos(), e2.getLastPos());
 					}
 				}
 			}
@@ -200,11 +200,43 @@ public class GameModel {
 		
 	}
 	
-	private void checkCollision(GameElement e1, GameElement e2, Vec2D e2lastPos) {
+	private void checkCollision(GameElement e1, GameElement e2, Vec2D e1lastPos, Vec2D e2lastPos) {
 		// Return if there is no collision
 		if (!e1.getCollisionFrame().collidesWith(e2.getCollisionFrame())) {
 			return;
 		}
+		/*
+		float velRelX = e1.getPos().getX() - e2.getPos().getX();
+		float velRelY = e1.getPos().getY() - e2.getPos().getY();
+		
+		if (Math.abs(velRelX) < Math.abs(velRelY)) {
+			if (velRelX > 0) {
+				e1.reactToCollision(e2, Direction.LEFT);
+			}
+			if (velRelX < 0) {
+				e1.reactToCollision(e2, Direction.RIGHT);
+			}
+		} else {
+			if (velRelY > 0) {
+				e1.reactToCollision(e2, Direction.UP);
+			}
+			if (velRelY < 0) {
+				e1.reactToCollision(e2, Direction.DOWN);
+			}
+		}
+		*/
+		
+		// Simulate CollisionFrame with last Y position
+		Vec2D e1lastYVec = new Vec2D(e1.getPos().getX(), e1lastPos.getY());
+		Frame e1lastYFrame = new Frame(
+				e1lastYVec.add(e1.getSize().multiply(-0.5f)),
+				e1lastYVec.add(e1.getSize().multiply(0.5f)));
+		
+		// Simulate CollisionFrame with last X position
+		Vec2D e1lastXVec = new Vec2D(e1lastPos.getX(), e1.getPos().getY());
+		Frame e1lastXFrame = new Frame(e1lastXVec.add(e1
+				.getSize().multiply(-0.5f)),
+				e1lastXVec.add(e1.getSize().multiply(0.5f)));
 		
 		// Simulate CollisionFrame with last Y position
 		Vec2D e2lastYVec = new Vec2D(e2.getPos().getX(), e2lastPos.getY());
@@ -218,40 +250,41 @@ public class GameModel {
 				.getSize().multiply(-0.5f)),
 				e2lastXVec.add(e2.getSize().multiply(0.5f)));
 
-		// If he still collides with the old x position:
+		// If they still collide with the old x positions:
 		// it must be because of the y position
-		if (e1.getCollisionFrame().collidesWith(e2lastXFrame)) {
-			// If he moved in positive y direction (down)
-			if (e2.getPos().getY() > e2lastPos.getY()) { 
-				e1.reactToCollision(e2, Direction.DOWN);	
+		if (e1lastXFrame.collidesWith(e2lastXFrame)) {
+			// If relative movement is in positive y direction (down)
+			if (e2.getPos().getY() + e1.getPos().getY() > e2lastPos.getY() + e1lastPos.getY()) { 
+				e1.reactToCollision(e2, Direction.UP);	
 			} else
-			// If he moved in negative y direction (up)
-			if (e2.getPos().getY() < e2lastPos.getY()) {
-				e1.reactToCollision(e2, Direction.UP);
+			// If relative movement is in negative y direction (up)
+			if (e2.getPos().getY() + e1.getPos().getY() < e2lastPos.getY() + e1lastPos.getY()) {
+				e1.reactToCollision(e2, Direction.DOWN);
 			}
 			else {
 				return;
 			}
 			// check if he is still colliding even with last x position
-			checkCollision(e1, e2, new Vec2D(e2lastPos.getX(), e2.getPos().getY()));
+			checkCollision(e1, e2, new Vec2D(e1lastPos.getX(), e1.getPos().getY()), new Vec2D(e2lastPos.getX(), e2.getPos().getY()));
 		} else
-		// If he still collides with the old y position:
+		// If they still collide with the old y positions:
 		// it must be because of the x position
-		if (e1.getCollisionFrame().collidesWith(e2lastYFrame)) {
+		if (e1lastYFrame.collidesWith(e2lastYFrame)) {
 			// If he moved in positive x direction (right)
-			if (e2.getPos().getX() > e2lastPos.getX()) { 
+			if (e2.getPos().getX() + e1.getPos().getX() > e2lastPos.getX() + e1lastPos.getX()) { 
 				e1.reactToCollision(e2, Direction.RIGHT);	
 			} else
 			// If he moved in negative x direction (left)
-			if (e2.getPos().getX() < e2lastPos.getX()) {
+			if (e2.getPos().getX() + e1.getPos().getX() < e2lastPos.getX() + e1lastPos.getX()) {
 				e1.reactToCollision(e2, Direction.LEFT);
 			}
 			else {
 				return;
 			}
 			// check if he is still colliding even with last x position
-			checkCollision(e1, e2, new Vec2D(e2.getPos().getX(), e2lastPos.getY()));
+			checkCollision(e1, e2, new Vec2D(e1.getPos().getX(), e1lastPos.getY()), new Vec2D(e2.getPos().getX(), e2lastPos.getY()));
 		}
+		
 	}
 
 	/**

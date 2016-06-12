@@ -34,7 +34,7 @@ public abstract class GameElement implements Collidable {
 		// Do nothing
 	}
 
-	private Vec2D vel;
+	private Vec2D vel = new Vec2D();
 	
 	public void setVel(Vec2D value) {
 		this.vel = value;

@@ -50,7 +50,7 @@ public class Player extends Entity {
 	@Override
 	public void collidedWith(Frame collision, Direction dir) {
 		super.collidedWith(collision, dir);
-		if (dir == Direction.DOWN) {
+		if (dir == Direction.UP) {
 			this.setVel(this.getVel().setY(c.playerBottomBoost));
 		}
 	}
