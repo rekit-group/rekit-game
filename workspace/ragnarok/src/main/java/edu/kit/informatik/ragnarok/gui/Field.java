@@ -18,6 +18,7 @@ public class Field {
 	public Field(GC gc, GameView view) {
 		this.gc = gc;
 		this.view = view;
+		ImageLoader.init(gc.getDevice());
 	}
 
 	private int units2pixel(float units) {
@@ -72,7 +73,7 @@ public class Field {
 	}
 
 	public void drawImage(Vec2D pos, Vec2D size, String imagePath) {
-		Image image = new Image(this.gc.getDevice(), imagePath);
+		Image image = ImageLoader.get(imagePath);
 		gc.drawImage(image,
 				currentOffset() + units2pixel(pos.getX() - size.getX() / 2f), // dstX
 				units2pixel(pos.getY() - size.getY() / 2f) // dstY
@@ -82,7 +83,7 @@ public class Field {
 	public void refreshUI(int lifes, int points) {
 
 		// Iterate lifes
-		Image image = new Image(this.gc.getDevice(), "resources/mrRekt_glasses_right.png");
+		Image image = ImageLoader.get("resources/mrRekt_glasses_right.png");
 		for (int i = 0; i < lifes; i++) {
 			gc.drawImage(image, 10 + 50 * i, 10);
 		}
