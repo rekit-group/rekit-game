@@ -46,9 +46,31 @@ public class Field {
 
 	public void drawRectangle(Vec2D pos, Vec2D size, RGB col) {
 		gc.setBackground(new Color(gc.getDevice(), col));
-		gc.fillRectangle(currentOffset() + units2pixel(pos.getX() - 0.5f),
-				units2pixel(pos.getY() - 0.5f), units2pixel(size.getX()),
+		gc.fillRectangle(currentOffset() + units2pixel(pos.getX() - size.getX() / 2f),
+				units2pixel(pos.getY() - size.getY() / 2f), units2pixel(size.getX()),
 				units2pixel(size.getY()));
+	}
+	
+	public void drawPolygon(Vec2D start, Vec2D[] relDirs, RGB col) {
+		
+		// prepare actual array {x1, y1, x2, y2, ...}
+		int[] actualArray = new int[2 + relDirs.length * 2];
+		
+		// save first (absolute) point x1, y1
+		actualArray[0] = currentOffset() + units2pixel(start.getX());
+		actualArray[1] = units2pixel(start.getY());
+		
+		// calculate rest of absolute points from relative points to start
+		for (int i = 0; i < relDirs.length; i++) {
+			actualArray[2*i + 2] = currentOffset() + units2pixel(start.getX() + relDirs[i].getX());
+			actualArray[2*i + 3] = units2pixel(start.getY() + relDirs[i].getY());
+		}
+		
+		// set color
+		gc.setBackground(new Color(gc.getDevice(), col));
+		
+		// draw actual polygon
+		gc.fillPolygon(actualArray);
 	}
 
 	public void drawImage(Vec2D pos, Vec2D size, String imagePath) {

@@ -52,27 +52,51 @@ public class RektKiller extends Entity {
 		Vec2D pos = this.getPos();
 		Vec2D size = this.getSize();
 		
-		RGB color = new RGB(200, 30, 30);
-		RGB darkColor = new RGB (150, 20, 20);
+		RGB innerColor = new RGB(150, 30, 30);
+		RGB spikeColor = new RGB (80, 80, 80);
 		
-		f.drawRectangle(pos, size, color);
+		// draw rectangle in the middle
+		f.drawRectangle(pos, size.multiply(0.8f), innerColor);
 		
-		if (this.hasSide(Direction.UP)) {
-			f.drawRectangle(pos.add(new Vec2D(0, 0)), size.setY(0.1f), darkColor);
+		// define start point path for spikes at top side
+		Vec2D startPt = pos.add(size.multiply(-0.8f / 2f));
+		Vec2D[] relPts = new Vec2D[] {
+				new Vec2D(0.5f * ((size.getX() * 0.8f) / 3f), -(size.getY() * 0.8f) / 3f),
+				new Vec2D(1.0f * ((size.getX() * 0.8f) / 3f), 0),
+				new Vec2D(1.5f * ((size.getX() * 0.8f) / 3f), -(size.getY() * 0.8f) / 3f),
+				new Vec2D(2.0f * ((size.getX() * 0.8f) / 3f), 0),
+				new Vec2D(2.5f * ((size.getX() * 0.8f) / 3f), -(size.getY() * 0.8f) / 3f),
+				new Vec2D(3.0f * ((size.getX() * 0.8f) / 3f), 0),
+				new Vec2D() // and back to start
+		};
+		
+		for (Direction d : Direction.values()) {
+			if (this.hasSide(d)) {
+				
+				double angle = d.getAngle();
+				//System.out.println(d.toString() + " ->" + angle);
+				Vec2D relStartPoint = startPt.rotate(angle, pos);
+				
+				f.drawPolygon(
+					relStartPoint, // Rotate start point relative to enemy center
+					rotatePath(relPts, angle), // Rotate path relative to start point
+					spikeColor
+					);
+			}
 		}
-		if (this.hasSide(Direction.RIGHT)) {
-			f.drawRectangle(pos.add(new Vec2D(size.getX() - 0.1f, 0)), size.setX(0.1f), darkColor);
+		
+	}
+	
+	private Vec2D[] rotatePath(Vec2D[] toTurn, double angle) {
+		Vec2D[] result = new Vec2D[toTurn.length];
+		for (int i = 0; i < result.length; i++) {
+			result[i] = toTurn[i].rotate(angle);
 		}
-		if (this.hasSide(Direction.DOWN)) {
-			f.drawRectangle(pos.add(new Vec2D(0, size.getY() - 0.1f)), size.setY(0.1f), darkColor);
-		}
-		if (this.hasSide(Direction.LEFT)) {
-			f.drawRectangle(pos.add(new Vec2D(0, 0)), size.setX(0.1f), darkColor);
-		}
+		return result;
 	}
 
 	public Vec2D getSize() {
-		return new Vec2D(0.8f, 0.8f);
+		return new Vec2D(0.6f, 0.6f);
 	}
 
 	private Direction currentDirection = Direction.LEFT;

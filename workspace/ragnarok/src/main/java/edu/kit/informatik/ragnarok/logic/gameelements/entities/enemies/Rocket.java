@@ -25,7 +25,7 @@ public class Rocket extends Entity {
 	}
 	
 	public Vec2D getSize() {
-		return new Vec2D(0.8f, 0.5f);
+		return new Vec2D(1.8f, 1.2f);
 	}
 
 	

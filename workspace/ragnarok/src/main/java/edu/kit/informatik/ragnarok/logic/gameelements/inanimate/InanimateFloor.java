@@ -19,7 +19,10 @@ public class InanimateFloor extends Inanimate {
 		
 		RGB darkColor = new RGB(color.red - 30, color.green - 30, color.blue - 30);
 		
-		f.drawRectangle(pos.add(new Vec2D(0, 0)), size.setY(0.1f), darkColor);
+		float plateThickness = 0.1f;
+		f.drawRectangle(
+				pos.add(new Vec2D(0, -size.getY() / 2f + plateThickness/2f)),
+				size.setY(plateThickness), darkColor);
 		
 	}
 }

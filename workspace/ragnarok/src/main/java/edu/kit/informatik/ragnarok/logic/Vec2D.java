@@ -102,6 +102,23 @@ public class Vec2D {
 		return new Vec2D(this.getX() * scalar, this.getY() * scalar);
 	}
 	
+	
+	public Vec2D rotate(double angle, Vec2D relative) {
+		// translate toTurn to (0, 0) relative to relative
+		Vec2D shifted = this.add(relative.multiply(-1));
+		
+		// rotate shifted vector
+		Vec2D rotated = new Vec2D();
+		rotated = rotated.setX((float)(shifted.getX() * Math.cos(angle) - shifted.getY() * Math.sin(angle)));
+		rotated = rotated.setY((float)(shifted.getX() * Math.sin(angle) + shifted.getY() * Math.cos(angle)));
+		
+		return rotated.add(relative);
+	}
+	public Vec2D rotate(double angle) {
+		return rotate(angle, new Vec2D());
+	}
+	
+	
 	public String toString() {
 		return "(" + this.getX() + "|" + this.getY() + ")"; 
 	}

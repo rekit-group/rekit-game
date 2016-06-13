@@ -25,7 +25,6 @@ public class LevelCreator {
 	
 	
 	private final int[][][] structures = new int[][][]{
-		
 			new int[][] {
 					{3},
 			},
