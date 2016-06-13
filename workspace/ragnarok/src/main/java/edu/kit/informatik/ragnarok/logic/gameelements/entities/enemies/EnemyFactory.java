@@ -21,7 +21,7 @@ public class EnemyFactory {
 		Entity enemy = null;
 		switch (enemyId) {
 		case 2:
-			enemy = new RektKiller(new Vec2D(x, y), r.nextInt(14));
+			enemy = new RektKiller(new Vec2D(x, y), r.nextInt(16));
 			break;
 		case 3:
 			enemy = new Rocket(new Vec2D(x, y));

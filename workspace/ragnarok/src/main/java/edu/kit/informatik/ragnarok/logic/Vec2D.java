@@ -99,7 +99,18 @@ public class Vec2D {
 	 * @return the resulting vector
 	 */
 	public Vec2D multiply(float scalar) {
-		return new Vec2D(this.getX() * scalar, this.getY() * scalar);
+		return this.multiply(scalar, scalar);
+	}
+	
+	/**
+	 * Multiplies the vectors x-component and its y-component with separate
+	 * scalars and <b>returns a new Vector</b>
+	 * @param scalarX the scalar to multiply the vectors x-component with
+	 * @param scalarY the scalar to multiply the vectors x-component with
+	 * @return the resulting vector
+	 */
+	public Vec2D multiply(float scalarX, float scalarY) {
+		return new Vec2D(this.getX() * scalarX, this.getY() * scalarY);
 	}
 	
 	

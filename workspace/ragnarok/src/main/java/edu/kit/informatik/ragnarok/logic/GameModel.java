@@ -28,7 +28,7 @@ public class GameModel {
 	 */
 	private Set<GameElement> gameElements;
 
-	private Player player;
+	private Player player = new Player(new Vec2D(3, 5));
 
 	public long lastTime;
 
@@ -47,7 +47,7 @@ public class GameModel {
 		this.gameElements = new HashSet<GameElement>();
 
 		// Create Player and add him to game
-		this.player = new Player(new Vec2D(3, 0));
+		this.player.init();
 		this.currentOffset = 3;
 		this.addGameElement(player);
 		
@@ -60,6 +60,7 @@ public class GameModel {
 		
 		// Initialize all other attributes
 		this.lastTime = System.currentTimeMillis();
+		
 	}
 	
 	public void restart() {

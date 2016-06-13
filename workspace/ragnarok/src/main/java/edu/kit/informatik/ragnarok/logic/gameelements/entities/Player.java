@@ -12,21 +12,30 @@ import edu.kit.informatik.ragnarok.logic.gameelements.Entity;
 
 public class Player extends Entity {
 
+	private Vec2D startPos;
+	
 	public Player(Vec2D startPos) {
 		super(startPos);
-
-		this.lifes = c.playerLifes;
-		this.setTeam(0);
+		this.startPos = startPos;
+		this.init();
 	}
-
 	
+	public void init() {
+		this.setPos(this.startPos);
+		this.lifes = c.playerLifes;
+		this.points = 0;
+		this.setTeam(0);
+		this.currentDirection = Direction.RIGHT;
+		this.setVel(new Vec2D(0, 0));
+		this.deleteMe = false;
+	}
 	
 	public Vec2D getSize() {
 		return new Vec2D(0.8f, 0.8f);
 	}
 	
 	
-	private Direction currentDirection = Direction.RIGHT;
+	private Direction currentDirection;
 	@Override
 	public void render(Field f) {
 		

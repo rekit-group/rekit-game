@@ -17,7 +17,9 @@ public class LevelCreator {
 	public LevelCreator(GameModel model) {
 		this.model = model;
 		
-		generateFloor((int)-c.playerDist, (int)(2 * c.playerDist));
+		for (int x = (int)-c.playerDist; x <= (int)(2 * c.playerDist); x++) {
+			generateFloor(x, c.gridH);
+		}
 		this.generatedUntil = (int)(2 * c.playerDist);
 	}
 	
@@ -27,28 +29,25 @@ public class LevelCreator {
 	private final int[][][] structures = new int[][][]{
 			new int[][] {
 					{3},
-			},
-			new int[][] {
-					{3},
-					{0}
-			},
-			new int[][] {
-					{3},
-					{0},
-					{0}
+					{1}
 			},
 			new int[][] {
 					{3},
 					{0},
-					{0},
-					{0}
+					{1}
 			},
 			new int[][] {
 					{3},
 					{0},
 					{0},
+					{1}
+			},
+			new int[][] {
+					{3},
 					{0},
-					{0}
+					{0},
+					{0},
+					{1}
 			},
 			new int[][] {
 					{3},
@@ -56,28 +55,47 @@ public class LevelCreator {
 					{0},
 					{0},
 					{0},
-					{0}
+					{1}
 			},
 			new int[][] {
+					{3},
+					{0},
+					{0},
+					{0},
+					{0},
+					{0},
+					{1}
+			},
+			
+			new int[][] {
+					{1},
 					{1},
 			},
 			new int[][] {
 					{1},
 					{1},
+					{1}
+			},
+			new int[][] {
+				{1, 0, 0, 1}
 			},
 			new int[][] {
 					{0, 1, 0},
-					{1, 1, 1}
+					{1, 1, 1},
+					{1, 1, 1},
 			},
 			new int[][] {
 					{1, 0, 0},
+					{1, 1, 1},
 					{1, 1, 1}
 			},
 			new int[][] {
 					{0, 2, 1},
+					{1, 1, 1},
 					{1, 1, 1}
 			},
 			new int[][] {
+					{1, 0, 1},
 					{1, 0, 1},
 					{1, 0, 1}
 			},
@@ -85,59 +103,68 @@ public class LevelCreator {
 					{0, 0, 0, 1},
 					{0, 0, 1, 1},
 					{0, 1, 1, 1},
+					{1, 1, 1, 1},
 					{1, 1, 1, 1}
 			},
 			new int[][] {
 					{1, 1},
-					{2, 0}
+					{0, 0},
+					{1, 1}
 			},
 			new int[][] {
 					{0, 2},
 					{1, 1},
 					{0, 0},
-					{0, 0}
+					{0, 0},
+					{1, 1}
 			},
 			new int[][] {
 					{1, 1, 1},
+					{0, 0, 1},
 					{0, 0, 1}
 			},
 			new int[][] {
 					{0, 0, 0, 0, 2, 0, 0},
 					{0, 2, 0, 0, 1, 1, 1},
 					{1, 1, 1, 0, 0, 1, 0},
-					{0, 1, 0, 0, 0, 1, 0}
+					{0, 1, 0, 0, 0, 1, 0},
+					{1, 1, 0, 0, 0, 1, 1}
 			},
 			new int[][] {
 					{0, 2, 0, 0, 1, 1},
 					{1, 1, 0, 0, 1, 1},
+					{1, 1, 0, 0, 1, 1},
 					{1, 1, 0, 0, 1, 1}
 			},
 			new int[][] {
-					{0, 0, 0, 0, 1},
-					{0, 0, 1, 0, 1},
+					{0, 0, 0, 2, 1},
+					{0, 2, 1, 0, 1},
+					{1, 0, 1, 0, 1},
 					{1, 0, 1, 0, 1}
 			},
 			new int[][] {
 					{0, 0, 0, 0, 0, 0, 1},
 					{0, 0, 0, 0, 0, 0, 1},
-					{0, 0, 0, 0, 1, 0, 1},
-					{0, 0, 1, 0, 1, 0, 1},
+					{0, 0, 0, 2, 1, 0, 1},
+					{0, 2, 1, 0, 1, 0, 1},
 					{1, 0, 1, 0, 1, 0, 1}
 			},
 			new int[][] {
 					{0, 0, 0, 0, 0, 0, 1},
 					{0, 0, 0, 0, 0, 0, 1},
-					{0, 0, 0, 0, 0, 0, 1},
+					{0, 0, 0, 0, 0, 2, 1},
 					{0, 0, 1, 0, 1, 0, 1},
 					{0, 0, 1, 0, 1, 0, 0},
-					{1, 0, 1, 0, 1, 0, 0}
+					{1, 0, 1, 0, 1, 0, 0},
+					{1, 0, 1, 0, 1, 1, 1}
 			},
 			new int[][] {
 					{0, 0, 0, 0, 0},
 					{0, 2, 1, 1, 1},
 					{0, 0, 0, 1, 0},
 					{1, 0, 0, 1, 0},
-					{1, 0, 0, 1, 0}
+					{1, 0, 0, 1, 0},
+					{1, 0, 0, 1, 1}
 			},
 			new int[][] {
 					{0, 0, 0, 0, 1},
@@ -145,6 +172,7 @@ public class LevelCreator {
 					{0, 0, 0, 0, 0},
 					{0, 0, 0, 0, 1},
 					{0, 0, 1, 0, 1},
+					{1, 0, 1, 0, 1},
 					{1, 0, 1, 0, 1}
 			},
 			new int[][] {
@@ -153,15 +181,17 @@ public class LevelCreator {
 					{0, 0, 0, 0, 1, 1, 0, 2, 0, 1},
 					{0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 					{1, 1, 0, 2, 0, 0, 0, 0, 0, 1},
-					{1, 0, 0, 0, 0, 0, 0, 0, 0, 1}
+					{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+					{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 			},
 			new int[][] {
 					{0, 0, 0, 0, 0, 0, 0},
 					{0, 0, 0, 0, 0, 0, 0},
 					{0, 0, 0, 0, 0, 0, 0},
 					{0, 0, 0, 0, 0, 0, 0},
-					{1, 0, 2, 1, 0, 2, 1},
-					{1, 0, 2, 0, 0, 2, 1}
+					{1, 2, 0, 1, 0, 2, 1},
+					{1, 0, 0, 0, 0, 0, 1},
+					{1, 1, 1, 1, 1, 1, 1}
 			},
 			new int[][] {
 					{0, 0, 0, 0, 0, 1},
@@ -169,23 +199,27 @@ public class LevelCreator {
 					{0, 0, 0, 0, 0, 1},
 					{0, 1, 0, 2, 0, 1},
 					{0, 1, 0, 0, 0, 1},
-					{1, 1, 0, 0, 0, 0}
+					{1, 1, 0, 0, 0, 0},
+					{1, 1, 1, 1, 1, 1}
 			},
 			new int[][] {
 					{0, 0, 0, 1, 0, 0, 0},
 					{0, 0, 1, 0, 1, 0, 0},
 					{0, 1, 0, 2, 0, 1, 0},
-					{1, 0, 0, 2, 0, 0, 1}
+					{1, 0, 0, 2, 0, 0, 1},
+					{1, 1, 1, 1, 1, 1, 1}
 			},
 			new int[][] {
 					{0, 1, 0, 2, 0, 0, 0, 1},
 					{0, 1, 0, 0, 2, 0, 0, 1},
 					{1, 1, 0, 0, 0, 0, 1, 1},
-					{1, 1, 0, 0, 0, 0, 1, 1}
+					{1, 1, 0, 0, 0, 0, 1, 1},
+					{1, 1, 1, 1, 1, 1, 1, 1}
 			},
 			new int[][] {
 					{0, 1},
 					{0, 1},
+					{1, 1},
 					{1, 1},
 					{1, 1}
 			},
@@ -193,23 +227,26 @@ public class LevelCreator {
 					{0, 1},
 					{0, 1},
 					{0, 0},
-					{0, 0}
+					{0, 0},
+					{1, 1}
 			},
 	};
 	
-	public void generateFloor(int fromX, int toX) {
+	public void generateFloor(int x, int y) {
 		Inanimate i;
 		Random r = new Random();
 		
-		// build floor under this structure and under the gap
-		for (int x = fromX; x <= toX; x++) {
-			if (r.nextInt(8) != 0 || true) {
-				int randColG = r.nextInt(100) + 100;
-				int randColRB = r.nextInt(40) + 30;
-				i = new InanimateFloor(new Vec2D(x, c.gridH - 1), new Vec2D(1, 1), new RGB(randColRB, randColG, randColRB));
-				this.model.addGameElement(i);
-			}
-		}
+		int randColG = r.nextInt(100) + 100;
+		int randColRB = r.nextInt(40) + 30;
+		i = new InanimateFloor(new Vec2D(x, c.gridH - 1), new Vec2D(1, 1), new RGB(randColRB, randColG, randColRB));
+		this.model.addGameElement(i);
+	}
+	public void generateBox(int x, int y) {
+		Inanimate i;
+		Random r = new Random();
+		int randCol = r.nextInt(60) + 50;
+		i = new InanimateBox(new Vec2D(x, y), new Vec2D(1, 1), new RGB(randCol, randCol, randCol));
+		this.model.addGameElement(i);
 	}
 	
 	public void generate() {
@@ -222,7 +259,7 @@ public class LevelCreator {
 			int randId = r.nextInt(structures.length);
 			
 			// Randomly determine gap between this structure and the next
-			int gap = r.nextInt(3) + 2;
+			int gap = r.nextInt(2) + 1;
 			
 			// Get structure and all required info
 			int[][] struc = this.structures[randId];
@@ -230,19 +267,18 @@ public class LevelCreator {
 			int aw = struc[0].length;
 			
 			int ix = generatedUntil + 1;
-			int iy = c.gridH - 1;
-			
-			generateFloor(ix, ix + aw + gap);
-			
-			Inanimate i;
+			int iy = c.gridH;
 			
 			// build structure
 			for (int y = 0; y < ah; y++) {
 				for (int x = 0; x < aw; x++) {
 					if (struc[y][x] == 1) {
-						int randCol = r.nextInt(60) + 50;
-						i = new InanimateBox(new Vec2D(ix + x, iy + (y - ah)), new Vec2D(1, 1), new RGB(randCol, randCol, randCol));
-						this.model.addGameElement(i);
+						if (y == ah - 1) {
+							generateFloor(ix + x, iy + (y - ah));	
+						}
+						else {
+							generateBox(ix + x, iy + (y - ah));	
+						}
 					}
 					else if (struc[y][x] > 1) {
 						EnemyFactory.generate(struc[y][x], ix + x, iy + (y - ah));
@@ -251,6 +287,10 @@ public class LevelCreator {
 				}
 			}	
 			
+			for (int x = generatedUntil + 1 + aw; x <=  generatedUntil + aw + gap; x++) {
+				generateFloor(x, c.gridH);
+			}
+
 			// Update coordinate until where we generated
 			this.generatedUntil += aw + gap;
 		}

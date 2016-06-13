@@ -40,7 +40,6 @@ public class Controller implements Observer {
 		if (!this.mpCmd.containsKey(id)) {
 			return;
 		}
-		
 		this.mpCmd.get(id).apply();
 	}
 

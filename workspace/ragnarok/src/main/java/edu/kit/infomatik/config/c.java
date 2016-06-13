@@ -46,7 +46,7 @@ public class c {
 	public static final float playerWalkMaxSpeed = 13*playerWalkAccel;
 	
 	public static final float playerJumpBoost = -20*g;
-	public static final float playerBottomBoost = -8*g;
+	public static final float playerBottomBoost = -6*g;
 	
 	public static final float playerDist = 5f;
 	public static final int playerLifes = 5;

@@ -1,5 +1,7 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies;
 
+import java.util.Random;
+
 import org.eclipse.swt.graphics.RGB;
 
 import edu.kit.infomatik.config.c;
@@ -19,10 +21,14 @@ public class RektKiller extends Entity {
 	public RektKiller(Vec2D startPos, int sides) {
 		super(startPos);
 
-		if (sides < 0 || sides > 14) {
+		if (sides < 0 || sides > 15) {
 			throw new IllegalArgumentException(
 					"RektKiller must be give a number between 0 and 14");
 		}
+		
+		Random r = new Random();
+		int x = r.nextInt(Direction.values().length);
+        this.currentDirection = Direction.values()[x];
 
 		this.sides = sides;
 	}
@@ -99,21 +105,20 @@ public class RektKiller extends Entity {
 		return new Vec2D(0.6f, 0.6f);
 	}
 
-	private Direction currentDirection = Direction.LEFT;
+	private Direction currentDirection;
 
 	@Override
 	public void logicLoop(float deltaTime) {
 		
-		// We dont want this guy to fall
-		this.setVel(this.getVel().setY(0));
-		
 		// Do usual entity logic
 		super.logicLoop(deltaTime);
 		
-		// Walk in current direction
-		InputCommand cmd = new WalkCommand(currentDirection);
-		cmd.setEntity(this);
-		cmd.apply();
+		if (this.getPos().getY() <= 0 || this.getPos().getY() >= c.gridH - 1) {
+			currentDirection = currentDirection.getOpposite();
+		}
+		
+		// We dont want this guy to fall
+		this.setVel(this.currentDirection.getVector().multiply(c.playerWalkMaxSpeed));
 	}
 
 	@Override
@@ -127,10 +132,10 @@ public class RektKiller extends Entity {
 			// Touched harmless side
 			if (!this.hasSide(dir)) {
 				// give the player 40 points
-				element.addPoints(40);
+				element.addPoints(20);
 
 				// Let the player jump if he landed on top
-				if (dir == Direction.DOWN) {
+				if (dir == Direction.UP) {
 					element.setVel(element.getVel().setY(c.playerJumpBoost));
 				}
 
@@ -156,10 +161,8 @@ public class RektKiller extends Entity {
 	@Override
 	public void collidedWith(Frame collision, Direction dir) {
 		super.collidedWith(collision, dir);
-
-		if (dir == Direction.RIGHT || dir == Direction.LEFT) {
-			this.currentDirection = dir.getOpposite();
-		}
+		
+		this.currentDirection = currentDirection.getOpposite();
 
 	}
 
