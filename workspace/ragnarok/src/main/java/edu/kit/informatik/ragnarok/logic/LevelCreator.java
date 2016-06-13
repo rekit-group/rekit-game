@@ -283,6 +283,11 @@ public class LevelCreator {
 					else if (struc[y][x] > 1) {
 						EnemyFactory.generate(struc[y][x], ix + x, iy + (y - ah));
 					}
+					else if (struc[y][x] == 0) {
+						if (r.nextInt(10) == 0) {
+							EnemyFactory.generate(10, ix + x, iy + (y - ah));
+						}
+					}
 					
 				}
 			}	
