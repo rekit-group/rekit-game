@@ -1,8 +1,5 @@
 package edu.kit.informatik.ragnarok;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-
 import edu.kit.informatik.ragnarok.controller.Controller;
 import edu.kit.informatik.ragnarok.controller.InputHelper;
 import edu.kit.informatik.ragnarok.gui.GameView;

@@ -1,8 +1,5 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities;
 
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.RGB;
-
 import edu.kit.infomatik.config.c;
 import edu.kit.informatik.ragnarok.gui.Field;
 import edu.kit.informatik.ragnarok.logic.Direction;

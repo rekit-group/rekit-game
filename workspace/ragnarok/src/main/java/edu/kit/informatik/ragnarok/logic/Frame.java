@@ -1,8 +1,5 @@
 package edu.kit.informatik.ragnarok.logic;
 
-import java.util.Set;
-import java.util.HashSet;
-
 public class Frame {
 
 	private Vec2D vec1;

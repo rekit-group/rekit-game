@@ -4,9 +4,7 @@ import edu.kit.infomatik.config.c;
 import edu.kit.informatik.ragnarok.logic.Direction;
 import edu.kit.informatik.ragnarok.logic.Vec2D;
 import edu.kit.informatik.ragnarok.logic.gameelements.Entity;
-import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.JumpState;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.WalkState;
 
 public class WalkCommand extends InputCommand {
@@ -14,10 +12,6 @@ public class WalkCommand extends InputCommand {
 
 	private void setDir(Direction value) {
 		this.dir = value;
-	}
-
-	private Direction getDir() {
-		return this.dir;
 	}
 
 	public WalkCommand(Direction dir) {

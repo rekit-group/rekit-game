@@ -3,8 +3,6 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies;
 import org.eclipse.swt.graphics.RGB;
 
 import edu.kit.infomatik.config.c;
-import edu.kit.informatik.ragnarok.controller.commands.InputCommand;
-import edu.kit.informatik.ragnarok.controller.commands.WalkCommand;
 import edu.kit.informatik.ragnarok.gui.Field;
 import edu.kit.informatik.ragnarok.logic.Direction;
 import edu.kit.informatik.ragnarok.logic.Frame;
