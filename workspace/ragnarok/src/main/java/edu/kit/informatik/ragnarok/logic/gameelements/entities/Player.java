@@ -46,13 +46,13 @@ public class Player extends Entity {
 			this.currentDirection = Direction.LEFT;
 		}
 		
-		// draw player image
-		f.drawImage(this.getPos(), this.getSize(),
-				this.currentDirection == Direction.RIGHT
-				? "resources/mrRekt_right.png" // When facing right
-				: "resources/mrRekt_left.png" // When facing right
-		);
-		
+		// draw player background image
+		f.drawImage(this.getPos(), this.getSize(), "resources/mrRekt_background.png");
+		// draw player glasses image
+		String src = this.currentDirection == Direction.RIGHT
+				? "resources/mrRekt_glasses_right.png" // When facing right
+				: "resources/mrRekt_glasses_left.png"; // When facing right
+		f.drawImage(this.getPos().addY(-0.025f * this.getVel().getY()), this.getSize(), src);
 		
 	}
 	

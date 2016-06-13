@@ -21,7 +21,7 @@ public class Rocket extends Entity {
 	@Override
 	public void render(Field f) {
 		RGB innerColor = new RGB(90, 90, 90);
-		RGB frontColor = new RGB(200, 30, 30);
+		RGB frontColor = new RGB(150, 30, 30);
 		RGB outerColor = new RGB(50, 50, 50);
 		
 		// draw body

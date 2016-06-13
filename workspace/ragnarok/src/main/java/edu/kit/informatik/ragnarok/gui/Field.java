@@ -84,7 +84,7 @@ public class Field {
 	public void refreshUI(int lifes, int points) {
 
 		// Iterate lifes
-		Image image = new Image(this.gc.getDevice(), "resources/life.png");
+		Image image = new Image(this.gc.getDevice(), "resources/mrRekt_glasses_right.png");
 		for (int i = 0; i < lifes; i++) {
 			gc.drawImage(image, 10 + 50 * i, 10);
 		}
