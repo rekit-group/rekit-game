@@ -8,7 +8,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.RGB;
 
 import edu.kit.infomatik.config.c;
-import edu.kit.informatik.ragnarok.logic.Vec2D;
+import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
 public class Field {
 

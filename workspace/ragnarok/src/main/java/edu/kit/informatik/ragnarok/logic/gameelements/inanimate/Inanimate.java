@@ -3,10 +3,10 @@ package edu.kit.informatik.ragnarok.logic.gameelements.inanimate;
 import org.eclipse.swt.graphics.RGB;
 
 import edu.kit.informatik.ragnarok.gui.Field;
-import edu.kit.informatik.ragnarok.logic.Direction;
-import edu.kit.informatik.ragnarok.logic.Frame;
-import edu.kit.informatik.ragnarok.logic.Vec2D;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.primitives.Direction;
+import edu.kit.informatik.ragnarok.primitives.Frame;
+import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
 public class Inanimate extends GameElement {
 	

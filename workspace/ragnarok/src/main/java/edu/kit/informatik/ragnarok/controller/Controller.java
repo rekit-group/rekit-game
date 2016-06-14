@@ -5,8 +5,8 @@ import java.util.Iterator;
 import java.util.Map;
 
 import edu.kit.informatik.ragnarok.controller.commands.*;
-import edu.kit.informatik.ragnarok.logic.Direction;
 import edu.kit.informatik.ragnarok.logic.GameModel;
+import edu.kit.informatik.ragnarok.primitives.Direction;
 
 public class Controller implements Observer {
 	private Map<Integer, InputCommand> mpCmd;

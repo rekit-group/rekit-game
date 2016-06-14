@@ -1,4 +1,4 @@
-package edu.kit.informatik.ragnarok.logic;
+package edu.kit.informatik.ragnarok.primitives;
 
 /**
  * A two dimensional Vector with operations

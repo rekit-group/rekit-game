@@ -3,7 +3,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.inanimate;
 import org.eclipse.swt.graphics.RGB;
 
 import edu.kit.informatik.ragnarok.gui.Field;
-import edu.kit.informatik.ragnarok.logic.Vec2D;
+import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
 public class InanimateFloor extends Inanimate {
 

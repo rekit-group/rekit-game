@@ -9,6 +9,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.EnemyFact
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateBox;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateFloor;
+import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
 public class LevelCreator {
 

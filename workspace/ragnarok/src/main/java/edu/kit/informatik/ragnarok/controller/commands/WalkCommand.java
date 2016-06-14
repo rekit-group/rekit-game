@@ -1,11 +1,11 @@
 package edu.kit.informatik.ragnarok.controller.commands;
 
 import edu.kit.infomatik.config.c;
-import edu.kit.informatik.ragnarok.logic.Direction;
-import edu.kit.informatik.ragnarok.logic.Vec2D;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.JumpState;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.WalkState;
+import edu.kit.informatik.ragnarok.primitives.Direction;
+import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
 public class WalkCommand extends InputCommand {
 	private Direction dir;

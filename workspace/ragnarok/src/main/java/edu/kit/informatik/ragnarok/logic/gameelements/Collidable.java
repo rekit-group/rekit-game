@@ -1,7 +1,7 @@
 package edu.kit.informatik.ragnarok.logic.gameelements;
 
-import edu.kit.informatik.ragnarok.logic.Direction;
-import edu.kit.informatik.ragnarok.logic.Frame;
+import edu.kit.informatik.ragnarok.primitives.Direction;
+import edu.kit.informatik.ragnarok.primitives.Frame;
 
 /**
  * Defines the interface that every GameElement that can collide must have.  

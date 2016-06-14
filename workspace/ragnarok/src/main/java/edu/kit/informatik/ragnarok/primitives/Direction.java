@@ -1,4 +1,4 @@
-package edu.kit.informatik.ragnarok.logic;
+package edu.kit.informatik.ragnarok.primitives;
 
 /**
  * Representation of the 4 directions there are
