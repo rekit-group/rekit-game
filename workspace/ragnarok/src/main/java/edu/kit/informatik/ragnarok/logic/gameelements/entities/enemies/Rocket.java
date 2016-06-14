@@ -8,6 +8,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
+import edu.kit.informatik.ragnarok.primitives.Polygon;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
 public class Rocket extends Entity {
@@ -16,11 +17,14 @@ public class Rocket extends Entity {
 		super(startPos);
 	}
 
+	private static RGB innerColor = new RGB(90, 90, 90);
+	private static RGB frontColor = new RGB(150, 30, 30);
+	private static RGB outerColor = new RGB(50, 50, 50);
+	
+	
 	@Override
 	public void render(Field f) {
-		RGB innerColor = new RGB(90, 90, 90);
-		RGB frontColor = new RGB(150, 30, 30);
-		RGB outerColor = new RGB(50, 50, 50);
+		
 		
 		// draw body
 		f.drawRectangle(this.getPos(), this.getSize().multiply(0.8f, 0.6f), innerColor);
@@ -32,7 +36,7 @@ public class Rocket extends Entity {
 				new Vec2D(this.getSize().multiply(0.1f).getX(), this.getSize().multiply(0.5f).getY()),
 				new Vec2D()
 		};
-		f.drawPolygon(startPt, relPts, frontColor);
+		f.drawPolygon(new Polygon(startPt, relPts), frontColor);
 		
 		// draw stripes
 		Vec2D stripeStart = this.getPos().addX(-this.getSize().multiply(0.4f - 0.05f - 0.025f).getX());
@@ -50,7 +54,7 @@ public class Rocket extends Entity {
 				new Vec2D(-this.getSize().getX() * 0.1f, this.getSize().getY() * 0.2f),
 				new Vec2D()
 		};
-		f.drawPolygon(startPt, relPts, outerColor);
+		f.drawPolygon(new Polygon(startPt, relPts), outerColor);
 	}
 	
 	public Vec2D getSize() {

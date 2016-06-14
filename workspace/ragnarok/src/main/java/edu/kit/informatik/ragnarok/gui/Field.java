@@ -6,8 +6,10 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.RGB;
+import org.eclipse.swt.graphics.RGBA;
 
 import edu.kit.infomatik.config.c;
+import edu.kit.informatik.ragnarok.primitives.Polygon;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
 public class Field {
@@ -50,26 +52,29 @@ public class Field {
 				units2pixel(size.getY()));
 	}
 	
-	public void drawPolygon(Vec2D start, Vec2D[] relDirs, RGB col) {
-		
-		// prepare actual array {x1, y1, x2, y2, ...}
-		int[] actualArray = new int[2 + relDirs.length * 2];
-		
-		// save first (absolute) point x1, y1
-		actualArray[0] = currentOffset() + units2pixel(start.getX());
-		actualArray[1] = units2pixel(start.getY());
-		
-		// calculate rest of absolute points from relative points to start
-		for (int i = 0; i < relDirs.length; i++) {
-			actualArray[2*i + 2] = currentOffset() + units2pixel(start.getX() + relDirs[i].getX());
-			actualArray[2*i + 3] = units2pixel(start.getY() + relDirs[i].getY());
-		}
-		
+	public void drawPolygon(Polygon polygon, RGB col) {
+		RGBA actualCol = new RGBA(col.red, col.green, col.blue, 255);
+		drawPolygon(polygon, actualCol);
+	}
+
+	public void drawPolygon(Polygon polygon, RGBA col) {
 		// set color
+		gc.setAlpha(col.alpha);
 		gc.setBackground(new Color(gc.getDevice(), col));
 		
+		float[] unitArray = polygon.getAbsoluteArray();
+		int[] pixelArray = new int[unitArray.length];
+		
+		// calculate to pixels and add level scrolling offset
+		for (int i = 0; i < unitArray.length; i+=2) {
+			pixelArray[i] = currentOffset() + units2pixel(unitArray[i]);
+			pixelArray[i+1] = units2pixel(unitArray[i+1]);
+		}
+		
 		// draw actual polygon
-		gc.fillPolygon(actualArray);
+		gc.fillPolygon(pixelArray);
+		
+		gc.setAlpha(255);
 	}
 
 	public void drawImage(Vec2D pos, Vec2D size, String imagePath) {

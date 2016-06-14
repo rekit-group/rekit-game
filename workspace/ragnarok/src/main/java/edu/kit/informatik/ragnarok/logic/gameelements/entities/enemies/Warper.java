@@ -7,13 +7,12 @@ import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
+import edu.kit.informatik.ragnarok.primitives.TimeDependency;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
 public class Warper extends Entity {
 
-	private static final float warpDelta = 1;
-	private float warpTimeLeft = warpDelta;
-	private float progress = warpTimeLeft / warpDelta;
+	private TimeDependency warpAction = new TimeDependency(1);
 	
 	public Warper(Vec2D startPos) {
 		super(startPos);
@@ -21,9 +20,10 @@ public class Warper extends Entity {
 
 	@Override
 	public void render(Field f) {
-
+		float progress = warpAction.getProgress();
+		
 		for (float i = 1; i >= 0.2; i-=0.1) {
-			RGB innerColor = new RGB((int)(250 * (1-progress) * i), (int)(250 * (progress)), (int)(150));
+			RGB innerColor = new RGB((int)(250 * (progress) * i), (int)(250 * (1-progress)), (int)(150));
 			
 			// draw body
 			f.drawCircle(this.getPos(), this.getSize().multiply(i), innerColor);
@@ -41,12 +41,12 @@ public class Warper extends Entity {
 	@Override
 	public void logicLoop(float deltaTime) {
 		// decrease time left
-		warpTimeLeft -= deltaTime;
+		warpAction.removeTime(deltaTime);
 		
 		// if time is up
-		if (warpTimeLeft < 0) {
-			// reset time (with overflow)
-			warpTimeLeft = Warper.warpDelta + warpTimeLeft;
+		if (warpAction.timeUp()) {
+			// reset time
+			warpAction.reset();
 			
 			// get target (player)
 			Vec2D target = this.getGameModel().getPlayer().getPos();
@@ -59,9 +59,6 @@ public class Warper extends Entity {
 				this.setPos(this.getPos().addY(-Math.signum(dif.getY())));
 			}
 		}
-		
-		// calculate progress in 0 to 1
-		progress = warpTimeLeft / warpDelta;
 	}
 
 	@Override

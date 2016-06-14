@@ -129,6 +129,9 @@ public class Vec2D {
 		return rotate(angle, new Vec2D());
 	}
 	
+	public Vec2D clone() {
+		return new Vec2D(getX(), getY());
+	}
 	
 	public String toString() {
 		return "(" + this.getX() + "|" + this.getY() + ")"; 

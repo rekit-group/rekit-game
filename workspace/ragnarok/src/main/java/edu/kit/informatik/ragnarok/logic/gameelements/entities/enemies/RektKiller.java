@@ -10,11 +10,25 @@ import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
+import edu.kit.informatik.ragnarok.primitives.Polygon;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
 public class RektKiller extends Entity {
 
 	private int sides;
+
+	private Polygon spikePolygon = new Polygon(new Vec2D(), new Vec2D[] {
+			new Vec2D(0.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this
+					.getSize().getY() * 0.8f) / 3f),
+			new Vec2D(1.0f * ((this.getSize().getX() * 0.8f) / 3f), 0),
+			new Vec2D(1.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this
+					.getSize().getY() * 0.8f) / 3f),
+			new Vec2D(2.0f * ((this.getSize().getX() * 0.8f) / 3f), 0),
+			new Vec2D(2.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this
+					.getSize().getY() * 0.8f) / 3f),
+			new Vec2D(3.0f * ((this.getSize().getX() * 0.8f) / 3f), 0),
+			new Vec2D() // and back to start
+			});
 
 	public RektKiller(Vec2D startPos, int sides) {
 		super(startPos);
@@ -23,10 +37,10 @@ public class RektKiller extends Entity {
 			throw new IllegalArgumentException(
 					"RektKiller must be give a number between 0 and 14");
 		}
-		
+
 		Random r = new Random();
 		int x = r.nextInt(Direction.values().length);
-        this.currentDirection = Direction.values()[x];
+		this.currentDirection = Direction.values()[x];
 
 		this.sides = sides;
 	}
@@ -46,7 +60,7 @@ public class RektKiller extends Entity {
 		default:
 			bitPos = 3;
 			break;
-			
+
 		}
 		return ((this.sides >> bitPos) & 1) == 1;
 	}
@@ -55,48 +69,25 @@ public class RektKiller extends Entity {
 	public void render(Field f) {
 		Vec2D pos = this.getPos();
 		Vec2D size = this.getSize();
-		
+
 		RGB innerColor = new RGB(150, 30, 30);
-		RGB spikeColor = new RGB (80, 80, 80);
-		
+		RGB spikeColor = new RGB(80, 80, 80);
+
 		// draw rectangle in the middle
 		f.drawRectangle(pos, size.multiply(0.8f), innerColor);
-		
-		// define start point path for spikes at top side
-		Vec2D startPt = pos.add(size.multiply(-0.8f / 2f));
-		Vec2D[] relPts = new Vec2D[] {
-				new Vec2D(0.5f * ((size.getX() * 0.8f) / 3f), -(size.getY() * 0.8f) / 3f),
-				new Vec2D(1.0f * ((size.getX() * 0.8f) / 3f), 0),
-				new Vec2D(1.5f * ((size.getX() * 0.8f) / 3f), -(size.getY() * 0.8f) / 3f),
-				new Vec2D(2.0f * ((size.getX() * 0.8f) / 3f), 0),
-				new Vec2D(2.5f * ((size.getX() * 0.8f) / 3f), -(size.getY() * 0.8f) / 3f),
-				new Vec2D(3.0f * ((size.getX() * 0.8f) / 3f), 0),
-				new Vec2D() // and back to start
-		};
-		
+
+		// move to upper position
+		this.spikePolygon.moveTo(pos.add(size.multiply(-0.8f / 2f)));
+
 		for (Direction d : Direction.values()) {
 			if (this.hasSide(d)) {
-				
 				double angle = d.getAngle();
-				//System.out.println(d.toString() + " ->" + angle);
-				Vec2D relStartPoint = startPt.rotate(angle, pos);
-				
-				f.drawPolygon(
-					relStartPoint, // Rotate start point relative to enemy center
-					rotatePath(relPts, angle), // Rotate path relative to start point
-					spikeColor
-					);
+				Polygon rotatedSpikes = spikePolygon.rotate((float) angle, pos);
+
+				f.drawPolygon(rotatedSpikes, spikeColor);
 			}
 		}
-		
-	}
-	
-	private Vec2D[] rotatePath(Vec2D[] toTurn, double angle) {
-		Vec2D[] result = new Vec2D[toTurn.length];
-		for (int i = 0; i < result.length; i++) {
-			result[i] = toTurn[i].rotate(angle);
-		}
-		return result;
+
 	}
 
 	public Vec2D getSize() {
@@ -107,16 +98,17 @@ public class RektKiller extends Entity {
 
 	@Override
 	public void logicLoop(float deltaTime) {
-		
+
 		// Do usual entity logic
 		super.logicLoop(deltaTime);
-		
+
 		if (this.getPos().getY() <= 0 || this.getPos().getY() >= c.gridH - 1) {
 			currentDirection = currentDirection.getOpposite();
 		}
-		
+
 		// We dont want this guy to fall
-		this.setVel(this.currentDirection.getVector().multiply(c.playerWalkMaxSpeed));
+		this.setVel(this.currentDirection.getVector().multiply(
+				c.playerWalkMaxSpeed));
 	}
 
 	@Override
@@ -124,7 +116,7 @@ public class RektKiller extends Entity {
 		if (this.deleteMe) {
 			return;
 		}
-		
+
 		if (this.isHostile(element)) {
 			System.out.println(dir.toString());
 			// Touched harmless side
@@ -159,7 +151,7 @@ public class RektKiller extends Entity {
 	@Override
 	public void collidedWith(Frame collision, Direction dir) {
 		super.collidedWith(collision, dir);
-		
+
 		this.currentDirection = currentDirection.getOpposite();
 
 	}

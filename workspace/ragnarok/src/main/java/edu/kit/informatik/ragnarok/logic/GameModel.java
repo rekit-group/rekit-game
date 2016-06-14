@@ -2,6 +2,7 @@ package edu.kit.informatik.ragnarok.logic;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 
@@ -29,6 +30,13 @@ public class GameModel {
 	 * </pre>
 	 */
 	private PriorityQueue<GameElement> gameElements;
+	
+	/**
+	 * GameElements that are waiting to be added to the actual gameElements
+	 */
+	private List<GameElement> waitingGameElements;
+	
+	private List<GameElement> gameElementsToDelete;
 
 	private Player player = new Player(new Vec2D(3, 5));
 
@@ -47,6 +55,8 @@ public class GameModel {
 	public void init() {
 		// Initialize Set of all gameElements that need rendering and logic
 		this.gameElements = new PriorityQueue<GameElement>();
+		this.waitingGameElements = new ArrayList<GameElement>();
+		this.gameElementsToDelete = new ArrayList<GameElement>();
 		
 		// Create Player and add him to game
 		this.player.init();
@@ -111,9 +121,9 @@ public class GameModel {
 	 *            the GameElement to add
 	 */
 	public void addGameElement(GameElement element) {
+		// Put GameElement in waiting list 
 		synchronized (SYNC) {
-			this.gameElements.add(element);
-			element.setGameModel(this);
+			waitingGameElements.add(element);
 		}
 	}
 
@@ -125,7 +135,7 @@ public class GameModel {
 	 */
 	public void removeGameElement(GameElement element) {
 		synchronized (SYNC) {
-			this.gameElements.remove(element);
+			this.gameElementsToDelete.add(element);
 		}
 	}
 
@@ -149,8 +159,18 @@ public class GameModel {
 		long timeNow = System.currentTimeMillis();
 		long timeDelta = timeNow - this.lastTime;
 
+		synchronized (SYNC) {
+			Iterator<GameElement> it = this.waitingGameElements.iterator();
+			while (it.hasNext()) {
+				GameElement element = it.next();
+				this.gameElements.add(element);
+				element.setGameModel(this);
+				
+				it.remove();
+			}
+		}
+		
 		// iterate all GameElements to invoke logicLoop
-		List<GameElement> gameElementsToDelete = new ArrayList<GameElement>();
 		synchronized (SYNC) {
 			Iterator<GameElement> it = this.getGameElementIterator();
 			while (it.hasNext()) {
@@ -163,14 +183,20 @@ public class GameModel {
 				
 				// check if we can delete this
 				if (e.getPos().getX() < this.currentOffset - c.playerDist - 1) {
-					gameElementsToDelete.add(e);
+					this.removeGameElement(e);
 				} else {
 					e.logicLoop(timeDelta / 1000.f);
 				}
 			}
 		}
-		for (GameElement e : gameElementsToDelete) {
-			this.removeGameElement(e);
+		
+		synchronized (SYNC) {
+			Iterator<GameElement> it = this.gameElementsToDelete.iterator();
+			while(it.hasNext()) {
+				GameElement element = it.next();
+				it.remove();
+				this.gameElements.remove(element);
+			}
 		}
 		
 		Player player = this.getPlayer();
@@ -198,7 +224,7 @@ public class GameModel {
 				}
 			}
 		}
-
+	
 		// update time
 		this.lastTime = timeNow;
 		
