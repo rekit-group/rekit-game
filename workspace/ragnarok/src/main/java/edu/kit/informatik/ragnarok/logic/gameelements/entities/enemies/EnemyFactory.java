@@ -27,6 +27,9 @@ public class EnemyFactory {
 		case 3:
 			enemy = new Rocket(new Vec2D(x, y));
 			break;
+		case 4:
+			enemy = new Warper(new Vec2D(x, y));
+			break;
 			
 		case 10:
 			enemy = new Coin(new Vec2D(x, y));

@@ -6,6 +6,7 @@ import org.eclipse.swt.graphics.RGB;
 
 import edu.kit.infomatik.config.c;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.EnemyFactory;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.Warper;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateBox;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateFloor;
@@ -26,7 +27,26 @@ public class LevelCreator {
 	private int generatedUntil;
 	
 	
-	private final int[][][] structures = new int[][][]{
+	private final int[][][] structures = new int[][][]{		
+			new int[][] {
+					{4},
+					{0},
+					{1}
+			},
+			new int[][] {
+					{4},
+					{0},
+					{0},
+					{1}
+			},
+			new int[][] {
+					{4},
+					{0},
+					{0},
+					{0},
+					{1}
+			},
+			
 			new int[][] {
 					{3},
 					{1}
@@ -80,12 +100,12 @@ public class LevelCreator {
 				{1, 0, 0, 1}
 			},
 			new int[][] {
-					{0, 1, 0},
+					{4, 1, 0},
 					{1, 1, 1},
 					{1, 1, 1},
 			},
 			new int[][] {
-					{1, 0, 0},
+					{1, 0, 4},
 					{1, 1, 1},
 					{1, 1, 1}
 			},
@@ -218,7 +238,7 @@ public class LevelCreator {
 			},
 			new int[][] {
 					{0, 1},
-					{0, 1},
+					{4, 1},
 					{1, 1},
 					{1, 1},
 					{1, 1}
@@ -226,7 +246,7 @@ public class LevelCreator {
 			new int[][] {
 					{0, 1},
 					{0, 1},
-					{0, 0},
+					{0, 4},
 					{0, 0},
 					{1, 1}
 			},

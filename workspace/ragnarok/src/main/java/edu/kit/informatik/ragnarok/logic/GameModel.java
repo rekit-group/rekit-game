@@ -111,6 +111,7 @@ public class GameModel {
 	public void addGameElement(GameElement element) {
 		synchronized (SYNC) {
 			this.gameElements.add(element);
+			element.setGameModel(this);
 		}
 	}
 

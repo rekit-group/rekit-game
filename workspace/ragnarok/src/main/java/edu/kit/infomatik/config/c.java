@@ -26,7 +26,7 @@ public class c {
 	/**
 	 * Time in milliseconds to wait after each renderLoop, that refreshes all graphical elements
 	 */
-	public static final int renderDelta = 20;
+	public static final int renderDelta = 30;
 	/**
 	 * Time in milliseconds to wait after each logicLoop, that simulates physics changes positions,
 	 * detects collisions, ... 
