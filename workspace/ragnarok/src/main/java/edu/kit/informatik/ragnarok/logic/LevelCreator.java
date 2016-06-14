@@ -6,7 +6,6 @@ import org.eclipse.swt.graphics.RGB;
 
 import edu.kit.infomatik.config.c;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.EnemyFactory;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.Warper;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateBox;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateFloor;

@@ -7,8 +7,8 @@ import edu.kit.informatik.ragnarok.gui.Field;
 import edu.kit.informatik.ragnarok.logic.Direction;
 import edu.kit.informatik.ragnarok.logic.Frame;
 import edu.kit.informatik.ragnarok.logic.Vec2D;
-import edu.kit.informatik.ragnarok.logic.gameelements.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 
 public class Rocket extends Entity {
 

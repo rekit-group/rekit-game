@@ -6,7 +6,7 @@ import edu.kit.informatik.ragnarok.logic.Frame;
 import edu.kit.informatik.ragnarok.logic.GameModel;
 import edu.kit.informatik.ragnarok.logic.Vec2D;
 
-public abstract class GameElement implements Collidable {
+public abstract class GameElement implements Collidable, Comparable<GameElement> {
 	public boolean deleteMe = false;
 	public void destroy() {
 		this.deleteMe = true;
@@ -102,5 +102,13 @@ public abstract class GameElement implements Collidable {
 	}
 
 	public abstract void render(Field f);
-
+	
+	public int getZ() {
+		return 0;
+	}
+	
+	@Override
+	public int compareTo(GameElement other) {
+		return this.getZ() - other.getZ();
+	}
 }

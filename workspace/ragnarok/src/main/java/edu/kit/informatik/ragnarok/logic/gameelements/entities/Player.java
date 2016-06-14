@@ -5,7 +5,6 @@ import edu.kit.informatik.ragnarok.gui.Field;
 import edu.kit.informatik.ragnarok.logic.Direction;
 import edu.kit.informatik.ragnarok.logic.Frame;
 import edu.kit.informatik.ragnarok.logic.Vec2D;
-import edu.kit.informatik.ragnarok.logic.gameelements.Entity;
 
 public class Player extends Entity {
 
@@ -59,6 +58,10 @@ public class Player extends Entity {
 		if (dir == Direction.UP) {
 			this.setVel(this.getVel().setY(c.playerBottomBoost));
 		}
+	}
+	
+	public int getZ() {
+		return 10;
 	}
 
 }

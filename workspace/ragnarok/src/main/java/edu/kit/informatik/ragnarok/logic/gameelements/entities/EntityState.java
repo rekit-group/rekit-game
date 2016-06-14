@@ -1,6 +1,5 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities;
 
-import edu.kit.informatik.ragnarok.logic.gameelements.Entity;
 
 
 public abstract class EntityState {

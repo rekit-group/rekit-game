@@ -1,10 +1,9 @@
 package edu.kit.informatik.ragnarok.logic;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
+import java.util.PriorityQueue;
 
 import edu.kit.infomatik.config.c;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
@@ -26,7 +25,7 @@ public class GameModel {
 	 *           gameModel        &gt;       gameElement
 	 * </pre>
 	 */
-	private Set<GameElement> gameElements;
+	private PriorityQueue<GameElement> gameElements;
 
 	private Player player = new Player(new Vec2D(3, 5));
 
@@ -44,8 +43,8 @@ public class GameModel {
 	
 	public void init() {
 		// Initialize Set of all gameElements that need rendering and logic
-		this.gameElements = new HashSet<GameElement>();
-
+		this.gameElements = new PriorityQueue<GameElement>();
+		
 		// Create Player and add him to game
 		this.player.init();
 		this.currentOffset = 3;

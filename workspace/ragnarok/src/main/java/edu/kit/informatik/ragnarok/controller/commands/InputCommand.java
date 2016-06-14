@@ -1,6 +1,6 @@
 package edu.kit.informatik.ragnarok.controller.commands;
 
-import edu.kit.informatik.ragnarok.logic.gameelements.Entity;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 
 public abstract class InputCommand {
 	private Entity entity;

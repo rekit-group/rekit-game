@@ -1,12 +1,10 @@
-package edu.kit.informatik.ragnarok.logic.gameelements;
+package edu.kit.informatik.ragnarok.logic.gameelements.entities;
 
 import edu.kit.infomatik.config.c;
 import edu.kit.informatik.ragnarok.logic.Direction;
 import edu.kit.informatik.ragnarok.logic.Frame;
 import edu.kit.informatik.ragnarok.logic.Vec2D;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.DefaultState;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.EntityState;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.JumpState;
+import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 
 public abstract class Entity extends GameElement {
 	
@@ -133,5 +131,8 @@ public abstract class Entity extends GameElement {
 		// resetting lastPos
 		this.setLastPos(lastPos);
 	}
-
+	
+	public int getZ() {
+		return 1;
+	}
 }

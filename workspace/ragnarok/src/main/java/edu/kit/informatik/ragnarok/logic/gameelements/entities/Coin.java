@@ -5,7 +5,6 @@ import org.eclipse.swt.graphics.RGB;
 import edu.kit.informatik.ragnarok.gui.Field;
 import edu.kit.informatik.ragnarok.logic.Direction;
 import edu.kit.informatik.ragnarok.logic.Vec2D;
-import edu.kit.informatik.ragnarok.logic.gameelements.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 
 public class Coin extends Entity {
