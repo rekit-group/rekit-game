@@ -115,7 +115,11 @@ public class GameModel {
 	}
 
 	/**
-	 * Adds a GameElement to the Model
+	 * Adds a GameElement to the Model.
+	 * The elements will not directly be added to the internal data structure to prevent
+	 * concurrency errors.
+	 * Instead there is an internal list to hold all waiting GameElements that will be
+	 * added in the next call of logicLoop 
 	 * 
 	 * @param element
 	 *            the GameElement to add
@@ -126,9 +130,30 @@ public class GameModel {
 			waitingGameElements.add(element);
 		}
 	}
+	
+	/**
+	 * Internal method to add all waiting GameElements.
+	 * See addGameElement for more info.
+	 */
+	private void addAllWaitingGameElements() {
+		synchronized (SYNC) {
+			Iterator<GameElement> it = this.waitingGameElements.iterator();
+			while (it.hasNext()) {
+				GameElement element = it.next();
+				this.gameElements.add(element);
+				element.setGameModel(this);
+				
+				it.remove();
+			}
+		}
+	}
 
 	/**
 	 * Removes a GameElement from the Model
+	 * The elements will not directly be removed from the internal data structure to prevent
+	 * concurrency errors.
+	 * Instead there is an internal list to hold all waiting GameElements that will be
+	 * removed in the next call of logicLoop 
 	 * 
 	 * @param element
 	 *            the GameElement to remove
@@ -138,6 +163,22 @@ public class GameModel {
 			this.gameElementsToDelete.add(element);
 		}
 	}
+	
+	/**
+	 * Internal method to remove all waiting GameElements.
+	 * See removeGameElement for more info.
+	 */
+	private void removeAllWaitingGameElements() {
+		synchronized (SYNC) {
+			Iterator<GameElement> it = this.gameElementsToDelete.iterator();
+			while(it.hasNext()) {
+				GameElement element = it.next();
+				it.remove();
+				this.gameElements.remove(element);
+			}
+		}
+	}
+	
 
 	/**
 	 * Supplies an Iterator for all saved GameElements
@@ -158,17 +199,9 @@ public class GameModel {
 		// calculate time difference since last physics loop
 		long timeNow = System.currentTimeMillis();
 		long timeDelta = timeNow - this.lastTime;
-
-		synchronized (SYNC) {
-			Iterator<GameElement> it = this.waitingGameElements.iterator();
-			while (it.hasNext()) {
-				GameElement element = it.next();
-				this.gameElements.add(element);
-				element.setGameModel(this);
-				
-				it.remove();
-			}
-		}
+		
+		// add GameElements that have been added
+		this.addAllWaitingGameElements();
 		
 		// iterate all GameElements to invoke logicLoop
 		synchronized (SYNC) {
@@ -190,14 +223,8 @@ public class GameModel {
 			}
 		}
 		
-		synchronized (SYNC) {
-			Iterator<GameElement> it = this.gameElementsToDelete.iterator();
-			while(it.hasNext()) {
-				GameElement element = it.next();
-				it.remove();
-				this.gameElements.remove(element);
-			}
-		}
+		// remove GameElements that must be removed
+		this.removeAllWaitingGameElements();
 		
 		Player player = this.getPlayer();
 		// get maximum player x
@@ -235,27 +262,7 @@ public class GameModel {
 		if (!e1.getCollisionFrame().collidesWith(e2.getCollisionFrame())) {
 			return;
 		}
-		/*
-		float velRelX = e1.getPos().getX() - e2.getPos().getX();
-		float velRelY = e1.getPos().getY() - e2.getPos().getY();
-		
-		if (Math.abs(velRelX) < Math.abs(velRelY)) {
-			if (velRelX > 0) {
-				e1.reactToCollision(e2, Direction.LEFT);
-			}
-			if (velRelX < 0) {
-				e1.reactToCollision(e2, Direction.RIGHT);
-			}
-		} else {
-			if (velRelY > 0) {
-				e1.reactToCollision(e2, Direction.UP);
-			}
-			if (velRelY < 0) {
-				e1.reactToCollision(e2, Direction.DOWN);
-			}
-		}
-		*/
-		
+
 		// Simulate CollisionFrame with last Y position
 		Vec2D e1lastYVec = new Vec2D(e1.getPos().getX(), e1lastPos.getY());
 		Frame e1lastYFrame = new Frame(
