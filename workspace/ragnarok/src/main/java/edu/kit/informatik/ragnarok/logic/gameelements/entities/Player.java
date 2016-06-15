@@ -1,20 +1,19 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities;
 
-import java.util.Random;
 
 import edu.kit.infomatik.config.c;
 import edu.kit.informatik.ragnarok.gui.Field;
-import edu.kit.informatik.ragnarok.logic.GameModel;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.Particle;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawner;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
-import edu.kit.informatik.ragnarok.primitives.Polygon;
-import edu.kit.informatik.ragnarok.primitives.ProgressDependency;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
 public class Player extends Entity {
 
 	private Vec2D startPos;
+	
+	private ParticleSpawner damageParticles;
 	
 	public Player(Vec2D startPos) {
 		super(startPos);
@@ -30,6 +29,13 @@ public class Player extends Entity {
 		this.currentDirection = Direction.RIGHT;
 		this.setVel(new Vec2D(0, 0));
 		this.deleteMe = false;
+		
+		damageParticles = new ParticleSpawner();
+		damageParticles.colorR = new ParticleSpawnerOption(222, 242, -10, 10);
+		damageParticles.colorG = new ParticleSpawnerOption(138, 158, -10, 10);
+		damageParticles.colorB = new ParticleSpawnerOption(6, 26, -10, 10);
+		damageParticles.colorA = new ParticleSpawnerOption(255, 255, -255, -255);
+		
 	}
 	
 	public Vec2D getSize() {
@@ -40,7 +46,6 @@ public class Player extends Entity {
 	private Direction currentDirection;
 	@Override
 	public void render(Field f) {
-		
 		// determine if direction needs to be changed
 		if (this.getVel().getX() > 0) {
 			this.currentDirection = Direction.RIGHT;
@@ -67,30 +72,9 @@ public class Player extends Entity {
 	}
 	
 	public void addDamage(int damage) {
-		Random r = new Random();
 		
-		for (int i = 0; i < 15; i++) {
-			
-			float speed = r.nextFloat() -0.5f + 5f;
-			float angle = r.nextFloat() * 2 * (float)Math.PI;
-			
-			
-			Particle p = new Particle (
-				
-				new Polygon(new Vec2D(), new Vec2D[]{new Vec2D(0.2f, 0), new Vec2D(0.2f, 0.2f), new Vec2D(0, 0.2f), new Vec2D()}),
-					this.getPos(),
-					0.4f,
-					new ProgressDependency(1, 1),
-					new ProgressDependency(speed, speed),
-					new ProgressDependency(angle, angle),
-					
-					new ProgressDependency(232, 232),
-					new ProgressDependency(148, 148),
-					new ProgressDependency(16, 16),
-					new ProgressDependency(255, 0)
-			);
-			this.getGameModel().addGameElement(p);
-		}
+		// spawn particles
+		this.damageParticles.spawn(this.getGameModel(), this.getPos());		
 		
 		// Do usual life logic
 		super.addDamage(damage);

@@ -6,25 +6,50 @@ import edu.kit.infomatik.config.c;
 import edu.kit.informatik.ragnarok.gui.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawner;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Polygon;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
 public class Rocket extends Entity {
-
-	public Rocket(Vec2D startPos) {
-		super(startPos);
-	}
-
+	
 	private static RGB innerColor = new RGB(90, 90, 90);
 	private static RGB frontColor = new RGB(150, 30, 30);
 	private static RGB outerColor = new RGB(50, 50, 50);
+	
+	private ParticleSpawner sparkParticles;
+	private static final ParticleSpawnerOption sparkParticlesAngle = new ParticleSpawnerOption((float) ((1/4f) * Math.PI), (float) ((3/4f) * Math.PI), 0, 0);
+	
+	public Rocket(Vec2D startPos) {
+		super(startPos);
+		
+		sparkParticles = new ParticleSpawner();
+		
+		sparkParticles.angle = sparkParticlesAngle;
+		
+		sparkParticles.colorR = new ParticleSpawnerOption(200, 230, 10, 25);
+		sparkParticles.colorG = new ParticleSpawnerOption(200, 250, -140, -120);
+		sparkParticles.colorB = new ParticleSpawnerOption(150, 200, -140, -120);
+		sparkParticles.colorA = new ParticleSpawnerOption(230, 250, -150, -230);
+		
+		sparkParticles.timeMin = 0.1f;
+		sparkParticles.timeMin = 0.1f;
+		
+		sparkParticles.amountMin = 1;
+		sparkParticles.amountMax = 3;
+		
+		sparkParticles.speed = new ParticleSpawnerOption(3, 6, -1, 1);
+	}
+	
+
 	
 	
 	@Override
 	public void render(Field f) {
 		
+		sparkParticles.spawn(this.getGameModel(), this.getPos().addX(this.getSize().getX()/2));
 		
 		// draw body
 		f.drawRectangle(this.getPos(), this.getSize().multiply(0.8f, 0.6f), innerColor);
@@ -66,6 +91,7 @@ public class Rocket extends Entity {
 	public void logicLoop(float deltaTime) {
 		// move ahead with player max speed
 		this.setPos(this.getPos().addX(-c.playerWalkMaxSpeed * deltaTime));
+		
 	}
 
 	@Override

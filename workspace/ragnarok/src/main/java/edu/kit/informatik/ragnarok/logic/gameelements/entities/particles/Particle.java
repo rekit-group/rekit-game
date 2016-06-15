@@ -1,6 +1,5 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities.particles;
 
-import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.graphics.RGBA;
 
 import edu.kit.informatik.ragnarok.gui.Field;
@@ -88,6 +87,9 @@ public class Particle extends GameElement {
 			// get current progress of Particle
 			float progress = this.timer.getProgress();
 
+//			System.out.println((int)colorR.getNow(progress) + " " + 
+//					(int)colorG.getNow(progress) + " " + (int)colorB.getNow(progress) + " " +
+//					(int)colorA.getNow(progress));
 			// calculate current color
 			currentCol = new RGBA((int)colorR.getNow(progress),
 					(int)colorG.getNow(progress), (int)colorB.getNow(progress),
@@ -111,6 +113,11 @@ public class Particle extends GameElement {
 		}
 	}
 
+	@Override
+	public int getZ () {
+		return 100;
+	}
+	
 	@Override
 	public void render(Field f) {
 		float progress = timer.getProgress();
