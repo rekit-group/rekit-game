@@ -19,28 +19,51 @@ public class Rocket extends Entity {
 	private static RGB frontColor = new RGB(150, 30, 30);
 	private static RGB outerColor = new RGB(50, 50, 50);
 	
-	private ParticleSpawner sparkParticles;
-	private static final ParticleSpawnerOption sparkParticlesAngle = new ParticleSpawnerOption((float) ((1/4f) * Math.PI), (float) ((3/4f) * Math.PI), 0, 0);
+	private static ParticleSpawner sparkParticles = null;
+	private static ParticleSpawner explosionParticles = null;
 	
 	public Rocket(Vec2D startPos) {
 		super(startPos);
 		
-		sparkParticles = new ParticleSpawner();
+		// if this is first instantiated rocket: create spark Particle
+		if (sparkParticles == null) {
+			sparkParticles = new ParticleSpawner();
+			
+			sparkParticles.angle = new ParticleSpawnerOption((float) ((1/4f) * Math.PI), (float) ((3/4f) * Math.PI), 0, 0);;
+			
+			sparkParticles.colorR = new ParticleSpawnerOption(200, 230, 10, 25);
+			sparkParticles.colorG = new ParticleSpawnerOption(200, 250, -140, -120);
+			sparkParticles.colorB = new ParticleSpawnerOption(150, 200, -140, -120);
+			sparkParticles.colorA = new ParticleSpawnerOption(230, 250, -150, -230);
+			
+			sparkParticles.timeMin = 0.1f;
+			sparkParticles.timeMin = 0.1f;
+			
+			sparkParticles.amountMin = 1;
+			sparkParticles.amountMax = 3;
+			
+			sparkParticles.speed = new ParticleSpawnerOption(3, 6, -1, 1);
+		}
 		
-		sparkParticles.angle = sparkParticlesAngle;
-		
-		sparkParticles.colorR = new ParticleSpawnerOption(200, 230, 10, 25);
-		sparkParticles.colorG = new ParticleSpawnerOption(200, 250, -140, -120);
-		sparkParticles.colorB = new ParticleSpawnerOption(150, 200, -140, -120);
-		sparkParticles.colorA = new ParticleSpawnerOption(230, 250, -150, -230);
-		
-		sparkParticles.timeMin = 0.1f;
-		sparkParticles.timeMin = 0.1f;
-		
-		sparkParticles.amountMin = 1;
-		sparkParticles.amountMax = 3;
-		
-		sparkParticles.speed = new ParticleSpawnerOption(3, 6, -1, 1);
+		// if this is first instantiated rocket: create explosion Particle
+		if (explosionParticles == null) {
+			explosionParticles = new ParticleSpawner();
+			
+			explosionParticles.angle = new ParticleSpawnerOption(0, (float) (2 * Math.PI), 0, 0);
+			
+			explosionParticles.colorR = new ParticleSpawnerOption(200, 230, 10, 25);
+			explosionParticles.colorG = new ParticleSpawnerOption(200, 250, -130, -110);
+			explosionParticles.colorB = new ParticleSpawnerOption(150, 200, -130, -110);
+			explosionParticles.colorA = new ParticleSpawnerOption(230, 250, -120, -200);
+			
+			explosionParticles.timeMin = 0.1f;
+			explosionParticles.timeMin = 0.2f;
+			
+			explosionParticles.amountMin = 40;
+			explosionParticles.amountMax = 50;
+			
+			explosionParticles.speed = new ParticleSpawnerOption(4, 9, -1, 1);
+		}
 	}
 	
 
@@ -104,7 +127,6 @@ public class Rocket extends Entity {
 			
 			if (dir == Direction.UP) {
 				element.setVel(element.getVel().setY(c.playerJumpBoost));
-				
 				element.addPoints(20);
 				
 				// Kill the rocket itself
@@ -115,6 +137,8 @@ public class Rocket extends Entity {
 
 				// Kill the rocket itself
 				this.addDamage(1);
+				
+				explosionParticles.spawn(this.getGameModel(), this.getPos());
 			}
 		}
 	}
