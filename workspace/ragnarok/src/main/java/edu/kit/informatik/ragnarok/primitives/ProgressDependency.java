@@ -33,12 +33,21 @@ public class ProgressDependency {
 	
 	/**
 	 * Calculates a value between <i>start</i> and <i>end</i> in the same ratio as 
-	 * progress has to 0 and 1.   
+	 * progress has to 0 and 1. Has no defined behavior for other numbers.
 	 * @param progress a value between 0 and 1 that defines the ratio
 	 * @return the calculated value between <i>start</i> and <i>end</i> (inclusive)
 	 */
 	public float getNow(float progress) {
 		// if no change required then there must be no calculation 
-		return delta == 0 ? start : start + delta * progress;
+		return isStatic() ? start : start + delta * progress;
+	}
+	
+	/**
+	 * Returns true if start = end, which means there are no calculations required in
+	 * <i>getNow(float progress)</i>.
+	 * @return true if getNows output never changes, false otherwise 
+	 */
+	public boolean isStatic() { 
+		return delta == 0;
 	}
 }
