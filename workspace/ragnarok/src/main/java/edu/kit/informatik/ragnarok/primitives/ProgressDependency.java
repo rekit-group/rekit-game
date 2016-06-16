@@ -1,16 +1,44 @@
 package edu.kit.informatik.ragnarok.primitives;
 
+/**
+ * Data class that holds an <i>start</i> and an <i>end</i> float.
+ * It can return the corresponding value in between in the same ratio as
+ * a given number <i>progress</i> to 0 and 1.
+ *
+ * @author Angelo Aracri
+ * @version 1.0
+ */
 public class ProgressDependency {
 	
-	private float initial;
-	private float end;
+	/**
+	 * Saved version of the start value
+	 */
+	private float start;
 	
-	public ProgressDependency(float initial, float end) {
-		this.initial = initial;
-		this.end = end;
+	/**
+	 * Saved version of the delta value, calculated by end-initial
+	 */
+	private float delta;
+	
+	/**
+	 * Constructor that takes the start and end value for calculating
+	 * values in between relative to a <i>progress</i> between 0 and 1.
+	 * @param start the start value that will be returned for progress = 0
+	 * @param end the end value that will be returned for progress = 1
+	 */
+	public ProgressDependency(float start, float end) {
+		this.start = start;
+		this.delta = end - start;
 	}
 	
+	/**
+	 * Calculates a value between <i>start</i> and <i>end</i> in the same ratio as 
+	 * progress has to 0 and 1.   
+	 * @param progress a value between 0 and 1 that defines the ratio
+	 * @return the calculated value between <i>start</i> and <i>end</i> (inclusive)
+	 */
 	public float getNow(float progress) {
-		return initial + (end - initial) * progress;
+		// if no change required then there must be no calculation 
+		return delta == 0 ? start : start + delta * progress;
 	}
 }
