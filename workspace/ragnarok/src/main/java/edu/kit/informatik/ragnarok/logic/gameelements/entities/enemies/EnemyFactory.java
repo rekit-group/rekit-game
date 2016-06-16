@@ -5,6 +5,7 @@ import java.util.Random;
 import edu.kit.informatik.ragnarok.logic.GameModel;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Coin;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.Life;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
 public class EnemyFactory {
@@ -31,8 +32,12 @@ public class EnemyFactory {
 			enemy = new Warper(new Vec2D(x, y));
 			break;
 			
+		
 		case 10:
 			enemy = new Coin(new Vec2D(x, y));
+			break;
+		case 20:
+			enemy = new Life(new Vec2D(x, y));
 			break;
 		}
 		
