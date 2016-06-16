@@ -56,7 +56,7 @@ public class Field {
 		RGBA actualCol = new RGBA(col.red, col.green, col.blue, 255);
 		drawPolygon(polygon, actualCol);
 	}
-
+	
 	public void drawPolygon(Polygon polygon, RGBA col) {
 		// set color
 		gc.setAlpha(col.alpha);

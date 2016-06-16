@@ -75,6 +75,11 @@ public class Particle extends GameElement {
 		// Do nothing
 	}
 
+	
+	public int capColor(float col) {
+		return col > 255 ? 255 : (col < 0 ? 0 : (int)col);
+	}
+	
 	@Override
 	public void logicLoop(float deltaTime) {
 		// tell timer passed time
@@ -86,14 +91,9 @@ public class Particle extends GameElement {
 		} else {
 			// get current progress of Particle
 			float progress = this.timer.getProgress();
-
-//			System.out.println((int)colorR.getNow(progress) + " " + 
-//					(int)colorG.getNow(progress) + " " + (int)colorB.getNow(progress) + " " +
-//					(int)colorA.getNow(progress));
-			// calculate current color
-			currentCol = new RGBA((int)colorR.getNow(progress),
-					(int)colorG.getNow(progress), (int)colorB.getNow(progress),
-					(int)colorA.getNow(progress));
+			currentCol = new RGBA(capColor(colorR.getNow(progress)),
+					capColor(colorG.getNow(progress)), capColor(colorB.getNow(progress)),
+					capColor(colorA.getNow(progress)));
 
 			// get speed and angle relative to progress
 			float speed = this.speed.getNow(progress);

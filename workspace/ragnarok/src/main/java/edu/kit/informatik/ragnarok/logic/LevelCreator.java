@@ -27,7 +27,8 @@ public class LevelCreator {
 	private int generatedUntil;
 	
 	
-	private final int[][][] structures = new int[][][]{		
+	private final int[][][] structures = new int[][][]{
+
 			new int[][] {
 					{4},
 					{0},
@@ -249,6 +250,13 @@ public class LevelCreator {
 					{0, 4},
 					{0, 0},
 					{1, 1}
+			},
+			new int[][] {
+					{0, 0, 0, 0, 0, 0, 0, 0, 3},
+					{0, 0, 0, 0, 0, 1, 1, 0, 0},
+					{0, 1, 1, 0, 0, 0, 0, 0, 0},
+					{0, 0, 0, 2, 0, 0, 0, 0, 0},
+					{1, 0, 0, 0, 0, 0, 0, 0, 0}
 			},
 	};
 	
