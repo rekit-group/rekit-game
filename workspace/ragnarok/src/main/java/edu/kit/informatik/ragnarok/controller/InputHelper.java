@@ -9,7 +9,7 @@ import java.util.Set;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.widgets.Control;
 
-import edu.kit.infomatik.config.c;
+import edu.kit.informatik.ragnarok.c;
 
 public final class InputHelper {
 
