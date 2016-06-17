@@ -15,27 +15,21 @@ import edu.kit.informatik.ragnarok.primitives.Vec2D;
 public class Warper extends Entity {
 
 	private TimeDependency warpAction = new TimeDependency(1);
-	private ParticleSpawner warpParticles = null;
+	private static ParticleSpawner warpParticles = null;
+	static {
+		Warper.warpParticles = new ParticleSpawner();
+		Warper.warpParticles.angle = new ParticleSpawnerOption(0, (float) (2 * Math.PI), (float) (2 * Math.PI),
+				(float) (4 * Math.PI));
+		Warper.warpParticles.colorR = new ParticleSpawnerOption(250, 0);
+		Warper.warpParticles.colorG = new ParticleSpawnerOption(250, -250);
+		Warper.warpParticles.colorB = new ParticleSpawnerOption(150);
+		Warper.warpParticles.colorA = new ParticleSpawnerOption(220, -220);
+		Warper.warpParticles.timeMin = 1f;
+		Warper.warpParticles.speed = new ParticleSpawnerOption(2, 3, -1, 1);
+	}
 
 	public Warper(Vec2D startPos) {
 		super(startPos);
-
-		// if this is first instantiated warper: create explosion Particle
-		if (this.warpParticles == null) {
-			this.warpParticles = new ParticleSpawner();
-
-			this.warpParticles.angle = new ParticleSpawnerOption(0, (float) (2 * Math.PI), (float) (2 * Math.PI),
-					(float) (4 * Math.PI));
-
-			this.warpParticles.colorR = new ParticleSpawnerOption(250, 0);
-			this.warpParticles.colorG = new ParticleSpawnerOption(250, -250);
-			this.warpParticles.colorB = new ParticleSpawnerOption(150);
-			this.warpParticles.colorA = new ParticleSpawnerOption(220, -220);
-
-			this.warpParticles.timeMin = 1f;
-
-			this.warpParticles.speed = new ParticleSpawnerOption(2, 3, -1, 1);
-		}
 	}
 
 	@Override
@@ -62,9 +56,9 @@ public class Warper extends Entity {
 		this.warpAction.removeTime(deltaTime);
 
 		// animate particles
-		this.warpParticles.amountMin = -5;
-		this.warpParticles.amountMax = 2;
-		this.warpParticles.spawn(this.getGameModel(), this.getPos());
+		Warper.warpParticles.amountMin = -5;
+		Warper.warpParticles.amountMax = 2;
+		Warper.warpParticles.spawn(this.getGameModel(), this.getPos());
 
 		// if time is up
 		if (this.warpAction.timeUp()) {
@@ -75,9 +69,9 @@ public class Warper extends Entity {
 			Vec2D target = this.getGameModel().getPlayer().getPos();
 
 			// animate particles
-			this.warpParticles.amountMin = 5;
-			this.warpParticles.amountMax = 8;
-			this.warpParticles.spawn(this.getGameModel(), this.getPos());
+			Warper.warpParticles.amountMin = 5;
+			Warper.warpParticles.amountMax = 8;
+			Warper.warpParticles.spawn(this.getGameModel(), this.getPos());
 
 			// determine if x or y is greater in distance
 			Vec2D dif = this.getPos().add(target.multiply(-1));
