@@ -4,37 +4,29 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import edu.kit.informatik.ragnarok.controller.commands.*;
+import org.eclipse.swt.SWT;
+
+import edu.kit.informatik.ragnarok.controller.commands.InputCommand;
+import edu.kit.informatik.ragnarok.controller.commands.JumpCommand;
+import edu.kit.informatik.ragnarok.controller.commands.WalkCommand;
 import edu.kit.informatik.ragnarok.logic.GameModel;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 
 public class Controller implements Observer {
-	private Map<Integer, InputCommand> mpCmd;
-	
-	public Controller() {
-		
-	}
-	
-	public void setModel(GameModel model) {
+
+	private final Map<Integer, InputCommand> mpCmd;
+
+	public Controller(GameModel model) {
 		this.mpCmd = new HashMap<Integer, InputCommand>();
-		
-		// Initialize jump command
-		InputCommand jmpCmd = new JumpCommand();
-		jmpCmd.setEntity(model.getPlayer());
-		
-		// Initialize left walking command
-		InputCommand leftCmd = new WalkCommand(Direction.LEFT);
-		leftCmd.setEntity(model.getPlayer());
-		
-		// Initialize right walking command
-		InputCommand rightCmd = new WalkCommand(Direction.RIGHT);
-		rightCmd.setEntity(model.getPlayer());
-		
-		this.mpCmd.put(119, jmpCmd);
-		this.mpCmd.put(97, leftCmd);
-		this.mpCmd.put(100, rightCmd);
+		this.init(model);
 	}
-	
+
+	private void init(GameModel model) {
+		this.mpCmd.put(SWT.ARROW_UP, new JumpCommand().setEntity(model.getPlayer()));
+		this.mpCmd.put(SWT.ARROW_LEFT, new WalkCommand(Direction.LEFT).setEntity(model.getPlayer()));
+		this.mpCmd.put(SWT.ARROW_RIGHT, new WalkCommand(Direction.RIGHT).setEntity(model.getPlayer()));
+	}
+
 	public void handleEvent(int id) {
 		// return if we do not have a command defined for this key
 		if (!this.mpCmd.containsKey(id)) {
@@ -47,13 +39,13 @@ public class Controller implements Observer {
 		// Register me! --> update is called whenever something changes
 		InputHelper.register(this);
 	}
-	
+
 	@Override
 	public void update() {
 		Iterator<Integer> it = InputHelper.getKeyIterator();
 		while (it.hasNext()) {
 			int next = it.next();
-			handleEvent(next);
+			this.handleEvent(next);
 		}
 	}
 

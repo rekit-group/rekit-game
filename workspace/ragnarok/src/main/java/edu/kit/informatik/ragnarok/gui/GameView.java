@@ -15,13 +15,17 @@ import org.eclipse.swt.widgets.Shell;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.GameModel;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.util.SwtUtils;
+import edu.kit.informatik.ragnarok.util.ThreadUtils;
 
 /**
  * Main class of the View. Manages the window and a canvas an periodically
  * renders all GameElements that GameModel.getGameElementIterator() provides
  *
  * @author Angelo Aracri
- * @version 1.0
+ * @author Dominik Fuchß
+ *
+ * @version 1.1
  */
 public class GameView {
 	/**
@@ -31,19 +35,14 @@ public class GameView {
 	private GameModel model;
 
 	/**
-	 * Display object holds the shell
-	 */
-	private Display display;
-
-	/**
 	 * Represents a graphic window
 	 */
 	private Shell shell;
 
 	private long lastRenderTime;
-	
+
 	private Queue<Float> fpsQueue = new ArrayDeque<Float>();
-	
+
 	/**
 	 * The canvas that is drawn upon
 	 */
@@ -59,11 +58,15 @@ public class GameView {
 	/**
 	 * Constructor that creates a new window with a canvas and prepares all
 	 * required attributes
+	 *
+	 * @param model
+	 *            the model
 	 */
-	public GameView() {
+	public GameView(GameModel model) {
+		this.model = model;
 		// Create window
-		this.display = new Display();
-		this.shell = new Shell(this.display, SWT.DIALOG_TRIM | SWT.MIN | SWT.PRIMARY_MODAL | SWT.NO_BACKGROUND);
+
+		this.shell = new Shell(Display.getDefault(), SWT.DIALOG_TRIM | SWT.MIN | SWT.PRIMARY_MODAL | SWT.NO_BACKGROUND);
 		this.shell.setText("Project Ragnarok");
 
 		// Create and position a canvas
@@ -72,8 +75,9 @@ public class GameView {
 		this.canvas.setLocation(0, 0);
 
 		// Open Shell
-		this.shell.open();
 		this.shell.setSize(GameConf.gridW * GameConf.pxPerUnit, GameConf.gridH * GameConf.pxPerUnit);
+		this.shell.setLocation(SwtUtils.calcCenter(this.shell));
+		this.shell.open();
 
 		// Create Graphic context
 		this.gc = new GC(this.canvas);
@@ -94,12 +98,7 @@ public class GameView {
 							GameView.this.renderLoop();
 						}
 					});
-
-					try {
-						Thread.sleep(GameConf.renderDelta);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+					ThreadUtils.sleep(GameConf.renderDelta);
 				}
 			}
 		};
@@ -107,23 +106,15 @@ public class GameView {
 		updateThread.setDaemon(true);
 		updateThread.start();
 
+		// Main SWT stuff ...
+		Display display = Display.getDefault();
 		// Wait for window to be closed, holds the window open
 		while (!this.shell.isDisposed()) {
-			if (!this.display.readAndDispatch()) {
-				this.display.sleep();
+			if (!display.readAndDispatch()) {
+				display.sleep();
 			}
 		}
-		this.display.dispose();
-	}
-
-	/**
-	 * Setter for the GameModel
-	 *
-	 * @param value
-	 *            the GameModel to set
-	 */
-	public void setModel(GameModel model) {
-		this.model = model;
+		display.dispose();
 	}
 
 	/**
@@ -179,34 +170,31 @@ public class GameView {
 		// put trash outside
 		image.dispose();
 		tempGC.dispose();
-		
+
 		// draw FPS
-		float fps = getFPS();
+		float fps = this.getFPS();
 		this.field.setGC(this.gc);
 		this.field.drawFPS(fps);
 
 	}
-	
+
 	private float getFPS() {
 		long thisTime = System.currentTimeMillis();
 		long deltaTime = thisTime - this.lastRenderTime;
 		this.lastRenderTime = System.currentTimeMillis();
-		
+
 		float fps = deltaTime;
-		fpsQueue.add(fps);
+		this.fpsQueue.add(fps);
 		float sum = 0;
-		for (float f : fpsQueue) {
+		for (float f : this.fpsQueue) {
 			sum += f;
 		}
-		
-		if (fpsQueue.size() > 5) {
-			fpsQueue.poll();
+
+		if (this.fpsQueue.size() > 5) {
+			this.fpsQueue.poll();
 		}
-		
-		return (int)(10000f / (sum / fpsQueue.size()) / 10f);
+
+		return (int) (10000f / (sum / this.fpsQueue.size()) / 10f);
 	}
-
-
-  
 
 }
