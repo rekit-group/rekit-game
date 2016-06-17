@@ -4,7 +4,7 @@ import java.util.Random;
 
 import org.eclipse.swt.graphics.RGB;
 
-import edu.kit.infomatik.config.c;
+import edu.kit.informatik.ragnarok.c;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.EnemyFactory;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateBox;

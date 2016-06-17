@@ -1,4 +1,4 @@
-package edu.kit.infomatik.config;
+package edu.kit.informatik.ragnarok;
 
 /**
  * Configuration class that holds static options
