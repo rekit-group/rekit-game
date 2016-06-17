@@ -53,5 +53,7 @@ public class GameConf {
 
 	public static final float playerDist = 5f;
 	public static final int playerLifes = 5;
+	
+	public static final float slurpSpeed = GameConf.BUNDLE.getFloat("slurpSpeed");
 
 }
