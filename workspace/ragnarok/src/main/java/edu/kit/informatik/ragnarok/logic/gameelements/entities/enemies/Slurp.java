@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.eclipse.swt.graphics.RGB;
-
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.gui.Field;
+import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
@@ -16,47 +15,6 @@ import edu.kit.informatik.ragnarok.primitives.Vec2D;
 public class Slurp extends Entity {
 	
 	private List<SlurpDurp> slurpDurps;
-	
-	private class SlurpDurp extends Entity {
-		private Vec2D parentPos;
-		private Vec2D innerPos;
-		private float frequency;
-		private float baseSize;
-		private float amplitude;
-		private float phase;
-		
-		private float currentX = 0;
-		private float currentSize = 0;
-		
-		public SlurpDurp(Vec2D parentPos, Vec2D innerPos, float baseSize, float frequency, float amplitude, float phase) {
-			super(parentPos.add(innerPos));
-			this.parentPos = parentPos;
-			this.innerPos = innerPos;
-			this.baseSize = baseSize;
-			this.frequency = frequency;
-			this.amplitude = amplitude;
-			this.phase = phase;
-		}
-		
-		public Vec2D getPos() {
-			return this.parentPos.add(this.innerPos);
-		}
-		
-		public void setParentPos(Vec2D parentPos) {
-			this.parentPos = parentPos;
-		}
-
-		@Override
-		public void logicLoop(float deltaTime) {
-			this.currentX += deltaTime;
-			this.currentSize = this.baseSize + (float)(amplitude * Math.sin(this.currentX * frequency + phase));
-		}
-		
-		@Override
-		public void render(Field f) {
-			f.drawCircle(this.getPos(), new Vec2D(this.currentSize), new RGB(94, 233, 101));
-		}
-	}
 
 	public Slurp(Vec2D startPos) {
 		super(startPos);
@@ -89,7 +47,6 @@ public class Slurp extends Entity {
 		// prevent Slurp from flying upwards to infinity and beyond
 		if (!hasWallContact) {
 			this.currentDirection = this.currentDirection.getNextAntiClockwise();
-			System.out.println("no contact -> " + this.currentDirection);
 		}
 		
 		// calculate velocity (by currentDirection)
@@ -110,6 +67,20 @@ public class Slurp extends Entity {
 			slurpDurp.logicLoop(deltaTime);
 		}
 		
+		// Randomly determine if SlurpDurp should pop off
+		if (Math.random() >= (1.0 - GameConf.slurpPopOffsPerSec * deltaTime)) {
+			// get and remove one SlurpDurp from list
+			SlurpDurp poppedOf = this.slurpDurps.remove(0);
+			
+			// add this SlurpDurp as regular Entity to GameModel
+			this.getGameModel().addGameElement(poppedOf);
+		}
+		
+		// If every SlurpDurp has popped off
+		if (this.slurpDurps.size() == 0) {
+			this.getGameModel().removeGameElement(this);
+		}
+		
 		this.hasWallContact = false;
 	}
 	
@@ -127,6 +98,10 @@ public class Slurp extends Entity {
 			this.hasWallContact = true;
 		}
 		super.collidedWith(collision, dir);
+	}
+	
+	public void reactToCollision(GameElement element, Direction dir) {
+		element.setVel(element.getVel().multiply(0.6f));
 	}
 	
 	@Override

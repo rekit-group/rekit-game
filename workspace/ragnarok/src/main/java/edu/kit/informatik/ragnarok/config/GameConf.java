@@ -58,5 +58,6 @@ public class GameConf {
 	public static final int playerLifes = 5;
 	
 	public static final float slurpSpeed = GameConf.BUNDLE.getFloat("slurpSpeed");
+	public static final float slurpPopOffsPerSec = GameConf.BUNDLE.getFloat("slurpPopOffsPerSec");
 
 }
