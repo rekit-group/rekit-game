@@ -2,7 +2,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies;
 
 import org.eclipse.swt.graphics.RGB;
 
-import edu.kit.informatik.ragnarok.c;
+import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.gui.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
@@ -113,7 +113,7 @@ public class Rocket extends Entity {
 	@Override
 	public void logicLoop(float deltaTime) {
 		// move ahead with player max speed
-		this.setPos(this.getPos().addX(-c.playerWalkMaxSpeed * deltaTime));
+		this.setPos(this.getPos().addX(-GameConf.playerWalkMaxSpeed * deltaTime));
 		
 	}
 
@@ -126,7 +126,7 @@ public class Rocket extends Entity {
 		if (this.isHostile(element)) {
 			
 			if (dir == Direction.UP) {
-				element.setVel(element.getVel().setY(c.playerJumpBoost));
+				element.setVel(element.getVel().setY(GameConf.playerJumpBoost));
 				element.addPoints(20);
 				
 				// Kill the rocket itself

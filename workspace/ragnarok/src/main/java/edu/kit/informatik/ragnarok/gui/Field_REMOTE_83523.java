@@ -99,18 +99,6 @@ public class Field {
 		// And draw the text
 		this.gc.drawText(text, this.units2pixel(GameConf.gridW) - textWidth - 10, 10, true);
 	}
-	
-	public void drawFPS(float fps) {
-		// Set color to red and set font
-		gc.setForeground(new Color(Display.getCurrent(), new RGB(200, 50, 0)));
-		Font font = new Font(Display.getCurrent(), "Tahoma", 18, SWT.BOLD);
-		gc.setFont(font);
-		// There is no alignment, so we need to calculate the text width
-		String text = "FPS: " + fps;
-		int textWidth = gc.stringExtent(text).x;
-		// And draw the text
-		gc.drawText(text, units2pixel(c.gridW) - textWidth - 10, units2pixel(c.gridH) - 60, true);
-	}
 
 	public void setGC(GC gc) {
 		this.gc = gc;

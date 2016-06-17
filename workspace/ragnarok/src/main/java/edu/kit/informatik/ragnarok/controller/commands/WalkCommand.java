@@ -1,6 +1,6 @@
 package edu.kit.informatik.ragnarok.controller.commands;
 
-import edu.kit.informatik.ragnarok.c;
+import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.JumpState;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.WalkState;
@@ -25,12 +25,12 @@ public class WalkCommand extends InputCommand {
 
 		// Update x velocity with corresponding direction and acceleration
 		Vec2D newVel = entity.getVel().addX(
-				this.dir.getVector().getX() * c.playerWalkAccel);
+				this.dir.getVector().getX() * GameConf.playerWalkAccel);
 
 		// check if max speed achieved
-		if (Math.abs(newVel.getX()) > c.playerWalkMaxSpeed) {
+		if (Math.abs(newVel.getX()) > GameConf.playerWalkMaxSpeed) {
 			newVel = newVel.setX(Math.signum(newVel.getX())
-					* c.playerWalkMaxSpeed);
+					* GameConf.playerWalkMaxSpeed);
 		}
 		
 		// Save new velocity

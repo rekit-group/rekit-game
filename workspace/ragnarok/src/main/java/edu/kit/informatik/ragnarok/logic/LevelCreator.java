@@ -4,7 +4,7 @@ import java.util.Random;
 
 import org.eclipse.swt.graphics.RGB;
 
-import edu.kit.informatik.ragnarok.c;
+import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.EnemyFactory;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateBox;
@@ -18,10 +18,10 @@ public class LevelCreator {
 	public LevelCreator(GameModel model) {
 		this.model = model;
 		
-		for (int x = (int)-c.playerDist; x <= (int)(2 * c.playerDist); x++) {
-			generateFloor(x, c.gridH);
+		for (int x = (int)-GameConf.playerDist; x <= (int)(2 * GameConf.playerDist); x++) {
+			generateFloor(x, GameConf.gridH);
 		}
-		this.generatedUntil = (int)(2 * c.playerDist);
+		this.generatedUntil = (int)(2 * GameConf.playerDist);
 	}
 	
 	private int generatedUntil;
@@ -329,7 +329,7 @@ public class LevelCreator {
 		
 		int randColG = r.nextInt(100) + 100;
 		int randColRB = r.nextInt(40) + 30;
-		i = new InanimateFloor(new Vec2D(x, c.gridH - 1), new Vec2D(1, 1), new RGB(randColRB, randColG, randColRB));
+		i = new InanimateFloor(new Vec2D(x, GameConf.gridH - 1), new Vec2D(1, 1), new RGB(randColRB, randColG, randColRB));
 		this.model.addGameElement(i);
 	}
 	public void generateBox(int x, int y) {
@@ -341,7 +341,7 @@ public class LevelCreator {
 	}
 	
 	public void generate() {
-		int max = (int) this.model.getCurrentOffset() + c.gridW + 1;
+		int max = (int) this.model.getCurrentOffset() + GameConf.gridW + 1;
 	
 		while (this.generatedUntil < max) {
 			
@@ -358,7 +358,7 @@ public class LevelCreator {
 			int aw = struc[0].length;
 			
 			int ix = generatedUntil + 1;
-			int iy = c.gridH;
+			int iy = GameConf.gridH;
 			
 			// build structure
 			for (int y = 0; y < ah; y++) {
@@ -384,7 +384,7 @@ public class LevelCreator {
 			}	
 			
 			for (int x = generatedUntil + 1 + aw; x <=  generatedUntil + aw + gap; x++) {
-				generateFloor(x, c.gridH);
+				generateFloor(x, GameConf.gridH);
 			}
 
 			// Update coordinate until where we generated

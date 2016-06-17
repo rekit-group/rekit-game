@@ -9,7 +9,7 @@ import java.util.Set;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.widgets.Control;
 
-import edu.kit.informatik.ragnarok.c;
+import edu.kit.informatik.ragnarok.config.GameConf;
 
 public final class InputHelper {
 
@@ -74,7 +74,7 @@ public final class InputHelper {
 				while (true) {
 					InputHelper.notifyObservers();
 					try {
-						Thread.sleep(c.logicDelta);
+						Thread.sleep(GameConf.logicDelta);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
