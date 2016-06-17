@@ -48,7 +48,7 @@ public class GameModel {
 
 	private Thread loopThread;
 
-	private final int startOffset = 3;
+	private static final int START_OFFSET = 3;
 
 	public GameModel() {
 		this.init();
@@ -62,7 +62,7 @@ public class GameModel {
 
 		// Create Player and add him to game
 		this.player.init();
-		this.currentOffset = this.startOffset;
+		this.currentOffset = GameModel.START_OFFSET;
 		this.addGameElement(this.player);
 
 		// Init EnemyFactory with model
@@ -332,7 +332,7 @@ public class GameModel {
 	}
 
 	public int getPoints() {
-		return (int) this.getCurrentOffset() + this.getPlayer().getPoints() - this.startOffset;
+		return (int) this.getCurrentOffset() + this.getPlayer().getPoints() - GameModel.START_OFFSET;
 	}
 
 }

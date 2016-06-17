@@ -5,7 +5,7 @@
 
 ### Explanation
 [ ] Means currently not in work  
-[-] Means currently beeing worked at  
+[-] Means currently being worked at  
 [x] Means done, will be removed later  
 
 ### List
@@ -15,4 +15,5 @@
 - [x] Secret Exit Bug
 - [ ] Allow shorter Jumps
 - [ ] Fix z-Index rendering order
+- [ ] Lazy Initialization Bug in Rocket explosion & spark particles
 

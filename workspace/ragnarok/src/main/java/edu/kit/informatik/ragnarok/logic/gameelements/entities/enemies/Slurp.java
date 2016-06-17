@@ -14,21 +14,22 @@ import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
 public class Slurp extends Entity {
-	
+
 	private List<SlurpDurp> slurpDurps;
-	
-	private class SlurpDurp extends Entity {
+
+	private static class SlurpDurp extends Entity {
 		private Vec2D parentPos;
 		private Vec2D innerPos;
 		private float frequency;
 		private float baseSize;
 		private float amplitude;
 		private float phase;
-		
+
 		private float currentX = 0;
 		private float currentSize = 0;
-		
-		public SlurpDurp(Vec2D parentPos, Vec2D innerPos, float baseSize, float frequency, float amplitude, float phase) {
+
+		public SlurpDurp(Vec2D parentPos, Vec2D innerPos, float baseSize, float frequency, float amplitude,
+				float phase) {
 			super(parentPos.add(innerPos));
 			this.parentPos = parentPos;
 			this.innerPos = innerPos;
@@ -37,11 +38,12 @@ public class Slurp extends Entity {
 			this.amplitude = amplitude;
 			this.phase = phase;
 		}
-		
+
+		@Override
 		public Vec2D getPos() {
 			return this.parentPos.add(this.innerPos);
 		}
-		
+
 		public void setParentPos(Vec2D parentPos) {
 			this.parentPos = parentPos;
 		}
@@ -49,9 +51,10 @@ public class Slurp extends Entity {
 		@Override
 		public void logicLoop(float deltaTime) {
 			this.currentX += deltaTime;
-			this.currentSize = this.baseSize + (float)(amplitude * Math.sin(this.currentX * frequency + phase));
+			this.currentSize = this.baseSize
+					+ (float) (this.amplitude * Math.sin(this.currentX * this.frequency + this.phase));
 		}
-		
+
 		@Override
 		public void render(Field f) {
 			f.drawCircle(this.getPos(), new Vec2D(this.currentSize), new RGB(94, 233, 101));
@@ -60,11 +63,11 @@ public class Slurp extends Entity {
 
 	public Slurp(Vec2D startPos) {
 		super(startPos);
-		
+
 		Random r = new Random();
 		float sizeX = this.getSize().getX();
 		float sizeY = this.getSize().getX();
-		
+
 		this.slurpDurps = new ArrayList<SlurpDurp>();
 		for (int i = 0; i < 15; i++) {
 			// randomize position, and pulsing options
@@ -75,44 +78,47 @@ public class Slurp extends Entity {
 			float amplitude = r.nextFloat() / 4.0f;
 			float phase = (float) (r.nextFloat() * 2 * Math.PI);
 			// add SlurpDurp to List
-			this.slurpDurps.add(new SlurpDurp(this.getPos(), new Vec2D(randX, randY), baseSize, frequency, amplitude, phase));
+			this.slurpDurps
+					.add(new SlurpDurp(this.getPos(), new Vec2D(randX, randY), baseSize, frequency, amplitude, phase));
 		}
 	}
-	
+
 	private Direction currentDirection = Direction.LEFT;
-	
+
 	private boolean hasWallContact = true;
-	
+
 	@Override
 	public void logicLoop(float deltaTime) {
-		
+
 		// prevent Slurp from flying upwards to infinity and beyond
-		if (!hasWallContact) {
+		if (!this.hasWallContact) {
 			this.currentDirection = this.currentDirection.getNextAntiClockwise();
 			System.out.println("no contact -> " + this.currentDirection);
 		}
-		
+
 		// calculate velocity (by currentDirection)
-		if (currentDirection == Direction.LEFT || currentDirection == Direction.RIGHT) {
-			this.setVel(new Vec2D(this.currentDirection.getVector().getX() * GameConf.slurpSpeed, this.currentDirection.getNextAntiClockwise().getVector().getY() * 3));
+		if (this.currentDirection == Direction.LEFT || this.currentDirection == Direction.RIGHT) {
+			this.setVel(new Vec2D(this.currentDirection.getVector().getX() * GameConf.slurpSpeed,
+					this.currentDirection.getNextAntiClockwise().getVector().getY() * 3));
 		} else {
-			this.setVel(new Vec2D(this.currentDirection.getNextAntiClockwise().getVector().getX() * 3, this.currentDirection.getVector().getY() * GameConf.slurpSpeed));
+			this.setVel(new Vec2D(this.currentDirection.getNextAntiClockwise().getVector().getX() * 3,
+					this.currentDirection.getVector().getY() * GameConf.slurpSpeed));
 		}
-		
+
 		super.logicLoop(deltaTime);
-		
+
 		// Iterate all contained SlurpDurps
 		for (SlurpDurp slurpDurp : this.slurpDurps) {
 			// update new position SlurpPosition
 			slurpDurp.setParentPos(this.getPos());
-			
+
 			// everyone need some logic
 			slurpDurp.logicLoop(deltaTime);
 		}
-		
+
 		this.hasWallContact = false;
 	}
-	
+
 	@Override
 	public void collidedWith(Frame collision, Direction dir) {
 		// If slurp collides against wall, orthogonal to direction
@@ -128,7 +134,7 @@ public class Slurp extends Entity {
 		}
 		super.collidedWith(collision, dir);
 	}
-	
+
 	@Override
 	public void render(Field f) {
 		for (SlurpDurp slurpDurp : this.slurpDurps) {

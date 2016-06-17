@@ -6,14 +6,14 @@ public class Frame {
 	private Vec2D vec2;
 
 	public Frame(Vec2D v1, Vec2D v2) {
-		this.SetFrame(v1, v2);
+		this.setFrame(v1, v2);
 	}
 
 	public Frame(float x1, float y1, float x2, float y2) {
-		this.SetFrame(new Vec2D(x1, y1), new Vec2D(x2, y2));
+		this.setFrame(new Vec2D(x1, y1), new Vec2D(x2, y2));
 	}
 
-	public void SetFrame(Vec2D v1, Vec2D v2) {
+	public void setFrame(Vec2D v1, Vec2D v2) {
 		this.vec1 = v1;
 		this.vec2 = v2;
 	}
