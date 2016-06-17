@@ -67,7 +67,7 @@ public class GameView {
 		// Create window
 
 		this.shell = new Shell(Display.getDefault(), SWT.DIALOG_TRIM | SWT.MIN | SWT.PRIMARY_MODAL | SWT.NO_BACKGROUND);
-		this.shell.setText("Project Ragnarok");
+		this.shell.setText(GameConf.BUNDLE.getString("name"));
 
 		// Create and position a canvas
 		this.canvas = new Canvas(this.shell, SWT.NONE);
@@ -89,10 +89,12 @@ public class GameView {
 	 */
 	public void start() {
 		Thread updateThread = new Thread() {
+
 			@Override
 			public void run() {
-				while (true) {
-					Display.getDefault().syncExec(new Runnable() {
+				Display disp = Display.getDefault();
+				while (true && !disp.isDisposed()) {
+					disp.syncExec(new Runnable() {
 						@Override
 						public void run() {
 							GameView.this.renderLoop();

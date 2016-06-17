@@ -30,7 +30,7 @@ public final class BundleHelper {
 
 	/**
 	 * Get the value as {@link Integer}
-	 * 
+	 *
 	 * @param key
 	 *            the key
 	 * @return {@code null} if no value was found or the found value cannot be
@@ -38,7 +38,7 @@ public final class BundleHelper {
 	 */
 	public Integer getInt(String key) {
 		String res = null;
-		if (!this.bundle.containsKey(key) || !((res = this.bundle.getString(key)).matches("(-[0-9]+|[0-9]+)"))) {
+		if (!this.bundle.containsKey(key) || !((res = this.bundle.getString(key)).matches("(-|\\+)?[0-9]+"))) {
 			return null;
 		}
 		return Integer.parseInt(res);
@@ -46,7 +46,7 @@ public final class BundleHelper {
 
 	/**
 	 * Get the value as {@link Float}
-	 * 
+	 *
 	 * @param key
 	 *            the key
 	 * @return {@code null} if no value was found or the found value cannot be
@@ -54,7 +54,8 @@ public final class BundleHelper {
 	 */
 	public Float getFloat(String key) {
 		String res = null;
-		if (!this.bundle.containsKey(key) || !((res = this.bundle.getString(key)).matches("-?[0-9]+\\.[0-9]+(f|F)"))) {
+		if (!this.bundle.containsKey(key)
+				|| !((res = this.bundle.getString(key)).matches("(-|\\+)?[0-9]+\\.[0-9]+(f|F)"))) {
 			return null;
 		}
 		return Float.parseFloat(res);
@@ -62,7 +63,7 @@ public final class BundleHelper {
 
 	/**
 	 * Get the value as {@link String}
-	 * 
+	 *
 	 * @param key
 	 *            the key
 	 * @return {@code null} if no value was found, value otherwise
