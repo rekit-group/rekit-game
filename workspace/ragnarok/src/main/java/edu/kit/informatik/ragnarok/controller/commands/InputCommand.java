@@ -5,8 +5,16 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 public abstract class InputCommand {
 	private Entity entity;
 
-	public void setEntity(Entity entity) {
+	/**
+	 * Set the corresponding entity for the command
+	 *
+	 * @param entity
+	 *            the entity
+	 * @return {@code this} for code chaining
+	 */
+	public final InputCommand setEntity(Entity entity) {
 		this.entity = entity;
+		return this;
 	}
 
 	public Entity getEntity() {

@@ -12,6 +12,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.EnemyFact
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.util.ThreadUtils;
 
 public class GameModel {
 
@@ -75,20 +76,15 @@ public class GameModel {
 	}
 
 	public void restart() {
-		final GameModel that = this;
 		Thread restartThread = new Thread() {
 			@Override
 			public void run() {
 				// wait 2 seconds
-				try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+				ThreadUtils.sleep(2000);
 				// reset all data structures
-				that.init();
+				GameModel.this.init();
 				// restart logic thread
-				that.start();
+				GameModel.this.start();
 			}
 		};
 		restartThread.start();
@@ -100,12 +96,9 @@ public class GameModel {
 			public void run() {
 				// repeat until player is dead
 				while (!GameModel.this.getPlayer().deleteMe) {
-					try {
-						GameModel.this.logicLoop();
-						Thread.sleep(GameConf.logicDelta);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+					GameModel.this.logicLoop();
+					ThreadUtils.sleep(GameConf.logicDelta);
+
 				}
 				// restart game
 				GameModel.this.restart();
@@ -190,10 +183,9 @@ public class GameModel {
 	/**
 	 * Calculate DeltaTime Get Collisions .. & Invoke ReactCollision Iterate
 	 * over Elements --> invoke GameElement:logicLoop()
-	 * 
-	 * @throws InterruptedException
+	 *
 	 */
-	public void logicLoop() throws InterruptedException {
+	public void logicLoop() {
 
 		// calculate time difference since last physics loop
 		long timeNow = System.currentTimeMillis();
@@ -210,7 +202,6 @@ public class GameModel {
 			this.levelCreator.generate();
 		}
 
-		
 		// dont allow player to go behind currentOffset
 		float minX = this.currentOffset - GameConf.playerDist + player.getSize().getX() / 2f;
 		if (player.getPos().getX() < minX) {
@@ -327,7 +318,7 @@ public class GameModel {
 
 	/**
 	 * Return player
-	 * 
+	 *
 	 * @return the player
 	 */
 	public Player getPlayer() {

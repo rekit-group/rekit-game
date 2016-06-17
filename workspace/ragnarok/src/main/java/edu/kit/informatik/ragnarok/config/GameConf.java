@@ -10,6 +10,9 @@ import java.util.ResourceBundle;
  * @version 1.1
  */
 public class GameConf {
+	/**
+	 * The Bundle which contains all configuration stuff
+	 */
 	private static final BundleHelper BUNDLE = new BundleHelper(ResourceBundle.getBundle("conf/game"));
 
 	/**

@@ -7,9 +7,11 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.widgets.Control;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
+import edu.kit.informatik.ragnarok.util.ThreadUtils;
 
 public final class InputHelper {
 
@@ -39,7 +41,7 @@ public final class InputHelper {
 	 * Initializes the InputHelper with a shell by attaching keyListeners to it.
 	 * Each time a key is pressed/released the corresponding keyCode is saved
 	 * in/deleted from the Set keys.
-	 * 
+	 *
 	 * @param shell
 	 */
 	public static void init(Control listenerControl) {
@@ -47,68 +49,59 @@ public final class InputHelper {
 		if (listenerControl == null) {
 			return;
 		}
-		
+
 		// Add our custom KeyListener to an object
 		listenerControl.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyPressed(org.eclipse.swt.events.KeyEvent e) {
-				synchronized (InputHelper.class) {
-					InputHelper.press(e.keyCode);
-				}
+			public void keyPressed(KeyEvent e) {
+				InputHelper.press(e.keyCode);
 			}
 
 			@Override
-			public void keyReleased(org.eclipse.swt.events.KeyEvent e) {
-				synchronized (InputHelper.class) {
-					InputHelper.release(e.keyCode);
-				}
+			public void keyReleased(KeyEvent e) {
+				InputHelper.release(e.keyCode);
 			}
 		});
 
 		// Save that we just initialized
 		InputHelper.init = true;
-		
-		Thread t = new Thread() {
-			public void run() {
 
+		Thread daemon = new Thread() {
+			@Override
+			public void run() {
 				while (true) {
 					InputHelper.notifyObservers();
-					try {
-						Thread.sleep(GameConf.logicDelta);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					ThreadUtils.sleep(GameConf.logicDelta);
 				}
 			}
 		};
-		t.setDaemon(true);
-		t.start();
+		daemon.setDaemon(true);
+		daemon.start();
 	}
-	
+
 	/**
 	 * Adds a pressed keys keyCode to the List and notifies observers
-	 * 
+	 *
 	 * @param code
 	 *            the keyCode of the just pressed key
 	 */
-	private static final void press(int code) {
+	private static final synchronized void press(int code) {
 		InputHelper.keys.add(code);
 	}
 
 	/**
 	 * Remove a released keys keyCode to the List and notifies observers.
-	 * 
+	 *
 	 * @param code
 	 *            the keyCode of the just released key
 	 */
-	private static final void release(int code) {
+	private static final synchronized void release(int code) {
 		InputHelper.keys.remove(code);
 	}
 
 	/**
 	 * Get an Iterator to iterate over all pressed keys keyCodes
-	 * 
+	 *
 	 * @return the Iterator for all pressed keyCodes
 	 */
 	public static final Iterator<Integer> getKeyIterator() {
@@ -146,7 +139,7 @@ public final class InputHelper {
 	/**
 	 * Adds an Observer to the List that will be notified every time something
 	 * important changes
-	 * 
+	 *
 	 * @param observer
 	 *            The Observer that wants to listen
 	 */
@@ -159,7 +152,7 @@ public final class InputHelper {
 	/**
 	 * Removes an Observer from the List to prevent further notification of
 	 * changes
-	 * 
+	 *
 	 * @param observer
 	 *            The Observer that does not want to listen anymore
 	 */
