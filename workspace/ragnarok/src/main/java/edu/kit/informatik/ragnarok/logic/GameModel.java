@@ -1,5 +1,10 @@
 package edu.kit.informatik.ragnarok.logic;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -91,6 +96,50 @@ public class GameModel {
 		};
 		restartThread.start();
 	}
+	
+	private void end () {
+		
+		// save score if higher than highscore
+		if (this.getScore() > this.getHighScore()) {
+			this.setHighScore(this.getScore());
+		}
+		
+		// restart game
+		GameModel.this.restart();
+	}
+	
+	private int highScore = -1;
+	
+	public int getHighScore() {
+		if (this.highScore != -1) {
+			return this.highScore;
+		}
+		
+		int highScore = 0;
+		try {
+			BufferedReader in = new BufferedReader(new FileReader("score.dat"));
+			String input = in.readLine();
+			highScore = Integer.parseInt(input);
+			in.close();
+		} catch (IOException e) {
+			highScore = 0;
+		}
+		
+		return highScore;
+	}
+	
+	public int setHighScore(int highScore) {
+		try {
+			BufferedWriter out = new BufferedWriter(new FileWriter("score.dat"));
+			out.write(Integer.toString(highScore));
+			out.close();
+			this.highScore = highScore;
+		} catch (IOException e) {
+			// TODO error
+		}
+		
+		return highScore;
+	}
 
 	public void start() {
 		this.loopThread = new Thread() {
@@ -102,8 +151,7 @@ public class GameModel {
 					ThreadUtils.sleep(GameConf.logicDelta);
 
 				}
-				// restart game
-				GameModel.this.restart();
+				GameModel.this.end();
 			}
 		};
 		this.loopThread.setDaemon(true);
@@ -205,7 +253,8 @@ public class GameModel {
 		}
 
 		// dont allow player to go behind currentOffset
-		float minX = this.currentOffset - GameConf.playerDist + player.getSize().getX() / 2f;
+		float minX = this.currentOffset - GameConf.playerDist
+				+ player.getSize().getX() / 2f;
 		if (player.getPos().getX() < minX) {
 			player.setPos(player.getPos().setX(minX));
 		}
@@ -222,7 +271,8 @@ public class GameModel {
 				}
 
 				// check if we can delete this
-				if (e.getPos().getX() < this.currentOffset - GameConf.playerDist - 1) {
+				if (e.getPos().getX() < this.currentOffset
+						- GameConf.playerDist - 1) {
 					this.removeGameElement(e);
 				} else {
 					e.logicLoop(timeDelta / 1000.f);
@@ -242,7 +292,8 @@ public class GameModel {
 				while (it2.hasNext()) {
 					GameElement e2 = it2.next();
 					if (e1 != e2) {
-						this.checkCollision(e1, e2, e1.getLastPos(), e2.getLastPos());
+						this.checkCollision(e1, e2, e1.getLastPos(),
+								e2.getLastPos());
 					}
 				}
 			}
@@ -253,7 +304,8 @@ public class GameModel {
 
 	}
 
-	private void checkCollision(GameElement e1, GameElement e2, Vec2D e1lastPos, Vec2D e2lastPos) {
+	private void checkCollision(GameElement e1, GameElement e2,
+			Vec2D e1lastPos, Vec2D e2lastPos) {
 		// Return if there is no collision
 		if (!e1.getCollisionFrame().collidesWith(e2.getCollisionFrame())) {
 			return;
@@ -261,29 +313,30 @@ public class GameModel {
 
 		// Simulate CollisionFrame with last Y position
 		Vec2D e1lastYVec = new Vec2D(e1.getPos().getX(), e1lastPos.getY());
-		Frame e1lastYFrame = new Frame(e1lastYVec.add(e1.getSize().multiply(-0.5f)),
-				e1lastYVec.add(e1.getSize().multiply(0.5f)));
+		Frame e1lastYFrame = new Frame(e1lastYVec.add(e1.getSize().multiply(
+				-0.5f)), e1lastYVec.add(e1.getSize().multiply(0.5f)));
 
 		// Simulate CollisionFrame with last X position
 		Vec2D e1lastXVec = new Vec2D(e1lastPos.getX(), e1.getPos().getY());
-		Frame e1lastXFrame = new Frame(e1lastXVec.add(e1.getSize().multiply(-0.5f)),
-				e1lastXVec.add(e1.getSize().multiply(0.5f)));
+		Frame e1lastXFrame = new Frame(e1lastXVec.add(e1.getSize().multiply(
+				-0.5f)), e1lastXVec.add(e1.getSize().multiply(0.5f)));
 
 		// Simulate CollisionFrame with last Y position
 		Vec2D e2lastYVec = new Vec2D(e2.getPos().getX(), e2lastPos.getY());
-		Frame e2lastYFrame = new Frame(e2lastYVec.add(e2.getSize().multiply(-0.5f)),
-				e2lastYVec.add(e2.getSize().multiply(0.5f)));
+		Frame e2lastYFrame = new Frame(e2lastYVec.add(e2.getSize().multiply(
+				-0.5f)), e2lastYVec.add(e2.getSize().multiply(0.5f)));
 
 		// Simulate CollisionFrame with last X position
 		Vec2D e2lastXVec = new Vec2D(e2lastPos.getX(), e2.getPos().getY());
-		Frame e2lastXFrame = new Frame(e2lastXVec.add(e2.getSize().multiply(-0.5f)),
-				e2lastXVec.add(e2.getSize().multiply(0.5f)));
+		Frame e2lastXFrame = new Frame(e2lastXVec.add(e2.getSize().multiply(
+				-0.5f)), e2lastXVec.add(e2.getSize().multiply(0.5f)));
 
 		// If they still collide with the old x positions:
 		// it must be because of the y position
 		if (e1lastXFrame.collidesWith(e2lastXFrame)) {
 			// If relative movement is in positive y direction (down)
-			float relMovement = (e2.getPos().getY() - e2lastPos.getY()) - (e1.getPos().getY() - e1lastPos.getY());
+			float relMovement = (e2.getPos().getY() - e2lastPos.getY())
+					- (e1.getPos().getY() - e1lastPos.getY());
 			if (relMovement > 0) {
 				e1.reactToCollision(e2, Direction.UP);
 			} else
@@ -294,14 +347,15 @@ public class GameModel {
 				return;
 			}
 			// check if he is still colliding even with last x position
-			this.checkCollision(e1, e2, new Vec2D(e1lastPos.getX(), e1.getPos().getY()),
-					new Vec2D(e2lastPos.getX(), e2.getPos().getY()));
+			this.checkCollision(e1, e2, new Vec2D(e1lastPos.getX(), e1.getPos()
+					.getY()), new Vec2D(e2lastPos.getX(), e2.getPos().getY()));
 		} else
 		// If they still collide with the old y positions:
 		// it must be because of the x position
 		if (e1lastYFrame.collidesWith(e2lastYFrame)) {
 			// If he moved in positive x direction (right)
-			float relMovement = (e2.getPos().getX() - e2lastPos.getX()) - (e1.getPos().getX() - e1lastPos.getX());
+			float relMovement = (e2.getPos().getX() - e2lastPos.getX())
+					- (e1.getPos().getX() - e1lastPos.getX());
 			if (relMovement > 0) {
 				e1.reactToCollision(e2, Direction.LEFT);
 			} else
@@ -312,8 +366,9 @@ public class GameModel {
 				return;
 			}
 			// check if he is still colliding even with last x position
-			this.checkCollision(e1, e2, new Vec2D(e1.getPos().getX(), e1lastPos.getY()),
-					new Vec2D(e2.getPos().getX(), e2lastPos.getY()));
+			this.checkCollision(e1, e2,
+					new Vec2D(e1.getPos().getX(), e1lastPos.getY()), new Vec2D(
+							e2.getPos().getX(), e2lastPos.getY()));
 		}
 
 	}
@@ -331,8 +386,9 @@ public class GameModel {
 		return this.currentOffset;
 	}
 
-	public int getPoints() {
-		return (int) this.getCurrentOffset() + this.getPlayer().getPoints() - GameModel.START_OFFSET;
+	public int getScore() {
+		return (int) this.getCurrentOffset() + this.getPlayer().getPoints()
+				- GameModel.START_OFFSET;
 	}
 
 }

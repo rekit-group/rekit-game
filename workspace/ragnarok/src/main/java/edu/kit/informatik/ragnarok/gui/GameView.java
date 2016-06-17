@@ -164,7 +164,7 @@ public class GameView {
 		}
 
 		// Draw UI (lifes, score)
-		this.field.refreshUI(this.getModel().getPlayer().getLifes(), this.getModel().getPoints());
+		this.field.refreshUI(this.getModel().getPlayer().getLifes(), this.getModel().getScore(), this.getModel().getHighScore());
 
 		// draw temporary image on actual cavans
 		this.gc.drawImage(image, 0, 0);

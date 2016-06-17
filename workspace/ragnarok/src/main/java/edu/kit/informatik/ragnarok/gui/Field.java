@@ -81,7 +81,7 @@ public class Field {
 		);
 	}
 
-	public void refreshUI(int lifes, int points) {
+	public void refreshUI(int lifes, int points, int highScore) {
 
 		// Iterate lifes
 		Image image = ImageLoader.get("mrRekt_glasses_right.png");
@@ -96,8 +96,15 @@ public class Field {
 		// There is no alignment, so we need to calculate the text width
 		String text = points + " Points";
 		int textWidth = this.gc.stringExtent(text).x;
+		int textHeight = this.gc.stringExtent(text).y;
 		// And draw the text
 		this.gc.drawText(text, this.units2pixel(GameConf.gridW) - textWidth - 10, 10, true);
+		
+		//There is no alignment, so we need to calculate the text width
+		text = highScore + " HighScore";
+		textWidth = this.gc.stringExtent(text).x;
+		// And draw the text
+		this.gc.drawText(text, this.units2pixel(GameConf.gridW) - textWidth - 10, 10 + 10 + textHeight, true);
 	}
 	
 	public void drawFPS(float fps) {
