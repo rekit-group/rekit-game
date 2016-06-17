@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Display;
@@ -48,13 +49,15 @@ public class GameView {
 	 */
 	private Field field;
 	
+	private GC gc;
+	
 	/**
 	 * Constructor that creates a new window with a canvas and prepares all required attributes
 	 */
 	public GameView() {
 		// Create window
 		this.display = new Display();
-		this.shell = new Shell(display);
+		this.shell = new Shell(display, SWT.DIALOG_TRIM | SWT.MIN | SWT.PRIMARY_MODAL | SWT.NO_BACKGROUND);
 		this.shell.setText("Project Ragnarok");
 
 		// Create and position a canvas
@@ -67,10 +70,8 @@ public class GameView {
 		shell.setSize(c.gridW * c.pxPerUnit, c.gridH * c.pxPerUnit);
 
 		// Create Graphic context
-		GC gc = new GC(canvas);
-		this.field = new Field(gc, this);
-		
-		
+		this.gc = new GC(canvas);
+		this.field = new Field(this);
 	}
 	
 	/**
@@ -138,6 +139,11 @@ public class GameView {
 	 * GameMode.getGameElementIterator() supplies and invoking each render()
 	 */
 	public void renderLoop() {
+		// Create temporary GC on new Image and let field draw on that
+		Image image = new Image(shell.getDisplay(), canvas.getBounds());
+		GC tempGC = new GC(image);
+		this.field.setGC(tempGC);
+		
 		// Draw background
 		this.field.setBackground(new RGB(110, 170, 255));
 
@@ -150,7 +156,16 @@ public class GameView {
 			}
 		}
 		
+		// Draw UI (lifes, score)
 		this.field.refreshUI(this.getModel().getPlayer().getLifes(), this.getModel().getPoints());
+		
+		// draw temporary image on actual cavans
+		this.gc.drawImage(image, 0, 0);
+		
+		// put trash outside
+		image.dispose();
+		tempGC.dispose();
+		
 	}
 
 }
