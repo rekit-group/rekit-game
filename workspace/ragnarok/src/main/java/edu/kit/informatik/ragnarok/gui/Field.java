@@ -109,7 +109,7 @@ public class Field {
 		String text = "FPS: " + fps;
 		int textWidth = gc.stringExtent(text).x;
 		// And draw the text
-		gc.drawText(text, units2pixel(c.gridW) - textWidth - 10, units2pixel(c.gridH) - 60, true);
+		gc.drawText(text, units2pixel(GameConf.gridW) - textWidth - 10, units2pixel(GameConf.gridH) - 60, true);
 	}
 
 	public void setGC(GC gc) {
