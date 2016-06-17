@@ -13,7 +13,7 @@ public class GameConf {
 	/**
 	 * The Bundle which contains all configuration stuff
 	 */
-	private static final BundleHelper BUNDLE = new BundleHelper(ResourceBundle.getBundle("conf/game"));
+	public static final BundleHelper BUNDLE = new BundleHelper(ResourceBundle.getBundle("conf/game"));
 
 	/**
 	 * Size of one in-game unit in pixels. So a Vec2D(1, 0) will be projected to
@@ -46,17 +46,17 @@ public class GameConf {
 	 */
 	public static final float g = GameConf.BUNDLE.getFloat("g");
 
-	public static final float playerWalkAccel = 0.8f * GameConf.g;
-	public static final float playerStopAccel = 0.1f * GameConf.g;
+	public static final float playerWalkAccel = GameConf.BUNDLE.getFloat("playerWalkAccel");
+	public static final float playerStopAccel = GameConf.BUNDLE.getFloat("playerStopAccel");
 
-	public static final float playerWalkMaxSpeed = 13 * GameConf.playerWalkAccel;
+	public static final float playerWalkMaxSpeed = GameConf.BUNDLE.getFloat("playerWalkMaxSpeed");
 
-	public static final float playerJumpBoost = -20 * GameConf.g;
-	public static final float playerBottomBoost = -6 * GameConf.g;
+	public static final float playerJumpBoost = GameConf.BUNDLE.getFloat("playerJumpBoost");
+	public static final float playerBottomBoost = GameConf.BUNDLE.getFloat("playerBottomBoost");
 
-	public static final float playerDist = 5f;
-	public static final int playerLifes = 5;
-	
+	public static final float playerDist = GameConf.BUNDLE.getFloat("playerDist");
+	public static final int playerLifes = GameConf.BUNDLE.getInt("playerLifes");
+
 	public static final float slurpSpeed = GameConf.BUNDLE.getFloat("slurpSpeed");
 
 }
