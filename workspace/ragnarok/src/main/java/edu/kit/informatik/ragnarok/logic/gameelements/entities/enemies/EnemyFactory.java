@@ -31,6 +31,9 @@ public class EnemyFactory {
 		case 4:
 			enemy = new Warper(new Vec2D(x, y));
 			break;
+		case 5:
+			enemy = new Slurp(new Vec2D(x, y));
+			break;
 			
 		
 		case 10:

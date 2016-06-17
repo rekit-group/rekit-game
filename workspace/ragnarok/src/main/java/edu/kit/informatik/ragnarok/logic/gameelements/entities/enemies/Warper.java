@@ -34,9 +34,6 @@ public class Warper extends Entity {
 			warpParticles.timeMin = 1f;
 			warpParticles.timeMin = 1f;
 			
-			warpParticles.amountMin = 5;
-			warpParticles.amountMax = 8;
-			
 			warpParticles.speed = new ParticleSpawnerOption(2, 3, -1, 1);
 		}
 	}
@@ -65,6 +62,11 @@ public class Warper extends Entity {
 		// decrease time left
 		warpAction.removeTime(deltaTime);
 		
+		// animate particles
+		warpParticles.amountMin = -5;
+		warpParticles.amountMax = 2;
+		this.warpParticles.spawn(this.getGameModel(), this.getPos());
+				
 		// if time is up
 		if (warpAction.timeUp()) {
 			// reset time
@@ -74,6 +76,8 @@ public class Warper extends Entity {
 			Vec2D target = this.getGameModel().getPlayer().getPos();
 			
 			// animate particles
+			warpParticles.amountMin = 5;
+			warpParticles.amountMax = 8;
 			this.warpParticles.spawn(this.getGameModel(), this.getPos());
 			
 			// determine if x or y is greater in distance  

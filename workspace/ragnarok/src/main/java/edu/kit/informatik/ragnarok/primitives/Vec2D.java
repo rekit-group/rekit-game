@@ -25,6 +25,14 @@ public class Vec2D {
 		this.y = y;
 	}
 	/**
+	 * Constructor that takes one initial coordinate an saves them as x and y
+	 * @param x the initial x- and y-component of the vector
+	 */
+	public Vec2D(float xy) {
+		this.x = xy;
+		this.y = xy;
+	}
+	/**
 	 * Short-hand constructor that takes the default value (0|0)
 	 */
 	public Vec2D() {
