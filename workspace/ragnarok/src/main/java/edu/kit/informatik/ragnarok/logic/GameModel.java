@@ -203,6 +203,22 @@ public class GameModel {
 		// add GameElements that have been added
 		this.addAllWaitingGameElements();
 		
+
+		Player player = this.getPlayer();
+		
+		// get maximum player x and adjust level offset
+		if (player.getPos().getX() > this.currentOffset) {
+			this.currentOffset = player.getPos().getX();
+			this.levelCreator.generate();
+		}
+		
+		// dont allow player to go behind currentOffset
+		float minX = this.currentOffset - c.playerDist + player.getSize().getX() / 2f;
+		System.out.println(player.getPos().getX() - minX);
+		if (player.getPos().getX() < minX) {
+			player.setPos(player.getPos().setX(minX));
+		}
+		
 		// iterate all GameElements to invoke logicLoop
 		synchronized (SYNC) {
 			Iterator<GameElement> it = this.getGameElementIterator();
@@ -226,16 +242,6 @@ public class GameModel {
 		// remove GameElements that must be removed
 		this.removeAllWaitingGameElements();
 		
-		Player player = this.getPlayer();
-		// get maximum player x
-		if (player.getPos().getX() > this.currentOffset) {
-			this.currentOffset = player.getPos().getX();
-			this.levelCreator.generate();
-		}
-		// dont allow player to go behind currentOffset
-		if (player.getPos().getX() < this.currentOffset - c.playerDist) {
-			player.setPos(player.getPos().setX(this.currentOffset - c.playerDist));
-		}
 
 		synchronized (SYNC) {
 			// iterate all GameElements to detect collision
