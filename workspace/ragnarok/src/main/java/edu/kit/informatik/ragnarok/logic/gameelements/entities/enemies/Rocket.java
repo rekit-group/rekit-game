@@ -55,10 +55,9 @@ public class Rocket extends Entity {
 			Rocket.explosionParticles.colorG = new ParticleSpawnerOption(200, 250, -130, -110);
 			Rocket.explosionParticles.colorB = new ParticleSpawnerOption(150, 200, -130, -110);
 			Rocket.explosionParticles.colorA = new ParticleSpawnerOption(230, 250, -120, -200);
-
-			// TODO This was here
-			// explosionParticles.timeMin = 0.1f;
-			Rocket.explosionParticles.timeMin = 0.2f;
+ 
+			Rocket.explosionParticles.timeMin = 0.1f;
+			Rocket.explosionParticles.timeMax = 0.2f;
 
 			Rocket.explosionParticles.amountMin = 40;
 			Rocket.explosionParticles.amountMax = 50;
