@@ -20,50 +20,87 @@ public class Rocket extends Entity {
 	private static RGB outerColor = new RGB(50, 50, 50);
 
 	private static ParticleSpawner sparkParticles = null;
+	static {
+		Rocket.sparkParticles = new ParticleSpawner();
+		Rocket.sparkParticles.angle = new ParticleSpawnerOption((float) ((1 / 4f) * Math.PI),
+				(float) ((3 / 4f) * Math.PI), 0, 0);
+		Rocket.sparkParticles.colorR = new ParticleSpawnerOption(200, 230, 10, 25);
+		Rocket.sparkParticles.colorG = new ParticleSpawnerOption(200, 250, -140, -120);
+		Rocket.sparkParticles.colorB = new ParticleSpawnerOption(150, 200, -140, -120);
+		Rocket.sparkParticles.colorA = new ParticleSpawnerOption(230, 250, -150, -230);
+		Rocket.sparkParticles.timeMin = 0.1f;
+		Rocket.sparkParticles.amountMin = 1;
+		Rocket.sparkParticles.amountMax = 3;
+		Rocket.sparkParticles.speed = new ParticleSpawnerOption(3, 6, -1, 1);
+	}
 	private static ParticleSpawner explosionParticles = null;
+	static {
+		Rocket.explosionParticles = new ParticleSpawner();
+		Rocket.explosionParticles.angle = new ParticleSpawnerOption(0, (float) (2 * Math.PI), 0, 0);
+		Rocket.explosionParticles.colorR = new ParticleSpawnerOption(200, 230, 10, 25);
+		Rocket.explosionParticles.colorG = new ParticleSpawnerOption(200, 250, -130, -110);
+		Rocket.explosionParticles.colorB = new ParticleSpawnerOption(150, 200, -130, -110);
+		Rocket.explosionParticles.colorA = new ParticleSpawnerOption(230, 250, -120, -200);
+		Rocket.explosionParticles.timeMin = 0.1f;
+		Rocket.explosionParticles.timeMax = 0.2f;
+		Rocket.explosionParticles.amountMin = 40;
+		Rocket.explosionParticles.amountMax = 50;
+		Rocket.explosionParticles.speed = new ParticleSpawnerOption(4, 9, -1, 1);
+	}
 
 	public Rocket(Vec2D startPos) {
 		super(startPos);
 
 		// if this is first instantiated rocket: create spark Particle
-		if (Rocket.sparkParticles == null) {
-			Rocket.sparkParticles = new ParticleSpawner();
-
-			Rocket.sparkParticles.angle = new ParticleSpawnerOption((float) ((1 / 4f) * Math.PI),
-					(float) ((3 / 4f) * Math.PI), 0, 0);
-
-			Rocket.sparkParticles.colorR = new ParticleSpawnerOption(200, 230, 10, 25);
-			Rocket.sparkParticles.colorG = new ParticleSpawnerOption(200, 250, -140, -120);
-			Rocket.sparkParticles.colorB = new ParticleSpawnerOption(150, 200, -140, -120);
-			Rocket.sparkParticles.colorA = new ParticleSpawnerOption(230, 250, -150, -230);
-
-			Rocket.sparkParticles.timeMin = 0.1f;
-
-			Rocket.sparkParticles.amountMin = 1;
-			Rocket.sparkParticles.amountMax = 3;
-
-			Rocket.sparkParticles.speed = new ParticleSpawnerOption(3, 6, -1, 1);
-		}
+		// if (Rocket.sparkParticles == null) {
+		// Rocket.sparkParticles = new ParticleSpawner();
+		//
+		// Rocket.sparkParticles.angle = new ParticleSpawnerOption((float) ((1 /
+		// 4f) * Math.PI),
+		// (float) ((3 / 4f) * Math.PI), 0, 0);
+		//
+		// Rocket.sparkParticles.colorR = new ParticleSpawnerOption(200, 230,
+		// 10, 25);
+		// Rocket.sparkParticles.colorG = new ParticleSpawnerOption(200, 250,
+		// -140, -120);
+		// Rocket.sparkParticles.colorB = new ParticleSpawnerOption(150, 200,
+		// -140, -120);
+		// Rocket.sparkParticles.colorA = new ParticleSpawnerOption(230, 250,
+		// -150, -230);
+		//
+		// Rocket.sparkParticles.timeMin = 0.1f;
+		//
+		// Rocket.sparkParticles.amountMin = 1;
+		// Rocket.sparkParticles.amountMax = 3;
+		//
+		// Rocket.sparkParticles.speed = new ParticleSpawnerOption(3, 6, -1, 1);
+		// }
 
 		// if this is first instantiated rocket: create explosion Particle
-		if (Rocket.explosionParticles == null) {
-			Rocket.explosionParticles = new ParticleSpawner();
-
-			Rocket.explosionParticles.angle = new ParticleSpawnerOption(0, (float) (2 * Math.PI), 0, 0);
-
-			Rocket.explosionParticles.colorR = new ParticleSpawnerOption(200, 230, 10, 25);
-			Rocket.explosionParticles.colorG = new ParticleSpawnerOption(200, 250, -130, -110);
-			Rocket.explosionParticles.colorB = new ParticleSpawnerOption(150, 200, -130, -110);
-			Rocket.explosionParticles.colorA = new ParticleSpawnerOption(230, 250, -120, -200);
- 
-			Rocket.explosionParticles.timeMin = 0.1f;
-			Rocket.explosionParticles.timeMax = 0.2f;
-
-			Rocket.explosionParticles.amountMin = 40;
-			Rocket.explosionParticles.amountMax = 50;
-
-			Rocket.explosionParticles.speed = new ParticleSpawnerOption(4, 9, -1, 1);
-		}
+		// if (Rocket.explosionParticles == null) {
+		// Rocket.explosionParticles = new ParticleSpawner();
+		//
+		// Rocket.explosionParticles.angle = new ParticleSpawnerOption(0,
+		// (float) (2 * Math.PI), 0, 0);
+		//
+		// Rocket.explosionParticles.colorR = new ParticleSpawnerOption(200,
+		// 230, 10, 25);
+		// Rocket.explosionParticles.colorG = new ParticleSpawnerOption(200,
+		// 250, -130, -110);
+		// Rocket.explosionParticles.colorB = new ParticleSpawnerOption(150,
+		// 200, -130, -110);
+		// Rocket.explosionParticles.colorA = new ParticleSpawnerOption(230,
+		// 250, -120, -200);
+		//
+		// Rocket.explosionParticles.timeMin = 0.1f;
+		// Rocket.explosionParticles.timeMax = 0.2f;
+		//
+		// Rocket.explosionParticles.amountMin = 40;
+		// Rocket.explosionParticles.amountMax = 50;
+		//
+		// Rocket.explosionParticles.speed = new ParticleSpawnerOption(4, 9, -1,
+		// 1);
+		// }
 	}
 
 	@Override

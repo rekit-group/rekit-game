@@ -18,6 +18,7 @@
 - [x] Fix collision detection direction
 - [x] Secret Exit Bug
 - [ ] Fix z-Index rendering order
-- [?] Lazy Initialization Bug in Rocket explosion & spark particles
+- [x] Lazy Initialization Bug in Rocket explosion & spark particles
 - [ ] Slurp colliding with InanimateFloor cause Particle madness
 - [ ] SlurpDurps sometimes seem to not affect the Player
+- [ ] org.eclipse.swt.SWTError: No more handles when playing for a long time
