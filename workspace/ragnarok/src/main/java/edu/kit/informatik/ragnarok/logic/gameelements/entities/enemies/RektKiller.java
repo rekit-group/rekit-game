@@ -4,7 +4,7 @@ import java.util.Random;
 
 import org.eclipse.swt.graphics.RGB;
 
-import edu.kit.informatik.ragnarok.c;
+import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.gui.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
@@ -102,13 +102,13 @@ public class RektKiller extends Entity {
 		// Do usual entity logic
 		super.logicLoop(deltaTime);
 
-		if (this.getPos().getY() <= 0 || this.getPos().getY() >= c.gridH - 1) {
+		if (this.getPos().getY() <= 0 || this.getPos().getY() >= GameConf.gridH - 1) {
 			currentDirection = currentDirection.getOpposite();
 		}
 
 		// We dont want this guy to fall
 		this.setVel(this.currentDirection.getVector().multiply(
-				c.playerWalkMaxSpeed));
+				GameConf.playerWalkMaxSpeed));
 	}
 
 	@Override
@@ -126,7 +126,7 @@ public class RektKiller extends Entity {
 
 				// Let the player jump if he landed on top
 				if (dir == Direction.UP) {
-					element.setVel(element.getVel().setY(c.playerJumpBoost));
+					element.setVel(element.getVel().setY(GameConf.playerJumpBoost));
 				}
 
 				// kill the enemy

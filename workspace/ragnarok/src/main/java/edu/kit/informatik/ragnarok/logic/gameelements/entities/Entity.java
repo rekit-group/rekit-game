@@ -1,6 +1,6 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities;
 
-import edu.kit.informatik.ragnarok.c;
+import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
@@ -66,7 +66,7 @@ public abstract class Entity extends GameElement {
 	public void logicLoop(float deltaTime) {
 		
 		// if delta is too big, clipping likely to appear...
-		if (deltaTime > c.logicDelta) {
+		if (deltaTime > GameConf.logicDelta) {
 			// ..so recursively split work up into smaller parts
 			logicLoop(deltaTime / 2);
 			logicLoop(deltaTime / 2);
@@ -79,9 +79,9 @@ public abstract class Entity extends GameElement {
 		
 		Vec2D newVel = this.getVel();
 		// apply gravity
-		newVel = newVel.addY(c.g);
+		newVel = newVel.addY(GameConf.g);
 		// apply slowing down walk
-		newVel = newVel.addX(-Math.signum(newVel.getX()) * c.playerStopAccel);
+		newVel = newVel.addX(-Math.signum(newVel.getX()) * GameConf.playerStopAccel);
 		// we dont want weird floating point velocities
 		if (Math.abs(newVel.getX()) < 0.01) {
 			newVel = newVel.setX(0);
@@ -89,7 +89,7 @@ public abstract class Entity extends GameElement {
 		// save new velocity
 		this.setVel(newVel);
 		// check if entity fell out of the world
-		if (this.getPos().getY() > c.gridH) {
+		if (this.getPos().getY() > GameConf.gridH) {
 			this.addDamage(this.getLifes());
 		}
 	}
