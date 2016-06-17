@@ -101,8 +101,12 @@ public class Slurp extends Entity {
 		
 		super.logicLoop(deltaTime);
 		
+		// Iterate all contained SlurpDurps
 		for (SlurpDurp slurpDurp : this.slurpDurps) {
+			// update new position SlurpPosition
 			slurpDurp.setParentPos(this.getPos());
+			
+			// everyone need some logic
 			slurpDurp.logicLoop(deltaTime);
 		}
 		
@@ -111,14 +115,17 @@ public class Slurp extends Entity {
 	
 	@Override
 	public void collidedWith(Frame collision, Direction dir) {
+		// If slurp collides against wall, orthogonal to direction
 		if (this.currentDirection == dir.getNextAntiClockwise()) {
+			// He sticks to a wall
 			this.hasWallContact = true;
 		}
+		// If Slurp ran against wall
 		if (this.currentDirection == dir.getOpposite()) {
+			// Turn him
 			this.currentDirection = this.currentDirection.getNextClockwise();
 			this.hasWallContact = true;
 		}
-		System.out.println(dir + " -> " + this.currentDirection);
 		super.collidedWith(collision, dir);
 	}
 	

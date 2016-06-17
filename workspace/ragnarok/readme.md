@@ -14,4 +14,5 @@
 - [x] Fix collision detection direction
 - [x] Secret Exit Bug
 - [ ] Allow shorter Jumps
+- [ ] Fix z-Index rendering order
 

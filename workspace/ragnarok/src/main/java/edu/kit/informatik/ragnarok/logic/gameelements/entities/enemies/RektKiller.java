@@ -118,7 +118,6 @@ public class RektKiller extends Entity {
 		}
 
 		if (this.isHostile(element)) {
-			System.out.println(dir.toString());
 			// Touched harmless side
 			if (!this.hasSide(dir)) {
 				// give the player 40 points
