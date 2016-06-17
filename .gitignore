@@ -4,3 +4,4 @@ workspace/.metadata
 workspace/.recommenders
 workspace/ragnarok/src/**/*.class
 **/*.cfs
+*.classpath
