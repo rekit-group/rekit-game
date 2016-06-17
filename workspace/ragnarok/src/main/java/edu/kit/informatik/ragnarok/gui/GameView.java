@@ -1,6 +1,8 @@
 package edu.kit.informatik.ragnarok.gui;
 
+import java.util.ArrayDeque;
 import java.util.Iterator;
+import java.util.Queue;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
@@ -51,6 +53,8 @@ public class GameView {
 	
 	private GC gc;
 	
+	private long lastRenderTime;
+	
 	/**
 	 * Constructor that creates a new window with a canvas and prepares all required attributes
 	 */
@@ -88,6 +92,7 @@ public class GameView {
 						}
 					});
 
+					
 					try {
 						Thread.sleep(c.renderDelta);
 					} catch (InterruptedException e) {
@@ -159,13 +164,37 @@ public class GameView {
 		// Draw UI (lifes, score)
 		this.field.refreshUI(this.getModel().getPlayer().getLifes(), this.getModel().getPoints());
 		
-		// draw temporary image on actual cavans
+		// draw temporary image on actual canvas
 		this.gc.drawImage(image, 0, 0);
 		
 		// put trash outside
 		image.dispose();
 		tempGC.dispose();
 		
+		// draw FPS
+		float fps = getFPS();
+		this.field.setGC(this.gc);
+		this.field.drawFPS(fps);
 	}
 
+	
+	private Queue<Float> fpsQueue = new ArrayDeque<Float>();
+	private float getFPS() {
+		long thisTime = System.currentTimeMillis();
+		long deltaTime = thisTime - this.lastRenderTime;
+		this.lastRenderTime = System.currentTimeMillis();
+		
+		float fps = deltaTime;
+		fpsQueue.add(fps);
+		float sum = 0;
+		for (float f : fpsQueue) {
+			sum += f;
+		}
+		
+		if (fpsQueue.size() > 5) {
+			fpsQueue.poll();
+		}
+		
+		return (int)(10000f / (sum / fpsQueue.size()) / 10f);
+	}
 }

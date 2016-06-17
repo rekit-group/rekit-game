@@ -2,7 +2,6 @@ package edu.kit.informatik.ragnarok.logic;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 
@@ -214,7 +213,6 @@ public class GameModel {
 		
 		// dont allow player to go behind currentOffset
 		float minX = this.currentOffset - c.playerDist + player.getSize().getX() / 2f;
-		System.out.println(player.getPos().getX() - minX);
 		if (player.getPos().getX() < minX) {
 			player.setPos(player.getPos().setX(minX));
 		}
