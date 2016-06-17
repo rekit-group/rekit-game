@@ -108,7 +108,7 @@ public abstract class Entity extends GameElement {
 			break;
 		case RIGHT:
 			this.setPos(this.getPos().setX(
-					collision.getBorder(dir.getOpposite()) - this.getSize().getX() / 1.9f));
+					collision.getBorder(dir) + this.getSize().getX() / 1.9f));
 			// stop velocity in x dimension
 			this.setVel(this.getVel().setX(0));
 			break;
@@ -122,7 +122,7 @@ public abstract class Entity extends GameElement {
 			break;
 		case LEFT:
 			this.setPos(this.getPos().setX(
-					collision.getBorder(dir.getOpposite()) + this.getSize().getX() / 1.9f));
+					collision.getBorder(dir) - this.getSize().getX() / 1.9f));
 			// stop velocity in x dimension
 			this.setVel(this.getVel().setX(0));
 			break;

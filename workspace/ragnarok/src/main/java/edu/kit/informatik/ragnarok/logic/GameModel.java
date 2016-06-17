@@ -290,11 +290,12 @@ public class GameModel {
 		// it must be because of the y position
 		if (e1lastXFrame.collidesWith(e2lastXFrame)) {
 			// If relative movement is in positive y direction (down)
-			if (e2.getPos().getY() + e1.getPos().getY() > e2lastPos.getY() + e1lastPos.getY()) {
+			float relMovement = (e2.getPos().getY() - e2lastPos.getY()) - (e1.getPos().getY() - e1lastPos.getY());
+			if (relMovement > 0) {
 				e1.reactToCollision(e2, Direction.UP);
 			} else
 			// If relative movement is in negative y direction (up)
-			if (e2.getPos().getY() + e1.getPos().getY() < e2lastPos.getY() + e1lastPos.getY()) {
+			if (relMovement < 0) {
 				e1.reactToCollision(e2, Direction.DOWN);
 			} else {
 				return;
@@ -307,12 +308,13 @@ public class GameModel {
 		// it must be because of the x position
 		if (e1lastYFrame.collidesWith(e2lastYFrame)) {
 			// If he moved in positive x direction (right)
-			if (e2.getPos().getX() + e1.getPos().getX() > e2lastPos.getX() + e1lastPos.getX()) {
-				e1.reactToCollision(e2, Direction.RIGHT);
+			float relMovement = (e2.getPos().getX() - e2lastPos.getX()) - (e1.getPos().getX() - e1lastPos.getX());
+			if (relMovement > 0) {
+				e1.reactToCollision(e2, Direction.LEFT);
 			} else
 			// If he moved in negative x direction (left)
-			if (e2.getPos().getX() + e1.getPos().getX() < e2lastPos.getX() + e1lastPos.getX()) {
-				e1.reactToCollision(e2, Direction.LEFT);
+			if (relMovement < 0) {
+				e1.reactToCollision(e2, Direction.RIGHT);
 			} else {
 				return;
 			}
