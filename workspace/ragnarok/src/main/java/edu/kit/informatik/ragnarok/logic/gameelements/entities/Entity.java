@@ -8,19 +8,26 @@ import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
 public abstract class Entity extends GameElement {
 	
-	
-	protected int lifes;
-	protected int points;
+	/**
+	 * The amount of lifes the Entity has.
+	 * Upon reaching 0 lifes, he dies
+	 */
+	protected int lifes = 1;
 	
 	/**
-	 * <pre>
-	 *           1..1     1..1
-	 * Entity ------------------------- EntityState
-	 *           entity        &gt;       entityState
-	 * </pre>
+	 * The amount of points the Entity has scored
+	 */
+	protected int points = 0;
+	
+	/**
+	 * The current State the Entity is in and determines the jump behavior
 	 */
 	private EntityState entityState;
 	
+	/**
+	 * Constructor that initializes attributes and takes a start position
+	 * @param startPos the position this entity shall be in
+	 */
 	public Entity(Vec2D startPos) {
 		// Set to default state 
 		this.setEntityState(new DefaultState());
@@ -30,10 +37,18 @@ public abstract class Entity extends GameElement {
 		this.setVel(new Vec2D(0, 0));
 	}
 	
+	/**
+	 * Set the Entities <i>EntitiyState</i> that determines its jump behavior
+	 * @param value
+	 */
 	public void setEntityState(EntityState value) {
 		this.entityState = value;
 	}
-
+	
+	/**
+	 * Return the Entities current <i>EntitiyState</i> that determines its jump behavior.
+	 * @return
+	 */
 	public EntityState getEntityState() {
 		return this.entityState;
 	}
@@ -132,6 +147,7 @@ public abstract class Entity extends GameElement {
 		this.setLastPos(lastPos);
 	}
 	
+	@Override
 	public int getZ() {
 		return 1;
 	}

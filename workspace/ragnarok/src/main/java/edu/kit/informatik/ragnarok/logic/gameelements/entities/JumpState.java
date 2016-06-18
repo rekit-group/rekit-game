@@ -1,14 +1,15 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities;
 
+/**
+ * The jumping state a entity is in upon jumping until landing
+ * Represents the state where a player can not jump anymore.
+ *
+ * @author Angelo Aracri
+ * @version 1.0
+ */
 public class JumpState extends EntityState {
 	@Override
-	public void render() {
-		// TODO implement this operation
-		throw new UnsupportedOperationException("not implemented");
-	}
-	
 	public boolean canJump() {
 		return false;
 	}
-
 }
