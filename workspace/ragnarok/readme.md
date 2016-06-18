@@ -10,9 +10,9 @@
 [?] Means done, but not sure. Remove if someone is sure  
 
 ### Features
-- [ ] Show highscore below score and save highscore
+- [x] Show highscore below score and save highscore
 - [ ] Show score/highscore dependent death-messages
-- [ ] Allow shorter Jumps
+- [x] Allow shorter Jumps
 
 ### Bugs
 - [x] Fix collision detection direction

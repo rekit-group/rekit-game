@@ -33,7 +33,7 @@ public abstract class Entity extends GameElement {
 	 */
 	public Entity(Vec2D startPos) {
 		// Set to default state 
-		this.setEntityState(new DefaultState());
+		this.setEntityState(new DefaultState(this));
 		
 		// Set initial position and velocity
 		this.setPos(startPos);
@@ -131,7 +131,7 @@ public abstract class Entity extends GameElement {
 		case UP:
 			signum = -1;
 			if (this.getEntityState() instanceof JumpState) {
-				this.setEntityState(new DefaultState());
+				this.setEntityState(new DefaultState(this));
 			}
 		case DOWN:
 			// move entities lower side to collisions top side / vice versa

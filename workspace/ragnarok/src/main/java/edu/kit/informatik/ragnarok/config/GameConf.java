@@ -52,6 +52,7 @@ public class GameConf {
 	public static final float playerWalkMaxSpeed = GameConf.BUNDLE.getFloat("playerWalkMaxSpeed");
 
 	public static final float playerJumpBoost = GameConf.BUNDLE.getFloat("playerJumpBoost");
+	public static final float playerJumpTime = GameConf.BUNDLE.getFloat("playerJumpTime");
 	public static final float playerBottomBoost = GameConf.BUNDLE.getFloat("playerBottomBoost");
 
 	public static final float playerDist = GameConf.BUNDLE.getFloat("playerDist");
