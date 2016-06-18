@@ -193,7 +193,7 @@ public class GameView {
 		}
 
 		if (this.fpsQueue.size() > 5) {
-			this.fpsQueue.poll();
+			this.fpsQueue.remove();
 		}
 
 		return (int) (10000f / (sum / this.fpsQueue.size()) / 10f);
