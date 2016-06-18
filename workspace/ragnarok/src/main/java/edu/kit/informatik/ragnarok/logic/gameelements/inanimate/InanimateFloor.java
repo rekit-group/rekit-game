@@ -47,7 +47,7 @@ public class InanimateFloor extends Inanimate {
 				size.setY(plateThickness), darkColor);
 		
 	}
-	
+
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
 		
@@ -56,7 +56,7 @@ public class InanimateFloor extends Inanimate {
 			dustParticles.spawn(this.getGameModel(), this.getPos().addY(-this.getSize().getY()/2));
 		}
 		// if strong velocity in x direction
-		else if (Math.abs(element.getVel().getX()) > 1) {
+		else if (Math.abs(element.getVel().getX()) > 5) {
 			// if moving right
 			if (element.getVel().getX() > 0) {
 				dustParticles.angle = dustParticleAngleLeft;
