@@ -106,7 +106,6 @@ public class Field {
 		color.dispose();
 		Font font = new Font(Display.getCurrent(), "Tahoma", 18, SWT.BOLD);
 		this.gc.setFont(font);
-		font.dispose();
 		// There is no alignment, so we need to calculate the text width
 		String text = points + " Points";
 		int textWidth = this.gc.stringExtent(text).x;
@@ -119,6 +118,8 @@ public class Field {
 		textWidth = this.gc.stringExtent(text).x;
 		// And draw the text
 		this.gc.drawText(text, this.units2pixel(GameConf.gridW) - textWidth - 10, 10 + 10 + textHeight, true);
+		font.dispose();
+
 	}
 
 	public void drawFPS(float fps) {
