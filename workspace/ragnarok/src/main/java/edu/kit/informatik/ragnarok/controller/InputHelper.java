@@ -145,12 +145,11 @@ public final class InputHelper {
 	 * Observers and invokes every update();
 	 */
 	private static void notifyObservers() {
+		if (InputHelper.attatched.isEmpty()) {
+			return;
+		}
 		List<Observer> obs = new ArrayList<Observer>();
-
 		synchronized (InputHelper.SYNC) {
-			if (InputHelper.attatched.isEmpty()) {
-				return;
-			}
 			// Kind of hacky but works: blockingly (what kind of adverb is
 			// this??)
 			// add all Observers to regular List...
