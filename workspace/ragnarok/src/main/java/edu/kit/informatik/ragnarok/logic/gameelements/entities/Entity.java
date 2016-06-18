@@ -2,6 +2,9 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.state.DefaultState;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.state.EntityState;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.state.JumpState;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;

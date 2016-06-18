@@ -1,4 +1,4 @@
-package edu.kit.informatik.ragnarok.logic.gameelements.entities;
+package edu.kit.informatik.ragnarok.logic.gameelements.entities.state;
 
 /**
  * The default state a entity is in after initialization.

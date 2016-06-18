@@ -13,6 +13,13 @@ import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.primitives.Polygon;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
+/**
+ * This class represents a Field of the {@link GameView}
+ *
+ * @author Angelo Aracri
+ * @author Dominik Fuchß
+ *
+ */
 public class Field {
 
 	private GC gc;
@@ -36,28 +43,33 @@ public class Field {
 	}
 
 	public void drawCircle(Vec2D pos, Vec2D size, RGB col) {
-		this.gc.setBackground(new Color(Display.getCurrent(), col));
+		Color color = new Color(Display.getCurrent(), col);
+		this.gc.setBackground(color);
+		color.dispose();
 		this.gc.fillOval(this.currentOffset() + this.units2pixel((pos.getX() - size.getX() / 2f)),
-				this.units2pixel((pos.getY() - size.getY() / 2f)), this.units2pixel(size.getX()),
-				this.units2pixel(size.getY()));
+				this.units2pixel((pos.getY() - size.getY() / 2f)), this.units2pixel(size.getX()), this.units2pixel(size.getY()));
 	}
 
 	public void drawRectangle(Vec2D pos, Vec2D size, RGB col) {
-		this.gc.setBackground(new Color(Display.getCurrent(), col));
+		Color color = new Color(Display.getCurrent(), col);
+		this.gc.setBackground(color);
+		color.dispose();
 		this.gc.fillRectangle(this.currentOffset() + this.units2pixel(pos.getX() - size.getX() / 2f),
-				this.units2pixel(pos.getY() - size.getY() / 2f), this.units2pixel(size.getX()),
-				this.units2pixel(size.getY()));
+				this.units2pixel(pos.getY() - size.getY() / 2f), this.units2pixel(size.getX()), this.units2pixel(size.getY()));
 	}
 
 	public void drawPolygon(Polygon polygon, RGB col) {
 		RGBA actualCol = new RGBA(col.red, col.green, col.blue, 255);
 		this.drawPolygon(polygon, actualCol);
+
 	}
 
 	public void drawPolygon(Polygon polygon, RGBA col) {
 		// set color
 		this.gc.setAlpha(col.alpha);
-		this.gc.setBackground(new Color(Display.getCurrent(), col));
+		Color color = new Color(Display.getCurrent(), col);
+		this.gc.setBackground(color);
+		color.dispose();
 
 		float[] unitArray = polygon.getAbsoluteArray();
 		int[] pixelArray = new int[unitArray.length];
@@ -88,35 +100,40 @@ public class Field {
 		for (int i = 0; i < lifes; i++) {
 			this.gc.drawImage(image, 10 + 50 * i, 10);
 		}
-
 		// Set color to red and set font
-		this.gc.setForeground(new Color(Display.getCurrent(), new RGB(200, 50, 0)));
+		Color color = new Color(Display.getCurrent(), new RGB(200, 50, 0));
+		this.gc.setForeground(color);
+		color.dispose();
 		Font font = new Font(Display.getCurrent(), "Tahoma", 18, SWT.BOLD);
 		this.gc.setFont(font);
+		font.dispose();
 		// There is no alignment, so we need to calculate the text width
 		String text = points + " Points";
 		int textWidth = this.gc.stringExtent(text).x;
 		int textHeight = this.gc.stringExtent(text).y;
 		// And draw the text
 		this.gc.drawText(text, this.units2pixel(GameConf.gridW) - textWidth - 10, 10, true);
-		
-		//There is no alignment, so we need to calculate the text width
+
+		// There is no alignment, so we need to calculate the text width
 		text = highScore + " HighScore";
 		textWidth = this.gc.stringExtent(text).x;
 		// And draw the text
 		this.gc.drawText(text, this.units2pixel(GameConf.gridW) - textWidth - 10, 10 + 10 + textHeight, true);
 	}
-	
+
 	public void drawFPS(float fps) {
 		// Set color to red and set font
-		gc.setForeground(new Color(Display.getCurrent(), new RGB(200, 50, 0)));
+		Color color = new Color(Display.getCurrent(), new RGB(200, 50, 0));
+		this.gc.setForeground(color);
+		color.dispose();
 		Font font = new Font(Display.getCurrent(), "Tahoma", 18, SWT.BOLD);
-		gc.setFont(font);
+		this.gc.setFont(font);
+		font.dispose();
 		// There is no alignment, so we need to calculate the text width
 		String text = "FPS: " + fps;
-		int textWidth = gc.stringExtent(text).x;
+		int textWidth = this.gc.stringExtent(text).x;
 		// And draw the text
-		gc.drawText(text, units2pixel(GameConf.gridW) - textWidth - 10, units2pixel(GameConf.gridH) - 60, true);
+		this.gc.drawText(text, this.units2pixel(GameConf.gridW) - textWidth - 10, this.units2pixel(GameConf.gridH) - 60, true);
 	}
 
 	public void setGC(GC gc) {

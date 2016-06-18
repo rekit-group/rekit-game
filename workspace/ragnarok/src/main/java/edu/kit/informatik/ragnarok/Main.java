@@ -29,7 +29,7 @@ public class Main {
 		Controller controller = new Controller(model);
 
 		// Instantiate InputHelper that requires a shell
-		InputHelper.init(view.getCanvas());
+		InputHelper.attach(view.getCanvas());
 
 		// Start MVC
 		model.start();

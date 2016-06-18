@@ -21,4 +21,4 @@
 - [x] Lazy Initialization Bug in Rocket explosion & spark particles
 - [x] Slurp colliding with InanimateFloor cause Particle madness
 - [ ] SlurpDurps sometimes seem to not affect the Player
-- [ ] org.eclipse.swt.SWTError: No more handles when playing for a long time
+- [x] org.eclipse.swt.SWTError: No more handles when playing for a long time

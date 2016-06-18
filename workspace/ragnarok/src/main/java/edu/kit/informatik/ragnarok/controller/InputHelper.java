@@ -5,14 +5,23 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.widgets.Control;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.util.ThreadUtils;
 
+/**
+ * This class establishes a {@link KeyListener} to Components of the Shell<br>
+ * Also {@link Observer Observers} can register to receive events
+ *
+ * @author Dominik Fuchß
+ *
+ */
 public final class InputHelper {
 
 	/**
@@ -27,45 +36,16 @@ public final class InputHelper {
 	private static List<Observer> observers = new ArrayList<>();
 
 	/**
-	 * Boolean that signals if the InputHelper has been initialized with the
-	 * shell
-	 */
-	private static boolean init = false;
-
-	/**
 	 * List of all keyCodes that are currently pressed
 	 */
 	private static Set<Integer> keys = new HashSet<Integer>();
-
 	/**
-	 * Initializes the InputHelper with a shell by attaching keyListeners to it.
-	 * Each time a key is pressed/released the corresponding keyCode is saved
-	 * in/deleted from the Set keys.
-	 *
-	 * @param shell
+	 * All registered {@link Control Controls} with their key adapters
 	 */
-	public static void init(Control listenerControl) {
-		// Check if listenerControl is set
-		if (listenerControl == null) {
-			return;
-		}
+	private static ConcurrentHashMap<Control, KeyAdapter> attatched = new ConcurrentHashMap<>();
 
-		// Add our custom KeyListener to an object
-		listenerControl.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				InputHelper.press(e.keyCode);
-			}
-
-			@Override
-			public void keyReleased(KeyEvent e) {
-				InputHelper.release(e.keyCode);
-			}
-		});
-
-		// Save that we just initialized
-		InputHelper.init = true;
-
+	// Start the daemon
+	static {
 		Thread daemon = new Thread() {
 			@Override
 			public void run() {
@@ -77,6 +57,52 @@ public final class InputHelper {
 		};
 		daemon.setDaemon(true);
 		daemon.start();
+	}
+
+	/**
+	 * Attach a {@link Control} to the Listener
+	 *
+	 * @param listenerControl
+	 *            the control
+	 * @return {@code true} if successfully attached, {@code false} otherwise
+	 */
+	public static synchronized boolean attach(Control listenerControl) {
+		// Check if listenerControl is set
+		if (listenerControl == null || InputHelper.attatched.containsKey(listenerControl)) {
+			return false;
+		}
+
+		// Add our custom KeyListener to an object
+		KeyAdapter adapter = new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				InputHelper.press(e.keyCode);
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				InputHelper.release(e.keyCode);
+			}
+		};
+		InputHelper.attatched.put(listenerControl, adapter);
+		listenerControl.addKeyListener(adapter);
+		return true;
+	}
+
+	/**
+	 * Detach a {@link Control} from the listener
+	 *
+	 * @param listenerControl
+	 *            the control
+	 * @return {@code true} if detached or {@code false} if not detached
+	 */
+	public static synchronized boolean detach(Control listenerControl) {
+		KeyAdapter adapter = InputHelper.attatched.remove(listenerControl);
+		if (adapter == null) {
+			return false;
+		}
+		listenerControl.removeKeyListener(adapter);
+		return true;
 	}
 
 	/**
@@ -119,13 +145,15 @@ public final class InputHelper {
 	 * Observers and invokes every update();
 	 */
 	private static void notifyObservers() {
-		if (!InputHelper.init) {
-			return;
-		}
-		// Kind of hacky but works: blockingly (what kind of adverb is this??)
-		// add all Observers to regular List...
 		List<Observer> obs = new ArrayList<Observer>();
+
 		synchronized (InputHelper.SYNC) {
+			if (InputHelper.attatched.isEmpty()) {
+				return;
+			}
+			// Kind of hacky but works: blockingly (what kind of adverb is
+			// this??)
+			// add all Observers to regular List...
 			for (Observer o : InputHelper.observers) {
 				obs.add(o);
 			}

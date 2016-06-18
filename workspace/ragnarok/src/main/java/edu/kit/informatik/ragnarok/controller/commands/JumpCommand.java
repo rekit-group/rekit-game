@@ -2,7 +2,7 @@ package edu.kit.informatik.ragnarok.controller.commands;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.JumpState;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.state.JumpState;
 
 public class JumpCommand extends InputCommand {	
 	public void apply() {

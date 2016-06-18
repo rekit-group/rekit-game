@@ -22,8 +22,7 @@ public class Rocket extends Entity {
 	private static ParticleSpawner sparkParticles = null;
 	static {
 		Rocket.sparkParticles = new ParticleSpawner();
-		Rocket.sparkParticles.angle = new ParticleSpawnerOption((float) ((1 / 4f) * Math.PI),
-				(float) ((3 / 4f) * Math.PI), 0, 0);
+		Rocket.sparkParticles.angle = new ParticleSpawnerOption((float) ((1 / 4f) * Math.PI), (float) ((3 / 4f) * Math.PI), 0, 0);
 		Rocket.sparkParticles.colorR = new ParticleSpawnerOption(200, 230, 10, 25);
 		Rocket.sparkParticles.colorG = new ParticleSpawnerOption(200, 250, -140, -120);
 		Rocket.sparkParticles.colorB = new ParticleSpawnerOption(150, 200, -140, -120);
@@ -50,57 +49,6 @@ public class Rocket extends Entity {
 
 	public Rocket(Vec2D startPos) {
 		super(startPos);
-
-		// if this is first instantiated rocket: create spark Particle
-		// if (Rocket.sparkParticles == null) {
-		// Rocket.sparkParticles = new ParticleSpawner();
-		//
-		// Rocket.sparkParticles.angle = new ParticleSpawnerOption((float) ((1 /
-		// 4f) * Math.PI),
-		// (float) ((3 / 4f) * Math.PI), 0, 0);
-		//
-		// Rocket.sparkParticles.colorR = new ParticleSpawnerOption(200, 230,
-		// 10, 25);
-		// Rocket.sparkParticles.colorG = new ParticleSpawnerOption(200, 250,
-		// -140, -120);
-		// Rocket.sparkParticles.colorB = new ParticleSpawnerOption(150, 200,
-		// -140, -120);
-		// Rocket.sparkParticles.colorA = new ParticleSpawnerOption(230, 250,
-		// -150, -230);
-		//
-		// Rocket.sparkParticles.timeMin = 0.1f;
-		//
-		// Rocket.sparkParticles.amountMin = 1;
-		// Rocket.sparkParticles.amountMax = 3;
-		//
-		// Rocket.sparkParticles.speed = new ParticleSpawnerOption(3, 6, -1, 1);
-		// }
-
-		// if this is first instantiated rocket: create explosion Particle
-		// if (Rocket.explosionParticles == null) {
-		// Rocket.explosionParticles = new ParticleSpawner();
-		//
-		// Rocket.explosionParticles.angle = new ParticleSpawnerOption(0,
-		// (float) (2 * Math.PI), 0, 0);
-		//
-		// Rocket.explosionParticles.colorR = new ParticleSpawnerOption(200,
-		// 230, 10, 25);
-		// Rocket.explosionParticles.colorG = new ParticleSpawnerOption(200,
-		// 250, -130, -110);
-		// Rocket.explosionParticles.colorB = new ParticleSpawnerOption(150,
-		// 200, -130, -110);
-		// Rocket.explosionParticles.colorA = new ParticleSpawnerOption(230,
-		// 250, -120, -200);
-		//
-		// Rocket.explosionParticles.timeMin = 0.1f;
-		// Rocket.explosionParticles.timeMax = 0.2f;
-		//
-		// Rocket.explosionParticles.amountMin = 40;
-		// Rocket.explosionParticles.amountMax = 50;
-		//
-		// Rocket.explosionParticles.speed = new ParticleSpawnerOption(4, 9, -1,
-		// 1);
-		// }
 	}
 
 	@Override
@@ -113,8 +61,7 @@ public class Rocket extends Entity {
 
 		// draw spike at front
 		Vec2D startPt = this.getPos().addX(-this.getSize().multiply(0.5f).getX());
-		Vec2D[] relPts = new Vec2D[] {
-				new Vec2D(this.getSize().multiply(0.1f).getX(), -this.getSize().multiply(0.5f).getY()),
+		Vec2D[] relPts = new Vec2D[] { new Vec2D(this.getSize().multiply(0.1f).getX(), -this.getSize().multiply(0.5f).getY()),
 				new Vec2D(this.getSize().multiply(0.1f).getX(), this.getSize().multiply(0.5f).getY()), new Vec2D() };
 		f.drawPolygon(new Polygon(startPt, relPts), Rocket.frontColor);
 
@@ -126,8 +73,7 @@ public class Rocket extends Entity {
 
 		// draw drive at back
 		startPt = this.getPos().addX(this.getSize().multiply(0.5f).getX()).addY(-this.getSize().multiply(0.5f).getY());
-		relPts = new Vec2D[] { new Vec2D(0, this.getSize().getY()),
-				new Vec2D(-this.getSize().getX() * 0.1f, this.getSize().getY() * 0.8f),
+		relPts = new Vec2D[] { new Vec2D(0, this.getSize().getY()), new Vec2D(-this.getSize().getX() * 0.1f, this.getSize().getY() * 0.8f),
 				new Vec2D(-this.getSize().getX() * 0.1f, this.getSize().getY() * 0.2f), new Vec2D() };
 		f.drawPolygon(new Polygon(startPt, relPts), Rocket.outerColor);
 	}
