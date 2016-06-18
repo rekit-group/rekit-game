@@ -114,32 +114,28 @@ public abstract class Entity extends GameElement {
 		// saving last position
 		Vec2D lastPos = this.getLastPos();
 		
+		int signum = 1;
 		switch (dir) {
-		case DOWN:
-			this.setPos(this.getPos().setY(
-					collision.getBorder(dir.getOpposite()) + this.getSize().getY() / 1.9f));
-			// stop velocity in y dimension 
-			this.setVel(this.getVel().setY(0));
-			break;
+		case LEFT:
+			signum = -1;
 		case RIGHT:
-			this.setPos(this.getPos().setX(
-					collision.getBorder(dir) + this.getSize().getX() / 1.9f));
+			// move entities right side to collisions left side / vice versa
+			float newX = collision.getBorder(dir) + signum * this.getSize().getX() / 1.9f;
+			this.setPos(this.getPos().setX(newX));
 			// stop velocity in x dimension
 			this.setVel(this.getVel().setX(0));
 			break;
 		case UP:
-			this.setPos(this.getPos().setY(collision.getBorder(dir.getOpposite()) - this.getSize().getY() / 1.9f));
+			signum = -1;
 			if (this.getEntityState() instanceof JumpState) {
 				this.setEntityState(new DefaultState());
 			}
-			// stop velocity in y dimension
+		case DOWN:
+			// move entities lower side to collisions top side / vice versa
+			float newY = collision.getBorder(dir.getOpposite()) + signum * this.getSize().getY() / 1.9f;
+			this.setPos(this.getPos().setY(newY));
+			// stop velocity in y dimension 
 			this.setVel(this.getVel().setY(0));
-			break;
-		case LEFT:
-			this.setPos(this.getPos().setX(
-					collision.getBorder(dir) - this.getSize().getX() / 1.9f));
-			// stop velocity in x dimension
-			this.setVel(this.getVel().setX(0));
 			break;
 		}
 		
