@@ -1,5 +1,6 @@
 package edu.kit.informatik.ragnarok.logic.levelcreator;
 
+import java.util.HashMap;
 import java.util.Random;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
@@ -10,6 +11,21 @@ public class InfiniteLevelCreator extends LevelCreator {
 	
 	public InfiniteLevelCreator(GameModel model) {
 		super(model);
+		
+		this.bossRooms = new HashMap<Integer, BossRoom>();
+		
+		// first boss room after 100 units in x direction
+		this.bossRooms.put(100, new BossRoom(new LevelStructure(new int[][] {
+		  {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+		  {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		  {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		  {1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0},
+		  {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+		  {1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0},
+		  {1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
+		  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		  {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+		}), this));
 	}
 
 	private final int[][][] structures = new int[][][]{
@@ -275,25 +291,16 @@ public class InfiniteLevelCreator extends LevelCreator {
 			}
 	};
 	
-	public void generate(int max) {
 	
+	private HashMap<Integer, BossRoom> bossRooms;
+	
+	public void generate(int max) {
 		
+
 		while (this.generatedUntil < max) {
+			// Save current x to where level was generated yet
+			int lastGeneratedUntil = this.generatedUntil;
 			
-			
-			generateBossRoom(new LevelStructure(new int[][] {
-			  {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-			  {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			  {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			  {1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0},
-			  {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
-			  {1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0},
-			  {1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
-			  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			  {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-			}), this.generatedUntil);
-			
-			/*
 			// Randomly select structure
 			Random r = new Random();
 			int randId = r.nextInt(structures.length);
@@ -316,15 +323,13 @@ public class InfiniteLevelCreator extends LevelCreator {
 			generateEvenFloor(generatedUntil + 1 + aw, generatedUntil + aw + gap);
 			
 			this.generatedUntil += aw;
-			*/
+			
+			for (int i = lastGeneratedUntil; i <= this.generatedUntil; i++) {
+				if (this.bossRooms.containsKey(i)) {
+					this.bossRooms.get(i).generate(this.generatedUntil);
+				}
+			}
 		}
-	}
-	
-	
-	
-	public void generateBossRoom(LevelStructure roomStructure, int x) {
-		BossRoom room = new BossRoom(roomStructure, this, x);
-		room.generate();
 	}
 	
 }

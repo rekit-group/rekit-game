@@ -18,13 +18,14 @@ public class BossRoom {
 	private InanimateDoor door;
 	private Vec2D triggerPos;
 	
-	public BossRoom(LevelStructure roomStructure, final LevelCreator levelCreator, final int x) {
+	public BossRoom(LevelStructure roomStructure, final LevelCreator levelCreator) {
 		this.roomStructure = roomStructure;
 		this.levelCreator = levelCreator;
-		this.x = x;
 	}
 	
-	public void generate() {
+	public void generate(int x) {
+		this.x = x;
+		
 		// generate floor before boss room 
 		levelCreator.generateEvenFloor(x, x + 5);
 		// generate boss room structure

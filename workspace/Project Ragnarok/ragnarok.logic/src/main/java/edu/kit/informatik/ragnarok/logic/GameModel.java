@@ -376,8 +376,7 @@ public class GameModel implements CameraTarget {
 	}
 
 	public int getScore() {
-		return (int) (this.player.getCameraOffset() + this.getPlayer().getPoints()
-				- GameConf.playerCameraOffset);
+		return (int) (this.player.getCameraOffset() + this.getPlayer().getPoints());
 	}
 
 	@Override
