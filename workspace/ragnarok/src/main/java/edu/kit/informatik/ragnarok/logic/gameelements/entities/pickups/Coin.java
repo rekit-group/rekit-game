@@ -1,9 +1,10 @@
-package edu.kit.informatik.ragnarok.logic.gameelements.entities;
+package edu.kit.informatik.ragnarok.logic.gameelements.entities.pickups;
 
 import org.eclipse.swt.graphics.RGB;
 
 import edu.kit.informatik.ragnarok.gui.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 

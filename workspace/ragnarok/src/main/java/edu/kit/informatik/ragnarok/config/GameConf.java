@@ -2,6 +2,8 @@ package edu.kit.informatik.ragnarok.config;
 
 import java.util.ResourceBundle;
 
+import org.eclipse.swt.graphics.RGB;
+
 /**
  * Configuration class that holds static options
  *
@@ -60,5 +62,8 @@ public class GameConf {
 
 	public static final float slurpSpeed = GameConf.BUNDLE.getFloat("slurpSpeed");
 	public static final float slurpPopOffsPerSec = GameConf.BUNDLE.getFloat("slurpPopOffsPerSec");
+	
+	public static final RGB gameBackgroundColor = GameConf.BUNDLE.getRGB("gameBackgroundColor");
+	public static final RGB menuBackgroundColor = GameConf.BUNDLE.getRGB("menuBackgroundColor");
 
 }

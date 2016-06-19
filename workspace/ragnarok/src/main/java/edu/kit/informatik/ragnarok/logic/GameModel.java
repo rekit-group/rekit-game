@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
+import edu.kit.informatik.ragnarok.logic.levelcreator.LevelCreator;
+import edu.kit.informatik.ragnarok.logic.levelcreator.InfiniteLevelCreator;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.EnemyFactory;
@@ -67,8 +69,8 @@ public class GameModel {
 		EnemyFactory.init(this);
 
 		// Create LevelCreator
-		this.levelCreator = new LevelCreator(this);
-		this.levelCreator.generate();
+		this.levelCreator = new InfiniteLevelCreator(this);
+		this.levelCreator.generate(GameConf.gridW);
 
 		// Initialize all other attributes
 		this.lastTime = System.currentTimeMillis();
@@ -242,7 +244,7 @@ public class GameModel {
 		// get maximum player x and adjust level offset
 		if (player.getPos().getX() > this.currentOffset) {
 			this.currentOffset = player.getPos().getX();
-			this.levelCreator.generate();
+			this.levelCreator.generate((int)(this.getCurrentOffset() + GameConf.gridW + 1));
 		}
 
 		// dont allow player to go behind currentOffset
