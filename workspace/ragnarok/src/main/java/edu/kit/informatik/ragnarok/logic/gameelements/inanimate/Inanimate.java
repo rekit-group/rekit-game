@@ -10,13 +10,11 @@ import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
 public class Inanimate extends GameElement {
 	
-	protected Vec2D size;
-	
 	protected RGB color;
 	
 	public Inanimate(Vec2D pos, Vec2D size, RGB color) {
 		this.setPos(pos);
-		this.size = size;
+		this.setSize(size);
 		this.color = color;		
 	}
 
@@ -24,7 +22,7 @@ public class Inanimate extends GameElement {
 	public void render(Field f) {
 		Vec2D pos = this.getPos();
 		
-		f.drawRectangle(pos, size.multiply(0.95f), this.color);
+		f.drawRectangle(pos, this.getSize().multiply(0.95f), this.color);
 	}
 
 	public void reactToCollision(GameElement element, Direction dir) {

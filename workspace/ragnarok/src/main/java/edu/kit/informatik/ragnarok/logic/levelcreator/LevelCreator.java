@@ -6,6 +6,7 @@ import org.eclipse.swt.graphics.RGB;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.GameModel;
+import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateBox;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateFloor;
@@ -32,20 +33,24 @@ public abstract class LevelCreator {
 		// must be implemented
 	}
 	
-	public void generateFloor(int x, int y) {
+	protected void generateGameElement(GameElement element) {
+		this.model.addGameElement(element);
+	}
+	
+	protected void generateFloor(int x, int y) {
 		Inanimate i;
 		Random r = new Random();
 		
 		int randColG = r.nextInt(100) + 100;
 		int randColRB = r.nextInt(40) + 30;
 		i = new InanimateFloor(new Vec2D(x, GameConf.gridH - 1), new Vec2D(1, 1), new RGB(randColRB, randColG, randColRB));
-		this.model.addGameElement(i);
+		generateGameElement(i);
 	}
-	public void generateBox(int x, int y) {
+	protected void generateBox(int x, int y) {
 		Inanimate i;
 		Random r = new Random();
 		int randCol = r.nextInt(60) + 50;
 		i = new InanimateBox(new Vec2D(x, y), new Vec2D(1, 1), new RGB(randCol, randCol, randCol));
-		this.model.addGameElement(i);
+		generateGameElement(i);
 	}
 }
