@@ -9,8 +9,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 
-import edu.kit.informatik.ragnarok.config.GameConf;
-
 public final class SwtUtils {
 	private SwtUtils() {
 	}
@@ -32,14 +30,10 @@ public final class SwtUtils {
 
 	private static final Pattern patternRGB = Pattern.compile("([0-9]+);([0-9]+);([0-9]+)");
 
-	public RGB getRGB(String key) {
-		String res = GameConf.BUNDLE.getString(key);
-		if (res == null) {
-			return null;
-		}
-		Matcher matcher = SwtUtils.patternRGB.matcher(res);
+	public static final RGB getRGB(String color) {
+		Matcher matcher = SwtUtils.patternRGB.matcher(color);
 		if (!matcher.find()) {
-			System.err.println("BundleHelper: " + res + " is no RBG");
+			System.err.println("BundleHelper: " + color + " is no RBG");
 			return null;
 		}
 

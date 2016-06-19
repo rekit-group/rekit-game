@@ -39,12 +39,12 @@ public final class InputHelper {
 	 * List of all keyCodes that are currently pressed
 	 */
 	private static Set<Integer> pressedKeys = new HashSet<Integer>();
-	
+
 	/**
 	 * List of all keyCodes that have just been released
 	 */
 	private static Set<Integer> releasedKeys = new HashSet<Integer>();
-	
+
 	/**
 	 * All registered {@link Control Controls} with their key adapters
 	 */
@@ -141,7 +141,7 @@ public final class InputHelper {
 	public static final Iterator<Integer> getPressedKeyIterator() {
 		return InputHelper.pressedKeys.iterator();
 	}
-	
+
 	/**
 	 * Get an Iterator to iterate over all pressed keys keyCodes
 	 *
