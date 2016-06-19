@@ -2,6 +2,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities.state;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
+import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
 /**
  * The jumping state a entity is in upon jumping until landing
@@ -11,18 +12,29 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
  * @version 1.0
  */
 public class JumpState extends EntityState {
-	private long maxTime;
+	private float timeLeft = 0;
 	
 	public JumpState(Entity entity) {
 		super(entity);
-		maxTime = System.currentTimeMillis() + (long) (100 * GameConf.playerJumpTime);
+		timeLeft = GameConf.playerJumpTime;
 	}
-
+	
 	@Override
-	public boolean jump() {
-		if (maxTime > System.currentTimeMillis()) {
-			entity.setVel(entity.getVel().setY(GameConf.playerJumpBoost));
-		}
+	public boolean canJump() {
 		return false;
+	}
+	
+	@Override
+	public void floorCollision() {
+		this.entity.setEntityState(new DefaultState(this.entity));
+	}
+	
+	@Override
+	public void logicLoop(float deltaTime) {
+		timeLeft -= deltaTime;
+		
+		if (timeLeft > 0) {
+			this.entity.setVel(new Vec2D(this.entity.getVel().getX(), GameConf.playerJumpBoost));
+		}
 	}
 }

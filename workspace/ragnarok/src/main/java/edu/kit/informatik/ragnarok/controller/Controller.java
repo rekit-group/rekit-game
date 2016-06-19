@@ -7,6 +7,7 @@ import java.util.Map;
 import org.eclipse.swt.SWT;
 
 import edu.kit.informatik.ragnarok.controller.commands.InputCommand;
+import edu.kit.informatik.ragnarok.controller.commands.InputCommand.InputMethod;
 import edu.kit.informatik.ragnarok.controller.commands.JumpCommand;
 import edu.kit.informatik.ragnarok.controller.commands.WalkCommand;
 import edu.kit.informatik.ragnarok.logic.GameModel;
@@ -54,13 +55,14 @@ public class Controller implements Observer {
 	 * @param id
 	 *            the key's id
 	 */
-	public void handleEvent(int id) {
+	public void handleEvent(int id, InputMethod inputMethod) {
 		// return if we do not have a command defined for this key
 		if (!this.mpCmd.containsKey(id)) {
 			System.err.println("Warning: No Event defined for Key-ID: " + id);
 			return;
 		}
-		this.mpCmd.get(id).apply();
+		
+		this.mpCmd.get(id).apply(inputMethod);
 	}
 
 	/**
@@ -73,10 +75,15 @@ public class Controller implements Observer {
 
 	@Override
 	public void update() {
-		Iterator<Integer> it = InputHelper.getKeyIterator();
+		Iterator<Integer> it = InputHelper.getPressedKeyIterator();
 		while (it.hasNext()) {
-			int next = it.next();
-			this.handleEvent(next);
+			this.handleEvent(it.next(), InputMethod.PRESS);
+		}
+		
+		it = InputHelper.getReleasedKeyIterator();
+		while (it.hasNext()) {
+			this.handleEvent(it.next(), InputMethod.RELEASE);
+			it.remove();
 		}
 	}
 

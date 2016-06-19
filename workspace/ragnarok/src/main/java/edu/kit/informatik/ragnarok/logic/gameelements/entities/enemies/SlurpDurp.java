@@ -42,12 +42,12 @@ public class SlurpDurp extends Entity {
 		@Override
 		public void reactToCollision(GameElement element, Direction dir) {
 			if (this.isHostile(element)) {
-				element.setVel(element.getVel().multiply(0.8f));
+				element.setVel(element.getVel().multiply(0.9f));
 			}
 		}
 		
 		public void setParentPos(Vec2D parentPos) {
-			this.parentPos = parentPos;
+			this.parentPos = parentPos.clone();
 		}
 
 		@Override

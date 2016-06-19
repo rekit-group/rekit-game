@@ -27,13 +27,6 @@ public class GameModel {
 	 */
 	public static final Object SYNC = new Object();
 
-	/**
-	 * <pre>
-	 *           1..1     1..*
-	 * GameModel ------------------------- GameElement
-	 *           gameModel        &gt;       gameElement
-	 * </pre>
-	 */
 	private PriorityQueue<GameElement> gameElements;
 
 	/**

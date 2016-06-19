@@ -4,7 +4,11 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 
 public abstract class InputCommand {
 	private Entity entity;
-
+	
+	public enum InputMethod {
+		PRESS,
+		RELEASE
+	}
 	/**
 	 * Set the corresponding entity for the command
 	 *
@@ -21,6 +25,6 @@ public abstract class InputCommand {
 		return this.entity;
 	}
 
-	public abstract void apply();
+	public abstract void apply(InputMethod inputMethod);
 
 }

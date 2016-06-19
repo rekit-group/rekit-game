@@ -17,7 +17,11 @@ public class WalkCommand extends InputCommand {
 	}
 
 	@Override
-	public void apply() {
+	public void apply(InputMethod inputMethod) {
+		if (inputMethod == InputMethod.RELEASE) {
+			return;
+		}
+		
 		// Get old velocity
 		Entity entity = this.getEntity();
 

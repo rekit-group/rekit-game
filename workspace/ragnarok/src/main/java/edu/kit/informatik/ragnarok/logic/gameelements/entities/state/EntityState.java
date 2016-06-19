@@ -1,6 +1,5 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities.state;
 
-import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 
 /**
@@ -18,14 +17,16 @@ public abstract class EntityState {
 		this.entity = entity;
 	}
 	
-	/**
-	 * Jumps if an <i>Entity</i> is currently able to jump.
-	 * Is true in this case.
-	 * @return true if an <i>Entity</i> can currently jump, false otherwise
-	 */
-	public boolean jump() {
-		entity.setVel(entity.getVel().setY(GameConf.playerJumpBoost));
+	public boolean canJump() {
 		return true;
+	}
+	
+	public void logicLoop(float deltaTime) {
+		// Do nothing
+	}
+	
+	public void floorCollision() {
+		// Do nothing
 	}
 
 }

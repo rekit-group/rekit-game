@@ -15,6 +15,8 @@
 ### Bugs
 - [ ] Fix z-Index rendering order
 - [ ] SlurpDurps sometimes seem to not affect the Player
+- [ ] RektKillers sometimes get stuck in levelBorders (also: what to do with left border?)
+- [ ] logicDelta {relation} JumpHeight  
 
 ## Archive
 

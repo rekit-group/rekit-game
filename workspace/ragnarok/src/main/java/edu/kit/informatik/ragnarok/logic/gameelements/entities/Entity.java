@@ -4,7 +4,6 @@ import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.state.DefaultState;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.state.EntityState;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.state.JumpState;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
@@ -91,6 +90,8 @@ public abstract class Entity extends GameElement {
 			return;
 		}
 		
+		this.getEntityState().logicLoop(deltaTime);
+		
 		// calculate new position
 		// s1 = s0 + v*t because physics, thats why!
 		this.setPos(this.getPos().add(this.getVel().multiply(deltaTime)));
@@ -130,9 +131,7 @@ public abstract class Entity extends GameElement {
 			break;
 		case UP:
 			signum = -1;
-			if (this.getEntityState() instanceof JumpState) {
-				this.setEntityState(new DefaultState(this));
-			}
+			this.getEntityState().floorCollision();
 		case DOWN:
 			// move entities lower side to collisions top side / vice versa
 			float newY = collision.getBorder(dir.getOpposite()) + signum * this.getSize().getY() / 1.9f;

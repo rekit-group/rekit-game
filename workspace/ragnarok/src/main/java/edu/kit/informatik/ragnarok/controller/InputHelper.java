@@ -38,11 +38,17 @@ public final class InputHelper {
 	/**
 	 * List of all keyCodes that are currently pressed
 	 */
-	private static Set<Integer> keys = new HashSet<Integer>();
+	private static Set<Integer> pressedKeys = new HashSet<Integer>();
+	
+	/**
+	 * List of all keyCodes that have just been released
+	 */
+	private static Set<Integer> releasedKeys = new HashSet<Integer>();
+	
 	/**
 	 * All registered {@link Control Controls} with their key adapters
 	 */
-	private static ConcurrentHashMap<Control, KeyAdapter> attatched = new ConcurrentHashMap<>();
+	private static ConcurrentHashMap<Control, KeyAdapter> attached = new ConcurrentHashMap<>();
 
 	// Start the daemon
 	static {
@@ -68,7 +74,7 @@ public final class InputHelper {
 	 */
 	public static synchronized boolean attach(Control listenerControl) {
 		// Check if listenerControl is set
-		if (listenerControl == null || InputHelper.attatched.containsKey(listenerControl)) {
+		if (listenerControl == null || InputHelper.attached.containsKey(listenerControl)) {
 			return false;
 		}
 
@@ -84,7 +90,7 @@ public final class InputHelper {
 				InputHelper.release(e.keyCode);
 			}
 		};
-		InputHelper.attatched.put(listenerControl, adapter);
+		InputHelper.attached.put(listenerControl, adapter);
 		listenerControl.addKeyListener(adapter);
 		return true;
 	}
@@ -97,7 +103,7 @@ public final class InputHelper {
 	 * @return {@code true} if detached or {@code false} if not detached
 	 */
 	public static synchronized boolean detach(Control listenerControl) {
-		KeyAdapter adapter = InputHelper.attatched.remove(listenerControl);
+		KeyAdapter adapter = InputHelper.attached.remove(listenerControl);
 		if (adapter == null) {
 			return false;
 		}
@@ -112,7 +118,8 @@ public final class InputHelper {
 	 *            the keyCode of the just pressed key
 	 */
 	private static final synchronized void press(int code) {
-		InputHelper.keys.add(code);
+		InputHelper.pressedKeys.add(code);
+		InputHelper.releasedKeys.remove(code);
 	}
 
 	/**
@@ -122,7 +129,8 @@ public final class InputHelper {
 	 *            the keyCode of the just released key
 	 */
 	private static final synchronized void release(int code) {
-		InputHelper.keys.remove(code);
+		InputHelper.releasedKeys.add(code);
+		InputHelper.pressedKeys.remove(code);
 	}
 
 	/**
@@ -130,8 +138,17 @@ public final class InputHelper {
 	 *
 	 * @return the Iterator for all pressed keyCodes
 	 */
-	public static final Iterator<Integer> getKeyIterator() {
-		return InputHelper.keys.iterator();
+	public static final Iterator<Integer> getPressedKeyIterator() {
+		return InputHelper.pressedKeys.iterator();
+	}
+	
+	/**
+	 * Get an Iterator to iterate over all pressed keys keyCodes
+	 *
+	 * @return the Iterator for all pressed keyCodes
+	 */
+	public static final Iterator<Integer> getReleasedKeyIterator() {
+		return InputHelper.releasedKeys.iterator();
 	}
 
 	/**
@@ -145,7 +162,7 @@ public final class InputHelper {
 	 * Observers and invokes every update();
 	 */
 	private static void notifyObservers() {
-		if (InputHelper.attatched.isEmpty()) {
+		if (InputHelper.attached.isEmpty()) {
 			return;
 		}
 		List<Observer> obs = new ArrayList<Observer>();
