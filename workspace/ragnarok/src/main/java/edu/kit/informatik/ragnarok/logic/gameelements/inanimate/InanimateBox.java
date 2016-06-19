@@ -13,6 +13,7 @@ public class InanimateBox extends Inanimate {
 	@Override
 	public void render(Field f) {
 		Vec2D pos = this.getPos();
+		Vec2D size = this.getSize();
 		
 		f.drawRectangle(pos, size, this.color);
 		

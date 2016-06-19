@@ -19,7 +19,6 @@ public class InanimateFloor extends Inanimate {
 	public InanimateFloor(Vec2D pos, Vec2D size, RGB color) {
 		super(pos, size, color);
 		
-		
 		dustParticles = new ParticleSpawner();
 		dustParticles.colorR = new ParticleSpawnerOption(this.color.red);
 		dustParticles.colorG = new ParticleSpawnerOption(this.color.green);
@@ -36,6 +35,7 @@ public class InanimateFloor extends Inanimate {
 	@Override
 	public void render(Field f) {
 		Vec2D pos = this.getPos();
+		Vec2D size = this.getSize();
 		
 		f.drawRectangle(pos, size, this.color);
 		

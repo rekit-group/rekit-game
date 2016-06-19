@@ -7,12 +7,17 @@ import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
 public abstract class GameElement implements Collidable, Comparable<GameElement> {
+	
 	public boolean deleteMe = false;
+	
+	private Vec2D size = new Vec2D(1, 1);
+	
+	private int team = 1;
+	
 	public void destroy() {
 		this.deleteMe = true;
 	}
 
-	private int team = 1;
 
 	protected void setTeam(int value) {
 		this.team = value;
@@ -72,9 +77,13 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 	public Vec2D getLastPos() {
 		return this.lastPos;
 	}
-
+	
 	public Vec2D getSize() {
-		return new Vec2D(1, 1);
+		return size;
+	}
+	
+	public void setSize(Vec2D size) {
+		this.size = size;
 	}
 
 	/**
