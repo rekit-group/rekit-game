@@ -2,6 +2,9 @@ package edu.kit.informatik.ragnarok.config;
 
 import java.util.ResourceBundle;
 
+import edu.kit.informatik.ragnarok.util.RGBColor;
+
+
 /**
  * Configuration class that holds static options
  *
@@ -14,7 +17,7 @@ public class GameConf {
 	 * The Bundle which contains all configuration stuff
 	 */
 	public static final BundleHelper BUNDLE = new BundleHelper(ResourceBundle.getBundle("conf/game"));
-
+	
 	/**
 	 * Size of one in-game unit in pixels. So a Vec2D(1, 0) will be projected to
 	 * (pxPerUnit, 0)
@@ -46,6 +49,8 @@ public class GameConf {
 	 */
 	public static final float g = GameConf.BUNDLE.getFloat("g");
 
+	public static final float playerCameraOffset = GameConf.BUNDLE.getFloat("playerCameraOffset");
+	
 	public static final float playerWalkAccel = GameConf.BUNDLE.getFloat("playerWalkAccel");
 	public static final float playerStopAccel = GameConf.BUNDLE.getFloat("playerStopAccel");
 
@@ -55,12 +60,12 @@ public class GameConf {
 	public static final float playerJumpTime = GameConf.BUNDLE.getFloat("playerJumpTime");
 	public static final float playerBottomBoost = GameConf.BUNDLE.getFloat("playerBottomBoost");
 
-	public static final float playerDist = GameConf.BUNDLE.getFloat("playerDist");
 	public static final int playerLifes = GameConf.BUNDLE.getInt("playerLifes");
 
 	public static final float slurpSpeed = GameConf.BUNDLE.getFloat("slurpSpeed");
 	public static final float slurpPopOffsPerSec = GameConf.BUNDLE.getFloat("slurpPopOffsPerSec");
-	public static final String gameBackgroundColor = GameConf.BUNDLE.getString("gameBackgroundColor");
-	public static final String menuBackgroundColor = GameConf.BUNDLE.getString("menuBackgroundColor");
+	
+	public static final RGBColor gameBackgroundColor = GameConf.BUNDLE.getRGBColor("gameBackgroundColor");
+	public static final RGBColor menuBackgroundColor = GameConf.BUNDLE.getRGBColor("menuBackgroundColor");
 
 }

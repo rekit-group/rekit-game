@@ -36,7 +36,7 @@ public class Field implements edu.kit.informatik.ragnarok.logic.gameelements.Fie
 	}
 
 	private int currentOffset() {
-		return -this.units2pixel(this.view.getModel().getCurrentOffset() - GameConf.playerDist);
+		return -this.units2pixel(this.view.getModel().getCameraOffset());
 	}
 
 	public void setBackground(RGB col) {
@@ -52,7 +52,7 @@ public class Field implements edu.kit.informatik.ragnarok.logic.gameelements.Fie
 				this.units2pixel((pos.getY() - size.getY() / 2f)), this.units2pixel(size.getX()), this.units2pixel(size.getY()));
 	}
 
-	private void drawRectangle(Vec2D pos, Vec2D size, RGB col) {
+	public void drawRectangle(Vec2D pos, Vec2D size, RGB col) {
 		Color color = new Color(Display.getCurrent(), col);
 		this.gc.setBackground(color);
 		color.dispose();
@@ -88,7 +88,6 @@ public class Field implements edu.kit.informatik.ragnarok.logic.gameelements.Fie
 		this.gc.setAlpha(255);
 	}
 
-	@Override
 	public void drawImage(Vec2D pos, Vec2D size, String imagePath) {
 		Image image = ImageLoader.get(imagePath);
 		this.gc.drawImage(image, this.currentOffset() + this.units2pixel(pos.getX() - size.getX() / 2f), // dstX
@@ -147,25 +146,22 @@ public class Field implements edu.kit.informatik.ragnarok.logic.gameelements.Fie
 	@Override
 	public void drawRectangle(Vec2D pos, Vec2D size, RGBColor color) {
 		this.drawRectangle(pos, size, new RGB(color.red, color.green, color.blue));
-
+		
 	}
 
 	@Override
 	public void drawCircle(Vec2D pos, Vec2D size, RGBColor color) {
 		this.drawCircle(pos, size, new RGB(color.red, color.green, color.blue));
-
 	}
 
 	@Override
 	public void drawPolygon(Polygon polygon, RGBAColor color) {
 		this.drawPolygon(polygon, new RGBA(color.red, color.green, color.blue, color.alpha));
-
 	}
 
 	@Override
 	public void drawPolygon(Polygon polygon, RGBColor color) {
 		this.drawPolygon(polygon, new RGB(color.red, color.green, color.blue));
-
 	}
 
 }

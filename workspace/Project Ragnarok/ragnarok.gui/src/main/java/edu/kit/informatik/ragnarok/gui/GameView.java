@@ -7,6 +7,7 @@ import java.util.Queue;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -152,7 +153,7 @@ public class GameView {
 		this.field.setGC(tempGC);
 
 		// Draw background
-		this.field.setBackground(SwtUtils.getRGB(GameConf.gameBackgroundColor));
+		this.field.setBackground(new RGB(GameConf.gameBackgroundColor.red, GameConf.gameBackgroundColor.green, GameConf.gameBackgroundColor.blue));
 
 		// Iterate all GameElements
 		synchronized (GameModel.SYNC) {

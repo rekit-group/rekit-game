@@ -1,6 +1,10 @@
 package edu.kit.informatik.ragnarok.config;
 
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import edu.kit.informatik.ragnarok.util.RGBColor;
 
 /**
  * This class contains several getters for a {@link ResourceBundle}
@@ -72,6 +76,24 @@ public final class BundleHelper {
 			return null;
 		}
 		return this.bundle.getString(key);
+	}
+	
+	public RGBColor getRGBColor(String key) {
+		Pattern pattern = Pattern.compile("([0-9]+);([0-9]+);([0-9]+)");
+		if (!this.bundle.containsKey(key)) {
+			return null;
+		}
+		String res = this.bundle.getString(key);
+		Matcher matcher = pattern.matcher(res);
+		if (!matcher.find()) {
+			System.err.println("BundleHelper: " + res + " is no RBG");
+			return null;
+		}
+		
+		int r = Integer.parseInt(matcher.group(1));
+		int g = Integer.parseInt(matcher.group(2));
+		int b = Integer.parseInt(matcher.group(3));
+		return new RGBColor(r,g,b);
 	}
 
 }
