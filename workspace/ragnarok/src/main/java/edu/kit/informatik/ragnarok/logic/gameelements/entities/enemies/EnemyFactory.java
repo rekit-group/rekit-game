@@ -3,9 +3,8 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies;
 import java.util.Random;
 
 import edu.kit.informatik.ragnarok.logic.GameModel;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.Coin;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.Life;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.pickups.*;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
 public class EnemyFactory {
