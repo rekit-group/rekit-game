@@ -7,7 +7,6 @@ import java.util.Queue;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -147,13 +146,14 @@ public class GameView {
 			return;
 		}
 		// Create temporary GC on new Image and let field draw on that
+		// Double buffering reduces flickering
 		Image image = new Image(this.shell.getDisplay(), this.canvas.getBounds());
 		GC tempGC = new GC(image);
 		this.field.setGC(tempGC);
 
 		// Draw background
-		this.field.setBackground(new RGB(110, 170, 255));
-
+		this.field.setBackground(GameConf.gameBackgroundColor);
+		
 		// Iterate all GameElements
 		synchronized (GameModel.SYNC) {
 			Iterator<GameElement> it = this.model.getGameElementIterator();
