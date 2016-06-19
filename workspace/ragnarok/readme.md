@@ -16,7 +16,7 @@
 - [ ] Bosses
 
 ### Refactoring
-- [ ] Put collision detection in seperete class
+- [ ] Put collision detection in separete class
 - [ ] Don't give Entity full access to GameModel --> Interface
 
 ### Nice to have
