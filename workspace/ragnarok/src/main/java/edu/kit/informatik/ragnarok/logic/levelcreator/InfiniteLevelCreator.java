@@ -4,8 +4,7 @@ import java.util.Random;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.GameModel;
-import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateDoor;
-import edu.kit.informatik.ragnarok.primitives.Vec2D;
+
 
 public class InfiniteLevelCreator extends LevelCreator {
 	
@@ -286,15 +285,15 @@ public class InfiniteLevelCreator extends LevelCreator {
 			  {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 			  {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			  {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			  {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			  {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			  {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			  {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			  {1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0},
+			  {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+			  {1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0},
+			  {1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
 			  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			  {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+			  {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 			}), this.generatedUntil);
-			*/
 			
+			*/
 			// Randomly select structure
 			Random r = new Random();
 			int randId = r.nextInt(structures.length);
@@ -321,30 +320,11 @@ public class InfiniteLevelCreator extends LevelCreator {
 		}
 	}
 	
-	public void generateEvenFloor(int fromX, int toX) {
-		for (int x = fromX; x <= toX; x++) {
-			generateFloor(x, GameConf.gridH);
-		}
-
-		// Update coordinate until where we generated
-		this.generatedUntil += toX - fromX;
-	}
 	
 	
 	public void generateBossRoom(LevelStructure roomStructure, int x) {
-		
-		// generate floor before boss room 
-		generateEvenFloor(x, x + 5);
-		// generate boss room structure
-		roomStructure.buildStructure(this, x + 6, GameConf.gridH);
-		this.generatedUntil += roomStructure.getWidth();
-		// generate floor after boss room
-		generateEvenFloor(x + 6 + roomStructure.getWidth(), x + 6 + roomStructure.getWidth() + 5);
-		
-		// generate door after room
-		InanimateDoor door = new InanimateDoor(new Vec2D(x + 5 + roomStructure.getWidth(), (float)Math.ceil(GameConf.gridH / 2)));
-		this.generateGameElement(door);
-		
+		BossRoom room = new BossRoom(roomStructure, this, x);
+		room.generate();
 	}
 	
 }

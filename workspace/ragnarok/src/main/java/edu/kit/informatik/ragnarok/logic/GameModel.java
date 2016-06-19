@@ -14,6 +14,7 @@ import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.levelcreator.LevelCreator;
 import edu.kit.informatik.ragnarok.logic.levelcreator.InfiniteLevelCreator;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.CameraTarget;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.EnemyFactory;
 import edu.kit.informatik.ragnarok.primitives.Direction;
@@ -21,7 +22,7 @@ import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 import edu.kit.informatik.ragnarok.util.ThreadUtils;
 
-public class GameModel {
+public class GameModel implements CameraTarget {
 
 	/**
 	 * Synchronization Object that is used as a lock variable for blocking
@@ -47,8 +48,12 @@ public class GameModel {
 	private float currentOffset;
 
 	private Thread loopThread;
-
-	private static final int START_OFFSET = 3;
+	
+	private CameraTarget cameraTarget;
+	
+	public void setCameraTarget(CameraTarget cameraTarget) {
+		this.cameraTarget = cameraTarget;
+	}
 
 	public GameModel() {
 		this.init();
@@ -62,7 +67,7 @@ public class GameModel {
 
 		// Create Player and add him to game
 		this.player.init();
-		this.currentOffset = GameModel.START_OFFSET;
+		this.cameraTarget = (CameraTarget) this.player;
 		this.addGameElement(this.player);
 
 		// Init EnemyFactory with model
@@ -239,17 +244,10 @@ public class GameModel {
 		// add GameElements that have been added
 		this.addAllWaitingGameElements();
 
-		Player player = this.getPlayer();
-
-		// get maximum player x and adjust level offset
-		if (player.getPos().getX() > this.currentOffset) {
-			this.currentOffset = player.getPos().getX();
-			this.levelCreator.generate((int)(this.getCurrentOffset() + GameConf.gridW + 1));
-		}
+		this.levelCreator.generate((int)(this.getCameraOffset() + GameConf.gridW + 1));
 
 		// dont allow player to go behind currentOffset
-		float minX = this.currentOffset - GameConf.playerDist
-				+ player.getSize().getX() / 2f;
+		float minX = this.getCameraOffset() + player.getSize().getX() / 2f;
 		if (player.getPos().getX() < minX) {
 			player.setPos(player.getPos().setX(minX));
 		}
@@ -267,7 +265,7 @@ public class GameModel {
 
 				// check if we can delete this
 				if (e.getPos().getX() < this.currentOffset
-						- GameConf.playerDist - 1) {
+						- GameConf.playerCameraOffset - 1) {
 					this.removeGameElement(e);
 				} else {
 					e.logicLoop(timeDelta / 1000.f);
@@ -377,13 +375,14 @@ public class GameModel {
 		return this.player;
 	}
 
-	public float getCurrentOffset() {
-		return this.currentOffset;
+	public int getScore() {
+		return (int) (this.player.getCameraOffset() + this.getPlayer().getPoints()
+				- GameConf.playerCameraOffset);
 	}
 
-	public int getScore() {
-		return (int) this.getCurrentOffset() + this.getPlayer().getPoints()
-				- GameModel.START_OFFSET;
+	@Override
+	public float getCameraOffset() {
+		return this.cameraTarget.getCameraOffset();
 	}
 
 }

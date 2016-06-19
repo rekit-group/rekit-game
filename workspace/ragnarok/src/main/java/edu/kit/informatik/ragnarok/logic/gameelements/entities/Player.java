@@ -8,12 +8,14 @@ import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
-public class Player extends Entity {
+public class Player extends Entity implements CameraTarget  {
 
 	private Vec2D startPos;
 
 	private ParticleSpawner damageParticles;
 
+	private float currentCameraOffset;
+	
 	public Player(Vec2D startPos) {
 		super(startPos);
 		this.startPos = startPos;
@@ -28,7 +30,8 @@ public class Player extends Entity {
 		this.currentDirection = Direction.RIGHT;
 		this.setVel(new Vec2D(0, 0));
 		this.deleteMe = false;
-
+		this.currentCameraOffset = 0;
+		
 		this.damageParticles = new ParticleSpawner();
 		this.damageParticles.colorR = new ParticleSpawnerOption(222, 242, -10, 10);
 		this.damageParticles.colorG = new ParticleSpawnerOption(138, 158, -10, 10);
@@ -85,6 +88,16 @@ public class Player extends Entity {
 	@Override
 	public int getZ() {
 		return 10;
+	}
+
+	@Override
+	public float getCameraOffset() {
+		// get maximum player x and adjust level offset
+		float offsetNow = this.getPos().getX() - GameConf.playerCameraOffset;
+		if (offsetNow > this.currentCameraOffset) {
+			this.currentCameraOffset = offsetNow;
+		}
+		return this.currentCameraOffset;
 	}
 
 }

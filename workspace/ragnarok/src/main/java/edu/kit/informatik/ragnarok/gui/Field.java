@@ -34,7 +34,7 @@ public class Field {
 	}
 
 	private int currentOffset() {
-		return -this.units2pixel(this.view.getModel().getCurrentOffset() - GameConf.playerDist);
+		return -this.units2pixel(this.view.getModel().getCameraOffset());
 	}
 
 	public void setBackground(RGB col) {
