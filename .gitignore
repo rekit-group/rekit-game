@@ -5,5 +5,5 @@ workspace/.recommenders
 workspace/ragnarok/src/**/*.class
 **/*.cfs
 *.classpath
-workspace/ragnarok/.settings/edu.umd.cs.findbugs.core.prefs
+*.settings
 *.project
