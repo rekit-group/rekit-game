@@ -10,7 +10,12 @@
 [?] Means done, but not sure. Remove if someone is sure  
 
 ### Features
-- [ ] Show score/highscore dependent death-messages
+- [ ] Menu (Start Game, Settings, About)
+- [ ] Show score/highscore dependent death-messages (Restart option/countdown)
+
+### Nice to have
+- [ ] Player pickup: clear Screen (kill enemys)
+- [ ] Enemy pickups (makes the enemy tougher)
 
 ### Bugs
 - [ ] Fix z-Index rendering order
