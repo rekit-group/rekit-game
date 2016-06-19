@@ -6,4 +6,11 @@
     <version>0.1-ALPHA</version>
   </parent>
   <artifactId>ragnarok.gui</artifactId>
+  <dependencies>
+  	<dependency>
+  		<groupId>edu.kit.informatik</groupId>
+  		<artifactId>ragnarok.logic</artifactId>
+  		<version>0.1-ALPHA</version>
+  	</dependency>
+  </dependencies>
 </project>
