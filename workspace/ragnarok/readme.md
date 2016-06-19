@@ -15,6 +15,10 @@
 - [ ] Create Background and parallax it (2 or 3 layers)
 - [ ] Bosses
 
+### Refactoring
+- [ ] Put collision detection in seperete class
+- [ ] Don't give Entity full access to GameModel --> Interface
+
 ### Nice to have
 - [ ] Player pickup: clear Screen (kill enemys)
 - [ ] Enemy pickups (makes the enemy tougher)
