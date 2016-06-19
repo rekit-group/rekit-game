@@ -10,6 +10,7 @@ import edu.kit.informatik.ragnarok.logic.GameModel;
  * game. implements a singleton to prevent multiple instantiation.
  *
  * @author Angelo Aracri
+ * @author Dominik Fuchß
  * @version 1.0
  */
 public class Main {
