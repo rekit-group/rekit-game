@@ -20,7 +20,7 @@ public class RektSmasher extends RektKiller implements Boss {
 		super(startPos, 1);
 		this.setSize(new Vec2D(2f, 2f));
 		this.prepare();
-		
+		this.currentDirection = Direction.DOWN;
 		this.setLifes(3);
 		
 		this.sides = 15;
@@ -45,7 +45,8 @@ public class RektSmasher extends RektKiller implements Boss {
 		
 		Direction newDir;
 		
-		if (Math.abs(dif.getX()) > Math.abs(dif.getY())) {
+		//if (Math.abs(dif.getX()) / GameConf.gridW > Math.abs(dif.getY()) / GameConf.gridH) {
+		if (dir == Direction.UP || dir == Direction.DOWN) {
 			if (dif.getX() > 0) {
 				newDir = Direction.LEFT;
 			} else {

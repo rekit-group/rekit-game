@@ -163,7 +163,7 @@ public class BossRoom {
 
 		// Needed for animating camera movement
 		ProgressDependency cameraMover = new ProgressDependency(cameraTarget
-				- GameConf.playerCameraOffset, player.getCameraOffset());
+				- GameConf.playerCameraOffset, player.getPos().getX() - GameConf.playerCameraOffset);
 		
 		// Needed for animating door movement
 		ProgressDependency doorMover = new ProgressDependency(this.door.getPos().getY(), this.door.getPos().getY() - 10);
@@ -175,13 +175,18 @@ public class BossRoom {
 
 				// save Players current velocity
 				Vec2D playerVelSave = player.getVel();
-
+				Vec2D playerPosSave = player.getPos();
+				Vec2D bossPosSave = ((GameElement) boss).getPos();
+				
+				
 				// while timer has time left...
 				while (!timer.timeUp()) {
 
 					// freeze player and pos
 					player.setVel(new Vec2D());
+					player.setPos(playerPosSave);
 					((GameElement) boss).setVel(new Vec2D());
+					((GameElement) boss).setPos(bossPosSave);
 
 					// wait for time to be up
 					try {
@@ -239,6 +244,7 @@ public class BossRoom {
 				player.setVel(playerVelSave);
 
 				// set camera back to player
+				player.resetCameraOffset();
 				gameModel.setCameraTarget(player);
 
 			}
