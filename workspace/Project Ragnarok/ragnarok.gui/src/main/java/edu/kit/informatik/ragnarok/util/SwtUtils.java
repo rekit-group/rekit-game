@@ -1,6 +1,8 @@
 package edu.kit.informatik.ragnarok.util;
 
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.RGB;
+import org.eclipse.swt.graphics.RGBA;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
@@ -45,6 +47,15 @@ public final class SwtUtils {
 		int newLeftPos = (mon.getBounds().width - me.getSize().x) / 2;
 		int newTopPos = (mon.getBounds().height - me.getSize().y) / 2;
 		return new Point(newLeftPos, newTopPos);
+
+	}
+	
+	public static RGB calcRGB(RGBColor color) {
+		return new RGB(color.red, color.green, color.blue);
+	}
+
+	public static RGBA calcRGBA(RGBAColor color) {
+		return new RGBA(color.red, color.green, color.blue, color.alpha);
 
 	}
 }

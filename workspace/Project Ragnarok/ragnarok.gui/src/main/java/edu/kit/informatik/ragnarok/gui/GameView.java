@@ -18,6 +18,7 @@ import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.GameModel;
 import edu.kit.informatik.ragnarok.logic.Model;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.logic.gameelements.GuiElement;
 import edu.kit.informatik.ragnarok.util.InputHelper;
 import edu.kit.informatik.ragnarok.util.SwtUtils;
 import edu.kit.informatik.ragnarok.util.ThreadUtils;
@@ -149,15 +150,21 @@ class GameView implements View {
 		this.field.setGC(tempGC);
 
 		// Draw background
-		this.field.setBackground(
-				new RGB(GameConf.gameBackgroundColor.red, GameConf.gameBackgroundColor.green, GameConf.gameBackgroundColor.blue));
+		this.field.setBackground(SwtUtils.calcRGB(GameConf.gameBackgroundColor));
 
-		// Iterate all GameElements
 		synchronized (GameModel.SYNC) {
-			Iterator<GameElement> it = this.model.getGameElementIterator();
-			while (it.hasNext()) {
+			// Iterate all GameElements
+			Iterator<GameElement> it1 = this.model.getGameElementIterator();
+			while (it1.hasNext()) {
 				// Render next element
-				it.next().render(this.field);
+				it1.next().render(this.field);
+			}
+			
+			// Iterate all GuiElements
+			Iterator<GuiElement> it2 = this.model.getGuiElementIterator();
+			while (it2.hasNext()) {
+				// Render next element
+				it2.next().render(this.field);
 			}
 		}
 

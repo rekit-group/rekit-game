@@ -12,9 +12,11 @@ import java.util.PriorityQueue;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.logic.gameelements.GuiElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.CameraTarget;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.EntityFactory;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
+import edu.kit.informatik.ragnarok.logic.gameelements.gui.HighscorePanel;
 import edu.kit.informatik.ragnarok.logic.levelcreator.InfiniteLevelCreator;
 import edu.kit.informatik.ragnarok.logic.levelcreator.LevelCreator;
 import edu.kit.informatik.ragnarok.primitives.Direction;
@@ -37,6 +39,8 @@ public class GameModel implements CameraTarget, Model {
 	 * operations
 	 */
 	public static final Object SYNC = new Object();
+	
+	private PriorityQueue<GuiElement> guiElements;
 
 	private PriorityQueue<GameElement> gameElements;
 
@@ -63,6 +67,8 @@ public class GameModel implements CameraTarget, Model {
 
 	private TimeDependency currentBossTextTimeLeft;
 
+	private HighscorePanel highScorePanel;
+
 	public void setCameraTarget(CameraTarget cameraTarget) {
 		this.cameraTarget = cameraTarget;
 	}
@@ -73,6 +79,7 @@ public class GameModel implements CameraTarget, Model {
 
 	public void init() {
 		// Initialize Set of all gameElements that need rendering and logic
+		this.guiElements = new PriorityQueue<>();
 		this.gameElements = new PriorityQueue<GameElement>();
 		this.waitingGameElements = new ArrayList<GameElement>();
 		this.gameElementsToDelete = new ArrayList<GameElement>();
@@ -81,6 +88,11 @@ public class GameModel implements CameraTarget, Model {
 		this.player.init();
 		this.cameraTarget = this.player;
 		this.addGameElement(this.player);
+		
+		// Create Highscore Panel
+		this.highScorePanel = new HighscorePanel(this);
+		//TODO do we need add and delete queue for gui??
+		this.guiElements.add(this.highScorePanel);
 
 		// Init EnemyFactory with model
 		EntityFactory.init(this);
@@ -244,6 +256,16 @@ public class GameModel implements CameraTarget, Model {
 	public Iterator<GameElement> getGameElementIterator() {
 		return this.gameElements.iterator();
 	}
+	
+	/**
+	 * Supplies an Iterator for all saved GuiElements
+	 *
+	 * @return
+	 */
+	@Override
+	public Iterator<GuiElement> getGuiElementIterator() {
+		return this.guiElements.iterator();
+	}
 
 	/**
 	 * Calculate DeltaTime Get Collisions .. & Invoke ReactCollision Iterate
@@ -307,6 +329,16 @@ public class GameModel implements CameraTarget, Model {
 						this.checkCollision(e1, e2, e1.getLastPos(), e2.getLastPos());
 					}
 				}
+			}
+		}
+		
+		// after all GameRelated loigc update GuiElements
+		synchronized (GameModel.SYNC)
+		{
+			Iterator<GuiElement> it = this.getGuiElementIterator();
+			while (it.hasNext()) {
+				GuiElement e = it.next();
+				e.logicLoop(timeDelta / 1000.f);
 			}
 		}
 

@@ -4,6 +4,7 @@ import edu.kit.informatik.ragnarok.primitives.Polygon;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 import edu.kit.informatik.ragnarok.util.RGBAColor;
 import edu.kit.informatik.ragnarok.util.RGBColor;
+import edu.kit.informatik.ragnarok.util.TextOptions;
 
 public interface Field {
 
@@ -15,5 +16,10 @@ public interface Field {
 
 	void drawPolygon(Polygon polygon, RGBAColor color);
 
-	void drawPolygon(Polygon rotatedSpikes, RGBColor color);
+	void drawPolygon(Polygon polygon, RGBColor color);
+	
+	//void drawGameText(Vec2D pos, String text);
+	
+	void drawText(Vec2D pos, String text, TextOptions options);
+	
 }

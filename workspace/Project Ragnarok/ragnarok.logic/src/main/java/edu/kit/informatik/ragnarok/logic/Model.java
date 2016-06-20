@@ -3,6 +3,7 @@ package edu.kit.informatik.ragnarok.logic;
 import java.util.Iterator;
 
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.logic.gameelements.GuiElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 
 /**
@@ -27,6 +28,13 @@ public interface Model {
 	 * @return the iterator
 	 */
 	Iterator<GameElement> getGameElementIterator();
+	
+	/**
+	 * Get an Iterator over all {@link GuiElement GuiElements}
+	 * 
+	 * @return the iterator
+	 */
+	Iterator<GuiElement> getGuiElementIterator();
 
 	/**
 	 * Get the Player

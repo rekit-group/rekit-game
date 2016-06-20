@@ -15,6 +15,8 @@ import edu.kit.informatik.ragnarok.primitives.Polygon;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 import edu.kit.informatik.ragnarok.util.RGBAColor;
 import edu.kit.informatik.ragnarok.util.RGBColor;
+import edu.kit.informatik.ragnarok.util.SwtUtils;
+import edu.kit.informatik.ragnarok.util.TextOptions;
 
 /**
  * This class represents a {@link Field} of the {@link GameView}
@@ -96,6 +98,28 @@ public class FieldImpl implements Field {
 				this.units2pixel(pos.getY() - size.getY() / 2f) // dstY
 		);
 	}
+	
+	@Override
+	public void drawText(Vec2D pos, String text, TextOptions options) {
+		// Set color to red and set font
+		RGB rgb = new RGB(options.getColor().red, options.getColor().green, options.getColor().blue);
+		Color color = new Color(Display.getCurrent(), rgb);
+		this.gc.setForeground(color);
+		color.dispose();
+		
+		Font font = new Font(Display.getCurrent(), options.getFont(), options.getHeight(), options.getFontOptions() | SWT.BOLD);
+		this.gc.setFont(font);
+		font.dispose();
+		
+		Vec2D alignAdd = new Vec2D();
+		if (options.isAlignmentLeft())
+		{
+			int textWidth = this.gc.stringExtent(text).x;
+			alignAdd = alignAdd.addX(-textWidth);
+		}
+		
+		this.gc.drawText(text, (int) (pos.getX() + alignAdd.getX()), (int) (pos.getY() + (int) alignAdd.getY()), true);
+	}
 
 	public void refreshUI(int lifes, int points, int highScore, String bossText) {
 
@@ -138,6 +162,8 @@ public class FieldImpl implements Field {
 	}
 
 	public void drawFPS(float fps) {
+		drawText(new Vec2D(this.units2pixel(GameConf.gridW) - 10, this.units2pixel(GameConf.gridH) - 60), "FPS: " + fps, GameConf.defaultText);
+		/*
 		// Set color to red and set font
 		Color color = new Color(Display.getCurrent(), new RGB(200, 50, 0));
 		this.gc.setForeground(color);
@@ -150,6 +176,7 @@ public class FieldImpl implements Field {
 		int textWidth = this.gc.stringExtent(text).x;
 		// And draw the text
 		this.gc.drawText(text, this.units2pixel(GameConf.gridW) - textWidth - 10, this.units2pixel(GameConf.gridH) - 60, true);
+		*/
 	}
 
 	public void setGC(GC gc) {
@@ -158,22 +185,21 @@ public class FieldImpl implements Field {
 
 	@Override
 	public void drawRectangle(Vec2D pos, Vec2D size, RGBColor color) {
-		this.drawRectangle(pos, size, new RGB(color.red, color.green, color.blue));
-
+		this.drawRectangle(pos, size, SwtUtils.calcRGB(color));
 	}
 
 	@Override
 	public void drawCircle(Vec2D pos, Vec2D size, RGBColor color) {
-		this.drawCircle(pos, size, new RGB(color.red, color.green, color.blue));
+		this.drawCircle(pos, size, SwtUtils.calcRGB(color));
 	}
 
 	@Override
 	public void drawPolygon(Polygon polygon, RGBAColor color) {
-		this.drawPolygon(polygon, new RGBA(color.red, color.green, color.blue, color.alpha));
+		this.drawPolygon(polygon, SwtUtils.calcRGBA(color));
 	}
 
 	@Override
 	public void drawPolygon(Polygon polygon, RGBColor color) {
-		this.drawPolygon(polygon, new RGB(color.red, color.green, color.blue));
+		this.drawPolygon(polygon, SwtUtils.calcRGB(color));
 	}
 }

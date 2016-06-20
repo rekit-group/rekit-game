@@ -3,6 +3,7 @@ package edu.kit.informatik.ragnarok.config;
 import java.util.ResourceBundle;
 
 import edu.kit.informatik.ragnarok.util.RGBColor;
+import edu.kit.informatik.ragnarok.util.TextOptions;
 
 
 /**
@@ -67,5 +68,7 @@ public class GameConf {
 	
 	public static final RGBColor gameBackgroundColor = GameConf.BUNDLE.getRGBColor("gameBackgroundColor");
 	public static final RGBColor menuBackgroundColor = GameConf.BUNDLE.getRGBColor("menuBackgroundColor");
+	public static final RGBColor gameTextColor = GameConf.BUNDLE.getRGBColor("gameTextColor");
+	public static final TextOptions defaultText = new TextOptions(true, 18, gameTextColor, "Tahoma", 1);
 
 }
