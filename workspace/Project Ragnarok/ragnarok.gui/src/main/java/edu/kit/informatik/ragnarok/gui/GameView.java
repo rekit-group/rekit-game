@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.Queue;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.RGB;
@@ -14,7 +16,9 @@ import org.eclipse.swt.widgets.Shell;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.GameModel;
+import edu.kit.informatik.ragnarok.logic.Model;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.util.InputHelper;
 import edu.kit.informatik.ragnarok.util.SwtUtils;
 import edu.kit.informatik.ragnarok.util.ThreadUtils;
 
@@ -27,12 +31,12 @@ import edu.kit.informatik.ragnarok.util.ThreadUtils;
  *
  * @version 1.1
  */
-public class GameView {
+class GameView implements View {
 	/**
 	 * Reference to the model, that holds all information that are required for
 	 * rendering
 	 */
-	private GameModel model;
+	private Model model;
 
 	/**
 	 * Represents a graphic window
@@ -62,7 +66,7 @@ public class GameView {
 	 * @param model
 	 *            the model
 	 */
-	public GameView(GameModel model) {
+	public GameView(Model model) {
 		this.model = model;
 		// Create window
 
@@ -87,6 +91,7 @@ public class GameView {
 	/**
 	 * Starts the View by periodically invoking renderLoop()
 	 */
+	@Override
 	public void start() {
 		Thread updateThread = new Thread() {
 
@@ -124,17 +129,8 @@ public class GameView {
 	 *
 	 * @return the reference to the GameModel
 	 */
-	public GameModel getModel() {
+	public Model getModel() {
 		return this.model;
-	}
-
-	/**
-	 * Getter for the canvas
-	 *
-	 * @return the canvas
-	 */
-	public Canvas getCanvas() {
-		return this.canvas;
 	}
 
 	/**
@@ -153,7 +149,8 @@ public class GameView {
 		this.field.setGC(tempGC);
 
 		// Draw background
-		this.field.setBackground(new RGB(GameConf.gameBackgroundColor.red, GameConf.gameBackgroundColor.green, GameConf.gameBackgroundColor.blue));
+		this.field.setBackground(
+				new RGB(GameConf.gameBackgroundColor.red, GameConf.gameBackgroundColor.green, GameConf.gameBackgroundColor.blue));
 
 		// Iterate all GameElements
 		synchronized (GameModel.SYNC) {
@@ -165,7 +162,8 @@ public class GameView {
 		}
 
 		// Draw UI (lifes, score)
-		this.field.refreshUI(this.getModel().getPlayer().getLifes(), this.getModel().getScore(), this.getModel().getHighScore(), this.getModel().getCurrentBossText());
+		this.field.refreshUI(this.getModel().getPlayer().getLifes(), this.getModel().getScore(), this.getModel().getHighScore(),
+				this.getModel().getCurrentBossText());
 
 		// draw temporary image on actual cavans
 		this.gc.drawImage(image, 0, 0);
@@ -198,6 +196,28 @@ public class GameView {
 		}
 
 		return (int) (10000f / (sum / this.fpsQueue.size()) / 10f);
+	}
+
+	@Override
+	public void attachMe(InputHelper inputHelper) {
+		// Check if listenerControl is set
+		if (inputHelper == null) {
+			return;
+		}
+		// Add our custom KeyListener to an object
+		KeyAdapter adapter = new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				inputHelper.press(e.keyCode);
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				inputHelper.release(e.keyCode);
+			}
+		};
+		this.canvas.addKeyListener(adapter);
+
 	}
 
 }

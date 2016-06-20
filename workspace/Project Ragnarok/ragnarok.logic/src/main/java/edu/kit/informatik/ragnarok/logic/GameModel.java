@@ -11,19 +11,19 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
-import edu.kit.informatik.ragnarok.logic.levelcreator.LevelCreator;
-import edu.kit.informatik.ragnarok.logic.levelcreator.InfiniteLevelCreator;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.CameraTarget;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.EnemyFactory;
+import edu.kit.informatik.ragnarok.logic.levelcreator.InfiniteLevelCreator;
+import edu.kit.informatik.ragnarok.logic.levelcreator.LevelCreator;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.TimeDependency;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 import edu.kit.informatik.ragnarok.util.ThreadUtils;
 
-public class GameModel implements CameraTarget {
+public class GameModel implements CameraTarget, Model {
 
 	/**
 	 * Synchronization Object that is used as a lock variable for blocking
@@ -49,13 +49,13 @@ public class GameModel implements CameraTarget {
 	private float currentOffset;
 
 	private Thread loopThread;
-	
+
 	private CameraTarget cameraTarget;
-	
+
 	private String currentBossText = null;
-	
-	private TimeDependency currentBossTextTimeLeft ;
-	
+
+	private TimeDependency currentBossTextTimeLeft;
+
 	public void setCameraTarget(CameraTarget cameraTarget) {
 		this.cameraTarget = cameraTarget;
 	}
@@ -72,7 +72,7 @@ public class GameModel implements CameraTarget {
 
 		// Create Player and add him to game
 		this.player.init();
-		this.cameraTarget = (CameraTarget) this.player;
+		this.cameraTarget = this.player;
 		this.addGameElement(this.player);
 
 		// Init EnemyFactory with model
@@ -101,25 +101,25 @@ public class GameModel implements CameraTarget {
 		};
 		restartThread.start();
 	}
-	
-	private void end () {
-		
+
+	private void end() {
+
 		// save score if higher than highscore
 		if (this.getScore() > this.getHighScore()) {
 			this.setHighScore(this.getScore());
 		}
-		
+
 		// restart game
 		GameModel.this.restart();
 	}
-	
+
 	private int highScore = -1;
-	
+
 	public int getHighScore() {
 		if (this.highScore != -1) {
 			return this.highScore;
 		}
-		
+
 		int highScore = 0;
 		try {
 			BufferedReader in = new BufferedReader(new FileReader("score.dat"));
@@ -129,10 +129,10 @@ public class GameModel implements CameraTarget {
 		} catch (IOException e) {
 			highScore = 0;
 		}
-		
+
 		return highScore;
 	}
-	
+
 	public int setHighScore(int highScore) {
 		try {
 			BufferedWriter out = new BufferedWriter(new FileWriter("score.dat"));
@@ -142,7 +142,7 @@ public class GameModel implements CameraTarget {
 		} catch (IOException e) {
 			// TODO error
 		}
-		
+
 		return highScore;
 	}
 
@@ -250,16 +250,16 @@ public class GameModel implements CameraTarget {
 		if (this.currentBossTextTimeLeft != null) {
 			this.currentBossTextTimeLeft.removeTime(timeDelta / 1000f);
 		}
-		
+
 		// add GameElements that have been added
 		this.addAllWaitingGameElements();
 
-		this.levelCreator.generate((int)(this.getCameraOffset() + GameConf.gridW + 1));
+		this.levelCreator.generate((int) (this.getCameraOffset() + GameConf.gridW + 1));
 
 		// dont allow player to go behind currentOffset
-		float minX = this.getCameraOffset() + player.getSize().getX() / 2f;
-		if (player.getPos().getX() < minX) {
-			player.setPos(player.getPos().setX(minX));
+		float minX = this.getCameraOffset() + this.player.getSize().getX() / 2f;
+		if (this.player.getPos().getX() < minX) {
+			this.player.setPos(this.player.getPos().setX(minX));
 		}
 
 		// iterate all GameElements to invoke logicLoop
@@ -274,8 +274,7 @@ public class GameModel implements CameraTarget {
 				}
 
 				// check if we can delete this
-				if (e.getPos().getX() < this.currentOffset
-						- GameConf.playerCameraOffset - 1) {
+				if (e.getPos().getX() < this.currentOffset - GameConf.playerCameraOffset - 1) {
 					this.removeGameElement(e);
 				} else {
 					e.logicLoop(timeDelta / 1000.f);
@@ -295,8 +294,7 @@ public class GameModel implements CameraTarget {
 				while (it2.hasNext()) {
 					GameElement e2 = it2.next();
 					if (e1 != e2) {
-						this.checkCollision(e1, e2, e1.getLastPos(),
-								e2.getLastPos());
+						this.checkCollision(e1, e2, e1.getLastPos(), e2.getLastPos());
 					}
 				}
 			}
@@ -307,8 +305,7 @@ public class GameModel implements CameraTarget {
 
 	}
 
-	private void checkCollision(GameElement e1, GameElement e2,
-			Vec2D e1lastPos, Vec2D e2lastPos) {
+	private void checkCollision(GameElement e1, GameElement e2, Vec2D e1lastPos, Vec2D e2lastPos) {
 		// Return if there is no collision
 		if (!e1.getCollisionFrame().collidesWith(e2.getCollisionFrame())) {
 			return;
@@ -316,30 +313,25 @@ public class GameModel implements CameraTarget {
 
 		// Simulate CollisionFrame with last Y position
 		Vec2D e1lastYVec = new Vec2D(e1.getPos().getX(), e1lastPos.getY());
-		Frame e1lastYFrame = new Frame(e1lastYVec.add(e1.getSize().multiply(
-				-0.5f)), e1lastYVec.add(e1.getSize().multiply(0.5f)));
+		Frame e1lastYFrame = new Frame(e1lastYVec.add(e1.getSize().multiply(-0.5f)), e1lastYVec.add(e1.getSize().multiply(0.5f)));
 
 		// Simulate CollisionFrame with last X position
 		Vec2D e1lastXVec = new Vec2D(e1lastPos.getX(), e1.getPos().getY());
-		Frame e1lastXFrame = new Frame(e1lastXVec.add(e1.getSize().multiply(
-				-0.5f)), e1lastXVec.add(e1.getSize().multiply(0.5f)));
+		Frame e1lastXFrame = new Frame(e1lastXVec.add(e1.getSize().multiply(-0.5f)), e1lastXVec.add(e1.getSize().multiply(0.5f)));
 
 		// Simulate CollisionFrame with last Y position
 		Vec2D e2lastYVec = new Vec2D(e2.getPos().getX(), e2lastPos.getY());
-		Frame e2lastYFrame = new Frame(e2lastYVec.add(e2.getSize().multiply(
-				-0.5f)), e2lastYVec.add(e2.getSize().multiply(0.5f)));
+		Frame e2lastYFrame = new Frame(e2lastYVec.add(e2.getSize().multiply(-0.5f)), e2lastYVec.add(e2.getSize().multiply(0.5f)));
 
 		// Simulate CollisionFrame with last X position
 		Vec2D e2lastXVec = new Vec2D(e2lastPos.getX(), e2.getPos().getY());
-		Frame e2lastXFrame = new Frame(e2lastXVec.add(e2.getSize().multiply(
-				-0.5f)), e2lastXVec.add(e2.getSize().multiply(0.5f)));
+		Frame e2lastXFrame = new Frame(e2lastXVec.add(e2.getSize().multiply(-0.5f)), e2lastXVec.add(e2.getSize().multiply(0.5f)));
 
 		// If they still collide with the old x positions:
 		// it must be because of the y position
 		if (e1lastXFrame.collidesWith(e2lastXFrame)) {
 			// If relative movement is in positive y direction (down)
-			float relMovement = (e2.getPos().getY() - e2lastPos.getY())
-					- (e1.getPos().getY() - e1lastPos.getY());
+			float relMovement = (e2.getPos().getY() - e2lastPos.getY()) - (e1.getPos().getY() - e1lastPos.getY());
 			if (relMovement > 0) {
 				e1.reactToCollision(e2, Direction.UP);
 			} else
@@ -350,15 +342,13 @@ public class GameModel implements CameraTarget {
 				return;
 			}
 			// check if he is still colliding even with last x position
-			this.checkCollision(e1, e2, new Vec2D(e1lastPos.getX(), e1.getPos()
-					.getY()), new Vec2D(e2lastPos.getX(), e2.getPos().getY()));
+			this.checkCollision(e1, e2, new Vec2D(e1lastPos.getX(), e1.getPos().getY()), new Vec2D(e2lastPos.getX(), e2.getPos().getY()));
 		} else
 		// If they still collide with the old y positions:
 		// it must be because of the x position
 		if (e1lastYFrame.collidesWith(e2lastYFrame)) {
 			// If he moved in positive x direction (right)
-			float relMovement = (e2.getPos().getX() - e2lastPos.getX())
-					- (e1.getPos().getX() - e1lastPos.getX());
+			float relMovement = (e2.getPos().getX() - e2lastPos.getX()) - (e1.getPos().getX() - e1lastPos.getX());
 			if (relMovement > 0) {
 				e1.reactToCollision(e2, Direction.LEFT);
 			} else
@@ -369,9 +359,7 @@ public class GameModel implements CameraTarget {
 				return;
 			}
 			// check if he is still colliding even with last x position
-			this.checkCollision(e1, e2,
-					new Vec2D(e1.getPos().getX(), e1lastPos.getY()), new Vec2D(
-							e2.getPos().getX(), e2lastPos.getY()));
+			this.checkCollision(e1, e2, new Vec2D(e1.getPos().getX(), e1lastPos.getY()), new Vec2D(e2.getPos().getX(), e2lastPos.getY()));
 		}
 
 	}
@@ -381,6 +369,7 @@ public class GameModel implements CameraTarget {
 	 *
 	 * @return the player
 	 */
+	@Override
 	public Player getPlayer() {
 		return this.player;
 	}
@@ -393,16 +382,15 @@ public class GameModel implements CameraTarget {
 	public float getCameraOffset() {
 		return this.cameraTarget.getCameraOffset();
 	}
-	
-	
+
 	public void addBossText(String text) {
 		this.currentBossText = text;
 		this.currentBossTextTimeLeft = new TimeDependency(3);
-		
+
 	}
-	
+
 	public String getCurrentBossText() {
-		if (currentBossText != null && !this.currentBossTextTimeLeft.timeUp()) {
+		if (this.currentBossText != null && !this.currentBossTextTimeLeft.timeUp()) {
 			return this.currentBossText;
 		}
 		return null;

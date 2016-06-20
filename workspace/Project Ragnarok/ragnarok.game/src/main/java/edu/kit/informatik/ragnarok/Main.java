@@ -1,9 +1,8 @@
 package edu.kit.informatik.ragnarok;
 
 import edu.kit.informatik.ragnarok.controller.Controller;
-import edu.kit.informatik.ragnarok.controller.InputHelper;
-import edu.kit.informatik.ragnarok.gui.GameView;
-import edu.kit.informatik.ragnarok.logic.GameModel;
+import edu.kit.informatik.ragnarok.gui.View;
+import edu.kit.informatik.ragnarok.logic.Model;
 
 /**
  * Game class that instantiates all necessary classes that are required for a
@@ -25,12 +24,12 @@ public class Main {
 		// Create MVC
 		// Set References:
 		// V----> M <----C
-		GameModel model = new GameModel();
-		GameView view = new GameView(model);
-		Controller controller = new Controller(model);
+		Model model = Model.getModel();
+		View view = View.getView(model);
+		Controller controller = Controller.getController(model);
 
 		// Instantiate InputHelper that requires a shell
-		InputHelper.attach(view.getCanvas());
+		controller.getInputHelper().initialize(view);
 
 		// Start MVC
 		model.start();

@@ -17,7 +17,6 @@
 			<groupId>org.eclipse.swt</groupId>
 			<artifactId>${swt.artifactId}</artifactId>
 			<version>${swt.version}</version>
-			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 </project>
