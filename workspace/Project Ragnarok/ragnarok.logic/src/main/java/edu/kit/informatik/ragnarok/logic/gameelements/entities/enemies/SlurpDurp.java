@@ -18,6 +18,13 @@ public class SlurpDurp extends Entity {
 	private float currentX = 0;
 	private float currentSize = 0;
 
+	/**
+	 * Prototype Constructor
+	 */
+	public SlurpDurp() {
+		super(null);
+	}
+
 	public SlurpDurp(Vec2D parentPos, Vec2D innerPos, float baseSize, float frequency, float amplitude, float phase) {
 		super(parentPos.add(innerPos));
 		this.parentPos = parentPos;
@@ -59,4 +66,10 @@ public class SlurpDurp extends Entity {
 	public void render(Field f) {
 		f.drawCircle(this.getPos(), new Vec2D(this.currentSize), new RGBColor(94, 233, 101));
 	}
+
+	@Override
+	public Entity create(Vec2D startPos) {
+		throw new UnsupportedOperationException("Create not supported for SlurpDurps");
+	}
+
 }

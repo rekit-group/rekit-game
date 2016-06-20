@@ -33,13 +33,10 @@ public class Player extends Entity implements CameraTarget {
 		this.currentCameraOffset = 0;
 
 		this.damageParticles = new ParticleSpawner();
-		this.damageParticles.colorR = new ParticleSpawnerOption(222, 242, -10,
-				10);
-		this.damageParticles.colorG = new ParticleSpawnerOption(138, 158, -10,
-				10);
+		this.damageParticles.colorR = new ParticleSpawnerOption(222, 242, -10, 10);
+		this.damageParticles.colorG = new ParticleSpawnerOption(138, 158, -10, 10);
 		this.damageParticles.colorB = new ParticleSpawnerOption(6, 26, -10, 10);
-		this.damageParticles.colorA = new ParticleSpawnerOption(255, 255, -255,
-				-255);
+		this.damageParticles.colorA = new ParticleSpawnerOption(255, 255, -255, -255);
 
 	}
 
@@ -66,8 +63,7 @@ public class Player extends Entity implements CameraTarget {
 																							// facing
 																							// right
 				: "mrRekt_glasses_left.png"; // When facing left
-		f.drawImage(this.getPos().addY(-0.025f * this.getVel().getY()),
-				this.getSize(), src);
+		f.drawImage(this.getPos().addY(-0.025f * this.getVel().getY()), this.getSize(), src);
 
 	}
 
@@ -102,6 +98,11 @@ public class Player extends Entity implements CameraTarget {
 			this.currentCameraOffset = offsetNow;
 		}
 		return this.currentCameraOffset;
+	}
+
+	@Override
+	public Entity create(Vec2D startPos) {
+		throw new UnsupportedOperationException("Create not supported for Players");
 	}
 
 }

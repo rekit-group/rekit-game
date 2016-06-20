@@ -8,6 +8,9 @@ import edu.kit.informatik.ragnarok.primitives.Vec2D;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 
 public class Coin extends Entity {
+	public Coin() {
+		super(null);
+	}
 
 	public Coin(Vec2D startPos) {
 		super(startPos);
@@ -49,6 +52,11 @@ public class Coin extends Entity {
 	@Override
 	public void logicLoop(float deltaTime) {
 		// no logic
+	}
+
+	@Override
+	public Entity create(Vec2D startPos) {
+		return new Coin(startPos);
 	}
 
 }

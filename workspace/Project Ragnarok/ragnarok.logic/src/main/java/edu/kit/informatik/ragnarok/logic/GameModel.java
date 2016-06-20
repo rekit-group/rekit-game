@@ -14,7 +14,7 @@ import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.CameraTarget;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.EnemyFactory;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.EntityFactory;
 import edu.kit.informatik.ragnarok.logic.levelcreator.InfiniteLevelCreator;
 import edu.kit.informatik.ragnarok.logic.levelcreator.LevelCreator;
 import edu.kit.informatik.ragnarok.primitives.Direction;
@@ -83,7 +83,7 @@ public class GameModel implements CameraTarget, Model {
 		this.addGameElement(this.player);
 
 		// Init EnemyFactory with model
-		EnemyFactory.init(this);
+		EntityFactory.init(this);
 
 		// Create LevelCreator
 		this.levelCreator = new InfiniteLevelCreator(this);

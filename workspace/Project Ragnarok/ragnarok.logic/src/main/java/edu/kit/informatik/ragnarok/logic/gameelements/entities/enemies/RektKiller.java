@@ -19,10 +19,17 @@ public class RektKiller extends Entity {
 	private Polygon spikePolygon;
 
 	protected Direction currentDirection;
-	
+
+	/**
+	 * Prototype Constructor
+	 */
+	public RektKiller() {
+		super(null);
+	}
+
 	public RektKiller(Vec2D startPos, int sides) {
 		super(startPos);
-		
+
 		if (sides < 0 || sides > 15) {
 			throw new IllegalArgumentException("RektKiller must be give a number between 0 and 14");
 		}
@@ -32,24 +39,24 @@ public class RektKiller extends Entity {
 		int x = r.nextInt(Direction.values().length);
 		this.currentDirection = Direction.values()[x];
 		this.sides = sides;
-		
+
 		this.setSize(new Vec2D(0.6f, 0.6f));
 		this.prepare();
 	}
-	
+
 	protected void prepare() {
 		// calculate size dependent Polygon for spikes
 		this.spikePolygon = new Polygon(new Vec2D(),
 				new Vec2D[] { new Vec2D(0.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
-			new Vec2D(1.0f * ((this.getSize().getX() * 0.8f) / 3f), 0),
-			new Vec2D(1.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
-			new Vec2D(2.0f * ((this.getSize().getX() * 0.8f) / 3f), 0),
-			new Vec2D(2.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
-			new Vec2D(3.0f * ((this.getSize().getX() * 0.8f) / 3f), 0), new Vec2D() // and
-																					// back
-																					// to
-																					// start
-		});
+						new Vec2D(1.0f * ((this.getSize().getX() * 0.8f) / 3f), 0),
+						new Vec2D(1.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
+						new Vec2D(2.0f * ((this.getSize().getX() * 0.8f) / 3f), 0),
+						new Vec2D(2.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
+						new Vec2D(3.0f * ((this.getSize().getX() * 0.8f) / 3f), 0), new Vec2D() // and
+																								// back
+																								// to
+																								// start
+				});
 	}
 
 	private boolean hasSide(Direction dir) {
@@ -71,7 +78,7 @@ public class RektKiller extends Entity {
 		}
 		return ((this.sides >> bitPos) & 1) == 1;
 	}
-	
+
 	protected void setSide(Direction dir, boolean spikes) {
 		int bitPos;
 		switch (dir) {
@@ -94,7 +101,7 @@ public class RektKiller extends Entity {
 		} else {
 			this.sides = this.sides & ~(1 << bitPos);
 		}
-		 
+
 	}
 
 	@Override
@@ -178,6 +185,13 @@ public class RektKiller extends Entity {
 
 		this.currentDirection = this.currentDirection.getOpposite();
 
+	}
+
+	private static final Random PRNG = new Random();
+
+	@Override
+	public Entity create(Vec2D startPos) {
+		return new RektKiller(startPos, RektKiller.PRNG.nextInt(16));
 	}
 
 }

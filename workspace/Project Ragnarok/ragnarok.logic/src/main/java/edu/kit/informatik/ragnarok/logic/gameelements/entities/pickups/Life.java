@@ -7,6 +7,9 @@ import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
 public class Life extends Entity {
+	public Life() {
+		super(null);
+	}
 
 	public Life(Vec2D startPos) {
 		super(startPos);
@@ -28,6 +31,11 @@ public class Life extends Entity {
 	@Override
 	public void render(Field f) {
 		f.drawImage(this.getPos(), this.getSize(), "mrRekt_glasses_left.png");
+	}
+
+	@Override
+	public Entity create(Vec2D startPos) {
+		return new Life(startPos);
 	}
 
 }

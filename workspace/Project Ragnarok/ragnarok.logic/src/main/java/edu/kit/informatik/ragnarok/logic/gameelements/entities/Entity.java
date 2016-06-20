@@ -9,52 +9,57 @@ import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
 public abstract class Entity extends GameElement {
-	
+
 	/**
-	 * The amount of lifes the Entity has.
-	 * Upon reaching 0 lifes, he dies
+	 * The amount of lifes the Entity has. Upon reaching 0 lifes, he dies
 	 */
 	protected int lifes = 1;
-	
+
 	/**
 	 * The amount of points the Entity has scored
 	 */
 	protected int points = 0;
-	
+
 	/**
 	 * The current State the Entity is in and determines the jump behavior
 	 */
 	private EntityState entityState;
-	
+
 	/**
 	 * Constructor that initializes attributes and takes a start position
-	 * @param startPos the position this entity shall be in
+	 *
+	 * @param startPos
+	 *            the position this entity shall be in
 	 */
 	public Entity(Vec2D startPos) {
-		// Set to default state 
+		// Set to default state
 		this.setEntityState(new DefaultState(this));
-		
+
 		// Set initial position and velocity
 		this.setPos(startPos);
 		this.setVel(new Vec2D(0, 0));
 	}
-	
+
 	/**
 	 * Set the Entities <i>EntitiyState</i> that determines its jump behavior
+	 *
 	 * @param value
 	 */
 	public void setEntityState(EntityState value) {
 		this.entityState = value;
 	}
-	
+
 	/**
-	 * Return the Entities current <i>EntitiyState</i> that determines its jump behavior.
+	 * Return the Entities current <i>EntitiyState</i> that determines its jump
+	 * behavior.
+	 *
 	 * @return
 	 */
 	public EntityState getEntityState() {
 		return this.entityState;
 	}
-	
+
+	@Override
 	public void addDamage(int damage) {
 		this.lifes -= damage;
 		if (this.lifes <= 0) {
@@ -62,43 +67,43 @@ public abstract class Entity extends GameElement {
 			this.destroy();
 		}
 	}
-	
+
 	public void setLifes(int lifes) {
 		this.lifes = lifes;
 	}
-	
+
 	@Override
 	public int getLifes() {
 		return this.lifes;
 	}
-	
+
 	@Override
 	public void addPoints(int points) {
 		this.points += points;
-	}	
-	
+	}
+
 	@Override
 	public int getPoints() {
 		return this.points;
 	}
-	
+
 	@Override
 	public void logicLoop(float deltaTime) {
-		
+
 		// if delta is too big, clipping likely to appear...
 		if (deltaTime > GameConf.logicDelta) {
 			// ..so recursively split work up into smaller parts
-			logicLoop(deltaTime / 2);
-			logicLoop(deltaTime / 2);
+			this.logicLoop(deltaTime / 2);
+			this.logicLoop(deltaTime / 2);
 			return;
 		}
-		
+
 		this.getEntityState().logicLoop(deltaTime);
-		
+
 		// calculate new position
 		// s1 = s0 + v*t because physics, thats why!
 		this.setPos(this.getPos().add(this.getVel().multiply(deltaTime)));
-		
+
 		Vec2D newVel = this.getVel();
 		// apply gravity
 		newVel = newVel.addY(GameConf.g);
@@ -115,12 +120,12 @@ public abstract class Entity extends GameElement {
 			this.addDamage(this.getLifes());
 		}
 	}
-	
+
 	@Override
 	public void collidedWith(Frame collision, Direction dir) {
 		// saving last position
 		Vec2D lastPos = this.getLastPos();
-		
+
 		int signum = 1;
 		switch (dir) {
 		case LEFT:
@@ -139,15 +144,17 @@ public abstract class Entity extends GameElement {
 			// move entities lower side to collisions top side / vice versa
 			float newY = collision.getBorder(dir.getOpposite()) + signum * this.getSize().getY() / 1.9f;
 			this.setPos(this.getPos().setY(newY));
-			// stop velocity in y dimension 
+			// stop velocity in y dimension
 			this.setVel(this.getVel().setY(0));
 			break;
 		}
-		
+
 		// resetting lastPos
 		this.setLastPos(lastPos);
 	}
-	
+
+	public abstract Entity create(Vec2D startPos);
+
 	@Override
 	public int getZ() {
 		return 1;

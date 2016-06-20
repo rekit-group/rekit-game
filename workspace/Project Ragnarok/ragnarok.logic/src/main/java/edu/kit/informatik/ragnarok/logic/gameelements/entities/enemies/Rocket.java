@@ -13,6 +13,12 @@ import edu.kit.informatik.ragnarok.primitives.Vec2D;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 
 public class Rocket extends Entity {
+	/**
+	 * Prototype Constructor
+	 */
+	public Rocket() {
+		super(null);
+	}
 
 	private static RGBColor innerColor = new RGBColor(90, 90, 90);
 	private static RGBColor frontColor = new RGBColor(150, 30, 30);
@@ -123,6 +129,11 @@ public class Rocket extends Entity {
 	@Override
 	public void addDamage(int damage) {
 		this.destroy();
+	}
+
+	@Override
+	public Entity create(Vec2D startPos) {
+		return new Rocket(startPos);
 	}
 
 }

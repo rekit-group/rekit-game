@@ -16,6 +16,13 @@ public class Slurp extends Entity {
 
 	private List<SlurpDurp> slurpDurps;
 
+	/**
+	 * Prototype Constructor
+	 */
+	public Slurp() {
+		super(null);
+	}
+
 	public Slurp(Vec2D startPos) {
 		super(startPos);
 
@@ -112,6 +119,11 @@ public class Slurp extends Entity {
 		for (SlurpDurp slurpDurp : this.slurpDurps) {
 			slurpDurp.render(f);
 		}
+	}
+
+	@Override
+	public Entity create(Vec2D startPos) {
+		return new Slurp(startPos);
 	}
 
 }

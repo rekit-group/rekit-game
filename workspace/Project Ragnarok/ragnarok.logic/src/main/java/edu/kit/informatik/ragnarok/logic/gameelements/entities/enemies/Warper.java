@@ -15,6 +15,14 @@ public class Warper extends Entity {
 
 	private TimeDependency warpAction = new TimeDependency(1);
 	private static ParticleSpawner warpParticles = null;
+
+	/**
+	 * Prototype Constructor
+	 */
+	public Warper() {
+		super(null);
+	}
+
 	static {
 		Warper.warpParticles = new ParticleSpawner();
 		Warper.warpParticles.angle = new ParticleSpawnerOption(0, (float) (2 * Math.PI), (float) (2 * Math.PI), (float) (4 * Math.PI));
@@ -105,6 +113,11 @@ public class Warper extends Entity {
 	@Override
 	public void addDamage(int damage) {
 		this.destroy();
+	}
+
+	@Override
+	public Entity create(Vec2D startPos) {
+		return new Warper(startPos);
 	}
 
 }
