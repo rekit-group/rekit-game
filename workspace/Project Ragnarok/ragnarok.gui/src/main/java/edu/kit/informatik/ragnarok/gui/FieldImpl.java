@@ -128,32 +128,13 @@ public class FieldImpl implements Field {
 		for (int i = 0; i < lifes; i++) {
 			this.gc.drawImage(image, 10 + 50 * i, 10);
 		}
-		// Set color to red and set font
-		Color color = new Color(Display.getCurrent(), new RGB(200, 50, 0));
-		this.gc.setForeground(color);
-		color.dispose();
-		Font font = new Font(Display.getCurrent(), "Tahoma", 18, SWT.BOLD);
-		this.gc.setFont(font);
-		// There is no alignment, so we need to calculate the text width
-		String text = points + " Points";
-		int textWidth = this.gc.stringExtent(text).x;
-		int textHeight = this.gc.stringExtent(text).y;
-		// And draw the text
-		this.gc.drawText(text, this.units2pixel(GameConf.gridW) - textWidth - 10, 10, true);
-
-		// There is no alignment, so we need to calculate the text width
-		text = highScore + " HighScore";
-		textWidth = this.gc.stringExtent(text).x;
-		// And draw the text
-		this.gc.drawText(text, this.units2pixel(GameConf.gridW) - textWidth - 10, 10 + 10 + textHeight, true);
-		font.dispose();
 
 		if (bossText != null) {
-			font = new Font(Display.getCurrent(), "Tahoma", 30, SWT.BOLD);
+			Font font = new Font(Display.getCurrent(), "Tahoma", 30, SWT.BOLD);
 			this.gc.setFont(font);
 			// There is no alignment, so we need to calculate the text width
-			textWidth = this.gc.stringExtent(bossText).x;
-			textHeight = this.gc.stringExtent(bossText).y;
+			int textWidth = this.gc.stringExtent(bossText).x;
+			int textHeight = this.gc.stringExtent(bossText).y;
 			// And draw the text
 			this.gc.drawText(bossText, (this.units2pixel(GameConf.gridW) - textWidth) / 2,
 					(this.units2pixel(GameConf.gridH) - textHeight) / 2, true);
@@ -163,20 +144,6 @@ public class FieldImpl implements Field {
 
 	public void drawFPS(float fps) {
 		drawText(new Vec2D(this.units2pixel(GameConf.gridW) - 10, this.units2pixel(GameConf.gridH) - 60), "FPS: " + fps, GameConf.defaultText);
-		/*
-		// Set color to red and set font
-		Color color = new Color(Display.getCurrent(), new RGB(200, 50, 0));
-		this.gc.setForeground(color);
-		color.dispose();
-		Font font = new Font(Display.getCurrent(), "Tahoma", 18, SWT.BOLD);
-		this.gc.setFont(font);
-		font.dispose();
-		// There is no alignment, so we need to calculate the text width
-		String text = "FPS: " + fps;
-		int textWidth = this.gc.stringExtent(text).x;
-		// And draw the text
-		this.gc.drawText(text, this.units2pixel(GameConf.gridW) - textWidth - 10, this.units2pixel(GameConf.gridH) - 60, true);
-		*/
 	}
 
 	public void setGC(GC gc) {

@@ -5,7 +5,7 @@ import edu.kit.informatik.ragnarok.logic.GameModel;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GuiElement;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
-import edu.kit.informatik.ragnarok.util.TextOptions;
+import edu.kit.informatik.ragnarok.util.CalcUtil;
 
 public class HighscorePanel extends GuiElement{
 	
@@ -14,13 +14,10 @@ public class HighscorePanel extends GuiElement{
 	
 	public HighscorePanel(GameModel model) {
 		super(model);
-		TextOptions op = new TextOptions(false, 18, GameConf.gameTextColor, "Tahoma", 1);
-		points = new Text(model, op);
-		highscore = new Text(model, op);
-		points.setPos(new Vec2D(GameConf.gridW - 1, 1));
-		points.setPos(new Vec2D(10, 100));
-		highscore.setPos(new Vec2D(GameConf.gridW - 1, 2));
-		highscore.setPos(new Vec2D(10, 130));
+		points = new Text(model, GameConf.defaultText);
+		highscore = new Text(model, GameConf.defaultText);
+		points.setPos(new Vec2D(CalcUtil.units2pixel(GameConf.gridW) - 10, 1));
+		highscore.setPos(new Vec2D(CalcUtil.units2pixel(GameConf.gridW) - 10, 50));
 	}
 	
 	@Override
