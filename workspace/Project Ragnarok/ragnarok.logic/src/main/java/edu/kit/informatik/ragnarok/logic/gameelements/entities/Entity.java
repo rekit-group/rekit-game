@@ -55,13 +55,16 @@ public abstract class Entity extends GameElement {
 		return this.entityState;
 	}
 	
-	@Override
 	public void addDamage(int damage) {
 		this.lifes -= damage;
 		if (this.lifes <= 0) {
 			this.lifes = 0;
 			this.destroy();
 		}
+	}
+	
+	public void setLifes(int lifes) {
+		this.lifes = lifes;
 	}
 	
 	@Override

@@ -65,7 +65,7 @@ public class BossRoom {
 		
 		// Prepare boss 
 		this.boss.setBossRoom(this);
-		this.boss.setPos(new Vec2D(x + 6 + roomStructure.getWidth() / 2, GameConf.gridH / 2));
+		this.boss.setPos(new Vec2D(x + 6 + roomStructure.getWidth() / 2, GameConf.gridH / 2 + 1));
 		this.boss.setTarget(player);
 		
 		// Create thread for asynchronous stuff

@@ -14,10 +14,12 @@ import edu.kit.informatik.ragnarok.util.RGBColor;
 
 public class RektKiller extends Entity {
 
-	private int sides;
+	protected int sides;
 
 	private Polygon spikePolygon;
 
+	protected Direction currentDirection;
+	
 	public RektKiller(Vec2D startPos, int sides) {
 		super(startPos);
 		
@@ -69,6 +71,31 @@ public class RektKiller extends Entity {
 		}
 		return ((this.sides >> bitPos) & 1) == 1;
 	}
+	
+	protected void setSide(Direction dir, boolean spikes) {
+		int bitPos;
+		switch (dir) {
+		case UP:
+			bitPos = 0;
+			break;
+		case RIGHT:
+			bitPos = 1;
+			break;
+		case DOWN:
+			bitPos = 2;
+			break;
+		default:
+			bitPos = 3;
+			break;
+
+		}
+		if (spikes) {
+			this.sides = this.sides | (1 << bitPos);
+		} else {
+			this.sides = this.sides & ~(1 << bitPos);
+		}
+		 
+	}
 
 	@Override
 	public void render(Field f) {
@@ -94,8 +121,6 @@ public class RektKiller extends Entity {
 		}
 
 	}
-
-	private Direction currentDirection;
 
 	@Override
 	public void logicLoop(float deltaTime) {
