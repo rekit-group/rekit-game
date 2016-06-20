@@ -31,7 +31,8 @@ public class RektSmasher extends RektKiller implements Boss {
 	@Override
 	public void render(Field f) {
 		super.render(f);
-		f.drawImage(this.getPos(), this.getSize().multiply(0.8f), "rektSmasher.png");
+		int lifes = this.getLifes() > 3 ? 3 : this.getLifes(); 
+		f.drawImage(this.getPos(), this.getSize().multiply(0.8f), "rektSmasher_" + lifes + ".png");		
 	}
 	
 	@Override
@@ -120,6 +121,9 @@ public class RektSmasher extends RektKiller implements Boss {
 		if (this.invincibility != null && !this.invincibility.timeUp()) {
 			this.isHarmless = true;
 			speed = 1f;
+		}
+		if (this.getLifes() <= 0) {
+			this.isHarmless = true;
 		}
 		this.setVel(this.getVel().multiply(speed));
 		super.logicLoop(deltaTime);
