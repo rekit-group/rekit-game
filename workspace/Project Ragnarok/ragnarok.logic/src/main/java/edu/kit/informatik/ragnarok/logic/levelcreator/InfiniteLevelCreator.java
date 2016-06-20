@@ -5,6 +5,8 @@ import java.util.Random;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.GameModel;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.bosses.RektSmasher;
+import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
 
 public class InfiniteLevelCreator extends LevelCreator {
@@ -15,7 +17,9 @@ public class InfiniteLevelCreator extends LevelCreator {
 		this.bossRooms = new HashMap<Integer, BossRoom>();
 		
 		// first boss room after 100 units in x direction
-		this.bossRooms.put(100, new BossRoom(new LevelStructure(new int[][] {
+		this.bossRooms.put(10, new BossRoom(
+		new RektSmasher(new Vec2D()),
+		new LevelStructure(new int[][] {
 		  {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 		  {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 		  {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},

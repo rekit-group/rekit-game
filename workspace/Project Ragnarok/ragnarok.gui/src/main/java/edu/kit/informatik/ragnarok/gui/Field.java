@@ -95,7 +95,7 @@ public class Field implements edu.kit.informatik.ragnarok.logic.gameelements.Fie
 		);
 	}
 
-	public void refreshUI(int lifes, int points, int highScore) {
+	public void refreshUI(int lifes, int points, int highScore, String bossText) {
 
 		// Iterate lifes
 		Image image = ImageLoader.get("mrRekt_glasses_right.png");
@@ -121,6 +121,17 @@ public class Field implements edu.kit.informatik.ragnarok.logic.gameelements.Fie
 		// And draw the text
 		this.gc.drawText(text, this.units2pixel(GameConf.gridW) - textWidth - 10, 10 + 10 + textHeight, true);
 		font.dispose();
+		
+		
+		if (bossText != null) {
+			font = new Font(Display.getCurrent(), "Tahoma", 30, SWT.BOLD);
+			this.gc.setFont(font);
+			// There is no alignment, so we need to calculate the text width
+			textWidth = this.gc.stringExtent(bossText).x;
+			textHeight = this.gc.stringExtent(bossText).y;
+			// And draw the text
+			this.gc.drawText(bossText, (this.units2pixel(GameConf.gridW) - textWidth) / 2, (this.units2pixel(GameConf.gridH) - textHeight) / 2, true);
+		}
 
 	}
 
@@ -163,5 +174,4 @@ public class Field implements edu.kit.informatik.ragnarok.logic.gameelements.Fie
 	public void drawPolygon(Polygon polygon, RGBColor color) {
 		this.drawPolygon(polygon, new RGB(color.red, color.green, color.blue));
 	}
-
 }

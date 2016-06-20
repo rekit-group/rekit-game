@@ -8,14 +8,14 @@ import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
-public class Player extends Entity implements CameraTarget  {
+public class Player extends Entity implements CameraTarget {
 
 	private Vec2D startPos;
 
 	private ParticleSpawner damageParticles;
 
 	private float currentCameraOffset;
-	
+
 	public Player(Vec2D startPos) {
 		super(startPos);
 		this.startPos = startPos;
@@ -31,12 +31,15 @@ public class Player extends Entity implements CameraTarget  {
 		this.setVel(new Vec2D(0, 0));
 		this.deleteMe = false;
 		this.currentCameraOffset = 0;
-		
+
 		this.damageParticles = new ParticleSpawner();
-		this.damageParticles.colorR = new ParticleSpawnerOption(222, 242, -10, 10);
-		this.damageParticles.colorG = new ParticleSpawnerOption(138, 158, -10, 10);
+		this.damageParticles.colorR = new ParticleSpawnerOption(222, 242, -10,
+				10);
+		this.damageParticles.colorG = new ParticleSpawnerOption(138, 158, -10,
+				10);
 		this.damageParticles.colorB = new ParticleSpawnerOption(6, 26, -10, 10);
-		this.damageParticles.colorA = new ParticleSpawnerOption(255, 255, -255, -255);
+		this.damageParticles.colorA = new ParticleSpawnerOption(255, 255, -255,
+				-255);
 
 	}
 
@@ -62,8 +65,9 @@ public class Player extends Entity implements CameraTarget  {
 		String src = this.currentDirection == Direction.RIGHT ? "mrRekt_glasses_right.png" // When
 																							// facing
 																							// right
-				: "mrRekt_glasses_left.png"; // When facing right
-		f.drawImage(this.getPos().addY(-0.025f * this.getVel().getY()), this.getSize(), src);
+				: "mrRekt_glasses_left.png"; // When facing left
+		f.drawImage(this.getPos().addY(-0.025f * this.getVel().getY()),
+				this.getSize(), src);
 
 	}
 

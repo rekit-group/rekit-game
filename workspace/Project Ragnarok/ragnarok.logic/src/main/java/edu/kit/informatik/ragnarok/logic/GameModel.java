@@ -19,6 +19,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.EnemyFactory;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
+import edu.kit.informatik.ragnarok.primitives.TimeDependency;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 import edu.kit.informatik.ragnarok.util.ThreadUtils;
 
@@ -50,6 +51,10 @@ public class GameModel implements CameraTarget {
 	private Thread loopThread;
 	
 	private CameraTarget cameraTarget;
+	
+	private String currentBossText = null;
+	
+	private TimeDependency currentBossTextTimeLeft ;
 	
 	public void setCameraTarget(CameraTarget cameraTarget) {
 		this.cameraTarget = cameraTarget;
@@ -241,6 +246,11 @@ public class GameModel implements CameraTarget {
 		long timeNow = System.currentTimeMillis();
 		long timeDelta = timeNow - this.lastTime;
 
+		// update boss text TimeDependency
+		if (this.currentBossTextTimeLeft != null) {
+			this.currentBossTextTimeLeft.removeTime(timeDelta / 1000f);
+		}
+		
 		// add GameElements that have been added
 		this.addAllWaitingGameElements();
 
@@ -382,6 +392,20 @@ public class GameModel implements CameraTarget {
 	@Override
 	public float getCameraOffset() {
 		return this.cameraTarget.getCameraOffset();
+	}
+	
+	
+	public void addBossText(String text) {
+		this.currentBossText = text;
+		this.currentBossTextTimeLeft = new TimeDependency(3);
+		
+	}
+	
+	public String getCurrentBossText() {
+		if (currentBossText != null && !this.currentBossTextTimeLeft.timeUp()) {
+			return this.currentBossText;
+		}
+		return null;
 	}
 
 }

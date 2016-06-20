@@ -5,7 +5,7 @@ import edu.kit.informatik.ragnarok.logic.GameModel;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.FixedCameraTarget;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.bosses.RektSmasher;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.bosses.Boss;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateDoor;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateTrigger;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
@@ -17,10 +17,12 @@ public class BossRoom {
 	private LevelCreator levelCreator;
 	private InanimateDoor door;
 	private Vec2D triggerPos;
+	private Boss boss;
 	
-	public BossRoom(LevelStructure roomStructure, final LevelCreator levelCreator) {
+	public BossRoom(Boss boss, LevelStructure roomStructure, final LevelCreator levelCreator) {
 		this.roomStructure = roomStructure;
 		this.levelCreator = levelCreator;
+		this.boss = boss;
 	}
 	
 	public void generate(int x) {
@@ -62,7 +64,7 @@ public class BossRoom {
 		final float cameraTarget = x + 5 + GameConf.playerCameraOffset + player.getSize().getX() / 2;
 		
 		// Prepare boss 
-		final RektSmasher boss = new RektSmasher(new Vec2D(x + 6 + roomStructure.getWidth() / 2, GameConf.gridH / 2), this);
+		this.boss.setPos(new Vec2D(x + 6 + roomStructure.getWidth() / 2, GameConf.gridH / 2));
 				
 		// Create thread for asynchronous stuff
 		Thread newThread = new Thread(){
@@ -81,8 +83,10 @@ public class BossRoom {
 				
 				gameModel.setCameraTarget(new FixedCameraTarget(cameraTarget - GameConf.playerCameraOffset));
 
+				gameModel.addBossText(boss.getName());
+				
 				// Spawn Boss
-				levelCreator.generateGameElement(boss);
+				levelCreator.generateGameElement((GameElement)boss);
 				
 				// Close door
 				levelCreator.generateBox((int)triggerPos.getX(), (int)triggerPos.getY());
