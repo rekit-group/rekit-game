@@ -10,24 +10,25 @@ import org.eclipse.swt.graphics.RGBA;
 import org.eclipse.swt.widgets.Display;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
+import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.primitives.Polygon;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 import edu.kit.informatik.ragnarok.util.RGBAColor;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 
 /**
- * This class represents a Field of the {@link GameView}
+ * This class represents a {@link Field} of the {@link GameView}
  *
  * @author Angelo Aracri
  * @author Dominik Fuchß
  *
  */
-public class Field implements edu.kit.informatik.ragnarok.logic.gameelements.Field {
+public class FieldImpl implements Field {
 
 	private GC gc;
 	private GameView view;
 
-	public Field(GameView view) {
+	public FieldImpl(GameView view) {
 		this.view = view;
 	}
 
@@ -88,6 +89,7 @@ public class Field implements edu.kit.informatik.ragnarok.logic.gameelements.Fie
 		this.gc.setAlpha(255);
 	}
 
+	@Override
 	public void drawImage(Vec2D pos, Vec2D size, String imagePath) {
 		Image image = ImageLoader.get(imagePath);
 		this.gc.drawImage(image, this.currentOffset() + this.units2pixel(pos.getX() - size.getX() / 2f), // dstX
@@ -121,8 +123,7 @@ public class Field implements edu.kit.informatik.ragnarok.logic.gameelements.Fie
 		// And draw the text
 		this.gc.drawText(text, this.units2pixel(GameConf.gridW) - textWidth - 10, 10 + 10 + textHeight, true);
 		font.dispose();
-		
-		
+
 		if (bossText != null) {
 			font = new Font(Display.getCurrent(), "Tahoma", 30, SWT.BOLD);
 			this.gc.setFont(font);
@@ -130,7 +131,8 @@ public class Field implements edu.kit.informatik.ragnarok.logic.gameelements.Fie
 			textWidth = this.gc.stringExtent(bossText).x;
 			textHeight = this.gc.stringExtent(bossText).y;
 			// And draw the text
-			this.gc.drawText(bossText, (this.units2pixel(GameConf.gridW) - textWidth) / 2, (this.units2pixel(GameConf.gridH) - textHeight) / 2, true);
+			this.gc.drawText(bossText, (this.units2pixel(GameConf.gridW) - textWidth) / 2,
+					(this.units2pixel(GameConf.gridH) - textHeight) / 2, true);
 		}
 
 	}
@@ -157,7 +159,7 @@ public class Field implements edu.kit.informatik.ragnarok.logic.gameelements.Fie
 	@Override
 	public void drawRectangle(Vec2D pos, Vec2D size, RGBColor color) {
 		this.drawRectangle(pos, size, new RGB(color.red, color.green, color.blue));
-		
+
 	}
 
 	@Override

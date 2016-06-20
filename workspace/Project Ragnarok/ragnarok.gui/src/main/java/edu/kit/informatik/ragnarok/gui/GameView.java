@@ -55,7 +55,7 @@ class GameView implements View {
 	/**
 	 * The Field that manages the graphic context
 	 */
-	private Field field;
+	private FieldImpl field;
 
 	private GC gc;
 
@@ -85,7 +85,7 @@ class GameView implements View {
 
 		// Create Graphic context
 		this.gc = new GC(this.canvas);
-		this.field = new Field(this);
+		this.field = new FieldImpl(this);
 	}
 
 	/**

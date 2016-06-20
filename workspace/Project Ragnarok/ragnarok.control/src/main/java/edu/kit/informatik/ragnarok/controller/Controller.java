@@ -4,7 +4,7 @@ import edu.kit.informatik.ragnarok.gui.View;
 import edu.kit.informatik.ragnarok.logic.Model;
 
 /**
- * This Inteface defines the Controller for the MVC
+ * This Interface defines the Controller for the MVC
  *
  * @author Dominik Fuchß
  *
