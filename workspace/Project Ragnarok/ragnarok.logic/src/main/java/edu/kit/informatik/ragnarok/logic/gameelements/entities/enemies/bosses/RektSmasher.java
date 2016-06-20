@@ -13,6 +13,7 @@ public class RektSmasher extends RektKiller implements Boss {
 	private BossRoom bossRoom;
 	private GameElement target;
 	
+	private boolean isHarmless = false;
 	
 	public RektSmasher(Vec2D startPos) {
 		super(startPos, 1);
@@ -80,7 +81,9 @@ public class RektSmasher extends RektKiller implements Boss {
 	
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
-			
+		if (!this.isHarmless) {
+			super.reactToCollision(element, dir);
+		}
 	}
 	
 	@Override
@@ -98,8 +101,9 @@ public class RektSmasher extends RektKiller implements Boss {
 	}
 	
 	public void destroy() {
-		super.destroy();
 		bossRoom.endBattle();
+		isHarmless = true;
+		// super.destroy();
 	}
 
 	@Override
