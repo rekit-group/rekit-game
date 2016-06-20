@@ -2,7 +2,7 @@ package edu.kit.informatik.ragnarok.logic.levelcreator;
 
 import java.util.Random;
 
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.EntityFactory;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.EntityFactory;
 
 public class LevelStructure {
 	

@@ -1,9 +1,12 @@
-package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies;
+package edu.kit.informatik.ragnarok.logic.gameelements.entities;
 
 import java.util.HashMap;
 
 import edu.kit.informatik.ragnarok.logic.GameModel;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.RektKiller;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.Rocket;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.Slurp;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.Warper;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.pickups.Coin;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.pickups.Life;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;

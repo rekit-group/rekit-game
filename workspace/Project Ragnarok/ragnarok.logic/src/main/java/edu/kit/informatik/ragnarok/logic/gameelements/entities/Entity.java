@@ -32,6 +32,9 @@ public abstract class Entity extends GameElement {
 	 *            the position this entity shall be in
 	 */
 	public Entity(Vec2D startPos) {
+		if (startPos == null) {
+			return;
+		}
 		// Set to default state
 		this.setEntityState(new DefaultState(this));
 
