@@ -5,37 +5,44 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
+/**
+ * This {@link InputCommand} will cause a Walk of an {@link Entity}
+ *
+ * @author Dominik Fuchß
+ * @author Angelo Aracri
+ *
+ */
 public class WalkCommand extends InputCommand {
+	/**
+	 * The {@link Direction} of the walk
+	 */
 	private Direction dir;
 
-	private void setDir(Direction value) {
-		this.dir = value;
-	}
-
+	/**
+	 * Instantiate the WalkCommand
+	 * 
+	 * @param dir
+	 *            the direction
+	 */
 	public WalkCommand(Direction dir) {
-		this.setDir(dir);
+		this.dir = dir;
 	}
 
 	@Override
-	public void apply(InputMethod inputMethod) {
+	public void execute(InputMethod inputMethod) {
 		if (inputMethod == InputMethod.RELEASE) {
 			return;
 		}
-		
-		// Get old velocity
-		Entity entity = this.getEntity();
 
 		// Update x velocity with corresponding direction and acceleration
-		Vec2D newVel = entity.getVel().addX(
-				this.dir.getVector().getX() * GameConf.playerWalkAccel);
+		Vec2D newVel = this.entity.getVel().addX(this.dir.getVector().getX() * GameConf.playerWalkAccel);
 
 		// check if max speed achieved
 		if (Math.abs(newVel.getX()) > GameConf.playerWalkMaxSpeed) {
-			newVel = newVel.setX(Math.signum(newVel.getX())
-					* GameConf.playerWalkMaxSpeed);
+			newVel = newVel.setX(Math.signum(newVel.getX()) * GameConf.playerWalkMaxSpeed);
 		}
-		
+
 		// Save new velocity
-		entity.setVel(newVel);
+		this.entity.setVel(newVel);
 	}
 }

@@ -4,19 +4,24 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.state.FallState;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.state.JumpState;
 
-public class JumpCommand extends InputCommand {	
-	public void apply(InputMethod inputMethod) {
-		
-		Entity entity = this.getEntity();
+/**
+ * This {@link InputCommand} will cause a Jump of an {@link Entity}
+ *
+ * @author Dominik Fuchß
+ * @author Angelo Aracri
+ *
+ */
+public class JumpCommand extends InputCommand {
+	@Override
+	public void execute(InputMethod inputMethod) {
 		if (inputMethod == InputMethod.PRESS) {
-			if (entity.getEntityState().canJump()) {
-				entity.setEntityState(new JumpState(entity));
+			if (this.entity.getEntityState().canJump()) {
+				this.entity.setEntityState(new JumpState(this.entity));
 			}
 		} else {
-			entity.setEntityState(new FallState(entity));
+			this.entity.setEntityState(new FallState(this.entity));
 		}
-		
-		
+
 	}
 
 }

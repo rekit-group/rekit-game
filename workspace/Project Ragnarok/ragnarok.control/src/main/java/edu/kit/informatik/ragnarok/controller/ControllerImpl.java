@@ -8,12 +8,13 @@ import edu.kit.informatik.ragnarok.controller.commands.InputCommand;
 import edu.kit.informatik.ragnarok.controller.commands.InputCommand.InputMethod;
 import edu.kit.informatik.ragnarok.controller.commands.JumpCommand;
 import edu.kit.informatik.ragnarok.controller.commands.WalkCommand;
+import edu.kit.informatik.ragnarok.gui.View;
 import edu.kit.informatik.ragnarok.logic.Model;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.util.InputHelper;
 
 /**
- * This is the Controller of the MVC <br>
+ * This is an implementation of an {@link Controller} of the MVC <br>
  * It handles all input Events
  *
  * @author Dominik Fuchß
@@ -24,6 +25,9 @@ class ControllerImpl implements Observer, Controller {
 	 * Map Key-ID --> Command
 	 */
 	private final Map<Integer, InputCommand> mpCmd;
+	/**
+	 * The input helper
+	 */
 	private final InputHelperImpl helper;
 
 	/**
@@ -64,15 +68,12 @@ class ControllerImpl implements Observer, Controller {
 			return;
 		}
 
-		this.mpCmd.get(id).apply(inputMethod);
+		this.mpCmd.get(id).execute(inputMethod);
 	}
 
-	/**
-	 * Start the Controller
-	 */
 	@Override
-	public void start() {
-		return;
+	public void start(View view) {
+		this.helper.initialize(view);
 	}
 
 	@Override
@@ -87,11 +88,6 @@ class ControllerImpl implements Observer, Controller {
 			this.handleEvent(it.next(), InputMethod.RELEASE);
 			it.remove();
 		}
-	}
-
-	@Override
-	public InputHelper getInputHelper() {
-		return this.helper;
 	}
 
 }

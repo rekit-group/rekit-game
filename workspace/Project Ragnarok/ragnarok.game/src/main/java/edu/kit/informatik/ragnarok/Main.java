@@ -28,12 +28,11 @@ public class Main {
 		View view = View.getView(model);
 		Controller controller = Controller.getController(model);
 
-		// Instantiate InputHelper that requires a shell
-		controller.getInputHelper().initialize(view);
-
 		// Start MVC
 		model.start();
-		controller.start();
+
+		// Instantiate InputHelper that requires a shell
+		controller.start(view);
 		view.start();
 
 	}

@@ -20,7 +20,7 @@ import edu.kit.informatik.ragnarok.util.ThreadUtils;
 final class InputHelperImpl implements InputHelper {
 
 	/**
-	 * Private constructor to prevent instantiation of static used class
+	 * Instantiate the InputHelper
 	 */
 	public InputHelperImpl() {
 		Thread daemon = new Thread() {
@@ -97,7 +97,7 @@ final class InputHelperImpl implements InputHelper {
 	 * Synchronization Object that is used as a lock variable for blocking
 	 * operations
 	 */
-	private static final Object SYNC = new Object();
+	private final Object observerSync = new Object();
 
 	/**
 	 * Used to tell all Observers that something important changed Iterates all
@@ -106,7 +106,7 @@ final class InputHelperImpl implements InputHelper {
 	private void notifyObservers() {
 
 		List<Observer> obs = new ArrayList<Observer>();
-		synchronized (InputHelperImpl.SYNC) {
+		synchronized (this.observerSync) {
 			// Kind of hacky but works: blockingly (what kind of adverb is
 			// this??)
 			// add all Observers to regular List...
@@ -128,7 +128,7 @@ final class InputHelperImpl implements InputHelper {
 	 *            The Observer that wants to listen
 	 */
 	public void register(Observer observer) {
-		synchronized (InputHelperImpl.SYNC) {
+		synchronized (this.observerSync) {
 			this.observers.add(observer);
 		}
 	}
@@ -141,7 +141,7 @@ final class InputHelperImpl implements InputHelper {
 	 *            The Observer that does not want to listen anymore
 	 */
 	public void unregister(Observer observer) {
-		synchronized (InputHelperImpl.SYNC) {
+		synchronized (this.observerSync) {
 			this.observers.remove(observer);
 		}
 	}
