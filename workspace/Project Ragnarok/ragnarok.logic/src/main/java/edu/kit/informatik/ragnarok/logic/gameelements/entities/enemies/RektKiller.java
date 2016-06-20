@@ -59,7 +59,7 @@ public class RektKiller extends Entity {
 				});
 	}
 
-	private boolean hasSide(Direction dir) {
+	protected boolean hasSide(Direction dir) {
 		int bitPos;
 		switch (dir) {
 		case UP:
@@ -172,11 +172,6 @@ public class RektKiller extends Entity {
 				this.addDamage(1);
 			}
 		}
-	}
-
-	@Override
-	public void addDamage(int damage) {
-		this.destroy();
 	}
 
 	@Override

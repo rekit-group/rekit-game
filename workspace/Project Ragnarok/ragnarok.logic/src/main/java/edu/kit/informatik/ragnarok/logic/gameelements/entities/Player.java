@@ -90,6 +90,10 @@ public class Player extends Entity implements CameraTarget {
 		return 10;
 	}
 
+	public void resetCameraOffset() {
+		this.currentCameraOffset = 0;
+	}
+	
 	@Override
 	public float getCameraOffset() {
 		// get maximum player x and adjust level offset

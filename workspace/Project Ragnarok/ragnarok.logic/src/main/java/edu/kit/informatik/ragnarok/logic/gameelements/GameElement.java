@@ -116,4 +116,8 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 	public int compareTo(GameElement other) {
 		return this.getZ() - other.getZ();
 	}
+	
+	public boolean preventRendering() {
+		return false;
+	}
 }

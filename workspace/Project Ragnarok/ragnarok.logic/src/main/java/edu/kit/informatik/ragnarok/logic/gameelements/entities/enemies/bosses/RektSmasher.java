@@ -1,5 +1,6 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.bosses;
 
+import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.RektKiller;
@@ -13,16 +14,19 @@ public class RektSmasher extends RektKiller implements Boss {
 	private BossRoom bossRoom;
 	private GameElement target;
 	
+	private boolean isHarmless = false;
 	
 	public RektSmasher(Vec2D startPos) {
 		super(startPos, 1);
 		this.setSize(new Vec2D(2f, 2f));
 		this.prepare();
-		
-		this.setLifes(5);
+		this.currentDirection = Direction.DOWN;
+		this.setLifes(3);
 		
 		this.sides = 15;
 	}
+	
+	private float speed = 0.5f;
 	
 	@Override
 	public void render(Field f) {
@@ -41,7 +45,8 @@ public class RektSmasher extends RektKiller implements Boss {
 		
 		Direction newDir;
 		
-		if (Math.abs(dif.getX()) > Math.abs(dif.getY())) {
+		//if (Math.abs(dif.getX()) / GameConf.gridW > Math.abs(dif.getY()) / GameConf.gridH) {
+		if (dir == Direction.UP || dir == Direction.DOWN) {
 			if (dif.getX() > 0) {
 				newDir = Direction.LEFT;
 			} else {
@@ -80,12 +85,43 @@ public class RektSmasher extends RektKiller implements Boss {
 	
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
-			
+		if (this.isHarmless) {
+			return;
+		}
+		
+		if (this.isHostile(element)) {
+			// Touched harmless side
+			if (!this.hasSide(dir)) {
+				// Let the player jump if he landed on top
+				if (dir == Direction.UP) {
+					element.setVel(element.getVel().setY(GameConf.playerJumpBoost));
+				}
+
+				// kill the enemy
+				this.addDamage(1);
+				
+			}
+			// Touched dangerous side
+			else {
+				// Give player damage
+				element.addDamage(1);
+			}
+		}
 	}
 	
 	@Override
 	public void logicLoop(float deltaTime) {
-		this.setVel(this.getVel().multiply(1/2f));
+		// if no invincibility of invincibility time is up
+		if (this.invincibility == null || (this.invincibility != null && this.invincibility.timeUp())) {
+			this.isHarmless = false;
+			speed = 0.5f;
+		}
+		// if no invincibility or invincibility time is up
+		if (this.invincibility != null && !this.invincibility.timeUp()) {
+			this.isHarmless = true;
+			speed = 1f;
+		}
+		this.setVel(this.getVel().multiply(speed));
 		super.logicLoop(deltaTime);
 	}
 	
@@ -98,8 +134,9 @@ public class RektSmasher extends RektKiller implements Boss {
 	}
 	
 	public void destroy() {
-		super.destroy();
 		bossRoom.endBattle();
+		isHarmless = true;
+		// super.destroy();
 	}
 
 	@Override
