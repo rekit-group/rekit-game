@@ -23,6 +23,13 @@ import edu.kit.informatik.ragnarok.primitives.TimeDependency;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 import edu.kit.informatik.ragnarok.util.ThreadUtils;
 
+/**
+ * Main class of the Model. Manages the logic
+ *
+ * @author Angelo Aracri
+ *
+ * @version 1.1
+ */
 public class GameModel implements CameraTarget, Model {
 
 	/**
@@ -115,6 +122,7 @@ public class GameModel implements CameraTarget, Model {
 
 	private int highScore = -1;
 
+	@Override
 	public int getHighScore() {
 		if (this.highScore != -1) {
 			return this.highScore;
@@ -140,12 +148,13 @@ public class GameModel implements CameraTarget, Model {
 			out.close();
 			this.highScore = highScore;
 		} catch (IOException e) {
-			// TODO error
+			System.err.println("Cannot write highscore: " + e.getMessage());
 		}
 
 		return highScore;
 	}
 
+	@Override
 	public void start() {
 		this.loopThread = new Thread() {
 			@Override
@@ -231,6 +240,7 @@ public class GameModel implements CameraTarget, Model {
 	 *
 	 * @return
 	 */
+	@Override
 	public Iterator<GameElement> getGameElementIterator() {
 		return this.gameElements.iterator();
 	}
@@ -374,6 +384,7 @@ public class GameModel implements CameraTarget, Model {
 		return this.player;
 	}
 
+	@Override
 	public int getScore() {
 		return (int) (this.player.getCameraOffset() + this.getPlayer().getPoints());
 	}
@@ -389,6 +400,7 @@ public class GameModel implements CameraTarget, Model {
 
 	}
 
+	@Override
 	public String getCurrentBossText() {
 		if (this.currentBossText != null && !this.currentBossTextTimeLeft.timeUp()) {
 			return this.currentBossText;
