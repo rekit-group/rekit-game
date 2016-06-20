@@ -16,30 +16,38 @@ public class RektKiller extends Entity {
 
 	private int sides;
 
-	private Polygon spikePolygon = new Polygon(new Vec2D(),
-			new Vec2D[] { new Vec2D(0.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
-					new Vec2D(1.0f * ((this.getSize().getX() * 0.8f) / 3f), 0),
-					new Vec2D(1.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
-					new Vec2D(2.0f * ((this.getSize().getX() * 0.8f) / 3f), 0),
-					new Vec2D(2.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
-					new Vec2D(3.0f * ((this.getSize().getX() * 0.8f) / 3f), 0), new Vec2D() // and
-																							// back
-																							// to
-																							// start
-			});
+	private Polygon spikePolygon;
 
 	public RektKiller(Vec2D startPos, int sides) {
 		super(startPos);
-
+		
 		if (sides < 0 || sides > 15) {
 			throw new IllegalArgumentException("RektKiller must be give a number between 0 and 14");
 		}
 
+		// save initial attributes
 		Random r = new Random();
 		int x = r.nextInt(Direction.values().length);
 		this.currentDirection = Direction.values()[x];
-
 		this.sides = sides;
+		
+		this.setSize(new Vec2D(0.6f, 0.6f));
+		this.prepare();
+	}
+	
+	protected void prepare() {
+		// calculate size dependent Polygon for spikes
+		this.spikePolygon = new Polygon(new Vec2D(),
+				new Vec2D[] { new Vec2D(0.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
+			new Vec2D(1.0f * ((this.getSize().getX() * 0.8f) / 3f), 0),
+			new Vec2D(1.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
+			new Vec2D(2.0f * ((this.getSize().getX() * 0.8f) / 3f), 0),
+			new Vec2D(2.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
+			new Vec2D(3.0f * ((this.getSize().getX() * 0.8f) / 3f), 0), new Vec2D() // and
+																					// back
+																					// to
+																					// start
+		});
 	}
 
 	private boolean hasSide(Direction dir) {
@@ -85,11 +93,6 @@ public class RektKiller extends Entity {
 			}
 		}
 
-	}
-
-	@Override
-	public Vec2D getSize() {
-		return new Vec2D(0.6f, 0.6f);
 	}
 
 	private Direction currentDirection;
