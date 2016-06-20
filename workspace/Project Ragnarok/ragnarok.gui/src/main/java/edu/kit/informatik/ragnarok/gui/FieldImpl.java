@@ -109,7 +109,6 @@ public class FieldImpl implements Field {
 		
 		Font font = new Font(Display.getCurrent(), options.getFont(), options.getHeight(), options.getFontOptions() | SWT.BOLD);
 		this.gc.setFont(font);
-		font.dispose();
 		
 		Vec2D alignAdd = new Vec2D();
 		if (options.isAlignmentLeft())
@@ -119,6 +118,7 @@ public class FieldImpl implements Field {
 		}
 		
 		this.gc.drawText(text, (int) (pos.getX() + alignAdd.getX()), (int) (pos.getY() + (int) alignAdd.getY()), true);
+		font.dispose();
 	}
 
 	public void refreshUI(int lifes, int points, int highScore, String bossText) {
