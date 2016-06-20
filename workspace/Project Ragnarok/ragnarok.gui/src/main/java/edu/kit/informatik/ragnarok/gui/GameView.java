@@ -157,7 +157,10 @@ class GameView implements View {
 			Iterator<GameElement> it = this.model.getGameElementIterator();
 			while (it.hasNext()) {
 				// Render next element
-				it.next().render(this.field);
+				GameElement next = it.next();
+				if (!next.preventRendering()) {
+					next.render(this.field);
+				}
 			}
 		}
 
