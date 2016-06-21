@@ -68,10 +68,13 @@ public class GameConf {
 
 	public static final RGBColor GAME_BACKGROUD_COLOR = GameConf.BUNDLE.getRGBColor("gameBackgroundColor");
 	public static final RGBColor MENU_BACKGROUND_COLOR = GameConf.BUNDLE.getRGBColor("menuBackgroundColor");
+	
+	
 	public static final RGBColor GAME_TEXT_COLOR = GameConf.BUNDLE.getRGBColor("gameTextColor");
-	public static final int GAME_TEXT_SIZE = GameConf.BUNDLE.getInt("gameTextSize");
 	public static final String GAME_TEXT_FONT = GameConf.BUNDLE.getString("gameTextFont");
+	public static final int GAME_TEXT_SIZE = GameConf.BUNDLE.getInt("gameTextSize");
+	
 	public static final TextOptions DEFAULT_TEXT = new TextOptions(new Vec2D(-1, 0), GameConf.GAME_TEXT_SIZE, GameConf.GAME_TEXT_COLOR,	GameConf.GAME_TEXT_FONT, 1);
-	public static final TextOptions HINT_TEXT = new TextOptions(new Vec2D(-1, 0), GameConf.GAME_TEXT_SIZE - 8, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, 1);
+	public static final TextOptions HINT_TEXT = GameConf.DEFAULT_TEXT.clone().setHeight(GameConf.GAME_TEXT_SIZE - 8);
 
 }

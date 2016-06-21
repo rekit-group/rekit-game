@@ -5,7 +5,6 @@ import edu.kit.informatik.ragnarok.logic.GameModel;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.FixedCameraTarget;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.Rocket;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.bosses.Boss;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawner;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
@@ -28,47 +27,34 @@ public class BossRoom {
 	private static ParticleSpawner explosionParticles = null;
 	static {
 		BossRoom.explosionParticles = new ParticleSpawner();
-		BossRoom.explosionParticles.angle = new ParticleSpawnerOption(0,
-				(float) (2 * Math.PI), 0, 0);
-		BossRoom.explosionParticles.colorR = new ParticleSpawnerOption(200,
-				230, 10, 25);
-		BossRoom.explosionParticles.colorG = new ParticleSpawnerOption(200,
-				250, -130, -110);
-		BossRoom.explosionParticles.colorB = new ParticleSpawnerOption(150,
-				200, -130, -110);
-		BossRoom.explosionParticles.colorA = new ParticleSpawnerOption(230,
-				250, -120, -200);
+		BossRoom.explosionParticles.angle = new ParticleSpawnerOption(0, (float) (2 * Math.PI), 0, 0);
+		BossRoom.explosionParticles.colorR = new ParticleSpawnerOption(200, 230, 10, 25);
+		BossRoom.explosionParticles.colorG = new ParticleSpawnerOption(200, 250, -130, -110);
+		BossRoom.explosionParticles.colorB = new ParticleSpawnerOption(150, 200, -130, -110);
+		BossRoom.explosionParticles.colorA = new ParticleSpawnerOption(230, 250, -120, -200);
 		BossRoom.explosionParticles.timeMin = 0.1f;
 		BossRoom.explosionParticles.timeMax = 0.3f;
 		BossRoom.explosionParticles.amountMin = 40;
 		BossRoom.explosionParticles.amountMax = 50;
-		BossRoom.explosionParticles.speed = new ParticleSpawnerOption(4, 9, -1,
-				1);
+		BossRoom.explosionParticles.speed = new ParticleSpawnerOption(4, 9, -1, 1);
 	}
 
 	private static ParticleSpawner fireworkParticles = null;
 	static {
 		BossRoom.fireworkParticles = new ParticleSpawner();
-		BossRoom.fireworkParticles.angle = new ParticleSpawnerOption(0,
-				(float) (2 * Math.PI), 0, (float) (Math.PI));
-		BossRoom.fireworkParticles.colorR = new ParticleSpawnerOption(100, 250,
-				-100, 5);
-		BossRoom.fireworkParticles.colorG = new ParticleSpawnerOption(100, 250,
-				-100, 5);
-		BossRoom.fireworkParticles.colorB = new ParticleSpawnerOption(100, 250,
-				-100, 5);
-		BossRoom.fireworkParticles.colorA = new ParticleSpawnerOption(230, 250,
-				-120, -200);
+		BossRoom.fireworkParticles.angle = new ParticleSpawnerOption(0, (float) (2 * Math.PI), 0, (float) (Math.PI));
+		BossRoom.fireworkParticles.colorR = new ParticleSpawnerOption(100, 250, -100, 5);
+		BossRoom.fireworkParticles.colorG = new ParticleSpawnerOption(100, 250, -100, 5);
+		BossRoom.fireworkParticles.colorB = new ParticleSpawnerOption(100, 250, -100, 5);
+		BossRoom.fireworkParticles.colorA = new ParticleSpawnerOption(230, 250, -120, -200);
 		BossRoom.fireworkParticles.timeMin = 0.5f;
 		BossRoom.fireworkParticles.timeMax = 1f;
 		BossRoom.fireworkParticles.amountMin = 40;
 		BossRoom.fireworkParticles.amountMax = 50;
-		BossRoom.fireworkParticles.speed = new ParticleSpawnerOption(3, 5, -1,
-				1);
+		BossRoom.fireworkParticles.speed = new ParticleSpawnerOption(3, 5, -1, 1);
 	}
 
-	public BossRoom(Boss boss, LevelStructure roomStructure,
-			final LevelCreator levelCreator) {
+	public BossRoom(Boss boss, LevelStructure roomStructure, final LevelCreator levelCreator) {
 		this.roomStructure = roomStructure;
 		this.levelCreator = levelCreator;
 		this.boss = boss;
@@ -78,31 +64,27 @@ public class BossRoom {
 		this.x = x;
 
 		// generate floor before boss room
-		levelCreator.generateEvenFloor(x, x + 5);
+		this.levelCreator.generateEvenFloor(x, x + 5);
 		// generate boss room structure
-		roomStructure.buildStructure(levelCreator, x + 6, GameConf.GRID_H);
-		levelCreator.generatedUntil += roomStructure.getWidth();
+		this.roomStructure.buildStructure(this.levelCreator, x + 6, GameConf.GRID_H);
+		this.levelCreator.generatedUntil += this.roomStructure.getWidth();
 		// generate floor after boss room
-		levelCreator.generateEvenFloor(x + 6 + roomStructure.getWidth(), x + 6
-				+ roomStructure.getWidth() + 5);
+		this.levelCreator.generateEvenFloor(x + 6 + this.roomStructure.getWidth(), x + 6 + this.roomStructure.getWidth() + 5);
 
 		// generate door after room
-		this.door = new InanimateDoor(new Vec2D(x + 5
-				+ roomStructure.getWidth(),
-				(float) Math.ceil(GameConf.GRID_H / 2)));
-		levelCreator.generateGameElement(door);
+		this.door = new InanimateDoor(new Vec2D(x + 5 + this.roomStructure.getWidth(), (float) Math.ceil(GameConf.GRID_H / 2)));
+		this.levelCreator.generateGameElement(this.door);
 
 		this.triggerPos = new Vec2D(x + 6, GameConf.GRID_H - 2);
-		InanimateTrigger trigger = new InanimateTrigger(triggerPos, new Vec2D(
-				1, 1)) {
+		InanimateTrigger trigger = new InanimateTrigger(this.triggerPos, new Vec2D(1, 1)) {
 			@Override
 			public void perform() {
 				if (!this.deleteMe) {
-					startBattle(this);
+					BossRoom.this.startBattle(this);
 				}
 			}
 		};
-		levelCreator.generateGameElement(trigger);
+		this.levelCreator.generateGameElement(trigger);
 	}
 
 	public void startBattle(GameElement trigger) {
@@ -110,17 +92,15 @@ public class BossRoom {
 		// destroy invisible InanimateTrigger
 		trigger.destroy();
 
-		final GameModel gameModel = levelCreator.getGameModel();
+		final GameModel gameModel = this.levelCreator.getGameModel();
 		final Player player = gameModel.getPlayer();
 
 		// calculate where to put camera
-		cameraTarget = x + 5 + GameConf.PLAYER_CAMERA_OFFSET
-				+ player.getSize().getX() / 2;
+		this.cameraTarget = this.x + 5 + GameConf.PLAYER_CAMERA_OFFSET + player.getSize().getX() / 2;
 
 		// Prepare boss
 		this.boss.setBossRoom(this);
-		this.boss.setPos(new Vec2D(x + 6 + roomStructure.getWidth() / 2,
-				GameConf.GRID_H / 2 + 1));
+		this.boss.setPos(new Vec2D(this.x + 6 + this.roomStructure.getWidth() / 2, GameConf.GRID_H / 2 + 1));
 		this.boss.setTarget(player);
 
 		// Create thread for asynchronous stuff
@@ -129,7 +109,7 @@ public class BossRoom {
 			public void run() {
 
 				// keep walking right to the right camera position
-				while (player.getPos().getX() < cameraTarget) {
+				while (player.getPos().getX() < BossRoom.this.cameraTarget) {
 					player.setVel(player.getVel().setX(1.8f));
 					try {
 						Thread.sleep(GameConf.LOGIC_DELTA);
@@ -138,17 +118,15 @@ public class BossRoom {
 					}
 				}
 
-				gameModel.setCameraTarget(new FixedCameraTarget(cameraTarget
-						- GameConf.PLAYER_CAMERA_OFFSET));
+				gameModel.setCameraTarget(new FixedCameraTarget(BossRoom.this.cameraTarget - GameConf.PLAYER_CAMERA_OFFSET));
 
-				gameModel.addBossText(boss.getName());
+				gameModel.addBossText(BossRoom.this.boss.getName());
 
 				// Spawn Boss
-				levelCreator.generateGameElement((GameElement) boss);
+				BossRoom.this.levelCreator.generateGameElement((GameElement) BossRoom.this.boss);
 
 				// Close door
-				levelCreator.generateBox((int) triggerPos.getX(),
-						(int) triggerPos.getY());
+				BossRoom.this.levelCreator.generateBox((int) BossRoom.this.triggerPos.getX(), (int) BossRoom.this.triggerPos.getY());
 			}
 		};
 
@@ -162,9 +140,9 @@ public class BossRoom {
 		final TimeDependency timer = new TimeDependency(7f);
 
 		// Needed for animating camera movement
-		ProgressDependency cameraMover = new ProgressDependency(cameraTarget
-				- GameConf.PLAYER_CAMERA_OFFSET, player.getPos().getX() - GameConf.PLAYER_CAMERA_OFFSET);
-		
+		ProgressDependency cameraMover = new ProgressDependency(this.cameraTarget - GameConf.PLAYER_CAMERA_OFFSET,
+				player.getPos().getX() - GameConf.PLAYER_CAMERA_OFFSET);
+
 		// Needed for animating door movement
 		ProgressDependency doorMover = new ProgressDependency(this.door.getPos().getY(), this.door.getPos().getY() - 10);
 
@@ -176,17 +154,16 @@ public class BossRoom {
 				// save Players current velocity
 				Vec2D playerVelSave = player.getVel();
 				Vec2D playerPosSave = player.getPos();
-				Vec2D bossPosSave = ((GameElement) boss).getPos();
-				
-				
+				Vec2D bossPosSave = ((GameElement) BossRoom.this.boss).getPos();
+
 				// while timer has time left...
 				while (!timer.timeUp()) {
 
 					// freeze player and pos
 					player.setVel(new Vec2D());
 					player.setPos(playerPosSave);
-					((GameElement) boss).setVel(new Vec2D());
-					((GameElement) boss).setPos(bossPosSave);
+					((GameElement) BossRoom.this.boss).setVel(new Vec2D());
+					((GameElement) BossRoom.this.boss).setPos(bossPosSave);
 
 					// wait for time to be up
 					try {
@@ -198,41 +175,38 @@ public class BossRoom {
 					// phase one: show explosions
 					if (timer.getProgress() < 0.4) {
 						if (Math.random() > 0.9) {
-							Vec2D randPos = ((GameElement) boss).getPos().add(
-									new Vec2D((float) Math.random() * 2 - 1,
-											(float) Math.random() * 2f - 1));
-							explosionParticles.spawn(gameModel, randPos);
+							Vec2D randPos = ((GameElement) BossRoom.this.boss).getPos()
+									.add(new Vec2D((float) Math.random() * 2 - 1, (float) Math.random() * 2f - 1));
+							BossRoom.explosionParticles.spawn(gameModel, randPos);
 						}
 					}
 					// phase two: show fireworks
 					else if (timer.getProgress() < 0.9) {
 						// remove boss of last phase
-						gameModel.removeGameElement((GameElement) boss);
+						gameModel.removeGameElement((GameElement) BossRoom.this.boss);
 
 						// show fireworks
 						if (Math.random() > 0.9) {
 							float deltaX = GameConf.GRID_W / 2f;
-							float midX = x + deltaX;
+							float midX = BossRoom.this.x + deltaX;
 
 							float deltaY = GameConf.GRID_H / 2f;
 							float midY = deltaY;
 
-							Vec2D randPos = new Vec2D(midX
-									+ (float) Math.random() * deltaX * 2
-									- deltaX, midY + (float) Math.random()
-									* deltaY * 2 - deltaY);
-							fireworkParticles.spawn(gameModel, randPos);
+							Vec2D randPos = new Vec2D(midX + (float) Math.random() * deltaX * 2 - deltaX,
+									midY + (float) Math.random() * deltaY * 2 - deltaY);
+							BossRoom.fireworkParticles.spawn(gameModel, randPos);
 						}
 
 						// open door slowly
 						float prog = (timer.getProgress() - 0.4f) * 2f;
-						door.setPos(door.getPos().setY(doorMover.getNow(prog)));
+						BossRoom.this.door.setPos(BossRoom.this.door.getPos().setY(doorMover.getNow(prog)));
 					}
 					// phase three: re-move camera to player position
 					else {
 						// remove door of last phase
 						BossRoom.this.door.destroy();
-						
+
 						float prog = (timer.getProgress() - 0.9f) * 10f;
 						gameModel.setCameraTarget(new FixedCameraTarget(cameraMover.getNow(prog)));
 					}
