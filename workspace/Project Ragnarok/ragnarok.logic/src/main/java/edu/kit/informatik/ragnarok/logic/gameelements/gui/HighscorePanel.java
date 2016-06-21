@@ -28,9 +28,8 @@ public class HighscorePanel extends GuiElement{
 		points.setText(this.getGameModel().getScore() + " Points");
 		highscore.setText(this.getGameModel().getHighScore() + " Highscore");
 		
-		double sin = Math.sin((System.currentTimeMillis() / 300.0));
-		op.setHeight((int)(GameConf.gameTextSize + sin));
-		
+		double sin = Math.sin((System.currentTimeMillis() / 200.0));
+		op.setHeight((int)(GameConf.gameTextSize + 5 *sin));
 	}
 	
 	@Override
