@@ -23,14 +23,15 @@ public abstract class LevelCreator {
 		// save reference to GameMode to be able to add GameElements
 		this.model = model;
 		
+		rand = new Random(randomSeed);
+		colorRand = new Random();
+		
 		// build initial even floor 
 		for (int x = (int)-GameConf.PLAYER_CAMERA_OFFSET; x <= (int)(2 * GameConf.PLAYER_CAMERA_OFFSET); x++) {
 			generateFloor(x, GameConf.GRID_H);
 		}
 		this.generatedUntil = (int)(2 * GameConf.PLAYER_CAMERA_OFFSET);
-		
-		rand = new Random(randomSeed);
-		colorRand = new Random();
+
 	}
 	
 	protected int generatedUntil;
