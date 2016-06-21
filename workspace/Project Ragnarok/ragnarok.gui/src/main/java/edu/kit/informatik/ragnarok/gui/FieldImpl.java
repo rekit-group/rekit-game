@@ -5,6 +5,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.graphics.RGBA;
 import org.eclipse.swt.widgets.Display;
@@ -15,6 +16,8 @@ import edu.kit.informatik.ragnarok.primitives.Polygon;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 import edu.kit.informatik.ragnarok.util.RGBAColor;
 import edu.kit.informatik.ragnarok.util.RGBColor;
+import edu.kit.informatik.ragnarok.util.SwtUtils;
+import edu.kit.informatik.ragnarok.util.TextOptions;
 
 /**
  * This class represents a {@link Field} of the {@link GameView}
@@ -96,60 +99,30 @@ public class FieldImpl implements Field {
 				this.units2pixel(pos.getY() - size.getY() / 2f) // dstY
 		);
 	}
-
-	public void refreshUI(int lifes, int points, int highScore, String bossText) {
-
-		// Iterate lifes
-		Image image = ImageLoader.get("mrRekt_glasses_right.png");
-		for (int i = 0; i < lifes; i++) {
-			this.gc.drawImage(image, 10 + 50 * i, 10);
-		}
-		// Set color to red and set font
-		Color color = new Color(Display.getCurrent(), new RGB(200, 50, 0));
-		this.gc.setForeground(color);
-		color.dispose();
-		Font font = new Font(Display.getCurrent(), "Tahoma", 18, SWT.BOLD);
-		this.gc.setFont(font);
-		// There is no alignment, so we need to calculate the text width
-		String text = points + " Points";
-		int textWidth = this.gc.stringExtent(text).x;
-		int textHeight = this.gc.stringExtent(text).y;
-		// And draw the text
-		this.gc.drawText(text, this.units2pixel(GameConf.gridW) - textWidth - 10, 10, true);
-
-		// There is no alignment, so we need to calculate the text width
-		text = highScore + " HighScore";
-		textWidth = this.gc.stringExtent(text).x;
-		// And draw the text
-		this.gc.drawText(text, this.units2pixel(GameConf.gridW) - textWidth - 10, 10 + 10 + textHeight, true);
-		font.dispose();
-
-		if (bossText != null) {
-			font = new Font(Display.getCurrent(), "Tahoma", 30, SWT.BOLD);
-			this.gc.setFont(font);
-			// There is no alignment, so we need to calculate the text width
-			textWidth = this.gc.stringExtent(bossText).x;
-			textHeight = this.gc.stringExtent(bossText).y;
-			// And draw the text
-			this.gc.drawText(bossText, (this.units2pixel(GameConf.gridW) - textWidth) / 2,
-					(this.units2pixel(GameConf.gridH) - textHeight) / 2, true);
-		}
-
+	
+	@Override
+	public void drawGuiImage(Vec2D pos, Vec2D size, String imagePath) {
+		Image image = ImageLoader.get(imagePath);
+		this.gc.drawImage(image, (int) (pos.getX() - size.getX() / 2f), // dstX
+				(int) (pos.getY() - size.getY() / 2f) // dstY
+		);
 	}
-
-	public void drawFPS(float fps) {
+	
+	@Override
+	public void drawText(Vec2D pos, String text, TextOptions options) {
 		// Set color to red and set font
-		Color color = new Color(Display.getCurrent(), new RGB(200, 50, 0));
+		RGB rgb = new RGB(options.getColor().red, options.getColor().green, options.getColor().blue);
+		Color color = new Color(Display.getCurrent(), rgb);
 		this.gc.setForeground(color);
 		color.dispose();
-		Font font = new Font(Display.getCurrent(), "Tahoma", 18, SWT.BOLD);
+		
+		Font font = new Font(Display.getCurrent(), options.getFont(), options.getHeight(), options.getFontOptions() | SWT.BOLD);
 		this.gc.setFont(font);
+		
+		Point textBounds = this.gc.textExtent(text);
+		
+		this.gc.drawText(text, (int) (pos.getX() + options.getAlignment().getX() * textBounds.x), (int) (pos.getY() + options.getAlignment().getY() * textBounds.y), true);
 		font.dispose();
-		// There is no alignment, so we need to calculate the text width
-		String text = "FPS: " + fps;
-		int textWidth = this.gc.stringExtent(text).x;
-		// And draw the text
-		this.gc.drawText(text, this.units2pixel(GameConf.gridW) - textWidth - 10, this.units2pixel(GameConf.gridH) - 60, true);
 	}
 
 	public void setGC(GC gc) {
@@ -158,22 +131,21 @@ public class FieldImpl implements Field {
 
 	@Override
 	public void drawRectangle(Vec2D pos, Vec2D size, RGBColor color) {
-		this.drawRectangle(pos, size, new RGB(color.red, color.green, color.blue));
-
+		this.drawRectangle(pos, size, SwtUtils.calcRGB(color));
 	}
 
 	@Override
 	public void drawCircle(Vec2D pos, Vec2D size, RGBColor color) {
-		this.drawCircle(pos, size, new RGB(color.red, color.green, color.blue));
+		this.drawCircle(pos, size, SwtUtils.calcRGB(color));
 	}
 
 	@Override
 	public void drawPolygon(Polygon polygon, RGBAColor color) {
-		this.drawPolygon(polygon, new RGBA(color.red, color.green, color.blue, color.alpha));
+		this.drawPolygon(polygon, SwtUtils.calcRGBA(color));
 	}
 
 	@Override
 	public void drawPolygon(Polygon polygon, RGBColor color) {
-		this.drawPolygon(polygon, new RGB(color.red, color.green, color.blue));
+		this.drawPolygon(polygon, SwtUtils.calcRGB(color));
 	}
 }

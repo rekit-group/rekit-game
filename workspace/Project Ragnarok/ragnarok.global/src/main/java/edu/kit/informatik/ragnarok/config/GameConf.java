@@ -2,7 +2,9 @@ package edu.kit.informatik.ragnarok.config;
 
 import java.util.ResourceBundle;
 
+import edu.kit.informatik.ragnarok.primitives.Vec2D;
 import edu.kit.informatik.ragnarok.util.RGBColor;
+import edu.kit.informatik.ragnarok.util.TextOptions;
 
 
 /**
@@ -67,5 +69,9 @@ public class GameConf {
 	
 	public static final RGBColor gameBackgroundColor = GameConf.BUNDLE.getRGBColor("gameBackgroundColor");
 	public static final RGBColor menuBackgroundColor = GameConf.BUNDLE.getRGBColor("menuBackgroundColor");
+	public static final RGBColor gameTextColor = GameConf.BUNDLE.getRGBColor("gameTextColor");
+	public static final int gameTextSize = GameConf.BUNDLE.getInt("gameTextSize");
+	public static final String gameTextFont = GameConf.BUNDLE.getString("gameTextFont");
+	public static final TextOptions defaultText = new TextOptions(new Vec2D(-1, 0), gameTextSize, gameTextColor, gameTextFont, 1);
 
 }

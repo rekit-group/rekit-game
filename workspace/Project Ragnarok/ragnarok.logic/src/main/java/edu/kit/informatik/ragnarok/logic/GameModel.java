@@ -12,15 +12,22 @@ import java.util.PriorityQueue;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.logic.gameelements.GuiElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.CameraTarget;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.EntityFactory;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
+import edu.kit.informatik.ragnarok.logic.gameelements.gui.ScoreGui;
+import edu.kit.informatik.ragnarok.logic.gameelements.gui.LifeGui;
+import edu.kit.informatik.ragnarok.logic.gameelements.gui.Text;
+import edu.kit.informatik.ragnarok.logic.gameelements.gui.TimeDecorator;
 import edu.kit.informatik.ragnarok.logic.levelcreator.InfiniteLevelCreator;
 import edu.kit.informatik.ragnarok.logic.levelcreator.LevelCreator;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.TimeDependency;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.util.CalcUtil;
+import edu.kit.informatik.ragnarok.util.TextOptions;
 import edu.kit.informatik.ragnarok.util.ThreadUtils;
 
 /**
@@ -37,6 +44,8 @@ public class GameModel implements CameraTarget, Model {
 	 * operations
 	 */
 	public static final Object SYNC = new Object();
+	
+	private PriorityQueue<GuiElement> guiElements;
 
 	private PriorityQueue<GameElement> gameElements;
 
@@ -59,9 +68,13 @@ public class GameModel implements CameraTarget, Model {
 
 	private CameraTarget cameraTarget;
 
-	private String currentBossText = null;
+	private ScoreGui scoreGui;
+	
+	private LifeGui lifeGui;
 
-	private TimeDependency currentBossTextTimeLeft;
+	private int highScore = -1;
+
+	private GuiElement bossTextGui;
 
 	public void setCameraTarget(CameraTarget cameraTarget) {
 		this.cameraTarget = cameraTarget;
@@ -73,6 +86,7 @@ public class GameModel implements CameraTarget, Model {
 
 	public void init() {
 		// Initialize Set of all gameElements that need rendering and logic
+		this.guiElements = new PriorityQueue<>();
 		this.gameElements = new PriorityQueue<GameElement>();
 		this.waitingGameElements = new ArrayList<GameElement>();
 		this.gameElementsToDelete = new ArrayList<GameElement>();
@@ -81,6 +95,13 @@ public class GameModel implements CameraTarget, Model {
 		this.player.init();
 		this.cameraTarget = this.player;
 		this.addGameElement(this.player);
+		
+		// Create Gui
+		this.scoreGui = new ScoreGui(this);
+		this.lifeGui = new LifeGui(this);
+		this.lifeGui.setPos(new Vec2D(10));
+		this.guiElements.add(this.scoreGui);
+		this.guiElements.add(this.lifeGui);
 
 		// Init EnemyFactory with model
 		EntityFactory.init(this);
@@ -119,8 +140,6 @@ public class GameModel implements CameraTarget, Model {
 		// restart game
 		GameModel.this.restart();
 	}
-
-	private int highScore = -1;
 
 	@Override
 	public int getHighScore() {
@@ -244,6 +263,16 @@ public class GameModel implements CameraTarget, Model {
 	public Iterator<GameElement> getGameElementIterator() {
 		return this.gameElements.iterator();
 	}
+	
+	/**
+	 * Supplies an Iterator for all saved GuiElements
+	 *
+	 * @return
+	 */
+	@Override
+	public Iterator<GuiElement> getGuiElementIterator() {
+		return this.guiElements.iterator();
+	}
 
 	/**
 	 * Calculate DeltaTime Get Collisions .. & Invoke ReactCollision Iterate
@@ -255,11 +284,6 @@ public class GameModel implements CameraTarget, Model {
 		// calculate time difference since last physics loop
 		long timeNow = System.currentTimeMillis();
 		long timeDelta = timeNow - this.lastTime;
-
-		// update boss text TimeDependency
-		if (this.currentBossTextTimeLeft != null) {
-			this.currentBossTextTimeLeft.removeTime(timeDelta / 1000f);
-		}
 
 		// add GameElements that have been added
 		this.addAllWaitingGameElements();
@@ -307,6 +331,16 @@ public class GameModel implements CameraTarget, Model {
 						this.checkCollision(e1, e2, e1.getLastPos(), e2.getLastPos());
 					}
 				}
+			}
+		}
+		
+		// after all game related logic update GuiElements
+		synchronized (GameModel.SYNC)
+		{
+			Iterator<GuiElement> it = this.getGuiElementIterator();
+			while (it.hasNext()) {
+				GuiElement e = it.next();
+				e.logicLoop(timeDelta / 1000.f);
 			}
 		}
 
@@ -395,17 +429,15 @@ public class GameModel implements CameraTarget, Model {
 	}
 
 	public void addBossText(String text) {
-		this.currentBossText = text;
-		this.currentBossTextTimeLeft = new TimeDependency(3);
+		this.guiElements.remove(this.bossTextGui);
 
+		TextOptions op = new TextOptions(new Vec2D(-0.5f, -0.5f), 30, GameConf.gameTextColor, GameConf.gameTextFont, 1);
+		Text bossText = new Text(this, op);
+		bossText.setText(text);
+		bossText.setPos(CalcUtil.units2vec(new Vec2D(GameConf.gridW / 2f, GameConf.gridH / 2f)));
+		
+		this.bossTextGui = new TimeDecorator(this, bossText, new TimeDependency(3));
+
+		this.guiElements.add(this.bossTextGui);
 	}
-
-	@Override
-	public String getCurrentBossText() {
-		if (this.currentBossText != null && !this.currentBossTextTimeLeft.timeUp()) {
-			return this.currentBossText;
-		}
-		return null;
-	}
-
 }

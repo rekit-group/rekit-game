@@ -3,6 +3,7 @@ package edu.kit.informatik.ragnarok.logic;
 import java.util.Iterator;
 
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.logic.gameelements.GuiElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 
 /**
@@ -27,6 +28,13 @@ public interface Model {
 	 * @return the iterator
 	 */
 	Iterator<GameElement> getGameElementIterator();
+	
+	/**
+	 * Get an Iterator over all {@link GuiElement GuiElements}
+	 * 
+	 * @return the iterator
+	 */
+	Iterator<GuiElement> getGuiElementIterator();
 
 	/**
 	 * Get the Player
@@ -34,14 +42,6 @@ public interface Model {
 	 * @return the player
 	 */
 	Entity getPlayer();
-
-	/**
-	 * Get the text for the current boss
-	 * 
-	 * @return {@code null} if no boss is currently available, the
-	 *         {@link String} otherwise
-	 */
-	String getCurrentBossText();
 
 	/**
 	 * Get the current score of the Player
