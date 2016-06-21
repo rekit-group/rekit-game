@@ -10,10 +10,14 @@
 [?] Means done, but not sure. Remove if someone is sure  
 
 ### Features
-- [ ] Menu (Start Game, Settings, About)
+- [ ] use Bitbucket Issues for Features and Bugs?
+- [-] Menu (Start Game, Settings, About)
+- [-] divide Game in Scenes (MenuScene, InfinitPlayScene, LevelOfTheDayScene)
 - [ ] Show score/highscore dependent death-messages (Restart option/countdown)
 - [ ] Create Background and parallax it (2 or 3 layers)
 - [ ] Bosses
+#### Visual
+- [ ] Player loose glasses on hit (show tiny eys while invincible)
 
 ### Refactoring
 - [ ] Put collision detection in separete class
