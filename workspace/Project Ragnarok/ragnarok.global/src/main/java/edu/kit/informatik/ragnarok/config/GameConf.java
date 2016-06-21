@@ -65,6 +65,8 @@ public class GameConf {
 
 	public static final float SLURP_SPEED = GameConf.BUNDLE.getFloat("slurpSpeed");
 	public static final float SLURP_POPOFFS_PER_SEC = GameConf.BUNDLE.getFloat("slurpPopOffsPerSec");
+	
+	public static final float WARPER_WARP_DELTA = GameConf.BUNDLE.getFloat("warperWarpDelta");
 
 	public static final RGBColor GAME_BACKGROUD_COLOR = GameConf.BUNDLE.getRGBColor("gameBackgroundColor");
 	public static final RGBColor MENU_BACKGROUND_COLOR = GameConf.BUNDLE.getRGBColor("menuBackgroundColor");
