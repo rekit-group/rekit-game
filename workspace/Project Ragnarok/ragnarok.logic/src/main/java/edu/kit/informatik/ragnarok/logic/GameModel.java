@@ -259,7 +259,9 @@ public class GameModel implements CameraTarget, Model {
 	@Override
 	public Iterator<GameElement> getOrderedGameElementIterator() {
 		//return this.gameElements.iterator();
-		return new PriorityQueueIterator<GameElement>(this.gameElements);
+		synchronized (GameModel.SYNC) {
+			return new PriorityQueueIterator<GameElement>(this.gameElements);
+		}
 	}
 	
 	/**

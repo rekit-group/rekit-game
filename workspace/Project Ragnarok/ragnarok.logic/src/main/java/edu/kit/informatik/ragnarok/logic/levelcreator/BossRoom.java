@@ -123,7 +123,7 @@ public class BossRoom {
 				gameModel.addBossText(BossRoom.this.boss.getName());
 
 				// Spawn Boss
-				BossRoom.this.levelCreator.generateGameElement((GameElement) BossRoom.this.boss);
+				BossRoom.this.levelCreator.generateGameElement(BossRoom.this.boss);
 
 				// Close door
 				BossRoom.this.levelCreator.generateBox((int) BossRoom.this.triggerPos.getX(), (int) BossRoom.this.triggerPos.getY());
@@ -154,7 +154,7 @@ public class BossRoom {
 				// save Players current velocity
 				Vec2D playerVelSave = player.getVel();
 				Vec2D playerPosSave = player.getPos();
-				Vec2D bossPosSave = ((GameElement) BossRoom.this.boss).getPos();
+				Vec2D bossPosSave = BossRoom.this.boss.getPos();
 
 				// while timer has time left...
 				while (!timer.timeUp()) {
@@ -162,8 +162,8 @@ public class BossRoom {
 					// freeze player and pos
 					player.setVel(new Vec2D());
 					player.setPos(playerPosSave);
-					((GameElement) BossRoom.this.boss).setVel(new Vec2D());
-					((GameElement) BossRoom.this.boss).setPos(bossPosSave);
+					BossRoom.this.boss.setVel(new Vec2D());
+					BossRoom.this.boss.setPos(bossPosSave);
 
 					// wait for time to be up
 					try {
@@ -175,7 +175,7 @@ public class BossRoom {
 					// phase one: show explosions
 					if (timer.getProgress() < 0.4) {
 						if (Math.random() > 0.9) {
-							Vec2D randPos = ((GameElement) BossRoom.this.boss).getPos()
+							Vec2D randPos = BossRoom.this.boss.getPos()
 									.add(new Vec2D((float) Math.random() * 2 - 1, (float) Math.random() * 2f - 1));
 							BossRoom.explosionParticles.spawn(gameModel, randPos);
 						}
@@ -183,7 +183,7 @@ public class BossRoom {
 					// phase two: show fireworks
 					else if (timer.getProgress() < 0.9) {
 						// remove boss of last phase
-						gameModel.removeGameElement((GameElement) BossRoom.this.boss);
+						gameModel.removeGameElement(BossRoom.this.boss);
 
 						// show fireworks
 						if (Math.random() > 0.9) {
