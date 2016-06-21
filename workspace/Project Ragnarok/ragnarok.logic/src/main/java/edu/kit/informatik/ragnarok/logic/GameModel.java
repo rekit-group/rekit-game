@@ -17,12 +17,16 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.CameraTarget;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.EntityFactory;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.HighscorePanel;
+import edu.kit.informatik.ragnarok.logic.gameelements.gui.Text;
+import edu.kit.informatik.ragnarok.logic.gameelements.gui.TimeDecorator;
 import edu.kit.informatik.ragnarok.logic.levelcreator.InfiniteLevelCreator;
 import edu.kit.informatik.ragnarok.logic.levelcreator.LevelCreator;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.TimeDependency;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.util.CalcUtil;
+import edu.kit.informatik.ragnarok.util.TextOptions;
 import edu.kit.informatik.ragnarok.util.ThreadUtils;
 
 /**
@@ -63,11 +67,11 @@ public class GameModel implements CameraTarget, Model {
 
 	private CameraTarget cameraTarget;
 
-	private String currentBossText = null;
-
-	private TimeDependency currentBossTextTimeLeft;
-
 	private HighscorePanel highScorePanel;
+
+	private int highScore = -1;
+
+	private GuiElement bossTextGui;
 
 	public void setCameraTarget(CameraTarget cameraTarget) {
 		this.cameraTarget = cameraTarget;
@@ -131,8 +135,6 @@ public class GameModel implements CameraTarget, Model {
 		// restart game
 		GameModel.this.restart();
 	}
-
-	private int highScore = -1;
 
 	@Override
 	public int getHighScore() {
@@ -278,11 +280,6 @@ public class GameModel implements CameraTarget, Model {
 		long timeNow = System.currentTimeMillis();
 		long timeDelta = timeNow - this.lastTime;
 
-		// update boss text TimeDependency
-		if (this.currentBossTextTimeLeft != null) {
-			this.currentBossTextTimeLeft.removeTime(timeDelta / 1000f);
-		}
-
 		// add GameElements that have been added
 		this.addAllWaitingGameElements();
 
@@ -427,17 +424,15 @@ public class GameModel implements CameraTarget, Model {
 	}
 
 	public void addBossText(String text) {
-		this.currentBossText = text;
-		this.currentBossTextTimeLeft = new TimeDependency(3);
+		this.guiElements.remove(this.bossTextGui);
 
+		TextOptions op = new TextOptions(new Vec2D(-0.5f, -0.5f), 30, GameConf.gameTextColor, GameConf.gameTextFont, 1);
+		Text bossText = new Text(this, op);
+		bossText.setText(text);
+		bossText.setPos(CalcUtil.units2vec(new Vec2D(GameConf.gridW / 2f, GameConf.gridH / 2f)));
+		
+		this.bossTextGui = new TimeDecorator(this, bossText, new TimeDependency(3));
+
+		this.guiElements.add(this.bossTextGui);
 	}
-
-	@Override
-	public String getCurrentBossText() {
-		if (this.currentBossText != null && !this.currentBossTextTimeLeft.timeUp()) {
-			return this.currentBossText;
-		}
-		return null;
-	}
-
 }

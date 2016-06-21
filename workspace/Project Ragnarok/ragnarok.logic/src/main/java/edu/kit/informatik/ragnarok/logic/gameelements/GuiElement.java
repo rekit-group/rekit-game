@@ -3,9 +3,9 @@ package edu.kit.informatik.ragnarok.logic.gameelements;
 import edu.kit.informatik.ragnarok.logic.GameModel;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
-public abstract class GuiElement {
+public abstract class GuiElement implements Comparable<GuiElement> {
 
-	private boolean show = true;
+	private boolean visible = true;
 	
 	private Vec2D pos;
 	
@@ -18,12 +18,12 @@ public abstract class GuiElement {
 	 */
 	private GameModel gameModel;
 	
-	public boolean isShow() {
-		return show;
+	public boolean isVisible() {
+		return visible;
 	}
 
-	public void setShow(boolean show) {
-		this.show = show;
+	public void setVisible(boolean visible) {
+		this.visible = visible;
 	}
 
 	public void setPos(Vec2D value) {
@@ -42,6 +42,10 @@ public abstract class GuiElement {
 		return this.gameModel;
 	}
 	
+	public int getZ() {
+		return 0;
+	}
+	
 	public GuiElement(GameModel model) {
 		this.gameModel = model;
 	}
@@ -51,4 +55,9 @@ public abstract class GuiElement {
 	}
 	
 	public abstract void render(Field f);
+	
+	@Override
+	public int compareTo(GuiElement other) {
+		return this.getZ() - other.getZ();
+	}
 }

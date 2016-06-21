@@ -44,14 +44,6 @@ public interface Model {
 	Entity getPlayer();
 
 	/**
-	 * Get the text for the current boss
-	 * 
-	 * @return {@code null} if no boss is currently available, the
-	 *         {@link String} otherwise
-	 */
-	String getCurrentBossText();
-
-	/**
 	 * Get the current score of the Player
 	 * 
 	 * @return the score

@@ -157,20 +157,25 @@ class GameView implements View {
 			Iterator<GameElement> it1 = this.model.getGameElementIterator();
 			while (it1.hasNext()) {
 				// Render next element
-				it1.next().render(this.field);
+				GameElement e = it1.next();
+				if (!e.preventRendering()) {
+					e.render(this.field);
+				}
 			}
 			
 			// Iterate all GuiElements
 			Iterator<GuiElement> it2 = this.model.getGuiElementIterator();
 			while (it2.hasNext()) {
 				// Render next element
-				it2.next().render(this.field);
+				GuiElement e = it2.next();
+				if (e.isVisible()) {
+					e.render(this.field);
+				}
 			}
 		}
 
 		// Draw UI (lifes, score)
-		this.field.refreshUI(this.getModel().getPlayer().getLifes(), this.getModel().getScore(), this.getModel().getHighScore(),
-				this.getModel().getCurrentBossText());
+		this.field.refreshUI(this.getModel().getPlayer().getLifes());
 
 		// draw temporary image on actual cavans
 		this.gc.drawImage(image, 0, 0);

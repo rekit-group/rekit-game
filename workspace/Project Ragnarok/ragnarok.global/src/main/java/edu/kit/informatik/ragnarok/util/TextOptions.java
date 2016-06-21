@@ -1,9 +1,11 @@
 package edu.kit.informatik.ragnarok.util;
 
+import edu.kit.informatik.ragnarok.primitives.Direction;
+import edu.kit.informatik.ragnarok.primitives.Vec2D;
+
 public class TextOptions {
 	
-	//TODO: align more than left vs right
-	private boolean alignmentLeft;
+	private Vec2D alignment;
 	
 	private int height;
 	
@@ -13,12 +15,12 @@ public class TextOptions {
 	
 	private int fontOptions;
 
-	public boolean isAlignmentLeft() {
-		return alignmentLeft;
+	public Vec2D getAlignment() {
+		return this.alignment;
 	}
 
-	public void setAlignmentLeft(boolean alignmentLeft) {
-		this.alignmentLeft = alignmentLeft;
+	public void setAlignmentLeft(Vec2D alignment) {
+		this.alignment = alignment;
 	}
 
 	public int getHeight() {
@@ -53,8 +55,8 @@ public class TextOptions {
 		this.fontOptions = fontOptions;
 	}
 
-	public TextOptions(boolean alignmentLeft, int height, RGBColor color, String font, int fontOptions) {
-		this.alignmentLeft = alignmentLeft;
+	public TextOptions(Vec2D alignment, int height, RGBColor color, String font, int fontOptions) {
+		this.alignment = alignment;
 		this.height = height;
 		this.color = color;
 		this.font = font;
