@@ -23,12 +23,13 @@ public interface Model {
 	}
 
 	/**
-	 * Get an Iterator over all {@link GameElement GameElements}
+	 * Get an Iterator over all {@link GameElement GameElements} in ascending
+	 * order concerning the {@link GameElement GameElements} zIndex.
 	 * 
 	 * @return the iterator
 	 */
-	Iterator<GameElement> getGameElementIterator();
-	
+	Iterator<GameElement> getOrderedGameElementIterator();
+
 	/**
 	 * Get an Iterator over all {@link GuiElement GuiElements}
 	 * 

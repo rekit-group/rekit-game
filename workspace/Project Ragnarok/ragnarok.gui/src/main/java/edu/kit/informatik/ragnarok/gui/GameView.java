@@ -152,10 +152,11 @@ class GameView implements View {
 
 		// Draw background
 		this.field.setBackground(SwtUtils.calcRGB(GameConf.GAME_BACKGROUD_COLOR));
-
+		
+		// Get a z-index-ordered iterator
+		Iterator<GameElement> it1 = this.model.getOrderedGameElementIterator();
 		synchronized (GameModel.SYNC) {
 			// Iterate all GameElements
-			Iterator<GameElement> it1 = this.model.getGameElementIterator();
 			while (it1.hasNext()) {
 				// Render next element
 				GameElement e = it1.next();

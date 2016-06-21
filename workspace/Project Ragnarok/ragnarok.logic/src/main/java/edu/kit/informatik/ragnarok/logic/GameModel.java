@@ -256,14 +256,10 @@ public class GameModel implements CameraTarget, Model {
 		}
 	}
 
-	/**
-	 * Supplies an Iterator for all saved GameElements
-	 *
-	 * @return
-	 */
 	@Override
-	public Iterator<GameElement> getGameElementIterator() {
-		return this.gameElements.iterator();
+	public Iterator<GameElement> getOrderedGameElementIterator() {
+		//return this.gameElements.iterator();
+		return new PriorityQueueIterator<GameElement>(this.gameElements);
 	}
 	
 	/**
@@ -300,7 +296,7 @@ public class GameModel implements CameraTarget, Model {
 
 		// iterate all GameElements to invoke logicLoop
 		synchronized (GameModel.SYNC) {
-			Iterator<GameElement> it = this.getGameElementIterator();
+			Iterator<GameElement> it = this.gameElements.iterator();
 			while (it.hasNext()) {
 				GameElement e = it.next();
 
@@ -323,10 +319,10 @@ public class GameModel implements CameraTarget, Model {
 
 		synchronized (GameModel.SYNC) {
 			// iterate all GameElements to detect collision
-			Iterator<GameElement> it1 = this.getGameElementIterator();
+			Iterator<GameElement> it1 = this.gameElements.iterator();
 			while (it1.hasNext()) {
 				GameElement e1 = it1.next();
-				Iterator<GameElement> it2 = this.getGameElementIterator();
+				Iterator<GameElement> it2 = this.gameElements.iterator();
 				while (it2.hasNext()) {
 					GameElement e2 = it2.next();
 					if (e1 != e2) {
