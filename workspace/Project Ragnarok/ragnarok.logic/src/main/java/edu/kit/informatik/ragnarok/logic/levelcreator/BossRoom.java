@@ -217,6 +217,11 @@ public class BossRoom {
 				// re-apply velocity to Player
 				player.setVel(playerVelSave);
 
+				// give player full health
+				if (player.getLifes() < GameConf.PLAYER_LIFES) {
+					player.setLifes(GameConf.PLAYER_LIFES);
+				}
+				
 				// set camera back to player
 				player.resetCameraOffset();
 				gameModel.setCameraTarget(player);

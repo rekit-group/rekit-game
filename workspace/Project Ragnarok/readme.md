@@ -14,14 +14,16 @@
 - [-] Menu (Start Game, Settings, About)
 - [-] divide Game in Scenes (MenuScene, InfinitPlayScene, LevelOfTheDayScene)
 - [ ] Show score/highscore dependent death-messages (Restart option/countdown)
-- [ ] Create Background and parallax it (2 or 3 layers)
-- [ ] Bosses
+- [-] Create Background and parallax it (2 or 3 layers)
+
 #### Visual
 - [ ] Player loose glasses on hit (show tiny eys while invincible)
 
 ### Refactoring
-- [ ] Put collision detection in separete class
+- [ ] Put collision detection in separate class
 - [ ] Don't give Entity full access to GameModel --> Interface
+- [ ] Create Boss super class
+- [ ] Create ParticleSpawnerFactory
 
 ### Nice to have
 - [ ] Player pickup: clear Screen (kill enemys)
@@ -39,6 +41,7 @@
 ### Features
 - [x] Show highscore below score and save highscore
 - [x] Allow shorter Jumps
+- [x] Bosses
 
 ### Nice to have
 

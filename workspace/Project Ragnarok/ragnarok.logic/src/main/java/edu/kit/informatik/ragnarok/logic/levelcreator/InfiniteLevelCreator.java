@@ -15,8 +15,8 @@ public class InfiniteLevelCreator extends LevelCreator {
 		
 		this.bossRooms = new HashMap<Integer, BossRoom>();
 		
-		// first boss room after 100 units in x direction
-		this.bossRooms.put(10, new BossRoom(
+		// first boss room after 200 units in x direction
+		this.bossRooms.put(200, new BossRoom(
 		new RektSmasher(new Vec2D()),
 		new LevelStructure(new int[][] {
 		  {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
