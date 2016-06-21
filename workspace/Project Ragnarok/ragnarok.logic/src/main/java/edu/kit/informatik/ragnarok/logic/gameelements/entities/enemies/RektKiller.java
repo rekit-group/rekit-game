@@ -133,9 +133,12 @@ public class RektKiller extends Entity {
 
 		// Do usual entity logic
 		super.logicLoop(deltaTime);
-
-		if (this.getPos().getY() <= 0 || this.getPos().getY() >= GameConf.GRID_H - 1) {
-			this.setCurrentDirection(this.getCurrentDirection().getOpposite());
+		
+		if (this.getPos().getY() <= 0) {
+			this.collidedWith(new Frame(new Vec2D(0, 0), new Vec2D(0, 0)), Direction.DOWN);
+		}
+		if (this.getPos().getY() >= GameConf.GRID_H - 1) {
+			this.collidedWith(new Frame(new Vec2D(0, GameConf.GRID_H - 1), new Vec2D(0, GameConf.GRID_H - 1)), Direction.UP);
 		}
 
 		// We dont want this guy to fall
