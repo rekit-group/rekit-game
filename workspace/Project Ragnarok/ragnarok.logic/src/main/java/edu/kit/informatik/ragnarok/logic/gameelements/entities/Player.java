@@ -24,7 +24,7 @@ public class Player extends Entity implements CameraTarget {
 
 	public void init() {
 		this.setPos(this.startPos);
-		this.lifes = GameConf.playerLifes;
+		this.lifes = GameConf.PLAYER_LIFES;
 		this.points = 0;
 		this.setTeam(0);
 		this.currentDirection = Direction.RIGHT;
@@ -71,7 +71,7 @@ public class Player extends Entity implements CameraTarget {
 	public void collidedWith(Frame collision, Direction dir) {
 		super.collidedWith(collision, dir);
 		if (dir == Direction.UP) {
-			this.setVel(this.getVel().setY(GameConf.playerBottomBoost));
+			this.setVel(this.getVel().setY(GameConf.PLAYER_BOTTOM_BOOST));
 		}
 	}
 
@@ -97,7 +97,7 @@ public class Player extends Entity implements CameraTarget {
 	@Override
 	public float getCameraOffset() {
 		// get maximum player x and adjust level offset
-		float offsetNow = this.getPos().getX() - GameConf.playerCameraOffset;
+		float offsetNow = this.getPos().getX() - GameConf.PLAYER_CAMERA_OFFSET;
 		if (offsetNow > this.currentCameraOffset) {
 			this.currentCameraOffset = offsetNow;
 		}

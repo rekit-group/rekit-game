@@ -108,7 +108,7 @@ public class GameModel implements CameraTarget, Model {
 
 		// Create LevelCreator
 		this.levelCreator = new InfiniteLevelCreator(this);
-		this.levelCreator.generate(GameConf.gridW);
+		this.levelCreator.generate(GameConf.GRID_W);
 
 		// Initialize all other attributes
 		this.lastTime = System.currentTimeMillis();
@@ -181,7 +181,7 @@ public class GameModel implements CameraTarget, Model {
 				// repeat until player is dead
 				while (!GameModel.this.getPlayer().deleteMe) {
 					GameModel.this.logicLoop();
-					ThreadUtils.sleep(GameConf.logicDelta);
+					ThreadUtils.sleep(GameConf.LOGIC_DELTA);
 
 				}
 				GameModel.this.end();
@@ -288,7 +288,7 @@ public class GameModel implements CameraTarget, Model {
 		// add GameElements that have been added
 		this.addAllWaitingGameElements();
 
-		this.levelCreator.generate((int) (this.getCameraOffset() + GameConf.gridW + 1));
+		this.levelCreator.generate((int) (this.getCameraOffset() + GameConf.GRID_W + 1));
 
 		// dont allow player to go behind currentOffset
 		float minX = this.getCameraOffset() + this.player.getSize().getX() / 2f;
@@ -308,7 +308,7 @@ public class GameModel implements CameraTarget, Model {
 				}
 
 				// check if we can delete this
-				if (e.getPos().getX() < this.currentOffset - GameConf.playerCameraOffset - 1) {
+				if (e.getPos().getX() < this.currentOffset - GameConf.PLAYER_CAMERA_OFFSET - 1) {
 					this.removeGameElement(e);
 				} else {
 					e.logicLoop(timeDelta / 1000.f);
@@ -431,10 +431,10 @@ public class GameModel implements CameraTarget, Model {
 	public void addBossText(String text) {
 		this.guiElements.remove(this.bossTextGui);
 
-		TextOptions op = new TextOptions(new Vec2D(-0.5f, -0.5f), 30, GameConf.gameTextColor, GameConf.gameTextFont, 1);
+		TextOptions op = new TextOptions(new Vec2D(-0.5f, -0.5f), 30, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, 1);
 		Text bossText = new Text(this, op);
 		bossText.setText(text);
-		bossText.setPos(CalcUtil.units2vec(new Vec2D(GameConf.gridW / 2f, GameConf.gridH / 2f)));
+		bossText.setPos(CalcUtil.units2vec(new Vec2D(GameConf.GRID_W / 2f, GameConf.GRID_H / 2f)));
 		
 		this.bossTextGui = new TimeDecorator(this, bossText, new TimeDependency(3));
 

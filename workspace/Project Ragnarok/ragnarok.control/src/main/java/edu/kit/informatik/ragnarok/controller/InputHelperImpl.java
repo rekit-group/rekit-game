@@ -28,7 +28,7 @@ final class InputHelperImpl implements InputHelper {
 			public void run() {
 				while (true) {
 					InputHelperImpl.this.notifyObservers();
-					ThreadUtils.sleep(GameConf.logicDelta);
+					ThreadUtils.sleep(GameConf.LOGIC_DELTA);
 				}
 			}
 		};

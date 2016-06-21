@@ -58,11 +58,11 @@ public class Slurp extends Entity {
 
 		// calculate velocity (by currentDirection)
 		if (this.currentDirection == Direction.LEFT || this.currentDirection == Direction.RIGHT) {
-			this.setVel(new Vec2D(this.currentDirection.getVector().getX() * GameConf.slurpSpeed,
+			this.setVel(new Vec2D(this.currentDirection.getVector().getX() * GameConf.SLURP_SPEED,
 					this.currentDirection.getNextAntiClockwise().getVector().getY() * 3));
 		} else {
 			this.setVel(new Vec2D(this.currentDirection.getNextAntiClockwise().getVector().getX() * 3,
-					this.currentDirection.getVector().getY() * GameConf.slurpSpeed));
+					this.currentDirection.getVector().getY() * GameConf.SLURP_SPEED));
 		}
 
 		super.logicLoop(deltaTime);
@@ -77,7 +77,7 @@ public class Slurp extends Entity {
 		}
 
 		// Randomly determine if SlurpDurp should pop off
-		if (Math.random() >= (1.0 - GameConf.slurpPopOffsPerSec * deltaTime)) {
+		if (Math.random() >= (1.0 - GameConf.SLURP_POPOFFS_PER_SEC * deltaTime)) {
 			// get and remove one SlurpDurp from list
 			SlurpDurp poppedOf = this.slurpDurps.remove(0);
 

@@ -77,11 +77,11 @@ class GameView implements View {
 
 		// Create and position a canvas
 		this.canvas = new Canvas(this.shell, SWT.NONE);
-		this.canvas.setSize(GameConf.gridW * GameConf.pxPerUnit, GameConf.gridH * GameConf.pxPerUnit);
+		this.canvas.setSize(GameConf.GRID_W * GameConf.PX_PER_UNIT, GameConf.GRID_H * GameConf.PX_PER_UNIT);
 		this.canvas.setLocation(0, 0);
 
 		// Open Shell
-		this.shell.setSize(GameConf.gridW * GameConf.pxPerUnit, GameConf.gridH * GameConf.pxPerUnit);
+		this.shell.setSize(GameConf.GRID_W * GameConf.PX_PER_UNIT, GameConf.GRID_H * GameConf.PX_PER_UNIT);
 		this.shell.setLocation(SwtUtils.calcCenter(this.shell));
 		this.shell.open();
 
@@ -107,7 +107,7 @@ class GameView implements View {
 							GameView.this.renderLoop();
 						}
 					});
-					ThreadUtils.sleep(GameConf.renderDelta);
+					ThreadUtils.sleep(GameConf.RENDER_DELTA);
 				}
 			}
 		};
@@ -151,7 +151,7 @@ class GameView implements View {
 		this.field.setGC(tempGC);
 
 		// Draw background
-		this.field.setBackground(SwtUtils.calcRGB(GameConf.gameBackgroundColor));
+		this.field.setBackground(SwtUtils.calcRGB(GameConf.GAME_BACKGROUD_COLOR));
 
 		synchronized (GameModel.SYNC) {
 			// Iterate all GameElements
@@ -163,7 +163,7 @@ class GameView implements View {
 					e.render(this.field);
 				}
 			}
-			
+
 			// Iterate all GuiElements (life, score, boss)
 			Iterator<GuiElement> it2 = this.model.getGuiElementIterator();
 			while (it2.hasNext()) {
@@ -185,7 +185,8 @@ class GameView implements View {
 		// draw FPS
 		float fps = this.getFPS();
 		this.field.setGC(this.gc);
-		this.field.drawText(new Vec2D(CalcUtil.units2pixel(GameConf.gridW) - 10, CalcUtil.units2pixel(GameConf.gridH) - 60), "FPS: " + fps, GameConf.defaultText);
+		this.field.drawText(new Vec2D(CalcUtil.units2pixel(GameConf.GRID_W) - 10, CalcUtil.units2pixel(GameConf.GRID_H) - 60), "FPS: " + fps,
+				GameConf.HINT_TEXT);
 
 	}
 

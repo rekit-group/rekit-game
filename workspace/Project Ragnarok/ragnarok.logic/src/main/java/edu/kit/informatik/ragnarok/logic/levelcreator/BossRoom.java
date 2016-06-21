@@ -80,7 +80,7 @@ public class BossRoom {
 		// generate floor before boss room
 		levelCreator.generateEvenFloor(x, x + 5);
 		// generate boss room structure
-		roomStructure.buildStructure(levelCreator, x + 6, GameConf.gridH);
+		roomStructure.buildStructure(levelCreator, x + 6, GameConf.GRID_H);
 		levelCreator.generatedUntil += roomStructure.getWidth();
 		// generate floor after boss room
 		levelCreator.generateEvenFloor(x + 6 + roomStructure.getWidth(), x + 6
@@ -89,10 +89,10 @@ public class BossRoom {
 		// generate door after room
 		this.door = new InanimateDoor(new Vec2D(x + 5
 				+ roomStructure.getWidth(),
-				(float) Math.ceil(GameConf.gridH / 2)));
+				(float) Math.ceil(GameConf.GRID_H / 2)));
 		levelCreator.generateGameElement(door);
 
-		this.triggerPos = new Vec2D(x + 6, GameConf.gridH - 2);
+		this.triggerPos = new Vec2D(x + 6, GameConf.GRID_H - 2);
 		InanimateTrigger trigger = new InanimateTrigger(triggerPos, new Vec2D(
 				1, 1)) {
 			@Override
@@ -114,13 +114,13 @@ public class BossRoom {
 		final Player player = gameModel.getPlayer();
 
 		// calculate where to put camera
-		cameraTarget = x + 5 + GameConf.playerCameraOffset
+		cameraTarget = x + 5 + GameConf.PLAYER_CAMERA_OFFSET
 				+ player.getSize().getX() / 2;
 
 		// Prepare boss
 		this.boss.setBossRoom(this);
 		this.boss.setPos(new Vec2D(x + 6 + roomStructure.getWidth() / 2,
-				GameConf.gridH / 2 + 1));
+				GameConf.GRID_H / 2 + 1));
 		this.boss.setTarget(player);
 
 		// Create thread for asynchronous stuff
@@ -132,14 +132,14 @@ public class BossRoom {
 				while (player.getPos().getX() < cameraTarget) {
 					player.setVel(player.getVel().setX(1.8f));
 					try {
-						Thread.sleep(GameConf.logicDelta);
+						Thread.sleep(GameConf.LOGIC_DELTA);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
 				}
 
 				gameModel.setCameraTarget(new FixedCameraTarget(cameraTarget
-						- GameConf.playerCameraOffset));
+						- GameConf.PLAYER_CAMERA_OFFSET));
 
 				gameModel.addBossText(boss.getName());
 
@@ -163,7 +163,7 @@ public class BossRoom {
 
 		// Needed for animating camera movement
 		ProgressDependency cameraMover = new ProgressDependency(cameraTarget
-				- GameConf.playerCameraOffset, player.getPos().getX() - GameConf.playerCameraOffset);
+				- GameConf.PLAYER_CAMERA_OFFSET, player.getPos().getX() - GameConf.PLAYER_CAMERA_OFFSET);
 		
 		// Needed for animating door movement
 		ProgressDependency doorMover = new ProgressDependency(this.door.getPos().getY(), this.door.getPos().getY() - 10);
@@ -190,7 +190,7 @@ public class BossRoom {
 
 					// wait for time to be up
 					try {
-						Thread.sleep(GameConf.logicDelta);
+						Thread.sleep(GameConf.LOGIC_DELTA);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -211,10 +211,10 @@ public class BossRoom {
 
 						// show fireworks
 						if (Math.random() > 0.9) {
-							float deltaX = GameConf.gridW / 2f;
+							float deltaX = GameConf.GRID_W / 2f;
 							float midX = x + deltaX;
 
-							float deltaY = GameConf.gridH / 2f;
+							float deltaY = GameConf.GRID_H / 2f;
 							float midY = deltaY;
 
 							Vec2D randPos = new Vec2D(midX
@@ -237,7 +237,7 @@ public class BossRoom {
 						gameModel.setCameraTarget(new FixedCameraTarget(cameraMover.getNow(prog)));
 					}
 
-					timer.removeTime(GameConf.logicDelta / 1000f);
+					timer.removeTime(GameConf.LOGIC_DELTA / 1000f);
 				}
 
 				// re-apply velocity to Player

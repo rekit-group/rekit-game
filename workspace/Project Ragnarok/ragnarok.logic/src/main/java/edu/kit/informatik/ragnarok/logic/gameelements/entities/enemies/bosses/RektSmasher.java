@@ -95,7 +95,7 @@ public class RektSmasher extends RektKiller implements Boss {
 			if (!this.hasSide(dir)) {
 				// Let the player jump if he landed on top
 				if (dir == Direction.UP) {
-					element.setVel(element.getVel().setY(GameConf.playerJumpBoost));
+					element.setVel(element.getVel().setY(GameConf.PLAYER_JUMP_BOOST));
 				}
 
 				// kill the enemy

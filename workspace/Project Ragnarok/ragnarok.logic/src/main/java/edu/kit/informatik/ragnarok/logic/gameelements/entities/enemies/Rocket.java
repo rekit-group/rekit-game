@@ -91,7 +91,7 @@ public class Rocket extends Entity {
 	@Override
 	public void logicLoop(float deltaTime) {
 		// move ahead with player max speed
-		this.setPos(this.getPos().addX(-GameConf.playerWalkMaxSpeed * deltaTime));
+		this.setPos(this.getPos().addX(-GameConf.PLAYER_WALK_MAX_SPEED * deltaTime));
 
 	}
 
@@ -104,7 +104,7 @@ public class Rocket extends Entity {
 		if (this.isHostile(element)) {
 
 			if (dir == Direction.UP) {
-				element.setVel(element.getVel().setY(GameConf.playerJumpBoost));
+				element.setVel(element.getVel().setY(GameConf.PLAYER_JUMP_BOOST));
 				element.addPoints(20);
 
 				// Kill the rocket itself

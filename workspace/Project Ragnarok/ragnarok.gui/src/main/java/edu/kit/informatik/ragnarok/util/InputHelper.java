@@ -25,8 +25,13 @@ public interface InputHelper {
 	public static final int ARROW_RIGHT = SWT.ARROW_RIGHT;
 
 	/**
+	 * Key ID Space
+	 */
+	public static final int SPACE = 32;
+
+	/**
 	 * Initialize the InputHelper
-	 * 
+	 *
 	 * @param view
 	 */
 	default void initialize(View view) {
@@ -35,7 +40,7 @@ public interface InputHelper {
 
 	/**
 	 * This method will invoked when a key is pressed
-	 * 
+	 *
 	 * @param keyCode
 	 *            the keycode
 	 */
@@ -43,7 +48,7 @@ public interface InputHelper {
 
 	/**
 	 * This method will invoked when a key is released
-	 * 
+	 *
 	 * @param keyCode
 	 *            the keycode
 	 */

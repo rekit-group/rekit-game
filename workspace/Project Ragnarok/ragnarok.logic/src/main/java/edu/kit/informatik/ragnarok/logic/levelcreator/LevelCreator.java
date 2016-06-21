@@ -20,10 +20,10 @@ public abstract class LevelCreator {
 		this.model = model;
 		
 		// build initial even floor 
-		for (int x = (int)-GameConf.playerCameraOffset; x <= (int)(2 * GameConf.playerCameraOffset); x++) {
-			generateFloor(x, GameConf.gridH);
+		for (int x = (int)-GameConf.PLAYER_CAMERA_OFFSET; x <= (int)(2 * GameConf.PLAYER_CAMERA_OFFSET); x++) {
+			generateFloor(x, GameConf.GRID_H);
 		}
-		this.generatedUntil = (int)(2 * GameConf.playerCameraOffset);
+		this.generatedUntil = (int)(2 * GameConf.PLAYER_CAMERA_OFFSET);
 	}
 	
 	protected int generatedUntil;
@@ -46,13 +46,13 @@ public abstract class LevelCreator {
 		
 		int randColG = r.nextInt(100) + 100;
 		int randColRB = r.nextInt(40) + 30;
-		i = new InanimateFloor(new Vec2D(x, GameConf.gridH - 1), new Vec2D(1, 1), new RGBColor(randColRB, randColG, randColRB));
+		i = new InanimateFloor(new Vec2D(x, GameConf.GRID_H - 1), new Vec2D(1, 1), new RGBColor(randColRB, randColG, randColRB));
 		generateGameElement(i);
 	}
 
 	public void generateEvenFloor(int fromX, int toX) {
 		for (int x = fromX; x <= toX; x++) {
-			generateFloor(x, GameConf.gridH);
+			generateFloor(x, GameConf.GRID_H);
 		}
 
 		// Update coordinate until where we generated

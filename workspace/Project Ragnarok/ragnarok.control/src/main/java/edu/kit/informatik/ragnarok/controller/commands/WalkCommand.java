@@ -35,11 +35,11 @@ public class WalkCommand extends InputCommand {
 		}
 
 		// Update x velocity with corresponding direction and acceleration
-		Vec2D newVel = this.entity.getVel().addX(this.dir.getVector().getX() * GameConf.playerWalkAccel);
+		Vec2D newVel = this.entity.getVel().addX(this.dir.getVector().getX() * GameConf.PLAYER_WALK_ACCEL);
 
 		// check if max speed achieved
-		if (Math.abs(newVel.getX()) > GameConf.playerWalkMaxSpeed) {
-			newVel = newVel.setX(Math.signum(newVel.getX()) * GameConf.playerWalkMaxSpeed);
+		if (Math.abs(newVel.getX()) > GameConf.PLAYER_WALK_MAX_SPEED) {
+			newVel = newVel.setX(Math.signum(newVel.getX()) * GameConf.PLAYER_WALK_MAX_SPEED);
 		}
 
 		// Save new velocity

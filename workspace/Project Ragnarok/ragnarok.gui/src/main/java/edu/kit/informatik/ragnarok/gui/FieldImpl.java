@@ -36,7 +36,7 @@ public class FieldImpl implements Field {
 	}
 
 	private int units2pixel(float units) {
-		return (int) (units * GameConf.pxPerUnit);
+		return (int) (units * GameConf.PX_PER_UNIT);
 	}
 
 	private int currentOffset() {
@@ -45,7 +45,7 @@ public class FieldImpl implements Field {
 
 	public void setBackground(RGB col) {
 		this.gc.setBackground(new Color(Display.getCurrent(), col));
-		this.gc.fillRectangle(0, 0, this.units2pixel(GameConf.gridW), this.units2pixel(GameConf.gridH));
+		this.gc.fillRectangle(0, 0, this.units2pixel(GameConf.GRID_W), this.units2pixel(GameConf.GRID_H));
 	}
 
 	public void drawCircle(Vec2D pos, Vec2D size, RGB col) {

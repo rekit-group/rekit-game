@@ -16,7 +16,7 @@ public class JumpState extends EntityState {
 	
 	public JumpState(Entity entity) {
 		super(entity);
-		timeLeft = GameConf.playerJumpTime;
+		timeLeft = GameConf.PLAYER_JUMP_TIME;
 	}
 	
 	@Override
@@ -34,7 +34,7 @@ public class JumpState extends EntityState {
 		timeLeft -= deltaTime;
 		
 		if (timeLeft > 0) {
-			this.entity.setVel(new Vec2D(this.entity.getVel().getX(), GameConf.playerJumpBoost));
+			this.entity.setVel(new Vec2D(this.entity.getVel().getX(), GameConf.PLAYER_JUMP_BOOST));
 		}
 	}
 }

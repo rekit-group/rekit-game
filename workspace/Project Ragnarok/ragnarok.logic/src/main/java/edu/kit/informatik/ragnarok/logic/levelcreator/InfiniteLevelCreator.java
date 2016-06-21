@@ -317,7 +317,7 @@ public class InfiniteLevelCreator extends LevelCreator {
 			
 			// Calculate where to generate structure
 			int ix = generatedUntil + 1;
-			int iy = GameConf.gridH;
+			int iy = GameConf.GRID_H;
 			
 			// build structure
 			struc.buildStructure(this, ix, iy);

@@ -1,18 +1,17 @@
 package edu.kit.informatik.ragnarok.util;
 
-import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
 public class TextOptions {
-	
+
 	private Vec2D alignment;
-	
+
 	private int height;
-	
+
 	private RGBColor color;
-	
+
 	private String font;
-	
+
 	private int fontOptions;
 
 	public Vec2D getAlignment() {
@@ -24,11 +23,11 @@ public class TextOptions {
 	}
 
 	public int getHeight() {
-		return height;
+		return this.height;
 	}
 
 	public RGBColor getColor() {
-		return color;
+		return this.color;
 	}
 
 	public void setColor(RGBColor color) {
@@ -40,7 +39,7 @@ public class TextOptions {
 	}
 
 	public String getFont() {
-		return font;
+		return this.font;
 	}
 
 	public void setFont(String font) {
@@ -48,7 +47,7 @@ public class TextOptions {
 	}
 
 	public int getFontOptions() {
-		return fontOptions;
+		return this.fontOptions;
 	}
 
 	public void setFontOptions(int fontOptions) {
