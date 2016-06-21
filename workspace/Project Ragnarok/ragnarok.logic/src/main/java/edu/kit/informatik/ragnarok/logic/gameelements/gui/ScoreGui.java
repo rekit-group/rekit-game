@@ -18,7 +18,7 @@ public class ScoreGui extends GuiElement{
 		op = new TextOptions(new Vec2D(-1, 0), GameConf.GAME_TEXT_SIZE, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, 1);
 		points = new Text(model, op);
 		highscore = new Text(model, op);
-		points.setPos(new Vec2D(CalcUtil.units2pixel(GameConf.GRID_W) - 10, 1));
+		points.setPos(new Vec2D(CalcUtil.units2pixel(GameConf.GRID_W) - 10, 10));
 		highscore.setPos(new Vec2D(CalcUtil.units2pixel(GameConf.GRID_W) - 10, 50));
 	}
 	
@@ -26,9 +26,6 @@ public class ScoreGui extends GuiElement{
 	public void logicLoop(float deltaTime) {
 		points.setText(this.getGameModel().getScore() + " Points");
 		highscore.setText(this.getGameModel().getHighScore() + " Highscore");
-		
-		double sin = Math.sin((System.currentTimeMillis() / 200.0));
-		op.setHeight((int)(GameConf.GAME_TEXT_SIZE + 5 * sin));
 	}
 	
 	@Override

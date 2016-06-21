@@ -7,6 +7,8 @@ import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
 public abstract class GameElement implements Collidable, Comparable<GameElement> {
 
+	private boolean visible = true;
+
 	public boolean deleteMe = false;
 
 	private Vec2D size = new Vec2D(1, 1);
@@ -117,7 +119,7 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 		return this.getZ() - other.getZ();
 	}
 	
-	public boolean preventRendering() {
-		return false;
+	public boolean isVisible() {
+		return this.visible;
 	}
 }

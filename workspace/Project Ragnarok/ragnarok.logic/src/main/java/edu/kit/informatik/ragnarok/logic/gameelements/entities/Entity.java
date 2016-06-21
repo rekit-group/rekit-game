@@ -180,10 +180,10 @@ public abstract class Entity extends GameElement {
 		return 1;
 	}
 	
-	public boolean preventRendering() {
+	public boolean isVisible() {
 		if (this.invincibility != null && !this.invincibility.timeUp()) {
 			return (int)(this.invincibility.getProgress() * 20) % 2 == 0;
 		}
-		return super.preventRendering();
+		return super.isVisible();
 	}
 }

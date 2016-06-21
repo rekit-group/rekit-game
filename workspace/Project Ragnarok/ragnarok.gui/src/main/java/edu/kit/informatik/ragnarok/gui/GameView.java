@@ -159,7 +159,7 @@ class GameView implements View {
 			while (it1.hasNext()) {
 				// Render next element
 				GameElement e = it1.next();
-				if (!e.preventRendering()) {
+				if (e.isVisible()) {
 					e.render(this.field);
 				}
 			}

@@ -17,14 +17,13 @@ public class TimeDecorator extends GuiElement {
 	
 	@Override
 	public void logicLoop(float deltaTime) {
-		if (!timer.timeUp()){
-			timer.removeTime(deltaTime);
-			if (timer.timeUp()) {
-				this.setVisible(false);
-			}
-			
-			element.logicLoop(deltaTime);
+		timer.removeTime(deltaTime);
+		if (timer.timeUp()) {
+			this.setVisible(false);
+			this.getGameModel().removeGuiElement(this);
 		}
+		
+		element.logicLoop(deltaTime);
 	}
 
 	@Override

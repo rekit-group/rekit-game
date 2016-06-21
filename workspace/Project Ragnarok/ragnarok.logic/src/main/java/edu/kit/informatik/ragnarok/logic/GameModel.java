@@ -99,10 +99,11 @@ public class GameModel implements CameraTarget, Model {
 		
 		// Create Gui
 		this.scoreGui = new ScoreGui(this);
+		this.scoreGui.setPos(new Vec2D(10, 10));
 		this.lifeGui = new LifeGui(this);
 		this.lifeGui.setPos(new Vec2D(10));
-		this.guiElements.add(this.scoreGui);
-		this.guiElements.add(this.lifeGui);
+		this.addGuiElement(this.scoreGui);
+		this.addGuiElement(this.lifeGui);
 
 		// Init EnemyFactory with model
 		EntityFactory.init(this);
@@ -428,6 +429,20 @@ public class GameModel implements CameraTarget, Model {
 	public float getCameraOffset() {
 		return this.cameraTarget.getCameraOffset();
 	}
+	
+	/**
+	 * Adds a GuiElement to the GameModel. 
+	 * @param e the GuiElement to add
+	 */
+	public void addGuiElement(GuiElement e)
+	{
+		this.guiElements.add(e);
+	}
+	
+	public void removeGuiElement(GuiElement e)
+	{
+		this.guiElements.remove(e);
+	}
 
 	public void addBossText(String text) {
 		this.guiElements.remove(this.bossTextGui);
@@ -439,6 +454,6 @@ public class GameModel implements CameraTarget, Model {
 		
 		this.bossTextGui = new TimeDecorator(this, bossText, new TimeDependency(3));
 
-		this.guiElements.add(this.bossTextGui);
+		this.addGuiElement(this.bossTextGui);
 	}
 }
