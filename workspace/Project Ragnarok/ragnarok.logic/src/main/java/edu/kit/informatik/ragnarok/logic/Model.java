@@ -3,8 +3,8 @@ package edu.kit.informatik.ragnarok.logic;
 import java.util.Iterator;
 
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
-import edu.kit.informatik.ragnarok.logic.gameelements.GuiElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
+import edu.kit.informatik.ragnarok.logic.gameelements.gui.GuiElement;
 
 /**
  * This Interface defines the Model for the MVC

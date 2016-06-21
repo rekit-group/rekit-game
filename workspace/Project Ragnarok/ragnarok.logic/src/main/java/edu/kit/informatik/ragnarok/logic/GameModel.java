@@ -12,11 +12,11 @@ import java.util.PriorityQueue;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
-import edu.kit.informatik.ragnarok.logic.gameelements.GuiElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.CameraTarget;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.EntityFactory;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.ScoreGui;
+import edu.kit.informatik.ragnarok.logic.gameelements.gui.GuiElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.LifeGui;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.Text;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.TimeDecorator;

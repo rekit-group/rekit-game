@@ -1,6 +1,7 @@
-package edu.kit.informatik.ragnarok.logic.gameelements;
+package edu.kit.informatik.ragnarok.logic.gameelements.gui;
 
 import edu.kit.informatik.ragnarok.logic.GameModel;
+import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
 public abstract class GuiElement implements Comparable<GuiElement> {

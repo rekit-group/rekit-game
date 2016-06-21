@@ -3,7 +3,6 @@ package edu.kit.informatik.ragnarok.logic.gameelements.gui;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.GameModel;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
-import edu.kit.informatik.ragnarok.logic.gameelements.GuiElement;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 import edu.kit.informatik.ragnarok.util.CalcUtil;
 import edu.kit.informatik.ragnarok.util.TextOptions;

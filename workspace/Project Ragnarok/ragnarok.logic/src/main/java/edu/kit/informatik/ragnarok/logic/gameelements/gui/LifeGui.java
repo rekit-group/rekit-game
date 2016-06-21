@@ -2,7 +2,6 @@ package edu.kit.informatik.ragnarok.logic.gameelements.gui;
 
 import edu.kit.informatik.ragnarok.logic.GameModel;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
-import edu.kit.informatik.ragnarok.logic.gameelements.GuiElement;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
 public class LifeGui extends GuiElement {
