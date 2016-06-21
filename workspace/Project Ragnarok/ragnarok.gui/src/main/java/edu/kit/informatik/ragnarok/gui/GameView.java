@@ -9,7 +9,6 @@ import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -19,6 +18,8 @@ import edu.kit.informatik.ragnarok.logic.GameModel;
 import edu.kit.informatik.ragnarok.logic.Model;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.GuiElement;
+import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.util.CalcUtil;
 import edu.kit.informatik.ragnarok.util.InputHelper;
 import edu.kit.informatik.ragnarok.util.SwtUtils;
 import edu.kit.informatik.ragnarok.util.ThreadUtils;
@@ -163,7 +164,7 @@ class GameView implements View {
 				}
 			}
 			
-			// Iterate all GuiElements
+			// Iterate all GuiElements (life, score, boss)
 			Iterator<GuiElement> it2 = this.model.getGuiElementIterator();
 			while (it2.hasNext()) {
 				// Render next element
@@ -173,9 +174,6 @@ class GameView implements View {
 				}
 			}
 		}
-
-		// Draw UI (lifes, score)
-		this.field.refreshUI(this.getModel().getPlayer().getLifes());
 
 		// draw temporary image on actual cavans
 		this.gc.drawImage(image, 0, 0);
@@ -187,7 +185,7 @@ class GameView implements View {
 		// draw FPS
 		float fps = this.getFPS();
 		this.field.setGC(this.gc);
-		this.field.drawFPS(fps);
+		this.field.drawText(new Vec2D(CalcUtil.units2pixel(GameConf.gridW) - 10, CalcUtil.units2pixel(GameConf.gridH) - 60), "FPS: " + fps, GameConf.defaultText);
 
 	}
 

@@ -20,6 +20,8 @@ public interface Field {
 	
 	//void drawGameText(Vec2D pos, String text);
 	
+	void drawGuiImage(Vec2D pos, Vec2D size, String string);
+	
 	void drawText(Vec2D pos, String text, TextOptions options);
 	
 }

@@ -101,6 +101,14 @@ public class FieldImpl implements Field {
 	}
 	
 	@Override
+	public void drawGuiImage(Vec2D pos, Vec2D size, String imagePath) {
+		Image image = ImageLoader.get(imagePath);
+		this.gc.drawImage(image, (int) (pos.getX() - size.getX() / 2f), // dstX
+				(int) (pos.getY() - size.getY() / 2f) // dstY
+		);
+	}
+	
+	@Override
 	public void drawText(Vec2D pos, String text, TextOptions options) {
 		// Set color to red and set font
 		RGB rgb = new RGB(options.getColor().red, options.getColor().green, options.getColor().blue);
@@ -115,19 +123,6 @@ public class FieldImpl implements Field {
 		
 		this.gc.drawText(text, (int) (pos.getX() + options.getAlignment().getX() * textBounds.x), (int) (pos.getY() + options.getAlignment().getY() * textBounds.y), true);
 		font.dispose();
-	}
-
-	public void refreshUI(int lifes) {
-
-		// Iterate lifes
-		Image image = ImageLoader.get("mrRekt_glasses_right.png");
-		for (int i = 0; i < lifes; i++) {
-			this.gc.drawImage(image, 10 + 50 * i, 10);
-		}
-	}
-
-	public void drawFPS(float fps) {
-		drawText(new Vec2D(this.units2pixel(GameConf.gridW) - 10, this.units2pixel(GameConf.gridH) - 60), "FPS: " + fps, GameConf.defaultText);
 	}
 
 	public void setGC(GC gc) {

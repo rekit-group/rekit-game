@@ -16,7 +16,8 @@ import edu.kit.informatik.ragnarok.logic.gameelements.GuiElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.CameraTarget;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.EntityFactory;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
-import edu.kit.informatik.ragnarok.logic.gameelements.gui.HighscorePanel;
+import edu.kit.informatik.ragnarok.logic.gameelements.gui.ScoreGui;
+import edu.kit.informatik.ragnarok.logic.gameelements.gui.LifeGui;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.Text;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.TimeDecorator;
 import edu.kit.informatik.ragnarok.logic.levelcreator.InfiniteLevelCreator;
@@ -67,7 +68,9 @@ public class GameModel implements CameraTarget, Model {
 
 	private CameraTarget cameraTarget;
 
-	private HighscorePanel highScorePanel;
+	private ScoreGui scoreGui;
+	
+	private LifeGui lifeGui;
 
 	private int highScore = -1;
 
@@ -93,10 +96,12 @@ public class GameModel implements CameraTarget, Model {
 		this.cameraTarget = this.player;
 		this.addGameElement(this.player);
 		
-		// Create Highscore Panel
-		this.highScorePanel = new HighscorePanel(this);
-		//TODO do we need add and delete queue for gui??
-		this.guiElements.add(this.highScorePanel);
+		// Create Gui
+		this.scoreGui = new ScoreGui(this);
+		this.lifeGui = new LifeGui(this);
+		this.lifeGui.setPos(new Vec2D(10));
+		this.guiElements.add(this.scoreGui);
+		this.guiElements.add(this.lifeGui);
 
 		// Init EnemyFactory with model
 		EntityFactory.init(this);
@@ -329,7 +334,7 @@ public class GameModel implements CameraTarget, Model {
 			}
 		}
 		
-		// after all GameRelated loigc update GuiElements
+		// after all game related logic update GuiElements
 		synchronized (GameModel.SYNC)
 		{
 			Iterator<GuiElement> it = this.getGuiElementIterator();

@@ -7,7 +7,7 @@ public abstract class GuiElement implements Comparable<GuiElement> {
 
 	private boolean visible = true;
 	
-	private Vec2D pos;
+	private Vec2D pos = new Vec2D(0);
 	
 	/**
 	 * <pre>
