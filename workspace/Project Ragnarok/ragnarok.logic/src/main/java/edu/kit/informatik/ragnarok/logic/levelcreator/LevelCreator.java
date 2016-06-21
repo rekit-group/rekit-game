@@ -65,7 +65,7 @@ public abstract class LevelCreator {
 		}
 
 		// Update coordinate until where we generated
-		this.generatedUntil += toX - fromX;
+		this.generatedUntil += toX - fromX + 1;
 	}
 	
 	protected void generateBox(int x, int y) {
