@@ -1,7 +1,6 @@
 package edu.kit.informatik.ragnarok.logic.levelcreator;
 
 import java.util.HashMap;
-import java.util.Random;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.GameModel;
@@ -11,8 +10,8 @@ import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
 public class InfiniteLevelCreator extends LevelCreator {
 	
-	public InfiniteLevelCreator(GameModel model) {
-		super(model);
+	public InfiniteLevelCreator(GameModel model, int randomSeed) {
+		super(model, randomSeed);
 		
 		this.bossRooms = new HashMap<Integer, BossRoom>();
 		
@@ -299,18 +298,16 @@ public class InfiniteLevelCreator extends LevelCreator {
 	private HashMap<Integer, BossRoom> bossRooms;
 	
 	public void generate(int max) {
-		
 
 		while (this.generatedUntil < max) {
 			// Save current x to where level was generated yet
 			int lastGeneratedUntil = this.generatedUntil;
 			
 			// Randomly select structure
-			Random r = new Random();
-			int randId = r.nextInt(structures.length);
+			int randId = rand.nextInt(structures.length);
 			
 			// Randomly determine gap between this structure and the next
-			int gap = r.nextInt(2) + 1;
+			int gap = rand.nextInt(2) + 1;
 			
 			// Get structure and all required info
 			LevelStructure struc = new LevelStructure(this.structures[randId]);

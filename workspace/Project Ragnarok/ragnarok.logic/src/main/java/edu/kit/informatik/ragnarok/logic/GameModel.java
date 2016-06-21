@@ -9,15 +9,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.PriorityQueue;
+import java.util.Random;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.CameraTarget;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.EntityFactory;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
-import edu.kit.informatik.ragnarok.logic.gameelements.gui.ScoreGui;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.GuiElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.LifeGui;
+import edu.kit.informatik.ragnarok.logic.gameelements.gui.ScoreGui;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.Text;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.TimeDecorator;
 import edu.kit.informatik.ragnarok.logic.levelcreator.InfiniteLevelCreator;
@@ -106,8 +107,8 @@ public class GameModel implements CameraTarget, Model {
 		// Init EnemyFactory with model
 		EntityFactory.init(this);
 
-		// Create LevelCreator
-		this.levelCreator = new InfiniteLevelCreator(this);
+		// Create LevelCreator with random seed
+		this.levelCreator = new InfiniteLevelCreator(this, new Random().nextInt());
 		this.levelCreator.generate(GameConf.GRID_W);
 
 		// Initialize all other attributes

@@ -15,7 +15,11 @@ public abstract class LevelCreator {
 	
 	private GameModel model;
 	
-	public LevelCreator(GameModel model) {
+	protected Random rand;
+	
+	protected Random colorRand;
+	
+	public LevelCreator(GameModel model, int randomSeed) {
 		// save reference to GameMode to be able to add GameElements
 		this.model = model;
 		
@@ -24,13 +28,18 @@ public abstract class LevelCreator {
 			generateFloor(x, GameConf.GRID_H);
 		}
 		this.generatedUntil = (int)(2 * GameConf.PLAYER_CAMERA_OFFSET);
+		
+		rand = new Random(randomSeed);
+		colorRand = new Random();
 	}
 	
 	protected int generatedUntil;
 	
-	public void generate(int max) {
-		// must be implemented
-	}
+	/**
+	 * Generates the level up to a maximum unit
+	 * @param max the max unit to generate to
+	 */
+	public abstract void generate(int max);
 	
 	protected void generateGameElement(GameElement element) {
 		this.model.addGameElement(element);
@@ -42,10 +51,9 @@ public abstract class LevelCreator {
 	
 	protected void generateFloor(int x, int y) {
 		Inanimate i;
-		Random r = new Random();
 		
-		int randColG = r.nextInt(100) + 100;
-		int randColRB = r.nextInt(40) + 30;
+		int randColG = colorRand.nextInt(100) + 100;
+		int randColRB = colorRand.nextInt(40) + 30;
 		i = new InanimateFloor(new Vec2D(x, GameConf.GRID_H - 1), new Vec2D(1, 1), new RGBColor(randColRB, randColG, randColRB));
 		generateGameElement(i);
 	}
@@ -61,8 +69,7 @@ public abstract class LevelCreator {
 	
 	protected void generateBox(int x, int y) {
 		Inanimate i;
-		Random r = new Random();
-		int randCol = r.nextInt(60) + 50;
+		int randCol = colorRand.nextInt(60) + 50;
 		i = new InanimateBox(new Vec2D(x, y), new Vec2D(1, 1), new RGBColor(randCol, randCol, randCol));
 		generateGameElement(i);
 	}
