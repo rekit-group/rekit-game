@@ -19,48 +19,48 @@ public interface Model {
 	 * @return the model
 	 */
 	static Model getModel() {
-		return new GameModel();
+		return new GameModelImpl();
 	}
 
 	/**
 	 * Get an Iterator over all {@link GameElement GameElements} in ascending
 	 * order concerning the {@link GameElement GameElements} zIndex.
-	 * 
+	 *
 	 * @return the iterator
 	 */
 	Iterator<GameElement> getOrderedGameElementIterator();
 
 	/**
 	 * Get an Iterator over all {@link GuiElement GuiElements}
-	 * 
+	 *
 	 * @return the iterator
 	 */
 	Iterator<GuiElement> getGuiElementIterator();
 
 	/**
 	 * Get the Player
-	 * 
+	 *
 	 * @return the player
 	 */
 	Entity getPlayer();
 
 	/**
 	 * Get the current score of the Player
-	 * 
+	 *
 	 * @return the score
 	 */
 	int getScore();
 
 	/**
 	 * Get the current highscore
-	 * 
+	 *
 	 * @return the highscore
 	 */
 	int getHighScore();
 
 	/**
 	 * Get the camera offset
-	 * 
+	 *
 	 * @return the camera offset
 	 */
 	float getCameraOffset();
@@ -69,5 +69,7 @@ public interface Model {
 	 * Start the model
 	 */
 	void start();
+
+	Object synchronize();
 
 }
