@@ -30,7 +30,8 @@ public class FieldImpl implements Field {
 
 	private GC gc;
 	private GameView view;
-
+	private int cameraOffset = 0;
+	
 	public FieldImpl(GameView view) {
 		this.view = view;
 	}
@@ -39,8 +40,11 @@ public class FieldImpl implements Field {
 		return (int) (units * GameConf.PX_PER_UNIT);
 	}
 
+	public void setCurrentOffset(float cameraOffset) {
+		this.cameraOffset = -this.units2pixel(cameraOffset);
+	}
 	private int currentOffset() {
-		return -this.units2pixel(this.view.getModel().getCameraOffset());
+		return this.cameraOffset;
 	}
 
 	public void setBackground(RGB col) {
@@ -57,11 +61,21 @@ public class FieldImpl implements Field {
 	}
 
 	public void drawRectangle(Vec2D pos, Vec2D size, RGB col) {
+		drawRectangle(pos, size, new RGBA(col.red, col.green, col.blue, 255));
+	}
+	
+	public void drawRectangle(Vec2D pos, Vec2D size, RGBA col) {
+		// set color
+		this.gc.setAlpha(col.alpha);
 		Color color = new Color(Display.getCurrent(), col);
+		
 		this.gc.setBackground(color);
 		color.dispose();
 		this.gc.fillRectangle(this.currentOffset() + this.units2pixel(pos.getX() - size.getX() / 2f),
 				this.units2pixel(pos.getY() - size.getY() / 2f), this.units2pixel(size.getX()), this.units2pixel(size.getY()));
+		
+		// reset alpha
+		this.gc.setAlpha(255);
 	}
 
 	public void drawPolygon(Polygon polygon, RGB col) {
@@ -133,6 +147,11 @@ public class FieldImpl implements Field {
 	public void drawRectangle(Vec2D pos, Vec2D size, RGBColor color) {
 		this.drawRectangle(pos, size, SwtUtils.calcRGB(color));
 	}
+	
+	@Override
+	public void drawRectangle(Vec2D pos, Vec2D size, RGBAColor rgbaColor) {
+		this.drawRectangle(pos, size, SwtUtils.calcRGBA(rgbaColor));
+	}
 
 	@Override
 	public void drawCircle(Vec2D pos, Vec2D size, RGBColor color) {
@@ -148,4 +167,5 @@ public class FieldImpl implements Field {
 	public void drawPolygon(Polygon polygon, RGBColor color) {
 		this.drawPolygon(polygon, SwtUtils.calcRGB(color));
 	}
+
 }

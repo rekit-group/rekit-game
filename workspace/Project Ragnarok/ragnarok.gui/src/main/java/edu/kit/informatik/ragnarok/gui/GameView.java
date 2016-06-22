@@ -14,6 +14,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
+import edu.kit.informatik.ragnarok.gui.parallax.ParallaxContainer;
+import edu.kit.informatik.ragnarok.gui.parallax.ParallaxLayer;
 import edu.kit.informatik.ragnarok.logic.GameModel;
 import edu.kit.informatik.ragnarok.logic.Model;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
@@ -60,6 +62,8 @@ class GameView implements View {
 	private FieldImpl field;
 
 	private GC gc;
+	
+	private ParallaxContainer parallax;
 
 	/**
 	 * Constructor that creates a new window with a canvas and prepares all
@@ -88,6 +92,13 @@ class GameView implements View {
 		// Create Graphic context
 		this.gc = new GC(this.canvas);
 		this.field = new FieldImpl(this);
+		
+		// Create parallax background
+		this.parallax = new ParallaxContainer();
+		
+		parallax.addLayer(new ParallaxLayer("bg_layer_0.png", 1.1f));
+		parallax.addLayer(new ParallaxLayer("bg_layer_1.png", 1.4f));
+		parallax.addLayer(new ParallaxLayer("bg_layer_2.png", 1.9f));
 	}
 
 	/**
@@ -149,9 +160,13 @@ class GameView implements View {
 		Image image = new Image(this.shell.getDisplay(), this.canvas.getBounds());
 		GC tempGC = new GC(image);
 		this.field.setGC(tempGC);
-
+		
+		// set current camera position
+		float cameraOffset = this.model.getCameraOffset();
+		this.field.setCurrentOffset(cameraOffset);
+		
 		// Draw background
-		this.field.setBackground(SwtUtils.calcRGB(GameConf.GAME_BACKGROUD_COLOR));
+		parallax.render(this.field, cameraOffset);
 		
 		// Get a z-index-ordered iterator
 		Iterator<GameElement> it1 = this.model.getOrderedGameElementIterator();
