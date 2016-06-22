@@ -5,10 +5,17 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import edu.kit.informatik.ragnarok.util.RGBColor;
+import edu.kit.informatik.ragnarok.visitor.Visitable;
 
+/**
+ * This {@link Parser} is used for parsing {@link RGBColor RGBColors}
+ * 
+ * @author Dominik Fuchß
+ *
+ */
 public class RGBColorParser implements Parser {
 	@Override
-	public boolean parse(Object obj, Field field, String definition) throws Exception {
+	public boolean parse(Visitable obj, Field field, String definition) throws Exception {
 		if (!Parser.super.parse(obj, field, definition)) {
 			return false;
 		}

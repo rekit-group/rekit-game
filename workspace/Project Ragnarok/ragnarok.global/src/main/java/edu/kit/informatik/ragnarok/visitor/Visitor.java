@@ -14,16 +14,39 @@ import edu.kit.informatik.ragnarok.visitor.parser.Parser;
 import edu.kit.informatik.ragnarok.visitor.parser.RGBColorParser;
 import edu.kit.informatik.ragnarok.visitor.parser.StringParser;
 
+/**
+ * This class supports the setting of Values and/or Attributes to Classes and
+ * Objects which implements the {@link Visitable} interface
+ *
+ * @author Dominik Fuchß
+ * @see VisitInfo
+ * @see AfterVisit
+ *
+ */
 public class Visitor {
-
+	/**
+	 * Set values / attributes of classes (only static)
+	 *
+	 * @param clazz
+	 *            the class
+	 */
 	public static final void visitStatic(Class<? extends Visitable> clazz) {
 		new Visitor().visitMeStatic(clazz);
 	}
 
+	/**
+	 * Set values / attributes of objects (only non-static)
+	 *
+	 * @param v
+	 *            the object
+	 */
 	public static final void visit(Visitable v) {
 		new Visitor().visitMe(v);
 	}
 
+	/**
+	 * A map of parsers for the visit
+	 */
 	private final Map<Class<?>, Parser> parsers = new HashMap<Class<?>, Parser>() {
 		/**
 		 * SUID
