@@ -33,14 +33,6 @@ public class InfiniteLevelCreator extends LevelCreator {
 
 	private final int[][][] structures = new int[][][]{
 			new int[][] {
-					{2,2,2,2},
-					{0,0,0,0},
-					{0,0,0,0},
-					{0,0,0,0},
-					{1,0,0,1}
-			},
-			/*
-			new int[][] {
 					{1},
 					{5},
 					{1},
@@ -299,7 +291,7 @@ public class InfiniteLevelCreator extends LevelCreator {
 					{0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
 					{0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
 					{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			}*/
+			}
 	};
 	
 	
