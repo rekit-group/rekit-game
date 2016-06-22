@@ -1,7 +1,5 @@
 package edu.kit.informatik.ragnarok.config;
 
-import java.util.ResourceBundle;
-
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 import edu.kit.informatik.ragnarok.util.TextOptions;
@@ -19,9 +17,9 @@ import edu.kit.informatik.ragnarok.visitor.Visitable;
 @VisitInfo(res = "conf/game", visit = true)
 public class GameConf implements Visitable {
 	/**
-	 * The Bundle which contains all configuration stuff
+	 * The Name of the Game
 	 */
-	public static BundleHelper BUNDLE = new BundleHelper(ResourceBundle.getBundle("conf/game"));
+	public static String NAME;
 
 	/**
 	 * Size of one in-game unit in pixels. So a Vec2D(1, 0) will be projected to

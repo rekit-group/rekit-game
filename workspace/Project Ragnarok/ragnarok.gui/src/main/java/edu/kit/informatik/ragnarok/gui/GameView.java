@@ -72,7 +72,7 @@ class GameView implements View {
 		// Create window
 
 		this.shell = new Shell(Display.getDefault(), SWT.DIALOG_TRIM | SWT.MIN | SWT.PRIMARY_MODAL | SWT.NO_BACKGROUND);
-		this.shell.setText(GameConf.BUNDLE.getString("name"));
+		this.shell.setText(GameConf.NAME);
 
 		// Create and position a canvas
 		this.canvas = new Canvas(this.shell, SWT.NONE);
@@ -154,7 +154,7 @@ class GameView implements View {
 		this.field.setCurrentOffset(cameraOffset);
 
 		// Draw background
-		model.getParallax().render(this.field);
+		this.model.getParallax().render(this.field);
 
 		// Get a z-index-ordered iterator
 		Iterator<GameElement> it1 = this.model.getOrderedGameElementIterator();
@@ -189,8 +189,8 @@ class GameView implements View {
 		// draw FPS
 		float fps = this.getFPS();
 		this.field.setGC(this.gc);
-		this.field.drawText(new Vec2D(CalcUtil.units2pixel(GameConf.GRID_W) - 10, CalcUtil.units2pixel(GameConf.GRID_H) - 60), "FPS: " + fps,
-				GameConf.HINT_TEXT);
+		this.field.drawText(new Vec2D(CalcUtil.units2pixel(GameConf.GRID_W) - 10, CalcUtil.units2pixel(GameConf.GRID_H) - 60),
+				"FPS: " + fps, GameConf.HINT_TEXT);
 
 	}
 
