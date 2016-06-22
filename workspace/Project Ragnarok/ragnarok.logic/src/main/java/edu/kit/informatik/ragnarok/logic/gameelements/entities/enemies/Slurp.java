@@ -82,12 +82,12 @@ public class Slurp extends Entity {
 			SlurpDurp poppedOf = this.slurpDurps.remove(0);
 
 			// add this SlurpDurp as regular Entity to GameModel
-			this.getGameModel().addGameElement(poppedOf);
+			this.getScene().addGameElement(poppedOf);
 		}
 
 		// If every SlurpDurp has popped off
 		if (this.slurpDurps.size() == 0) {
-			this.getGameModel().removeGameElement(this);
+			this.getScene().removeGameElement(this);
 		}
 
 		this.hasWallContact = false;

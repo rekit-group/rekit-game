@@ -1,7 +1,7 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.gui;
 
-import edu.kit.informatik.ragnarok.logic.GameModel;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
+import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
 public class LifeGui extends GuiElement {
@@ -10,14 +10,14 @@ public class LifeGui extends GuiElement {
 	private Vec2D imageSize = new Vec2D(10);
 	private int playerLifes;
 
-	public LifeGui(GameModel model) {
-		super(model);
+	public LifeGui(Scene scene) {
+		super(scene);
 		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
 	public void logicLoop(float deltaTime) {
-		playerLifes = this.getGameModel().getPlayer().getLifes();
+		playerLifes = this.getScene().getPlayer().getLifes();
 	}
 
 	@Override

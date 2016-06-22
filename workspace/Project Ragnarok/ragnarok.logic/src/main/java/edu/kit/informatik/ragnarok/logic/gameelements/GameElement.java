@@ -1,6 +1,6 @@
 package edu.kit.informatik.ragnarok.logic.gameelements;
 
-import edu.kit.informatik.ragnarok.logic.GameModel;
+import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
@@ -91,14 +91,14 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 	 *           gameElement        &lt;       gameModel
 	 * </pre>
 	 */
-	private GameModel gameModel;
+	private Scene scene;
 
-	public void setGameModel(GameModel value) {
-		this.gameModel = value;
+	public void setScene(Scene value) {
+		this.scene = value;
 	}
 
-	public GameModel getGameModel() {
-		return this.gameModel;
+	public Scene getScene() {
+		return this.scene;
 	}
 
 	public Frame getCollisionFrame() {

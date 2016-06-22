@@ -64,7 +64,7 @@ public class Warper extends Entity {
 		// animate particles
 		Warper.warpParticles.amountMin = -5;
 		Warper.warpParticles.amountMax = 2;
-		Warper.warpParticles.spawn(this.getGameModel(), this.getPos());
+		Warper.warpParticles.spawn(this.getScene(), this.getPos());
 
 		// if time is up
 		if (this.warpAction.timeUp()) {
@@ -72,12 +72,12 @@ public class Warper extends Entity {
 			this.warpAction.reset();
 
 			// get target (player)
-			Vec2D target = this.getGameModel().getPlayer().getPos();
+			Vec2D target = this.getScene().getPlayer().getPos();
 
 			// animate particles
 			Warper.warpParticles.amountMin = 5;
 			Warper.warpParticles.amountMax = 8;
-			Warper.warpParticles.spawn(this.getGameModel(), this.getPos());
+			Warper.warpParticles.spawn(this.getScene(), this.getPos());
 
 			// determine if x or y is greater in distance
 			Vec2D dif = this.getPos().add(target.multiply(-1));

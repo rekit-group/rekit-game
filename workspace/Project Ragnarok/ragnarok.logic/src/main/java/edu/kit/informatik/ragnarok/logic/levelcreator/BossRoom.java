@@ -1,18 +1,23 @@
 package edu.kit.informatik.ragnarok.logic.levelcreator;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
-import edu.kit.informatik.ragnarok.logic.GameModel;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.FixedCameraTarget;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.bosses.Boss;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawner;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
+import edu.kit.informatik.ragnarok.logic.gameelements.gui.GuiElement;
+import edu.kit.informatik.ragnarok.logic.gameelements.gui.Text;
+import edu.kit.informatik.ragnarok.logic.gameelements.gui.TimeDecorator;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateDoor;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateTrigger;
+import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.ProgressDependency;
 import edu.kit.informatik.ragnarok.primitives.TimeDependency;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.util.CalcUtil;
+import edu.kit.informatik.ragnarok.util.TextOptions;
 
 public class BossRoom {
 
@@ -85,6 +90,15 @@ public class BossRoom {
 			}
 		};
 		this.levelCreator.generateGameElement(trigger);
+		
+		TextOptions op = new TextOptions(new Vec2D(-0.5f, -0.5f), 30, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, 1);
+		Text bossText = new Text(this.levelCreator.getScene(), op);
+		bossText.setText(this.boss.getName());
+		bossText.setPos(CalcUtil.units2vec(new Vec2D(GameConf.GRID_W / 2f, GameConf.GRID_H / 2f)));
+		
+		GuiElement bossTextGui = new TimeDecorator(this.levelCreator.getScene(), bossText, new TimeDependency(3));
+
+		this.levelCreator.getScene().addGuiElement(bossTextGui);
 	}
 
 	public void startBattle(GameElement trigger) {
@@ -92,8 +106,8 @@ public class BossRoom {
 		// destroy invisible InanimateTrigger
 		trigger.destroy();
 
-		final GameModel gameModel = this.levelCreator.getGameModel();
-		final Player player = gameModel.getPlayer();
+		final Scene scene = this.levelCreator.getScene();
+		final Player player = scene.getPlayer();
 
 		// calculate where to put camera
 		this.cameraTarget = this.x + 5 + GameConf.PLAYER_CAMERA_OFFSET + player.getSize().getX() / 2;
@@ -118,15 +132,24 @@ public class BossRoom {
 					}
 				}
 
-				gameModel.setCameraTarget(new FixedCameraTarget(BossRoom.this.cameraTarget - GameConf.PLAYER_CAMERA_OFFSET));
-
-				gameModel.addBossText(BossRoom.this.boss.getName());
+				scene.setCameraTarget(new FixedCameraTarget(BossRoom.this.cameraTarget - GameConf.PLAYER_CAMERA_OFFSET));
 
 				// Spawn Boss
 				BossRoom.this.levelCreator.generateGameElement((GameElement) BossRoom.this.boss);
 
 				// Close door
 				BossRoom.this.levelCreator.generateBox((int) BossRoom.this.triggerPos.getX(), (int) BossRoom.this.triggerPos.getY());
+
+				// Boss text
+
+				TextOptions op = new TextOptions(new Vec2D(-0.5f, -0.5f), 30, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, 1);
+				Text bossText = new Text(scene, op);
+				bossText.setText(BossRoom.this.boss.getName());
+				bossText.setPos(CalcUtil.units2vec(new Vec2D(GameConf.GRID_W / 2f, GameConf.GRID_H / 2f)));
+				
+				TimeDecorator bossTextGui = new TimeDecorator(scene, bossText, new TimeDependency(3));
+
+				scene.addGuiElement(bossTextGui);
 			}
 		};
 
@@ -134,8 +157,8 @@ public class BossRoom {
 	}
 
 	public void endBattle() {
-		final GameModel gameModel = this.levelCreator.getGameModel();
-		final Player player = gameModel.getPlayer();
+		final Scene scene = this.levelCreator.getScene();
+		final Player player = scene.getPlayer();
 
 		final TimeDependency timer = new TimeDependency(7f);
 
@@ -177,13 +200,13 @@ public class BossRoom {
 						if (Math.random() > 0.9) {
 							Vec2D randPos = ((GameElement) BossRoom.this.boss).getPos()
 									.add(new Vec2D((float) Math.random() * 2 - 1, (float) Math.random() * 2f - 1));
-							BossRoom.explosionParticles.spawn(gameModel, randPos);
+							BossRoom.explosionParticles.spawn(scene, randPos);
 						}
 					}
 					// phase two: show fireworks
 					else if (timer.getProgress() < 0.9) {
 						// remove boss of last phase
-						gameModel.removeGameElement((GameElement) BossRoom.this.boss);
+						scene.removeGameElement((GameElement) BossRoom.this.boss);
 
 						// show fireworks
 						if (Math.random() > 0.9) {
@@ -195,7 +218,7 @@ public class BossRoom {
 
 							Vec2D randPos = new Vec2D(midX + (float) Math.random() * deltaX * 2 - deltaX,
 									midY + (float) Math.random() * deltaY * 2 - deltaY);
-							BossRoom.fireworkParticles.spawn(gameModel, randPos);
+							BossRoom.fireworkParticles.spawn(scene, randPos);
 						}
 
 						// open door slowly
@@ -208,7 +231,7 @@ public class BossRoom {
 						BossRoom.this.door.destroy();
 
 						float prog = (timer.getProgress() - 0.9f) * 10f;
-						gameModel.setCameraTarget(new FixedCameraTarget(cameraMover.getNow(prog)));
+						scene.setCameraTarget(new FixedCameraTarget(cameraMover.getNow(prog)));
 					}
 
 					timer.removeTime(GameConf.LOGIC_DELTA / 1000f);
@@ -224,7 +247,7 @@ public class BossRoom {
 				
 				// set camera back to player
 				player.resetCameraOffset();
-				gameModel.setCameraTarget(player);
+				scene.setCameraTarget(player);
 
 			}
 		};

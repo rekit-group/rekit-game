@@ -44,20 +44,6 @@ public interface Model {
 	Entity getPlayer();
 
 	/**
-	 * Get the current score of the Player
-	 * 
-	 * @return the score
-	 */
-	int getScore();
-
-	/**
-	 * Get the current highscore
-	 * 
-	 * @return the highscore
-	 */
-	int getHighScore();
-
-	/**
 	 * Get the camera offset
 	 * 
 	 * @return the camera offset

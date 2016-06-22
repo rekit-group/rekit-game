@@ -79,7 +79,7 @@ public class Player extends Entity implements CameraTarget {
 	public void addDamage(int damage) {
 
 		// spawn particles
-		this.damageParticles.spawn(this.getGameModel(), this.getPos());
+		this.damageParticles.spawn(this.getScene(), this.getPos());
 
 		// Do usual life logic
 		super.addDamage(damage);

@@ -59,7 +59,7 @@ public class Rocket extends Entity {
 	@Override
 	public void render(Field f) {
 
-		Rocket.sparkParticles.spawn(this.getGameModel(), this.getPos().addX(this.getSize().getX() / 2));
+		Rocket.sparkParticles.spawn(this.getScene(), this.getPos().addX(this.getSize().getX() / 2));
 
 		// draw body
 		f.drawRectangle(this.getPos(), this.getSize().multiply(0.8f, 0.6f), Rocket.innerColor);
@@ -116,7 +116,7 @@ public class Rocket extends Entity {
 				// Kill the rocket itself
 				this.addDamage(1);
 
-				Rocket.explosionParticles.spawn(this.getGameModel(), this.getPos());
+				Rocket.explosionParticles.spawn(this.getScene(), this.getPos());
 			}
 		}
 	}

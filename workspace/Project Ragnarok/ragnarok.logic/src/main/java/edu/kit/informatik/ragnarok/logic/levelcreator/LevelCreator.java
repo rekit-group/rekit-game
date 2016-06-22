@@ -3,35 +3,38 @@ package edu.kit.informatik.ragnarok.logic.levelcreator;
 import java.util.Random;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
-import edu.kit.informatik.ragnarok.logic.GameModel;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateBox;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateFloor;
+import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 
 public abstract class LevelCreator {
 	
-	private GameModel model;
+	private Scene scene;
 	
 	protected Random rand;
 	
 	protected Random colorRand;
 	
-	public LevelCreator(GameModel model, int randomSeed) {
+	public LevelCreator(int randomSeed) {
 		// save reference to GameMode to be able to add GameElements
-		this.model = model;
+		this.scene = scene;
 		
 		rand = new Random(randomSeed);
 		colorRand = new Random();
+	}
+	
+	public void init(Scene scene) {
+		this.scene = scene;
 		
 		// build initial even floor 
 		for (int x = (int)-GameConf.PLAYER_CAMERA_OFFSET; x <= (int)(2 * GameConf.PLAYER_CAMERA_OFFSET); x++) {
 			generateFloor(x, GameConf.GRID_H);
 		}
 		this.generatedUntil = (int)(2 * GameConf.PLAYER_CAMERA_OFFSET);
-
 	}
 	
 	protected int generatedUntil;
@@ -43,11 +46,11 @@ public abstract class LevelCreator {
 	public abstract void generate(int max);
 	
 	protected void generateGameElement(GameElement element) {
-		this.model.addGameElement(element);
+		this.scene.addGameElement(element);
 	}
 	
-	protected GameModel getGameModel() {
-		return this.model;
+	protected Scene getScene() {
+		return this.scene;
 	}
 	
 	protected void generateFloor(int x, int y) {

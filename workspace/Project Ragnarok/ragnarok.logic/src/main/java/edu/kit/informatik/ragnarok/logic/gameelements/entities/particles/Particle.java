@@ -102,7 +102,7 @@ public class Particle extends GameElement {
 
 		// If time is up: kill yourself
 		if (this.timer.timeUp()) {
-			this.getGameModel().removeGameElement(this);
+			this.getScene().removeGameElement(this);
 		} else {
 			// get current progress of Particle
 			float progress = this.timer.getProgress();

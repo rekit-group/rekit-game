@@ -1,6 +1,6 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities.particles;
 
-import edu.kit.informatik.ragnarok.logic.GameModel;
+import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.Polygon;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
@@ -52,7 +52,7 @@ public class ParticleSpawner {
 		timeMax = 0.6f;
 	}
 	
-	public void spawn(GameModel model, Vec2D pos) {
+	public void spawn(Scene scene, Vec2D pos) {
 		
 		int randomAmount = (int) (amountMin + Math.random() * (amountMax - amountMin));
 		
@@ -70,7 +70,7 @@ public class ParticleSpawner {
 					colorB.randomizeProgressDependency(),
 					colorA.randomizeProgressDependency());
 			
-			model.addGameElement(p);
+			scene.addGameElement(p);
 		}
 		
 	}

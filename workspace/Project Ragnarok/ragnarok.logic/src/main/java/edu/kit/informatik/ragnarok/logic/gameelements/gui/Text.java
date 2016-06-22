@@ -1,7 +1,7 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.gui;
 
-import edu.kit.informatik.ragnarok.logic.GameModel;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
+import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.util.TextOptions;
 
 public class Text extends GuiElement {
@@ -25,8 +25,8 @@ public class Text extends GuiElement {
 		this.options = options;
 	}
 
-	public Text(GameModel model, TextOptions options) {
-		super(model);
+	public Text(Scene scene, TextOptions options) {
+		super(scene);
 		this.text = "";
 		this.options = options;
 	}

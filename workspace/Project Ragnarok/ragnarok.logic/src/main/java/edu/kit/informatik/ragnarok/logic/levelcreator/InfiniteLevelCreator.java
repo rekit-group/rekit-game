@@ -3,15 +3,14 @@ package edu.kit.informatik.ragnarok.logic.levelcreator;
 import java.util.HashMap;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
-import edu.kit.informatik.ragnarok.logic.GameModel;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.bosses.RektSmasher;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
 
 public class InfiniteLevelCreator extends LevelCreator {
 	
-	public InfiniteLevelCreator(GameModel model, int randomSeed) {
-		super(model, randomSeed);
+	public InfiniteLevelCreator(int randomSeed) {
+		super(randomSeed);
 		
 		this.bossRooms = new HashMap<Integer, BossRoom>();
 		

@@ -1,7 +1,7 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.gui;
 
-import edu.kit.informatik.ragnarok.logic.GameModel;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
+import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
 public abstract class GuiElement implements Comparable<GuiElement> {
@@ -17,7 +17,7 @@ public abstract class GuiElement implements Comparable<GuiElement> {
 	 *           gameElement        &lt;       gameModel
 	 * </pre>
 	 */
-	private GameModel gameModel;
+	private Scene scene;
 	
 	public boolean isVisible() {
 		return visible;
@@ -35,20 +35,20 @@ public abstract class GuiElement implements Comparable<GuiElement> {
 		return this.pos;
 	}
 
-	public void setGameModel(GameModel value) {
-		this.gameModel = value;
+	public void setScene(Scene value) {
+		this.scene = value;
 	}
 
-	public GameModel getGameModel() {
-		return this.gameModel;
+	public Scene getScene() {
+		return this.scene;
 	}
 	
 	public int getZ() {
 		return 0;
 	}
 	
-	public GuiElement(GameModel model) {
-		this.gameModel = model;
+	public GuiElement(Scene scene) {
+		this.scene = scene;
 	}
 	
 	public void logicLoop(float deltaTime) {
