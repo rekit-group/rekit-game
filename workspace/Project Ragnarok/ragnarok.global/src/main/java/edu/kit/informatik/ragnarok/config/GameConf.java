@@ -16,6 +16,9 @@ import edu.kit.informatik.ragnarok.visitor.Visitable;
  */
 @VisitInfo(res = "conf/game", visit = true)
 public class GameConf implements Visitable {
+	private GameConf() {
+	}
+
 	/**
 	 * The Name of the Game
 	 */
