@@ -1,4 +1,4 @@
-package edu.kit.informatik.ragnarok.gui.parallax;
+package edu.kit.informatik.ragnarok.logic.parallax;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -16,10 +16,16 @@ public class ParallaxContainer {
 	public void addLayer(ParallaxLayer layer) {
 		this.layers.add(layer);
 	}
-	
-	public void render(Field f, float currentOffset) {
+
+	public void logicLoop(float currentOffset) {
 		for (ParallaxLayer layer : this.layers) {
-			layer.render(f, currentOffset);
+			layer.logicLoop(currentOffset);
+		}
+	}
+	
+	public void render(Field f) {
+		for (ParallaxLayer layer : this.layers) {
+			layer.render(f);
 		}
 	}
 	

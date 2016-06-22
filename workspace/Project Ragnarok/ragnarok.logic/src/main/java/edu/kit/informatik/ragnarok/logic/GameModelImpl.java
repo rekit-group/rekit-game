@@ -23,6 +23,8 @@ import edu.kit.informatik.ragnarok.logic.gameelements.gui.Text;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.TimeDecorator;
 import edu.kit.informatik.ragnarok.logic.levelcreator.InfiniteLevelCreator;
 import edu.kit.informatik.ragnarok.logic.levelcreator.LevelCreator;
+import edu.kit.informatik.ragnarok.logic.parallax.ParallaxContainer;
+import edu.kit.informatik.ragnarok.logic.parallax.ParallaxLayer;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.TimeDependency;
@@ -76,6 +78,8 @@ class GameModelImpl implements CameraTarget, GameModel {
 	private int highScore = -1;
 
 	private GuiElement bossTextGui;
+	
+	private ParallaxContainer parallax;
 
 	@Override
 	public void setCameraTarget(CameraTarget cameraTarget) {
@@ -115,6 +119,13 @@ class GameModelImpl implements CameraTarget, GameModel {
 
 		// Initialize all other attributes
 		this.lastTime = System.currentTimeMillis();
+		
+		// Create parallax background
+		this.parallax = new ParallaxContainer();
+		
+		parallax.addLayer(new ParallaxLayer("bg_layer_0.png", 1646, 1.1f));
+		parallax.addLayer(new ParallaxLayer("bg_layer_1.png", 1646, 1.3f));
+		parallax.addLayer(new ParallaxLayer("bg_layer_2.png", 1646, 1.6f));
 
 	}
 
@@ -317,6 +328,9 @@ class GameModelImpl implements CameraTarget, GameModel {
 				}
 			}
 		}
+		
+		// update Parallax
+		this.getParallax().logicLoop(this.getCameraOffset());
 
 		// remove GameElements that must be removed
 		this.removeAllWaitingGameElements();
@@ -458,6 +472,10 @@ class GameModelImpl implements CameraTarget, GameModel {
 		this.addGuiElement(this.bossTextGui);
 	}
 
+	public ParallaxContainer getParallax() {
+		return this.parallax;
+	}
+	
 	@Override
 	public Object synchronize() {
 		return this.sync;

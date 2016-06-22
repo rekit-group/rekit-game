@@ -5,6 +5,7 @@ import java.util.Iterator;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.GuiElement;
+import edu.kit.informatik.ragnarok.logic.parallax.ParallaxContainer;
 
 /**
  * This Interface defines the Model for the MVC
@@ -71,5 +72,7 @@ public interface Model {
 	void start();
 
 	Object synchronize();
+
+	ParallaxContainer getParallax();
 
 }
