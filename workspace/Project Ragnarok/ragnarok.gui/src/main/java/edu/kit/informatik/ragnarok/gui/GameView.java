@@ -97,8 +97,8 @@ class GameView implements View {
 		this.parallax = new ParallaxContainer();
 		
 		parallax.addLayer(new ParallaxLayer("bg_layer_0.png", 1.1f));
-		parallax.addLayer(new ParallaxLayer("bg_layer_1.png", 1.4f));
-		parallax.addLayer(new ParallaxLayer("bg_layer_2.png", 1.9f));
+		parallax.addLayer(new ParallaxLayer("bg_layer_1.png", 1.3f));
+		parallax.addLayer(new ParallaxLayer("bg_layer_2.png", 1.6f));
 	}
 
 	/**
