@@ -133,8 +133,8 @@ public class GameModel implements CameraTarget, Model {
 	}
 
 	@Override
-	public Iterator<GameElement> getGameElementIterator() {
-		return curScene.getGameElementIterator();
+	public Iterator<GameElement> getOrderedGameElementIterator() {
+		return curScene.getOrderedGameElementIterator();
 	}
 
 	@Override

@@ -14,7 +14,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
-import edu.kit.informatik.ragnarok.logic.GameModel;
 import edu.kit.informatik.ragnarok.logic.Model;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.GuiElement;
@@ -73,7 +72,7 @@ class GameView implements View {
 		// Create window
 
 		this.shell = new Shell(Display.getDefault(), SWT.DIALOG_TRIM | SWT.MIN | SWT.PRIMARY_MODAL | SWT.NO_BACKGROUND);
-		this.shell.setText(GameConf.BUNDLE.getString("name"));
+		this.shell.setText(GameConf.NAME);
 
 		// Create and position a canvas
 		this.canvas = new Canvas(this.shell, SWT.NONE);
@@ -150,12 +149,17 @@ class GameView implements View {
 		GC tempGC = new GC(image);
 		this.field.setGC(tempGC);
 
-		// Draw background
-		this.field.setBackground(SwtUtils.calcRGB(GameConf.GAME_BACKGROUD_COLOR));
+		// set current camera position
+		float cameraOffset = this.model.getCameraOffset();
+		this.field.setCurrentOffset(cameraOffset);
 
-		synchronized (GameModel.SYNC) {
+		// Draw background
+		this.model.getParallax().render(this.field);
+
+		// Get a z-index-ordered iterator
+		Iterator<GameElement> it1 = this.model.getOrderedGameElementIterator();
+		synchronized (this.model.synchronize()) {
 			// Iterate all GameElements
-			Iterator<GameElement> it1 = this.model.getGameElementIterator();
 			while (it1.hasNext()) {
 				// Render next element
 				GameElement e = it1.next();
@@ -185,8 +189,8 @@ class GameView implements View {
 		// draw FPS
 		float fps = this.getFPS();
 		this.field.setGC(this.gc);
-		this.field.drawText(new Vec2D(CalcUtil.units2pixel(GameConf.GRID_W) - 10, CalcUtil.units2pixel(GameConf.GRID_H) - 60), "FPS: " + fps,
-				GameConf.HINT_TEXT);
+		this.field.drawText(new Vec2D(CalcUtil.units2pixel(GameConf.GRID_W) - 10, CalcUtil.units2pixel(GameConf.GRID_H) - 60),
+				"FPS: " + fps, GameConf.HINT_TEXT);
 
 	}
 

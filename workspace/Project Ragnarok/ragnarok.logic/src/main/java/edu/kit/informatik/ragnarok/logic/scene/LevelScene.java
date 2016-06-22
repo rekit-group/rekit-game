@@ -143,10 +143,10 @@ public class LevelScene extends Scene {
 	protected void logicLoopAfter() {
 		synchronized (GameModel.SYNC) {
 			// iterate all GameElements to detect collision
-			Iterator<GameElement> it1 = this.getGameElementIterator();
+			Iterator<GameElement> it1 = this.getOrderedGameElementIterator();
 			while (it1.hasNext()) {
 				GameElement e1 = it1.next();
-				Iterator<GameElement> it2 = this.getGameElementIterator();
+				Iterator<GameElement> it2 = this.getOrderedGameElementIterator();
 				while (it2.hasNext()) {
 					GameElement e2 = it2.next();
 					if (e1 != e2) {

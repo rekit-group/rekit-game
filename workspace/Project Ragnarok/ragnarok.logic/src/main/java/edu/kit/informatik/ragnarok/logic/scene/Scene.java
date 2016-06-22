@@ -9,8 +9,15 @@ import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.CameraTarget;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.GuiElement;
+import edu.kit.informatik.ragnarok.logic.parallax.ParallaxContainer;
 
 public abstract class Scene implements CameraTarget {
+	
+	/**
+	 * Synchronization Object that is used as a lock variable for blocking
+	 * operations
+	 */
+	private final Object sync = new Object();
 	
 	protected GameModel model;
 	
@@ -63,7 +70,7 @@ public abstract class Scene implements CameraTarget {
 
 		// iterate all GameElements to invoke logicLoop
 		synchronized (GameModel.SYNC) {
-			Iterator<GameElement> it = this.getGameElementIterator();
+			Iterator<GameElement> it = this.getOrderedGameElementIterator();
 			while (it.hasNext()) {
 				logicLoopGameElement(timeDelta, it);
 			}
@@ -164,7 +171,7 @@ public abstract class Scene implements CameraTarget {
 		}
 	}
 	
-	public Iterator<GameElement> getGameElementIterator() {
+	public Iterator<GameElement> getOrderedGameElementIterator() {
 		return this.gameElements.iterator();
 	}
 	
@@ -197,6 +204,14 @@ public abstract class Scene implements CameraTarget {
 	
 	public void setCameraTarget(CameraTarget cameraTarget) {
 		
+	}
+	
+	public ParallaxContainer getParallax() {
+		return this.parallax;
+	}
+	
+	public Object synchronize() {
+		return this.sync;
 	}
 
 }

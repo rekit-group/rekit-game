@@ -1,5 +1,6 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies;
 
+import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
@@ -13,7 +14,7 @@ import edu.kit.informatik.ragnarok.util.RGBColor;
 
 public class Warper extends Entity {
 
-	private TimeDependency warpAction = new TimeDependency(1);
+	private TimeDependency warpAction = new TimeDependency(GameConf.WARPER_WARP_DELTA);
 	private static ParticleSpawner warpParticles = null;
 
 	/**

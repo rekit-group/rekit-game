@@ -20,7 +20,7 @@ public abstract class GuiElement implements Comparable<GuiElement> {
 	private Scene scene;
 	
 	public boolean isVisible() {
-		return visible;
+		return this.visible;
 	}
 
 	public void setVisible(boolean visible) {

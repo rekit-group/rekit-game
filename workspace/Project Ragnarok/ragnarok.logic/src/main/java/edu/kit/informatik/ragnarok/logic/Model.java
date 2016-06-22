@@ -23,29 +23,30 @@ public interface Model {
 	}
 
 	/**
-	 * Get an Iterator over all {@link GameElement GameElements}
-	 * 
+	 * Get an Iterator over all {@link GameElement GameElements} in ascending
+	 * order concerning the {@link GameElement GameElements} zIndex.
+	 *
 	 * @return the iterator
 	 */
-	Iterator<GameElement> getGameElementIterator();
-	
+	Iterator<GameElement> getOrderedGameElementIterator();
+
 	/**
 	 * Get an Iterator over all {@link GuiElement GuiElements}
-	 * 
+	 *
 	 * @return the iterator
 	 */
 	Iterator<GuiElement> getGuiElementIterator();
 
 	/**
 	 * Get the Player
-	 * 
+	 *
 	 * @return the player
 	 */
 	Entity getPlayer();
 
 	/**
 	 * Get the camera offset
-	 * 
+	 *
 	 * @return the camera offset
 	 */
 	float getCameraOffset();

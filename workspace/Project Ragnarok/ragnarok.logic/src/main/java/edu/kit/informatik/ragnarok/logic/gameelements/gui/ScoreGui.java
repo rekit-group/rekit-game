@@ -7,7 +7,7 @@ import edu.kit.informatik.ragnarok.primitives.Vec2D;
 import edu.kit.informatik.ragnarok.util.CalcUtil;
 import edu.kit.informatik.ragnarok.util.TextOptions;
 
-public class ScoreGui extends GuiElement{
+public class ScoreGui extends GuiElement {
 
 	private Text points;
 	private Text highscore;
@@ -15,24 +15,24 @@ public class ScoreGui extends GuiElement{
 	
 	public ScoreGui(LevelScene scene) {
 		super(scene);
-		op = new TextOptions(new Vec2D(-1, 0), GameConf.GAME_TEXT_SIZE, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, 1);
-		points = new Text(scene, op);
-		highscore = new Text(scene, op);
-		points.setPos(new Vec2D(CalcUtil.units2pixel(GameConf.GRID_W) - 10, 10));
-		highscore.setPos(new Vec2D(CalcUtil.units2pixel(GameConf.GRID_W) - 10, 50));
+		this.op = new TextOptions(new Vec2D(-1, 0), GameConf.GAME_TEXT_SIZE, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, 1);
+		this.points = new Text(scene, this.op);
+		this.highscore = new Text(scene, this.op);
+		this.points.setPos(new Vec2D(CalcUtil.units2pixel(GameConf.GRID_W) - 10, 10));
+		this.highscore.setPos(new Vec2D(CalcUtil.units2pixel(GameConf.GRID_W) - 10, 50));
 	}
 	
 	@Override
 	public void logicLoop(float deltaTime) {
 		LevelScene lvlScene = (LevelScene) this.getScene();
-		points.setText(lvlScene.getScore() + " Points");
-		highscore.setText(lvlScene.getHighScore() + " Highscore");
+		this.points.setText(lvlScene.getScore() + " Points");
+		this.highscore.setText(lvlScene.getHighScore() + " Highscore");
 	}
 	
 	@Override
 	public void render(Field f) {
-		points.render(f);
-		highscore.render(f);
+		this.points.render(f);
+		this.highscore.render(f);
 	}
 
 }
