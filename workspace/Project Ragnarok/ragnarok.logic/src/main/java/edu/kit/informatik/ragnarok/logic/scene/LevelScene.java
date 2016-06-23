@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package edu.kit.informatik.ragnarok.logic.scene;
 
@@ -27,56 +27,59 @@ import edu.kit.informatik.ragnarok.primitives.Vec2D;
 import edu.kit.informatik.ragnarok.util.ThreadUtils;
 
 /**
- * Scene that holds a playable Level created by a LevelCreator.
- * Different Levels are possible by changing the LevelCreator in the costructor.
+ * Scene that holds a playable Level created by a LevelCreator. Different Levels
+ * are possible by changing the LevelCreator in the costructor.
+ *
  * @author matze
  *
  */
 public class LevelScene extends Scene {
-	
+
 	private Player player = new Player(new Vec2D(3, 5));
-	
+
 	private LevelCreator levelCreator;
-	
+
 	private CameraTarget cameraTarget;
-	
+
 	private float currentOffset;
-	
+
 	private ParallaxContainer parallax;
 
 	private int highScore = -1;
-	
+
 	private ScoreGui scoreGui;
-	
+
 	private LifeGui lifeGui;
 
 	public LevelScene(GameModel model, LevelCreator levelCreator) {
 		super(model);
-		
+
 		this.levelCreator = levelCreator;
 	}
 
 	@Override
 	public void init() {
 		super.init();
-		
+
 		// Create Player and add him to game
 		this.player.init();
 		this.cameraTarget = this.player;
 		this.addGameElement(this.player);
-		
+
 		// Init EnemyFactory with model
 		EntityFactory.init(this);
 
 		this.levelCreator.init(this);
 		this.levelCreator.generate(GameConf.GRID_W);
-		
+
 		// Create parallax background
 		this.parallax = new ParallaxContainer();
 		this.parallax.addLayer(new CloudLayer(1.3f));
-		//this.parallax.addLayer(new ParallaxLayer("bg_layer_1.png", 1646, 1.4f));
-		//this.parallax.addLayer(new ParallaxLayer("bg_layer_2.png", 1646, 1.9f));
-		
+		// this.parallax.addLayer(new ParallaxLayer("bg_layer_1.png", 1646,
+		// 1.4f));
+		// this.parallax.addLayer(new ParallaxLayer("bg_layer_2.png", 1646,
+		// 1.9f));
+
 		// Create Gui
 		this.scoreGui = new ScoreGui(this);
 		this.scoreGui.setPos(new Vec2D(10, 10));
@@ -105,25 +108,19 @@ public class LevelScene extends Scene {
 
 	@Override
 	public void restart() {
-		Thread restartThread = new Thread() {
-			@Override
-			public void run() {
-				// wait 2 seconds
-				ThreadUtils.sleep(2000);
-				// reset all data structures
-				LevelScene.this.init();
-				// restart logic thread
-				LevelScene.this.start();
-			}
-		};
-		restartThread.start();
+		// wait 2 seconds
+		ThreadUtils.sleep(2000);
+		// reset all data structures
+		this.init();
+		// restart logic thread
+		this.start();
 	}
-	
+
 	@Override
 	protected void logicLoopPre(float timeDelta) {
-		
+
 		this.levelCreator.generate((int) (this.getCameraOffset() + GameConf.GRID_W + 1));
-		
+
 		// dont allow player to go behind currentOffset
 		float minX = this.getCameraOffset() + this.player.getSize().getX() / 2f;
 		if (this.player.getPos().getX() < minX) {
@@ -131,7 +128,7 @@ public class LevelScene extends Scene {
 		}
 
 	}
-	
+
 	@Override
 	protected void logicLoopGameElement(float timeDelta, Iterator<GameElement> it) {
 		GameElement e = it.next();
@@ -148,7 +145,7 @@ public class LevelScene extends Scene {
 			e.logicLoop(timeDelta);
 		}
 	}
-	
+
 	@Override
 	protected void logicLoopAfter() {
 		synchronized (this.synchronize()) {
@@ -165,12 +162,12 @@ public class LevelScene extends Scene {
 				}
 			}
 		}
-		
+
 		if (this.player.deleteMe) {
 			this.end();
 		}
 	}
-	
+
 	private void checkCollision(GameElement e1, GameElement e2, Vec2D e1lastPos, Vec2D e2lastPos) {
 		// Return if there is no collision
 		if (!e1.getCollisionFrame().collidesWith(e2.getCollisionFrame())) {
@@ -229,7 +226,7 @@ public class LevelScene extends Scene {
 		}
 
 	}
-	
+
 	@Override
 	public Player getPlayer() {
 		return this.player;
@@ -239,11 +236,13 @@ public class LevelScene extends Scene {
 	public float getCameraOffset() {
 		return this.cameraTarget.getCameraOffset();
 	}
-	
+
+	@Override
 	public void setCameraTarget(CameraTarget cameraTarget) {
 		this.cameraTarget = cameraTarget;
 	}
-	
+
+	@Override
 	public ParallaxContainer getBackground() {
 		return this.parallax;
 	}
@@ -251,7 +250,7 @@ public class LevelScene extends Scene {
 	public int getScore() {
 		return (int) (this.player.getCameraOffset() + this.getPlayer().getPoints());
 	}
-	
+
 	public int getHighScore() {
 		if (this.highScore != -1) {
 			return this.highScore;
