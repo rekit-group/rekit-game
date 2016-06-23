@@ -25,9 +25,9 @@ public class GameModel implements CameraTarget, Model {
 	public long lastTime;
 
 	private Thread loopThread;
-	
+
 	private Scene curScene;
-	
+
 	private boolean endGame;
 
 	public GameModel() {
@@ -35,7 +35,7 @@ public class GameModel implements CameraTarget, Model {
 	}
 
 	public void init() {
-		switchScene(0);
+		this.switchScene(0);
 	}
 
 	private void end() {
@@ -48,10 +48,10 @@ public class GameModel implements CameraTarget, Model {
 			@Override
 			public void run() {
 				// repeat until player is dead
-				while (!endGame) {
+				while (!GameModel.this.endGame) {
 					GameModel.this.logicLoop();
 					ThreadUtils.sleep(GameConf.LOGIC_DELTA);
-
+					System.gc();
 				}
 				GameModel.this.end();
 			}
@@ -73,41 +73,41 @@ public class GameModel implements CameraTarget, Model {
 			this.lastTime = System.currentTimeMillis();
 		}
 		long timeDelta = timeNow - this.lastTime;
-		
+
 		this.curScene.logicLoop(timeDelta / 1000.f);
-		
+
 		// update time
 		this.lastTime = timeNow;
 
 	}
-	
+
 	public void switchScene(int scene) {
 		switch (scene) {
 		case 0:
-			//curScene = new MainMenuScene();
-			//break;
-			
+			// curScene = new MainMenuScene();
+			// break;
+
 		case 1:
 			InfiniteLevelCreator infiniteCreator = new InfiniteLevelCreator(new Random().nextInt());
-			curScene = new LevelScene(this, infiniteCreator);
+			this.curScene = new LevelScene(this, infiniteCreator);
 			break;
-			
+
 		case 2:
 			DateFormat levelOfTheDayFormat = new SimpleDateFormat("ddMMyyyy");
 			int seed = Integer.parseInt(levelOfTheDayFormat.format(Calendar.getInstance().getTime()));
 			InfiniteLevelCreator levelOfTheDayCreator = new InfiniteLevelCreator(seed);
-			curScene = new LevelScene(this, levelOfTheDayCreator);
+			this.curScene = new LevelScene(this, levelOfTheDayCreator);
 			break;
 
 		default:
 			throw new IllegalArgumentException("no scene with id " + scene);
 		}
-		
-		curScene.init();
-		curScene.start();
+
+		this.curScene.init();
+		this.curScene.start();
 		this.lastTime = 0;
 	}
-	
+
 	@Override
 	public Scene getScene() {
 		return this.curScene;

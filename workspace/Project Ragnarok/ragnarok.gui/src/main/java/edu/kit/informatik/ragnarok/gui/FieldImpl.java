@@ -29,20 +29,20 @@ import edu.kit.informatik.ragnarok.util.TextOptions;
 public class FieldImpl implements Field {
 
 	private GC gc;
-	private GameView view;
 	private int cameraOffset = 0;
-	
-	public FieldImpl(GameView view) {
-		this.view = view;
+
+	public FieldImpl() {
 	}
 
 	private int units2pixel(float units) {
 		return (int) (units * GameConf.PX_PER_UNIT);
 	}
 
+	@Override
 	public void setCurrentOffset(float cameraOffset) {
 		this.cameraOffset = -this.units2pixel(cameraOffset);
 	}
+
 	private int currentOffset() {
 		return this.cameraOffset;
 	}
@@ -51,38 +51,38 @@ public class FieldImpl implements Field {
 		this.gc.setBackground(new Color(Display.getCurrent(), col));
 		this.gc.fillRectangle(0, 0, this.units2pixel(GameConf.GRID_W), this.units2pixel(GameConf.GRID_H));
 	}
-	
+
 	public void drawCircle(Vec2D pos, Vec2D size, RGB col) {
 		this.drawCircle(pos, size, new RGBA(col.red, col.green, col.blue, 255));
 	}
-	
+
 	public void drawCircle(Vec2D pos, Vec2D size, RGBA col) {
 		// set color
 		this.gc.setAlpha(col.alpha);
 		Color color = new Color(Display.getCurrent(), col);
 		this.gc.setBackground(color);
 		color.dispose();
-		this.gc.fillOval(this.currentOffset() + this.units2pixel((pos.getX() - size.getX() / 2f)),
-				this.units2pixel((pos.getY() - size.getY() / 2f)), this.units2pixel(size.getX()), this.units2pixel(size.getY()));
-		
+		this.gc.fillOval(this.currentOffset() + this.units2pixel((pos.getX() - size.getX() / 2f)), this.units2pixel((pos.getY() - size.getY() / 2f)),
+				this.units2pixel(size.getX()), this.units2pixel(size.getY()));
+
 		// reset alpha
 		this.gc.setAlpha(255);
 	}
 
 	public void drawRectangle(Vec2D pos, Vec2D size, RGB col) {
-		drawRectangle(pos, size, new RGBA(col.red, col.green, col.blue, 255));
+		this.drawRectangle(pos, size, new RGBA(col.red, col.green, col.blue, 255));
 	}
-	
+
 	public void drawRectangle(Vec2D pos, Vec2D size, RGBA col) {
 		// set color
 		this.gc.setAlpha(col.alpha);
 		Color color = new Color(Display.getCurrent(), col);
-		
+
 		this.gc.setBackground(color);
 		color.dispose();
-		this.gc.fillRectangle(this.currentOffset() + this.units2pixel(pos.getX() - size.getX() / 2f),
-				this.units2pixel(pos.getY() - size.getY() / 2f), this.units2pixel(size.getX()), this.units2pixel(size.getY()));
-		
+		this.gc.fillRectangle(this.currentOffset() + this.units2pixel(pos.getX() - size.getX() / 2f), this.units2pixel(pos.getY() - size.getY() / 2f),
+				this.units2pixel(size.getX()), this.units2pixel(size.getY()));
+
 		// reset alpha
 		this.gc.setAlpha(255);
 	}
@@ -122,7 +122,7 @@ public class FieldImpl implements Field {
 				this.units2pixel(pos.getY() - size.getY() / 2f) // dstY
 		);
 	}
-	
+
 	@Override
 	public void drawGuiImage(Vec2D pos, Vec2D size, String imagePath) {
 		Image image = ImageLoader.get(imagePath);
@@ -130,7 +130,7 @@ public class FieldImpl implements Field {
 				(int) (pos.getY() - size.getY() / 2f) // dstY
 		);
 	}
-	
+
 	@Override
 	public void drawText(Vec2D pos, String text, TextOptions options) {
 		// Set color to red and set font
@@ -138,13 +138,14 @@ public class FieldImpl implements Field {
 		Color color = new Color(Display.getCurrent(), rgb);
 		this.gc.setForeground(color);
 		color.dispose();
-		
+
 		Font font = new Font(Display.getCurrent(), options.getFont(), options.getHeight(), options.getFontOptions() | SWT.BOLD);
 		this.gc.setFont(font);
-		
+
 		Point textBounds = this.gc.textExtent(text);
-		
-		this.gc.drawText(text, (int) (pos.getX() + options.getAlignment().getX() * textBounds.x), (int) (pos.getY() + options.getAlignment().getY() * textBounds.y), true);
+
+		this.gc.drawText(text, (int) (pos.getX() + options.getAlignment().getX() * textBounds.x),
+				(int) (pos.getY() + options.getAlignment().getY() * textBounds.y), true);
 		font.dispose();
 	}
 
@@ -156,7 +157,7 @@ public class FieldImpl implements Field {
 	public void drawRectangle(Vec2D pos, Vec2D size, RGBColor color) {
 		this.drawRectangle(pos, size, SwtUtils.calcRGB(color));
 	}
-	
+
 	@Override
 	public void drawRectangle(Vec2D pos, Vec2D size, RGBAColor rgbaColor) {
 		this.drawRectangle(pos, size, SwtUtils.calcRGBA(rgbaColor));
@@ -166,7 +167,7 @@ public class FieldImpl implements Field {
 	public void drawCircle(Vec2D pos, Vec2D size, RGBAColor color) {
 		this.drawCircle(pos, size, SwtUtils.calcRGBA(color));
 	}
-	
+
 	@Override
 	public void drawCircle(Vec2D pos, Vec2D size, RGBColor color) {
 		this.drawCircle(pos, size, SwtUtils.calcRGB(color));

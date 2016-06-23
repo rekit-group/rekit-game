@@ -87,7 +87,7 @@ class GameView implements View {
 
 		// Create Graphic context
 		this.gc = new GC(this.canvas);
-		this.field = new FieldImpl(this);
+		this.field = new FieldImpl();
 	}
 
 	/**
@@ -144,9 +144,9 @@ class GameView implements View {
 		if (this.shell.isDisposed()) {
 			return;
 		}
-		
+
 		Scene scene = this.model.getScene();
-		
+
 		// Create temporary GC on new Image and let field draw on that
 		// Double buffering reduces flickering
 		Image image = new Image(this.shell.getDisplay(), this.canvas.getBounds());
@@ -157,10 +157,8 @@ class GameView implements View {
 		float cameraOffset = scene.getCameraOffset();
 		this.field.setCurrentOffset(cameraOffset);
 
-		
 		this.field.setBackground(SwtUtils.calcRGB(GameConf.GAME_BACKGROUD_COLOR));
 
-		
 		// Draw background
 		if (scene.getBackground() != null) {
 			scene.getBackground().render(this.field);
@@ -199,8 +197,8 @@ class GameView implements View {
 		// draw FPS
 		float fps = this.getFPS();
 		this.field.setGC(this.gc);
-		this.field.drawText(new Vec2D(CalcUtil.units2pixel(GameConf.GRID_W) - 10, CalcUtil.units2pixel(GameConf.GRID_H) - 60),
-				"FPS: " + fps, GameConf.HINT_TEXT);
+		this.field.drawText(new Vec2D(CalcUtil.units2pixel(GameConf.GRID_W) - 10, CalcUtil.units2pixel(GameConf.GRID_H) - 60), "FPS: " + fps,
+				GameConf.HINT_TEXT);
 
 	}
 

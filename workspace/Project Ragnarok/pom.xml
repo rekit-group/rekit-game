@@ -9,6 +9,7 @@
 	<properties>
 		<main.class>edu.kit.informatik.ragnarok.Main</main.class>
 		<swt.version>4.5.2</swt.version>
+		<opengl.version>3.0.0</opengl.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
@@ -82,6 +83,7 @@
 			</activation>
 			<properties>
 				<swt.artifactId>org.eclipse.swt.gtk.linux.x86_64</swt.artifactId>
+				<opengl.native>natives-linux</opengl.native>
 			</properties>
 		</profile>
 		<profile>
@@ -93,6 +95,7 @@
 			</activation>
 			<properties>
 				<swt.artifactId>org.eclipse.swt.cocoa.macosx.x86_64</swt.artifactId>
+				<opengl.native>natives-osx</opengl.native>
 			</properties>
 		</profile>
 		<profile>
@@ -105,6 +108,7 @@
 			</activation>
 			<properties>
 				<swt.artifactId>org.eclipse.swt.win32.win32.x86</swt.artifactId>
+				<opengl.native>natives-windows</opengl.native>
 			</properties>
 		</profile>
 		<profile>
@@ -117,6 +121,7 @@
 			</activation>
 			<properties>
 				<swt.artifactId>org.eclipse.swt.win32.win32.x86_64</swt.artifactId>
+				<opengl.native>natives-windows</opengl.native>
 			</properties>
 		</profile>
 	</profiles>

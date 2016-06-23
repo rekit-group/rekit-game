@@ -18,5 +18,16 @@
 			<artifactId>${swt.artifactId}</artifactId>
 			<version>${swt.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.lwjgl</groupId>
+			<artifactId>lwjgl</artifactId>
+			<version>${opengl.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.lwjgl</groupId>
+			<artifactId>lwjgl-platform</artifactId>
+			<version>${opengl.version}</version>
+			<classifier>${opengl.native}</classifier>
+		</dependency>
 	</dependencies>
 </project>
