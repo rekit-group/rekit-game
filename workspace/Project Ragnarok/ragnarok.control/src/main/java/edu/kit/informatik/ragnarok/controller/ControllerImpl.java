@@ -6,8 +6,12 @@ import java.util.Map;
 
 import edu.kit.informatik.ragnarok.controller.commands.InputCommand;
 import edu.kit.informatik.ragnarok.controller.commands.InputCommand.InputMethod;
+import edu.kit.informatik.ragnarok.controller.commands.JumpCommand;
+import edu.kit.informatik.ragnarok.controller.commands.WalkCommand;
 import edu.kit.informatik.ragnarok.gui.View;
 import edu.kit.informatik.ragnarok.logic.Model;
+import edu.kit.informatik.ragnarok.primitives.Direction;
+import edu.kit.informatik.ragnarok.util.InputHelper;
 
 /**
  * This is an implementation of an {@link Controller} of the MVC <br>
@@ -46,9 +50,9 @@ class ControllerImpl implements Observer, Controller {
 	 *            the model
 	 */
 	private void init(Model model) {
-		//this.mpCmd.put(InputHelper.ARROW_UP, new JumpCommand().setEntity(model.getPlayer()));
-		//this.mpCmd.put(InputHelper.ARROW_LEFT, new WalkCommand(Direction.LEFT).setEntity(model.getPlayer()));
-		//this.mpCmd.put(InputHelper.ARROW_RIGHT, new WalkCommand(Direction.RIGHT).setEntity(model.getPlayer()));
+		this.mpCmd.put(InputHelper.ARROW_UP, new JumpCommand().setEntity(model.getScene().getPlayer()));
+		this.mpCmd.put(InputHelper.ARROW_LEFT, new WalkCommand(Direction.LEFT).setEntity(model.getScene().getPlayer()));
+		this.mpCmd.put(InputHelper.ARROW_RIGHT, new WalkCommand(Direction.RIGHT).setEntity(model.getScene().getPlayer()));
 	}
 
 	/**

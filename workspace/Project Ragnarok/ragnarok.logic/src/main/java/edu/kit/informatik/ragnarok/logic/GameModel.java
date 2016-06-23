@@ -3,14 +3,11 @@ package edu.kit.informatik.ragnarok.logic;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.Random;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
-import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.CameraTarget;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
-import edu.kit.informatik.ragnarok.logic.gameelements.gui.GuiElement;
 import edu.kit.informatik.ragnarok.logic.levelcreator.InfiniteLevelCreator;
 import edu.kit.informatik.ragnarok.logic.scene.LevelScene;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
@@ -24,12 +21,6 @@ import edu.kit.informatik.ragnarok.util.ThreadUtils;
  * @version 1.1
  */
 public class GameModel implements CameraTarget, Model {
-
-	/**
-	 * Synchronization Object that is used as a lock variable for blocking
-	 * operations
-	 */
-	public static final Object SYNC = new Object();
 
 	public long lastTime;
 
@@ -116,6 +107,11 @@ public class GameModel implements CameraTarget, Model {
 		curScene.start();
 		this.lastTime = 0;
 	}
+	
+	@Override
+	public Scene getScene() {
+		return this.curScene;
+	}
 
 	/**
 	 * Return player
@@ -130,15 +126,5 @@ public class GameModel implements CameraTarget, Model {
 	@Override
 	public float getCameraOffset() {
 		return this.curScene.getCameraOffset();
-	}
-
-	@Override
-	public Iterator<GameElement> getOrderedGameElementIterator() {
-		return curScene.getOrderedGameElementIterator();
-	}
-
-	@Override
-	public Iterator<GuiElement> getGuiElementIterator() {
-		return curScene.getGuiElementIterator();
 	}
 }

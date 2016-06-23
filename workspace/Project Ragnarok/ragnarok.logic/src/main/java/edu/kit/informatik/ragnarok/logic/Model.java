@@ -1,10 +1,7 @@
 package edu.kit.informatik.ragnarok.logic;
 
-import java.util.Iterator;
-
-import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
-import edu.kit.informatik.ragnarok.logic.gameelements.gui.GuiElement;
+import edu.kit.informatik.ragnarok.logic.scene.Scene;
 
 /**
  * This Interface defines the Model for the MVC
@@ -23,21 +20,6 @@ public interface Model {
 	}
 
 	/**
-	 * Get an Iterator over all {@link GameElement GameElements} in ascending
-	 * order concerning the {@link GameElement GameElements} zIndex.
-	 *
-	 * @return the iterator
-	 */
-	Iterator<GameElement> getOrderedGameElementIterator();
-
-	/**
-	 * Get an Iterator over all {@link GuiElement GuiElements}
-	 *
-	 * @return the iterator
-	 */
-	Iterator<GuiElement> getGuiElementIterator();
-
-	/**
 	 * Get the Player
 	 *
 	 * @return the player
@@ -45,15 +27,15 @@ public interface Model {
 	Entity getPlayer();
 
 	/**
-	 * Get the camera offset
-	 *
-	 * @return the camera offset
-	 */
-	float getCameraOffset();
-
-	/**
 	 * Start the model
 	 */
 	void start();
+	
+	/**
+	 * Get the current scene. The scene to be drawn.
+	 * @return the currently active scene
+	 */
+	Scene getScene();
+
 
 }

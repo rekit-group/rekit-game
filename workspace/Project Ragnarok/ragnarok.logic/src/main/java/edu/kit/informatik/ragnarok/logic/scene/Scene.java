@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.PriorityQueue;
 
 import edu.kit.informatik.ragnarok.logic.GameModel;
+import edu.kit.informatik.ragnarok.logic.PriorityQueueIterator;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.CameraTarget;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
@@ -69,12 +70,14 @@ public abstract class Scene implements CameraTarget {
 		this.addGameElements();
 
 		// iterate all GameElements to invoke logicLoop
-		synchronized (GameModel.SYNC) {
-			Iterator<GameElement> it = this.getOrderedGameElementIterator();
+		synchronized (this.synchronize()) {
+			Iterator<GameElement> it = this.getGameElementIterator();
 			while (it.hasNext()) {
 				logicLoopGameElement(timeDelta, it);
 			}
 		}
+		
+		this.getBackground().logicLoop(this.getCameraOffset());
 
 		// remove GameElements that must be removed
 		this.removeGameElements();
@@ -82,7 +85,7 @@ public abstract class Scene implements CameraTarget {
 		logicLoopAfter();
 		
 		// after all game related logic update GuiElements
-		synchronized (GameModel.SYNC)
+		synchronized (this.synchronize())
 		{
 			Iterator<GuiElement> it = this.getGuiElementIterator();
 			while (it.hasNext()) {
@@ -119,7 +122,7 @@ public abstract class Scene implements CameraTarget {
 	 */
 	public void addGameElement(GameElement element) {
 		// Put GameElement in waiting list
-		synchronized (GameModel.SYNC) {
+		synchronized (this.synchronize()) {
 			this.gameElementAddQueue.add(element);
 		}
 	}
@@ -129,7 +132,7 @@ public abstract class Scene implements CameraTarget {
 	 * more info.
 	 */
 	private void addGameElements() {
-		synchronized (GameModel.SYNC) {
+		synchronized (this.synchronize()) {
 			Iterator<GameElement> it = this.gameElementAddQueue.iterator();
 			while (it.hasNext()) {
 				GameElement element = it.next();
@@ -151,7 +154,7 @@ public abstract class Scene implements CameraTarget {
 	 *            the GameElement to remove
 	 */
 	public void removeGameElement(GameElement element) {
-		synchronized (GameModel.SYNC) {
+		synchronized (this.synchronize()) {
 			this.gameElementRemoveQueue.add(element);
 		}
 	}
@@ -161,7 +164,7 @@ public abstract class Scene implements CameraTarget {
 	 * for more info.
 	 */
 	private void removeGameElements() {
-		synchronized (GameModel.SYNC) {
+		synchronized (this.synchronize()) {
 			Iterator<GameElement> it = this.gameElementRemoveQueue.iterator();
 			while (it.hasNext()) {
 				GameElement element = it.next();
@@ -172,6 +175,10 @@ public abstract class Scene implements CameraTarget {
 	}
 	
 	public Iterator<GameElement> getOrderedGameElementIterator() {
+		return new PriorityQueueIterator<GameElement>(this.gameElements);
+	}
+	
+	public Iterator<GameElement> getGameElementIterator() {
 		return this.gameElements.iterator();
 	}
 	
@@ -197,6 +204,10 @@ public abstract class Scene implements CameraTarget {
 		return null;
 	}
 	
+	public ParallaxContainer getBackground() {
+		return null;
+	}
+	
 	@Override
 	public float getCameraOffset() {
 		return 0;
@@ -204,10 +215,6 @@ public abstract class Scene implements CameraTarget {
 	
 	public void setCameraTarget(CameraTarget cameraTarget) {
 		
-	}
-	
-	public ParallaxContainer getParallax() {
-		return this.parallax;
 	}
 	
 	public Object synchronize() {

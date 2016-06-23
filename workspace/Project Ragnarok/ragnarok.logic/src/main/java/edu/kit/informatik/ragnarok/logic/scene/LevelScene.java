@@ -19,6 +19,8 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.LifeGui;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.ScoreGui;
 import edu.kit.informatik.ragnarok.logic.levelcreator.LevelCreator;
+import edu.kit.informatik.ragnarok.logic.parallax.ParallaxContainer;
+import edu.kit.informatik.ragnarok.logic.parallax.ParallaxLayer;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
@@ -40,6 +42,8 @@ public class LevelScene extends Scene {
 	
 	private float currentOffset;
 	
+	private ParallaxContainer parallax;
+
 	private int highScore = -1;
 	
 	private ScoreGui scoreGui;
@@ -61,6 +65,18 @@ public class LevelScene extends Scene {
 		this.cameraTarget = this.player;
 		this.addGameElement(this.player);
 		
+		// Init EnemyFactory with model
+		EntityFactory.init(this);
+
+		this.levelCreator.init(this);
+		this.levelCreator.generate(GameConf.GRID_W);
+		
+		// Create parallax background
+		this.parallax = new ParallaxContainer();
+		this.parallax.addLayer(new ParallaxLayer("bg_layer_0.png", 1646, 1.1f));
+		this.parallax.addLayer(new ParallaxLayer("bg_layer_1.png", 1646, 1.4f));
+		this.parallax.addLayer(new ParallaxLayer("bg_layer_2.png", 1646, 1.9f));
+		
 		// Create Gui
 		this.scoreGui = new ScoreGui(this);
 		this.scoreGui.setPos(new Vec2D(10, 10));
@@ -68,12 +84,6 @@ public class LevelScene extends Scene {
 		this.lifeGui.setPos(new Vec2D(10));
 		this.addGuiElement(this.scoreGui);
 		this.addGuiElement(this.lifeGui);
-
-		// Init EnemyFactory with model
-		EntityFactory.init(this);
-
-		this.levelCreator.init(this);
-		this.levelCreator.generate(GameConf.GRID_W);
 	}
 
 	@Override
@@ -141,12 +151,12 @@ public class LevelScene extends Scene {
 	
 	@Override
 	protected void logicLoopAfter() {
-		synchronized (GameModel.SYNC) {
+		synchronized (this.synchronize()) {
 			// iterate all GameElements to detect collision
-			Iterator<GameElement> it1 = this.getOrderedGameElementIterator();
+			Iterator<GameElement> it1 = this.getGameElementIterator();
 			while (it1.hasNext()) {
 				GameElement e1 = it1.next();
-				Iterator<GameElement> it2 = this.getOrderedGameElementIterator();
+				Iterator<GameElement> it2 = this.getGameElementIterator();
 				while (it2.hasNext()) {
 					GameElement e2 = it2.next();
 					if (e1 != e2) {
@@ -227,11 +237,15 @@ public class LevelScene extends Scene {
 
 	@Override
 	public float getCameraOffset() {
-		return 0;
+		return this.cameraTarget.getCameraOffset();
 	}
 	
 	public void setCameraTarget(CameraTarget cameraTarget) {
 		this.cameraTarget = cameraTarget;
+	}
+	
+	public ParallaxContainer getBackground() {
+		return this.parallax;
 	}
 
 	public int getScore() {

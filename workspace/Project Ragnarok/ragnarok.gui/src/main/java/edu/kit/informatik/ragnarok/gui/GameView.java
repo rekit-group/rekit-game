@@ -17,6 +17,7 @@ import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.Model;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.GuiElement;
+import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 import edu.kit.informatik.ragnarok.util.CalcUtil;
 import edu.kit.informatik.ragnarok.util.InputHelper;
@@ -143,6 +144,9 @@ class GameView implements View {
 		if (this.shell.isDisposed()) {
 			return;
 		}
+		
+		Scene scene = this.model.getScene();
+		
 		// Create temporary GC on new Image and let field draw on that
 		// Double buffering reduces flickering
 		Image image = new Image(this.shell.getDisplay(), this.canvas.getBounds());
@@ -150,15 +154,17 @@ class GameView implements View {
 		this.field.setGC(tempGC);
 
 		// set current camera position
-		float cameraOffset = this.model.getCameraOffset();
+		float cameraOffset = scene.getCameraOffset();
 		this.field.setCurrentOffset(cameraOffset);
 
 		// Draw background
-		this.model.getParallax().render(this.field);
+		if (scene.getBackground() != null) {
+			scene.getBackground().render(this.field);
+		}
 
-		// Get a z-index-ordered iterator
-		Iterator<GameElement> it1 = this.model.getOrderedGameElementIterator();
-		synchronized (this.model.synchronize()) {
+		synchronized (scene.synchronize()) {
+			// Get a z-index-ordered iterator
+			Iterator<GameElement> it1 = scene.getOrderedGameElementIterator();
 			// Iterate all GameElements
 			while (it1.hasNext()) {
 				// Render next element
@@ -169,7 +175,7 @@ class GameView implements View {
 			}
 
 			// Iterate all GuiElements (life, score, boss)
-			Iterator<GuiElement> it2 = this.model.getGuiElementIterator();
+			Iterator<GuiElement> it2 = scene.getGuiElementIterator();
 			while (it2.hasNext()) {
 				// Render next element
 				GuiElement e = it2.next();
