@@ -24,9 +24,12 @@ public class ParallaxContainer {
 	}
 	
 	public void render(Field f) {
+		//long before = System.currentTimeMillis();
 		for (ParallaxLayer layer : this.layers) {
 			layer.render(f);
 		}
+		//long after = System.currentTimeMillis();
+		//System.out.println(after - before);
 	}
 	
 	

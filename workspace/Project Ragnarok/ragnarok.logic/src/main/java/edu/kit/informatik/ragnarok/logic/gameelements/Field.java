@@ -14,7 +14,8 @@ public interface Field {
 	void drawRectangle(Vec2D pos, Vec2D size, RGBAColor rgbaColor);
 	
 	void drawCircle(Vec2D pos, Vec2D size, RGBColor color);
-
+	void drawCircle(Vec2D pos, Vec2D size, RGBAColor color);
+	
 	void drawImage(Vec2D pos, Vec2D size, String string);
 
 	void drawPolygon(Polygon polygon, RGBAColor color);

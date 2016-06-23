@@ -51,13 +51,22 @@ public class FieldImpl implements Field {
 		this.gc.setBackground(new Color(Display.getCurrent(), col));
 		this.gc.fillRectangle(0, 0, this.units2pixel(GameConf.GRID_W), this.units2pixel(GameConf.GRID_H));
 	}
-
+	
 	public void drawCircle(Vec2D pos, Vec2D size, RGB col) {
+		this.drawCircle(pos, size, new RGBA(col.red, col.green, col.blue, 255));
+	}
+	
+	public void drawCircle(Vec2D pos, Vec2D size, RGBA col) {
+		// set color
+		this.gc.setAlpha(col.alpha);
 		Color color = new Color(Display.getCurrent(), col);
 		this.gc.setBackground(color);
 		color.dispose();
 		this.gc.fillOval(this.currentOffset() + this.units2pixel((pos.getX() - size.getX() / 2f)),
 				this.units2pixel((pos.getY() - size.getY() / 2f)), this.units2pixel(size.getX()), this.units2pixel(size.getY()));
+		
+		// reset alpha
+		this.gc.setAlpha(255);
 	}
 
 	public void drawRectangle(Vec2D pos, Vec2D size, RGB col) {
@@ -153,6 +162,11 @@ public class FieldImpl implements Field {
 		this.drawRectangle(pos, size, SwtUtils.calcRGBA(rgbaColor));
 	}
 
+	@Override
+	public void drawCircle(Vec2D pos, Vec2D size, RGBAColor color) {
+		this.drawCircle(pos, size, SwtUtils.calcRGBA(color));
+	}
+	
 	@Override
 	public void drawCircle(Vec2D pos, Vec2D size, RGBColor color) {
 		this.drawCircle(pos, size, SwtUtils.calcRGB(color));

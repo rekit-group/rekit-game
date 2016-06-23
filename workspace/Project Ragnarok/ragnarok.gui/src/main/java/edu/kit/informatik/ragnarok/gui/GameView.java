@@ -157,6 +157,10 @@ class GameView implements View {
 		float cameraOffset = scene.getCameraOffset();
 		this.field.setCurrentOffset(cameraOffset);
 
+		
+		this.field.setBackground(SwtUtils.calcRGB(GameConf.GAME_BACKGROUD_COLOR));
+
+		
 		// Draw background
 		if (scene.getBackground() != null) {
 			scene.getBackground().render(this.field);
