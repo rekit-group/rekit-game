@@ -41,8 +41,6 @@ public class LevelScene extends Scene {
 
 	private CameraTarget cameraTarget;
 
-	private float currentOffset;
-
 	private ParallaxContainer parallax;
 
 	private int highScore = -1;
@@ -139,7 +137,7 @@ public class LevelScene extends Scene {
 		}
 
 		// check if we can delete this
-		if (e.getPos().getX() < this.currentOffset - GameConf.PLAYER_CAMERA_OFFSET - 1) {
+		if (e.getPos().getX() + e.getSize().getX() / 2 < this.getCameraOffset()) {
 			this.removeGameElement(e);
 		} else {
 			e.logicLoop(timeDelta);
