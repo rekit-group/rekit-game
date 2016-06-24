@@ -51,7 +51,7 @@ public class GameModel implements CameraTarget, Model {
 				while (!GameModel.this.endGame) {
 					GameModel.this.logicLoop();
 					ThreadUtils.sleep(GameConf.LOGIC_DELTA);
-					System.gc();
+					// System.gc();
 				}
 				GameModel.this.end();
 			}
