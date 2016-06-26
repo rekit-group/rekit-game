@@ -3,19 +3,12 @@ package edu.kit.informatik.ragnarok.logic.parallax;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 import edu.kit.informatik.ragnarok.util.RGBAColor;
 
 public class HeapLayer extends ParallaxLayer {
-
-	private final Object sync = new Object();
-
-	protected final Random RNG = new Random();
-
-	protected float currentlyGeneratedUntil = 0;
 
 	/**
 	 * Prototype for cloning new HeapElements
@@ -97,9 +90,4 @@ public class HeapLayer extends ParallaxLayer {
 	public float calcWithVariance(float mu, float sigma) {
 		return mu + (this.RNG.nextFloat() * 2 * sigma) - sigma;
 	}
-
-	public Object synchronize() {
-		return this.sync;
-	}
-
 }
