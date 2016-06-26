@@ -67,9 +67,4 @@ public class SlurpDurp extends Entity {
 		f.drawCircle(this.getPos(), new Vec2D(this.currentSize), new RGBColor(94, 233, 101));
 	}
 
-	@Override
-	public Entity create(Vec2D startPos) {
-		throw new UnsupportedOperationException("Create not supported for SlurpDurps");
-	}
-
 }

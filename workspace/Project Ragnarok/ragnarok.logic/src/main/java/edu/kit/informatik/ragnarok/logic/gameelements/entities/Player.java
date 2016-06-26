@@ -26,7 +26,7 @@ public class Player extends Entity implements CameraTarget {
 		this.setPos(this.startPos);
 		this.lifes = GameConf.PLAYER_LIFES;
 		this.points = 0;
-		this.setTeam(0);
+		this.team = 0;
 		this.currentDirection = Direction.RIGHT;
 		this.setVel(new Vec2D(0, 0));
 		this.deleteMe = false;
@@ -93,7 +93,7 @@ public class Player extends Entity implements CameraTarget {
 	public void resetCameraOffset() {
 		this.currentCameraOffset = 0;
 	}
-	
+
 	@Override
 	public float getCameraOffset() {
 		// get maximum player x and adjust level offset
@@ -102,11 +102,6 @@ public class Player extends Entity implements CameraTarget {
 			this.currentCameraOffset = offsetNow;
 		}
 		return this.currentCameraOffset;
-	}
-
-	@Override
-	public Entity create(Vec2D startPos) {
-		throw new UnsupportedOperationException("Create not supported for Players");
 	}
 
 }

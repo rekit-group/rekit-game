@@ -27,7 +27,7 @@ public abstract class Entity extends GameElement {
 	private EntityState entityState;
 
 	protected TimeDependency invincibility = null;
-	
+
 	/**
 	 * Constructor that initializes attributes and takes a start position
 	 *
@@ -71,13 +71,13 @@ public abstract class Entity extends GameElement {
 		if (damage > 0 && this.invincibility != null && !this.invincibility.timeUp()) {
 			return;
 		}
-			 
+
 		this.lifes -= damage;
-		
+
 		if (damage > 0) {
 			this.invincibility = new TimeDependency(2);
 		}
-		
+
 		if (this.lifes <= 0) {
 			this.lifes = 0;
 			this.destroy();
@@ -113,7 +113,7 @@ public abstract class Entity extends GameElement {
 			this.logicLoop(deltaTime / 2);
 			return;
 		}
-		
+
 		if (this.invincibility != null) {
 			this.invincibility.removeTime(deltaTime);
 		}
@@ -173,16 +173,19 @@ public abstract class Entity extends GameElement {
 		this.setLastPos(lastPos);
 	}
 
-	public abstract Entity create(Vec2D startPos);
+	public Entity create(Vec2D startPos) {
+		throw new UnsupportedOperationException("Create not supported for " + this.getClass().getSimpleName() + "s");
+	}
 
 	@Override
 	public int getZ() {
 		return 1;
 	}
-	
+
+	@Override
 	public boolean isVisible() {
 		if (this.invincibility != null && !this.invincibility.timeUp()) {
-			return (int)(this.invincibility.getProgress() * 20) % 2 == 0;
+			return (int) (this.invincibility.getProgress() * 20) % 2 == 0;
 		}
 		return super.isVisible();
 	}

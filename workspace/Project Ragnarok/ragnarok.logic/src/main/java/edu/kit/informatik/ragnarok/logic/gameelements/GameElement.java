@@ -13,14 +13,10 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 
 	private Vec2D size = new Vec2D(1, 1);
 
-	private int team = 1;
+	protected int team = 1;
 
 	public void destroy() {
 		this.deleteMe = true;
-	}
-
-	protected void setTeam(int value) {
-		this.team = value;
 	}
 
 	protected int getTeam() {
@@ -84,13 +80,6 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 		this.size = size;
 	}
 
-	/**
-	 * <pre>
-	 *           1..*     1..1
-	 * GameElement ------------------------- GameModel
-	 *           gameElement        &lt;       gameModel
-	 * </pre>
-	 */
 	private Scene scene;
 
 	public void setScene(Scene value) {
@@ -118,7 +107,7 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 	public int compareTo(GameElement other) {
 		return this.getZ() - other.getZ();
 	}
-	
+
 	public boolean isVisible() {
 		return this.visible;
 	}
