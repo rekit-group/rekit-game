@@ -1,6 +1,7 @@
 package edu.kit.informatik.ragnarok.logic.scene;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.PriorityQueue;
 
@@ -13,15 +14,15 @@ import edu.kit.informatik.ragnarok.logic.gameelements.gui.GuiElement;
 import edu.kit.informatik.ragnarok.logic.parallax.ParallaxContainer;
 
 public abstract class Scene implements CameraTarget {
-	
+
 	/**
 	 * Synchronization Object that is used as a lock variable for blocking
 	 * operations
 	 */
 	private final Object sync = new Object();
-	
+
 	protected GameModel model;
-	
+
 	private PriorityQueue<GuiElement> guiElements;
 
 	private PriorityQueue<GameElement> gameElements;
@@ -29,43 +30,43 @@ public abstract class Scene implements CameraTarget {
 	private ArrayList<GameElement> gameElementAddQueue;
 
 	private ArrayList<GameElement> gameElementRemoveQueue;
-
+	private static final Comparator<GameElement> COMP_GAME = (o1, o2) -> o1.getZ() - o2.getZ();
+	private static final Comparator<GuiElement> COMP_GUI = (o1, o2) -> o1.getZ() - o2.getZ();
 
 	public Scene(GameModel model) {
 		this.model = model;
 	}
-	
+
 	/**
-	 * Initialize the scene.
-	 * e.g. build Level/GUI so Scene is ready to be drawn
+	 * Initialize the scene. e.g. build Level/GUI so Scene is ready to be drawn
 	 * Must be called on restart.
 	 */
 	public void init() {
-		this.guiElements = new PriorityQueue<>();
-		this.gameElements = new PriorityQueue<GameElement>();
-		this.gameElementAddQueue = new ArrayList<GameElement>();
-		this.gameElementRemoveQueue = new ArrayList<GameElement>();
+		this.guiElements = new PriorityQueue<>(Scene.COMP_GUI);
+		this.gameElements = new PriorityQueue<>(Scene.COMP_GAME);
+		this.gameElementAddQueue = new ArrayList<>();
+		this.gameElementRemoveQueue = new ArrayList<>();
 	}
-	
+
 	/**
-	 * Start the scene. Begin drawing.
-	 * e.g. Player/Enemies will begin to move
+	 * Start the scene. Begin drawing. e.g. Player/Enemies will begin to move
 	 */
-	public void start() {};
-	
+	public void start() {
+	};
+
 	public void end() {
 		this.model.switchScene(0);
 	};
-	
+
 	public void restart() {
 		this.init();
 		this.start();
 	}
-	
+
 	public void logicLoop(float timeDelta) {
-		
-		logicLoopPre(timeDelta);
-		
+
+		this.logicLoopPre(timeDelta);
+
 		// add GameElements that have been added
 		this.addGameElements();
 
@@ -73,20 +74,19 @@ public abstract class Scene implements CameraTarget {
 		synchronized (this.synchronize()) {
 			Iterator<GameElement> it = this.getGameElementIterator();
 			while (it.hasNext()) {
-				logicLoopGameElement(timeDelta, it);
+				this.logicLoopGameElement(timeDelta, it);
 			}
 		}
-		
+
 		this.getBackground().logicLoop(this.getCameraOffset());
 
 		// remove GameElements that must be removed
 		this.removeGameElements();
 
-		logicLoopAfter();
-		
+		this.logicLoopAfter();
+
 		// after all game related logic update GuiElements
-		synchronized (this.synchronize())
-		{
+		synchronized (this.synchronize()) {
 			Iterator<GuiElement> it = this.getGuiElementIterator();
 			while (it.hasNext()) {
 				GuiElement e = it.next();
@@ -96,21 +96,23 @@ public abstract class Scene implements CameraTarget {
 
 	}
 
-	protected void logicLoopAfter() {}
+	protected void logicLoopAfter() {
+	}
 
-	protected void logicLoopPre(float timeDelta) {}
+	protected void logicLoopPre(float timeDelta) {
+	}
 
 	protected void logicLoopGameElement(float timeDelta, Iterator<GameElement> it) {
 		GameElement e = it.next();
 
 		// if this GameElement is marked for destruction
-		if (e.deleteMe) {
+		if (e.getDelete()) {
 			it.remove();
 		}
 
 		e.logicLoop(timeDelta);
 	}
-	
+
 	/**
 	 * Adds a GameElement to the Model. The elements will not directly be added
 	 * to the internal data structure to prevent concurrency errors. Instead
@@ -173,29 +175,29 @@ public abstract class Scene implements CameraTarget {
 			}
 		}
 	}
-	
+
 	public Iterator<GameElement> getOrderedGameElementIterator() {
-		return new PriorityQueueIterator<GameElement>(this.gameElements);
+		return new PriorityQueueIterator<>(this.gameElements, Scene.COMP_GAME);
 	}
-	
+
 	public Iterator<GameElement> getGameElementIterator() {
 		return this.gameElements.iterator();
 	}
-	
+
 	/**
-	 * Adds a GuiElement to the GameModel. 
-	 * @param e the GuiElement to add
+	 * Adds a GuiElement to the GameModel.
+	 *
+	 * @param e
+	 *            the GuiElement to add
 	 */
-	public void addGuiElement(GuiElement e)
-	{
+	public void addGuiElement(GuiElement e) {
 		this.guiElements.add(e);
 	}
-	
-	public void removeGuiElement(GuiElement e)
-	{
+
+	public void removeGuiElement(GuiElement e) {
 		this.guiElements.remove(e);
 	}
-	
+
 	public Iterator<GuiElement> getGuiElementIterator() {
 		return this.guiElements.iterator();
 	}
@@ -203,22 +205,27 @@ public abstract class Scene implements CameraTarget {
 	public Player getPlayer() {
 		return null;
 	}
-	
+
 	public ParallaxContainer getBackground() {
 		return null;
 	}
-	
+
 	@Override
 	public float getCameraOffset() {
 		return 0;
 	}
-	
+
 	public void setCameraTarget(CameraTarget cameraTarget) {
-		
+
 	}
-	
+
 	public Object synchronize() {
 		return this.sync;
+	}
+
+	@Override
+	public void resetCameraOffset() {
+		return;
 	}
 
 }

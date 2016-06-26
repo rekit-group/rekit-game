@@ -2,22 +2,23 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities.pickups;
 
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
 public class Life extends Entity {
 	public Life() {
-		super(null);
+		super(Team.INANIMATE, null);
 	}
 
 	public Life(Vec2D startPos) {
-		super(startPos);
+		super(Team.INANIMATE, startPos);
 	}
 
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
-		if (this.isHostile(element)) {
+		if (this.getTeam().isHostile(element.getTeam())) {
 			element.addDamage(-1);
 			this.addDamage(1);
 		}
@@ -29,8 +30,8 @@ public class Life extends Entity {
 	}
 
 	@Override
-	public void render(Field f) {
-		f.drawImage(this.getPos(), this.getSize(), "mrRekt_glasses_left.png");
+	public void internRender(Field f) {
+		f.drawImage(this.getPos(), this.size, "mrRekt_glasses_left.png");
 	}
 
 	@Override

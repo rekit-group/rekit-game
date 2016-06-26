@@ -3,6 +3,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawner;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
@@ -17,7 +18,8 @@ public class Rocket extends Entity {
 	 * Prototype Constructor
 	 */
 	public Rocket() {
-		super(null);
+		super(Team.ENEMY, null);
+		this.size = Vec2D.create(1.8f, 0.5f);
 	}
 
 	private static RGBColor innerColor = new RGBColor(90, 90, 90);
@@ -53,39 +55,35 @@ public class Rocket extends Entity {
 	}
 
 	public Rocket(Vec2D startPos) {
-		super(startPos);
+		super(Team.ENEMY, startPos);
+		this.size = Vec2D.create(1.8f, 0.5f);
 	}
 
 	@Override
-	public void render(Field f) {
+	public void internRender(Field f) {
 
-		Rocket.sparkParticles.spawn(this.getScene(), this.getPos().addX(this.getSize().getX() / 2));
+		Rocket.sparkParticles.spawn(this.getScene(), this.getPos().addX(this.size.getX() / 2));
 
 		// draw body
-		f.drawRectangle(this.getPos(), this.getSize().multiply(0.8f, 0.6f), Rocket.innerColor);
+		f.drawRectangle(this.getPos(), this.size.multiply(0.8f, 0.6f), Rocket.innerColor);
 
 		// draw spike at front
-		Vec2D startPt = this.getPos().addX(-this.getSize().multiply(0.5f).getX());
-		Vec2D[] relPts = new Vec2D[] { new Vec2D(this.getSize().multiply(0.1f).getX(), -this.getSize().multiply(0.5f).getY()),
-				new Vec2D(this.getSize().multiply(0.1f).getX(), this.getSize().multiply(0.5f).getY()), new Vec2D() };
+		Vec2D startPt = this.getPos().addX(-this.size.multiply(0.5f).getX());
+		Vec2D[] relPts = new Vec2D[] { new Vec2D(this.size.multiply(0.1f).getX(), -this.size.multiply(0.5f).getY()),
+				new Vec2D(this.size.multiply(0.1f).getX(), this.size.multiply(0.5f).getY()), new Vec2D() };
 		f.drawPolygon(new Polygon(startPt, relPts), Rocket.frontColor);
 
 		// draw stripes
-		Vec2D stripeStart = this.getPos().addX(-this.getSize().multiply(0.4f - 0.05f - 0.025f).getX());
+		Vec2D stripeStart = this.getPos().addX(-this.size.multiply(0.4f - 0.05f - 0.025f).getX());
 		for (int x = 0; x < 9; x++) {
-			f.drawRectangle(stripeStart.addX(0.15f * x), this.getSize().multiply(0.05f, 0.75f), Rocket.outerColor);
+			f.drawRectangle(stripeStart.addX(0.15f * x), this.size.multiply(0.05f, 0.75f), Rocket.outerColor);
 		}
 
 		// draw drive at back
-		startPt = this.getPos().addX(this.getSize().multiply(0.5f).getX()).addY(-this.getSize().multiply(0.5f).getY());
-		relPts = new Vec2D[] { new Vec2D(0, this.getSize().getY()), new Vec2D(-this.getSize().getX() * 0.1f, this.getSize().getY() * 0.8f),
-				new Vec2D(-this.getSize().getX() * 0.1f, this.getSize().getY() * 0.2f), new Vec2D() };
+		startPt = this.getPos().addX(this.size.multiply(0.5f).getX()).addY(-this.size.multiply(0.5f).getY());
+		relPts = new Vec2D[] { new Vec2D(0, this.size.getY()), new Vec2D(-this.size.getX() * 0.1f, this.size.getY() * 0.8f),
+				new Vec2D(-this.size.getX() * 0.1f, this.size.getY() * 0.2f), new Vec2D() };
 		f.drawPolygon(new Polygon(startPt, relPts), Rocket.outerColor);
-	}
-
-	@Override
-	public Vec2D getSize() {
-		return new Vec2D(1.8f, 0.5f);
 	}
 
 	@Override
@@ -101,7 +99,7 @@ public class Rocket extends Entity {
 			return;
 		}
 
-		if (this.isHostile(element)) {
+		if (this.getTeam().isHostile(element.getTeam())) {
 
 			if (dir == Direction.UP) {
 				element.setVel(element.getVel().setY(GameConf.PLAYER_JUMP_BOOST));

@@ -5,38 +5,49 @@ import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
-public abstract class GameElement implements Collidable, Comparable<GameElement> {
+public abstract class GameElement implements Collidable {
 
-	private boolean visible = true;
+	protected boolean deleteMe;
+	private Vec2D vel;
+	private Vec2D pos;
+	private Vec2D lastPos;
+	private Scene scene;
 
-	public boolean deleteMe = false;
+	protected Vec2D size;
 
-	private Vec2D size = new Vec2D(1, 1);
+	protected Team team;
 
-	protected int team = 1;
-
-	public void destroy() {
-		this.deleteMe = true;
+	protected GameElement(Team team) {
+		this(team, Vec2D.create(1, 1));
 	}
 
-	protected int getTeam() {
-		return this.team;
+	protected GameElement(Team team, Vec2D size) {
+		this.team = team;
+		this.size = size;
+		this.deleteMe = false;
+		this.vel = new Vec2D();
 	}
 
-	protected boolean isHostile(GameElement other) {
-		return this.getTeam() != other.getTeam();
+	public abstract void render(Field f);
+
+	public void logicLoop(float deltaTime) {
+		// Do nothing
+		return;
 	}
 
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
 		// Do nothing
+		return;
 	}
 
-	public void logicLoop(float deltaTime) {
-		// Do nothing
+	public void destroy() {
+		this.deleteMe = true;
 	}
 
-	private Vec2D vel = new Vec2D();
+	public Team getTeam() {
+		return this.team;
+	}
 
 	public void setVel(Vec2D value) {
 		this.vel = value;
@@ -46,41 +57,26 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 		return this.vel;
 	}
 
-	private Vec2D pos;
-
 	public void setPos(Vec2D value) {
 		if (this.pos == null) {
 			this.setLastPos(value);
 		} else {
 			this.setLastPos(this.pos);
 		}
-
 		this.pos = value;
 	}
 
 	public Vec2D getPos() {
-		return this.pos;
+		return this.pos.clone();
 	}
 
-	private Vec2D lastPos;
-
-	public void setLastPos(Vec2D value) {
+	protected void setLastPos(Vec2D value) {
 		this.lastPos = value;
 	}
 
 	public Vec2D getLastPos() {
-		return this.lastPos;
+		return this.lastPos.clone();
 	}
-
-	public Vec2D getSize() {
-		return this.size;
-	}
-
-	public void setSize(Vec2D size) {
-		this.size = size;
-	}
-
-	private Scene scene;
 
 	public void setScene(Scene value) {
 		this.scene = value;
@@ -90,25 +86,26 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 		return this.scene;
 	}
 
-	public Frame getCollisionFrame() {
-		Vec2D v1 = this.getPos().add(this.getSize().multiply(-0.5f));
-		Vec2D v2 = this.getPos().add(this.getSize().multiply(0.5f));
-
+	public final Frame getCollisionFrame() {
+		Vec2D v1 = this.getPos().add(this.size.multiply(-0.5f));
+		Vec2D v2 = this.getPos().add(this.size.multiply(0.5f));
 		return new Frame(v1, v2);
 	}
-
-	public abstract void render(Field f);
 
 	public int getZ() {
 		return 0;
 	}
 
-	@Override
-	public int compareTo(GameElement other) {
-		return this.getZ() - other.getZ();
+	public boolean getDelete() {
+		return this.deleteMe;
 	}
 
-	public boolean isVisible() {
-		return this.visible;
+	public final boolean canDelete(float cameraOffset) {
+		return this.pos.getX() + this.size.getX() / 2 < cameraOffset;
 	}
+
+	public Vec2D getSize() {
+		return this.size.clone();
+	}
+
 }

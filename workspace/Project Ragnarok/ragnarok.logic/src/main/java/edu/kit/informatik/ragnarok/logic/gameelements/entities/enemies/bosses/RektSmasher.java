@@ -17,12 +17,11 @@ public class RektSmasher extends Boss {
 
 		// Configure own attributes
 		super(startPos);
-		this.setSize(new Vec2D(2f, 2f));
+		this.size = Vec2D.create(2f, 2f);
 
 		// Configure innerRektKiller
-		this.innerRektKiller = new RektKiller(startPos, 15);
+		this.innerRektKiller = new RektKiller(startPos, 15, this.size);
 		this.innerRektKiller.setCurrentDirection(Direction.DOWN);
-		this.innerRektKiller.setSize(this.getSize());
 		this.innerRektKiller.prepare();
 
 		this.setLifes(3);
@@ -38,17 +37,17 @@ public class RektSmasher extends Boss {
 	}
 
 	@Override
-	public void render(Field f) {
+	public void internRender(Field f) {
 
 		// Update innerRektKiller
 		this.innerRektKiller.setPos(this.getPos());
 
 		// Render innerRektKiller
-		this.innerRektKiller.render(f);
+		this.innerRektKiller.internRender(f);
 
 		// Add face image above regular innerRektKiller visualization
 		int lifes = this.getLifes() > 3 ? 3 : this.getLifes();
-		f.drawImage(this.getPos(), this.getSize().multiply(0.8f), "rektSmasher_" + lifes + ".png");
+		f.drawImage(this.getPos(), this.size.multiply(0.8f), "rektSmasher_" + lifes + ".png");
 	}
 
 	@Override
@@ -115,7 +114,7 @@ public class RektSmasher extends Boss {
 			return;
 		}
 
-		if (this.isHostile(element)) {
+		if (this.getTeam().isHostile(element.getTeam())) {
 			// Touched harmless side
 			if (!this.innerRektKiller.hasSide(dir)) {
 				// Let the player jump if he landed on top

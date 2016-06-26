@@ -5,6 +5,7 @@ import java.util.Random;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
@@ -24,11 +25,11 @@ public class RektKiller extends Entity {
 	 * Prototype Constructor
 	 */
 	public RektKiller() {
-		super(null);
+		super(Team.ENEMY, null);
 	}
 
 	public RektKiller(Vec2D startPos, int sides) {
-		super(startPos);
+		super(Team.ENEMY, startPos);
 
 		if (sides < 0 || sides > 15) {
 			throw new IllegalArgumentException("RektKiller must be give a number between 0 and 14");
@@ -40,22 +41,27 @@ public class RektKiller extends Entity {
 		this.setCurrentDirection(Direction.values()[x]);
 		this.setSides(sides);
 
-		this.setSize(new Vec2D(0.6f, 0.6f));
+		this.size = Vec2D.create(0.6f, 0.6f);
 		this.prepare();
+	}
+
+	public RektKiller(Vec2D startPos, int sides, Vec2D size) {
+		this(startPos, sides);
+		this.size = size;
 	}
 
 	public void prepare() {
 		// calculate size dependent Polygon for spikes
 		this.spikePolygon = new Polygon(new Vec2D(),
-				new Vec2D[] { new Vec2D(0.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
-						new Vec2D(1.0f * ((this.getSize().getX() * 0.8f) / 3f), 0),
-						new Vec2D(1.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
-						new Vec2D(2.0f * ((this.getSize().getX() * 0.8f) / 3f), 0),
-						new Vec2D(2.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
-						new Vec2D(3.0f * ((this.getSize().getX() * 0.8f) / 3f), 0), new Vec2D() // and
-																								// back
-																								// to
-																								// start
+				new Vec2D[] { new Vec2D(0.5f * ((this.size.getX() * 0.8f) / 3f), -(this.size.getY() * 0.8f) / 3f),
+						new Vec2D(1.0f * ((this.size.getX() * 0.8f) / 3f), 0),
+						new Vec2D(1.5f * ((this.size.getX() * 0.8f) / 3f), -(this.size.getY() * 0.8f) / 3f),
+						new Vec2D(2.0f * ((this.size.getX() * 0.8f) / 3f), 0),
+						new Vec2D(2.5f * ((this.size.getX() * 0.8f) / 3f), -(this.size.getY() * 0.8f) / 3f),
+						new Vec2D(3.0f * ((this.size.getX() * 0.8f) / 3f), 0), new Vec2D() // and
+																							// back
+																							// to
+																							// start
 				});
 	}
 
@@ -105,17 +111,16 @@ public class RektKiller extends Entity {
 	}
 
 	@Override
-	public void render(Field f) {
+	public void internRender(Field f) {
 		Vec2D pos = this.getPos();
-		Vec2D size = this.getSize();
 		RGBColor innerColor = new RGBColor(150, 30, 30);
 		RGBColor spikeColor = new RGBColor(80, 80, 80);
 
 		// draw rectangle in the middle
-		f.drawRectangle(pos, size.multiply(0.8f), innerColor);
+		f.drawRectangle(pos, this.size.multiply(0.8f), innerColor);
 
 		// move to upper position
-		this.spikePolygon.moveTo(pos.add(size.multiply(-0.8f / 2f)));
+		this.spikePolygon.moveTo(pos.add(this.size.multiply(-0.8f / 2f)));
 
 		for (Direction d : Direction.values()) {
 			if (this.hasSide(d)) {
@@ -133,7 +138,7 @@ public class RektKiller extends Entity {
 
 		// Do usual entity logic
 		super.logicLoop(deltaTime);
-		
+
 		if (this.getPos().getY() <= 0) {
 			this.collidedWith(new Frame(new Vec2D(0, 0), new Vec2D(0, 0)), Direction.DOWN);
 		}
@@ -151,7 +156,7 @@ public class RektKiller extends Entity {
 			return;
 		}
 
-		if (this.isHostile(element)) {
+		if (this.getTeam().isHostile(element.getTeam())) {
 			// Touched harmless side
 			if (!this.hasSide(dir)) {
 				// give the player 40 points
@@ -192,7 +197,7 @@ public class RektKiller extends Entity {
 	}
 
 	public Direction getCurrentDirection() {
-		return currentDirection;
+		return this.currentDirection;
 	}
 
 	public void setCurrentDirection(Direction currentDirection) {
@@ -200,7 +205,7 @@ public class RektKiller extends Entity {
 	}
 
 	public int getSides() {
-		return sides;
+		return this.sides;
 	}
 
 	public void setSides(int sides) {

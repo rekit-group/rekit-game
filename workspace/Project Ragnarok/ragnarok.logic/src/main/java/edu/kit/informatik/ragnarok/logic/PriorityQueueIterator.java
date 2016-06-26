@@ -1,5 +1,6 @@
 package edu.kit.informatik.ragnarok.logic;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.PriorityQueue;
 
@@ -7,10 +8,11 @@ import java.util.PriorityQueue;
  * Iterator for PrioriyQueues. It differs from the regular Iterator fore it
  * enables traversing in ascending priority order. This is achieved by taking
  * advantage of the fact that a removed PriorityQueue always has the lowest
- * priority.
- * <b>Note:</b> Since it clones a PriorityQueue it is not as efficient!
+ * priority. <b>Note:</b> Since it clones a PriorityQueue it is not as
+ * efficient!
  *
- * @param <T> the type of the aggregates
+ * @param <T>
+ *            the type of the aggregates
  * @author Angelo Aracri
  * @version 1.0
  */
@@ -20,12 +22,14 @@ public class PriorityQueueIterator<T> implements Iterator<T> {
 
 	/**
 	 * Creates an Iterator for a given PriorityQueue.
-	 * @param queue the PriorityQueue to iterate over
+	 *
+	 * @param queue
+	 *            the PriorityQueue to iterate over
 	 */
-	public PriorityQueueIterator(PriorityQueue<T> queue) {
+	public PriorityQueueIterator(PriorityQueue<T> queue, Comparator<T> comparator) {
 
 		// create own Queue in Iterator
-		this.queue = new PriorityQueue<T>();
+		this.queue = new PriorityQueue<>(comparator);
 
 		// add elements unsortedly
 		Iterator<T> it = queue.iterator();

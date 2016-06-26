@@ -133,12 +133,12 @@ public class LevelScene extends Scene {
 		GameElement e = it.next();
 
 		// if this GameElement is marked for destruction
-		if (e.deleteMe) {
+		if (e.getDelete()) {
 			it.remove();
 		}
 
 		// check if we can delete this
-		if (e.getPos().getX() + e.getSize().getX() / 2 < this.getCameraOffset()) {
+		if (e.canDelete(this.getCameraOffset())) {
 			this.removeGameElement(e);
 		} else {
 			e.logicLoop(timeDelta);
@@ -162,7 +162,7 @@ public class LevelScene extends Scene {
 			}
 		}
 
-		if (this.player.deleteMe) {
+		if (this.player.getDelete()) {
 			this.end();
 		}
 	}

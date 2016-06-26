@@ -1,8 +1,7 @@
 package edu.kit.informatik.ragnarok.gui;
 
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Image;
@@ -19,7 +18,7 @@ public class ImageLoader {
 	/**
 	 * The cache
 	 */
-	private final static Map<String, Image> CACHE = new HashMap<String, Image>();
+	private final static ConcurrentHashMap<String, Image> CACHE = new ConcurrentHashMap<>();
 	/**
 	 * The Device needed for creation of {@link Image Images}
 	 */

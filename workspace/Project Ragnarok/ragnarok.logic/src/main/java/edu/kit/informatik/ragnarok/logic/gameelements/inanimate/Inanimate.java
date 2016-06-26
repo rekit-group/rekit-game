@@ -1,44 +1,43 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.inanimate;
 
-
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 
 public class Inanimate extends GameElement {
-	
+
 	protected RGBColor color;
-	
+
 	public Inanimate(Vec2D pos, Vec2D size, RGBColor color) {
+		super(Team.INANIMATE, size);
 		this.setPos(pos);
-		this.setSize(size);
-		this.color = color;		
+		this.color = color;
 	}
 
 	@Override
 	public void render(Field f) {
-		Vec2D pos = this.getPos();
-		
-		f.drawRectangle(pos, this.getSize().multiply(0.95f), this.color);
+		f.drawRectangle(this.getPos(), this.size.multiply(0.95f), this.color);
 	}
 
+	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
 		element.collidedWith(this.getCollisionFrame(), dir);
 	}
-	
+
 	@Override
 	public void addDamage(int damage) {
 		// Do nothing, blocks cannot be damaged
 	}
-	
+
 	@Override
 	public void addPoints(int points) {
 		// Do nothing, blocks cannot get points
 	}
-	
+
 	@Override
 	public int getPoints() {
 		return 0;

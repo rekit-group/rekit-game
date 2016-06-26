@@ -82,7 +82,7 @@ public class BossRoom {
 		this.triggerPos = new Vec2D(x + 6, GameConf.GRID_H - 2);
 		InanimateTrigger trigger = new InanimateTrigger(this.triggerPos, new Vec2D(1, 1)) {
 			@Override
-			public void perform() {
+			public void performTrigger() {
 				if (!this.deleteMe) {
 					BossRoom.this.startBattle(this);
 				}

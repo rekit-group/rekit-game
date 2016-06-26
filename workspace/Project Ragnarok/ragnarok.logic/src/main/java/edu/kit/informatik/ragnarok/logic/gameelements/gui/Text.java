@@ -5,20 +5,20 @@ import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.util.TextOptions;
 
 public class Text extends GuiElement {
-	
+
 	private String text;
 	private TextOptions options;
-	
+
 	public String getText() {
-		return text;
+		return this.text;
 	}
 
 	public void setText(String text) {
 		this.text = text;
 	}
-	
+
 	public TextOptions getOptions() {
-		return options;
+		return this.options;
 	}
 
 	public void setOptions(TextOptions options) {
@@ -32,7 +32,7 @@ public class Text extends GuiElement {
 	}
 
 	@Override
-	public void render(Field f) {
+	public void internRender(Field f) {
 		f.drawText(this.getPos(), this.text, this.getOptions());
 	}
 }

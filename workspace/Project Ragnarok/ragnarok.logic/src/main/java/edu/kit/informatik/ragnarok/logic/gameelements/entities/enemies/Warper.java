@@ -3,6 +3,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawner;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
@@ -21,7 +22,8 @@ public class Warper extends Entity {
 	 * Prototype Constructor
 	 */
 	public Warper() {
-		super(null);
+		super(Team.ENEMY, null);
+		this.size = Vec2D.create(0.6f, 0.6f);
 	}
 
 	static {
@@ -36,25 +38,21 @@ public class Warper extends Entity {
 	}
 
 	public Warper(Vec2D startPos) {
-		super(startPos);
+		super(Team.ENEMY, startPos);
+		this.size = Vec2D.create(0.6f, 0.6f);
 	}
 
 	@Override
-	public void render(Field f) {
+	public void internRender(Field f) {
 		float progress = this.warpAction.getProgress();
 
 		for (float i = 1; i >= 0.2; i -= 0.1) {
 			RGBColor innerColor = new RGBColor((int) (250 * i), (int) (250 * (1 - progress)), (150));
 
 			// draw body
-			f.drawCircle(this.getPos(), this.getSize().multiply(i), innerColor);
+			f.drawCircle(this.getPos(), this.size.multiply(i), innerColor);
 		}
 
-	}
-
-	@Override
-	public Vec2D getSize() {
-		return new Vec2D(0.6f, 0.6f);
 	}
 
 	@Override
@@ -96,7 +94,7 @@ public class Warper extends Entity {
 			return;
 		}
 
-		if (this.isHostile(element)) {
+		if (this.getTeam().isHostile(element.getTeam())) {
 
 			// Give player damage
 			element.addDamage(1);

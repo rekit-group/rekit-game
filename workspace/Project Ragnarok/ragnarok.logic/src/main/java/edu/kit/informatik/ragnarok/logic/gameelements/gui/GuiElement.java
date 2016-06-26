@@ -4,27 +4,18 @@ import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
-public abstract class GuiElement implements Comparable<GuiElement> {
+public abstract class GuiElement {
 
-	private boolean visible = true;
-	
+	protected boolean visible = true;
 	private Vec2D pos = new Vec2D(0);
-	
-	/**
-	 * <pre>
-	 *           1..*     1..1
-	 * GameElement ------------------------- GameModel
-	 *           gameElement        &lt;       gameModel
-	 * </pre>
-	 */
 	private Scene scene;
-	
-	public boolean isVisible() {
-		return this.visible;
+
+	public GuiElement(Scene scene) {
+		this.scene = scene;
 	}
 
-	public void setVisible(boolean visible) {
-		this.visible = visible;
+	public boolean isVisible() {
+		return this.visible;
 	}
 
 	public void setPos(Vec2D value) {
@@ -35,30 +26,24 @@ public abstract class GuiElement implements Comparable<GuiElement> {
 		return this.pos;
 	}
 
-	public void setScene(Scene value) {
-		this.scene = value;
-	}
-
 	public Scene getScene() {
 		return this.scene;
 	}
-	
+
 	public int getZ() {
 		return 0;
 	}
-	
-	public GuiElement(Scene scene) {
-		this.scene = scene;
-	}
-	
+
 	public void logicLoop(float deltaTime) {
 		// Do nothing
 	}
-	
-	public abstract void render(Field f);
-	
-	@Override
-	public int compareTo(GuiElement other) {
-		return this.getZ() - other.getZ();
+
+	public final void render(Field f) {
+		if (this.isVisible()) {
+			this.internRender(f);
+		}
 	}
+
+	public abstract void internRender(Field f);
+
 }

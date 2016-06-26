@@ -49,7 +49,7 @@ public final class SwtUtils {
 		return new Point(newLeftPos, newTopPos);
 
 	}
-	
+
 	public static RGB calcRGB(RGBColor color) {
 		return new RGB(color.red, color.green, color.blue);
 	}
