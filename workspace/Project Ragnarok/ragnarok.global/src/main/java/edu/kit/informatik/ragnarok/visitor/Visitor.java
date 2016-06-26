@@ -104,7 +104,6 @@ public class Visitor {
 			}
 			m.setAccessible(true);
 			m.invoke(null);
-			System.out.println("Invoked StaticMethod " + m.getName());
 		} catch (Exception e) {
 			System.err.println("Cannot apply to field: " + m.getName());
 		}
@@ -113,8 +112,10 @@ public class Visitor {
 
 	private void applyStatic(Field field, ResourceBundle bundle) {
 		try {
-			if (!Modifier.isStatic(field.getModifiers()) || Modifier.isFinal(field.getModifiers())
-					|| !bundle.containsKey(field.getName())) {
+			if (field.getAnnotation(NoVisit.class) != null) {
+				return;
+			}
+			if (!Modifier.isStatic(field.getModifiers()) || Modifier.isFinal(field.getModifiers()) || !bundle.containsKey(field.getName())) {
 				System.err.println("WARNING: Field " + field.getName() + " is not static or final or has no definition");
 				return;
 			}
@@ -141,7 +142,6 @@ public class Visitor {
 			}
 			m.setAccessible(true);
 			m.invoke(v);
-			System.out.println("Invoked ObjectMethod " + m.getName());
 		} catch (Exception e) {
 			System.err.println("Cannot apply to field: " + m.getName());
 		}
@@ -150,6 +150,9 @@ public class Visitor {
 
 	private void applyObject(Visitable v, Field field, ResourceBundle bundle) {
 		try {
+			if (field.getAnnotation(NoVisit.class) != null) {
+				return;
+			}
 			if (Modifier.isStatic(field.getModifiers()) || Modifier.isFinal(field.getModifiers()) || !bundle.containsKey(field.getName())) {
 				System.err.println("WARNING: Field " + field.getName() + " is static or final or has no definition");
 				return;

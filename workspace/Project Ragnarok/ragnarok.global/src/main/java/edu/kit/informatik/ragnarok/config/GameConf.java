@@ -4,6 +4,7 @@ import edu.kit.informatik.ragnarok.primitives.Vec2D;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 import edu.kit.informatik.ragnarok.util.TextOptions;
 import edu.kit.informatik.ragnarok.visitor.AfterVisit;
+import edu.kit.informatik.ragnarok.visitor.NoVisit;
 import edu.kit.informatik.ragnarok.visitor.VisitInfo;
 import edu.kit.informatik.ragnarok.visitor.Visitable;
 
@@ -79,8 +80,9 @@ public class GameConf implements Visitable {
 	public static RGBColor GAME_TEXT_COLOR;
 	public static String GAME_TEXT_FONT;
 	public static int GAME_TEXT_SIZE;
-
+	@NoVisit
 	public static TextOptions DEFAULT_TEXT;
+	@NoVisit
 	public static TextOptions HINT_TEXT;
 
 	@AfterVisit
