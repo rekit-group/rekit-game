@@ -10,12 +10,12 @@ import edu.kit.informatik.ragnarok.util.RGBColor;
 
 public class Coin extends Entity {
 	public Coin() {
-		super(Team.INANIMATE, null);
+		super(Team.PICKUP, null);
 		this.size = Vec2D.create(0.7f, 0.7f);
 	}
 
 	public Coin(Vec2D startPos) {
-		super(Team.INANIMATE, startPos);
+		super(Team.PICKUP, startPos);
 		this.size = Vec2D.create(0.7f, 0.7f);
 	}
 

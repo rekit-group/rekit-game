@@ -9,11 +9,11 @@ import edu.kit.informatik.ragnarok.primitives.Vec2D;
 
 public class Life extends Entity {
 	public Life() {
-		super(Team.INANIMATE, null);
+		super(Team.PICKUP, null);
 	}
 
 	public Life(Vec2D startPos) {
-		super(Team.INANIMATE, startPos);
+		super(Team.PICKUP, startPos);
 	}
 
 	@Override
