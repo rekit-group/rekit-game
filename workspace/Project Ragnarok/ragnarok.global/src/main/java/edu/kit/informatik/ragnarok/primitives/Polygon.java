@@ -12,7 +12,7 @@ public class Polygon implements Cloneable {
 	public Polygon(Vec2D startPoint, Vec2D[] relPts) {
 		this.startPoint = startPoint;
 
-		this.relPts = new LinkedList<Vec2D>();
+		this.relPts = new LinkedList<>();
 		for (Vec2D relPt : relPts) {
 			this.addRelPt(relPt);
 		}
@@ -21,7 +21,7 @@ public class Polygon implements Cloneable {
 	public Polygon(Vec2D startPoint, List<Vec2D> relPts) {
 		this.startPoint = startPoint;
 
-		this.relPts = new LinkedList<Vec2D>();
+		this.relPts = new LinkedList<>();
 		for (Vec2D relPt : relPts) {
 			this.addRelPt(relPt);
 		}
@@ -29,7 +29,7 @@ public class Polygon implements Cloneable {
 
 	Polygon(Vec2D startPoint) {
 		this.startPoint = startPoint;
-		this.relPts = new LinkedList<Vec2D>();
+		this.relPts = new LinkedList<>();
 	}
 
 	@Override

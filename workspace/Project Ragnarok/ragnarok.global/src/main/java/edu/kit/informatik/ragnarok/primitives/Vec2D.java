@@ -2,11 +2,15 @@ package edu.kit.informatik.ragnarok.primitives;
 
 /**
  * A two dimensional Vector with operations
- * 
+ *
  * @author Angelo Aracri
  * @version 1.0
  */
 public class Vec2D implements Cloneable {
+	public static final Vec2D create(float x, float y) {
+		return new Vec2D(x, y);
+	}
+
 	/**
 	 * The x-component of the vector
 	 */
@@ -18,7 +22,7 @@ public class Vec2D implements Cloneable {
 
 	/**
 	 * Constructor that takes the initial coordinates an saves them
-	 * 
+	 *
 	 * @param x
 	 *            the initial x-component of the vector
 	 * @param y
@@ -31,7 +35,7 @@ public class Vec2D implements Cloneable {
 
 	/**
 	 * Constructor that takes one initial coordinate an saves them as x and y
-	 * 
+	 *
 	 * @param x
 	 *            the initial x- and y-component of the vector
 	 */
@@ -50,7 +54,7 @@ public class Vec2D implements Cloneable {
 
 	/**
 	 * Sets number to the x-component and <b>returns a new Vector</b>
-	 * 
+	 *
 	 * @param x
 	 *            the new x-component of the vector
 	 * @return the vector with the new x-component
@@ -61,7 +65,7 @@ public class Vec2D implements Cloneable {
 
 	/**
 	 * Adds a given number to the x-component and <b>returns a new Vector</b>
-	 * 
+	 *
 	 * @param deltaX
 	 *            the number to add to the original x-component of the vector
 	 * @return the vector with the new x-component
@@ -72,7 +76,7 @@ public class Vec2D implements Cloneable {
 
 	/**
 	 * Getter for the x-component of the vector
-	 * 
+	 *
 	 * @return the x-component
 	 */
 	public float getX() {
@@ -81,7 +85,7 @@ public class Vec2D implements Cloneable {
 
 	/**
 	 * Sets number to the y-component and <b>returns a new Vector</b>
-	 * 
+	 *
 	 * @param y
 	 *            the new y-component of the vector
 	 * @return the vector with the new y-component
@@ -92,7 +96,7 @@ public class Vec2D implements Cloneable {
 
 	/**
 	 * Adds a given number to the y-component and <b>returns a new Vector</b>
-	 * 
+	 *
 	 * @param deltaY
 	 *            the number to add to the original y-component of the vector
 	 * @return the vector with the new y-component
@@ -103,7 +107,7 @@ public class Vec2D implements Cloneable {
 
 	/**
 	 * Getter for the y-component of the vector
-	 * 
+	 *
 	 * @return the y-component
 	 */
 	public float getY() {
@@ -112,7 +116,7 @@ public class Vec2D implements Cloneable {
 
 	/**
 	 * Adds another vector to this vector and <b>returns a new Vector</b>
-	 * 
+	 *
 	 * @param vec
 	 *            the other vector to add
 	 * @return the sum of the vectors
@@ -123,7 +127,7 @@ public class Vec2D implements Cloneable {
 
 	/**
 	 * Multiplies the vector with a scalar and <b>returns a new Vector</b>
-	 * 
+	 *
 	 * @param scalar
 	 *            the scalar to multiply the vector with
 	 * @return the resulting vector
@@ -135,7 +139,7 @@ public class Vec2D implements Cloneable {
 	/**
 	 * Multiplies the vectors x-component and its y-component with separate
 	 * scalars and <b>returns a new Vector</b>
-	 * 
+	 *
 	 * @param scalarX
 	 *            the scalar to multiply the vectors x-component with
 	 * @param scalarY

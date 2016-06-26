@@ -2,7 +2,7 @@ package edu.kit.informatik.ragnarok.primitives;
 
 /**
  * Representation of the 4 directions there are
- * 
+ *
  * @author Angelo Aracri
  * @version 1.0
  */
@@ -10,19 +10,19 @@ public enum Direction {
 	/**
 	 * Represents the Direction left with the Vector (-1|0)
 	 */
-	LEFT(new Vec2D(-1, 0), 1.5 * Math.PI),
+	LEFT(Vec2D.create(-1, 0), 1.5 * Math.PI),
 	/**
 	 * Represents the Direction right with the Vector (1|0)
 	 */
-	RIGHT(new Vec2D(1, 0), 0.5 * Math.PI),
+	RIGHT(Vec2D.create(1, 0), 0.5 * Math.PI),
 	/**
 	 * Represents the Direction up with the Vector (0|-1)
 	 */
-	UP(new Vec2D(0, -1), 0),
+	UP(Vec2D.create(0, -1), 0),
 	/**
 	 * Represents the Direction down with the Vector (0|1)
 	 */
-	DOWN(new Vec2D(0, 1), 1 * Math.PI);
+	DOWN(Vec2D.create(0, 1), 1 * Math.PI);
 
 	private Vec2D vec;
 	private double angle;
@@ -34,7 +34,7 @@ public enum Direction {
 
 	/**
 	 * Get the vector to a corresponding direction
-	 * 
+	 *
 	 * @return
 	 */
 	public Vec2D getVector() {
@@ -43,7 +43,7 @@ public enum Direction {
 
 	/**
 	 * Get the angle to a corresponding direction relative to direction up
-	 * 
+	 *
 	 * @return
 	 */
 	public double getAngle() {
@@ -52,7 +52,7 @@ public enum Direction {
 
 	/**
 	 * Get the opposite direction to a direction
-	 * 
+	 *
 	 * @return
 	 */
 	public Direction getOpposite() {
@@ -70,7 +70,7 @@ public enum Direction {
 
 	/**
 	 * Get the next direction to a direction (clockwise)
-	 * 
+	 *
 	 * @return
 	 */
 	public Direction getNextClockwise() {
@@ -88,7 +88,7 @@ public enum Direction {
 
 	/**
 	 * Get the next direction to a direction (anticlockwise)
-	 * 
+	 *
 	 * @return
 	 */
 	public Direction getNextAntiClockwise() {
