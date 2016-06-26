@@ -48,14 +48,13 @@ public class RektSmasher extends Boss {
 
 		// Add face image above regular innerRektKiller visualization
 		int lifes = this.getLifes() > 3 ? 3 : this.getLifes();
-		f.drawImage(this.getPos(), this.getSize().multiply(0.8f),
-				"rektSmasher_" + lifes + ".png");
+		f.drawImage(this.getPos(), this.getSize().multiply(0.8f), "rektSmasher_" + lifes + ".png");
 	}
 
 	@Override
 	public void collidedWith(Frame collision, final Direction dir) {
 
-		Vec2D dif = this.getPos().add(getTarget().getPos().multiply(-1));
+		Vec2D dif = this.getPos().add(this.getTarget().getPos().multiply(-1));
 
 		super.collidedWith(collision, dir);
 
@@ -77,14 +76,23 @@ public class RektSmasher extends Boss {
 			}
 		}
 
+		// Randomly change direction sometimes
+		if (Math.random() > 0.8) {
+			newDir = Direction.getRandom();
+		}
+
+		// If direction did not change, pick another randomly
 		while (this.innerRektKiller.getCurrentDirection() == newDir) {
-			newDir = Direction.values()[(int) (Math.random() * Direction
-					.values().length)];
+			newDir = Direction.getRandom();
 		}
 		this.innerRektKiller.setCurrentDirection(newDir);
 
-		if (Math.random() > 0.9) {
+		// Randomly remove spikes on colliding side sometimes
+		if (Math.random() > 0.9 && this.innerRektKiller.hasSide(dir.getOpposite())) {
+			// remove side
 			this.innerRektKiller.setSide(dir.getOpposite(), false);
+
+			// start thread to re-add spikes after time
 			Thread spikeRespawnThread = new Thread() {
 				@Override
 				public void run() {
@@ -93,8 +101,7 @@ public class RektSmasher extends Boss {
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-					RektSmasher.this.innerRektKiller.setSide(dir.getOpposite(),
-							true);
+					RektSmasher.this.innerRektKiller.setSide(dir.getOpposite(), true);
 				}
 			};
 
@@ -113,8 +120,7 @@ public class RektSmasher extends Boss {
 			if (!this.innerRektKiller.hasSide(dir)) {
 				// Let the player jump if he landed on top
 				if (dir == Direction.UP) {
-					element.setVel(element.getVel().setY(
-							GameConf.PLAYER_JUMP_BOOST));
+					element.setVel(element.getVel().setY(GameConf.PLAYER_JUMP_BOOST));
 				}
 
 				// kill the enemy
@@ -133,8 +139,7 @@ public class RektSmasher extends Boss {
 	@Override
 	public void logicLoop(float deltaTime) {
 		// if no invincibility or invincibility time is up
-		if (this.invincibility == null
-				|| (this.invincibility != null && this.invincibility.timeUp())) {
+		if (this.invincibility == null || (this.invincibility != null && this.invincibility.timeUp())) {
 			this.setHarmless(false);
 		}
 		// if invincible
@@ -146,8 +151,7 @@ public class RektSmasher extends Boss {
 			this.setHarmless(true);
 		}
 
-		this.setVel(this.innerRektKiller.getCurrentDirection().getVector()
-				.multiply(this.speed * GameConf.PLAYER_WALK_MAX_SPEED));
+		this.setVel(this.innerRektKiller.getCurrentDirection().getVector().multiply(this.speed * GameConf.PLAYER_WALK_MAX_SPEED));
 
 		super.logicLoop(deltaTime);
 	}
