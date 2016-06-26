@@ -5,9 +5,9 @@ public enum Team {
 
 	public boolean isHostile(Team t) {
 		if (this == PLAYER) {
-			return t == ENEMY;
+			return t == ENEMY || t == INANIMATE;
 		}
-		if (this == ENEMY) {
+		if (this == ENEMY || this == INANIMATE) {
 			return t == PLAYER;
 		}
 		return false;
