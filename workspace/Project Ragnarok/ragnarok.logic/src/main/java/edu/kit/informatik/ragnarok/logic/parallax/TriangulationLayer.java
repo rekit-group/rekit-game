@@ -111,6 +111,11 @@ public class TriangulationLayer extends ParallaxLayer {
 		}
 	}
 
+	@Override
+	public int getElementCount() {
+		return this.triangles.size();
+	}
+
 	private class Triangle {
 		private Vec2D[] corners = new Vec2D[3];
 		private Polygon polygon;

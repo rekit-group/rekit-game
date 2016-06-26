@@ -28,13 +28,10 @@ public abstract class ParallaxLayer {
 		this.x = currentOffset;
 
 		this.generateUntil = this.x + GameConf.GRID_W;
-
 	}
 
 	public void render(Field f) {
-		// f.drawRectangle(new Vec2D(x + GameConf.GRID_W / 2f, GameConf.GRID_H /
-		// 2), new Vec2D(GameConf.GRID_W, GameConf.GRID_H), new RGBAColor(255,
-		// 255, 255, 100));
+
 	}
 
 	protected float fieldXtoLayerX(float fieldX) {
@@ -47,5 +44,9 @@ public abstract class ParallaxLayer {
 
 	public Object synchronize() {
 		return this.sync;
+	}
+
+	public int getElementCount() {
+		return 0;
 	}
 }

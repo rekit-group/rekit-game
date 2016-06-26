@@ -88,6 +88,11 @@ public class HeapLayer extends ParallaxLayer {
 		}
 	}
 
+	@Override
+	public int getElementCount() {
+		return this.elems.size();
+	}
+
 	public static float calcWithVariance(float mu, float sigma) {
 		return mu + (ParallaxLayer.RNG.nextFloat() * 2 * sigma) - sigma;
 	}
