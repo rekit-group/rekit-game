@@ -6,7 +6,7 @@ import edu.kit.informatik.ragnarok.util.RGBAColor;
 
 public abstract class HeapElement {
 
-	protected float heapDistanceMu() {
+	protected static float heapDistanceMu() {
 		return 9;
 	}
 

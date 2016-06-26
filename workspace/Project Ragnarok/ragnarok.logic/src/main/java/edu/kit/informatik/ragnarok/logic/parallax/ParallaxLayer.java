@@ -13,7 +13,7 @@ public abstract class ParallaxLayer {
 
 	private final Object sync = new Object();
 
-	protected final Random RNG = new Random();
+	protected static final Random RNG = new Random();
 
 	protected float currentlyGeneratedUntil = 0;
 

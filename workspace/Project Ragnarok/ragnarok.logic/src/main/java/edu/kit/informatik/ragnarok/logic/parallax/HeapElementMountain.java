@@ -1,5 +1,6 @@
 package edu.kit.informatik.ragnarok.logic.parallax;
 
+import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.primitives.Polygon;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
@@ -69,7 +70,7 @@ public class HeapElementMountain extends HeapElement {
 
 	@Override
 	protected final float elemYMu() {
-		return 9;
+		return GameConf.GRID_H - 3.5f;
 	}
 
 	@Override
