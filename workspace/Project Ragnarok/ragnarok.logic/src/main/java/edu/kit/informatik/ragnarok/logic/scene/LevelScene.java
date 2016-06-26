@@ -19,7 +19,9 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.LifeGui;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.ScoreGui;
 import edu.kit.informatik.ragnarok.logic.levelcreator.LevelCreator;
-import edu.kit.informatik.ragnarok.logic.parallax.CloudLayer;
+import edu.kit.informatik.ragnarok.logic.parallax.HeapElementCloud;
+import edu.kit.informatik.ragnarok.logic.parallax.HeapElementMountain;
+import edu.kit.informatik.ragnarok.logic.parallax.HeapLayer;
 import edu.kit.informatik.ragnarok.logic.parallax.ParallaxContainer;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
@@ -72,11 +74,8 @@ public class LevelScene extends Scene {
 
 		// Create parallax background
 		this.parallax = new ParallaxContainer();
-		this.parallax.addLayer(new CloudLayer(1.3f));
-		// this.parallax.addLayer(new ParallaxLayer("bg_layer_1.png", 1646,
-		// 1.4f));
-		// this.parallax.addLayer(new ParallaxLayer("bg_layer_2.png", 1646,
-		// 1.9f));
+		this.parallax.addLayer(new HeapLayer(new HeapElementCloud(null, null, null, null), 1.1f));
+		this.parallax.addLayer(new HeapLayer(new HeapElementMountain(null, null, null, null), 1.3f));
 
 		// Create Gui
 		this.scoreGui = new ScoreGui(this);
