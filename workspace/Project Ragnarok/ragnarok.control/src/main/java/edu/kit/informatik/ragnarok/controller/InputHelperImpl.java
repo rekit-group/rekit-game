@@ -1,10 +1,9 @@
 package edu.kit.informatik.ragnarok.controller;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.util.InputHelper;
@@ -44,12 +43,12 @@ final class InputHelperImpl implements InputHelper {
 	/**
 	 * List of all keyCodes that are currently pressed
 	 */
-	private Set<Integer> pressedKeys = new HashSet<Integer>();
+	private ConcurrentSkipListSet<Integer> pressedKeys = new ConcurrentSkipListSet<>();
 
 	/**
 	 * List of all keyCodes that have just been released
 	 */
-	private Set<Integer> releasedKeys = new HashSet<Integer>();
+	private ConcurrentSkipListSet<Integer> releasedKeys = new ConcurrentSkipListSet<>();
 
 	/**
 	 * Adds a pressed keys keyCode to the List and notifies observers
@@ -105,7 +104,7 @@ final class InputHelperImpl implements InputHelper {
 	 */
 	private void notifyObservers() {
 
-		List<Observer> obs = new ArrayList<Observer>();
+		List<Observer> obs = new ArrayList<>();
 		synchronized (this.observerSync) {
 			// Kind of hacky but works: blockingly (what kind of adverb is
 			// this??)

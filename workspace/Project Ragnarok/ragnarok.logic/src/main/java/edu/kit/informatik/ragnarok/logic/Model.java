@@ -30,12 +30,14 @@ public interface Model {
 	 * Start the model
 	 */
 	void start();
-	
+
 	/**
 	 * Get the current scene. The scene to be drawn.
+	 * 
 	 * @return the currently active scene
 	 */
 	Scene getScene();
 
+	GameState getState();
 
 }

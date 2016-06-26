@@ -127,4 +127,9 @@ public class GameModel implements CameraTarget, Model {
 	public float getCameraOffset() {
 		return this.curScene.getCameraOffset();
 	}
+
+	@Override
+	public GameState getState() {
+		return GameState.INGAME;
+	}
 }
