@@ -12,6 +12,10 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.state.JumpState;
  *
  */
 public class JumpCommand extends InputCommand {
+	public JumpCommand(Entity entity) {
+		super(entity);
+	}
+
 	@Override
 	public void execute(InputMethod inputMethod) {
 		if (inputMethod == InputMethod.PRESS) {

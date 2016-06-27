@@ -56,12 +56,9 @@ class ControllerImpl implements Observer, Controller {
 	 *
 	 */
 	private void init() {
-		this.mpCmd.put(Tuple.create(InputHelper.ARROW_UP, GameState.INGAME), 
-				new JumpCommand().setEntity(this.model.getScene().getPlayer()));
-		this.mpCmd.put(Tuple.create(InputHelper.ARROW_LEFT, GameState.INGAME),
-				new WalkCommand(Direction.LEFT).setEntity(this.model.getScene().getPlayer()));
-		this.mpCmd.put(Tuple.create(InputHelper.ARROW_RIGHT, GameState.INGAME),
-				new WalkCommand(Direction.RIGHT).setEntity(this.model.getScene().getPlayer()));
+		this.mpCmd.put(Tuple.create(InputHelper.ARROW_UP, GameState.INGAME), new JumpCommand(this.model.getScene().getPlayer()));
+		this.mpCmd.put(Tuple.create(InputHelper.ARROW_LEFT, GameState.INGAME), new WalkCommand(this.model.getScene().getPlayer(), Direction.LEFT));
+		this.mpCmd.put(Tuple.create(InputHelper.ARROW_RIGHT, GameState.INGAME), new WalkCommand(this.model.getScene().getPlayer(), Direction.RIGHT));
 	}
 
 	/**

@@ -16,16 +16,11 @@ public abstract class InputCommand implements Command {
 	 */
 	protected Entity entity;
 
-	/**
-	 * Set the corresponding {@link Entity} for the command
-	 *
-	 * @param entity
-	 *            the entity
-	 * @return {@code this} for code chaining
-	 */
-	public final InputCommand setEntity(Entity entity) {
+	public InputCommand(Entity entity) {
+		if (entity == null) {
+			throw new IllegalArgumentException("Entity cannot be null");
+		}
 		this.entity = entity;
-		return this;
 	}
 
 }

@@ -20,11 +20,12 @@ public class WalkCommand extends InputCommand {
 
 	/**
 	 * Instantiate the WalkCommand
-	 * 
+	 *
 	 * @param dir
 	 *            the direction
 	 */
-	public WalkCommand(Direction dir) {
+	public WalkCommand(Entity entity, Direction dir) {
+		super(entity);
 		this.dir = dir;
 	}
 

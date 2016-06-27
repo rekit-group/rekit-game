@@ -9,6 +9,9 @@ public class Tuple<T, U> {
 	}
 
 	public Tuple(T t, U u) {
+		if (t == null || u == null) {
+			throw new IllegalArgumentException("Tuple arguments cannot be null");
+		}
 		this.t = t;
 		this.u = u;
 	}
