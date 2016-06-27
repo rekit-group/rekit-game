@@ -104,8 +104,7 @@ public abstract class GameElement implements Collidable {
 	}
 
 	public final boolean canDelete(float cameraOffset) {
-		return this.pos.getX() + this.size.getX() / 2 < cameraOffset;
-
+		return this.getPos().translate2D(cameraOffset).getX() + this.getSize().getX() / 2 < cameraOffset;
 	}
 
 	public Vec getSize() {
