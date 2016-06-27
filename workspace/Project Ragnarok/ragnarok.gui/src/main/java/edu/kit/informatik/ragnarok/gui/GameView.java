@@ -1,7 +1,9 @@
 package edu.kit.informatik.ragnarok.gui;
 
 import java.util.ArrayDeque;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map.Entry;
 import java.util.Queue;
 
 import org.eclipse.swt.SWT;
@@ -188,11 +190,46 @@ class GameView implements View {
 		tempGC.dispose();
 
 		// draw FPS
-		float fps = this.getFPS();
 		this.field.setGC(this.gc);
-		this.field.drawText(new Vec(CalcUtil.units2pixel(GameConf.GRID_W) - 10, CalcUtil.units2pixel(GameConf.GRID_H) - 60), "FPS: " + fps
-				+ "\nGameElements: " + this.model.getScene().getGameElementCount(), GameConf.HINT_TEXT);
+		String debugInfo = "FPS: " + this.getFPS() + "\nGameElements: " + this.model.getScene().getGameElementCount();
+		if (true) {
+			debugInfo += "\n" + this.getGameElementStats();
+			this.field.drawText(new Vec(CalcUtil.units2pixel(GameConf.GRID_W) - 10, CalcUtil.units2pixel(GameConf.GRID_H) / 2f), debugInfo,
+					GameConf.HINT_TEXT);
+		} else {
+			this.field.drawText(new Vec(CalcUtil.units2pixel(GameConf.GRID_W) - 10, CalcUtil.units2pixel(GameConf.GRID_H) - 60), debugInfo,
+					GameConf.HINT_TEXT);
+		}
 
+	}
+
+	private String getGameElementStats() {
+		HashMap<String, Integer> classCounter = new HashMap<String, Integer>();
+
+		synchronized (this.model.getScene().synchronize()) {
+			Iterator<GameElement> it = this.model.getScene().getGameElementIterator();
+			while (it.hasNext()) {
+				GameElement e = it.next();
+				String className = e.getClass()/* .getEnclosingClass() */.getName();
+				if (classCounter.containsKey(className)) {
+					classCounter.put(className, classCounter.get(className) + 1);
+				} else {
+					classCounter.put(className, 1);
+				}
+			}
+		}
+
+		StringBuilder result = new StringBuilder();
+		Iterator<Entry<String, Integer>> it2 = classCounter.entrySet().iterator();
+		while (it2.hasNext()) {
+			Entry<String, Integer> e = it2.next();
+			result.append(e.getKey());
+			result.append(": ");
+			result.append(e.getValue());
+			result.append("\n");
+		}
+
+		return result.toString();
 	}
 
 	private float getFPS() {
