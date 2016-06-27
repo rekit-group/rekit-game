@@ -20,7 +20,6 @@ public abstract class LevelCreator {
 	protected Random colorRand;
 
 	public LevelCreator(int randomSeed) {
-		// save reference to GameMode to be able to add GameElements
 		this.rand = new Random(randomSeed);
 		this.colorRand = new Random();
 	}
@@ -54,11 +53,10 @@ public abstract class LevelCreator {
 	}
 
 	protected void generateFloor(int x, int y) {
-		Inanimate i;
 
 		int randColG = this.colorRand.nextInt(100) + 100;
 		int randColRB = this.colorRand.nextInt(40) + 30;
-		i = new InanimateFloor(new Vec(x, GameConf.GRID_H - 1), new Vec(1, 1), new RGBColor(randColRB, randColG, randColRB));
+		Inanimate i = new InanimateFloor(new Vec(x, GameConf.GRID_H - 1), new Vec(1, 1), new RGBColor(randColRB, randColG, randColRB));
 		this.generateGameElement(i);
 
 	}
@@ -74,8 +72,9 @@ public abstract class LevelCreator {
 
 	protected void generateBox(int x, int y) {
 
+		Inanimate i;
 		int randCol = this.colorRand.nextInt(60) + 50;
-		Inanimate i = new InanimateBox(new Vec(x, y), new Vec(1, 1), new RGBColor(randCol, randCol, randCol));
+		i = new InanimateBox(new Vec(x, y), new Vec(1, 1), new RGBColor(randCol, randCol, randCol));
 		this.generateGameElement(i);
 
 	}
