@@ -10,7 +10,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
-import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.primitives.Vec;
 
 public class Slurp extends Entity {
 
@@ -23,7 +23,7 @@ public class Slurp extends Entity {
 		super(null);
 	}
 
-	public Slurp(Vec2D startPos) {
+	public Slurp(Vec startPos) {
 		super(startPos);
 
 		Random r = new Random();
@@ -40,7 +40,7 @@ public class Slurp extends Entity {
 			float amplitude = r.nextFloat() / 4.0f;
 			float phase = (float) (r.nextFloat() * 2 * Math.PI);
 			// add SlurpDurp to List
-			this.slurpDurps.add(new SlurpDurp(this.getPos(), new Vec2D(randX, randY), baseSize, frequency, amplitude, phase));
+			this.slurpDurps.add(new SlurpDurp(this.getPos(), new Vec(randX, randY), baseSize, frequency, amplitude, phase));
 		}
 	}
 
@@ -58,10 +58,10 @@ public class Slurp extends Entity {
 
 		// calculate velocity (by currentDirection)
 		if (this.currentDirection == Direction.LEFT || this.currentDirection == Direction.RIGHT) {
-			this.setVel(new Vec2D(this.currentDirection.getVector().getX() * GameConf.SLURP_SPEED,
+			this.setVel(new Vec(this.currentDirection.getVector().getX() * GameConf.SLURP_SPEED,
 					this.currentDirection.getNextAntiClockwise().getVector().getY() * 3));
 		} else {
-			this.setVel(new Vec2D(this.currentDirection.getNextAntiClockwise().getVector().getX() * 3,
+			this.setVel(new Vec(this.currentDirection.getNextAntiClockwise().getVector().getX() * 3,
 					this.currentDirection.getVector().getY() * GameConf.SLURP_SPEED));
 		}
 
@@ -122,7 +122,7 @@ public class Slurp extends Entity {
 	}
 
 	@Override
-	public Entity create(Vec2D startPos) {
+	public Entity create(Vec startPos) {
 		return new Slurp(startPos);
 	}
 

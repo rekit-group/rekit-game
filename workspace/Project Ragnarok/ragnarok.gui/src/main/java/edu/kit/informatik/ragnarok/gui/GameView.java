@@ -17,9 +17,8 @@ import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.Model;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.GuiElement;
-import edu.kit.informatik.ragnarok.logic.scene.LevelScene;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
-import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.CalcUtil;
 import edu.kit.informatik.ragnarok.util.InputHelper;
 import edu.kit.informatik.ragnarok.util.SwtUtils;
@@ -156,13 +155,7 @@ class GameView implements View {
 
 		// set current camera position
 		this.field.setCurrentOffset(scene.getCameraOffset());
-
 		this.field.setBackground(SwtUtils.calcRGB(GameConf.GAME_BACKGROUD_COLOR));
-
-		// Draw background
-		if (scene.getBackground() != null) {
-			scene.getBackground().render(this.field);
-		}
 
 		synchronized (scene.synchronize()) {
 			// Get a z-index-ordered iterator
@@ -197,10 +190,8 @@ class GameView implements View {
 		// draw FPS
 		float fps = this.getFPS();
 		this.field.setGC(this.gc);
-		this.field.drawText(
-				new Vec2D(CalcUtil.units2pixel(GameConf.GRID_W) - 10, CalcUtil.units2pixel(GameConf.GRID_H) - 60),
-				"FPS: " + fps + "\nGameElements: " + this.model.getScene().getGameElementCount() + "\nBGElements: "
-						+ ((LevelScene) this.model.getScene()).getBGElementCount(), GameConf.HINT_TEXT);
+		this.field.drawText(new Vec(CalcUtil.units2pixel(GameConf.GRID_W) - 10, CalcUtil.units2pixel(GameConf.GRID_H) - 60), "FPS: " + fps
+				+ "\nGameElements: " + this.model.getScene().getGameElementCount(), GameConf.HINT_TEXT);
 
 	}
 

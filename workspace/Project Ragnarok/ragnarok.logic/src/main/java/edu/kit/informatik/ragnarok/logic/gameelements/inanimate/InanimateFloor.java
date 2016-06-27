@@ -6,7 +6,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawner;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
 import edu.kit.informatik.ragnarok.primitives.Direction;
-import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 
 public class InanimateFloor extends Inanimate {
@@ -16,7 +16,7 @@ public class InanimateFloor extends Inanimate {
 	private static final ParticleSpawnerOption dustParticleAngleRight = new ParticleSpawnerOption((float) ((1/4f) * Math.PI), (float) ((3/4f) * Math.PI), 0, (float) ((1/4f) * Math.PI));
 	private static final ParticleSpawnerOption dustParticleAngleTop = new ParticleSpawnerOption((float) (-(1/2f) * Math.PI), (float) ((1/2f) * Math.PI), 0, 0);
 	
-	public InanimateFloor(Vec2D pos, Vec2D size, RGBColor color) {
+	public InanimateFloor(Vec pos, Vec size, RGBColor color) {
 		super(pos, size, color);
 		
 		dustParticles = new ParticleSpawner();
@@ -34,8 +34,8 @@ public class InanimateFloor extends Inanimate {
 	
 	@Override
 	public void render(Field f) {
-		Vec2D pos = this.getPos();
-		Vec2D size = this.getSize();
+		Vec pos = this.getPos();
+		Vec size = this.getSize();
 		
 		f.drawRectangle(pos, size, this.color);
 		
@@ -43,7 +43,7 @@ public class InanimateFloor extends Inanimate {
 		
 		float plateThickness = 0.1f;
 		f.drawRectangle(
-				pos.add(new Vec2D(0, -size.getY() / 2f + plateThickness/2f)),
+				pos.add(new Vec(0, -size.getY() / 2f + plateThickness/2f)),
 				size.setY(plateThickness), darkColor);
 		
 	}
@@ -64,7 +64,7 @@ public class InanimateFloor extends Inanimate {
 				dustParticles.angle = dustParticleAngleRight;
 			}
 			
-			Vec2D pos = this.getPos().addY(-this.getSize().getY()/2).setX(element.getPos().getX());
+			Vec pos = this.getPos().addY(-this.getSize().getY()/2).setX(element.getPos().getX());
 			
 			dustParticles.spawn(this.getScene(), pos);
 		}

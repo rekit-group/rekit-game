@@ -4,12 +4,12 @@ import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.primitives.Direction;
-import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 
 public class SlurpDurp extends Entity {
-	private Vec2D parentPos;
-	private Vec2D innerPos;
+	private Vec parentPos;
+	private Vec innerPos;
 	private float frequency;
 	private float baseSize;
 	private float amplitude;
@@ -25,7 +25,7 @@ public class SlurpDurp extends Entity {
 		super(null);
 	}
 
-	public SlurpDurp(Vec2D parentPos, Vec2D innerPos, float baseSize, float frequency, float amplitude, float phase) {
+	public SlurpDurp(Vec parentPos, Vec innerPos, float baseSize, float frequency, float amplitude, float phase) {
 		super(parentPos.add(innerPos));
 		this.parentPos = parentPos;
 		this.innerPos = innerPos;
@@ -36,13 +36,13 @@ public class SlurpDurp extends Entity {
 	}
 
 	@Override
-	public Vec2D getPos() {
+	public Vec getPos() {
 		return this.parentPos.add(this.innerPos);
 	}
 
 	@Override
-	public Vec2D getSize() {
-		return new Vec2D(this.currentSize);
+	public Vec getSize() {
+		return new Vec(this.currentSize);
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class SlurpDurp extends Entity {
 		}
 	}
 
-	public void setParentPos(Vec2D parentPos) {
+	public void setParentPos(Vec parentPos) {
 		this.parentPos = parentPos.clone();
 	}
 
@@ -64,11 +64,11 @@ public class SlurpDurp extends Entity {
 
 	@Override
 	public void render(Field f) {
-		f.drawCircle(this.getPos(), new Vec2D(this.currentSize), new RGBColor(94, 233, 101));
+		f.drawCircle(this.getPos(), new Vec(this.currentSize), new RGBColor(94, 233, 101));
 	}
 
 	@Override
-	public Entity create(Vec2D startPos) {
+	public Entity create(Vec startPos) {
 		throw new UnsupportedOperationException("Create not supported for SlurpDurps");
 	}
 

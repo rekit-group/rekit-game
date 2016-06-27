@@ -23,9 +23,10 @@ import edu.kit.informatik.ragnarok.logic.parallax.HeapElementCloud;
 import edu.kit.informatik.ragnarok.logic.parallax.HeapElementMountain;
 import edu.kit.informatik.ragnarok.logic.parallax.HeapLayer;
 import edu.kit.informatik.ragnarok.logic.parallax.ParallaxContainer;
+import edu.kit.informatik.ragnarok.logic.parallax.TriangulationLayer;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
-import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.ThreadUtils;
 
 /**
@@ -37,19 +38,19 @@ import edu.kit.informatik.ragnarok.util.ThreadUtils;
  */
 public class LevelScene extends Scene {
 
-	private Player player = new Player(new Vec2D(3, 5));
+	private Player player = new Player(new Vec(3, 5));
 
 	private LevelCreator levelCreator;
 
 	private CameraTarget cameraTarget;
-
-	private ParallaxContainer parallax;
 
 	private int highScore = -1;
 
 	private ScoreGui scoreGui;
 
 	private LifeGui lifeGui;
+
+	protected ParallaxContainer parallax;
 
 	public LevelScene(GameModel model, LevelCreator levelCreator) {
 		super(model);
@@ -73,16 +74,17 @@ public class LevelScene extends Scene {
 		this.levelCreator.generate(GameConf.GRID_W);
 
 		// Create parallax background
-		this.parallax = new ParallaxContainer();
-		// this.parallax.addLayer(new TriangulationLayer(1.5f));
-		this.parallax.addLayer(new HeapLayer(new HeapElementCloud(null, null, null, null), 1.1f));
-		this.parallax.addLayer(new HeapLayer(new HeapElementMountain(null, null, null, null), 1.3f));
+		this.parallax = new ParallaxContainer(this);
+
+		this.parallax.addLayer(new TriangulationLayer(1.5f));
+		this.parallax.addLayer(new HeapLayer(new HeapElementCloud(null, new Vec(), null, null), 1.1f));
+		this.parallax.addLayer(new HeapLayer(new HeapElementMountain(null, new Vec(), null, null), 1.3f));
 
 		// Create Gui
 		this.scoreGui = new ScoreGui(this);
-		this.scoreGui.setPos(new Vec2D(10, 10));
+		this.scoreGui.setPos(new Vec(10, 10));
 		this.lifeGui = new LifeGui(this);
-		this.lifeGui.setPos(new Vec2D(10));
+		this.lifeGui.setPos(new Vec(10));
 		this.addGuiElement(this.scoreGui);
 		this.addGuiElement(this.lifeGui);
 	}
@@ -137,7 +139,7 @@ public class LevelScene extends Scene {
 		}
 
 		// check if we can delete this
-		if (e.getPos().getX() + e.getSize().getX() / 2 < this.getCameraOffset()) {
+		if (e.getPos().translate2D(this.getCameraOffset()).getX() + e.getSize().getX() / 2 < this.getCameraOffset()) {
 			this.removeGameElement(e);
 		} else {
 			e.logicLoop(timeDelta);
@@ -166,26 +168,26 @@ public class LevelScene extends Scene {
 		}
 	}
 
-	private void checkCollision(GameElement e1, GameElement e2, Vec2D e1lastPos, Vec2D e2lastPos) {
+	private void checkCollision(GameElement e1, GameElement e2, Vec e1lastPos, Vec e2lastPos) {
 		// Return if there is no collision
 		if (!e1.getCollisionFrame().collidesWith(e2.getCollisionFrame())) {
 			return;
 		}
 
 		// Simulate CollisionFrame with last Y position
-		Vec2D e1lastYVec = new Vec2D(e1.getPos().getX(), e1lastPos.getY());
+		Vec e1lastYVec = new Vec(e1.getPos().getX(), e1lastPos.getY());
 		Frame e1lastYFrame = new Frame(e1lastYVec.add(e1.getSize().multiply(-0.5f)), e1lastYVec.add(e1.getSize().multiply(0.5f)));
 
 		// Simulate CollisionFrame with last X position
-		Vec2D e1lastXVec = new Vec2D(e1lastPos.getX(), e1.getPos().getY());
+		Vec e1lastXVec = new Vec(e1lastPos.getX(), e1.getPos().getY());
 		Frame e1lastXFrame = new Frame(e1lastXVec.add(e1.getSize().multiply(-0.5f)), e1lastXVec.add(e1.getSize().multiply(0.5f)));
 
 		// Simulate CollisionFrame with last Y position
-		Vec2D e2lastYVec = new Vec2D(e2.getPos().getX(), e2lastPos.getY());
+		Vec e2lastYVec = new Vec(e2.getPos().getX(), e2lastPos.getY());
 		Frame e2lastYFrame = new Frame(e2lastYVec.add(e2.getSize().multiply(-0.5f)), e2lastYVec.add(e2.getSize().multiply(0.5f)));
 
 		// Simulate CollisionFrame with last X position
-		Vec2D e2lastXVec = new Vec2D(e2lastPos.getX(), e2.getPos().getY());
+		Vec e2lastXVec = new Vec(e2lastPos.getX(), e2.getPos().getY());
 		Frame e2lastXFrame = new Frame(e2lastXVec.add(e2.getSize().multiply(-0.5f)), e2lastXVec.add(e2.getSize().multiply(0.5f)));
 
 		// If they still collide with the old x positions:
@@ -203,7 +205,7 @@ public class LevelScene extends Scene {
 				return;
 			}
 			// check if he is still colliding even with last x position
-			this.checkCollision(e1, e2, new Vec2D(e1lastPos.getX(), e1.getPos().getY()), new Vec2D(e2lastPos.getX(), e2.getPos().getY()));
+			this.checkCollision(e1, e2, new Vec(e1lastPos.getX(), e1.getPos().getY()), new Vec(e2lastPos.getX(), e2.getPos().getY()));
 		} else
 		// If they still collide with the old y positions:
 		// it must be because of the x position
@@ -220,7 +222,7 @@ public class LevelScene extends Scene {
 				return;
 			}
 			// check if he is still colliding even with last x position
-			this.checkCollision(e1, e2, new Vec2D(e1.getPos().getX(), e1lastPos.getY()), new Vec2D(e2.getPos().getX(), e2lastPos.getY()));
+			this.checkCollision(e1, e2, new Vec(e1.getPos().getX(), e1lastPos.getY()), new Vec(e2.getPos().getX(), e2lastPos.getY()));
 		}
 
 	}
@@ -238,11 +240,6 @@ public class LevelScene extends Scene {
 	@Override
 	public void setCameraTarget(CameraTarget cameraTarget) {
 		this.cameraTarget = cameraTarget;
-	}
-
-	@Override
-	public ParallaxContainer getBackground() {
-		return this.parallax;
 	}
 
 	public int getScore() {
@@ -280,8 +277,9 @@ public class LevelScene extends Scene {
 		return highScore;
 	}
 
-	public int getBGElementCount() {
-		return this.parallax.getElementCount();
+	@Override
+	public ParallaxContainer getBackground() {
+		return this.parallax;
 	}
 
 }

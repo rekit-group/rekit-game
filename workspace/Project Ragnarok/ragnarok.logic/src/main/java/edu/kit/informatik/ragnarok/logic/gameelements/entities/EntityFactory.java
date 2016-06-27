@@ -9,7 +9,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.Warper;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.pickups.Coin;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.pickups.Life;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
-import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.primitives.Vec;
 
 public class EntityFactory {
 
@@ -39,7 +39,7 @@ public class EntityFactory {
 		Entity entity = EntityFactory.prototypes.get(entityId);
 		if (entity != null) {
 			// Add enemy to model
-			EntityFactory.scene.addGameElement(entity.create(new Vec2D(x, y)));
+			EntityFactory.scene.addGameElement(entity.create(new Vec(x, y)));
 		}
 
 	}

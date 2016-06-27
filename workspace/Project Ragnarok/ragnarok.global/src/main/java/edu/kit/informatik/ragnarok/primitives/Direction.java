@@ -10,24 +10,24 @@ public enum Direction {
 	/**
 	 * Represents the Direction left with the Vector (-1|0)
 	 */
-	LEFT(new Vec2D(-1, 0), 1.5 * Math.PI),
+	LEFT(new Vec(-1, 0), 1.5 * Math.PI),
 	/**
 	 * Represents the Direction right with the Vector (1|0)
 	 */
-	RIGHT(new Vec2D(1, 0), 0.5 * Math.PI),
+	RIGHT(new Vec(1, 0), 0.5 * Math.PI),
 	/**
 	 * Represents the Direction up with the Vector (0|-1)
 	 */
-	UP(new Vec2D(0, -1), 0),
+	UP(new Vec(0, -1), 0),
 	/**
 	 * Represents the Direction down with the Vector (0|1)
 	 */
-	DOWN(new Vec2D(0, 1), 1 * Math.PI);
+	DOWN(new Vec(0, 1), 1 * Math.PI);
 
-	private Vec2D vec;
+	private Vec vec;
 	private double angle;
 
-	private Direction(Vec2D vec, double angle) {
+	private Direction(Vec vec, double angle) {
 		this.vec = vec;
 		this.angle = angle;
 	}
@@ -37,7 +37,7 @@ public enum Direction {
 	 * 
 	 * @return
 	 */
-	public Vec2D getVector() {
+	public Vec getVector() {
 		return this.vec;
 	}
 

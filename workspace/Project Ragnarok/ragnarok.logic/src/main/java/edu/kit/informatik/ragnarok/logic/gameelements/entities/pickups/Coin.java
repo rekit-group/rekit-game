@@ -4,7 +4,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.primitives.Direction;
-import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 
 public class Coin extends Entity {
@@ -12,7 +12,7 @@ public class Coin extends Entity {
 		super(null);
 	}
 
-	public Coin(Vec2D startPos) {
+	public Coin(Vec startPos) {
 		super(startPos);
 	}
 
@@ -25,8 +25,8 @@ public class Coin extends Entity {
 	}
 
 	@Override
-	public Vec2D getSize() {
-		return new Vec2D(0.7f, 0.7f);
+	public Vec getSize() {
+		return new Vec(0.7f, 0.7f);
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class Coin extends Entity {
 		RGBColor darkColor = new RGBColor(192, 174, 6);
 
 		double sin = Math.sin((System.currentTimeMillis() / 300.0));
-		Vec2D size = this.getSize().multiply((float) sin, 1);
+		Vec size = this.getSize().multiply((float) sin, 1);
 
 		for (float x = -0.025f; x <= 0.025f; x += 0.005f) {
 			f.drawCircle(this.getPos().addX(x), size, color);
@@ -55,7 +55,7 @@ public class Coin extends Entity {
 	}
 
 	@Override
-	public Entity create(Vec2D startPos) {
+	public Entity create(Vec startPos) {
 		return new Coin(startPos);
 	}
 

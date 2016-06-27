@@ -1,10 +1,10 @@
 package edu.kit.informatik.ragnarok.logic.parallax;
 
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
-import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBAColor;
 
-public abstract class HeapElement {
+public abstract class HeapElement extends BackgroundElement {
 
 	protected float heapDistanceMu() {
 		return 9;
@@ -86,28 +86,16 @@ public abstract class HeapElement {
 		return 0.8f;
 	}
 
-	protected Vec2D pos;
-	protected Vec2D size;
 	protected RGBAColor col;
 
-	private HeapLayer parent;
-
-	public HeapElement(HeapLayer parent, Vec2D pos, Vec2D size, RGBAColor col) {
-		this.parent = parent;
-		this.pos = pos;
-		this.size = size;
+	public HeapElement(HeapLayer parent, Vec pos, Vec size, RGBAColor col) {
+		super(parent, pos);
+		this.setSize(size);
 		this.col = col;
 	}
 
-	public Vec2D getFieldPos() {
-		return this.pos.addX(this.parent.fieldXtoLayerX(this.parent.x));
-	}
-
-	public Vec2D getSize() {
-		return this.size;
-	}
-
+	@Override
 	public abstract void render(Field f);
 
-	public abstract HeapElement clone(HeapLayer parent, Vec2D pos, Vec2D size, RGBAColor col);
+	public abstract HeapElement clone(HeapLayer parent, Vec pos, Vec size, RGBAColor col);
 }

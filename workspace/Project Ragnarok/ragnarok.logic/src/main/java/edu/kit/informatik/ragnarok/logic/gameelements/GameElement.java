@@ -3,7 +3,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
-import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.primitives.Vec;
 
 public abstract class GameElement implements Collidable, Comparable<GameElement> {
 
@@ -11,9 +11,23 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 
 	public boolean deleteMe = false;
 
-	private Vec2D size = new Vec2D(1, 1);
+	private Vec size = new Vec(1, 1);
 
 	private int team = 1;
+
+	protected Vec pos;
+
+	private Vec vel = new Vec();
+
+	private Vec lastPos;
+
+	public GameElement(Vec startPos) {
+		if (startPos == null) {
+			return;
+		}
+		this.setPos(startPos);
+
+	}
 
 	public void destroy() {
 		this.deleteMe = true;
@@ -40,19 +54,15 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 		// Do nothing
 	}
 
-	private Vec2D vel = new Vec2D();
-
-	public void setVel(Vec2D value) {
+	public void setVel(Vec value) {
 		this.vel = value;
 	}
 
-	public Vec2D getVel() {
+	public Vec getVel() {
 		return this.vel;
 	}
 
-	private Vec2D pos;
-
-	public void setPos(Vec2D value) {
+	public void setPos(Vec value) {
 		if (this.pos == null) {
 			this.setLastPos(value);
 		} else {
@@ -62,25 +72,23 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 		this.pos = value;
 	}
 
-	public Vec2D getPos() {
+	public Vec getPos() {
 		return this.pos;
 	}
 
-	private Vec2D lastPos;
-
-	public void setLastPos(Vec2D value) {
+	public void setLastPos(Vec value) {
 		this.lastPos = value;
 	}
 
-	public Vec2D getLastPos() {
+	public Vec getLastPos() {
 		return this.lastPos;
 	}
 
-	public Vec2D getSize() {
+	public Vec getSize() {
 		return this.size;
 	}
 
-	public void setSize(Vec2D size) {
+	public void setSize(Vec size) {
 		this.size = size;
 	}
 
@@ -102,23 +110,23 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 	}
 
 	public Frame getCollisionFrame() {
-		Vec2D v1 = this.getPos().add(this.getSize().multiply(-0.5f));
-		Vec2D v2 = this.getPos().add(this.getSize().multiply(0.5f));
+		Vec v1 = this.getPos().add(this.getSize().multiply(-0.5f));
+		Vec v2 = this.getPos().add(this.getSize().multiply(0.5f));
 
 		return new Frame(v1, v2);
 	}
 
 	public abstract void render(Field f);
 
-	public int getZ() {
+	public int getOrderZ() {
 		return 0;
 	}
 
 	@Override
 	public int compareTo(GameElement other) {
-		return this.getZ() - other.getZ();
+		return this.getOrderZ() - other.getOrderZ();
 	}
-	
+
 	public boolean isVisible() {
 		return this.visible;
 	}

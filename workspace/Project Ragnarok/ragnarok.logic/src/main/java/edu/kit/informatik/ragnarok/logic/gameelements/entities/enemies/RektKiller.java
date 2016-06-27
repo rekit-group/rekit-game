@@ -9,7 +9,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Polygon;
-import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 
 public class RektKiller extends Entity {
@@ -27,7 +27,7 @@ public class RektKiller extends Entity {
 		super(null);
 	}
 
-	public RektKiller(Vec2D startPos, int sides) {
+	public RektKiller(Vec startPos, int sides) {
 		super(startPos);
 
 		if (sides < 0 || sides > 15) {
@@ -40,19 +40,19 @@ public class RektKiller extends Entity {
 		this.setCurrentDirection(Direction.values()[x]);
 		this.setSides(sides);
 
-		this.setSize(new Vec2D(0.6f, 0.6f));
+		this.setSize(new Vec(0.6f, 0.6f));
 		this.prepare();
 	}
 
 	public void prepare() {
 		// calculate size dependent Polygon for spikes
-		this.spikePolygon = new Polygon(new Vec2D(),
-				new Vec2D[] { new Vec2D(0.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
-						new Vec2D(1.0f * ((this.getSize().getX() * 0.8f) / 3f), 0),
-						new Vec2D(1.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
-						new Vec2D(2.0f * ((this.getSize().getX() * 0.8f) / 3f), 0),
-						new Vec2D(2.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
-						new Vec2D(3.0f * ((this.getSize().getX() * 0.8f) / 3f), 0), new Vec2D() // and
+		this.spikePolygon = new Polygon(new Vec(),
+				new Vec[] { new Vec(0.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
+						new Vec(1.0f * ((this.getSize().getX() * 0.8f) / 3f), 0),
+						new Vec(1.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
+						new Vec(2.0f * ((this.getSize().getX() * 0.8f) / 3f), 0),
+						new Vec(2.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
+						new Vec(3.0f * ((this.getSize().getX() * 0.8f) / 3f), 0), new Vec() // and
 																								// back
 																								// to
 																								// start
@@ -106,8 +106,8 @@ public class RektKiller extends Entity {
 
 	@Override
 	public void render(Field f) {
-		Vec2D pos = this.getPos();
-		Vec2D size = this.getSize();
+		Vec pos = this.getPos();
+		Vec size = this.getSize();
 		RGBColor innerColor = new RGBColor(150, 30, 30);
 		RGBColor spikeColor = new RGBColor(80, 80, 80);
 
@@ -135,10 +135,10 @@ public class RektKiller extends Entity {
 		super.logicLoop(deltaTime);
 		
 		if (this.getPos().getY() <= 0) {
-			this.collidedWith(new Frame(new Vec2D(0, 0), new Vec2D(0, 0)), Direction.DOWN);
+			this.collidedWith(new Frame(new Vec(0, 0), new Vec(0, 0)), Direction.DOWN);
 		}
 		if (this.getPos().getY() >= GameConf.GRID_H - 1) {
-			this.collidedWith(new Frame(new Vec2D(0, GameConf.GRID_H - 1), new Vec2D(0, GameConf.GRID_H - 1)), Direction.UP);
+			this.collidedWith(new Frame(new Vec(0, GameConf.GRID_H - 1), new Vec(0, GameConf.GRID_H - 1)), Direction.UP);
 		}
 
 		// We dont want this guy to fall
@@ -187,7 +187,7 @@ public class RektKiller extends Entity {
 	private static final Random PRNG = new Random();
 
 	@Override
-	public Entity create(Vec2D startPos) {
+	public Entity create(Vec startPos) {
 		return new RektKiller(startPos, RektKiller.PRNG.nextInt(16));
 	}
 

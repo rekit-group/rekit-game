@@ -6,30 +6,34 @@ import java.util.List;
 
 public class Polygon implements Cloneable {
 
-	private Vec2D startPoint;
-	private List<Vec2D> relPts;
+	private Vec startPoint;
+	private List<Vec> relPts;
 
-	public Polygon(Vec2D startPoint, Vec2D[] relPts) {
+	public Polygon(Vec startPoint, Vec[] relPts) {
 		this.startPoint = startPoint;
 
-		this.relPts = new LinkedList<Vec2D>();
-		for (Vec2D relPt : relPts) {
+		this.relPts = new LinkedList<Vec>();
+		for (Vec relPt : relPts) {
 			this.addRelPt(relPt);
 		}
 	}
 
-	public Polygon(Vec2D startPoint, List<Vec2D> relPts) {
+	public Polygon(Vec startPoint, List<Vec> relPts) {
 		this.startPoint = startPoint;
 
-		this.relPts = new LinkedList<Vec2D>();
-		for (Vec2D relPt : relPts) {
+		this.relPts = new LinkedList<Vec>();
+		for (Vec relPt : relPts) {
 			this.addRelPt(relPt);
 		}
 	}
 
-	Polygon(Vec2D startPoint) {
+	Polygon(Vec startPoint) {
 		this.startPoint = startPoint;
-		this.relPts = new LinkedList<Vec2D>();
+		this.relPts = new LinkedList<Vec>();
+	}
+
+	public Vec getStartPoint() {
+		return this.startPoint;
 	}
 
 	@Override
@@ -37,24 +41,24 @@ public class Polygon implements Cloneable {
 		return new Polygon(this.startPoint, this.relPts);
 	}
 
-	public void moveTo(Vec2D startPoint) {
+	public void moveTo(Vec startPoint) {
 		this.startPoint = startPoint;
 	}
 
-	public void addRelPt(Vec2D relPt) {
+	public void addRelPt(Vec relPt) {
 		this.relPts.add(relPt);
 	}
 
 	public Polygon rotate(float angle) {
-		return this.rotate(angle, new Vec2D());
+		return this.rotate(angle, new Vec());
 	}
 
-	public Polygon rotate(float angle, Vec2D rotationAnchor) {
+	public Polygon rotate(float angle, Vec rotationAnchor) {
 		// Create new Polygon with rotated start point
 		Polygon result = new Polygon(this.startPoint.rotate(angle, rotationAnchor));
 
 		// Rotate path for each point
-		Iterator<Vec2D> it = this.relPts.iterator();
+		Iterator<Vec> it = this.relPts.iterator();
 		while (it.hasNext()) {
 			// We dont need rotationAnchor here since points are relative
 			// startPoint
@@ -74,7 +78,7 @@ public class Polygon implements Cloneable {
 
 		// calculate rest of absolute points from relative points to start
 		int i = 0;
-		for (Vec2D relPt : this.relPts) {
+		for (Vec relPt : this.relPts) {
 			actualArray[2 * i + 2] = this.startPoint.getX() + relPt.getX();
 			actualArray[2 * i + 3] = this.startPoint.getY() + relPt.getY();
 			i++;

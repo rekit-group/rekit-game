@@ -7,17 +7,17 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.RektKiller;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
-import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.primitives.Vec;
 
 public class RektSmasher extends Boss {
 
 	private RektKiller innerRektKiller;
 
-	public RektSmasher(Vec2D startPos) {
+	public RektSmasher(Vec startPos) {
 
 		// Configure own attributes
 		super(startPos);
-		this.setSize(new Vec2D(2f, 2f));
+		this.setSize(new Vec(2f, 2f));
 
 		// Configure innerRektKiller
 		this.innerRektKiller = new RektKiller(startPos, 15);
@@ -54,7 +54,7 @@ public class RektSmasher extends Boss {
 	@Override
 	public void collidedWith(Frame collision, final Direction dir) {
 
-		Vec2D dif = this.getPos().add(this.getTarget().getPos().multiply(-1));
+		Vec dif = this.getPos().add(this.getTarget().getPos().multiply(-1));
 
 		super.collidedWith(collision, dir);
 
@@ -162,7 +162,7 @@ public class RektSmasher extends Boss {
 	}
 
 	@Override
-	public Entity create(Vec2D startPos) {
+	public Entity create(Vec startPos) {
 		RektSmasher clone = new RektSmasher(startPos);
 		clone.setTarget(this.getTarget());
 		clone.setBossRoom(this.getBossRoom());

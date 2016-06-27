@@ -183,7 +183,7 @@ public abstract class Scene implements CameraTarget {
 
 	/**
 	 * Adds a GuiElement to the GameModel.
-	 * 
+	 *
 	 * @param e
 	 *            the GuiElement to add
 	 */

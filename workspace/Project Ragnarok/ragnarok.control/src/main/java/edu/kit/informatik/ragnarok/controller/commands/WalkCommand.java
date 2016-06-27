@@ -3,7 +3,7 @@ package edu.kit.informatik.ragnarok.controller.commands;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.primitives.Direction;
-import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.primitives.Vec;
 
 /**
  * This {@link InputCommand} will cause a Walk of an {@link Entity}
@@ -35,7 +35,7 @@ public class WalkCommand extends InputCommand {
 		}
 
 		// Update x velocity with corresponding direction and acceleration
-		Vec2D newVel = this.entity.getVel().addX(this.dir.getVector().getX() * GameConf.PLAYER_WALK_ACCEL);
+		Vec newVel = this.entity.getVel().addX(this.dir.getVector().getX() * GameConf.PLAYER_WALK_ACCEL);
 
 		// check if max speed achieved
 		if (Math.abs(newVel.getX()) > GameConf.PLAYER_WALK_MAX_SPEED) {

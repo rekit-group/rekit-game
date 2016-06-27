@@ -7,7 +7,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.state.EntityState
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.TimeDependency;
-import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.primitives.Vec;
 
 public abstract class Entity extends GameElement {
 
@@ -27,23 +27,21 @@ public abstract class Entity extends GameElement {
 	private EntityState entityState;
 
 	protected TimeDependency invincibility = null;
-	
+
 	/**
 	 * Constructor that initializes attributes and takes a start position
 	 *
 	 * @param startPos
 	 *            the position this entity shall be in
 	 */
-	public Entity(Vec2D startPos) {
-		if (startPos == null) {
-			return;
-		}
+	public Entity(Vec startPos) {
+		super(startPos);
+
 		// Set to default state
 		this.setEntityState(new DefaultState(this));
 
-		// Set initial position and velocity
-		this.setPos(startPos);
-		this.setVel(new Vec2D(0, 0));
+		// Set initial velocity
+		this.setVel(new Vec(0, 0));
 	}
 
 	/**
@@ -71,13 +69,13 @@ public abstract class Entity extends GameElement {
 		if (damage > 0 && this.invincibility != null && !this.invincibility.timeUp()) {
 			return;
 		}
-			 
+
 		this.lifes -= damage;
-		
+
 		if (damage > 0) {
 			this.invincibility = new TimeDependency(2);
 		}
-		
+
 		if (this.lifes <= 0) {
 			this.lifes = 0;
 			this.destroy();
@@ -113,7 +111,7 @@ public abstract class Entity extends GameElement {
 			this.logicLoop(deltaTime / 2);
 			return;
 		}
-		
+
 		if (this.invincibility != null) {
 			this.invincibility.removeTime(deltaTime);
 		}
@@ -124,7 +122,7 @@ public abstract class Entity extends GameElement {
 		// s1 = s0 + v*t because physics, thats why!
 		this.setPos(this.getPos().add(this.getVel().multiply(deltaTime)));
 
-		Vec2D newVel = this.getVel();
+		Vec newVel = this.getVel();
 		// apply gravity
 		newVel = newVel.addY(GameConf.G);
 		// apply slowing down walk
@@ -144,7 +142,7 @@ public abstract class Entity extends GameElement {
 	@Override
 	public void collidedWith(Frame collision, Direction dir) {
 		// saving last position
-		Vec2D lastPos = this.getLastPos();
+		Vec lastPos = this.getLastPos();
 
 		int signum = 1;
 		switch (dir) {
@@ -173,16 +171,17 @@ public abstract class Entity extends GameElement {
 		this.setLastPos(lastPos);
 	}
 
-	public abstract Entity create(Vec2D startPos);
+	public abstract Entity create(Vec startPos);
 
 	@Override
-	public int getZ() {
+	public int getOrderZ() {
 		return 1;
 	}
-	
+
+	@Override
 	public boolean isVisible() {
 		if (this.invincibility != null && !this.invincibility.timeUp()) {
-			return (int)(this.invincibility.getProgress() * 20) % 2 == 0;
+			return (int) (this.invincibility.getProgress() * 20) % 2 == 0;
 		}
 		return super.isVisible();
 	}

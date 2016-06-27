@@ -6,17 +6,17 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.Particl
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
-import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.primitives.Vec;
 
 public class Player extends Entity implements CameraTarget {
 
-	private Vec2D startPos;
+	private Vec startPos;
 
 	private ParticleSpawner damageParticles;
 
 	private float currentCameraOffset;
 
-	public Player(Vec2D startPos) {
+	public Player(Vec startPos) {
 		super(startPos);
 		this.startPos = startPos;
 		this.init();
@@ -28,7 +28,7 @@ public class Player extends Entity implements CameraTarget {
 		this.points = 0;
 		this.setTeam(0);
 		this.currentDirection = Direction.RIGHT;
-		this.setVel(new Vec2D(0, 0));
+		this.setVel(new Vec(0, 0));
 		this.deleteMe = false;
 		this.currentCameraOffset = 0;
 
@@ -41,8 +41,8 @@ public class Player extends Entity implements CameraTarget {
 	}
 
 	@Override
-	public Vec2D getSize() {
-		return new Vec2D(0.8f, 0.8f);
+	public Vec getSize() {
+		return new Vec(0.8f, 0.8f);
 	}
 
 	private Direction currentDirection;
@@ -86,14 +86,14 @@ public class Player extends Entity implements CameraTarget {
 	}
 
 	@Override
-	public int getZ() {
+	public int getOrderZ() {
 		return 10;
 	}
 
 	public void resetCameraOffset() {
 		this.currentCameraOffset = 0;
 	}
-	
+
 	@Override
 	public float getCameraOffset() {
 		// get maximum player x and adjust level offset
@@ -105,7 +105,7 @@ public class Player extends Entity implements CameraTarget {
 	}
 
 	@Override
-	public Entity create(Vec2D startPos) {
+	public Entity create(Vec startPos) {
 		throw new UnsupportedOperationException("Create not supported for Players");
 	}
 

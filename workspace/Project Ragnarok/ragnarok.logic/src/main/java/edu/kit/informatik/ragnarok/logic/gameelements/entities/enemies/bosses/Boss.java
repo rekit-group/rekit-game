@@ -3,7 +3,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.bosses;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.levelcreator.BossRoom;
-import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.primitives.Vec;
 
 public abstract class Boss extends Entity {
 	
@@ -11,7 +11,7 @@ public abstract class Boss extends Entity {
 	private GameElement target;
 	private boolean isHarmless = false;
 	
-	public Boss(Vec2D startPos) {
+	public Boss(Vec startPos) {
 		super(startPos);
 	}
 

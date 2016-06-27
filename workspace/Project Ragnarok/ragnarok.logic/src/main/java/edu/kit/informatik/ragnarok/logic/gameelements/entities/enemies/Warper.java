@@ -9,7 +9,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.Particl
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.TimeDependency;
-import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 
 public class Warper extends Entity {
@@ -35,7 +35,7 @@ public class Warper extends Entity {
 		Warper.warpParticles.speed = new ParticleSpawnerOption(2, 3, -1, 1);
 	}
 
-	public Warper(Vec2D startPos) {
+	public Warper(Vec startPos) {
 		super(startPos);
 	}
 
@@ -53,8 +53,8 @@ public class Warper extends Entity {
 	}
 
 	@Override
-	public Vec2D getSize() {
-		return new Vec2D(0.6f, 0.6f);
+	public Vec getSize() {
+		return new Vec(0.6f, 0.6f);
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class Warper extends Entity {
 			this.warpAction.reset();
 
 			// get target (player)
-			Vec2D target = this.getScene().getPlayer().getPos();
+			Vec target = this.getScene().getPlayer().getPos();
 
 			// animate particles
 			Warper.warpParticles.amountMin = 5;
@@ -81,7 +81,7 @@ public class Warper extends Entity {
 			Warper.warpParticles.spawn(this.getScene(), this.getPos());
 
 			// determine if x or y is greater in distance
-			Vec2D dif = this.getPos().add(target.multiply(-1));
+			Vec dif = this.getPos().add(target.multiply(-1));
 			if (Math.abs(dif.getX()) > Math.abs(dif.getY())) {
 				this.setPos(this.getPos().addX(-Math.signum(dif.getX())));
 			} else {
@@ -117,7 +117,7 @@ public class Warper extends Entity {
 	}
 
 	@Override
-	public Entity create(Vec2D startPos) {
+	public Entity create(Vec startPos) {
 		return new Warper(startPos);
 	}
 
