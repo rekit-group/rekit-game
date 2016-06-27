@@ -20,7 +20,7 @@ public class HeapLayer extends ParallaxLayer {
 
 	public HeapLayer(HeapElement prototype, float distanceFromFront) {
 		super(distanceFromFront);
-		this.elems = new LinkedList<HeapElement>();
+		this.elems = new LinkedList<>();
 		this.prototype = prototype;
 	}
 

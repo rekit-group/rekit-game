@@ -44,7 +44,9 @@ public abstract class Boss extends Entity {
 
 	@Override
 	public void destroy() {
-		this.bossRoom.endBattle();
+		if (this.bossRoom != null) {
+			this.bossRoom.endBattle();
+		}
 		this.setHarmless(true);
 	}
 }

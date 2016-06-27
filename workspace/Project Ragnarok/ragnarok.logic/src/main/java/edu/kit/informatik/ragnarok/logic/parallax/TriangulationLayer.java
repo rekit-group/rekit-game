@@ -127,7 +127,7 @@ public class TriangulationLayer extends ParallaxLayer {
 				minX = Math.min(this.corners[i].getX(), minX);
 				maxX = Math.max(this.corners[i].getX(), maxX);
 				minY = Math.min(this.corners[i].getY(), minY);
-				minY = Math.max(this.corners[i].getY(), maxY);
+				maxY = Math.max(this.corners[i].getY(), maxY);
 			}
 			this.setPos(new Vec(minX + (maxX - minX) / 2f, minY + (maxY - minY) / 2f));
 			this.size = new Vec(maxX - minX, maxY - minY);
@@ -163,7 +163,7 @@ public class TriangulationLayer extends ParallaxLayer {
 		}
 	}
 
-	private class Edge {
+	private static class Edge {
 		private Vec start;
 		private Vec end;
 

@@ -138,7 +138,7 @@ public class RektSmasher extends Boss {
 	@Override
 	public void logicLoop(float deltaTime) {
 		// if no invincibility or invincibility time is up
-		if (this.invincibility == null || (this.invincibility != null && this.invincibility.timeUp())) {
+		if (this.invincibility == null || this.invincibility.timeUp()) {
 			this.setHarmless(false);
 		}
 		// if invincible

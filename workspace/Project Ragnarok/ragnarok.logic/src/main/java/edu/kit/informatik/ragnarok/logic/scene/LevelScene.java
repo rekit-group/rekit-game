@@ -91,8 +91,7 @@ public class LevelScene extends Scene {
 
 	@Override
 	public void start() {
-		// TODO Auto-generated method stub
-
+		return;
 	}
 
 	@Override
@@ -255,6 +254,10 @@ public class LevelScene extends Scene {
 		try {
 			BufferedReader in = new BufferedReader(new FileReader("score.dat"));
 			String input = in.readLine();
+			if (input == null) {
+				in.close();
+				return 0;
+			}
 			highScore = Integer.parseInt(input);
 			in.close();
 		} catch (IOException e) {
