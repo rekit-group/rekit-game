@@ -8,7 +8,7 @@ import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Polygon;
 import edu.kit.informatik.ragnarok.primitives.ProgressDependency;
 import edu.kit.informatik.ragnarok.primitives.TimeDependency;
-import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBAColor;
 
 /**
@@ -39,7 +39,7 @@ public class Particle extends GameElement {
 
 	private RGBAColor currentCol = new RGBAColor(0, 0, 0, 0);
 
-	private Vec2D movementVec = null;
+	private Vec movementVec = null;
 
 	/**
 	 * Constructor that takes all ProgressDependencies required for the Particle
@@ -69,7 +69,7 @@ public class Particle extends GameElement {
 	 *            the <i>ProgressDendency</i> for the polygons alpha color
 	 *            channel
 	 */
-	public Particle(Polygon polygon, Vec2D pos, float lifeTime, ProgressDependency size, ProgressDependency speed, ProgressDependency angle,
+	public Particle(Polygon polygon, Vec pos, float lifeTime, ProgressDependency size, ProgressDependency speed, ProgressDependency angle,
 			ProgressDependency colorR, ProgressDependency colorG, ProgressDependency colorB, ProgressDependency colorA) {
 		super(Team.NEUTRAL);
 
@@ -132,7 +132,7 @@ public class Particle extends GameElement {
 	}
 
 	@Override
-	public int getZ() {
+	public int getOrderZ() {
 		return 100;
 	}
 

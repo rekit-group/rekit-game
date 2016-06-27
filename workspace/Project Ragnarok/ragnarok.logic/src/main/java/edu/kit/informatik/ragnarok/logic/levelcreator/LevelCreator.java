@@ -8,7 +8,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateBox;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateFloor;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
-import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 
 public abstract class LevelCreator {
@@ -58,8 +58,9 @@ public abstract class LevelCreator {
 
 		int randColG = this.colorRand.nextInt(100) + 100;
 		int randColRB = this.colorRand.nextInt(40) + 30;
-		i = new InanimateFloor(new Vec2D(x, GameConf.GRID_H - 1), new Vec2D(1, 1), new RGBColor(randColRB, randColG, randColRB));
+		i = new InanimateFloor(new Vec(x, GameConf.GRID_H - 1), new Vec(1, 1), new RGBColor(randColRB, randColG, randColRB));
 		this.generateGameElement(i);
+
 	}
 
 	public void generateEvenFloor(int fromX, int toX) {
@@ -72,8 +73,10 @@ public abstract class LevelCreator {
 	}
 
 	protected void generateBox(int x, int y) {
+
 		int randCol = this.colorRand.nextInt(60) + 50;
-		Inanimate i = new InanimateBox(new Vec2D(x, y), new Vec2D(1, 1), new RGBColor(randCol, randCol, randCol));
+		Inanimate i = new InanimateBox(new Vec(x, y), new Vec(1, 1), new RGBColor(randCol, randCol, randCol));
 		this.generateGameElement(i);
+
 	}
 }

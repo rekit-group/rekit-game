@@ -3,7 +3,7 @@ package edu.kit.informatik.ragnarok.logic.parallax;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.primitives.Polygon;
-import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBAColor;
 
 public class HeapElementMountain extends HeapElement {
@@ -100,23 +100,24 @@ public class HeapElementMountain extends HeapElement {
 
 	private Polygon polygon;
 
-	public HeapElementMountain(HeapLayer parent, Vec2D pos, Vec2D size, RGBAColor col) {
+	public HeapElementMountain(HeapLayer parent, Vec pos, Vec size, RGBAColor col) {
 		super(parent, pos, size, col);
 
 		if (pos != null && size != null) {
-			this.polygon = new Polygon(new Vec2D(), new Vec2D[] { new Vec2D(size.getX() / 2, -size.getY()), new Vec2D(size.getX(), 0), new Vec2D() });
+			this.polygon = new Polygon(new Vec(),
+					new Vec[] { new Vec(-size.getX() / 2, -size.getY()), new Vec(-size.getX(), 0), new Vec() });
 		}
 
 	}
 
 	@Override
 	public void render(Field f) {
-		this.polygon.moveTo(this.getFieldPos());
+		this.polygon.moveTo(this.getPos());
 		f.drawPolygon(this.polygon, this.col);
 	}
 
 	@Override
-	public HeapElement clone(HeapLayer parent, Vec2D pos, Vec2D size, RGBAColor col) {
+	public HeapElement clone(HeapLayer parent, Vec pos, Vec size, RGBAColor col) {
 		return new HeapElementMountain(parent, pos, size, col);
 	}
 

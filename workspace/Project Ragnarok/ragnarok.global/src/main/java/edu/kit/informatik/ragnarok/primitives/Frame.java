@@ -2,18 +2,20 @@ package edu.kit.informatik.ragnarok.primitives;
 
 public class Frame {
 
-	private Vec2D vec1;
-	private Vec2D vec2;
+	private Vec vec1;
+	private Vec vec2;
 
-	public Frame(Vec2D v1, Vec2D v2) {
+	public Frame(Vec v1, Vec v2) {
 		this.setFrame(v1, v2);
 	}
 
 	public Frame(float x1, float y1, float x2, float y2) {
-		this.setFrame(Vec2D.create(x1, y1), Vec2D.create(x2, y2));
+
+		this.setFrame(Vec.create(x1, y1), Vec.create(x2, y2));
+
 	}
 
-	public void setFrame(Vec2D v1, Vec2D v2) {
+	public void setFrame(Vec v1, Vec v2) {
 		this.vec1 = v1;
 		this.vec2 = v2;
 	}
@@ -23,13 +25,13 @@ public class Frame {
 				&& this.vec2.getY() > otherFrame.vec1.getY();
 	}
 
-	public boolean collidesWith(Vec2D vec) {
+	public boolean collidesWith(Vec vec) {
 		return vec.getX() > this.vec1.getX() && vec.getX() < this.vec2.getX() && vec.getY() > this.vec1.getY() && vec.getY() < this.vec2.getY();
 	}
 
 	/**
 	 * Gets the component of the frames border at given direction
-	 * 
+	 *
 	 * @param dir
 	 *            The direction of border
 	 * @return the corresponding coordinate component of the border

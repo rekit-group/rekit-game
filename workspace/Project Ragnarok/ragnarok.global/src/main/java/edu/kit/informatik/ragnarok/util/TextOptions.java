@@ -1,10 +1,10 @@
 package edu.kit.informatik.ragnarok.util;
 
-import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.primitives.Vec;
 
 public class TextOptions implements Cloneable {
 
-	private Vec2D alignment;
+	private Vec alignment;
 
 	private int height;
 
@@ -14,11 +14,11 @@ public class TextOptions implements Cloneable {
 
 	private int fontOptions;
 
-	public Vec2D getAlignment() {
+	public Vec getAlignment() {
 		return this.alignment;
 	}
 
-	public TextOptions setAlignmentLeft(Vec2D alignment) {
+	public TextOptions setAlignmentLeft(Vec alignment) {
 		this.alignment = alignment;
 		return this;
 	}
@@ -59,7 +59,7 @@ public class TextOptions implements Cloneable {
 		return this;
 	}
 
-	public TextOptions(Vec2D alignment, int height, RGBColor color, String font, int fontOptions) {
+	public TextOptions(Vec alignment, int height, RGBColor color, String font, int fontOptions) {
 		this.alignment = alignment;
 		this.height = height;
 		this.color = color;

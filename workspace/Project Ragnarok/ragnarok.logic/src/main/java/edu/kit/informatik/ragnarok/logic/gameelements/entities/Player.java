@@ -7,19 +7,20 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.Particl
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
-import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.primitives.Vec;
 
 public class Player extends Entity implements CameraTarget {
 
-	private Vec2D startPos;
+	private Vec startPos;
+
 	private ParticleSpawner damageParticles;
 	private float currentCameraOffset;
 	private Direction currentDirection;
 
-	public Player(Vec2D startPos) {
+	public Player(Vec startPos) {
 		super(Team.PLAYER, startPos);
 		this.startPos = startPos;
-		this.size = Vec2D.create(0.8f, 0.8f);
+		this.size = Vec.create(0.8f, 0.8f);
 		this.init();
 	}
 
@@ -38,7 +39,9 @@ public class Player extends Entity implements CameraTarget {
 	}
 
 	@Override
+
 	public void internRender(Field f) {
+
 		// determine if direction needs to be changed
 		if (this.getVel().getX() > 0) {
 			this.currentDirection = Direction.RIGHT;
@@ -73,12 +76,12 @@ public class Player extends Entity implements CameraTarget {
 	}
 
 	@Override
-	public int getZ() {
+	public int getOrderZ() {
 		return 10;
 	}
 
 	@Override
-	public Vec2D getSize() {
+	public Vec getSize() {
 		return this.size.clone();
 	}
 

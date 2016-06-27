@@ -1,11 +1,9 @@
 package edu.kit.informatik.ragnarok.logic.parallax;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import edu.kit.informatik.ragnarok.logic.gameelements.Field;
-import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBAColor;
 
 public class HeapLayer extends ParallaxLayer {
@@ -47,12 +45,12 @@ public class HeapLayer extends ParallaxLayer {
 				float randX = this.currentlyGeneratedUntil
 						+ HeapLayer.calcWithVariance(this.getPrototype().elemXMu(), this.getPrototype().elemXSigma());
 				float randY = HeapLayer.calcWithVariance(this.getPrototype().elemYMu(), this.getPrototype().elemYSigma());
-				Vec2D pos = new Vec2D(randX, randY);
+				Vec pos = new Vec(randX, randY);
 
 				// Calc Size
 				float randW = HeapLayer.calcWithVariance(this.getPrototype().elemWidthMu(), this.getPrototype().elemWidthSigma());
 				float randH = HeapLayer.calcWithVariance(this.getPrototype().elemHeightMu(), this.getPrototype().elemHeightSigma());
-				Vec2D size = new Vec2D(randW, randH);
+				Vec size = new Vec(randW, randH);
 
 				// Calc Color
 				int randR = (int) HeapLayer.calcWithVariance(this.getPrototype().elemColRMu(), this.getPrototype().elemColRSigma());
@@ -61,36 +59,12 @@ public class HeapLayer extends ParallaxLayer {
 				int randA = (int) HeapLayer.calcWithVariance(this.getPrototype().elemColAMu(), this.getPrototype().elemColASigma());
 				RGBAColor col = new RGBAColor(randR, randG, randB, randA);
 
-				// Create actual HeapElem object and (blockingly) add it
+				// Create actual HeapElem object and add it
 				HeapElement elem = this.getPrototype().clone(this, pos, size, col);
-				synchronized (this.synchronize()) {
-					this.elems.add(elem);
-				}
-			}
-
-		}
-	}
-
-	@Override
-	public void render(Field f) {
-		// call super method before this (drawing white rectangle)
-		super.render(f);
-		synchronized (this.synchronize()) {
-			Iterator<HeapElement> it = this.elems.iterator();
-			while (it.hasNext()) {
-				HeapElement e = it.next();
-				if (e.getFieldPos().getX() + e.getSize().getX() < this.x) {
-					it.remove();
-				} else {
-					e.render(f);
-				}
+				elem.backgroundZ -= i;
+				this.scene.addGameElement(elem);
 			}
 		}
-	}
-
-	@Override
-	public int getElementCount() {
-		return this.elems.size();
 	}
 
 	public static float calcWithVariance(float mu, float sigma) {

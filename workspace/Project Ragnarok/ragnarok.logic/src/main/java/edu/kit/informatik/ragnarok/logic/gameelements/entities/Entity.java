@@ -9,7 +9,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.state.EntityState
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.TimeDependency;
-import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.primitives.Vec;
 
 public abstract class Entity extends GameElement {
 
@@ -36,7 +36,8 @@ public abstract class Entity extends GameElement {
 	 * @param startPos
 	 *            the position this entity shall be in
 	 */
-	public Entity(Team t, Vec2D startPos) {
+
+	public Entity(Team t, Vec startPos) {
 		super(t);
 		if (startPos == null) {
 			return;
@@ -46,8 +47,9 @@ public abstract class Entity extends GameElement {
 
 		// Set initial position and velocity
 		this.setPos(startPos);
-		this.setVel(new Vec2D(0, 0));
+		this.setVel(new Vec(0, 0));
 		this.points = 0;
+
 	}
 
 	/**
@@ -128,7 +130,7 @@ public abstract class Entity extends GameElement {
 		// s1 = s0 + v*t because physics, thats why!
 		this.setPos(this.getPos().add(this.getVel().multiply(deltaTime)));
 
-		Vec2D newVel = this.getVel();
+		Vec newVel = this.getVel();
 		// apply gravity
 		newVel = newVel.addY(GameConf.G);
 		// apply slowing down walk
@@ -148,7 +150,7 @@ public abstract class Entity extends GameElement {
 	@Override
 	public void collidedWith(Frame collision, Direction dir) {
 		// saving last position
-		Vec2D lastPos = this.getLastPos();
+		Vec lastPos = this.getLastPos();
 
 		int signum = 1;
 		switch (dir) {
@@ -177,16 +179,17 @@ public abstract class Entity extends GameElement {
 		this.setLastPos(lastPos);
 	}
 
-	public Entity create(Vec2D startPos) {
+	public Entity create(Vec startPos) {
 		throw new UnsupportedOperationException("Create not supported for " + this.getClass().getSimpleName() + "s");
 	}
 
 	@Override
-	public int getZ() {
+	public int getOrderZ() {
 		return 1;
 	}
 
 	@Override
+
 	public final void render(Field f) {
 		if (this.isVisible()) {
 			this.internRender(f);

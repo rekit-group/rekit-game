@@ -4,14 +4,17 @@ import java.util.Random;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
+import edu.kit.informatik.ragnarok.logic.scene.Scene;
 
 public abstract class ParallaxLayer {
 
-	private float distanceFromFront;
+	protected float perspectiveZ;
 
 	protected float generateUntil = 0;
 
 	private final Object sync = new Object();
+
+	protected Scene scene;
 
 	protected static final Random RNG = new Random();
 
@@ -19,8 +22,8 @@ public abstract class ParallaxLayer {
 
 	protected float x;
 
-	public ParallaxLayer(float distanceFromFront) {
-		this.distanceFromFront = distanceFromFront;
+	public ParallaxLayer(float perspectiveZ) {
+		this.perspectiveZ = perspectiveZ;
 	}
 
 	public void logicLoop(float currentOffset) {
@@ -35,18 +38,18 @@ public abstract class ParallaxLayer {
 	}
 
 	protected float fieldXtoLayerX(float fieldX) {
-		return fieldX / this.distanceFromFront;
+		return fieldX / this.perspectiveZ;
 	}
 
 	protected float layerXtoFieldX(float layerX) {
-		return layerX * this.distanceFromFront;
+		return layerX * this.perspectiveZ;
+	}
+
+	public void setScene(Scene scene) {
+		this.scene = scene;
 	}
 
 	public Object synchronize() {
 		return this.sync;
-	}
-
-	public int getElementCount() {
-		return 0;
 	}
 }

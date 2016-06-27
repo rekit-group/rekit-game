@@ -3,17 +3,20 @@ package edu.kit.informatik.ragnarok.logic.parallax;
 import java.util.LinkedList;
 import java.util.List;
 
-import edu.kit.informatik.ragnarok.logic.gameelements.Field;
+import edu.kit.informatik.ragnarok.logic.scene.Scene;
 
 public class ParallaxContainer {
 
 	private List<ParallaxLayer> layers;
+	private Scene scene;
 
-	public ParallaxContainer() {
+	public ParallaxContainer(Scene scene) {
 		this.layers = new LinkedList<ParallaxLayer>();
+		this.scene = scene;
 	}
 
 	public void addLayer(ParallaxLayer layer) {
+		layer.setScene(this.scene);
 		this.layers.add(layer);
 	}
 
@@ -22,22 +25,4 @@ public class ParallaxContainer {
 			layer.logicLoop(currentOffset);
 		}
 	}
-
-	public void render(Field f) {
-		long before = System.currentTimeMillis();
-		for (ParallaxLayer layer : this.layers) {
-			layer.render(f);
-		}
-		long after = System.currentTimeMillis();
-		System.out.println(after - before);
-	}
-
-	public int getElementCount() {
-		int result = 0;
-		for (ParallaxLayer layer : this.layers) {
-			result += layer.getElementCount();
-		}
-		return result;
-	}
-
 }

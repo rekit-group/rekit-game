@@ -5,15 +5,16 @@ import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.primitives.Direction;
-import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.primitives.Vec;
 
 public class Life extends Entity {
 	public Life() {
 		super(Team.PICKUP, null);
 	}
 
-	public Life(Vec2D startPos) {
+	public Life(Vec startPos) {
 		super(Team.PICKUP, startPos);
+
 	}
 
 	@Override
@@ -35,7 +36,7 @@ public class Life extends Entity {
 	}
 
 	@Override
-	public Entity create(Vec2D startPos) {
+	public Entity create(Vec startPos) {
 		return new Life(startPos);
 	}
 

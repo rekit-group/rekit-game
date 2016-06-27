@@ -14,7 +14,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateTrigger
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.ProgressDependency;
 import edu.kit.informatik.ragnarok.primitives.TimeDependency;
-import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.CalcUtil;
 import edu.kit.informatik.ragnarok.util.TextOptions;
 
@@ -24,7 +24,7 @@ public class BossRoom {
 	private int x;
 	private LevelCreator levelCreator;
 	private InanimateDoor door;
-	private Vec2D triggerPos;
+	private Vec triggerPos;
 	private Boss boss;
 	private float cameraTarget;
 
@@ -76,11 +76,11 @@ public class BossRoom {
 		this.levelCreator.generateEvenFloor(x + 6 + this.roomStructure.getWidth(), x + 6 + this.roomStructure.getWidth() + 5);
 
 		// generate door after room
-		this.door = new InanimateDoor(new Vec2D(x + 5 + this.roomStructure.getWidth(), (float) Math.ceil(GameConf.GRID_H / 2)));
+		this.door = new InanimateDoor(new Vec(x + 5 + this.roomStructure.getWidth(), (float) Math.ceil(GameConf.GRID_H / 2)));
 		this.levelCreator.generateGameElement(this.door);
 
-		this.triggerPos = new Vec2D(x + 6, GameConf.GRID_H - 2);
-		InanimateTrigger trigger = new InanimateTrigger(this.triggerPos, new Vec2D(1, 1)) {
+		this.triggerPos = new Vec(x + 6, GameConf.GRID_H - 2);
+		InanimateTrigger trigger = new InanimateTrigger(this.triggerPos, new Vec(1, 1)) {
 			@Override
 			public void performTrigger() {
 				if (!this.deleteMe) {
@@ -104,7 +104,7 @@ public class BossRoom {
 
 		// Prepare boss
 		this.boss.setBossRoom(this);
-		this.boss.setPos(new Vec2D(this.x + 6 + this.roomStructure.getWidth() / 2, GameConf.GRID_H / 2 + 1));
+		this.boss.setPos(new Vec(this.x + 6 + this.roomStructure.getWidth() / 2, GameConf.GRID_H / 2 + 1));
 		this.boss.setTarget(player);
 
 		// Create thread for asynchronous stuff
@@ -132,10 +132,10 @@ public class BossRoom {
 
 				// Boss text
 
-				TextOptions op = new TextOptions(new Vec2D(-0.5f, -0.5f), 30, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, 1);
+				TextOptions op = new TextOptions(new Vec(-0.5f, -0.5f), 30, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, 1);
 				Text bossText = new Text(scene, op);
 				bossText.setText(BossRoom.this.boss.getName());
-				bossText.setPos(CalcUtil.units2vec(new Vec2D(GameConf.GRID_W / 2f, GameConf.GRID_H / 2f)));
+				bossText.setPos(CalcUtil.units2vec(new Vec(GameConf.GRID_W / 2f, GameConf.GRID_H / 2f)));
 				
 				TimeDecorator bossTextGui = new TimeDecorator(scene, bossText, new TimeDependency(3));
 
@@ -165,17 +165,17 @@ public class BossRoom {
 			public void run() {
 
 				// save Players current velocity
-				Vec2D playerVelSave = player.getVel();
-				Vec2D playerPosSave = player.getPos();
-				Vec2D bossPosSave = BossRoom.this.boss.getPos();
+				Vec playerVelSave = player.getVel();
+				Vec playerPosSave = player.getPos();
+				Vec bossPosSave = BossRoom.this.boss.getPos();
 
 				// while timer has time left...
 				while (!timer.timeUp()) {
 
 					// freeze player and pos
-					player.setVel(new Vec2D());
+					player.setVel(new Vec());
 					player.setPos(playerPosSave);
-					BossRoom.this.boss.setVel(new Vec2D());
+					BossRoom.this.boss.setVel(new Vec());
 					BossRoom.this.boss.setPos(bossPosSave);
 
 					// wait for time to be up
@@ -188,8 +188,8 @@ public class BossRoom {
 					// phase one: show explosions
 					if (timer.getProgress() < 0.4) {
 						if (Math.random() > 0.9) {
-							Vec2D randPos = BossRoom.this.boss.getPos()
-									.add(new Vec2D((float) Math.random() * 2 - 1, (float) Math.random() * 2f - 1));
+							Vec randPos = BossRoom.this.boss.getPos()
+									.add(new Vec((float) Math.random() * 2 - 1, (float) Math.random() * 2f - 1));
 							BossRoom.explosionParticles.spawn(scene, randPos);
 						}
 					}
@@ -206,7 +206,7 @@ public class BossRoom {
 							float deltaY = GameConf.GRID_H / 2f;
 							float midY = deltaY;
 
-							Vec2D randPos = new Vec2D(midX + (float) Math.random() * deltaX * 2 - deltaX,
+							Vec randPos = new Vec(midX + (float) Math.random() * deltaX * 2 - deltaX,
 									midY + (float) Math.random() * deltaY * 2 - deltaY);
 							BossRoom.fireworkParticles.spawn(scene, randPos);
 						}

@@ -3,29 +3,30 @@ package edu.kit.informatik.ragnarok.logic.gameelements;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
-import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.primitives.Vec;
 
 public abstract class GameElement implements Collidable {
 
 	protected boolean deleteMe;
-	private Vec2D vel;
-	private Vec2D pos;
-	private Vec2D lastPos;
+	private Vec vel;
+	private Vec pos;
+	private Vec lastPos;
 	private Scene scene;
 
-	protected Vec2D size;
+	protected Vec size;
 
 	protected Team team;
 
 	protected GameElement(Team team) {
-		this(team, Vec2D.create(1, 1));
+		this(team, Vec.create(1, 1));
+
 	}
 
-	protected GameElement(Team team, Vec2D size) {
+	protected GameElement(Team team, Vec size) {
 		this.team = team;
 		this.size = size;
 		this.deleteMe = false;
-		this.vel = new Vec2D();
+		this.vel = new Vec();
 	}
 
 	public abstract void render(Field f);
@@ -49,15 +50,17 @@ public abstract class GameElement implements Collidable {
 		return this.team;
 	}
 
-	public void setVel(Vec2D value) {
+	public void setVel(Vec value) {
+
 		this.vel = value;
 	}
 
-	public Vec2D getVel() {
+	public Vec getVel() {
 		return this.vel;
 	}
 
-	public void setPos(Vec2D value) {
+	public void setPos(Vec value) {
+
 		if (this.pos == null) {
 			this.setLastPos(value);
 		} else {
@@ -66,15 +69,15 @@ public abstract class GameElement implements Collidable {
 		this.pos = value;
 	}
 
-	public Vec2D getPos() {
+	public Vec getPos() {
 		return this.pos.clone();
 	}
 
-	protected void setLastPos(Vec2D value) {
+	protected void setLastPos(Vec value) {
 		this.lastPos = value;
 	}
 
-	public Vec2D getLastPos() {
+	public Vec getLastPos() {
 		return this.lastPos.clone();
 	}
 
@@ -87,12 +90,12 @@ public abstract class GameElement implements Collidable {
 	}
 
 	public final Frame getCollisionFrame() {
-		Vec2D v1 = this.getPos().add(this.size.multiply(-0.5f));
-		Vec2D v2 = this.getPos().add(this.size.multiply(0.5f));
+		Vec v1 = this.getPos().add(this.size.multiply(-0.5f));
+		Vec v2 = this.getPos().add(this.size.multiply(0.5f));
 		return new Frame(v1, v2);
 	}
 
-	public int getZ() {
+	public int getOrderZ() {
 		return 0;
 	}
 
@@ -102,9 +105,10 @@ public abstract class GameElement implements Collidable {
 
 	public final boolean canDelete(float cameraOffset) {
 		return this.pos.getX() + this.size.getX() / 2 < cameraOffset;
+
 	}
 
-	public Vec2D getSize() {
+	public Vec getSize() {
 		return this.size.clone();
 	}
 

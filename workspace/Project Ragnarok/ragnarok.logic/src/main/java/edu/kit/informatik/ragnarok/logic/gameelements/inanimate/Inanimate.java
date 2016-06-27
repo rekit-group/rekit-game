@@ -5,16 +5,17 @@ import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
-import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 
 public class Inanimate extends GameElement {
 
 	protected RGBColor color;
 
-	public Inanimate(Vec2D pos, Vec2D size, RGBColor color) {
+	public Inanimate(Vec pos, Vec size, RGBColor color) {
 		super(Team.INANIMATE, size);
 		this.setPos(pos);
+
 		this.color = color;
 	}
 

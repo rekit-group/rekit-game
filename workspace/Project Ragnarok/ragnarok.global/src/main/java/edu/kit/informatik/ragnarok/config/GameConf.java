@@ -1,6 +1,6 @@
 package edu.kit.informatik.ragnarok.config;
 
-import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 import edu.kit.informatik.ragnarok.util.TextOptions;
 import edu.kit.informatik.ragnarok.visitor.AfterVisit;
@@ -87,7 +87,8 @@ public class GameConf implements Visitable {
 
 	@AfterVisit
 	public static void afterVisit() {
-		GameConf.DEFAULT_TEXT = new TextOptions(Vec2D.create(-1, 0), GameConf.GAME_TEXT_SIZE, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, 1);
+
+		GameConf.DEFAULT_TEXT = new TextOptions(Vec.create(-1, 0), GameConf.GAME_TEXT_SIZE, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, 1);
 		GameConf.HINT_TEXT = GameConf.DEFAULT_TEXT.clone().setHeight(GameConf.GAME_TEXT_SIZE - 8);
 	}
 }

@@ -2,7 +2,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities.state;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
-import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.primitives.Vec;
 
 /**
  * The jumping state a entity is in upon jumping until landing
@@ -34,7 +34,7 @@ public class JumpState extends EntityState {
 		timeLeft -= deltaTime;
 		
 		if (timeLeft > 0) {
-			this.entity.setVel(new Vec2D(this.entity.getVel().getX(), GameConf.PLAYER_JUMP_BOOST));
+			this.entity.setVel(new Vec(this.entity.getVel().getX(), GameConf.PLAYER_JUMP_BOOST));
 		}
 	}
 }

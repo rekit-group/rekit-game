@@ -31,7 +31,7 @@ public abstract class Scene implements CameraTarget {
 
 	private ArrayList<GameElement> gameElementRemoveQueue;
 
-	private static final Comparator<GameElement> COMP_GAME = (o1, o2) -> o1.getZ() - o2.getZ();
+	private static final Comparator<GameElement> COMP_GAME = (o1, o2) -> o1.getOrderZ() - o2.getOrderZ();
 	private static final Comparator<GuiElement> COMP_GUI = (o1, o2) -> o1.getZ() - o2.getZ();
 
 	public Scene(GameModel model) {

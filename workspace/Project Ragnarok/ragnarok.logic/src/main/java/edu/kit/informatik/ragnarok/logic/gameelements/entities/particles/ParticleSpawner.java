@@ -2,7 +2,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities.particles;
 
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.Polygon;
-import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.primitives.Vec;
 
 public class ParticleSpawner {
 	
@@ -28,7 +28,7 @@ public class ParticleSpawner {
 		// use default values
 		
 		// default polygon is square wit a = 0.2
-		this.polygon = new Polygon(new Vec2D(), new Vec2D[]{new Vec2D(0.2f, 0), new Vec2D(0.2f, 0.2f), new Vec2D(0, 0.2f), new Vec2D()});
+		this.polygon = new Polygon(new Vec(), new Vec[]{new Vec(0.2f, 0), new Vec(0.2f, 0.2f), new Vec(0, 0.2f), new Vec()});
 		
 		// default color is fully opaque black
 		colorR = new ParticleSpawnerOption(0, 0, 0, 0);
@@ -52,7 +52,7 @@ public class ParticleSpawner {
 		timeMax = 0.6f;
 	}
 	
-	public void spawn(Scene scene, Vec2D pos) {
+	public void spawn(Scene scene, Vec pos) {
 		
 		int randomAmount = (int) (amountMin + Math.random() * (amountMax - amountMin));
 		

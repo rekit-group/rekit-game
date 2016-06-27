@@ -2,12 +2,13 @@ package edu.kit.informatik.ragnarok.logic.gameelements.gui;
 
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
-import edu.kit.informatik.ragnarok.primitives.Vec2D;
+import edu.kit.informatik.ragnarok.primitives.Vec;
 
 public abstract class GuiElement {
 
 	protected boolean visible = true;
-	private Vec2D pos = new Vec2D(0);
+	private Vec pos = new Vec(0);
+
 	private Scene scene;
 
 	public GuiElement(Scene scene) {
@@ -18,11 +19,11 @@ public abstract class GuiElement {
 		return this.visible;
 	}
 
-	public void setPos(Vec2D value) {
+	public void setPos(Vec value) {
 		this.pos = value;
 	}
 
-	public Vec2D getPos() {
+	public Vec getPos() {
 		return this.pos;
 	}
 
