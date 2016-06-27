@@ -174,7 +174,7 @@ class GameView implements View {
 		this.field.setGC(this.gc);
 
 		String debugInfo = "FPS: " + this.getFPS() + "\nGameElements: " + this.model.getScene().getGameElementCount();
-		if (true) {
+		if (GameConf.DEBUG) {
 			debugInfo += "\n" + this.getGameElementStats();
 			this.field.drawText(new Vec(CalcUtil.units2pixel(GameConf.GRID_W) - 10, CalcUtil.units2pixel(GameConf.GRID_H) / 2f), debugInfo,
 					GameConf.HINT_TEXT);
@@ -192,7 +192,7 @@ class GameView implements View {
 			Iterator<GameElement> it = this.model.getScene().getGameElementIterator();
 			while (it.hasNext()) {
 				GameElement e = it.next();
-				String className = e.getClass()/* .getEnclosingClass() */.getName();
+				String className = e.getClass()/* .getEnclosingClass() */.getSimpleName();
 				if (classCounter.containsKey(className)) {
 					classCounter.put(className, classCounter.get(className) + 1);
 				} else {
