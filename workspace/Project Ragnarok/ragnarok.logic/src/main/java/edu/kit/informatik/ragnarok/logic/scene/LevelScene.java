@@ -140,6 +140,7 @@ public class LevelScene extends Scene {
 
 		// check if we can delete this
 		if (e.getPos().translate2D(this.getCameraOffset()).getX() + e.getSize().getX() / 2 < this.getCameraOffset()) {
+
 			this.removeGameElement(e);
 		} else {
 			e.logicLoop(timeDelta);

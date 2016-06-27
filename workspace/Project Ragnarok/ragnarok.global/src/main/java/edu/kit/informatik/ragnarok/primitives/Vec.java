@@ -210,7 +210,7 @@ public class Vec implements Cloneable {
 	}
 
 	public Vec translate2D(float offset) {
-		if (offset != 1) {
+		if (this.getZ() != 1) {
 			return new Vec(this.getX() + offset / this.getZ(), this.getY());
 		}
 		return this;
