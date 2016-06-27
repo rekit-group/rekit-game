@@ -16,7 +16,7 @@ public class TriangulationLayer extends ParallaxLayer {
 
 	private List<Triangle> triangles;
 
-	private float minY = 0;
+	private float minY = GameConf.GRID_H - 3.5f;
 	private float maxY = GameConf.GRID_H;
 
 	public TriangulationLayer(float distanceFromFront) {
@@ -40,10 +40,10 @@ public class TriangulationLayer extends ParallaxLayer {
 			float y;
 
 			if (this.lastIterationEdge.start.getX() >= this.lastIterationEdge.end.getX()) {
-				x = this.lastIterationEdge.start.getX() + this.RNG.nextFloat() * 2 + 1;
+				x = this.lastIterationEdge.start.getX() + ParallaxLayer.RNG.nextFloat() * 3 + 3;
 				y = this.lastIterationEdge.end.getY();
 			} else {
-				x = this.lastIterationEdge.end.getX() + this.RNG.nextFloat() * 2 + 1;
+				x = this.lastIterationEdge.end.getX() + ParallaxLayer.RNG.nextFloat() * 3 + 3;
 				y = this.lastIterationEdge.start.getY();
 			}
 			Vec2D nextCorner = new Vec2D(x, y);
@@ -51,7 +51,7 @@ public class TriangulationLayer extends ParallaxLayer {
 			Triangle iterationTriangle = new Triangle(this.lastIterationEdge.start, this.lastIterationEdge.end, nextCorner);
 
 			LinkedList<Triangle> triangles = new LinkedList<Triangle>();
-			this.recursiveTriangulation(triangles, 3, iterationTriangle);
+			this.recursiveTriangulation(triangles, 2, iterationTriangle);
 
 			synchronized (this.synchronize()) {
 				this.triangles.addAll(triangles);
@@ -78,7 +78,7 @@ public class TriangulationLayer extends ParallaxLayer {
 	public void recursiveTriangulation(List<Triangle> yet, int depthLeft, Triangle triangle) {
 		// is number between 0 and 2 (inclusively)
 
-		int randCorner = this.RNG.nextInt(3);
+		int randCorner = ParallaxLayer.RNG.nextInt(3);
 
 		Vec2D separatingCorner = triangle.getCorner(randCorner);
 		Edge sharedEdge = triangle.getEdge(randCorner);
@@ -88,6 +88,8 @@ public class TriangulationLayer extends ParallaxLayer {
 		Triangle t2 = new Triangle(separatingCorner, separatingEdgePt, triangle.getCorner((randCorner + 2) % 3));
 
 		if (depthLeft <= 0) {
+			t1.initToRender();
+			t2.initToRender();
 			yet.add(t1);
 			yet.add(t2);
 		} else {
@@ -109,9 +111,15 @@ public class TriangulationLayer extends ParallaxLayer {
 		}
 	}
 
+	@Override
+	public int getElementCount() {
+		return this.triangles.size();
+	}
+
 	private class Triangle {
 		private Vec2D[] corners = new Vec2D[3];
 		private Polygon polygon;
+		private RGBColor col;
 
 		public Triangle(Vec2D corner0, Vec2D corner1, Vec2D corner2) {
 			this.corners[0] = corner0;
@@ -119,6 +127,11 @@ public class TriangulationLayer extends ParallaxLayer {
 			this.corners[2] = corner2;
 
 			this.polygon = new Polygon(new Vec2D(), new Vec2D[] { corner1.add(corner0.multiply(-1)), corner2.add(corner0.multiply(-1)), new Vec2D() });
+		}
+
+		public void initToRender() {
+			this.col = new RGBColor((int) HeapLayer.calcWithVariance(190, 23), (int) HeapLayer.calcWithVariance(120, 40),
+					(int) HeapLayer.calcWithVariance(25, 10));
 		}
 
 		public Vec2D getCorner(int i) {
@@ -138,15 +151,9 @@ public class TriangulationLayer extends ParallaxLayer {
 
 		public void render(Field f) {
 			this.polygon.moveTo(this.corners[0].addX(TriangulationLayer.this.fieldXtoLayerX(TriangulationLayer.this.x)));
-			f.drawPolygon(this.polygon, new RGBColor(TriangulationLayer.this.RNG.nextInt(255), TriangulationLayer.this.RNG.nextInt(255),
-					TriangulationLayer.this.RNG.nextInt(255)));
+			f.drawPolygon(this.polygon, this.col);
 		}
 
-	}
-
-	@Override
-	protected float fieldXtoLayerX(float fieldX) {
-		return -10 * fieldX;
 	}
 
 	private class Edge {
@@ -159,7 +166,7 @@ public class TriangulationLayer extends ParallaxLayer {
 		}
 
 		public Vec2D getRandomVecInBetween() {
-			return this.start.add((this.end.add(this.start.multiply(-1))).multiply(TriangulationLayer.this.RNG.nextFloat()));
+			return this.start.add((this.end.add(this.start.multiply(-1))).multiply(0.4f + ParallaxLayer.RNG.nextFloat() / 5f));
 		}
 	}
 

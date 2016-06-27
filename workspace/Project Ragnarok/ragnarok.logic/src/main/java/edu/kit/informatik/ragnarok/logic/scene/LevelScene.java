@@ -23,7 +23,6 @@ import edu.kit.informatik.ragnarok.logic.parallax.HeapElementCloud;
 import edu.kit.informatik.ragnarok.logic.parallax.HeapElementMountain;
 import edu.kit.informatik.ragnarok.logic.parallax.HeapLayer;
 import edu.kit.informatik.ragnarok.logic.parallax.ParallaxContainer;
-import edu.kit.informatik.ragnarok.logic.parallax.TriangulationLayer;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
@@ -75,7 +74,7 @@ public class LevelScene extends Scene {
 
 		// Create parallax background
 		this.parallax = new ParallaxContainer();
-		this.parallax.addLayer(new TriangulationLayer(1.5f));
+		// this.parallax.addLayer(new TriangulationLayer(1.5f));
 		this.parallax.addLayer(new HeapLayer(new HeapElementCloud(null, null, null, null), 1.1f));
 		this.parallax.addLayer(new HeapLayer(new HeapElementMountain(null, null, null, null), 1.3f));
 
@@ -279,6 +278,10 @@ public class LevelScene extends Scene {
 		}
 
 		return highScore;
+	}
+
+	public int getBGElementCount() {
+		return this.parallax.getElementCount();
 	}
 
 }

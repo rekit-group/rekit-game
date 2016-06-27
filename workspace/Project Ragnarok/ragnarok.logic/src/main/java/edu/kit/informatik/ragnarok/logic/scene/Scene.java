@@ -30,6 +30,7 @@ public abstract class Scene implements CameraTarget {
 	private ArrayList<GameElement> gameElementAddQueue;
 
 	private ArrayList<GameElement> gameElementRemoveQueue;
+
 	private static final Comparator<GameElement> COMP_GAME = (o1, o2) -> o1.getZ() - o2.getZ();
 	private static final Comparator<GuiElement> COMP_GUI = (o1, o2) -> o1.getZ() - o2.getZ();
 
@@ -217,6 +218,10 @@ public abstract class Scene implements CameraTarget {
 
 	public void setCameraTarget(CameraTarget cameraTarget) {
 
+	}
+
+	public int getGameElementCount() {
+		return this.gameElements.size();
 	}
 
 	public Object synchronize() {

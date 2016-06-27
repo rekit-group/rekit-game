@@ -17,12 +17,12 @@ import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.Model;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.GuiElement;
+import edu.kit.informatik.ragnarok.logic.scene.LevelScene;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.Vec2D;
 import edu.kit.informatik.ragnarok.util.CalcUtil;
 import edu.kit.informatik.ragnarok.util.InputHelper;
 import edu.kit.informatik.ragnarok.util.SwtUtils;
-import edu.kit.informatik.ragnarok.util.ThreadUtils;
 
 /**
  * Main class of the View. Manages the window and a canvas an periodically
@@ -96,6 +96,7 @@ class GameView implements View {
 	@Override
 	public void start() {
 		Thread updateThread = new Thread(() -> this.updateLoop());
+
 		// background thread
 		updateThread.setDaemon(true);
 		updateThread.start();
@@ -115,7 +116,8 @@ class GameView implements View {
 		Display disp = Display.getDefault();
 		while (!disp.isDisposed()) {
 			disp.syncExec(() -> this.renderLoop());
-			ThreadUtils.sleep(GameConf.RENDER_DELTA);
+			Thread.yield();
+			// ThreadUtils.sleep(GameConf.RENDER_DELTA);
 		}
 
 	}
@@ -139,8 +141,7 @@ class GameView implements View {
 		this.field.setGC(tempGC);
 
 		// set current camera position
-		float cameraOffset = scene.getCameraOffset();
-		this.field.setCurrentOffset(cameraOffset);
+		this.field.setCurrentOffset(scene.getCameraOffset());
 
 		this.field.setBackground(SwtUtils.calcRGB(GameConf.GAME_BACKGROUD_COLOR));
 
@@ -177,7 +178,10 @@ class GameView implements View {
 		// draw FPS
 		float fps = this.getFPS();
 		this.field.setGC(this.gc);
-		this.field.drawText(Vec2D.create(CalcUtil.units2pixel(GameConf.GRID_W) - 10, CalcUtil.units2pixel(GameConf.GRID_H) - 60), "FPS: " + fps,
+
+		this.field.drawText(Vec2D.create(CalcUtil.units2pixel(GameConf.GRID_W) - 10, CalcUtil.units2pixel(GameConf.GRID_H) - 60),
+				"FPS: " + fps + "\nGameElements: " + this.model.getScene().getGameElementCount() + "\nBGElements: "
+						+ ((LevelScene) this.model.getScene()).getBGElementCount(),
 				GameConf.HINT_TEXT);
 
 	}
