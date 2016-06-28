@@ -133,6 +133,6 @@
 		<module>ragnarok.game</module>
 		<module>ragnarok.basic.enemypack</module>
 		<module>ragnarok.basic.pickuppack</module>
-		<module>ragnarok.basic.bosspack</module>
+		
 	</modules>
 </project>
