@@ -152,7 +152,7 @@ public class RektKiller extends Enemy {
 			return;
 		}
 
-		if (this.isHostile(element)) {
+		if (this.team.isHostile(element.getTeam())) {
 			// Touched harmless side
 			if (!this.hasSide(dir)) {
 				// give the player 40 points

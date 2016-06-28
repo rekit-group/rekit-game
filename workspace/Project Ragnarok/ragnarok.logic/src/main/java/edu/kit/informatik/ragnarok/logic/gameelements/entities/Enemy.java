@@ -2,6 +2,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities;
 
 import java.util.Set;
 
+import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.logic.util.ReflectUtils;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 
@@ -11,11 +12,11 @@ public abstract class Enemy extends Entity {
 	}
 
 	protected Enemy() {
-		super(null);
+		super(null, Team.ENEMY);
 	}
 
 	protected Enemy(Vec startPos) {
-		super(startPos);
+		super(startPos, Team.ENEMY);
 	}
 
 }

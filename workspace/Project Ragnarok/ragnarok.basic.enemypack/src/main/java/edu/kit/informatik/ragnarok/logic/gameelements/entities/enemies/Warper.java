@@ -97,7 +97,7 @@ public class Warper extends Enemy {
 			return;
 		}
 
-		if (this.isHostile(element)) {
+		if (this.team.isHostile(element.getTeam())) {
 
 			// Give player damage
 			element.addDamage(1);

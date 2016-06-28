@@ -19,7 +19,7 @@ public class Coin extends Pickup {
 
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
-		if (this.isHostile(element)) {
+		if (this.team.isHostile(element.getTeam())) {
 			element.addPoints(10);
 			this.addDamage(1);
 		}

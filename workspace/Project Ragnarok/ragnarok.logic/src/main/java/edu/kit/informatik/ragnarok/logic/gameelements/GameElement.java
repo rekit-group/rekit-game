@@ -13,7 +13,7 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 
 	private Vec size = new Vec(1, 1);
 
-	private int team = 1;
+	protected Team team;
 
 	protected Vec pos;
 
@@ -21,28 +21,17 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 
 	private Vec lastPos;
 
-	public GameElement(Vec startPos) {
+	public GameElement(Vec startPos, Team team) {
 		if (startPos == null) {
 			return;
 		}
+		this.team = team;
 		this.setPos(startPos);
 
 	}
 
 	public void destroy() {
 		this.deleteMe = true;
-	}
-
-	protected void setTeam(int value) {
-		this.team = value;
-	}
-
-	protected int getTeam() {
-		return this.team;
-	}
-
-	protected boolean isHostile(GameElement other) {
-		return this.getTeam() != other.getTeam();
 	}
 
 	@Override
@@ -128,5 +117,9 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 
 	protected boolean isVisible() {
 		return this.visible;
+	}
+
+	public final Team getTeam() {
+		return this.team;
 	}
 }

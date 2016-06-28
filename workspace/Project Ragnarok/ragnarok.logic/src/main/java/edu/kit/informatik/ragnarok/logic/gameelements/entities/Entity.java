@@ -2,6 +2,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.state.DefaultState;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.state.EntityState;
 import edu.kit.informatik.ragnarok.primitives.Direction;
@@ -33,9 +34,11 @@ public abstract class Entity extends GameElement {
 	 *
 	 * @param startPos
 	 *            the position this entity shall be in
+	 * @param team
+	 *            the team
 	 */
-	public Entity(Vec startPos) {
-		super(startPos);
+	public Entity(Vec startPos, Team team) {
+		super(startPos, team);
 
 		// Set to default state
 		this.setEntityState(new DefaultState(this));

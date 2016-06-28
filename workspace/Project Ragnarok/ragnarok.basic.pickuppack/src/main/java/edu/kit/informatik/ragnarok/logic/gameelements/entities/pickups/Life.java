@@ -18,7 +18,7 @@ public class Life extends Pickup {
 
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
-		if (this.isHostile(element)) {
+		if (this.team.isHostile(element.getTeam())) {
 			element.addDamage(-1);
 			this.addDamage(1);
 		}
