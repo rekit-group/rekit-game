@@ -14,14 +14,13 @@ public class Inanimate extends GameElement {
 
 	public Inanimate(Vec pos, Vec size, RGBColor color) {
 		super(pos, Team.NEUTRAL);
-		this.setSize(size);
+		this.size = size;
 		this.color = color;
 	}
 
 	@Override
 	public void internalRender(Field f) {
 		Vec pos = this.getPos();
-
 		f.drawRectangle(pos, this.getSize().multiply(0.95f), this.color);
 	}
 

@@ -51,7 +51,7 @@ public class TriangulationLayer extends ParallaxLayer {
 			Triangle iterationTriangle = new Triangle(this.lastIterationEdge.start, this.lastIterationEdge.end, nextCorner);
 
 			// recursively split this triangle
-			LinkedList<Triangle> triangles = new LinkedList<Triangle>();
+			LinkedList<Triangle> triangles = new LinkedList<>();
 			this.recursiveTriangulation(triangles, 2, iterationTriangle);
 
 			// add all triangles to model
@@ -127,10 +127,10 @@ public class TriangulationLayer extends ParallaxLayer {
 				minX = Math.min(this.corners[i].getX(), minX);
 				maxX = Math.max(this.corners[i].getX(), maxX);
 				minY = Math.min(this.corners[i].getY(), minY);
-				minY = Math.max(this.corners[i].getY(), maxY);
+				maxY = Math.max(this.corners[i].getY(), maxY);
 			}
 			this.setPos(new Vec(minX + (maxX - minX) / 2f, minY + (maxY - minY) / 2f));
-			this.setSize(new Vec(maxX - minX, maxY - minY));
+			this.size = new Vec(maxX - minX, maxY - minY);
 
 			this.polygon = new Polygon(new Vec(), new Vec[] { corner1.add(corner0.multiply(-1)), corner2.add(corner0.multiply(-1)), new Vec() });
 		}

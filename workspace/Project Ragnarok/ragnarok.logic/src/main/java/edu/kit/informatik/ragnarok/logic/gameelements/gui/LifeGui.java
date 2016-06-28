@@ -5,8 +5,8 @@ import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 
 public class LifeGui extends GuiElement {
-	
-	private String image = "mrRekt_glasses_right.png";	
+
+	private String image = "mrRekt_glasses_right.png";
 	private Vec imageSize = new Vec(10);
 	private int playerLifes;
 
@@ -14,10 +14,10 @@ public class LifeGui extends GuiElement {
 		super(scene);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	@Override
 	public void logicLoop(float deltaTime) {
-		playerLifes = this.getScene().getPlayer().getLifes();
+		this.playerLifes = this.getScene().getPlayer().getLifes();
 	}
 
 	@Override

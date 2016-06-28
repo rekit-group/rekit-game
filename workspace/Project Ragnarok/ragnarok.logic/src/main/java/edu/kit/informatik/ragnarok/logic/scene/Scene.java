@@ -40,9 +40,9 @@ public abstract class Scene implements CameraTarget {
 	 */
 	public void init() {
 		this.guiElements = new PriorityQueue<>();
-		this.gameElements = new PriorityQueue<GameElement>();
-		this.gameElementAddQueue = new ArrayList<GameElement>();
-		this.gameElementRemoveQueue = new ArrayList<GameElement>();
+		this.gameElements = new PriorityQueue<>();
+		this.gameElementAddQueue = new ArrayList<>();
+		this.gameElementRemoveQueue = new ArrayList<>();
 	}
 
 	/**
@@ -103,7 +103,7 @@ public abstract class Scene implements CameraTarget {
 		GameElement e = it.next();
 
 		// if this GameElement is marked for destruction
-		if (e.deleteMe) {
+		if (e.getDeleteMe()) {
 			it.remove();
 		}
 
@@ -174,7 +174,7 @@ public abstract class Scene implements CameraTarget {
 	}
 
 	public Iterator<GameElement> getOrderedGameElementIterator() {
-		return new PriorityQueueIterator<GameElement>(this.gameElements);
+		return new PriorityQueueIterator<>(this.gameElements);
 	}
 
 	public Iterator<GameElement> getGameElementIterator() {

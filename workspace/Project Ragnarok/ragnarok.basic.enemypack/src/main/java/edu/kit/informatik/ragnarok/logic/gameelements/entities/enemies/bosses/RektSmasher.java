@@ -22,12 +22,11 @@ public class RektSmasher extends Boss {
 
 		// Configure own attributes
 		super(startPos);
-		this.setSize(new Vec(2f, 2f));
+		this.size = new Vec(2f, 2f);
 
 		// Configure innerRektKiller
-		this.innerRektKiller = new RektKiller(startPos, 15);
+		this.innerRektKiller = new RektKiller(startPos, 15, this.getSize());
 		this.innerRektKiller.setCurrentDirection(Direction.DOWN);
-		this.innerRektKiller.setSize(this.getSize());
 		this.innerRektKiller.prepare();
 
 		this.setLifes(3);
@@ -59,7 +58,7 @@ public class RektSmasher extends Boss {
 	@Override
 	public void collidedWith(Frame collision, final Direction dir) {
 
-		Vec dif = this.getPos().add(this.getTarget().getPos().multiply(-1));
+		Vec dif = this.getPos().add(this.target.getPos().multiply(-1));
 
 		super.collidedWith(collision, dir);
 
@@ -116,7 +115,7 @@ public class RektSmasher extends Boss {
 
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
-		if (this.isHarmless()) {
+		if (this.isHarmless) {
 			return;
 		}
 
@@ -145,15 +144,15 @@ public class RektSmasher extends Boss {
 	public void logicLoop(float deltaTime) {
 		// if no invincibility or invincibility time is up
 		if (this.invincibility == null || this.invincibility.timeUp()) {
-			this.setHarmless(false);
+			this.isHarmless = false;
 		}
 		// if invincible
 		if (this.invincibility != null && !this.invincibility.timeUp()) {
-			this.setHarmless(true);
+			this.isHarmless = true;
 		}
 		// we dont want him damaging the player when hes actually dead
 		if (this.getLifes() <= 0) {
-			this.setHarmless(true);
+			this.isHarmless = true;
 		}
 
 		this.setVel(this.innerRektKiller.getCurrentDirection().getVector().multiply(this.speed * GameConf.PLAYER_WALK_MAX_SPEED));
@@ -169,8 +168,8 @@ public class RektSmasher extends Boss {
 	@Override
 	public Entity create(Vec startPos) {
 		RektSmasher clone = new RektSmasher(startPos);
-		clone.setTarget(this.getTarget());
-		clone.setBossRoom(this.getBossRoom());
+		clone.setTarget(this.target);
+		clone.setBossRoom(this.bossRoom);
 		return clone;
 	}
 

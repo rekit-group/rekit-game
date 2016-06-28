@@ -5,7 +5,7 @@ import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.TimeDependency;
 
 public class TimeDecorator extends GuiElement {
-	
+
 	private GuiElement element;
 	private TimeDependency timer;
 
@@ -14,21 +14,21 @@ public class TimeDecorator extends GuiElement {
 		this.element = element;
 		this.timer = timer;
 	}
-	
+
 	@Override
 	public void logicLoop(float deltaTime) {
-		timer.removeTime(deltaTime);
-		if (timer.timeUp()) {
+		this.timer.removeTime(deltaTime);
+		if (this.timer.timeUp()) {
 			this.setVisible(false);
 			this.getScene().removeGuiElement(this);
 		}
-		
-		element.logicLoop(deltaTime);
+
+		this.element.logicLoop(deltaTime);
 	}
 
 	@Override
 	public void internalRender(Field f) {
-		element.internalRender(f);
+		this.element.internalRender(f);
 	}
 
 }

@@ -7,19 +7,17 @@ import edu.kit.informatik.ragnarok.primitives.Vec;
 
 public abstract class GameElement implements Collidable, Comparable<GameElement> {
 
-	private boolean visible = true;
+	protected boolean visible = true;
 
-	public boolean deleteMe = false;
+	protected boolean deleteMe = false;
 
-	private Vec size = new Vec(1, 1);
+	protected Vec size = new Vec(1, 1);
+	protected Vec vel = new Vec();
+	protected Vec pos;
+	protected Vec lastPos;
 
 	protected Team team;
-
-	protected Vec pos;
-
-	private Vec vel = new Vec();
-
-	private Vec lastPos;
+	protected Scene scene;
 
 	public GameElement(Vec startPos, Team team) {
 		if (startPos == null) {
@@ -44,54 +42,40 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 	}
 
 	public void setVel(Vec value) {
-		this.vel = value;
+		this.vel = value.clone();
 	}
 
 	public Vec getVel() {
-		return this.vel;
+		return this.vel.clone();
 	}
 
-	public void setPos(Vec value) {
+	public final void setPos(Vec value) {
 		if (this.pos == null) {
-			this.setLastPos(value);
+			this.lastPos = value.clone();
 		} else {
-			this.setLastPos(this.pos);
+			this.lastPos = this.pos.clone();
 		}
 
-		this.pos = value;
+		this.pos = value.clone();
 	}
 
 	public Vec getPos() {
-		return this.pos;
-	}
-
-	public void setLastPos(Vec value) {
-		this.lastPos = value;
+		return this.pos.clone();
 	}
 
 	public Vec getLastPos() {
-		return this.lastPos;
+		return this.lastPos.clone();
 	}
 
 	public Vec getSize() {
 		return this.size;
 	}
 
-	public void setSize(Vec size) {
-		this.size = size;
-	}
-
-	private Scene scene;
-
 	public void setScene(Scene value) {
 		this.scene = value;
 	}
 
-	public Scene getScene() {
-		return this.scene;
-	}
-
-	public Frame getCollisionFrame() {
+	public final Frame getCollisionFrame() {
 		Vec v1 = this.getPos().add(this.getSize().multiply(-0.5f));
 		Vec v2 = this.getPos().add(this.getSize().multiply(0.5f));
 
@@ -106,7 +90,7 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 
 	protected abstract void internalRender(Field f);
 
-	public int getOrderZ() {
+	protected int getOrderZ() {
 		return 0;
 	}
 
@@ -121,5 +105,9 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 
 	public final Team getTeam() {
 		return this.team;
+	}
+
+	public boolean getDeleteMe() {
+		return this.deleteMe;
 	}
 }

@@ -31,14 +31,13 @@ public class Particle extends GameElement {
 	private ProgressDependency colorG;
 	private ProgressDependency colorB;
 	private ProgressDependency colorA;
-	// private ProgressDependency size;
+
 	private ProgressDependency speed;
 	private ProgressDependency angle;
 
 	private TimeDependency timer;
 
 	private RGBAColor currentCol = new RGBAColor(0, 0, 0, 0);
-
 	private Vec movementVec = null;
 
 	/**
@@ -103,7 +102,7 @@ public class Particle extends GameElement {
 
 		// If time is up: kill yourself
 		if (this.timer.timeUp()) {
-			this.getScene().removeGameElement(this);
+			this.scene.removeGameElement(this);
 		} else {
 			// get current progress of Particle
 			float progress = this.timer.getProgress();

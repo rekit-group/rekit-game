@@ -60,7 +60,7 @@ public class Rocket extends Enemy {
 	@Override
 	public void internalRender(Field f) {
 
-		Rocket.sparkParticles.spawn(this.getScene(), this.getPos().addX(this.getSize().getX() / 2));
+		Rocket.sparkParticles.spawn(this.scene, this.getPos().addX(this.getSize().getX() / 2));
 
 		// draw body
 		f.drawRectangle(this.getPos(), this.getSize().multiply(0.8f, 0.6f), Rocket.innerColor);
@@ -117,7 +117,7 @@ public class Rocket extends Enemy {
 				// Kill the rocket itself
 				this.addDamage(1);
 
-				Rocket.explosionParticles.spawn(this.getScene(), this.getPos());
+				Rocket.explosionParticles.spawn(this.scene, this.getPos());
 			}
 		}
 	}

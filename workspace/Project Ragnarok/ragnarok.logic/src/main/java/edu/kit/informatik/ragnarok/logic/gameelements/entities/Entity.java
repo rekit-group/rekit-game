@@ -25,7 +25,7 @@ public abstract class Entity extends GameElement {
 	/**
 	 * The current State the Entity is in and determines the jump behavior
 	 */
-	private EntityState entityState;
+	protected EntityState entityState;
 
 	protected TimeDependency invincibility = null;
 
@@ -60,7 +60,7 @@ public abstract class Entity extends GameElement {
 	 * Return the Entities current <i>EntitiyState</i> that determines its jump
 	 * behavior.
 	 *
-	 * @return
+	 * @return the state
 	 */
 	public EntityState getEntityState() {
 		return this.entityState;
@@ -147,10 +147,12 @@ public abstract class Entity extends GameElement {
 		// saving last position
 		Vec lastPos = this.getLastPos();
 
-		int signum = 1;
+		int signum = dir == Direction.LEFT || dir == Direction.UP ? -1 : 1;
+		if (dir == Direction.UP) {
+			this.getEntityState().floorCollision();
+		}
 		switch (dir) {
 		case LEFT:
-			signum = -1;
 		case RIGHT:
 			// move entities right side to collisions left side / vice versa
 			float newX = collision.getBorder(dir) + signum * this.getSize().getX() / 1.9f;
@@ -159,8 +161,6 @@ public abstract class Entity extends GameElement {
 			this.setVel(this.getVel().setX(0));
 			break;
 		case UP:
-			signum = -1;
-			this.getEntityState().floorCollision();
 		case DOWN:
 			// move entities lower side to collisions top side / vice versa
 			float newY = collision.getBorder(dir.getOpposite()) + signum * this.getSize().getY() / 1.9f;
@@ -171,7 +171,7 @@ public abstract class Entity extends GameElement {
 		}
 
 		// resetting lastPos
-		this.setLastPos(lastPos);
+		this.lastPos = lastPos;
 	}
 
 	public abstract Entity create(Vec startPos);
@@ -182,7 +182,7 @@ public abstract class Entity extends GameElement {
 	}
 
 	@Override
-	public boolean isVisible() {
+	protected boolean isVisible() {
 		if (this.invincibility != null && !this.invincibility.timeUp()) {
 			return (int) (this.invincibility.getProgress() * 20) % 2 == 0;
 		}

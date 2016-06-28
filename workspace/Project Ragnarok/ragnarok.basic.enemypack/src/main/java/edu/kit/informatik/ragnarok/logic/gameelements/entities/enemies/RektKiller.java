@@ -28,6 +28,11 @@ public class RektKiller extends Enemy {
 		super();
 	}
 
+	public RektKiller(Vec startPos, int sides, Vec size) {
+		this(startPos, sides);
+		this.size = size;
+	}
+
 	public RektKiller(Vec startPos, int sides) {
 		super(startPos);
 
@@ -41,7 +46,7 @@ public class RektKiller extends Enemy {
 		this.setCurrentDirection(Direction.values()[x]);
 		this.setSides(sides);
 
-		this.setSize(new Vec(0.6f, 0.6f));
+		this.size = new Vec(0.6f, 0.6f);
 		this.prepare();
 	}
 

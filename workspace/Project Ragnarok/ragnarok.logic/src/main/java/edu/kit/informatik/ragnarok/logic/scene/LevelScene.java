@@ -134,7 +134,7 @@ public class LevelScene extends Scene {
 		GameElement e = it.next();
 
 		// if this GameElement is marked for destruction
-		if (e.deleteMe) {
+		if (e.getDeleteMe()) {
 			it.remove();
 		}
 
@@ -164,7 +164,7 @@ public class LevelScene extends Scene {
 			}
 		}
 
-		if (this.player.deleteMe) {
+		if (this.player.getDeleteMe()) {
 			this.end();
 		}
 	}

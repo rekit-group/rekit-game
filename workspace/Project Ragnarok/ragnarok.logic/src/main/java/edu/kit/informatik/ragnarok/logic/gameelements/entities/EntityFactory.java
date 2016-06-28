@@ -32,7 +32,7 @@ public class EntityFactory {
 		for (Entity e : Enemy.getBossPrototypes()) {
 			hm.put(e.getID(), e);
 		}
-		for (Entity e : Pickup.getBossPrototypes()) {
+		for (Entity e : Pickup.getPickupPrototypes()) {
 			hm.put(e.getID(), e);
 		}
 		return hm;

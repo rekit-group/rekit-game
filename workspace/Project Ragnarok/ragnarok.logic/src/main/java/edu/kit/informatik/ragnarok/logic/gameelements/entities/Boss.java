@@ -10,9 +10,9 @@ import edu.kit.informatik.ragnarok.primitives.Vec;
 
 public abstract class Boss extends Entity {
 
-	private BossRoom bossRoom;
-	private GameElement target;
-	private boolean isHarmless = false;
+	protected BossRoom bossRoom;
+	protected GameElement target;
+	protected boolean isHarmless = false;
 
 	public static final Set<Boss> getBossPrototypes() {
 		return ReflectUtils.get(Boss.class);
@@ -28,29 +28,13 @@ public abstract class Boss extends Entity {
 		this.bossRoom = bossRoom;
 	}
 
-	protected BossRoom getBossRoom() {
-		return this.bossRoom;
-	}
-
 	public void setTarget(GameElement target) {
 		this.target = target;
 	}
 
-	protected GameElement getTarget() {
-		return this.target;
-	}
-
-	protected boolean isHarmless() {
-		return this.isHarmless;
-	}
-
-	protected void setHarmless(boolean isHarmless) {
-		this.isHarmless = isHarmless;
-	}
-
 	@Override
-	public void destroy() {
+	public final void destroy() {
 		this.bossRoom.endBattle();
-		this.setHarmless(true);
+		this.isHarmless = true;
 	}
 }
