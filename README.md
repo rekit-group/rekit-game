@@ -22,7 +22,7 @@
 ### Refactoring
 - [ ] Put collision detection in separate class
 - [ ] Don't give Entity full access to GameModel --> Interface
-- [ ] Create Boss super class
+- [x] Create Boss super class
 - [ ] Create ParticleSpawnerFactory
 
 ### Nice to have
