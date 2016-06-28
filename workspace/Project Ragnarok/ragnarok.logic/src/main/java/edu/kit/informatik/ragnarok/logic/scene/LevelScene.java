@@ -91,7 +91,8 @@ public class LevelScene extends Scene {
 
 	@Override
 	public void start() {
-		return;
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
@@ -133,12 +134,13 @@ public class LevelScene extends Scene {
 		GameElement e = it.next();
 
 		// if this GameElement is marked for destruction
-		if (e.getDelete()) {
+		if (e.deleteMe) {
 			it.remove();
 		}
 
 		// check if we can delete this
-		if (e.canDelete(this.getCameraOffset())) {
+		if (e.getPos().translate2D(this.getCameraOffset()).getX() + e.getSize().getX() / 2 < this.getCameraOffset()) {
+
 			this.removeGameElement(e);
 		} else {
 			e.logicLoop(timeDelta);
@@ -162,7 +164,7 @@ public class LevelScene extends Scene {
 			}
 		}
 
-		if (this.player.getDelete()) {
+		if (this.player.deleteMe) {
 			this.end();
 		}
 	}
@@ -254,10 +256,6 @@ public class LevelScene extends Scene {
 		try {
 			BufferedReader in = new BufferedReader(new FileReader("score.dat"));
 			String input = in.readLine();
-			if (input == null) {
-				in.close();
-				return 0;
-			}
 			highScore = Integer.parseInt(input);
 			in.close();
 		} catch (IOException e) {

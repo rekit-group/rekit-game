@@ -90,7 +90,7 @@ public abstract class HeapElement extends BackgroundElement {
 
 	public HeapElement(HeapLayer parent, Vec pos, Vec size, RGBAColor col) {
 		super(parent, pos);
-		this.size = size;
+		this.setSize(size);
 		this.col = col;
 	}
 

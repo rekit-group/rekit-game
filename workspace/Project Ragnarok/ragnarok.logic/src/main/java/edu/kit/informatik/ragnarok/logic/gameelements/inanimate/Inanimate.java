@@ -2,7 +2,6 @@ package edu.kit.informatik.ragnarok.logic.gameelements.inanimate;
 
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
-import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Vec;
@@ -13,15 +12,16 @@ public class Inanimate extends GameElement {
 	protected RGBColor color;
 
 	public Inanimate(Vec pos, Vec size, RGBColor color) {
-		super(Team.INANIMATE, size);
-		this.setPos(pos);
-
+		super(pos);
+		this.setSize(size);
 		this.color = color;
 	}
 
 	@Override
 	public void render(Field f) {
-		f.drawRectangle(this.getPos(), this.size.multiply(0.95f), this.color);
+		Vec pos = this.getPos();
+
+		f.drawRectangle(pos, this.getSize().multiply(0.95f), this.color);
 	}
 
 	@Override

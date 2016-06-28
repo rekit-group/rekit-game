@@ -132,9 +132,4 @@ public class GameModel implements CameraTarget, Model {
 	public GameState getState() {
 		return GameState.INGAME;
 	}
-
-	@Override
-	public void resetCameraOffset() {
-		return;
-	}
 }

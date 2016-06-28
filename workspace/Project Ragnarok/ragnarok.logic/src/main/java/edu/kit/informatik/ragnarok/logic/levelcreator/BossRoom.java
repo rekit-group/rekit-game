@@ -76,13 +76,13 @@ public class BossRoom {
 		this.levelCreator.generateEvenFloor(x + 6 + this.roomStructure.getWidth(), x + 6 + this.roomStructure.getWidth() + 5);
 
 		// generate door after room
-		this.door = new InanimateDoor(new Vec(x + 5 + this.roomStructure.getWidth(), (float) Math.ceil(GameConf.GRID_H / 2F)));
+		this.door = new InanimateDoor(new Vec(x + 5 + this.roomStructure.getWidth(), (float) Math.ceil(GameConf.GRID_H / 2)));
 		this.levelCreator.generateGameElement(this.door);
 
 		this.triggerPos = new Vec(x + 6, GameConf.GRID_H - 2);
 		InanimateTrigger trigger = new InanimateTrigger(this.triggerPos, new Vec(1, 1)) {
 			@Override
-			public void performTrigger() {
+			public void perform() {
 				if (!this.deleteMe) {
 					BossRoom.this.startBattle(this);
 				}
@@ -136,7 +136,7 @@ public class BossRoom {
 				Text bossText = new Text(scene, op);
 				bossText.setText(BossRoom.this.boss.getName());
 				bossText.setPos(CalcUtil.units2vec(new Vec(GameConf.GRID_W / 2f, GameConf.GRID_H / 2f)));
-
+				
 				TimeDecorator bossTextGui = new TimeDecorator(scene, bossText, new TimeDependency(3));
 
 				scene.addGuiElement(bossTextGui);
@@ -188,7 +188,8 @@ public class BossRoom {
 					// phase one: show explosions
 					if (timer.getProgress() < 0.4) {
 						if (Math.random() > 0.9) {
-							Vec randPos = BossRoom.this.boss.getPos().add(new Vec((float) Math.random() * 2 - 1, (float) Math.random() * 2f - 1));
+							Vec randPos = BossRoom.this.boss.getPos()
+									.add(new Vec((float) Math.random() * 2 - 1, (float) Math.random() * 2f - 1));
 							BossRoom.explosionParticles.spawn(scene, randPos);
 						}
 					}
@@ -233,7 +234,7 @@ public class BossRoom {
 				if (player.getLifes() < GameConf.PLAYER_LIFES) {
 					player.setLifes(GameConf.PLAYER_LIFES);
 				}
-
+				
 				// set camera back to player
 				player.resetCameraOffset();
 				scene.setCameraTarget(player);

@@ -53,12 +53,11 @@ public abstract class LevelCreator {
 	}
 
 	protected void generateFloor(int x, int y) {
-
+		Inanimate i;
 		int randColG = this.colorRand.nextInt(100) + 100;
 		int randColRB = this.colorRand.nextInt(40) + 30;
-		Inanimate i = new InanimateFloor(new Vec(x, GameConf.GRID_H - 1), new Vec(1, 1), new RGBColor(randColRB, randColG, randColRB));
+		i = new InanimateFloor(new Vec(x, GameConf.GRID_H - 1), new Vec(1, 1), new RGBColor(randColRB, randColG, randColRB));
 		this.generateGameElement(i);
-
 	}
 
 	public void generateEvenFloor(int fromX, int toX) {
@@ -71,11 +70,9 @@ public abstract class LevelCreator {
 	}
 
 	protected void generateBox(int x, int y) {
-
 		Inanimate i;
 		int randCol = this.colorRand.nextInt(60) + 50;
 		i = new InanimateBox(new Vec(x, y), new Vec(1, 1), new RGBColor(randCol, randCol, randCol));
 		this.generateGameElement(i);
-
 	}
 }

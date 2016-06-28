@@ -38,6 +38,11 @@ public interface Model {
 	 */
 	Scene getScene();
 
+	/**
+	 * Get the current game state
+	 * 
+	 * @return the state
+	 */
 	GameState getState();
 
 }

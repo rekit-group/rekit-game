@@ -61,8 +61,11 @@ public class FieldImpl implements Field {
 		this.gc.fillRectangle(0, 0, this.units2pixel(GameConf.GRID_W), this.units2pixel(GameConf.GRID_H));
 	}
 
-	private void drawCircle(Vec pos, Vec size, RGBA col) {
+	public void drawCircle(Vec pos, Vec size, RGB col) {
+		this.drawCircle(pos, size, new RGBA(col.red, col.green, col.blue, 255));
+	}
 
+	public void drawCircle(Vec pos, Vec size, RGBA col) {
 		// set color
 		this.gc.setAlpha(col.alpha);
 		Color color = new Color(Display.getCurrent(), col);
@@ -75,30 +78,31 @@ public class FieldImpl implements Field {
 		this.gc.setAlpha(255);
 	}
 
-	private void drawCircle(Vec pos, Vec size, RGB col) {
-		this.drawCircle(pos, size, new RGBA(col.red, col.green, col.blue, 255));
+	public void drawRectangle(Vec pos, Vec size, RGB col) {
+		this.drawRectangle(pos, size, new RGBA(col.red, col.green, col.blue, 255));
 	}
 
-	private void drawRectangle(Vec pos, Vec size, RGBA col) {
-
+	public void drawRectangle(Vec pos, Vec size, RGBA col) {
 		// set color
 		this.gc.setAlpha(col.alpha);
 		Color color = new Color(Display.getCurrent(), col);
 
 		this.gc.setBackground(color);
 		color.dispose();
-		this.gc.fillRectangle(this.currentOffset() + this.units2pixel(pos.getX() - size.getX() / 2f), this.units2pixel(pos.getY() - size.getY() / 2f),
-				this.units2pixel(size.getX()), this.units2pixel(size.getY()));
+		this.gc.fillRectangle(this.currentOffset() + this.units2pixel(pos.getX() - size.getX() / 2f),
+				this.units2pixel(pos.getY() - size.getY() / 2f), this.units2pixel(size.getX()), this.units2pixel(size.getY()));
 
 		// reset alpha
 		this.gc.setAlpha(255);
 	}
 
-	private void drawRectangle(Vec pos, Vec size, RGB col) {
-		this.drawRectangle(pos, size, new RGBA(col.red, col.green, col.blue, 255));
+	public void drawPolygon(Polygon polygon, RGB col) {
+		RGBA actualCol = new RGBA(col.red, col.green, col.blue, 255);
+		this.drawPolygon(polygon, actualCol);
+
 	}
 
-	private void drawPolygon(Polygon polygon, RGBA col) {
+	public void drawPolygon(Polygon polygon, RGBA col) {
 		// set color
 		this.gc.setAlpha(col.alpha);
 		Color color = new Color(Display.getCurrent(), col);
@@ -121,17 +125,10 @@ public class FieldImpl implements Field {
 		this.gc.setAlpha(255);
 	}
 
-	private void drawPolygon(Polygon polygon, RGB col) {
-		RGBA actualCol = new RGBA(col.red, col.green, col.blue, 255);
-		this.drawPolygon(polygon, actualCol);
-
-	}
-
 	@Override
 	public void drawImage(Vec pos, Vec size, String imagePath) {
 		Image image = ImageLoader.get(imagePath);
-		this.gc.drawImage(image, // img
-				this.currentOffset() + this.units2pixel(pos.getX() - size.getX() / 2f), // dstX
+		this.gc.drawImage(image, this.currentOffset() + this.units2pixel(pos.getX() - size.getX() / 2f), // dstX
 				this.units2pixel(pos.getY() - size.getY() / 2f) // dstY
 		);
 	}
@@ -139,8 +136,7 @@ public class FieldImpl implements Field {
 	@Override
 	public void drawGuiImage(Vec pos, Vec size, String imagePath) {
 		Image image = ImageLoader.get(imagePath);
-		this.gc.drawImage(image, // img
-				(int) (pos.getX() - size.getX() / 2f), // dstX
+		this.gc.drawImage(image, (int) (pos.getX() - size.getX() / 2f), // dstX
 				(int) (pos.getY() - size.getY() / 2f) // dstY
 		);
 	}
@@ -158,19 +154,14 @@ public class FieldImpl implements Field {
 
 		Point textBounds = this.gc.textExtent(text);
 
-		this.gc.drawText(text, // txt
-				(int) (pos.getX() + options.getAlignment().getX() * textBounds.x), // dstX
-				(int) (pos.getY() + options.getAlignment().getY() * textBounds.y), // dstY
-				true);
-
+		this.gc.drawText(text, (int) (pos.getX() + options.getAlignment().getX() * textBounds.x), (int) (pos.getY() + options.getAlignment().getY()
+				* textBounds.y), true);
 		font.dispose();
 	}
 
 	public void setGC(GC gc) {
 		this.gc = gc;
 	}
-
-	// Adapt existing methods to Interface-Functions
 
 	@Override
 	public void drawRectangle(Vec pos, Vec size, RGBColor color) {

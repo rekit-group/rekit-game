@@ -2,7 +2,6 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
-import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawner;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
 import edu.kit.informatik.ragnarok.primitives.Direction;
@@ -14,20 +13,23 @@ public class Player extends Entity implements CameraTarget {
 	private Vec startPos;
 
 	private ParticleSpawner damageParticles;
+
 	private float currentCameraOffset;
-	private Direction currentDirection;
 
 	public Player(Vec startPos) {
-		super(Team.PLAYER, startPos);
+		super(startPos);
 		this.startPos = startPos;
-		this.size = Vec.create(0.8f, 0.8f);
 		this.init();
 	}
 
 	public void init() {
 		this.setPos(this.startPos);
 		this.lifes = GameConf.PLAYER_LIFES;
+		this.points = 0;
+		this.setTeam(0);
 		this.currentDirection = Direction.RIGHT;
+		this.setVel(new Vec(0, 0));
+		this.deleteMe = false;
 		this.currentCameraOffset = 0;
 
 		this.damageParticles = new ParticleSpawner();
@@ -39,9 +41,14 @@ public class Player extends Entity implements CameraTarget {
 	}
 
 	@Override
+	public Vec getSize() {
+		return new Vec(0.8f, 0.8f);
+	}
 
-	public void internRender(Field f) {
+	private Direction currentDirection;
 
+	@Override
+	public void render(Field f) {
 		// determine if direction needs to be changed
 		if (this.getVel().getX() > 0) {
 			this.currentDirection = Direction.RIGHT;
@@ -50,12 +57,13 @@ public class Player extends Entity implements CameraTarget {
 		}
 
 		// draw player background image
-		f.drawImage(this.getPos(), this.size, "mrRekt_background.png");
+		f.drawImage(this.getPos(), this.getSize(), "mrRekt_background.png");
 		// draw player glasses image
-		String src = this.currentDirection == Direction.RIGHT ? // side
-				"mrRekt_glasses_right.png" // When facing right
+		String src = this.currentDirection == Direction.RIGHT ? "mrRekt_glasses_right.png" // When
+																							// facing
+																							// right
 				: "mrRekt_glasses_left.png"; // When facing left
-		f.drawImage(this.getPos().addY(-0.025f * this.getVel().getY()), this.size, src);
+		f.drawImage(this.getPos().addY(-0.025f * this.getVel().getY()), this.getSize(), src);
 
 	}
 
@@ -69,8 +77,10 @@ public class Player extends Entity implements CameraTarget {
 
 	@Override
 	public void addDamage(int damage) {
+
 		// spawn particles
 		this.damageParticles.spawn(this.getScene(), this.getPos());
+
 		// Do usual life logic
 		super.addDamage(damage);
 	}
@@ -80,12 +90,6 @@ public class Player extends Entity implements CameraTarget {
 		return 10;
 	}
 
-	@Override
-	public Vec getSize() {
-		return this.size.clone();
-	}
-
-	@Override
 	public void resetCameraOffset() {
 		this.currentCameraOffset = 0;
 	}
@@ -98,6 +102,11 @@ public class Player extends Entity implements CameraTarget {
 			this.currentCameraOffset = offsetNow;
 		}
 		return this.currentCameraOffset;
+	}
+
+	@Override
+	public Entity create(Vec startPos) {
+		throw new UnsupportedOperationException("Create not supported for Players");
 	}
 
 }

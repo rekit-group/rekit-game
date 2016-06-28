@@ -1,7 +1,6 @@
 package edu.kit.informatik.ragnarok.logic.scene;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.PriorityQueue;
 
@@ -31,9 +30,6 @@ public abstract class Scene implements CameraTarget {
 
 	private ArrayList<GameElement> gameElementRemoveQueue;
 
-	private static final Comparator<GameElement> COMP_GAME = (o1, o2) -> o1.getOrderZ() - o2.getOrderZ();
-	private static final Comparator<GuiElement> COMP_GUI = (o1, o2) -> o1.getZ() - o2.getZ();
-
 	public Scene(GameModel model) {
 		this.model = model;
 	}
@@ -43,10 +39,10 @@ public abstract class Scene implements CameraTarget {
 	 * Must be called on restart.
 	 */
 	public void init() {
-		this.guiElements = new PriorityQueue<>(Scene.COMP_GUI);
-		this.gameElements = new PriorityQueue<>(Scene.COMP_GAME);
-		this.gameElementAddQueue = new ArrayList<>();
-		this.gameElementRemoveQueue = new ArrayList<>();
+		this.guiElements = new PriorityQueue<>();
+		this.gameElements = new PriorityQueue<GameElement>();
+		this.gameElementAddQueue = new ArrayList<GameElement>();
+		this.gameElementRemoveQueue = new ArrayList<GameElement>();
 	}
 
 	/**
@@ -107,7 +103,7 @@ public abstract class Scene implements CameraTarget {
 		GameElement e = it.next();
 
 		// if this GameElement is marked for destruction
-		if (e.getDelete()) {
+		if (e.deleteMe) {
 			it.remove();
 		}
 
@@ -178,7 +174,7 @@ public abstract class Scene implements CameraTarget {
 	}
 
 	public Iterator<GameElement> getOrderedGameElementIterator() {
-		return new PriorityQueueIterator<>(this.gameElements, Scene.COMP_GAME);
+		return new PriorityQueueIterator<GameElement>(this.gameElements);
 	}
 
 	public Iterator<GameElement> getGameElementIterator() {
@@ -226,11 +222,6 @@ public abstract class Scene implements CameraTarget {
 
 	public Object synchronize() {
 		return this.sync;
-	}
-
-	@Override
-	public void resetCameraOffset() {
-		return;
 	}
 
 }

@@ -1,7 +1,6 @@
 package edu.kit.informatik.ragnarok.logic.parallax;
 
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
-import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Vec;
@@ -13,8 +12,7 @@ public abstract class BackgroundElement extends GameElement {
 	protected int backgroundZ;
 
 	public BackgroundElement(ParallaxLayer parent, Vec pos) {
-		super(Team.NEUTRAL);
-		this.setPos(pos.setZ(parent == null ? 1 : parent.perspectiveZ));
+		super(pos.setZ(parent == null ? 1 : parent.perspectiveZ));
 		this.parent = parent;
 		this.backgroundZ = -10000;
 	}

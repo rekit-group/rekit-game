@@ -1,9 +1,7 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
-import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
-import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.state.DefaultState;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.state.EntityState;
 import edu.kit.informatik.ragnarok.primitives.Direction;
@@ -36,20 +34,14 @@ public abstract class Entity extends GameElement {
 	 * @param startPos
 	 *            the position this entity shall be in
 	 */
+	public Entity(Vec startPos) {
+		super(startPos);
 
-	public Entity(Team t, Vec startPos) {
-		super(t);
-		if (startPos == null) {
-			return;
-		}
 		// Set to default state
 		this.setEntityState(new DefaultState(this));
 
-		// Set initial position and velocity
-		this.setPos(startPos);
+		// Set initial velocity
 		this.setVel(new Vec(0, 0));
-		this.points = 0;
-
 	}
 
 	/**
@@ -158,7 +150,7 @@ public abstract class Entity extends GameElement {
 			signum = -1;
 		case RIGHT:
 			// move entities right side to collisions left side / vice versa
-			float newX = collision.getBorder(dir) + signum * this.size.getX() / 1.9f;
+			float newX = collision.getBorder(dir) + signum * this.getSize().getX() / 1.9f;
 			this.setPos(this.getPos().setX(newX));
 			// stop velocity in x dimension
 			this.setVel(this.getVel().setX(0));
@@ -168,7 +160,7 @@ public abstract class Entity extends GameElement {
 			this.getEntityState().floorCollision();
 		case DOWN:
 			// move entities lower side to collisions top side / vice versa
-			float newY = collision.getBorder(dir.getOpposite()) + signum * this.size.getY() / 1.9f;
+			float newY = collision.getBorder(dir.getOpposite()) + signum * this.getSize().getY() / 1.9f;
 			this.setPos(this.getPos().setY(newY));
 			// stop velocity in y dimension
 			this.setVel(this.getVel().setY(0));
@@ -179,9 +171,7 @@ public abstract class Entity extends GameElement {
 		this.setLastPos(lastPos);
 	}
 
-	public Entity create(Vec startPos) {
-		throw new UnsupportedOperationException("Create not supported for " + this.getClass().getSimpleName() + "s");
-	}
+	public abstract Entity create(Vec startPos);
 
 	@Override
 	public int getOrderZ() {
@@ -189,19 +179,10 @@ public abstract class Entity extends GameElement {
 	}
 
 	@Override
-
-	public final void render(Field f) {
-		if (this.isVisible()) {
-			this.internRender(f);
-		}
-	}
-
-	public abstract void internRender(Field f);
-
-	protected boolean isVisible() {
+	public boolean isVisible() {
 		if (this.invincibility != null && !this.invincibility.timeUp()) {
 			return (int) (this.invincibility.getProgress() * 20) % 2 == 0;
 		}
-		return true;
+		return super.isVisible();
 	}
 }
