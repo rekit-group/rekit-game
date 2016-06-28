@@ -3,6 +3,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.Enemy;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawner;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
@@ -12,7 +13,7 @@ import edu.kit.informatik.ragnarok.primitives.TimeDependency;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 
-public class Warper extends Entity {
+public class Warper extends Enemy {
 
 	private TimeDependency warpAction = new TimeDependency(GameConf.WARPER_WARP_DELTA);
 	private static ParticleSpawner warpParticles = null;
@@ -21,7 +22,7 @@ public class Warper extends Entity {
 	 * Prototype Constructor
 	 */
 	public Warper() {
-		super(null);
+		super();
 	}
 
 	static {
@@ -119,6 +120,11 @@ public class Warper extends Entity {
 	@Override
 	public Entity create(Vec startPos) {
 		return new Warper(startPos);
+	}
+
+	@Override
+	public int getID() {
+		return 4;
 	}
 
 }

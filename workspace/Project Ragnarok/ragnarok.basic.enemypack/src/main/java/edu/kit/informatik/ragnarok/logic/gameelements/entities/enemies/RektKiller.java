@@ -5,6 +5,7 @@ import java.util.Random;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.Enemy;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
@@ -12,7 +13,7 @@ import edu.kit.informatik.ragnarok.primitives.Polygon;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 
-public class RektKiller extends Entity {
+public class RektKiller extends Enemy {
 
 	private int sides;
 
@@ -24,7 +25,7 @@ public class RektKiller extends Entity {
 	 * Prototype Constructor
 	 */
 	public RektKiller() {
-		super(null);
+		super();
 	}
 
 	public RektKiller(Vec startPos, int sides) {
@@ -53,9 +54,9 @@ public class RektKiller extends Entity {
 						new Vec(2.0f * ((this.getSize().getX() * 0.8f) / 3f), 0),
 						new Vec(2.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
 						new Vec(3.0f * ((this.getSize().getX() * 0.8f) / 3f), 0), new Vec() // and
-																								// back
-																								// to
-																								// start
+																							// back
+																							// to
+																							// start
 				});
 	}
 
@@ -133,7 +134,7 @@ public class RektKiller extends Entity {
 
 		// Do usual entity logic
 		super.logicLoop(deltaTime);
-		
+
 		if (this.getPos().getY() <= 0) {
 			this.collidedWith(new Frame(new Vec(0, 0), new Vec(0, 0)), Direction.DOWN);
 		}
@@ -192,7 +193,7 @@ public class RektKiller extends Entity {
 	}
 
 	public Direction getCurrentDirection() {
-		return currentDirection;
+		return this.currentDirection;
 	}
 
 	public void setCurrentDirection(Direction currentDirection) {
@@ -200,11 +201,16 @@ public class RektKiller extends Entity {
 	}
 
 	public int getSides() {
-		return sides;
+		return this.sides;
 	}
 
 	public void setSides(int sides) {
 		this.sides = sides;
+	}
+
+	@Override
+	public int getID() {
+		return 2;
 	}
 
 }

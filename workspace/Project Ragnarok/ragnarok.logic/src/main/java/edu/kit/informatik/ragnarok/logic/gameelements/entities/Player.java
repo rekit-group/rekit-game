@@ -109,4 +109,9 @@ public class Player extends Entity implements CameraTarget {
 		throw new UnsupportedOperationException("Create not supported for Players");
 	}
 
+	@Override
+	public int getID() {
+		return 0;
+	}
+
 }

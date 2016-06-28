@@ -5,31 +5,11 @@
     <artifactId>ragnarok</artifactId>
     <version>0.2-ALPHA</version>
   </parent>
-  <artifactId>ragnarok.game</artifactId>
+  <artifactId>ragnarok.basic.bosspack</artifactId>
   <dependencies>
   	<dependency>
   		<groupId>edu.kit.informatik</groupId>
-  		<artifactId>ragnarok.control</artifactId>
-  		<version>0.2-ALPHA</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>edu.kit.informatik</groupId>
-  		<artifactId>ragnarok.gui</artifactId>
-  		<version>0.2-ALPHA</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>edu.kit.informatik</groupId>
   		<artifactId>ragnarok.logic</artifactId>
-  		<version>0.2-ALPHA</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>edu.kit.informatik</groupId>
-  		<artifactId>ragnarok.basic.bosspack</artifactId>
-  		<version>0.2-ALPHA</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>edu.kit.informatik</groupId>
-  		<artifactId>ragnarok.basic.pickuppack</artifactId>
   		<version>0.2-ALPHA</version>
   	</dependency>
   	<dependency>

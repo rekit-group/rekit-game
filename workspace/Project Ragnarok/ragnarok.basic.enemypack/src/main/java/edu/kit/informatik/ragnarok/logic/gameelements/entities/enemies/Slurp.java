@@ -7,12 +7,13 @@ import java.util.Random;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.Enemy;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 
-public class Slurp extends Entity {
+public class Slurp extends Enemy {
 
 	private List<SlurpDurp> slurpDurps;
 
@@ -20,7 +21,7 @@ public class Slurp extends Entity {
 	 * Prototype Constructor
 	 */
 	public Slurp() {
-		super(null);
+		super();
 	}
 
 	public Slurp(Vec startPos) {
@@ -30,7 +31,7 @@ public class Slurp extends Entity {
 		float sizeX = this.getSize().getX();
 		float sizeY = this.getSize().getX();
 
-		this.slurpDurps = new ArrayList<SlurpDurp>();
+		this.slurpDurps = new ArrayList<>();
 		for (int i = 0; i < 15; i++) {
 			// randomize position, and pulsing options
 			float randX = r.nextFloat() * (sizeX) - (sizeX / 2.0f);
@@ -124,6 +125,11 @@ public class Slurp extends Entity {
 	@Override
 	public Entity create(Vec startPos) {
 		return new Slurp(startPos);
+	}
+
+	@Override
+	public int getID() {
+		return 5;
 	}
 
 }

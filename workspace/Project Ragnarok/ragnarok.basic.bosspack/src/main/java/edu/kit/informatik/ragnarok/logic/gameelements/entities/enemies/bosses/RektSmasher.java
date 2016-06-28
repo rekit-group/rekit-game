@@ -3,6 +3,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.bosses;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.Boss;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.RektKiller;
 import edu.kit.informatik.ragnarok.primitives.Direction;
@@ -12,6 +13,10 @@ import edu.kit.informatik.ragnarok.primitives.Vec;
 public class RektSmasher extends Boss {
 
 	private RektKiller innerRektKiller;
+
+	public RektSmasher() {
+		super(null);
+	}
 
 	public RektSmasher(Vec startPos) {
 
@@ -139,7 +144,7 @@ public class RektSmasher extends Boss {
 	@Override
 	public void logicLoop(float deltaTime) {
 		// if no invincibility or invincibility time is up
-		if (this.invincibility == null || (this.invincibility != null && this.invincibility.timeUp())) {
+		if (this.invincibility == null || this.invincibility.timeUp()) {
 			this.setHarmless(false);
 		}
 		// if invincible
@@ -167,6 +172,11 @@ public class RektSmasher extends Boss {
 		clone.setTarget(this.getTarget());
 		clone.setBossRoom(this.getBossRoom());
 		return clone;
+	}
+
+	@Override
+	public int getID() {
+		return 100;
 	}
 
 }

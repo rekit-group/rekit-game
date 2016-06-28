@@ -72,4 +72,9 @@ public class SlurpDurp extends Entity {
 		throw new UnsupportedOperationException("Create not supported for SlurpDurps");
 	}
 
+	@Override
+	public int getID() {
+		return -1;
+	}
+
 }

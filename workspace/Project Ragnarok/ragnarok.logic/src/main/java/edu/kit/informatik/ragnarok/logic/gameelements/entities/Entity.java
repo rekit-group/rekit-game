@@ -185,4 +185,6 @@ public abstract class Entity extends GameElement {
 		}
 		return super.isVisible();
 	}
+
+	public abstract int getID();
 }

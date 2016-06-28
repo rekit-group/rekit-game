@@ -3,6 +3,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.Enemy;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawner;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
@@ -12,12 +13,12 @@ import edu.kit.informatik.ragnarok.primitives.Polygon;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 
-public class Rocket extends Entity {
+public class Rocket extends Enemy {
 	/**
 	 * Prototype Constructor
 	 */
 	public Rocket() {
-		super(null);
+		super();
 	}
 
 	private static RGBColor innerColor = new RGBColor(90, 90, 90);
@@ -134,6 +135,11 @@ public class Rocket extends Entity {
 	@Override
 	public Entity create(Vec startPos) {
 		return new Rocket(startPos);
+	}
+
+	@Override
+	public int getID() {
+		return 3;
 	}
 
 }
