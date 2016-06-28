@@ -2,6 +2,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities.particles;
 
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Polygon;
@@ -30,14 +31,13 @@ public class Particle extends GameElement {
 	private ProgressDependency colorG;
 	private ProgressDependency colorB;
 	private ProgressDependency colorA;
-	// private ProgressDependency size;
+
 	private ProgressDependency speed;
 	private ProgressDependency angle;
 
 	private TimeDependency timer;
 
 	private RGBAColor currentCol = new RGBAColor(0, 0, 0, 0);
-
 	private Vec movementVec = null;
 
 	/**
@@ -70,7 +70,7 @@ public class Particle extends GameElement {
 	 */
 	public Particle(Polygon polygon, Vec pos, float lifeTime, ProgressDependency size, ProgressDependency speed, ProgressDependency angle,
 			ProgressDependency colorR, ProgressDependency colorG, ProgressDependency colorB, ProgressDependency colorA) {
-		super(pos);
+		super(pos, Team.NEUTRAL);
 
 		// clone polygon so we can work with it
 		this.polygon = polygon.clone();
@@ -102,7 +102,7 @@ public class Particle extends GameElement {
 
 		// If time is up: kill yourself
 		if (this.timer.timeUp()) {
-			this.getScene().removeGameElement(this);
+			this.scene.removeGameElement(this);
 		} else {
 			// get current progress of Particle
 			float progress = this.timer.getProgress();

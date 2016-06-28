@@ -2,6 +2,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
+import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawner;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
 import edu.kit.informatik.ragnarok.primitives.Direction;
@@ -17,7 +18,7 @@ public class Player extends Entity implements CameraTarget {
 	private float currentCameraOffset;
 
 	public Player(Vec startPos) {
-		super(startPos);
+		super(startPos, Team.PLAYER);
 		this.startPos = startPos;
 		this.init();
 	}
@@ -26,7 +27,6 @@ public class Player extends Entity implements CameraTarget {
 		this.setPos(this.startPos);
 		this.lifes = GameConf.PLAYER_LIFES;
 		this.points = 0;
-		this.setTeam(0);
 		this.currentDirection = Direction.RIGHT;
 		this.setVel(new Vec(0, 0));
 		this.deleteMe = false;
@@ -79,7 +79,7 @@ public class Player extends Entity implements CameraTarget {
 	public void addDamage(int damage) {
 
 		// spawn particles
-		this.damageParticles.spawn(this.getScene(), this.getPos());
+		this.damageParticles.spawn(this.scene, this.getPos());
 
 		// Do usual life logic
 		super.addDamage(damage);
@@ -107,6 +107,11 @@ public class Player extends Entity implements CameraTarget {
 	@Override
 	public Entity create(Vec startPos) {
 		throw new UnsupportedOperationException("Create not supported for Players");
+	}
+
+	@Override
+	public int getID() {
+		return 0;
 	}
 
 }

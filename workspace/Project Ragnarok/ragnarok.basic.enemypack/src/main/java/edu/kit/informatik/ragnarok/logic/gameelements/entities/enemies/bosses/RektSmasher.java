@@ -3,6 +3,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.bosses;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.Boss;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.RektKiller;
 import edu.kit.informatik.ragnarok.primitives.Direction;
@@ -13,16 +14,19 @@ public class RektSmasher extends Boss {
 
 	private RektKiller innerRektKiller;
 
+	public RektSmasher() {
+		super(null);
+	}
+
 	public RektSmasher(Vec startPos) {
 
 		// Configure own attributes
 		super(startPos);
-		this.setSize(new Vec(2f, 2f));
+		this.size = new Vec(2f, 2f);
 
 		// Configure innerRektKiller
-		this.innerRektKiller = new RektKiller(startPos, 15);
+		this.innerRektKiller = new RektKiller(startPos, 15, this.getSize());
 		this.innerRektKiller.setCurrentDirection(Direction.DOWN);
-		this.innerRektKiller.setSize(this.getSize());
 		this.innerRektKiller.prepare();
 
 		this.setLifes(3);
@@ -54,7 +58,7 @@ public class RektSmasher extends Boss {
 	@Override
 	public void collidedWith(Frame collision, final Direction dir) {
 
-		Vec dif = this.getPos().add(this.getTarget().getPos().multiply(-1));
+		Vec dif = this.getPos().add(this.target.getPos().multiply(-1));
 
 		super.collidedWith(collision, dir);
 
@@ -111,11 +115,11 @@ public class RektSmasher extends Boss {
 
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
-		if (this.isHarmless()) {
+		if (this.isHarmless) {
 			return;
 		}
 
-		if (this.isHostile(element)) {
+		if (this.team.isHostile(element.getTeam())) {
 			// Touched harmless side
 			if (!this.innerRektKiller.hasSide(dir)) {
 				// Let the player jump if he landed on top
@@ -139,16 +143,16 @@ public class RektSmasher extends Boss {
 	@Override
 	public void logicLoop(float deltaTime) {
 		// if no invincibility or invincibility time is up
-		if (this.invincibility == null || (this.invincibility != null && this.invincibility.timeUp())) {
-			this.setHarmless(false);
+		if (this.invincibility == null || this.invincibility.timeUp()) {
+			this.isHarmless = false;
 		}
 		// if invincible
 		if (this.invincibility != null && !this.invincibility.timeUp()) {
-			this.setHarmless(true);
+			this.isHarmless = true;
 		}
 		// we dont want him damaging the player when hes actually dead
 		if (this.getLifes() <= 0) {
-			this.setHarmless(true);
+			this.isHarmless = true;
 		}
 
 		this.setVel(this.innerRektKiller.getCurrentDirection().getVector().multiply(this.speed * GameConf.PLAYER_WALK_MAX_SPEED));
@@ -164,9 +168,14 @@ public class RektSmasher extends Boss {
 	@Override
 	public Entity create(Vec startPos) {
 		RektSmasher clone = new RektSmasher(startPos);
-		clone.setTarget(this.getTarget());
-		clone.setBossRoom(this.getBossRoom());
+		clone.setTarget(this.target);
+		clone.setBossRoom(this.bossRoom);
 		return clone;
+	}
+
+	@Override
+	public int getID() {
+		return 100;
 	}
 
 }

@@ -11,7 +11,7 @@ import edu.kit.informatik.ragnarok.primitives.ProgressDependency;
  * start and end values accordingly. <b>Note:</b> the delta value will be added
  * to the start value to calculate the end value. So if variation in negative
  * direction is desired you must supply a negative delta.
- * 
+ *
  * @author Angelo Aracri
  * @version 1.0
  */
@@ -25,7 +25,7 @@ public class ParticleSpawnerOption {
 	/**
 	 * Constructor that takes arguments for lower and upper start and delta
 	 * values for full randomized variation
-	 * 
+	 *
 	 * @param startMin
 	 *            the minimal value for the ProgressDependencies start value
 	 * @param startMax
@@ -47,7 +47,7 @@ public class ParticleSpawnerOption {
 	/**
 	 * Short-hand constructor that takes arguments start and delta values for no
 	 * randomized variation
-	 * 
+	 *
 	 * @param start
 	 *            the value for the ProgressDependencies start value
 	 * @param delta
@@ -65,7 +65,7 @@ public class ParticleSpawnerOption {
 	 * Short-hand constructor that takes argument value and uses it as the start
 	 * value and sets delta to 0 for no randomized variation and no change of
 	 * the ProgressDependencies value.
-	 * 
+	 *
 	 * @param start
 	 *            the value for the ProgressDependencies start value
 	 */
@@ -80,14 +80,13 @@ public class ParticleSpawnerOption {
 	 * Returns a randomized ProgressDependency with start and end values
 	 * randomly generated according to specified options (startMin, startMax,
 	 * deltaMin, deltaMax)
-	 * 
+	 *
 	 * @return the randomized ProgressDependency
 	 */
 	public ProgressDependency randomizeProgressDependency() {
 		// calculate random start value between startMin and startMax
 		// (only if startMin != startMax)
-		float start = this.startMin == this.startMax ? this.startMin
-				: (float) (this.startMin + Math.random() * (this.startMax - this.startMin));
+		float start = this.startMin == this.startMax ? this.startMin : (float) (this.startMin + Math.random() * (this.startMax - this.startMin));
 
 		// calculate random delta value between deltaMin and deltaMax
 		// (only if deltaMin != deltaMax)

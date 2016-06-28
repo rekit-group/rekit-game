@@ -3,6 +3,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.Enemy;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawner;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
@@ -12,7 +13,7 @@ import edu.kit.informatik.ragnarok.primitives.TimeDependency;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 
-public class Warper extends Entity {
+public class Warper extends Enemy {
 
 	private TimeDependency warpAction = new TimeDependency(GameConf.WARPER_WARP_DELTA);
 	private static ParticleSpawner warpParticles = null;
@@ -21,7 +22,7 @@ public class Warper extends Entity {
 	 * Prototype Constructor
 	 */
 	public Warper() {
-		super(null);
+		super();
 	}
 
 	static {
@@ -65,7 +66,7 @@ public class Warper extends Entity {
 		// animate particles
 		Warper.warpParticles.amountMin = -5;
 		Warper.warpParticles.amountMax = 2;
-		Warper.warpParticles.spawn(this.getScene(), this.getPos());
+		Warper.warpParticles.spawn(this.scene, this.getPos());
 
 		// if time is up
 		if (this.warpAction.timeUp()) {
@@ -73,12 +74,12 @@ public class Warper extends Entity {
 			this.warpAction.reset();
 
 			// get target (player)
-			Vec target = this.getScene().getPlayer().getPos();
+			Vec target = this.scene.getPlayer().getPos();
 
 			// animate particles
 			Warper.warpParticles.amountMin = 5;
 			Warper.warpParticles.amountMax = 8;
-			Warper.warpParticles.spawn(this.getScene(), this.getPos());
+			Warper.warpParticles.spawn(this.scene, this.getPos());
 
 			// determine if x or y is greater in distance
 			Vec dif = this.getPos().add(target.multiply(-1));
@@ -96,7 +97,7 @@ public class Warper extends Entity {
 			return;
 		}
 
-		if (this.isHostile(element)) {
+		if (this.team.isHostile(element.getTeam())) {
 
 			// Give player damage
 			element.addDamage(1);
@@ -119,6 +120,11 @@ public class Warper extends Entity {
 	@Override
 	public Entity create(Vec startPos) {
 		return new Warper(startPos);
+	}
+
+	@Override
+	public int getID() {
+		return 4;
 	}
 
 }

@@ -3,12 +3,13 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities.pickups;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.Pickup;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 
-public class Life extends Entity {
+public class Life extends Pickup {
 	public Life() {
-		super(null);
+		super();
 	}
 
 	public Life(Vec startPos) {
@@ -17,15 +18,10 @@ public class Life extends Entity {
 
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
-		if (this.isHostile(element)) {
+		if (this.team.isHostile(element.getTeam())) {
 			element.addDamage(-1);
 			this.addDamage(1);
 		}
-	}
-
-	@Override
-	public void logicLoop(float deltaTime) {
-		// do nothing
 	}
 
 	@Override
@@ -36,6 +32,11 @@ public class Life extends Entity {
 	@Override
 	public Entity create(Vec startPos) {
 		return new Life(startPos);
+	}
+
+	@Override
+	public int getID() {
+		return 20;
 	}
 
 }

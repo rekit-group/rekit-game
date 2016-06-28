@@ -3,6 +3,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.Enemy;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawner;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
@@ -12,12 +13,12 @@ import edu.kit.informatik.ragnarok.primitives.Polygon;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 
-public class Rocket extends Entity {
+public class Rocket extends Enemy {
 	/**
 	 * Prototype Constructor
 	 */
 	public Rocket() {
-		super(null);
+		super();
 	}
 
 	private static RGBColor innerColor = new RGBColor(90, 90, 90);
@@ -59,7 +60,7 @@ public class Rocket extends Entity {
 	@Override
 	public void internalRender(Field f) {
 
-		Rocket.sparkParticles.spawn(this.getScene(), this.getPos().addX(this.getSize().getX() / 2));
+		Rocket.sparkParticles.spawn(this.scene, this.getPos().addX(this.getSize().getX() / 2));
 
 		// draw body
 		f.drawRectangle(this.getPos(), this.getSize().multiply(0.8f, 0.6f), Rocket.innerColor);
@@ -101,7 +102,7 @@ public class Rocket extends Entity {
 			return;
 		}
 
-		if (this.isHostile(element)) {
+		if (this.team.isHostile(element.getTeam())) {
 
 			if (dir == Direction.UP) {
 				element.setVel(element.getVel().setY(GameConf.PLAYER_JUMP_BOOST));
@@ -116,7 +117,7 @@ public class Rocket extends Entity {
 				// Kill the rocket itself
 				this.addDamage(1);
 
-				Rocket.explosionParticles.spawn(this.getScene(), this.getPos());
+				Rocket.explosionParticles.spawn(this.scene, this.getPos());
 			}
 		}
 	}
@@ -134,6 +135,11 @@ public class Rocket extends Entity {
 	@Override
 	public Entity create(Vec startPos) {
 		return new Rocket(startPos);
+	}
+
+	@Override
+	public int getID() {
+		return 3;
 	}
 
 }

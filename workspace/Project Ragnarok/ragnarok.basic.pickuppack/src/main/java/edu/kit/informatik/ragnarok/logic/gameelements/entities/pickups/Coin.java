@@ -3,13 +3,14 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities.pickups;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.Pickup;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 
-public class Coin extends Entity {
+public class Coin extends Pickup {
 	public Coin() {
-		super(null);
+		super();
 	}
 
 	public Coin(Vec startPos) {
@@ -18,7 +19,7 @@ public class Coin extends Entity {
 
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
-		if (this.isHostile(element)) {
+		if (this.team.isHostile(element.getTeam())) {
 			element.addPoints(10);
 			this.addDamage(1);
 		}
@@ -50,13 +51,13 @@ public class Coin extends Entity {
 	}
 
 	@Override
-	public void logicLoop(float deltaTime) {
-		// no logic
+	public Entity create(Vec startPos) {
+		return new Coin(startPos);
 	}
 
 	@Override
-	public Entity create(Vec startPos) {
-		return new Coin(startPos);
+	public int getID() {
+		return 10;
 	}
 
 }

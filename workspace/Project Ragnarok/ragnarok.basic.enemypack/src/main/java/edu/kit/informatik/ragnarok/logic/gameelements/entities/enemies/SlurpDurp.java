@@ -2,6 +2,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies;
 
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Vec;
@@ -22,11 +23,11 @@ public class SlurpDurp extends Entity {
 	 * Prototype Constructor
 	 */
 	public SlurpDurp() {
-		super(null);
+		super(null, Team.ENEMY);
 	}
 
 	public SlurpDurp(Vec parentPos, Vec innerPos, float baseSize, float frequency, float amplitude, float phase) {
-		super(parentPos.add(innerPos));
+		super(parentPos.add(innerPos), Team.ENEMY);
 		this.parentPos = parentPos;
 		this.innerPos = innerPos;
 		this.baseSize = baseSize;
@@ -47,7 +48,7 @@ public class SlurpDurp extends Entity {
 
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
-		if (this.isHostile(element)) {
+		if (this.team.isHostile(element.getTeam())) {
 			element.setVel(element.getVel().multiply(0.9f));
 		}
 	}
@@ -70,6 +71,11 @@ public class SlurpDurp extends Entity {
 	@Override
 	public Entity create(Vec startPos) {
 		throw new UnsupportedOperationException("Create not supported for SlurpDurps");
+	}
+
+	@Override
+	public int getID() {
+		return -1;
 	}
 
 }
