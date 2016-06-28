@@ -1,4 +1,6 @@
 * text=auto
 
+*.java text
+
 *.png binary
 *.jpg binary
