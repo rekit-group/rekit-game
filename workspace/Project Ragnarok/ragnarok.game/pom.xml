@@ -24,11 +24,6 @@
   	</dependency>
   	<dependency>
   		<groupId>edu.kit.informatik</groupId>
-  		<artifactId>ragnarok.basic.bosspack</artifactId>
-  		<version>0.2-ALPHA</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>edu.kit.informatik</groupId>
   		<artifactId>ragnarok.basic.pickuppack</artifactId>
   		<version>0.2-ALPHA</version>
   	</dependency>
