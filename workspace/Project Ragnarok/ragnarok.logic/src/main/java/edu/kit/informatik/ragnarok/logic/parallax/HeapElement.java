@@ -95,7 +95,7 @@ public abstract class HeapElement extends BackgroundElement {
 	}
 
 	@Override
-	public abstract void render(Field f);
+	public abstract void internalRender(Field f);
 
 	public abstract HeapElement clone(HeapLayer parent, Vec pos, Vec size, RGBAColor col);
 }

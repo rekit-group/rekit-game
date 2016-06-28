@@ -157,7 +157,7 @@ public class TriangulationLayer extends ParallaxLayer {
 		}
 
 		@Override
-		public void render(Field f) {
+		public void internalRender(Field f) {
 			this.polygon.moveTo(this.corners[0]);
 			f.drawPolygon(this.polygon, this.col);
 		}

@@ -30,7 +30,7 @@ public class Coin extends Entity {
 	}
 
 	@Override
-	public void render(Field f) {
+	public void internalRender(Field f) {
 		RGBColor color = new RGBColor(232, 214, 16);
 		RGBColor darkColor = new RGBColor(192, 174, 6);
 

@@ -12,7 +12,7 @@ public class InanimateTrigger extends Inanimate {
 		super(pos, size, new RGBColor(0, 0, 0));
 	}
 	
-	public void render(Field f) {
+	public void internalRender(Field f) {
 		// Do nothing
 	}
 

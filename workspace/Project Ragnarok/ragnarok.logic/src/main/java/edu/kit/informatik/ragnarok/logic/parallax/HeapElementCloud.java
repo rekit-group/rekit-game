@@ -15,7 +15,7 @@ public class HeapElementCloud extends HeapElement {
 	}
 
 	@Override
-	public void render(Field f) {
+	public void internalRender(Field f) {
 		f.drawCircle(this.getPos(), this.getSize(), this.col);
 	}
 

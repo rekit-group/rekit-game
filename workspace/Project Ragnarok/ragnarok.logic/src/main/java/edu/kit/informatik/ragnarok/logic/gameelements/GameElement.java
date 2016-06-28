@@ -92,13 +92,6 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 		this.size = size;
 	}
 
-	/**
-	 * <pre>
-	 *           1..*     1..1
-	 * GameElement ------------------------- GameModel
-	 *           gameElement        &lt;       gameModel
-	 * </pre>
-	 */
 	private Scene scene;
 
 	public void setScene(Scene value) {
@@ -116,7 +109,13 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 		return new Frame(v1, v2);
 	}
 
-	public abstract void render(Field f);
+	public final void render(Field f) {
+		if (this.isVisible()) {
+			this.internalRender(f);
+		}
+	}
+
+	protected abstract void internalRender(Field f);
 
 	public int getOrderZ() {
 		return 0;
@@ -127,7 +126,7 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 		return this.getOrderZ() - other.getOrderZ();
 	}
 
-	public boolean isVisible() {
+	protected boolean isVisible() {
 		return this.visible;
 	}
 }

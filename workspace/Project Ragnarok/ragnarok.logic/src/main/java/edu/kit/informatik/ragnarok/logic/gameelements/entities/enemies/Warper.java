@@ -40,7 +40,7 @@ public class Warper extends Entity {
 	}
 
 	@Override
-	public void render(Field f) {
+	public void internalRender(Field f) {
 		float progress = this.warpAction.getProgress();
 
 		for (float i = 1; i >= 0.2; i -= 0.1) {

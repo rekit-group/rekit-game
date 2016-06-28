@@ -136,7 +136,7 @@ public class Particle extends GameElement {
 	}
 
 	@Override
-	public void render(Field f) {
+	public void internalRender(Field f) {
 		// float progress = timer.getProgress();
 		this.polygon.moveTo(this.getPos());
 

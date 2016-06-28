@@ -29,7 +29,7 @@ public class Life extends Entity {
 	}
 
 	@Override
-	public void render(Field f) {
+	public void internalRender(Field f) {
 		f.drawImage(this.getPos(), this.getSize(), "mrRekt_glasses_left.png");
 	}
 

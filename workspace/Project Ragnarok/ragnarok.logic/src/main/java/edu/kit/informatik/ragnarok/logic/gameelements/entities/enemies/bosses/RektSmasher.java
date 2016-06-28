@@ -38,13 +38,13 @@ public class RektSmasher extends Boss {
 	}
 
 	@Override
-	public void render(Field f) {
+	public void internalRender(Field f) {
 
 		// Update innerRektKiller
 		this.innerRektKiller.setPos(this.getPos());
 
 		// Render innerRektKiller
-		this.innerRektKiller.render(f);
+		this.innerRektKiller.internalRender(f);
 
 		// Add face image above regular innerRektKiller visualization
 		int lifes = this.getLifes() > 3 ? 3 : this.getLifes();

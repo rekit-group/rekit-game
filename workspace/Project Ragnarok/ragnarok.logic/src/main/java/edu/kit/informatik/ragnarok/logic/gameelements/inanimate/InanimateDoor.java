@@ -12,7 +12,7 @@ public class InanimateDoor extends InanimateBox {
 	}
 
 	@Override
-	public void render(Field f) {
+	public void internalRender(Field f) {
 		f.drawRectangle(this.getPos(), this.getSize(), this.color);
 		
 		Vec start = this.getPos().add(this.getSize().multiply(-(1/2f))).add(new Vec(0.1f, 0.1f));

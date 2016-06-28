@@ -115,9 +115,9 @@ public class Slurp extends Entity {
 	}
 
 	@Override
-	public void render(Field f) {
+	public void internalRender(Field f) {
 		for (SlurpDurp slurpDurp : this.slurpDurps) {
-			slurpDurp.render(f);
+			slurpDurp.internalRender(f);
 		}
 	}
 

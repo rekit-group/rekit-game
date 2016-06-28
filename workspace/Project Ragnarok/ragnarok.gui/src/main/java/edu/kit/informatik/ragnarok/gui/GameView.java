@@ -48,7 +48,7 @@ class GameView implements View {
 
 	private long lastRenderTime;
 
-	private Queue<Float> fpsQueue = new ArrayDeque<Float>();
+	private Queue<Float> fpsQueue = new ArrayDeque<>();
 
 	/**
 	 * The canvas that is drawn upon
@@ -96,24 +96,8 @@ class GameView implements View {
 	 */
 	@Override
 	public void start() {
-		Thread updateThread = new Thread() {
-
-			@Override
-			public void run() {
-				Display disp = Display.getDefault();
-				while (true && !disp.isDisposed()) {
-					disp.syncExec(new Runnable() {
-						@Override
-						public void run() {
-							GameView.this.renderLoop();
-						}
-					});
-					// ThreadUtils.sleep(GameConf.RENDER_DELTA);
-					Thread.yield();
-				}
-			}
-		};
 		// background thread
+		Thread updateThread = new Thread(() -> this.update());
 		updateThread.setDaemon(true);
 		updateThread.start();
 
@@ -126,6 +110,14 @@ class GameView implements View {
 			}
 		}
 		display.dispose();
+	}
+
+	private void update() {
+		Display disp = Display.getDefault();
+		while (!disp.isDisposed()) {
+			disp.syncExec(() -> this.renderLoop());
+			Thread.yield();
+		}
 	}
 
 	/**
@@ -165,20 +157,14 @@ class GameView implements View {
 			// Iterate all GameElements
 			while (it1.hasNext()) {
 				// Render next element
-				GameElement e = it1.next();
-				if (e.isVisible()) {
-					e.render(this.field);
-				}
+				it1.next().render(this.field);
 			}
 
 			// Iterate all GuiElements (life, score, boss)
 			Iterator<GuiElement> it2 = scene.getGuiElementIterator();
 			while (it2.hasNext()) {
 				// Render next element
-				GuiElement e = it2.next();
-				if (e.isVisible()) {
-					e.render(this.field);
-				}
+				it2.next().render(this.field);
 			}
 		}
 
@@ -192,7 +178,7 @@ class GameView implements View {
 		// draw FPS
 		this.field.setGC(this.gc);
 		String debugInfo = "FPS: " + this.getFPS() + "\nGameElements: " + this.model.getScene().getGameElementCount();
-		if (true) {
+		if (GameConf.DEBUG) {
 			debugInfo += "\n" + this.getGameElementStats();
 			this.field.drawText(new Vec(CalcUtil.units2pixel(GameConf.GRID_W) - 10, CalcUtil.units2pixel(GameConf.GRID_H) / 2f), debugInfo,
 					GameConf.HINT_TEXT);
@@ -204,13 +190,13 @@ class GameView implements View {
 	}
 
 	private String getGameElementStats() {
-		HashMap<String, Integer> classCounter = new HashMap<String, Integer>();
+		HashMap<Class<?>, Integer> classCounter = new HashMap<>();
 
 		synchronized (this.model.getScene().synchronize()) {
 			Iterator<GameElement> it = this.model.getScene().getGameElementIterator();
 			while (it.hasNext()) {
 				GameElement e = it.next();
-				String className = e.getClass()/* .getEnclosingClass() */.getName();
+				Class<?> className = e.getClass();
 				if (classCounter.containsKey(className)) {
 					classCounter.put(className, classCounter.get(className) + 1);
 				} else {
@@ -220,10 +206,10 @@ class GameView implements View {
 		}
 
 		StringBuilder result = new StringBuilder();
-		Iterator<Entry<String, Integer>> it2 = classCounter.entrySet().iterator();
+		Iterator<Entry<Class<?>, Integer>> it2 = classCounter.entrySet().iterator();
 		while (it2.hasNext()) {
-			Entry<String, Integer> e = it2.next();
-			result.append(e.getKey());
+			Entry<Class<?>, Integer> e = it2.next();
+			result.append(e.getKey().getSimpleName());
 			result.append(": ");
 			result.append(e.getValue());
 			result.append("\n");

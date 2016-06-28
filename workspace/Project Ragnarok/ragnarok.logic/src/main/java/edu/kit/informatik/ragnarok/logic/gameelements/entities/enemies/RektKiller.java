@@ -105,7 +105,7 @@ public class RektKiller extends Entity {
 	}
 
 	@Override
-	public void render(Field f) {
+	public void internalRender(Field f) {
 		Vec pos = this.getPos();
 		Vec size = this.getSize();
 		RGBColor innerColor = new RGBColor(150, 30, 30);

@@ -27,8 +27,8 @@ public class TimeDecorator extends GuiElement {
 	}
 
 	@Override
-	public void render(Field f) {
-		element.render(f);
+	public void internalRender(Field f) {
+		element.internalRender(f);
 	}
 
 }

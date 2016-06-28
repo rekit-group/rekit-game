@@ -63,7 +63,7 @@ public class SlurpDurp extends Entity {
 	}
 
 	@Override
-	public void render(Field f) {
+	public void internalRender(Field f) {
 		f.drawCircle(this.getPos(), new Vec(this.currentSize), new RGBColor(94, 233, 101));
 	}
 

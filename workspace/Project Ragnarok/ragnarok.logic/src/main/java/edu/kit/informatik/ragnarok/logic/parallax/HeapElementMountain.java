@@ -111,7 +111,7 @@ public class HeapElementMountain extends HeapElement {
 	}
 
 	@Override
-	public void render(Field f) {
+	public void internalRender(Field f) {
 		this.polygon.moveTo(this.getPos());
 		f.drawPolygon(this.polygon, this.col);
 	}

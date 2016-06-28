@@ -32,7 +32,7 @@ public class Text extends GuiElement {
 	}
 
 	@Override
-	public void render(Field f) {
+	public void internalRender(Field f) {
 		f.drawText(this.getPos(), this.text, this.getOptions());
 	}
 }

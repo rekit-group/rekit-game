@@ -32,28 +32,10 @@ public class FieldImpl implements Field {
 	private int cameraOffset = 0;
 	private float cameraOffsetUnits = 0;
 
-	public FieldImpl() {
-	}
-
-	private int units2pixel(float units) {
-		return (int) (units * GameConf.PX_PER_UNIT);
-	}
-
 	@Override
 	public void setCurrentOffset(float cameraOffset) {
 		this.cameraOffsetUnits = cameraOffset;
 		this.cameraOffset = -this.units2pixel(cameraOffset);
-	}
-
-	public Vec translate2D(Vec vec3D) {
-		if (vec3D.getZ() != 1) {
-			return vec3D.translate2D(this.cameraOffsetUnits);
-		}
-		return vec3D;
-	}
-
-	private int currentOffset() {
-		return this.cameraOffset;
 	}
 
 	public void setBackground(RGB col) {
@@ -71,7 +53,7 @@ public class FieldImpl implements Field {
 		Color color = new Color(Display.getCurrent(), col);
 		this.gc.setBackground(color);
 		color.dispose();
-		this.gc.fillOval(this.currentOffset() + this.units2pixel((pos.getX() - size.getX() / 2f)), this.units2pixel((pos.getY() - size.getY() / 2f)),
+		this.gc.fillOval(this.cameraOffset + this.units2pixel((pos.getX() - size.getX() / 2f)), this.units2pixel((pos.getY() - size.getY() / 2f)),
 				this.units2pixel(size.getX()), this.units2pixel(size.getY()));
 
 		// reset alpha
@@ -89,8 +71,8 @@ public class FieldImpl implements Field {
 
 		this.gc.setBackground(color);
 		color.dispose();
-		this.gc.fillRectangle(this.currentOffset() + this.units2pixel(pos.getX() - size.getX() / 2f),
-				this.units2pixel(pos.getY() - size.getY() / 2f), this.units2pixel(size.getX()), this.units2pixel(size.getY()));
+		this.gc.fillRectangle(this.cameraOffset + this.units2pixel(pos.getX() - size.getX() / 2f), this.units2pixel(pos.getY() - size.getY() / 2f),
+				this.units2pixel(size.getX()), this.units2pixel(size.getY()));
 
 		// reset alpha
 		this.gc.setAlpha(255);
@@ -115,7 +97,7 @@ public class FieldImpl implements Field {
 
 		// calculate to pixels and add level scrolling offset
 		for (int i = 0; i < unitArray.length; i += 2) {
-			pixelArray[i] = this.currentOffset() + this.units2pixel(unitArray[i]);
+			pixelArray[i] = this.cameraOffset + this.units2pixel(unitArray[i]);
 			pixelArray[i + 1] = this.units2pixel(unitArray[i + 1]);
 		}
 
@@ -128,7 +110,8 @@ public class FieldImpl implements Field {
 	@Override
 	public void drawImage(Vec pos, Vec size, String imagePath) {
 		Image image = ImageLoader.get(imagePath);
-		this.gc.drawImage(image, this.currentOffset() + this.units2pixel(pos.getX() - size.getX() / 2f), // dstX
+		this.gc.drawImage(image, // image
+				this.cameraOffset + this.units2pixel(pos.getX() - size.getX() / 2f), // dstX
 				this.units2pixel(pos.getY() - size.getY() / 2f) // dstY
 		);
 	}
@@ -136,7 +119,8 @@ public class FieldImpl implements Field {
 	@Override
 	public void drawGuiImage(Vec pos, Vec size, String imagePath) {
 		Image image = ImageLoader.get(imagePath);
-		this.gc.drawImage(image, (int) (pos.getX() - size.getX() / 2f), // dstX
+		this.gc.drawImage(image, // image
+				(int) (pos.getX() - size.getX() / 2f), // dstX
 				(int) (pos.getY() - size.getY() / 2f) // dstY
 		);
 	}
@@ -154,14 +138,29 @@ public class FieldImpl implements Field {
 
 		Point textBounds = this.gc.textExtent(text);
 
-		this.gc.drawText(text, (int) (pos.getX() + options.getAlignment().getX() * textBounds.x), (int) (pos.getY() + options.getAlignment().getY()
-				* textBounds.y), true);
+		this.gc.drawText(text, // text
+				(int) (pos.getX() + options.getAlignment().getX() * textBounds.x), // dstX
+				(int) (pos.getY() + options.getAlignment().getY() * textBounds.y), // dstY
+				true);
 		font.dispose();
 	}
 
 	public void setGC(GC gc) {
 		this.gc = gc;
 	}
+
+	private Vec translate2D(Vec vec3D) {
+		if (vec3D.getZ() != 1) {
+			return vec3D.translate2D(this.cameraOffsetUnits);
+		}
+		return vec3D;
+	}
+
+	private int units2pixel(float units) {
+		return (int) (units * GameConf.PX_PER_UNIT);
+	}
+
+	// Adapt methods
 
 	@Override
 	public void drawRectangle(Vec pos, Vec size, RGBColor color) {

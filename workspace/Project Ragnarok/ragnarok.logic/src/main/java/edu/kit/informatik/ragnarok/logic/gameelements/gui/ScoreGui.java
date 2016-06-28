@@ -30,9 +30,9 @@ public class ScoreGui extends GuiElement {
 	}
 	
 	@Override
-	public void render(Field f) {
-		this.points.render(f);
-		this.highscore.render(f);
+	public void internalRender(Field f) {
+		this.points.internalRender(f);
+		this.highscore.internalRender(f);
 	}
 
 }

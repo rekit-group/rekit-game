@@ -18,7 +18,7 @@ public class Inanimate extends GameElement {
 	}
 
 	@Override
-	public void render(Field f) {
+	public void internalRender(Field f) {
 		Vec pos = this.getPos();
 
 		f.drawRectangle(pos, this.getSize().multiply(0.95f), this.color);

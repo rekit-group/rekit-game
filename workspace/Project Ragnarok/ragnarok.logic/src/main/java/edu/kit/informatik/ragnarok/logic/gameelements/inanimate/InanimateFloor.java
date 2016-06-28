@@ -33,7 +33,7 @@ public class InanimateFloor extends Inanimate {
 	}
 	
 	@Override
-	public void render(Field f) {
+	public void internalRender(Field f) {
 		Vec pos = this.getPos();
 		Vec size = this.getSize();
 		
