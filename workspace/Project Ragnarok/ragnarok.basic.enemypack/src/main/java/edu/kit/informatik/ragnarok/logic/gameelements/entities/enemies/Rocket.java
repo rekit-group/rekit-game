@@ -10,6 +10,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.type.Enemy;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Polygon;
+import edu.kit.informatik.ragnarok.primitives.TimeDependency;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 
@@ -24,6 +25,7 @@ public class Rocket extends Enemy {
 	private static RGBColor innerColor = new RGBColor(90, 90, 90);
 	private static RGBColor frontColor = new RGBColor(150, 30, 30);
 	private static RGBColor outerColor = new RGBColor(50, 50, 50);
+	private static float particleSpawnTime = 0.05f;
 
 	private static ParticleSpawner sparkParticles = null;
 	static {
@@ -53,14 +55,15 @@ public class Rocket extends Enemy {
 		Rocket.explosionParticles.speed = new ParticleSpawnerOption(4, 9, -1, 1);
 	}
 
+	private TimeDependency paricleTimer;
+
 	public Rocket(Vec startPos) {
 		super(startPos, new Vec(), new Vec(1.8f, 0.5f));
+		this.paricleTimer = new TimeDependency(Rocket.particleSpawnTime);
 	}
 
 	@Override
 	public void internalRender(Field f) {
-		Rocket.sparkParticles.spawn(this.scene, this.getPos().addX(this.getSize().getX() / 2));
-
 		// draw body
 		f.drawRectangle(this.getPos(), this.getSize().multiply(0.8f, 0.6f), Rocket.innerColor);
 		// draw spike at front
@@ -93,6 +96,12 @@ public class Rocket extends Enemy {
 		// move ahead with player max speed
 		this.setPos(this.getPos().addX(-GameConf.PLAYER_WALK_MAX_SPEED * deltaTime));
 
+		// spawn particles
+		this.paricleTimer.removeTime(deltaTime);
+		if (this.paricleTimer.timeUp()) {
+			this.paricleTimer.reset();
+			Rocket.sparkParticles.spawn(this.scene, this.getPos().addX(this.getSize().getX() / 2));
+		}
 	}
 
 	@Override
