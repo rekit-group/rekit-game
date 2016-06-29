@@ -44,9 +44,8 @@ public class RektKiller extends Enemy {
 
 	public void prepare() {
 		// calculate size dependent Polygon for spikes
-		this.spikePolygon = new Polygon(new Vec(),
-				new Vec[] { //
-						new Vec(0.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
+		this.spikePolygon = new Polygon(new Vec(), new Vec[] { //
+				new Vec(0.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
 						new Vec(1.0f * ((this.getSize().getX() * 0.8f) / 3f), 0),
 						new Vec(1.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
 						new Vec(2.0f * ((this.getSize().getX() * 0.8f) / 3f), 0),
@@ -102,7 +101,7 @@ public class RektKiller extends Enemy {
 			if (this.hasSide(d)) {
 				double angle = d.getAngle();
 				Polygon rotatedSpikes = this.spikePolygon.rotate((float) angle, this.pos);
-				f.drawPolygon(rotatedSpikes, spikeColor);
+				f.drawPolygon(rotatedSpikes, spikeColor, true);
 			}
 		}
 

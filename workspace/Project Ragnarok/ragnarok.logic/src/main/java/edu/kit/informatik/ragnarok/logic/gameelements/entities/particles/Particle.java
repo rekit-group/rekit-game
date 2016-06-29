@@ -140,7 +140,7 @@ public class Particle extends GameElement {
 		// float progress = timer.getProgress();
 		this.polygon.moveTo(this.getPos());
 
-		f.drawPolygon(this.polygon, this.currentCol);
+		f.drawPolygon(this.polygon, this.currentCol, true);
 	}
 
 	/**

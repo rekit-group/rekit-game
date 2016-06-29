@@ -20,9 +20,9 @@ public interface Field {
 
 	void drawImage(Vec pos, Vec size, String string);
 
-	void drawPolygon(Polygon polygon, RGBAColor color);
+	void drawPolygon(Polygon polygon, RGBAColor color, boolean fill);
 
-	void drawPolygon(Polygon polygon, RGBColor color);
+	void drawPolygon(Polygon polygon, RGBColor color, boolean fill);
 
 	void drawGuiImage(Vec pos, Vec size, String string);
 

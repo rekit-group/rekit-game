@@ -78,18 +78,15 @@ public class FieldImpl implements Field {
 		this.gc.setAlpha(255);
 	}
 
-	public void drawPolygon(Polygon polygon, RGB col) {
+	public void drawPolygon(Polygon polygon, RGB col, boolean fill) {
 		RGBA actualCol = new RGBA(col.red, col.green, col.blue, 255);
-		this.drawPolygon(polygon, actualCol);
-
+		this.drawPolygon(polygon, actualCol, fill);
 	}
 
-	public void drawPolygon(Polygon polygon, RGBA col) {
+	public void drawPolygon(Polygon polygon, RGBA col, boolean fill) {
 		// set color
 		this.gc.setAlpha(col.alpha);
 		Color color = new Color(Display.getCurrent(), col);
-		this.gc.setBackground(color);
-		color.dispose();
 
 		// polygon.moveTo(this.translate2D(polygon.getStartPoint()));
 		float[] unitArray = polygon.getAbsoluteArray();
@@ -102,7 +99,16 @@ public class FieldImpl implements Field {
 		}
 
 		// draw actual polygon
-		this.gc.fillPolygon(pixelArray);
+		if (fill) {
+			this.gc.setBackground(color);
+			this.gc.fillPolygon(pixelArray);
+		} else {
+			this.gc.setForeground(color);
+			this.gc.setLineWidth(2);
+			this.gc.drawPolygon(pixelArray);
+		}
+
+		color.dispose();
 
 		this.gc.setAlpha(255);
 	}
@@ -183,15 +189,15 @@ public class FieldImpl implements Field {
 	}
 
 	@Override
-	public void drawPolygon(Polygon polygon, RGBAColor color) {
+	public void drawPolygon(Polygon polygon, RGBAColor color, boolean fill) {
 		polygon.moveTo(this.translate2D(polygon.getStartPoint()));
-		this.drawPolygon(polygon, SwtUtils.calcRGBA(color));
+		this.drawPolygon(polygon, SwtUtils.calcRGBA(color), fill);
 	}
 
 	@Override
-	public void drawPolygon(Polygon polygon, RGBColor color) {
+	public void drawPolygon(Polygon polygon, RGBColor color, boolean fill) {
 		polygon.moveTo(this.translate2D(polygon.getStartPoint()));
-		this.drawPolygon(polygon, SwtUtils.calcRGB(color));
+		this.drawPolygon(polygon, SwtUtils.calcRGB(color), fill);
 	}
 
 }

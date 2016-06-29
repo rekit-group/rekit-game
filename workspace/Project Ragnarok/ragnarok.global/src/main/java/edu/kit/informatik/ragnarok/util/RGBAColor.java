@@ -10,4 +10,8 @@ public class RGBAColor {
 		this.alpha = a;
 	}
 
+	public RGBAColor darken(float p) {
+		return new RGBAColor((int) (this.red * p), (int) (this.green * p), (int) (this.blue * p), (int) (this.alpha * p));
+	}
+
 }

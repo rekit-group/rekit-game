@@ -14,4 +14,8 @@ public class RGBColor implements Cloneable {
 		return new RGBColor(this.red, this.green, this.blue);
 	}
 
+	public RGBColor darken(float p) {
+		return new RGBColor((int) (this.red * p), (int) (this.green * p), (int) (this.blue * p));
+	}
+
 }

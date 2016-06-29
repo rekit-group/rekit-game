@@ -16,6 +16,8 @@ public class TriangulationLayer extends ParallaxLayer {
 	private float minY = GameConf.GRID_H - 3.5f;
 	private float maxY = GameConf.GRID_H;
 
+	private int triangleId;
+
 	public TriangulationLayer(float distanceFromFront) {
 		super(distanceFromFront);
 
@@ -56,6 +58,7 @@ public class TriangulationLayer extends ParallaxLayer {
 
 			// add all triangles to model
 			for (Triangle t : triangles) {
+				t.backgroundZ -= this.triangleId--;
 				this.scene.addGameElement(t);
 			}
 
@@ -109,6 +112,7 @@ public class TriangulationLayer extends ParallaxLayer {
 		private Vec[] corners = new Vec[3];
 		private Polygon polygon;
 		private RGBColor col;
+		private RGBColor darkCol;
 
 		public Triangle(Vec corner0, Vec corner1, Vec corner2) {
 			super(TriangulationLayer.this, new Vec());
@@ -138,6 +142,7 @@ public class TriangulationLayer extends ParallaxLayer {
 		public void initToRender() {
 			this.col = new RGBColor((int) HeapLayer.calcWithVariance(190, 23), (int) HeapLayer.calcWithVariance(120, 40),
 					(int) HeapLayer.calcWithVariance(25, 10));
+			this.darkCol = this.col.darken(0.9f);
 			this.setPos(this.getPos().setZ(TriangulationLayer.this.perspectiveZ));
 		}
 
@@ -159,7 +164,8 @@ public class TriangulationLayer extends ParallaxLayer {
 		@Override
 		public void internalRender(Field f) {
 			this.polygon.moveTo(this.corners[0]);
-			f.drawPolygon(this.polygon, this.col);
+			f.drawPolygon(this.polygon, this.col, true);
+			f.drawPolygon(this.polygon, this.darkCol, false);
 		}
 	}
 

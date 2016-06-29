@@ -104,8 +104,7 @@ public class HeapElementMountain extends HeapElement {
 		super(parent, pos, size, col);
 
 		if (pos != null && size != null) {
-			this.polygon = new Polygon(new Vec(),
-					new Vec[] { new Vec(-size.getX() / 2, -size.getY()), new Vec(-size.getX(), 0), new Vec() });
+			this.polygon = new Polygon(new Vec(), new Vec[] { new Vec(-size.getX() / 2, -size.getY()), new Vec(-size.getX(), 0), new Vec() });
 		}
 
 	}
@@ -113,7 +112,7 @@ public class HeapElementMountain extends HeapElement {
 	@Override
 	public void internalRender(Field f) {
 		this.polygon.moveTo(this.getPos());
-		f.drawPolygon(this.polygon, this.col);
+		f.drawPolygon(this.polygon, this.col, true);
 	}
 
 	@Override
