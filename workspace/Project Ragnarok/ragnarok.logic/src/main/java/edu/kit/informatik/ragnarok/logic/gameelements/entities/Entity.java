@@ -48,7 +48,9 @@ public abstract class Entity extends GameElement {
 
 	}
 
-	public abstract Entity create(Vec startPos);
+	public Entity create(Vec startPos) {
+		throw new UnsupportedOperationException("Create not supported for " + this.getClass().getSimpleName());
+	}
 
 	/**
 	 * Set the Entities <i>EntitiyState</i> that determines its jump behavior

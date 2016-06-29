@@ -1,7 +1,5 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies;
 
-import java.util.Random;
-
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
@@ -14,8 +12,6 @@ import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 
 public class RektKiller extends Enemy {
-
-	private static final Random PRNG = new Random();
 
 	private int sides;
 	private Polygon spikePolygon;
@@ -34,17 +30,15 @@ public class RektKiller extends Enemy {
 	}
 
 	public RektKiller(Vec startPos, int sides) {
-		super(startPos, new Vec(), new Vec(1));
+		super(startPos, new Vec(), new Vec(0.6f, 0.6f));
 		if (sides < 0 || sides > 15) {
 			throw new IllegalArgumentException("RektKiller must be give a number between 0 and 14");
 		}
 		// save initial attributes
-		Random r = new Random();
-		int x = r.nextInt(Direction.values().length);
+		int x = Enemy.PRNG.nextInt(Direction.values().length);
 		this.setCurrentDirection(Direction.values()[x]);
 		this.setSides(sides);
 
-		this.size = new Vec(0.6f, 0.6f);
 		this.prepare();
 	}
 
@@ -165,7 +159,7 @@ public class RektKiller extends Enemy {
 
 	@Override
 	public Entity create(Vec startPos) {
-		return new RektKiller(startPos, RektKiller.PRNG.nextInt(16));
+		return new RektKiller(startPos, Enemy.PRNG.nextInt(16));
 	}
 
 	public Direction getCurrentDirection() {

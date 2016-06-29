@@ -16,7 +16,7 @@ public abstract class Boss extends Entity {
 	protected boolean isHarmless = false;
 
 	public static final Set<Boss> getBossPrototypes() {
-		return ReflectUtils.get(Boss.class);
+		return ReflectUtils.get("edu.kit.informatik", Boss.class);
 	}
 
 	protected Boss() {

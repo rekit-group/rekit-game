@@ -9,7 +9,7 @@ import edu.kit.informatik.ragnarok.primitives.Vec;
 
 public abstract class Pickup extends Entity {
 	public static final Set<Pickup> getPickupPrototypes() {
-		return ReflectUtils.get(Pickup.class);
+		return ReflectUtils.get("edu.kit.informatik", Pickup.class);
 	}
 
 	protected Pickup() {

@@ -106,16 +106,13 @@ public class Rocket extends Enemy {
 			if (dir == Direction.UP) {
 				element.setVel(element.getVel().setY(GameConf.PLAYER_JUMP_BOOST));
 				element.addPoints(20);
-
 				// Kill the rocket itself
-				this.addDamage(1);
+				this.destroy();
 			} else {
 				// Give player damage
 				element.addDamage(1);
-
 				// Kill the rocket itself
-				this.addDamage(1);
-
+				this.destroy();
 				Rocket.explosionParticles.spawn(this.scene, this.getPos());
 			}
 		}
@@ -124,11 +121,6 @@ public class Rocket extends Enemy {
 	@Override
 	public void collidedWith(Frame collision, Direction dir) {
 		// Do nothing, pass right through everything
-	}
-
-	@Override
-	public void addDamage(int damage) {
-		this.destroy();
 	}
 
 	@Override

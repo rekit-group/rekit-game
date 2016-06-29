@@ -59,11 +59,6 @@ public class SlurpDurp extends Entity {
 	}
 
 	@Override
-	public Entity create(Vec startPos) {
-		throw new UnsupportedOperationException("Create not supported for SlurpDurps");
-	}
-
-	@Override
 	public int getID() {
 		return -1;
 	}

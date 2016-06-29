@@ -2,7 +2,6 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
@@ -27,19 +26,18 @@ public class Slurp extends Enemy {
 	public Slurp(Vec startPos) {
 		super(startPos, new Vec(), new Vec(1));
 
-		Random r = new Random();
 		float sizeX = this.getSize().getX();
 		float sizeY = this.getSize().getX();
 
 		this.slurpDurps = new ArrayList<>();
 		for (int i = 0; i < 15; i++) {
 			// randomize position, and pulsing options
-			float randX = r.nextFloat() * (sizeX) - (sizeX / 2.0f);
-			float randY = r.nextFloat() * (sizeY) - (sizeY / 2.0f);
-			float baseSize = 0.2f + r.nextFloat() / 2f;
-			float frequency = r.nextFloat() * 10f;
-			float amplitude = r.nextFloat() / 4.0f;
-			float phase = (float) (r.nextFloat() * 2 * Math.PI);
+			float randX = Enemy.PRNG.nextFloat() * (sizeX) - (sizeX / 2.0f);
+			float randY = Enemy.PRNG.nextFloat() * (sizeY) - (sizeY / 2.0f);
+			float baseSize = 0.2f + Enemy.PRNG.nextFloat() / 2f;
+			float frequency = Enemy.PRNG.nextFloat() * 10f;
+			float amplitude = Enemy.PRNG.nextFloat() / 4.0f;
+			float phase = (float) (Enemy.PRNG.nextFloat() * 2 * Math.PI);
 			// add SlurpDurp to List
 			this.slurpDurps.add(new SlurpDurp(this.getPos(), new Vec(randX, randY), baseSize, frequency, amplitude, phase));
 		}

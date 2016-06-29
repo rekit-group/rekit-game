@@ -9,8 +9,8 @@ import org.reflections.Reflections;
 
 public class ReflectUtils {
 	@SuppressWarnings("unchecked")
-	public static final <T> Set<T> get(Class<T> type) {
-		Set<Class<? extends T>> classes = new Reflections("edu.kit.informatik").getSubTypesOf(type);
+	public static final <T> Set<T> get(String searchPath, Class<T> type) {
+		Set<Class<? extends T>> classes = new Reflections(searchPath).getSubTypesOf(type);
 		Set<T> objects = new HashSet<>();
 		for (Class<?> clazz : classes) {
 			if (Modifier.isAbstract(clazz.getModifiers())) {
