@@ -18,7 +18,7 @@ public class InanimateFloor extends Inanimate {
 	private static final ParticleSpawnerOption dustParticleAngleTop = new ParticleSpawnerOption((float) (-(1 / 2f) * Math.PI),
 			(float) ((1 / 2f) * Math.PI), 0, 0);
 
-	public InanimateFloor(Vec pos, Vec size, RGBColor color) {
+	protected InanimateFloor(Vec pos, Vec size, RGBColor color) {
 		super(pos, size, color);
 
 		this.dustParticles = new ParticleSpawner();
@@ -71,7 +71,7 @@ public class InanimateFloor extends Inanimate {
 		super.reactToCollision(element, dir);
 	}
 
-	public static Inanimate create(Vec pos) {
+	public static Inanimate staticCreate(Vec pos) {
 		int randColG = (int) (Math.random() * 100 + 100);
 		int randColRB = (int) (Math.random() * 40 + 30);
 		return new InanimateFloor(pos, new Vec(1, 1), new RGBColor(randColRB, randColG, randColRB));

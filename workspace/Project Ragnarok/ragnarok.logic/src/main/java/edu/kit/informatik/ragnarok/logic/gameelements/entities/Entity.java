@@ -45,11 +45,6 @@ public abstract class Entity extends GameElement {
 		super(startPos, vel, size, team);
 		// Set to default state
 		this.setEntityState(new DefaultState(this));
-
-	}
-
-	public Entity create(Vec startPos) {
-		throw new UnsupportedOperationException("Create not supported for " + this.getClass().getSimpleName());
 	}
 
 	/**

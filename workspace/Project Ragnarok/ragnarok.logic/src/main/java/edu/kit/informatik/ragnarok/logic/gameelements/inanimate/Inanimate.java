@@ -11,9 +11,11 @@ import edu.kit.informatik.ragnarok.util.RGBColor;
 
 public class Inanimate extends GameElement {
 
+	private static Inanimate instance;
+
 	protected RGBColor color;
 
-	public Inanimate(Vec pos, Vec size, RGBColor color) {
+	protected Inanimate(Vec pos, Vec size, RGBColor color) {
 		super(pos, new Vec(), size, Team.NEUTRAL);
 		this.color = color;
 	}
@@ -54,12 +56,19 @@ public class Inanimate extends GameElement {
 		return 0;
 	}
 
-	public static Inanimate create(Vec pos) {
-		if (pos.getY() >= GameConf.GRID_H) {
-			return Inanimate.create(pos);
+	@Override
+	public Inanimate create(Vec pos) {
+		if (pos.getY() + 1 >= GameConf.GRID_H) {
+			return InanimateFloor.staticCreate(pos);
 		} else {
-			return Inanimate.create(pos);
+			return InanimateBox.staticCreate(pos);
 		}
 	}
 
+	public static Inanimate getPrototype() {
+		if (Inanimate.instance == null) {
+			Inanimate.instance = new Inanimate(new Vec(), new Vec(1, 1), new RGBColor(0, 0, 0));
+		}
+		return Inanimate.instance;
+	}
 }

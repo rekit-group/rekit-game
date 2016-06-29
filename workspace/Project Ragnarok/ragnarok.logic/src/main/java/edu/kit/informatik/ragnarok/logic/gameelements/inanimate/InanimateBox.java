@@ -5,7 +5,7 @@ import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 
 public class InanimateBox extends Inanimate {
-	public InanimateBox(Vec pos, Vec size, RGBColor color) {
+	protected InanimateBox(Vec pos, Vec size, RGBColor color) {
 		super(pos, size, color);
 	}
 
@@ -24,7 +24,7 @@ public class InanimateBox extends Inanimate {
 		f.drawRectangle(this.pos, this.size.multiply(0.5f), darkColor);
 	}
 
-	public static Inanimate create(Vec pos) {
+	public static Inanimate staticCreate(Vec pos) {
 		int randCol = (int) (Math.random() * 60 + 50);
 		return new InanimateBox(pos, new Vec(1, 1), new RGBColor(randCol, randCol, randCol));
 	}
