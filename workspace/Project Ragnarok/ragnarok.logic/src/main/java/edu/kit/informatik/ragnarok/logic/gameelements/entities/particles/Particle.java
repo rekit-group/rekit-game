@@ -70,7 +70,7 @@ public class Particle extends GameElement {
 	 */
 	public Particle(Polygon polygon, Vec pos, float lifeTime, ProgressDependency size, ProgressDependency speed, ProgressDependency angle,
 			ProgressDependency colorR, ProgressDependency colorG, ProgressDependency colorB, ProgressDependency colorA) {
-		super(pos, Team.NEUTRAL);
+		super(pos, new Vec(), new Vec(1), Team.NEUTRAL);
 
 		// clone polygon so we can work with it
 		this.polygon = polygon.clone();

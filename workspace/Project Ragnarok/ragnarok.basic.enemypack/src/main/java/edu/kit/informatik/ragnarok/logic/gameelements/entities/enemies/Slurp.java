@@ -7,8 +7,8 @@ import java.util.Random;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.Enemy;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.type.Enemy;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Vec;
@@ -25,7 +25,7 @@ public class Slurp extends Enemy {
 	}
 
 	public Slurp(Vec startPos) {
-		super(startPos);
+		super(startPos, new Vec(), new Vec(1));
 
 		Random r = new Random();
 		float sizeX = this.getSize().getX();

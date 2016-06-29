@@ -11,19 +11,22 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 
 	protected boolean deleteMe = false;
 
-	protected Vec size = new Vec(1, 1);
-	protected Vec vel = new Vec();
+	protected Vec size;
+	protected Vec vel;
 	protected Vec pos;
 	protected Vec lastPos;
 
 	protected Team team;
 	protected Scene scene;
 
-	public GameElement(Vec startPos, Team team) {
-		if (startPos == null) {
-			return;
-		}
+	protected GameElement(Team team) {
 		this.team = team;
+	}
+
+	protected GameElement(Vec startPos, Vec vel, Vec size, Team team) {
+		this.team = team;
+		this.vel = vel;
+		this.size = size;
 		this.setPos(startPos);
 
 	}
@@ -41,12 +44,8 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 		// Do nothing
 	}
 
-	public void setVel(Vec value) {
-		this.vel = value.clone();
-	}
-
-	public Vec getVel() {
-		return this.vel.clone();
+	public final Vec getVel() {
+		return this.vel;
 	}
 
 	public final void setPos(Vec value) {
@@ -59,19 +58,19 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 		this.pos = value.clone();
 	}
 
-	public Vec getPos() {
-		return this.pos.clone();
+	public final Vec getPos() {
+		return this.pos;
 	}
 
-	public Vec getLastPos() {
-		return this.lastPos.clone();
+	public final Vec getLastPos() {
+		return this.lastPos;
 	}
 
-	public Vec getSize() {
+	public final Vec getSize() {
 		return this.size;
 	}
 
-	public void setScene(Scene value) {
+	public final void setScene(Scene value) {
 		this.scene = value;
 	}
 
@@ -95,7 +94,7 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 	}
 
 	@Override
-	public int compareTo(GameElement other) {
+	public final int compareTo(GameElement other) {
 		return this.getOrderZ() - other.getOrderZ();
 	}
 
@@ -107,7 +106,11 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 		return this.team;
 	}
 
-	public boolean getDeleteMe() {
+	public final boolean getDeleteMe() {
 		return this.deleteMe;
+	}
+
+	public final void setVel(Vec newVel) {
+		this.vel = newVel;
 	}
 }

@@ -14,11 +14,11 @@ public class Player extends Entity implements CameraTarget {
 	private Vec startPos;
 
 	private ParticleSpawner damageParticles;
-
+	private Direction currentDirection;
 	private float currentCameraOffset;
 
 	public Player(Vec startPos) {
-		super(startPos, Team.PLAYER);
+		super(startPos, new Vec(), new Vec(0.8f, 0.8f), Team.PLAYER);
 		this.startPos = startPos;
 		this.init();
 	}
@@ -31,7 +31,6 @@ public class Player extends Entity implements CameraTarget {
 		this.setVel(new Vec(0, 0));
 		this.deleteMe = false;
 		this.currentCameraOffset = 0;
-
 		this.damageParticles = new ParticleSpawner();
 		this.damageParticles.colorR = new ParticleSpawnerOption(222, 242, -10, 10);
 		this.damageParticles.colorG = new ParticleSpawnerOption(138, 158, -10, 10);
@@ -39,13 +38,6 @@ public class Player extends Entity implements CameraTarget {
 		this.damageParticles.colorA = new ParticleSpawnerOption(255, 255, -255, -255);
 
 	}
-
-	@Override
-	public Vec getSize() {
-		return new Vec(0.8f, 0.8f);
-	}
-
-	private Direction currentDirection;
 
 	@Override
 	public void internalRender(Field f) {
@@ -59,10 +51,9 @@ public class Player extends Entity implements CameraTarget {
 		// draw player background image
 		f.drawImage(this.getPos(), this.getSize(), "mrRekt_background.png");
 		// draw player glasses image
-		String src = this.currentDirection == Direction.RIGHT ? "mrRekt_glasses_right.png" // When
-																							// facing
-																							// right
-				: "mrRekt_glasses_left.png"; // When facing left
+		String src = this.currentDirection == Direction.RIGHT //
+				? "mrRekt_glasses_right.png" // facing right
+				: "mrRekt_glasses_left.png"; // facing left
 		f.drawImage(this.getPos().addY(-0.025f * this.getVel().getY()), this.getSize(), src);
 
 	}
@@ -77,10 +68,8 @@ public class Player extends Entity implements CameraTarget {
 
 	@Override
 	public void addDamage(int damage) {
-
 		// spawn particles
 		this.damageParticles.spawn(this.scene, this.getPos());
-
 		// Do usual life logic
 		super.addDamage(damage);
 	}

@@ -2,6 +2,8 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities;
 
 import java.util.HashMap;
 
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.type.Enemy;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.type.Pickup;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 

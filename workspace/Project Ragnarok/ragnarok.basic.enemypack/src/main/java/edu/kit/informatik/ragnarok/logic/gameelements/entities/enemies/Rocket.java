@@ -3,10 +3,10 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.Enemy;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawner;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.type.Enemy;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Polygon;
@@ -54,21 +54,22 @@ public class Rocket extends Enemy {
 	}
 
 	public Rocket(Vec startPos) {
-		super(startPos);
+		super(startPos, new Vec(), new Vec(1.8f, 0.5f));
 	}
 
 	@Override
 	public void internalRender(Field f) {
-
 		Rocket.sparkParticles.spawn(this.scene, this.getPos().addX(this.getSize().getX() / 2));
 
 		// draw body
 		f.drawRectangle(this.getPos(), this.getSize().multiply(0.8f, 0.6f), Rocket.innerColor);
-
 		// draw spike at front
 		Vec startPt = this.getPos().addX(-this.getSize().multiply(0.5f).getX());
-		Vec[] relPts = new Vec[] { new Vec(this.getSize().multiply(0.1f).getX(), -this.getSize().multiply(0.5f).getY()),
-				new Vec(this.getSize().multiply(0.1f).getX(), this.getSize().multiply(0.5f).getY()), new Vec() };
+		Vec[] relPts = new Vec[] { //
+				new Vec(this.getSize().multiply(0.1f).getX(), -this.getSize().multiply(0.5f).getY()),
+				new Vec(this.getSize().multiply(0.1f).getX(), this.getSize().multiply(0.5f).getY()), //
+				new Vec() //
+		};
 		f.drawPolygon(new Polygon(startPt, relPts), Rocket.frontColor);
 
 		// draw stripes
@@ -79,14 +80,12 @@ public class Rocket extends Enemy {
 
 		// draw drive at back
 		startPt = this.getPos().addX(this.getSize().multiply(0.5f).getX()).addY(-this.getSize().multiply(0.5f).getY());
-		relPts = new Vec[] { new Vec(0, this.getSize().getY()), new Vec(-this.getSize().getX() * 0.1f, this.getSize().getY() * 0.8f),
-				new Vec(-this.getSize().getX() * 0.1f, this.getSize().getY() * 0.2f), new Vec() };
+		relPts = new Vec[] { //
+				new Vec(0, this.getSize().getY()), new Vec(-this.getSize().getX() * 0.1f, this.getSize().getY() * 0.8f),
+				new Vec(-this.getSize().getX() * 0.1f, this.getSize().getY() * 0.2f), //
+				new Vec() //
+		};
 		f.drawPolygon(new Polygon(startPt, relPts), Rocket.outerColor);
-	}
-
-	@Override
-	public Vec getSize() {
-		return new Vec(1.8f, 0.5f);
 	}
 
 	@Override

@@ -13,8 +13,7 @@ public class Inanimate extends GameElement {
 	protected RGBColor color;
 
 	public Inanimate(Vec pos, Vec size, RGBColor color) {
-		super(pos, Team.NEUTRAL);
-		this.size = size;
+		super(pos, new Vec(), size, Team.NEUTRAL);
 		this.color = color;
 	}
 

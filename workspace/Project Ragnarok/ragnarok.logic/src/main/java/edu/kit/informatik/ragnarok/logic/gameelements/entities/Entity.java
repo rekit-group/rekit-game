@@ -29,6 +29,10 @@ public abstract class Entity extends GameElement {
 
 	protected TimeDependency invincibility = null;
 
+	protected Entity(Team team) {
+		super(team);
+	}
+
 	/**
 	 * Constructor that initializes attributes and takes a start position
 	 *
@@ -37,22 +41,21 @@ public abstract class Entity extends GameElement {
 	 * @param team
 	 *            the team
 	 */
-	public Entity(Vec startPos, Team team) {
-		super(startPos, team);
-
+	protected Entity(Vec startPos, Vec vel, Vec size, Team team) {
+		super(startPos, vel, size, team);
 		// Set to default state
 		this.setEntityState(new DefaultState(this));
 
-		// Set initial velocity
-		this.setVel(new Vec(0, 0));
 	}
+
+	public abstract Entity create(Vec startPos);
 
 	/**
 	 * Set the Entities <i>EntitiyState</i> that determines its jump behavior
 	 *
 	 * @param value
 	 */
-	public void setEntityState(EntityState value) {
+	public final void setEntityState(EntityState value) {
 		this.entityState = value;
 	}
 
@@ -62,7 +65,7 @@ public abstract class Entity extends GameElement {
 	 *
 	 * @return the state
 	 */
-	public EntityState getEntityState() {
+	public final EntityState getEntityState() {
 		return this.entityState;
 	}
 
@@ -72,41 +75,37 @@ public abstract class Entity extends GameElement {
 		if (damage > 0 && this.invincibility != null && !this.invincibility.timeUp()) {
 			return;
 		}
-
 		this.lifes -= damage;
-
 		if (damage > 0) {
 			this.invincibility = new TimeDependency(2);
 		}
-
 		if (this.lifes <= 0) {
 			this.lifes = 0;
 			this.destroy();
 		}
 	}
 
-	public void setLifes(int lifes) {
+	public final void setLifes(int lifes) {
 		this.lifes = lifes;
 	}
 
 	@Override
-	public int getLifes() {
+	public final int getLifes() {
 		return this.lifes;
 	}
 
 	@Override
-	public void addPoints(int points) {
+	public final void addPoints(int points) {
 		this.points += points;
 	}
 
 	@Override
-	public int getPoints() {
+	public final int getPoints() {
 		return this.points;
 	}
 
 	@Override
 	public void logicLoop(float deltaTime) {
-
 		// if delta is too big, clipping likely to appear...
 		if (deltaTime > GameConf.LOGIC_DELTA) {
 			// ..so recursively split work up into smaller parts
@@ -174,8 +173,6 @@ public abstract class Entity extends GameElement {
 		this.lastPos = lastPos;
 	}
 
-	public abstract Entity create(Vec startPos);
-
 	@Override
 	public int getOrderZ() {
 		return 1;
@@ -190,4 +187,5 @@ public abstract class Entity extends GameElement {
 	}
 
 	public abstract int getID();
+
 }

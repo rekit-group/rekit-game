@@ -1,8 +1,9 @@
-package edu.kit.informatik.ragnarok.logic.gameelements.entities;
+package edu.kit.informatik.ragnarok.logic.gameelements.entities.type;
 
 import java.util.Set;
 
 import edu.kit.informatik.ragnarok.logic.gameelements.Team;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.util.ReflectUtils;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 
@@ -12,11 +13,11 @@ public abstract class Pickup extends Entity {
 	}
 
 	protected Pickup() {
-		super(null, Team.PICKUP);
+		super(Team.PICKUP);
 	}
 
-	protected Pickup(Vec startPos) {
-		super(startPos, Team.PICKUP);
+	protected Pickup(Vec startPos, Vec vel, Vec size) {
+		super(startPos, vel, size, Team.PICKUP);
 	}
 
 	@Override

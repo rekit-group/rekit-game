@@ -17,33 +17,22 @@ public class SlurpDurp extends Entity {
 	private float phase;
 
 	private float currentX = 0;
-	private float currentSize = 0;
 
 	/**
 	 * Prototype Constructor
 	 */
 	public SlurpDurp() {
-		super(null, Team.ENEMY);
+		super(Team.ENEMY);
 	}
 
 	public SlurpDurp(Vec parentPos, Vec innerPos, float baseSize, float frequency, float amplitude, float phase) {
-		super(parentPos.add(innerPos), Team.ENEMY);
+		super(parentPos.add(innerPos), new Vec(), new Vec(), Team.ENEMY);
 		this.parentPos = parentPos;
 		this.innerPos = innerPos;
 		this.baseSize = baseSize;
 		this.frequency = frequency;
 		this.amplitude = amplitude;
 		this.phase = phase;
-	}
-
-	@Override
-	public Vec getPos() {
-		return this.parentPos.add(this.innerPos);
-	}
-
-	@Override
-	public Vec getSize() {
-		return new Vec(this.currentSize);
 	}
 
 	@Override
@@ -60,12 +49,13 @@ public class SlurpDurp extends Entity {
 	@Override
 	public void logicLoop(float deltaTime) {
 		this.currentX += deltaTime;
-		this.currentSize = this.baseSize + (float) (this.amplitude * Math.sin(this.currentX * this.frequency + this.phase));
+		this.size = new Vec(this.baseSize + (float) (this.amplitude * Math.sin(this.currentX * this.frequency + this.phase)));
+
 	}
 
 	@Override
 	public void internalRender(Field f) {
-		f.drawCircle(this.getPos(), new Vec(this.currentSize), new RGBColor(94, 233, 101));
+		f.drawCircle(this.parentPos.add(this.innerPos), this.size, new RGBColor(94, 233, 101));
 	}
 
 	@Override

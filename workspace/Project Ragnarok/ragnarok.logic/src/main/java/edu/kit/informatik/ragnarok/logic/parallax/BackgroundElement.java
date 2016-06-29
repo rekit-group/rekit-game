@@ -13,7 +13,7 @@ public abstract class BackgroundElement extends GameElement {
 	protected int backgroundZ;
 
 	public BackgroundElement(ParallaxLayer parent, Vec pos) {
-		super(pos.setZ(parent == null ? 1 : parent.perspectiveZ), Team.NEUTRAL);
+		super(pos.setZ(parent == null ? 1 : parent.perspectiveZ), new Vec(), new Vec(1), Team.NEUTRAL);
 		this.parent = parent;
 		this.backgroundZ = -10000;
 	}

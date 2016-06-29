@@ -1,9 +1,10 @@
-package edu.kit.informatik.ragnarok.logic.gameelements.entities;
+package edu.kit.informatik.ragnarok.logic.gameelements.entities.type;
 
 import java.util.Set;
 
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.Team;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.levelcreator.BossRoom;
 import edu.kit.informatik.ragnarok.logic.util.ReflectUtils;
 import edu.kit.informatik.ragnarok.primitives.Vec;
@@ -18,8 +19,12 @@ public abstract class Boss extends Entity {
 		return ReflectUtils.get(Boss.class);
 	}
 
-	protected Boss(Vec startPos) {
-		super(startPos, Team.ENEMY);
+	protected Boss() {
+		super(Team.ENEMY);
+	}
+
+	protected Boss(Vec startPos, Vec vel, Vec size) {
+		super(startPos, vel, size, Team.ENEMY);
 	}
 
 	public abstract String getName();

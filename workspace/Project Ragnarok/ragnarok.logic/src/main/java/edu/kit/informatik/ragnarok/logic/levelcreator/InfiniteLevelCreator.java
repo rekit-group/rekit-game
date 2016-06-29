@@ -3,7 +3,7 @@ package edu.kit.informatik.ragnarok.logic.levelcreator;
 import java.util.HashMap;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.Boss;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.type.Boss;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 
 public class InfiniteLevelCreator extends LevelCreator {

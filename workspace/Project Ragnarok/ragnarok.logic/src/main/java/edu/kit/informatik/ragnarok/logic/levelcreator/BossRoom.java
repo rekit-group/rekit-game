@@ -2,11 +2,11 @@ package edu.kit.informatik.ragnarok.logic.levelcreator;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.Boss;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.FixedCameraTarget;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawner;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.type.Boss;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.Text;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.TimeDecorator;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateDoor;

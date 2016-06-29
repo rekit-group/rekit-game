@@ -5,8 +5,8 @@ import java.util.Random;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.Enemy;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.type.Enemy;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Polygon;
@@ -15,10 +15,10 @@ import edu.kit.informatik.ragnarok.util.RGBColor;
 
 public class RektKiller extends Enemy {
 
+	private static final Random PRNG = new Random();
+
 	private int sides;
-
 	private Polygon spikePolygon;
-
 	private Direction currentDirection;
 
 	/**
@@ -34,12 +34,10 @@ public class RektKiller extends Enemy {
 	}
 
 	public RektKiller(Vec startPos, int sides) {
-		super(startPos);
-
+		super(startPos, new Vec(), new Vec(1));
 		if (sides < 0 || sides > 15) {
 			throw new IllegalArgumentException("RektKiller must be give a number between 0 and 14");
 		}
-
 		// save initial attributes
 		Random r = new Random();
 		int x = r.nextInt(Direction.values().length);
@@ -53,55 +51,24 @@ public class RektKiller extends Enemy {
 	public void prepare() {
 		// calculate size dependent Polygon for spikes
 		this.spikePolygon = new Polygon(new Vec(),
-				new Vec[] { new Vec(0.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
+				new Vec[] { //
+						new Vec(0.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
 						new Vec(1.0f * ((this.getSize().getX() * 0.8f) / 3f), 0),
 						new Vec(1.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
 						new Vec(2.0f * ((this.getSize().getX() * 0.8f) / 3f), 0),
 						new Vec(2.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
-						new Vec(3.0f * ((this.getSize().getX() * 0.8f) / 3f), 0), new Vec() // and
-																							// back
-																							// to
-																							// start
+						new Vec(3.0f * ((this.getSize().getX() * 0.8f) / 3f), 0), //
+						new Vec() //
 				});
 	}
 
 	public boolean hasSide(Direction dir) {
-		int bitPos;
-		switch (dir) {
-		case UP:
-			bitPos = 0;
-			break;
-		case RIGHT:
-			bitPos = 1;
-			break;
-		case DOWN:
-			bitPos = 2;
-			break;
-		default:
-			bitPos = 3;
-			break;
-
-		}
+		int bitPos = this.dirToInt(dir);
 		return ((this.getSides() >> bitPos) & 1) == 1;
 	}
 
 	public void setSide(Direction dir, boolean spikes) {
-		int bitPos;
-		switch (dir) {
-		case UP:
-			bitPos = 0;
-			break;
-		case RIGHT:
-			bitPos = 1;
-			break;
-		case DOWN:
-			bitPos = 2;
-			break;
-		default:
-			bitPos = 3;
-			break;
-
-		}
+		int bitPos = this.dirToInt(dir);
 		if (spikes) {
 			this.setSides(this.getSides() | (1 << bitPos));
 		} else {
@@ -110,24 +77,37 @@ public class RektKiller extends Enemy {
 
 	}
 
+	private int dirToInt(Direction dir) {
+		int bitPos;
+		switch (dir) {
+		case UP:
+			bitPos = 0;
+			break;
+		case RIGHT:
+			bitPos = 1;
+			break;
+		case DOWN:
+			bitPos = 2;
+			break;
+		default:
+			bitPos = 3;
+			break;
+		}
+		return bitPos;
+	}
+
 	@Override
 	public void internalRender(Field f) {
-		Vec pos = this.getPos();
-		Vec size = this.getSize();
 		RGBColor innerColor = new RGBColor(150, 30, 30);
 		RGBColor spikeColor = new RGBColor(80, 80, 80);
-
 		// draw rectangle in the middle
-		f.drawRectangle(pos, size.multiply(0.8f), innerColor);
-
+		f.drawRectangle(this.pos, this.size.multiply(0.8f), innerColor);
 		// move to upper position
-		this.spikePolygon.moveTo(pos.add(size.multiply(-0.8f / 2f)));
-
+		this.spikePolygon.moveTo(this.pos.add(this.size.multiply(-0.8f / 2f)));
 		for (Direction d : Direction.values()) {
 			if (this.hasSide(d)) {
 				double angle = d.getAngle();
-				Polygon rotatedSpikes = this.spikePolygon.rotate((float) angle, pos);
-
+				Polygon rotatedSpikes = this.spikePolygon.rotate((float) angle, this.pos);
 				f.drawPolygon(rotatedSpikes, spikeColor);
 			}
 		}
@@ -136,7 +116,6 @@ public class RektKiller extends Enemy {
 
 	@Override
 	public void logicLoop(float deltaTime) {
-
 		// Do usual entity logic
 		super.logicLoop(deltaTime);
 
@@ -156,18 +135,15 @@ public class RektKiller extends Enemy {
 		if (this.deleteMe) {
 			return;
 		}
-
 		if (this.team.isHostile(element.getTeam())) {
 			// Touched harmless side
 			if (!this.hasSide(dir)) {
 				// give the player 40 points
 				element.addPoints(20);
-
 				// Let the player jump if he landed on top
 				if (dir == Direction.UP) {
 					element.setVel(element.getVel().setY(GameConf.PLAYER_JUMP_BOOST));
 				}
-
 				// kill the enemy
 				this.addDamage(1);
 			}
@@ -175,7 +151,6 @@ public class RektKiller extends Enemy {
 			else {
 				// Give player damage
 				element.addDamage(1);
-
 				// Kill the enemy itself
 				this.addDamage(1);
 			}
@@ -185,12 +160,8 @@ public class RektKiller extends Enemy {
 	@Override
 	public void collidedWith(Frame collision, Direction dir) {
 		super.collidedWith(collision, dir);
-
 		this.setCurrentDirection(this.getCurrentDirection().getOpposite());
-
 	}
-
-	private static final Random PRNG = new Random();
 
 	@Override
 	public Entity create(Vec startPos) {

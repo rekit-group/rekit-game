@@ -3,7 +3,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities.pickups;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.Pickup;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.type.Pickup;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBColor;
@@ -14,7 +14,7 @@ public class Coin extends Pickup {
 	}
 
 	public Coin(Vec startPos) {
-		super(startPos);
+		super(startPos, new Vec(), new Vec(0.7f, 0.7f));
 	}
 
 	@Override
@@ -23,11 +23,6 @@ public class Coin extends Pickup {
 			element.addPoints(10);
 			this.addDamage(1);
 		}
-	}
-
-	@Override
-	public Vec getSize() {
-		return new Vec(0.7f, 0.7f);
 	}
 
 	@Override

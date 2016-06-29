@@ -3,10 +3,10 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.Enemy;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawner;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.type.Enemy;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.TimeDependency;
@@ -17,13 +17,6 @@ public class Warper extends Enemy {
 
 	private TimeDependency warpAction = new TimeDependency(GameConf.WARPER_WARP_DELTA);
 	private static ParticleSpawner warpParticles = null;
-
-	/**
-	 * Prototype Constructor
-	 */
-	public Warper() {
-		super();
-	}
 
 	static {
 		Warper.warpParticles = new ParticleSpawner();
@@ -36,26 +29,26 @@ public class Warper extends Enemy {
 		Warper.warpParticles.speed = new ParticleSpawnerOption(2, 3, -1, 1);
 	}
 
+	/**
+	 * Prototype Constructor
+	 */
+	public Warper() {
+		super();
+	}
+
 	public Warper(Vec startPos) {
-		super(startPos);
+		super(startPos, new Vec(), new Vec(0.6f, 0.6f));
 	}
 
 	@Override
 	public void internalRender(Field f) {
 		float progress = this.warpAction.getProgress();
-
 		for (float i = 1; i >= 0.2; i -= 0.1) {
 			RGBColor innerColor = new RGBColor((int) (250 * i), (int) (250 * (1 - progress)), (150));
-
 			// draw body
 			f.drawCircle(this.getPos(), this.getSize().multiply(i), innerColor);
 		}
 
-	}
-
-	@Override
-	public Vec getSize() {
-		return new Vec(0.6f, 0.6f);
 	}
 
 	@Override
