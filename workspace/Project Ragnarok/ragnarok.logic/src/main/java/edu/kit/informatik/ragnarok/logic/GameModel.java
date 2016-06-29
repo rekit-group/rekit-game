@@ -3,12 +3,11 @@ package edu.kit.informatik.ragnarok.logic;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Random;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.CameraTarget;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
-import edu.kit.informatik.ragnarok.logic.levelcreator.InfiniteLevelCreator;
+import edu.kit.informatik.ragnarok.logic.levelcreator.LevelAssembler;
 import edu.kit.informatik.ragnarok.logic.scene.LevelScene;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.util.ThreadUtils;
@@ -46,12 +45,12 @@ public class GameModel implements CameraTarget, Model {
 	public void start() {
 		this.loopThread = new Thread(() -> {
 			// repeat until player is dead
-			while (!this.endGame) {
-				this.logicLoop();
-				ThreadUtils.sleep(GameConf.LOGIC_DELTA);
-			}
-			this.end();
-		});
+				while (!this.endGame) {
+					this.logicLoop();
+					ThreadUtils.sleep(GameConf.LOGIC_DELTA);
+				}
+				this.end();
+			});
 		this.loopThread.setDaemon(true);
 		this.loopThread.start();
 	}
@@ -84,15 +83,15 @@ public class GameModel implements CameraTarget, Model {
 			// break;
 
 		case 1:
-			InfiniteLevelCreator infiniteCreator = new InfiniteLevelCreator(new Random().nextInt());
-			this.curScene = new LevelScene(this, infiniteCreator);
+			LevelAssembler infiniteAssembler = new LevelAssembler("infinite");
+			this.curScene = new LevelScene(this, infiniteAssembler);
 			break;
 
 		case 2:
 			DateFormat levelOfTheDayFormat = new SimpleDateFormat("ddMMyyyy");
 			int seed = Integer.parseInt(levelOfTheDayFormat.format(Calendar.getInstance().getTime()));
-			InfiniteLevelCreator levelOfTheDayCreator = new InfiniteLevelCreator(seed);
-			this.curScene = new LevelScene(this, levelOfTheDayCreator);
+			LevelAssembler levelOfTheDayAssembler = new LevelAssembler("infinite", seed);
+			this.curScene = new LevelScene(this, levelOfTheDayAssembler);
 			break;
 
 		default:

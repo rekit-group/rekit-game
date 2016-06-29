@@ -2,7 +2,7 @@ package edu.kit.informatik.ragnarok.logic.levelcreator;
 
 import java.util.Random;
 
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.EntityFactory;
+import edu.kit.informatik.ragnarok.logic.gameelements.GameElementFactory;
 
 public class LevelStructure {
 
@@ -40,10 +40,10 @@ public class LevelStructure {
 						levelCreator.generateBox(ix + x, iy + (y - ah));
 					}
 				} else if (this.structureArray[y][x] > 1) {
-					EntityFactory.generate(this.structureArray[y][x], ix + x, iy + (y - ah));
+					GameElementFactory.generate(this.structureArray[y][x], ix + x, iy + (y - ah));
 				} else if (this.structureArray[y][x] == 0) {
 					if (r.nextInt(10) == 0) {
-						EntityFactory.generate(10, ix + x, iy + (y - ah));
+						GameElementFactory.generate(10, ix + x, iy + (y - ah));
 					}
 				}
 
