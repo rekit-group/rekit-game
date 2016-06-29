@@ -85,10 +85,10 @@ public class RektSmasher extends Boss {
 			this.innerRektKiller.setSide(dir.getOpposite(), false);
 
 			// start thread to re-add spikes after time
-			new Thread(() -> {
+			ThreadUtils.runThread(() -> {
 				ThreadUtils.sleep(5000);
 				this.innerRektKiller.setSide(dir.getOpposite(), true);
-			}).start();
+			});
 
 		}
 	}

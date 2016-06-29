@@ -13,4 +13,8 @@ public final class ThreadUtils {
 		return true;
 	}
 
+	public static final void runThread(Runnable r) {
+		new Thread(r).start();
+	}
+
 }

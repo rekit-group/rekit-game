@@ -17,6 +17,7 @@ import edu.kit.informatik.ragnarok.primitives.TimeDependency;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.CalcUtil;
 import edu.kit.informatik.ragnarok.util.TextOptions;
+import edu.kit.informatik.ragnarok.util.ThreadUtils;
 
 public class BossRoom {
 
@@ -108,42 +109,28 @@ public class BossRoom {
 		this.boss.setTarget(player);
 
 		// Create thread for asynchronous stuff
-		Thread newThread = new Thread() {
-			@Override
-			public void run() {
-
-				// keep walking right to the right camera position
-				while (player.getPos().getX() < BossRoom.this.cameraTarget) {
-					player.setVel(player.getVel().setX(1.8f));
-					try {
-						Thread.sleep(GameConf.LOGIC_DELTA);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-
-				scene.setCameraTarget(new FixedCameraTarget(BossRoom.this.cameraTarget - GameConf.PLAYER_CAMERA_OFFSET));
-
-				// Spawn Boss
-				BossRoom.this.levelCreator.generateGameElement(BossRoom.this.boss);
-
-				// Close door
-				BossRoom.this.levelCreator.generateBox((int) BossRoom.this.triggerPos.getX(), (int) BossRoom.this.triggerPos.getY());
-
-				// Boss text
-
-				TextOptions op = new TextOptions(new Vec(-0.5f, -0.5f), 30, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, 1);
-				Text bossText = new Text(scene, op);
-				bossText.setText(BossRoom.this.boss.getName());
-				bossText.setPos(CalcUtil.units2vec(new Vec(GameConf.GRID_W / 2f, GameConf.GRID_H / 2f)));
-
-				TimeDecorator bossTextGui = new TimeDecorator(scene, bossText, new TimeDependency(3));
-
-				scene.addGuiElement(bossTextGui);
+		ThreadUtils.runThread(() -> {
+			// keep walking right to the right camera position
+			while (player.getPos().getX() < BossRoom.this.cameraTarget) {
+				player.setVel(player.getVel().setX(1.8f));
+				ThreadUtils.sleep(GameConf.LOGIC_DELTA);
 			}
-		};
+			scene.setCameraTarget(new FixedCameraTarget(BossRoom.this.cameraTarget - GameConf.PLAYER_CAMERA_OFFSET));
+			// Spawn Boss
+			this.levelCreator.generateGameElement(BossRoom.this.boss);
+			// Close door
+			this.levelCreator.generateBox((int) BossRoom.this.triggerPos.getX(), (int) BossRoom.this.triggerPos.getY());
 
-		newThread.start();
+			// Boss text
+
+			TextOptions op = new TextOptions(new Vec(-0.5f, -0.5f), 30, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, 1);
+			Text bossText = new Text(scene, op);
+			bossText.setText(BossRoom.this.boss.getName());
+			bossText.setPos(CalcUtil.units2vec(new Vec(GameConf.GRID_W / 2f, GameConf.GRID_H / 2f)));
+			TimeDecorator bossTextGui = new TimeDecorator(scene, bossText, new TimeDependency(3));
+			scene.addGuiElement(bossTextGui);
+		});
+
 	}
 
 	public void endBattle() {
@@ -160,88 +147,69 @@ public class BossRoom {
 		ProgressDependency doorMover = new ProgressDependency(this.door.getPos().getY(), this.door.getPos().getY() - 10);
 
 		// Create thread for asynchronous stuff
-		Thread newThread = new Thread() {
-			@Override
-			public void run() {
+		ThreadUtils.runThread(() -> {
+			// save Players current velocity
+			Vec playerVelSave = player.getVel();
+			Vec playerPosSave = player.getPos();
+			Vec bossPosSave = this.boss.getPos();
+			// while timer has time left...
+			while (!timer.timeUp()) {
+				// freeze player and pos
+				player.setVel(new Vec());
+				player.setPos(playerPosSave);
+				this.boss.setVel(new Vec());
+				this.boss.setPos(bossPosSave);
+				// wait for time to be up
+				ThreadUtils.sleep(GameConf.LOGIC_DELTA);
+				// phase one: show explosions
+				if (timer.getProgress() < 0.4) {
+					if (Math.random() > 0.9) {
+						Vec randPos = BossRoom.this.boss.getPos().add(new Vec((float) Math.random() * 2 - 1, (float) Math.random() * 2f - 1));
+						BossRoom.explosionParticles.spawn(scene, randPos);
+					}
+				}
+				// phase two: show fireworks
+				else if (timer.getProgress() < 0.9) {
+					// remove boss of last phase
+					scene.removeGameElement(BossRoom.this.boss);
 
-				// save Players current velocity
-				Vec playerVelSave = player.getVel();
-				Vec playerPosSave = player.getPos();
-				Vec bossPosSave = BossRoom.this.boss.getPos();
+					// show fireworks
+					if (Math.random() > 0.9) {
+						float deltaX = GameConf.GRID_W / 2f;
+						float midX = BossRoom.this.x + deltaX;
 
-				// while timer has time left...
-				while (!timer.timeUp()) {
+						float deltaY = GameConf.GRID_H / 2f;
+						float midY = deltaY;
 
-					// freeze player and pos
-					player.setVel(new Vec());
-					player.setPos(playerPosSave);
-					BossRoom.this.boss.setVel(new Vec());
-					BossRoom.this.boss.setPos(bossPosSave);
-
-					// wait for time to be up
-					try {
-						Thread.sleep(GameConf.LOGIC_DELTA);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+						Vec randPos = new Vec(midX + (float) Math.random() * deltaX * 2 - deltaX, midY + (float) Math.random() * deltaY * 2 - deltaY);
+						BossRoom.fireworkParticles.spawn(scene, randPos);
 					}
 
-					// phase one: show explosions
-					if (timer.getProgress() < 0.4) {
-						if (Math.random() > 0.9) {
-							Vec randPos = BossRoom.this.boss.getPos().add(new Vec((float) Math.random() * 2 - 1, (float) Math.random() * 2f - 1));
-							BossRoom.explosionParticles.spawn(scene, randPos);
-						}
-					}
-					// phase two: show fireworks
-					else if (timer.getProgress() < 0.9) {
-						// remove boss of last phase
-						scene.removeGameElement(BossRoom.this.boss);
-
-						// show fireworks
-						if (Math.random() > 0.9) {
-							float deltaX = GameConf.GRID_W / 2f;
-							float midX = BossRoom.this.x + deltaX;
-
-							float deltaY = GameConf.GRID_H / 2f;
-							float midY = deltaY;
-
-							Vec randPos = new Vec(midX + (float) Math.random() * deltaX * 2 - deltaX,
-									midY + (float) Math.random() * deltaY * 2 - deltaY);
-							BossRoom.fireworkParticles.spawn(scene, randPos);
-						}
-
-						// open door slowly
-						float prog = (timer.getProgress() - 0.4f) * 2f;
-						BossRoom.this.door.setPos(BossRoom.this.door.getPos().setY(doorMover.getNow(prog)));
-					}
-					// phase three: re-move camera to player position
-					else {
-						// remove door of last phase
-						BossRoom.this.door.destroy();
-
-						float prog = (timer.getProgress() - 0.9f) * 10f;
-						scene.setCameraTarget(new FixedCameraTarget(cameraMover.getNow(prog)));
-					}
-
-					timer.removeTime(GameConf.LOGIC_DELTA / 1000f);
+					// open door slowly
+					float prog = (timer.getProgress() - 0.4f) * 2f;
+					BossRoom.this.door.setPos(BossRoom.this.door.getPos().setY(doorMover.getNow(prog)));
+				}
+				// phase three: re-move camera to player position
+				else {
+					// remove door of last phase
+					this.door.destroy();
+					float prog = (timer.getProgress() - 0.9f) * 10f;
+					scene.setCameraTarget(new FixedCameraTarget(cameraMover.getNow(prog)));
 				}
 
-				// re-apply velocity to Player
-				player.setVel(playerVelSave);
-
-				// give player full health
-				if (player.getLifes() < GameConf.PLAYER_LIFES) {
-					player.setLifes(GameConf.PLAYER_LIFES);
-				}
-
-				// set camera back to player
-				player.resetCameraOffset();
-				scene.setCameraTarget(player);
-
+				timer.removeTime(GameConf.LOGIC_DELTA / 1000f);
 			}
-		};
 
-		newThread.start();
+			// re-apply velocity to Player
+			player.setVel(playerVelSave);
+			// give player full health
+			if (player.getLifes() < GameConf.PLAYER_LIFES) {
+				player.setLifes(GameConf.PLAYER_LIFES);
+			}
+			// set camera back to player
+			player.resetCameraOffset();
+			scene.setCameraTarget(player);
+		});
 
 	}
 }
