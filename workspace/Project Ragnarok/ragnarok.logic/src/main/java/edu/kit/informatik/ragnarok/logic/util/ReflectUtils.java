@@ -1,6 +1,7 @@
 package edu.kit.informatik.ragnarok.logic.util;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,7 +21,7 @@ public class ReflectUtils {
 				Constructor<?> c = clazz.getDeclaredConstructor();
 				c.setAccessible(true);
 				objects.add((T) c.newInstance());
-			} catch (Exception e) {
+			} catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 				System.err.println(clazz.getSimpleName() + " not loaded !");
 			}
 		}

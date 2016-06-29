@@ -1,9 +1,9 @@
 package edu.kit.informatik.ragnarok.logic;
 
+import java.security.SecureRandom;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Random;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.CameraTarget;
@@ -31,6 +31,7 @@ public class GameModel implements CameraTarget, Model {
 	private boolean endGame;
 
 	public GameModel() {
+		this.endGame = false;
 		this.init();
 	}
 
@@ -84,7 +85,7 @@ public class GameModel implements CameraTarget, Model {
 			// break;
 
 		case 1:
-			InfiniteLevelCreator infiniteCreator = new InfiniteLevelCreator(new Random().nextInt());
+			InfiniteLevelCreator infiniteCreator = new InfiniteLevelCreator(new SecureRandom().nextInt());
 			this.curScene = new LevelScene(this, infiniteCreator);
 			break;
 
