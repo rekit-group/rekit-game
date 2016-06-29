@@ -1,5 +1,6 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.inanimate;
 
+import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.Team;
@@ -51,6 +52,14 @@ public class Inanimate extends GameElement {
 	@Override
 	public int getLifes() {
 		return 0;
+	}
+
+	public static Inanimate create(Vec pos) {
+		if (pos.getY() >= GameConf.GRID_H) {
+			return Inanimate.create(pos);
+		} else {
+			return Inanimate.create(pos);
+		}
 	}
 
 }

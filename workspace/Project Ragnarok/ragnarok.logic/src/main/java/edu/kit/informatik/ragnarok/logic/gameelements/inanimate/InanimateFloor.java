@@ -71,4 +71,10 @@ public class InanimateFloor extends Inanimate {
 		super.reactToCollision(element, dir);
 	}
 
+	public static Inanimate create(Vec pos) {
+		int randColG = (int) (Math.random() * 100 + 100);
+		int randColRB = (int) (Math.random() * 40 + 30);
+		return new InanimateFloor(pos, new Vec(1, 1), new RGBColor(randColRB, randColG, randColRB));
+	}
+
 }
