@@ -104,8 +104,8 @@ public class BossRoom {
 		this.cameraTarget = this.x + 5 + GameConf.PLAYER_CAMERA_OFFSET + player.getSize().getX() / 2;
 
 		// Prepare boss
+		this.boss = (Boss) this.boss.create(new Vec(this.x + 6 + this.roomStructure.getWidth() / 2, GameConf.GRID_H / 2 + 1));
 		this.boss.setBossRoom(this);
-		this.boss.setPos(new Vec(this.x + 6 + this.roomStructure.getWidth() / 2, GameConf.GRID_H / 2 + 1));
 		this.boss.setTarget(player);
 
 		// Create thread for asynchronous stuff
