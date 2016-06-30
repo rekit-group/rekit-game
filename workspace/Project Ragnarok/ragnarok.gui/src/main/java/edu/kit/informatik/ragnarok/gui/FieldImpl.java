@@ -26,7 +26,7 @@ import edu.kit.informatik.ragnarok.util.TextOptions;
  * @author Dominik Fuchß
  *
  */
-public class FieldImpl implements Field {
+public class FieldImpl extends Field {
 
 	private GC gc;
 	private int cameraOffset = 0;
@@ -113,17 +113,7 @@ public class FieldImpl implements Field {
 		this.gc.setAlpha(255);
 	}
 
-	@Override
-	public void drawImage(Vec pos, Vec size, String imagePath) {
-		Image image = ImageLoader.get(imagePath);
-		this.gc.drawImage(image, // image
-				this.cameraOffset + this.units2pixel(pos.getX() - size.getX() / 2f), // dstX
-				this.units2pixel(pos.getY() - size.getY() / 2f) // dstY
-		);
-	}
-
-	@Override
-	public void drawGuiImage(Vec pos, Vec size, String imagePath) {
+	public void drawImageImpl(Vec pos, Vec size, String imagePath) {
 		Image image = ImageLoader.get(imagePath);
 		this.gc.drawImage(image, // image
 				(int) (pos.getX() - size.getX() / 2f), // dstX
@@ -132,7 +122,18 @@ public class FieldImpl implements Field {
 	}
 
 	@Override
-	public void drawText(Vec pos, String text, TextOptions options) {
+	public void drawImage(Vec pos, Vec size, String imagePath, boolean inGame) {
+		if (!inGame) {
+			this.drawImageImpl(pos, size, imagePath);
+		} else {
+			Vec newPos = Vec.create(this.units2pixel(pos.getX()), this.units2pixel(pos.getY()));
+			newPos = newPos.addX(this.cameraOffset);
+			Vec newSize = Vec.create(this.units2pixel(size.getX()), this.units2pixel(size.getY()));
+			this.drawImageImpl(newPos, newSize, imagePath);
+		}
+	}
+
+	private void drawText(Vec pos, String text, TextOptions options) {
 		// Set color to red and set font
 		RGB rgb = new RGB(options.getColor().red, options.getColor().green, options.getColor().blue);
 		Color color = new Color(Display.getCurrent(), rgb);
@@ -149,6 +150,17 @@ public class FieldImpl implements Field {
 				(int) (pos.getY() + options.getAlignment().getY() * textBounds.y), // dstY
 				true);
 		font.dispose();
+	}
+
+	@Override
+	public void drawText(Vec pos, String text, TextOptions options, boolean inGame) {
+		if (!inGame) {
+			this.drawText(pos, text, options);
+		} else {
+			Vec newPos = Vec.create(this.units2pixel(pos.getX()), this.units2pixel(pos.getY()));
+			newPos = newPos.addX(this.cameraOffset);
+			this.drawText(newPos, text, options);
+		}
 	}
 
 	public void setGC(GC gc) {

@@ -23,7 +23,7 @@ public class LifeGui extends GuiElement {
 	@Override
 	public void internalRender(Field f) {
 		for (int i = 0; i < this.playerLifes; i++) {
-			f.drawGuiImage(this.getPos().addX(50 * i), this.imageSize, this.image);
+			f.drawImage(this.getPos().addX(50 * i), this.imageSize, this.image, false);
 		}
 	}
 }

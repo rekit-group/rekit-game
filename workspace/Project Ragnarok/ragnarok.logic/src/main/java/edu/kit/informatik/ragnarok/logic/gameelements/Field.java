@@ -6,26 +6,28 @@ import edu.kit.informatik.ragnarok.util.RGBAColor;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 import edu.kit.informatik.ragnarok.util.TextOptions;
 
-public interface Field {
+public abstract class Field {
 
-	void setCurrentOffset(float cameraOffset);
+	public abstract void setCurrentOffset(float cameraOffset);
 
-	void drawRectangle(Vec pos, Vec size, RGBColor color);
+	public abstract void drawRectangle(Vec pos, Vec size, RGBColor color);
 
-	void drawRectangle(Vec pos, Vec size, RGBAColor rgbaColor);
+	public abstract void drawRectangle(Vec pos, Vec size, RGBAColor rgbaColor);
 
-	void drawCircle(Vec pos, Vec size, RGBColor color);
+	public abstract void drawCircle(Vec pos, Vec size, RGBColor color);
 
-	void drawCircle(Vec pos, Vec size, RGBAColor color);
+	public abstract void drawCircle(Vec pos, Vec size, RGBAColor color);
 
-	void drawImage(Vec pos, Vec size, String string);
+	public final void drawImage(Vec pos, Vec size, String imagePath) {
+		this.drawImage(pos, size, imagePath, true);
+	}
 
-	void drawPolygon(Polygon polygon, RGBAColor color, boolean fill);
+	public abstract void drawImage(Vec pos, Vec size, String imagePath, boolean inGame);
 
-	void drawPolygon(Polygon polygon, RGBColor color, boolean fill);
+	public abstract void drawPolygon(Polygon polygon, RGBAColor color, boolean fill);
 
-	void drawGuiImage(Vec pos, Vec size, String string);
+	public abstract void drawPolygon(Polygon polygon, RGBColor color, boolean fill);
 
-	void drawText(Vec pos, String text, TextOptions options);
+	public abstract void drawText(Vec pos, String text, TextOptions options, boolean inGame);
 
 }

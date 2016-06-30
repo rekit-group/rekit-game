@@ -179,10 +179,10 @@ class GameView implements View {
 		if (GameConf.DEBUG) {
 			debugInfo += "\n" + this.getGameElementStats();
 			this.field.drawText(new Vec(CalcUtil.units2pixel(GameConf.GRID_W) - 10, CalcUtil.units2pixel(GameConf.GRID_H) / 2f), debugInfo,
-					GameConf.HINT_TEXT);
+					GameConf.HINT_TEXT, false);
 		} else {
 			this.field.drawText(new Vec(CalcUtil.units2pixel(GameConf.GRID_W) - 10, CalcUtil.units2pixel(GameConf.GRID_H) - 60), debugInfo,
-					GameConf.HINT_TEXT);
+					GameConf.HINT_TEXT, false);
 		}
 
 	}
