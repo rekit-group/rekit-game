@@ -33,16 +33,17 @@ public interface Model {
 
 	/**
 	 * Get the current scene. The scene to be drawn.
-	 * 
+	 *
 	 * @return the currently active scene
 	 */
 	Scene getScene();
 
 	/**
-	 * Get the current game state
-	 * 
-	 * @return the state
+	 * Register a listener which will be notified when the scene is changed.
+	 *
+	 * @param l
+	 *            the listener to register
 	 */
-	GameState getState();
+	void registerSceneChangeListener(SceneChangeListener l);
 
 }

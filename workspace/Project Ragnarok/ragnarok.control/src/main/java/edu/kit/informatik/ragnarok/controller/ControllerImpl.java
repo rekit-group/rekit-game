@@ -7,13 +7,16 @@ import java.util.Map;
 import edu.kit.informatik.ragnarok.controller.commands.Command;
 import edu.kit.informatik.ragnarok.controller.commands.InputMethod;
 import edu.kit.informatik.ragnarok.controller.commands.JumpCommand;
+import edu.kit.informatik.ragnarok.controller.commands.MenuCommand;
 import edu.kit.informatik.ragnarok.controller.commands.WalkCommand;
 import edu.kit.informatik.ragnarok.gui.View;
-import edu.kit.informatik.ragnarok.logic.GameState;
 import edu.kit.informatik.ragnarok.logic.Model;
+import edu.kit.informatik.ragnarok.logic.Scenes;
+import edu.kit.informatik.ragnarok.logic.scene.LevelScene;
+import edu.kit.informatik.ragnarok.logic.scene.MenuScene;
+import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.util.InputHelper;
-import edu.kit.informatik.ragnarok.util.Tuple;
 
 /**
  * This is an implementation of an {@link Controller} of the MVC <br>
@@ -26,7 +29,7 @@ class ControllerImpl implements Observer, Controller {
 	/**
 	 * Map Key-ID, State --> Command
 	 */
-	private final Map<Tuple<Integer, GameState>, Command> mpCmd;
+	private Map<Integer, Command> mpCmd;
 	/**
 	 * The input helper
 	 */
@@ -47,18 +50,6 @@ class ControllerImpl implements Observer, Controller {
 		this.helper = new InputHelperImpl();
 		this.helper.register(this);
 		this.model = model;
-		this.init();
-	}
-
-	/**
-	 * Create mapping for the {@link #mpCmd}
-	 *
-	 *
-	 */
-	private void init() {
-		this.mpCmd.put(Tuple.create(InputHelper.ARROW_UP, GameState.INGAME), new JumpCommand(this.model.getScene().getPlayer()));
-		this.mpCmd.put(Tuple.create(InputHelper.ARROW_LEFT, GameState.INGAME), new WalkCommand(this.model.getScene().getPlayer(), Direction.LEFT));
-		this.mpCmd.put(Tuple.create(InputHelper.ARROW_RIGHT, GameState.INGAME), new WalkCommand(this.model.getScene().getPlayer(), Direction.RIGHT));
 	}
 
 	/**
@@ -69,13 +60,12 @@ class ControllerImpl implements Observer, Controller {
 	 */
 	public void handleEvent(int id, InputMethod inputMethod) {
 		// return if we do not have a command defined for this key
-		Tuple<Integer, GameState> key = Tuple.create(id, this.model.getState());
-		if (!this.mpCmd.containsKey(key)) {
-			System.err.println("Warning: No Event defined for Key-ID: " + id + ", State: " + this.model.getState());
+		if (!this.mpCmd.containsKey(id)) {
+			System.err.println("Warning: No Event defined for Key-ID: " + id);
 			return;
 		}
 
-		this.mpCmd.get(key).execute(inputMethod);
+		this.mpCmd.get(id).execute(inputMethod);
 	}
 
 	@Override
@@ -93,6 +83,28 @@ class ControllerImpl implements Observer, Controller {
 		while (it.hasNext()) {
 			this.handleEvent(it.next(), InputMethod.RELEASE);
 			it.remove();
+		}
+	}
+
+	@Override
+	public void sceneChanged(Scene s) {
+		Scenes sc = Scenes.getByInstance(s);
+		if (sc.isMenu()) {
+			MenuScene ms = (MenuScene) s;
+			this.mpCmd = new HashMap<>();
+			this.mpCmd.put(InputHelper.ESCAPE, new MenuCommand(ms.getMenu(), MenuCommand.Dir.BACK));
+			this.mpCmd.put(InputHelper.ENTER, new MenuCommand(ms.getMenu(), MenuCommand.Dir.SELECT));
+			this.mpCmd.put(InputHelper.ARROW_UP, new MenuCommand(ms.getMenu(), MenuCommand.Dir.UP));
+			this.mpCmd.put(InputHelper.ARROW_DOWN, new MenuCommand(ms.getMenu(), MenuCommand.Dir.DOWN));
+			this.mpCmd.put(InputHelper.ARROW_LEFT, new MenuCommand(ms.getMenu(), MenuCommand.Dir.BACK));
+			this.mpCmd.put(InputHelper.ARROW_RIGHT, new MenuCommand(ms.getMenu(), MenuCommand.Dir.SELECT));
+		} else {
+			LevelScene ls = (LevelScene) s;
+			this.mpCmd = new HashMap<>();
+			this.mpCmd.put(InputHelper.ARROW_UP, new JumpCommand(ls.getPlayer()));
+			this.mpCmd.put(InputHelper.ARROW_LEFT, new WalkCommand(ls.getPlayer(), Direction.LEFT));
+			this.mpCmd.put(InputHelper.ARROW_RIGHT, new WalkCommand(ls.getPlayer(), Direction.RIGHT));
+
 		}
 	}
 

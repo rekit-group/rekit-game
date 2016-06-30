@@ -6,11 +6,11 @@ import java.util.PriorityQueue;
 
 import edu.kit.informatik.ragnarok.logic.GameModel;
 import edu.kit.informatik.ragnarok.logic.PriorityQueueIterator;
+import edu.kit.informatik.ragnarok.logic.Scenes;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.CameraTarget;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.GuiElement;
-import edu.kit.informatik.ragnarok.logic.parallax.ParallaxContainer;
 
 public abstract class Scene implements CameraTarget {
 
@@ -49,11 +49,14 @@ public abstract class Scene implements CameraTarget {
 	 * Start the scene. Begin drawing. e.g. Player/Enemies will begin to move
 	 */
 	public void start() {
-	};
+	}
 
 	public void end() {
-		this.model.switchScene(0);
-	};
+		this.model.switchScene(Scenes.MENU);
+	}
+
+	public void stop() {
+	}
 
 	public void restart() {
 		this.init();
@@ -74,8 +77,6 @@ public abstract class Scene implements CameraTarget {
 				this.logicLoopGameElement(timeDelta, it);
 			}
 		}
-
-		this.getBackground().logicLoop(this.getCameraOffset());
 
 		// remove GameElements that must be removed
 		this.removeGameElements();
@@ -199,14 +200,6 @@ public abstract class Scene implements CameraTarget {
 		return this.guiElements.iterator();
 	}
 
-	public Player getPlayer() {
-		return null;
-	}
-
-	public ParallaxContainer getBackground() {
-		return null;
-	}
-
 	@Override
 	public float getCameraOffset() {
 		return 0;
@@ -222,6 +215,10 @@ public abstract class Scene implements CameraTarget {
 
 	public Object synchronize() {
 		return this.sync;
+	}
+
+	public Player getPlayer() {
+		return null;
 	}
 
 }

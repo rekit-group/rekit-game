@@ -15,10 +15,17 @@ public interface InputHelper {
 	 * Key ID ArrowUp
 	 */
 	public static final int ARROW_UP = SWT.ARROW_UP;
+
+	/**
+	 * Key ID ArrowUp
+	 */
+	public static final int ARROW_DOWN = SWT.ARROW_DOWN;
+
 	/**
 	 * Key ID Arrow Left
 	 */
 	public static final int ARROW_LEFT = SWT.ARROW_LEFT;
+
 	/**
 	 * Key ID Arrow Right
 	 */
@@ -28,6 +35,16 @@ public interface InputHelper {
 	 * Key ID Space
 	 */
 	public static final int SPACE = 32;
+
+	/**
+	 * Key ID Escape
+	 */
+	public static final int ESCAPE = SWT.ESC;
+
+	/**
+	 * Key ID Escape
+	 */
+	public static final int ENTER = 13;
 
 	/**
 	 * Initialize the InputHelper

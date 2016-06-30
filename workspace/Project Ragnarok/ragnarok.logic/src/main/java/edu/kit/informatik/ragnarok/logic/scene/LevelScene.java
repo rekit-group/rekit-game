@@ -127,6 +127,8 @@ public class LevelScene extends Scene {
 			this.player.setPos(this.player.getPos().setX(minX));
 		}
 
+		this.parallax.logicLoop(this.getCameraOffset());
+
 	}
 
 	@Override
@@ -276,11 +278,6 @@ public class LevelScene extends Scene {
 		}
 
 		return highScore;
-	}
-
-	@Override
-	public ParallaxContainer getBackground() {
-		return this.parallax;
 	}
 
 }

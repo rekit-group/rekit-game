@@ -5,6 +5,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.state.DefaultState;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.state.EntityState;
+import edu.kit.informatik.ragnarok.logic.scene.LevelScene;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.TimeDependency;
@@ -189,5 +190,9 @@ public abstract class Entity extends GameElement {
 	}
 
 	public abstract int getID();
+
+	public void setLevelScene(LevelScene value) {
+		super.setScene(value);
+	}
 
 }

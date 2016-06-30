@@ -3,13 +3,17 @@ package edu.kit.informatik.ragnarok.logic;
 import java.security.SecureRandom;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.CameraTarget;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.levelcreator.InfiniteLevelCreator;
 import edu.kit.informatik.ragnarok.logic.scene.LevelScene;
+import edu.kit.informatik.ragnarok.logic.scene.MenuScene;
+import edu.kit.informatik.ragnarok.logic.scene.NullScene;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.util.ThreadUtils;
 
@@ -22,19 +26,19 @@ import edu.kit.informatik.ragnarok.util.ThreadUtils;
  */
 public class GameModel implements CameraTarget, Model {
 
-	public long lastTime;
-
+	private long lastTime;
 	private Scene curScene;
-
 	private boolean endGame;
+	private List<SceneChangeListener> sceneChangeListeners;
 
 	public GameModel() {
 		this.endGame = false;
-		this.init();
+		this.sceneChangeListeners = new ArrayList<>();
+		this.curScene = new NullScene(this);
 	}
 
-	public void init() {
-		this.switchScene(0);
+	private void init() {
+		this.switchScene(Scenes.MENU);
 	}
 
 	private void end() {
@@ -43,6 +47,7 @@ public class GameModel implements CameraTarget, Model {
 
 	@Override
 	public void start() {
+		this.init();
 		ThreadUtils.runDaemon(() -> {
 			// repeat until player is dead
 			while (!this.endGame) {
@@ -74,31 +79,40 @@ public class GameModel implements CameraTarget, Model {
 
 	}
 
-	public void switchScene(int scene) {
-		switch (scene) {
+	public void switchScene(Scenes s) {
+		int sceneId = s.id;
+		Scene nextScene = null;
+
+		// TODO: move scene creation to Enum
+		switch (sceneId) {
 		case 0:
-			// curScene = new MainMenuScene();
-			// break;
+			nextScene = new MenuScene(this);
+			break;
 
 		case 1:
 			InfiniteLevelCreator infiniteCreator = new InfiniteLevelCreator(new SecureRandom().nextInt());
-			this.curScene = new LevelScene(this, infiniteCreator);
+			nextScene = new LevelScene(this, infiniteCreator);
 			break;
 
 		case 2:
 			DateFormat levelOfTheDayFormat = new SimpleDateFormat("ddMMyyyy");
 			int seed = Integer.parseInt(levelOfTheDayFormat.format(Calendar.getInstance().getTime()));
 			InfiniteLevelCreator levelOfTheDayCreator = new InfiniteLevelCreator(seed);
-			this.curScene = new LevelScene(this, levelOfTheDayCreator);
+			nextScene = new LevelScene(this, levelOfTheDayCreator);
 			break;
 
 		default:
-			throw new IllegalArgumentException("no scene with id " + scene);
+			throw new IllegalArgumentException("no scene with id " + sceneId);
 		}
 
-		this.curScene.init();
-		this.curScene.start();
+		nextScene.init();
+		nextScene.start();
+		this.curScene.stop();
+
 		this.lastTime = 0;
+		this.curScene = nextScene;
+
+		this.updateSceneChangeListeners();
 	}
 
 	@Override
@@ -122,7 +136,14 @@ public class GameModel implements CameraTarget, Model {
 	}
 
 	@Override
-	public GameState getState() {
-		return GameState.INGAME;
+	public void registerSceneChangeListener(SceneChangeListener l) {
+		this.sceneChangeListeners.add(l);
 	}
+
+	public void updateSceneChangeListeners() {
+		for (SceneChangeListener sceneChangeListener : this.sceneChangeListeners) {
+			sceneChangeListener.sceneChanged(this.curScene);
+		}
+	}
+
 }

@@ -2,6 +2,7 @@ package edu.kit.informatik.ragnarok.controller;
 
 import edu.kit.informatik.ragnarok.gui.View;
 import edu.kit.informatik.ragnarok.logic.Model;
+import edu.kit.informatik.ragnarok.logic.SceneChangeListener;
 
 /**
  * This Interface defines the Controller for the MVC
@@ -9,7 +10,7 @@ import edu.kit.informatik.ragnarok.logic.Model;
  * @author Dominik Fuchß
  *
  */
-public interface Controller {
+public interface Controller extends SceneChangeListener {
 	/**
 	 * Get the controller
 	 *

@@ -78,21 +78,37 @@ public class GameConf implements Visitable {
 
 	public static float WARPER_WARP_DELTA;
 
-	public static RGBColor GAME_BACKGROUD_COLOR;
 	public static RGBColor MENU_BACKGROUND_COLOR;
+	public static RGBColor MENU_BOX_COLOR;
+	public static RGBColor MENU_BOX_SELECT_COLOR;
+
+	public static RGBColor MENU_TEXT_COLOR;
+	public static String MENU_TEXT_FONT;
+	public static int MENU_TEXT_SIZE;
+
+	public static RGBColor GAME_BACKGROUD_COLOR;
 
 	public static RGBColor GAME_TEXT_COLOR;
 	public static String GAME_TEXT_FONT;
 	public static int GAME_TEXT_SIZE;
+
+	@NoVisit
+	public static RGBColor DEBUG_TEXT_COLOR;
+
 	@NoVisit
 	public static TextOptions DEFAULT_TEXT;
+
+	@NoVisit
+	public static TextOptions MENU_TEXT;
+
 	@NoVisit
 	public static TextOptions HINT_TEXT;
 
 	@AfterVisit
 	public static void afterVisit() {
-
 		GameConf.DEFAULT_TEXT = new TextOptions(Vec.create(-1, 0), GameConf.GAME_TEXT_SIZE, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, 1);
-		GameConf.HINT_TEXT = GameConf.DEFAULT_TEXT.clone().setHeight(GameConf.GAME_TEXT_SIZE - 8);
+		GameConf.MENU_TEXT = new TextOptions(new Vec(-0.5f), GameConf.MENU_TEXT_SIZE, GameConf.MENU_TEXT_COLOR, GameConf.GAME_TEXT_FONT, 1);
+		GameConf.DEBUG_TEXT_COLOR = new RGBColor(255, 255, 255);
+		GameConf.HINT_TEXT = GameConf.DEFAULT_TEXT.clone().setHeight(GameConf.GAME_TEXT_SIZE - 8).setColor(GameConf.DEBUG_TEXT_COLOR);
 	}
 }

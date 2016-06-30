@@ -10,6 +10,8 @@ public abstract class GuiElement implements Comparable<GuiElement> {
 
 	private Vec pos = new Vec(0);
 
+	private Vec size = new Vec(1);
+
 	private Scene scene;
 
 	protected boolean isVisible() {
@@ -26,6 +28,14 @@ public abstract class GuiElement implements Comparable<GuiElement> {
 
 	public Vec getPos() {
 		return this.pos;
+	}
+
+	public Vec getSize() {
+		return this.size;
+	}
+
+	public void setSize(Vec size) {
+		this.size = size;
 	}
 
 	public void setScene(Scene value) {
