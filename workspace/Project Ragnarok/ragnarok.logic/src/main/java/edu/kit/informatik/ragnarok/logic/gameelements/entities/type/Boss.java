@@ -5,13 +5,13 @@ import java.util.Set;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
-import edu.kit.informatik.ragnarok.logic.levelcreator.BossRoom;
+import edu.kit.informatik.ragnarok.logic.levelcreator.bossstructure.BossStructure;
 import edu.kit.informatik.ragnarok.logic.util.ReflectUtils;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 
 public abstract class Boss extends Entity {
 
-	protected BossRoom bossRoom;
+	protected BossStructure bossStructure;
 	protected GameElement target;
 	protected boolean isHarmless = false;
 
@@ -29,8 +29,8 @@ public abstract class Boss extends Entity {
 
 	public abstract String getName();
 
-	public void setBossRoom(BossRoom bossRoom) {
-		this.bossRoom = bossRoom;
+	public void setBossStructure(BossStructure bossStructure) {
+		this.bossStructure = bossStructure;
 	}
 
 	public void setTarget(GameElement target) {
@@ -39,7 +39,7 @@ public abstract class Boss extends Entity {
 
 	@Override
 	public final void destroy() {
-		this.bossRoom.endBattle();
+		this.bossStructure.endBattle(this.scene);
 		this.isHarmless = true;
 	}
 }

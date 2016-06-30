@@ -1,4 +1,5 @@
 {shuffle:true, doGaps:true, infinite:true, doEpicNeuralNetStuff:true, takeOverWorld:false, autoCoinSpawn:false}
+{10:100}
 
 {}
 1

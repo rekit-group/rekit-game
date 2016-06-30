@@ -5,6 +5,7 @@ import java.util.Random;
 public class LevelAssembler {
 
 	private int generatedUntil;
+	private int lastGeneratedUntil;
 
 	private StructureManager manager;
 
@@ -24,20 +25,25 @@ public class LevelAssembler {
 	public void generate(int max) {
 
 		while (this.generatedUntil < max) {
-			// Save current x to where level was generated yet
-			// int lastGeneratedUntil = this.generatedUntil;
 
-			// Randomly select structure
-			Structure struc = this.manager.next();
+			Structure nextStructure;
+
+			// check if Manager delivers u a BossStructure
+			Structure bossStructureOrNull = this.manager.bossSettings.getNextOrNull(this.lastGeneratedUntil, this.generatedUntil);
+			if (bossStructureOrNull != null) {
+				// If so: we want it!
+				nextStructure = bossStructureOrNull;
+			} else {
+				// Otherwise randomly select structure
+				nextStructure = this.manager.next();
+			}
+
+			// Save current x to where level was generated yet
+			this.lastGeneratedUntil = this.generatedUntil;
 
 			// build structure
-			this.generatedUntil += struc.build(this.generatedUntil + 1, this.manager.isSettingSet("autoCoinSpawn"));
+			this.generatedUntil += nextStructure.build(this.generatedUntil + 1, this.manager.isSettingSet("autoCoinSpawn"));
 
-			/*
-			 * for (int i = lastGeneratedUntil; i <= this.generatedUntil; i++) {
-			 * if (this.bossRooms.containsKey(i)) {
-			 * this.bossRooms.get(i).generate(this.generatedUntil); } }
-			 */
 		}
 	}
 

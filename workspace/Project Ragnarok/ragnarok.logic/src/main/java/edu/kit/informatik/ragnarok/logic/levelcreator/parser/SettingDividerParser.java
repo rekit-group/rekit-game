@@ -13,7 +13,6 @@ public class SettingDividerParser {
 			if (!trimmed.equals("")) {
 				new SettingParser(configurable, trimmed);
 			}
-
 		}
 	}
 }

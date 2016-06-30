@@ -6,7 +6,11 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
+import edu.kit.informatik.ragnarok.logic.gameelements.GameElementFactory;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.type.Boss;
+import edu.kit.informatik.ragnarok.logic.levelcreator.bossstructure.BossStructure;
 import edu.kit.informatik.ragnarok.logic.levelcreator.parser.FileParser;
+import edu.kit.informatik.ragnarok.primitives.Vec;
 
 public class StructureManager extends Configurable {
 
@@ -17,6 +21,8 @@ public class StructureManager extends Configurable {
 	private boolean buildInitialFloor;
 
 	private int currentStructureId = -1;
+
+	public BossSettings bossSettings;
 
 	/**
 	 * Private constructor to prevent instantiation from outside.
@@ -41,6 +47,13 @@ public class StructureManager extends Configurable {
 		scanner.close();
 
 		StructureManager instance = new StructureManager(randomSeed);
+
+		// WTF is this syntax
+		// Java, I don't like you anymore
+		// Usually you are so consequent and intuitive
+		// But what is this?????
+		instance.bossSettings = instance.new BossSettings();
+
 		new FileParser(instance, input);
 		return instance;
 	}
@@ -91,6 +104,19 @@ public class StructureManager extends Configurable {
 
 	public void addStructure(Structure structure) {
 		this.structures.put(this.structures.size(), structure);
+	}
+
+	public class BossSettings extends Configurable {
+		public Structure getNextOrNull(int fromX, int toX) {
+			for (int i = fromX; i <= toX; i++) {
+				String numString = String.valueOf(i);
+				if (this.isSettingSet(numString)) {
+					int bossId = this.getSettingValue(numString);
+					return new BossStructure((Boss) GameElementFactory.getPrototype(bossId).create(new Vec()));
+				}
+			}
+			return null;
+		}
 	}
 
 	private Structure getInitialStructure() {

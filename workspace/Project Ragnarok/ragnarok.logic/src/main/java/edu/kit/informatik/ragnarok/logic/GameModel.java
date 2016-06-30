@@ -78,7 +78,7 @@ public class GameModel implements CameraTarget, Model {
 
 	public void switchScene(int scene) {
 
-		scene = 3; // TODO delete me, just for testing arcadeLevel
+		scene = 1; // TODO delete me, just for testing arcadeLevel
 
 		switch (scene) {
 		case 0:

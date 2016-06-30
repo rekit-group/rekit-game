@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.Set;
 
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.type.Boss;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.type.Enemy;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.type.Pickup;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
@@ -34,21 +35,34 @@ public class GameElementFactory {
 
 	private static Random RNG;
 
-	public static void generate(int id, int x, int y) {
+	public static GameElement getPrototype(int id) {
 		GameElement element;
 		if (id > 0) {
 			element = GameElementFactory.prototypes.get(id);
 		} else {
 			// if this type of GameElement is not defined
 			if (!GameElementFactory.prototypeTypes.containsKey(id)) {
-				return;
+				return null;
 			}
 			GameElement[] elemArray = GameElementFactory.prototypeTypes.get(id);
 			element = elemArray[GameElementFactory.RNG.nextInt(elemArray.length)];
 		}
-		if (element != null) {
+		return element;
+	}
+
+	public static void generate(int id, int x, int y) {
+		GameElement prototype = GameElementFactory.getPrototype(id);
+		if (prototype != null) {
 			// Add enemy to model
-			GameElementFactory.scene.addGameElement(element.create(new Vec(x, y)));
+			GameElementFactory.scene.addGameElement(prototype.create(new Vec(x, y)));
+		}
+
+	}
+
+	public static void generate(GameElement element) {
+		if (element != null) {
+			// Add GameElement to model
+			GameElementFactory.scene.addGameElement(element);
 		}
 
 	}
@@ -62,6 +76,11 @@ public class GameElementFactory {
 
 		// Put Inanimates in collection
 		protos.put(1, Inanimate.getPrototype());
+
+		Set<Boss> bossPrototypes = Boss.getBossPrototypes();
+		for (Boss e : bossPrototypes) {
+			protos.put(e.getID(), e);
+		}
 
 		// Put Enemies in collection and in separate array
 		Set<Enemy> enemyPrototypes = Enemy.getEnemyPrototypes();

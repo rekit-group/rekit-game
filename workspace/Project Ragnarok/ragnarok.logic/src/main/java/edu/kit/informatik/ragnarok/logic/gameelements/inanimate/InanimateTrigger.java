@@ -23,6 +23,8 @@ public class InanimateTrigger extends Inanimate {
 	public void reactToCollision(GameElement element, Direction dir) {
 		if (this.team.isHostile(element.getTeam())) {
 			this.perform();
+			// destroy invisible InanimateTrigger
+			this.destroy();
 		}
 	}
 
