@@ -18,9 +18,7 @@ public class Structure extends Configurable {
 		for (int y = 0; y < this.structureArray.length; y++) {
 			for (int x = 0; x < this.structureArray[0].length; x++) {
 				int aY = (GameConf.GRID_H - this.structureArray.length) + y;
-				if (this.structureArray[y][x] > 0) {
-					GameElementFactory.generate(this.structureArray[y][x], levelX + x, aY);
-				}
+				GameElementFactory.generate(this.structureArray[y][x], levelX + x, aY);
 			}
 		}
 		// add gap

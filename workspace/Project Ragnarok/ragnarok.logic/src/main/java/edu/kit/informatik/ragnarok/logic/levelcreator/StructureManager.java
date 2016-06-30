@@ -16,6 +16,8 @@ public class StructureManager extends Configurable {
 
 	private boolean buildInitialFloor;
 
+	private int currentStructureId = -1;
+
 	/**
 	 * Private constructor to prevent instantiation from outside.
 	 */
@@ -26,6 +28,7 @@ public class StructureManager extends Configurable {
 	}
 
 	public void init() {
+		this.currentStructureId = -1;
 		this.buildInitialFloor = true;
 	}
 
@@ -45,8 +48,19 @@ public class StructureManager extends Configurable {
 	public Structure next() {
 		if (this.buildInitialFloor) {
 			this.buildInitialFloor = false;
-			return new Structure(new int[][] { { 1, 1, 1, 1, 1, 1, 1, 1 } });
+			return this.getInitialStructure();
 		} else {
+			// increment structureId / count
+			this.currentStructureId++;
+			// if end of sequence reached: Determine if to repeat or end level
+			if (this.currentStructureId >= this.structures.size()) {
+				if (this.isSettingSet("infinite")) {
+					this.currentStructureId = 0;
+				} else {
+					return this.getEndStructure();
+				}
+			}
+			// get next Structure depending on strategy (shuffled / in order)
 			if (this.isSettingSet("shuffle")) {
 				return this.nextShuffeled();
 			} else {
@@ -64,21 +78,8 @@ public class StructureManager extends Configurable {
 		return selected;
 	}
 
-	private int currentStructureId = 0;
-
 	public Structure nextInOrder() {
-		int randId = this.rand.nextInt(this.structures.size());
-
-		// if end of sequence reached
-		if (this.currentStructureId == this.structures.size()) {
-			if (this.isSettingSet("infinite")) {
-				this.currentStructureId = 0;
-			} else {
-				return new Structure(new int[][] { { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 } });
-			}
-		}
-
-		Structure selected = this.structures.get(this.currentStructureId++);
+		Structure selected = this.structures.get(this.currentStructureId);
 		selected.setGap(this.nextGapWidth());
 
 		return selected;
@@ -90,6 +91,14 @@ public class StructureManager extends Configurable {
 
 	public void addStructure(Structure structure) {
 		this.structures.put(this.structures.size(), structure);
+	}
+
+	private Structure getInitialStructure() {
+		return new Structure(new int[][] { { 1, 1, 1, 1, 1, 1, 1, 1 } });
+	}
+
+	private Structure getEndStructure() {
+		return new Structure(new int[][] { { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 } });
 	}
 
 }
