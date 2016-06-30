@@ -24,6 +24,7 @@ import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.CalcUtil;
 import edu.kit.informatik.ragnarok.util.InputHelper;
 import edu.kit.informatik.ragnarok.util.SwtUtils;
+import edu.kit.informatik.ragnarok.util.ThreadUtils;
 
 /**
  * Main class of the View. Manages the window and a canvas an periodically
@@ -97,10 +98,7 @@ class GameView implements View {
 	@Override
 	public void start() {
 		// background thread
-		Thread updateThread = new Thread(() -> this.update());
-		updateThread.setDaemon(true);
-		updateThread.start();
-
+		ThreadUtils.runDaemon(() -> this.update());
 		// Main SWT stuff ...
 		Display display = Display.getDefault();
 		// Wait for window to be closed, holds the window open

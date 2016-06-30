@@ -24,8 +24,6 @@ public class GameModel implements CameraTarget, Model {
 
 	public long lastTime;
 
-	private Thread loopThread;
-
 	private Scene curScene;
 
 	private boolean endGame;
@@ -45,7 +43,7 @@ public class GameModel implements CameraTarget, Model {
 
 	@Override
 	public void start() {
-		this.loopThread = new Thread(() -> {
+		ThreadUtils.runDaemon(() -> {
 			// repeat until player is dead
 			while (!this.endGame) {
 				this.logicLoop();
@@ -53,8 +51,6 @@ public class GameModel implements CameraTarget, Model {
 			}
 			this.end();
 		});
-		this.loopThread.setDaemon(true);
-		this.loopThread.start();
 	}
 
 	/**

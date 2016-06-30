@@ -22,14 +22,12 @@ final class InputHelperImpl implements InputHelper {
 	 * Instantiate the InputHelper
 	 */
 	public InputHelperImpl() {
-		Thread daemon = new Thread(() -> {
+		ThreadUtils.runDaemon(() -> {
 			while (true) {
 				this.notifyObservers();
 				ThreadUtils.sleep(GameConf.LOGIC_DELTA);
 			}
 		});
-		daemon.setDaemon(true);
-		daemon.start();
 	}
 
 	/**
@@ -103,8 +101,7 @@ final class InputHelperImpl implements InputHelper {
 
 		List<Observer> obs = new ArrayList<>();
 		synchronized (this.observerSync) {
-			// Kind of hacky but works: blockingly (what kind of adverb is
-			// this??)
+			// Kind of hacky but works
 			// add all Observers to regular List...
 			for (Observer o : this.observers) {
 				obs.add(o);

@@ -13,8 +13,18 @@ public final class ThreadUtils {
 		return true;
 	}
 
+	public static final void runDaemon(Runnable r) {
+		ThreadUtils.runThread(r, true);
+	}
+
 	public static final void runThread(Runnable r) {
-		new Thread(r).start();
+		ThreadUtils.runThread(r, false);
+	}
+
+	public static final void runThread(Runnable r, boolean daemon) {
+		Thread t = new Thread(r);
+		t.setDaemon(daemon);
+		t.start();
 	}
 
 }
