@@ -7,9 +7,13 @@ import edu.kit.informatik.ragnarok.logic.levelcreator.Structure;
 import edu.kit.informatik.ragnarok.logic.levelcreator.StructureManager;
 
 public class StructureParser {
+
+	private static String n = System.getProperty("line.separator");
+	private static String patternStr = "(?s)^\\{([0-9a-zA-Z,: ]*)\\}" + StructureParser.n + "(.+)$";
+
 	public StructureParser(StructureManager employer, String input) {
 
-		Pattern pattern = Pattern.compile("(?s)^\\{([0-9a-zA-Z,: ]*)\\}\n(.+)$");
+		Pattern pattern = Pattern.compile(StructureParser.patternStr);
 		Matcher matcher = pattern.matcher(input);
 		if (!matcher.find()) {
 			System.err.println("StructureManager: " + input + " is no valid Structure");

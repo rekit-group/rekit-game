@@ -4,7 +4,7 @@ import edu.kit.informatik.ragnarok.logic.levelcreator.StructureManager;
 
 public class StructureDividerParser {
 	public StructureDividerParser(StructureManager employer, String input) {
-		String[] settings = input.split("\n\n");
+		String[] settings = input.split(System.lineSeparator() + System.lineSeparator());
 
 		for (String setting : settings) {
 			new StructureParser(employer, setting);

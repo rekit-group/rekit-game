@@ -6,10 +6,14 @@ import java.util.regex.Pattern;
 import edu.kit.informatik.ragnarok.logic.levelcreator.StructureManager;
 
 public class FileParser extends Parser {
+
+	private static String n = System.getProperty("line.separator");
+	private static String patternStr = "(?s)^\\{([0-9a-zA-Z,: ]+)\\}" + FileParser.n + "\\{([0-9a-zA-Z,: ]+)\\}" + FileParser.n + "" + FileParser.n
+			+ "(.+)" + FileParser.n + "$";
+
 	public FileParser(StructureManager employer, String input) {
 
-		// TODO does this last \n cause troubles on other systems?
-		Pattern pattern = Pattern.compile("(?s)^\\{([0-9a-zA-Z,: ]+)\\}\n\\{([0-9a-zA-Z,: ]+)\\}\n\n(.+)\n$");
+		Pattern pattern = Pattern.compile(FileParser.patternStr);
 		Matcher matcher = pattern.matcher(input);
 		if (!matcher.find()) {
 			System.err.println("StructureManager: " + input + " is no valid file");
