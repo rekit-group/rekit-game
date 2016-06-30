@@ -18,4 +18,8 @@ public class RGBColor implements Cloneable {
 		return new RGBColor((int) (this.red * p), (int) (this.green * p), (int) (this.blue * p));
 	}
 
+	public RGBAColor toRGBA() {
+		return new RGBAColor(this.red, this.green, this.blue, 255);
+	}
+
 }

@@ -8,7 +8,7 @@ public class CalcUtil {
 		return (int) (units * GameConf.PX_PER_UNIT);
 	}
 
-	public static Vec units2vec(Vec pos) {
+	public static Vec units2pixel(Vec pos) {
 		return new Vec(pos.getX() * GameConf.PX_PER_UNIT, pos.getY() * GameConf.PX_PER_UNIT);
 	}
 }

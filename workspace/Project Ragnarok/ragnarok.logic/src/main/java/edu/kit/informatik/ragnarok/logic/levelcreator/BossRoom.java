@@ -126,7 +126,7 @@ public class BossRoom {
 			TextOptions op = new TextOptions(new Vec(-0.5f, -0.5f), 30, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, 1);
 			Text bossText = new Text(scene, op);
 			bossText.setText(BossRoom.this.boss.getName());
-			bossText.setPos(CalcUtil.units2vec(new Vec(GameConf.GRID_W / 2f, GameConf.GRID_H / 2f)));
+			bossText.setPos(CalcUtil.units2pixel(new Vec(GameConf.GRID_W / 2f, GameConf.GRID_H / 2f)));
 			TimeDecorator bossTextGui = new TimeDecorator(scene, bossText, new TimeDependency(3));
 			scene.addGuiElement(bossTextGui);
 		});

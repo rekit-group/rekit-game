@@ -14,6 +14,7 @@ import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.primitives.Polygon;
 import edu.kit.informatik.ragnarok.primitives.Vec;
+import edu.kit.informatik.ragnarok.util.CalcUtil;
 import edu.kit.informatik.ragnarok.util.RGBAColor;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 import edu.kit.informatik.ragnarok.util.SwtUtils;
@@ -35,68 +36,43 @@ public class FieldImpl extends Field {
 	@Override
 	public void setCurrentOffset(float cameraOffset) {
 		this.cameraOffsetUnits = cameraOffset;
-		this.cameraOffset = -this.units2pixel(cameraOffset);
+		this.cameraOffset = -CalcUtil.units2pixel(cameraOffset);
 	}
 
 	public void setBackground(RGB col) {
 		this.gc.setBackground(new Color(Display.getCurrent(), col));
-		this.gc.fillRectangle(0, 0, this.units2pixel(GameConf.GRID_W), this.units2pixel(GameConf.GRID_H));
+		this.gc.fillRectangle(0, 0, CalcUtil.units2pixel(GameConf.GRID_W), CalcUtil.units2pixel(GameConf.GRID_H));
 	}
 
-	public void drawCircle(Vec pos, Vec size, RGB col) {
-		this.drawCircle(pos, size, new RGBA(col.red, col.green, col.blue, 255));
-	}
-
-	public void drawCircle(Vec pos, Vec size, RGBA col) {
+	private void drawCircleImpl(Vec pos, Vec size, RGBA col) {
 		// set color
 		this.gc.setAlpha(col.alpha);
 		Color color = new Color(Display.getCurrent(), col);
 		this.gc.setBackground(color);
 		color.dispose();
-		this.gc.fillOval(this.cameraOffset + this.units2pixel((pos.getX() - size.getX() / 2f)), this.units2pixel((pos.getY() - size.getY() / 2f)),
-				this.units2pixel(size.getX()), this.units2pixel(size.getY()));
+		this.gc.fillOval((int) (pos.getX() - size.getX() / 2f), (int) (pos.getY() - size.getY() / 2f), (int) size.getX(), (int) size.getY());
 
 		// reset alpha
 		this.gc.setAlpha(255);
 	}
 
-	public void drawRectangle(Vec pos, Vec size, RGB col) {
-		this.drawRectangle(pos, size, new RGBA(col.red, col.green, col.blue, 255));
-	}
-
-	public void drawRectangle(Vec pos, Vec size, RGBA col) {
+	private void drawRectangleImpl(Vec pos, Vec size, RGBA col) {
 		// set color
 		this.gc.setAlpha(col.alpha);
 		Color color = new Color(Display.getCurrent(), col);
 
 		this.gc.setBackground(color);
 		color.dispose();
-		this.gc.fillRectangle(this.cameraOffset + this.units2pixel(pos.getX() - size.getX() / 2f), this.units2pixel(pos.getY() - size.getY() / 2f),
-				this.units2pixel(size.getX()), this.units2pixel(size.getY()));
+		this.gc.fillRectangle((int) (pos.getX() - size.getX() / 2f), (int) (pos.getY() - size.getY() / 2f), (int) size.getX(), (int) size.getY());
 
 		// reset alpha
 		this.gc.setAlpha(255);
 	}
 
-	public void drawPolygon(Polygon polygon, RGB col, boolean fill) {
-		RGBA actualCol = new RGBA(col.red, col.green, col.blue, 255);
-		this.drawPolygon(polygon, actualCol, fill);
-	}
-
-	public void drawPolygon(Polygon polygon, RGBA col, boolean fill) {
+	private void drawPolygonImpl(int[] pixelArray, RGBA col, boolean fill) {
 		// set color
 		this.gc.setAlpha(col.alpha);
 		Color color = new Color(Display.getCurrent(), col);
-
-		// polygon.moveTo(this.translate2D(polygon.getStartPoint()));
-		float[] unitArray = polygon.getAbsoluteArray();
-		int[] pixelArray = new int[unitArray.length];
-
-		// calculate to pixels and add level scrolling offset
-		for (int i = 0; i < unitArray.length; i += 2) {
-			pixelArray[i] = this.cameraOffset + this.units2pixel(unitArray[i]);
-			pixelArray[i + 1] = this.units2pixel(unitArray[i + 1]);
-		}
 
 		// draw actual polygon
 		if (fill) {
@@ -113,7 +89,7 @@ public class FieldImpl extends Field {
 		this.gc.setAlpha(255);
 	}
 
-	public void drawImageImpl(Vec pos, Vec size, String imagePath) {
+	private void drawImageImpl(Vec pos, Vec size, String imagePath) {
 		Image image = ImageLoader.get(imagePath);
 		this.gc.drawImage(image, // image
 				(int) (pos.getX() - size.getX() / 2f), // dstX
@@ -121,19 +97,7 @@ public class FieldImpl extends Field {
 		);
 	}
 
-	@Override
-	public void drawImage(Vec pos, Vec size, String imagePath, boolean inGame) {
-		if (!inGame) {
-			this.drawImageImpl(pos, size, imagePath);
-		} else {
-			Vec newPos = Vec.create(this.units2pixel(pos.getX()), this.units2pixel(pos.getY()));
-			newPos = newPos.addX(this.cameraOffset);
-			Vec newSize = Vec.create(this.units2pixel(size.getX()), this.units2pixel(size.getY()));
-			this.drawImageImpl(newPos, newSize, imagePath);
-		}
-	}
-
-	private void drawText(Vec pos, String text, TextOptions options) {
+	private void drawTextImpl(Vec pos, String text, TextOptions options) {
 		// Set color to red and set font
 		RGB rgb = new RGB(options.getColor().red, options.getColor().green, options.getColor().blue);
 		Color color = new Color(Display.getCurrent(), rgb);
@@ -152,17 +116,6 @@ public class FieldImpl extends Field {
 		font.dispose();
 	}
 
-	@Override
-	public void drawText(Vec pos, String text, TextOptions options, boolean inGame) {
-		if (!inGame) {
-			this.drawText(pos, text, options);
-		} else {
-			Vec newPos = Vec.create(this.units2pixel(pos.getX()), this.units2pixel(pos.getY()));
-			newPos = newPos.addX(this.cameraOffset);
-			this.drawText(newPos, text, options);
-		}
-	}
-
 	public void setGC(GC gc) {
 		this.gc = gc;
 	}
@@ -174,42 +127,90 @@ public class FieldImpl extends Field {
 		return vec3D;
 	}
 
-	private int units2pixel(float units) {
-		return (int) (units * GameConf.PX_PER_UNIT);
-	}
-
-	// Adapt methods
+	// Adapt methods (separate world position calculation from drawing)
 
 	@Override
-	public void drawRectangle(Vec pos, Vec size, RGBColor color) {
-		this.drawRectangle(this.translate2D(pos), size, SwtUtils.calcRGB(color));
+	public void drawRectangle(Vec pos, Vec size, RGBColor color, boolean inGame) {
+		this.drawRectangle(pos, size, color.toRGBA(), inGame);
 	}
 
 	@Override
-	public void drawRectangle(Vec pos, Vec size, RGBAColor rgbaColor) {
-		this.drawRectangle(this.translate2D(pos), size, SwtUtils.calcRGBA(rgbaColor));
+	public void drawRectangle(Vec pos, Vec size, RGBAColor rgbaColor, boolean inGame) {
+		if (!inGame) {
+			this.drawRectangleImpl(this.translate2D(pos), size, SwtUtils.calcRGBA(rgbaColor));
+		} else {
+			Vec newPos = this.translate2D(pos);
+			newPos = CalcUtil.units2pixel(newPos);
+			newPos = newPos.addX(this.cameraOffset);
+
+			Vec newSize = CalcUtil.units2pixel(size);
+
+			this.drawRectangleImpl(newPos, newSize, SwtUtils.calcRGBA(rgbaColor));
+		}
 	}
 
 	@Override
-	public void drawCircle(Vec pos, Vec size, RGBAColor color) {
-		this.drawCircle(this.translate2D(pos), size, SwtUtils.calcRGBA(color));
+	public void drawCircle(Vec pos, Vec size, RGBColor color, boolean inGame) {
+		this.drawCircle(pos, size, color.toRGBA(), inGame);
 	}
 
 	@Override
-	public void drawCircle(Vec pos, Vec size, RGBColor color) {
-		this.drawCircle(this.translate2D(pos), size, SwtUtils.calcRGB(color));
+	public void drawCircle(Vec pos, Vec size, RGBAColor rgbaColor, boolean inGame) {
+		if (!inGame) {
+			this.drawCircleImpl(this.translate2D(pos), size, SwtUtils.calcRGBA(rgbaColor));
+		} else {
+			Vec newPos = this.translate2D(pos);
+			newPos = CalcUtil.units2pixel(newPos);
+			newPos = newPos.addX(this.cameraOffset);
+
+			Vec newSize = CalcUtil.units2pixel(size);
+
+			this.drawCircleImpl(newPos, newSize, SwtUtils.calcRGBA(rgbaColor));
+		}
 	}
 
 	@Override
-	public void drawPolygon(Polygon polygon, RGBAColor color, boolean fill) {
+	public void drawPolygon(Polygon polygon, RGBColor color, boolean fill, boolean inGame) {
+		this.drawPolygon(polygon, color.toRGBA(), fill, inGame);
+	}
+
+	@Override
+	public void drawPolygon(Polygon polygon, RGBAColor color, boolean fill, boolean inGame) {
 		polygon.moveTo(this.translate2D(polygon.getStartPoint()));
-		this.drawPolygon(polygon, SwtUtils.calcRGBA(color), fill);
+
+		float[] unitArray = polygon.getAbsoluteArray();
+		int[] pixelArray = new int[unitArray.length];
+
+		// calculate to pixels and add level scrolling offset
+		for (int i = 0; i < unitArray.length; i += 2) {
+			pixelArray[i] = this.cameraOffset + CalcUtil.units2pixel(unitArray[i]);
+			pixelArray[i + 1] = CalcUtil.units2pixel(unitArray[i + 1]);
+		}
+
+		this.drawPolygonImpl(pixelArray, SwtUtils.calcRGBA(color), fill);
 	}
 
 	@Override
-	public void drawPolygon(Polygon polygon, RGBColor color, boolean fill) {
-		polygon.moveTo(this.translate2D(polygon.getStartPoint()));
-		this.drawPolygon(polygon, SwtUtils.calcRGB(color), fill);
+	public void drawImage(Vec pos, Vec size, String imagePath, boolean inGame) {
+		if (!inGame) {
+			this.drawImageImpl(pos, size, imagePath);
+		} else {
+			Vec newPos = CalcUtil.units2pixel(pos);
+			newPos = newPos.addX(this.cameraOffset);
+			Vec newSize = CalcUtil.units2pixel(size);
+			this.drawImageImpl(newPos, newSize, imagePath);
+		}
+	}
+
+	@Override
+	public void drawText(Vec pos, String text, TextOptions options, boolean inGame) {
+		if (!inGame) {
+			this.drawTextImpl(pos, text, options);
+		} else {
+			Vec newPos = CalcUtil.units2pixel(pos);
+			newPos = newPos.addX(this.cameraOffset);
+			this.drawTextImpl(newPos, text, options);
+		}
 	}
 
 }
