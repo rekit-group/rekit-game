@@ -1,4 +1,4 @@
-{shuffle:true, doEpicNeuralNetStuff:true, takeOverWorld:false}
+{shuffle:false, doGaps:true, infinite:false, doEpicNeuralNetStuff:true, takeOverWorld:false}
 
 {}
 1

@@ -9,4 +9,11 @@ public abstract class Configurable {
 	public void setSetting(String settingName, boolean settingValue) {
 		this.settings.put(settingName, settingValue);
 	}
+
+	protected boolean isSettingSet(String settingName) {
+		if (!this.settings.containsKey(settingName)) {
+			return false;
+		}
+		return this.settings.get(settingName);
+	}
 }

@@ -47,14 +47,45 @@ public class StructureManager extends Configurable {
 			this.buildInitialFloor = false;
 			return new Structure(new int[][] { { 1, 1, 1, 1, 1, 1, 1, 1 } });
 		} else {
-			int randId = this.rand.nextInt(this.structures.size());
-			int gapWidth = this.rand.nextInt(2) + 1;
-
-			Structure selected = this.structures.get(randId);
-			selected.setGap(gapWidth);
-
-			return selected;
+			if (this.isSettingSet("shuffle")) {
+				return this.nextShuffeled();
+			} else {
+				return this.nextInOrder();
+			}
 		}
+	}
+
+	public Structure nextShuffeled() {
+		int randId = this.rand.nextInt(this.structures.size());
+
+		Structure selected = this.structures.get(randId);
+		selected.setGap(this.nextGapWidth());
+
+		return selected;
+	}
+
+	private int currentStructureId = 0;
+
+	public Structure nextInOrder() {
+		int randId = this.rand.nextInt(this.structures.size());
+
+		// if end of sequence reached
+		if (this.currentStructureId == this.structures.size()) {
+			if (this.isSettingSet("infinite")) {
+				this.currentStructureId = 0;
+			} else {
+				return new Structure(new int[][] { { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 } });
+			}
+		}
+
+		Structure selected = this.structures.get(this.currentStructureId++);
+		selected.setGap(this.nextGapWidth());
+
+		return selected;
+	}
+
+	public int nextGapWidth() {
+		return this.isSettingSet("doGaps") ? this.rand.nextInt(2) + 1 : 0;
 	}
 
 	public void addStructure(Structure structure) {

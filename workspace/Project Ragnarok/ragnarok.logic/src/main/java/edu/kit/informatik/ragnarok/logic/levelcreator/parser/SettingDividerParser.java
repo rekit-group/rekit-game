@@ -6,7 +6,7 @@ public class SettingDividerParser {
 
 	public SettingDividerParser(Configurable configurable, String input) {
 
-		String[] settings = input.split(", ");
+		String[] settings = input.split(",");
 
 		for (String setting : settings) {
 			String trimmed = setting.trim();

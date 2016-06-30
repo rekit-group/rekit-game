@@ -7,7 +7,7 @@ import edu.kit.informatik.ragnarok.logic.levelcreator.Configurable;
 
 public class SettingParser {
 	public SettingParser(Configurable configurable, String input) {
-		Pattern pattern = Pattern.compile("^([0-9a-zA-Z]+):([false|true|0-9]+)$");
+		Pattern pattern = Pattern.compile("^([0-9a-zA-Z]+):([false|true]+)$");
 		Matcher matcher = pattern.matcher(input);
 		if (!matcher.find()) {
 			System.err.println("StructureManager: " + input + " is no valid setting declaration");
