@@ -18,11 +18,13 @@ public class StructureManager extends Configurable {
 
 	private Random rand;
 
-	private boolean buildInitialFloor;
-
 	private int currentStructureId = -1;
 
 	public BossSettings bossSettings;
+
+	private int unitsBuilt = 0;
+
+	private int lastUnitsBuilt = 0;
 
 	/**
 	 * Private constructor to prevent instantiation from outside.
@@ -35,7 +37,7 @@ public class StructureManager extends Configurable {
 
 	public void init() {
 		this.currentStructureId = -1;
-		this.buildInitialFloor = true;
+		this.unitsBuilt = 0;
 	}
 
 	public static StructureManager load(int randomSeed, String levelName) {
@@ -59,12 +61,14 @@ public class StructureManager extends Configurable {
 	}
 
 	public Structure next() {
-		if (this.buildInitialFloor) {
-			this.buildInitialFloor = false;
+
+		// if this is level start: build initial Structure
+		if (this.unitsBuilt == 0) {
 			return this.getInitialStructure();
 		} else {
 			// increment structureId / count
 			this.currentStructureId++;
+
 			// if end of sequence reached: Determine if to repeat or end level
 			if (this.currentStructureId >= this.structures.size()) {
 				if (this.isSettingSet("infinite")) {
@@ -73,6 +77,14 @@ public class StructureManager extends Configurable {
 					return this.getEndStructure();
 				}
 			}
+
+			Structure bossStructureOrNull = this.bossSettings.getNextOrNull(this.lastUnitsBuilt, this.unitsBuilt);
+			this.lastUnitsBuilt = this.unitsBuilt;
+
+			if (bossStructureOrNull != null) {
+				return bossStructureOrNull;
+			}
+
 			// get next Structure depending on strategy (shuffled / in order)
 			if (this.isSettingSet("shuffle")) {
 				return this.nextShuffeled();
@@ -83,17 +95,30 @@ public class StructureManager extends Configurable {
 	}
 
 	public Structure nextShuffeled() {
+		// get random next Structure
 		int randId = this.rand.nextInt(this.structures.size());
-
 		Structure selected = this.structures.get(randId);
-		selected.setGap(this.nextGapWidth());
+
+		// determine and set gap width
+		int gap = this.nextGapWidth();
+		selected.setGap(gap);
+
+		// keep track of how far we built
+		this.unitsBuilt += selected.getWidth() + gap;
 
 		return selected;
 	}
 
 	public Structure nextInOrder() {
+		// get next Structure in order
 		Structure selected = this.structures.get(this.currentStructureId);
-		selected.setGap(this.nextGapWidth());
+
+		// determine and set gap width
+		int gap = this.nextGapWidth();
+		selected.setGap(gap);
+
+		// keep track of how far we built
+		this.unitsBuilt += selected.getWidth() + gap;
 
 		return selected;
 	}
@@ -112,7 +137,9 @@ public class StructureManager extends Configurable {
 				String numString = String.valueOf(i);
 				if (this.isSettingSet(numString)) {
 					int bossId = this.getSettingValue(numString);
-					return new BossStructure((Boss) GameElementFactory.getPrototype(bossId).create(new Vec()));
+					Structure bossStructure = new BossStructure((Boss) GameElementFactory.getPrototype(bossId).create(new Vec()));
+					StructureManager.this.unitsBuilt += bossStructure.getWidth();
+					return bossStructure;
 				}
 			}
 			return null;
@@ -120,11 +147,23 @@ public class StructureManager extends Configurable {
 	}
 
 	private Structure getInitialStructure() {
-		return new Structure(new int[][] { { 1, 1, 1, 1, 1, 1, 1, 1 } });
+		// Flat floor
+		Structure structure = new Structure(new int[][] { { 1, 1, 1, 1, 1, 1, 1, 1 } });
+
+		// keep track of how far we built
+		this.unitsBuilt += structure.getWidth();
+
+		return structure;
 	}
 
 	private Structure getEndStructure() {
-		return new Structure(new int[][] { { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 } });
+		// Vertical wall
+		Structure structure = new Structure(new int[][] { { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 } });
+
+		// keep track of how far we built
+		this.unitsBuilt += structure.getWidth();
+
+		return structure;
 	}
 
 }
