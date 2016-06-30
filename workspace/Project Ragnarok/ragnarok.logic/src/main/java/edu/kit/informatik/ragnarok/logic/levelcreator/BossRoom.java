@@ -77,7 +77,7 @@ public class BossRoom {
 		this.levelCreator.generateEvenFloor(x + 6 + this.roomStructure.getWidth(), x + 6 + this.roomStructure.getWidth() + 5);
 
 		// generate door after room
-		this.door = new InanimateDoor(new Vec(x + 5 + this.roomStructure.getWidth(), (float) Math.ceil(GameConf.GRID_H / 2.0)));
+		this.door = new InanimateDoor(new Vec(x + 5 + this.roomStructure.getWidth(), GameConf.GRID_H / 2));
 		this.levelCreator.generateGameElement(this.door);
 
 		this.triggerPos = new Vec(x + 6, GameConf.GRID_H - 2);
