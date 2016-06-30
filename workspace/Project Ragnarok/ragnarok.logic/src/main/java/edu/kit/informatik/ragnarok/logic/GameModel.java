@@ -77,6 +77,9 @@ public class GameModel implements CameraTarget, Model {
 	}
 
 	public void switchScene(int scene) {
+
+		scene = 3; // TODO delete me, just for testing arcadeLevel
+
 		switch (scene) {
 		case 0:
 			// curScene = new MainMenuScene();
@@ -92,6 +95,11 @@ public class GameModel implements CameraTarget, Model {
 			int seed = Integer.parseInt(levelOfTheDayFormat.format(Calendar.getInstance().getTime()));
 			LevelAssembler levelOfTheDayAssembler = new LevelAssembler("infinite", seed);
 			this.curScene = new LevelScene(this, levelOfTheDayAssembler);
+			break;
+
+		case 3:
+			LevelAssembler arcadeLevel = new LevelAssembler("0");
+			this.curScene = new LevelScene(this, arcadeLevel);
 			break;
 
 		default:
