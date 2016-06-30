@@ -13,6 +13,12 @@ public class Coin extends Pickup {
 		super();
 	}
 
+	private static RGBColor color = new RGBColor(232, 214, 16);
+	private static RGBColor darkColor = new RGBColor(192, 174, 6);
+	private float x = 0;
+	private double sin = 0;
+	private Vec size = new Vec();
+
 	public Coin(Vec startPos) {
 		super(startPos, new Vec(), new Vec(0.7f, 0.7f));
 	}
@@ -26,21 +32,23 @@ public class Coin extends Pickup {
 	}
 
 	@Override
+	public void logicLoop(float renderDelta) {
+		this.x += renderDelta;
+		this.sin = Math.sin(this.x * 3);
+		this.size = new Vec((float) (0.7f * this.sin), 0.7f);
+	}
+
+	@Override
 	public void internalRender(Field f) {
-		RGBColor color = new RGBColor(232, 214, 16);
-		RGBColor darkColor = new RGBColor(192, 174, 6);
 
-		double sin = Math.sin((System.currentTimeMillis() / 300.0));
-		Vec size = this.getSize().multiply((float) sin, 1);
-
-		for (float x = -0.025f; x <= 0.025f; x += 0.005f) {
-			f.drawCircle(this.getPos().addX(x), size, color);
+		for (float x = -0.020f; x <= 0.020f; x += 0.005f) {
+			f.drawCircle(this.getPos().addX(x), this.size, Coin.color);
 		}
-		if (sin < 0) {
-			f.drawCircle(this.getPos().addX(-0.03f), size, darkColor);
+		if (this.sin < 0) {
+			f.drawCircle(this.getPos().addX(-0.03f), this.size, Coin.darkColor);
 		}
-		if (sin > 0) {
-			f.drawCircle(this.getPos().addX(0.03f), size, darkColor);
+		if (this.sin > 0) {
+			f.drawCircle(this.getPos().addX(0.03f), this.size, Coin.darkColor);
 		}
 
 	}
