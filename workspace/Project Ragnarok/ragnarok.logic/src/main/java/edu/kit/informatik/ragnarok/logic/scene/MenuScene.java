@@ -7,7 +7,6 @@ import edu.kit.informatik.ragnarok.logic.gameelements.gui.menu.MenuActionItem;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.menu.MenuItem;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.menu.MenuSubMenu;
 import edu.kit.informatik.ragnarok.primitives.Vec;
-import edu.kit.informatik.ragnarok.util.CalcUtil;
 
 public class MenuScene extends Scene {
 
@@ -22,7 +21,7 @@ public class MenuScene extends Scene {
 		super.init();
 
 		this.menu = new MenuSubMenu(this, "Main Menu");
-		this.menu.setPos(CalcUtil.units2pixel(new Vec(GameConf.GRID_W / 2f, GameConf.GRID_H / 2f)));
+		this.menu.setPos(new Vec(GameConf.PIXEL_W / 2f, GameConf.PIXEL_H / 2f));
 
 		MenuActionItem play = new MenuActionItem(this, "Infinite", () -> MenuScene.this.model.switchScene(Scenes.INFINIT));
 

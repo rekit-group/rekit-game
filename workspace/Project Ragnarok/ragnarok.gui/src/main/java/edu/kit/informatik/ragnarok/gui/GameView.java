@@ -21,7 +21,6 @@ import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.GuiElement;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.Vec;
-import edu.kit.informatik.ragnarok.util.CalcUtil;
 import edu.kit.informatik.ragnarok.util.InputHelper;
 import edu.kit.informatik.ragnarok.util.SwtUtils;
 import edu.kit.informatik.ragnarok.util.ThreadUtils;
@@ -79,11 +78,11 @@ class GameView implements View {
 
 		// Create and position a canvas
 		this.canvas = new Canvas(this.shell, SWT.NONE);
-		this.canvas.setSize(GameConf.GRID_W * GameConf.PX_PER_UNIT, GameConf.GRID_H * GameConf.PX_PER_UNIT);
+		this.canvas.setSize(GameConf.PIXEL_W, GameConf.PIXEL_H);
 		this.canvas.setLocation(0, 0);
 
 		// Open Shell
-		this.shell.setSize(GameConf.GRID_W * GameConf.PX_PER_UNIT, GameConf.GRID_H * GameConf.PX_PER_UNIT);
+		this.shell.setSize(GameConf.PIXEL_W, GameConf.PIXEL_H);
 		this.shell.setLocation(SwtUtils.calcCenter(this.shell));
 		this.shell.open();
 
@@ -178,11 +177,9 @@ class GameView implements View {
 		String debugInfo = "FPS: " + this.getFPS() + "\nGameElements: " + this.model.getScene().getGameElementCount();
 		if (GameConf.DEBUG) {
 			debugInfo += "\n" + this.getGameElementStats();
-			this.field.drawText(new Vec(CalcUtil.units2pixel(GameConf.GRID_W) - 10, CalcUtil.units2pixel(GameConf.GRID_H) / 2f), debugInfo,
-					GameConf.HINT_TEXT, false);
+			this.field.drawText(new Vec(GameConf.PIXEL_W - 10, GameConf.PIXEL_H / 2f), debugInfo, GameConf.HINT_TEXT, false);
 		} else {
-			this.field.drawText(new Vec(CalcUtil.units2pixel(GameConf.GRID_W) - 10, CalcUtil.units2pixel(GameConf.GRID_H) - 60), debugInfo,
-					GameConf.HINT_TEXT, false);
+			this.field.drawText(new Vec(GameConf.PIXEL_W - 10, GameConf.PIXEL_H - 60), debugInfo, GameConf.HINT_TEXT, false);
 		}
 
 	}

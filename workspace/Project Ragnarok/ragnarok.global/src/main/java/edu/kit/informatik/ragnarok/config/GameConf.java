@@ -44,6 +44,19 @@ public class GameConf implements Visitable {
 	public static int GRID_H;
 
 	/**
+	 * Width of the window. Calculated by {@link GameConf.GRID_W} *
+	 * {@link GameConf.PX_PER_UNIT}.
+	 */
+	@NoVisit
+	public static int PIXEL_W;
+	/**
+	 * Height of the window. Calculated by {@link GameConf.GRID_H} *
+	 * {@link GameConf.PX_PER_UNIT}.
+	 */
+	@NoVisit
+	public static int PIXEL_H;
+
+	/**
 	 * Time in milliseconds to wait after each renderLoop, that refreshes all
 	 * graphical elements
 	 */
@@ -106,6 +119,9 @@ public class GameConf implements Visitable {
 
 	@AfterVisit
 	public static void afterVisit() {
+		GameConf.PIXEL_W = GameConf.GRID_W * GameConf.PX_PER_UNIT;
+		GameConf.PIXEL_H = GameConf.GRID_H * GameConf.PX_PER_UNIT;
+
 		GameConf.DEFAULT_TEXT = new TextOptions(Vec.create(-1, 0), GameConf.GAME_TEXT_SIZE, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, 1);
 		GameConf.MENU_TEXT = new TextOptions(new Vec(-0.5f), GameConf.MENU_TEXT_SIZE, GameConf.MENU_TEXT_COLOR, GameConf.GAME_TEXT_FONT, 1);
 		GameConf.DEBUG_TEXT_COLOR = new RGBColor(255, 255, 255);

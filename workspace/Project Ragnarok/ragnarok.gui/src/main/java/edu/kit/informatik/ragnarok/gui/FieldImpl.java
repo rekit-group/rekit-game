@@ -41,7 +41,7 @@ public class FieldImpl extends Field {
 
 	public void setBackground(RGB col) {
 		this.gc.setBackground(new Color(Display.getCurrent(), col));
-		this.gc.fillRectangle(0, 0, CalcUtil.units2pixel(GameConf.GRID_W), CalcUtil.units2pixel(GameConf.GRID_H));
+		this.gc.fillRectangle(0, 0, GameConf.PIXEL_W, GameConf.PIXEL_H);
 	}
 
 	private void drawCircleImpl(Vec pos, Vec size, RGBA col) {
