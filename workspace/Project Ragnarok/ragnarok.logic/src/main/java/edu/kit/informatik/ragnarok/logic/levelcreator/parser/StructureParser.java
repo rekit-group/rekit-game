@@ -34,7 +34,7 @@ public class StructureParser {
 
 			// construct every char into array
 			for (int x = 0; x < elements.length; x++) {
-				result[y][x] = Integer.parseInt(elements[x]);
+				result[y][x] = Integer.parseInt(elements[x].trim());
 			}
 		}
 
