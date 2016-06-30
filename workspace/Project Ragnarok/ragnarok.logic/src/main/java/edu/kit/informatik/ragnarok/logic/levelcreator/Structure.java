@@ -3,7 +3,7 @@ package edu.kit.informatik.ragnarok.logic.levelcreator;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElementFactory;
 
-public class Structure {
+public class Structure extends Configurable {
 
 	private int[][] structureArray;
 

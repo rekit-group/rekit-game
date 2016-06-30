@@ -8,9 +8,7 @@ import java.util.Scanner;
 
 import edu.kit.informatik.ragnarok.logic.levelcreator.parser.FileParser;
 
-public class StructureManager {
-
-	private Map<String, Boolean> settings;
+public class StructureManager extends Configurable {
 
 	private Map<Integer, Structure> structures;
 
@@ -22,7 +20,7 @@ public class StructureManager {
 	 * Private constructor to prevent instantiation from outside.
 	 */
 	private StructureManager(int randomSeed) {
-		this.settings = new HashMap<String, Boolean>();
+		super();
 		this.structures = new HashMap<Integer, Structure>();
 		this.rand = new Random(randomSeed);
 	}
@@ -59,12 +57,8 @@ public class StructureManager {
 		}
 	}
 
-	public void setSetting(String settingName, boolean settingValue) {
-		this.settings.put(settingName, settingValue);
-	}
-
-	public void addStructure(int[][] structureArray) {
-		this.structures.put(this.structures.size(), new Structure(structureArray));
+	public void addStructure(Structure structure) {
+		this.structures.put(this.structures.size(), structure);
 	}
 
 }
