@@ -25,13 +25,13 @@ public class LevelAssembler {
 
 		while (this.generatedUntil < max) {
 			// Save current x to where level was generated yet
-			int lastGeneratedUntil = this.generatedUntil;
+			// int lastGeneratedUntil = this.generatedUntil;
 
 			// Randomly select structure
 			Structure struc = this.manager.next();
 
 			// build structure
-			this.generatedUntil += struc.build(this.generatedUntil + 1);
+			this.generatedUntil += struc.build(this.generatedUntil + 1, this.manager.isSettingSet("autoCoinSpawn"));
 
 			/*
 			 * for (int i = lastGeneratedUntil; i <= this.generatedUntil; i++) {

@@ -13,12 +13,18 @@ public class Structure extends Configurable {
 		this.structureArray = structureArray;
 	}
 
-	public int build(int levelX) {
+	public int build(int levelX, boolean autoCoinSpawn) {
 		// build structure
 		for (int y = 0; y < this.structureArray.length; y++) {
 			for (int x = 0; x < this.structureArray[0].length; x++) {
 				int aY = (GameConf.GRID_H - this.structureArray.length) + y;
-				GameElementFactory.generate(this.structureArray[y][x], levelX + x, aY);
+				if (this.structureArray[y][x] != 0) {
+					GameElementFactory.generate(this.structureArray[y][x], levelX + x, aY);
+				} else {
+					if (autoCoinSpawn && Math.random() > 0.95f) {
+						GameElementFactory.generate(10, levelX + x, aY);
+					}
+				}
 			}
 		}
 		// add gap
