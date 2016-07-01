@@ -7,3 +7,4 @@ workspace/ragnarok/src/**/*.class
 *.classpath
 *.settings
 *.project
+sh.exe.stackdump
