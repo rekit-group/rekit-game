@@ -89,7 +89,7 @@ public class MenuSubMenu extends MenuItem {
 		if (this.selected) {
 			// render this menu as complete Menu
 			int itemSize = 100;
-			Vec offset = new Vec(0, -(this.menuItems.size() * itemSize) / 2);
+			Vec offset = new Vec(0, -((this.menuItems.size() - 1) * itemSize) / 2);
 
 			for (MenuItem menuItem : this.menuItems) {
 				menuItem.setPos(this.getPos().add(offset));

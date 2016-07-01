@@ -9,6 +9,7 @@ import java.util.Queue;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Canvas;
@@ -81,8 +82,9 @@ class GameView implements View {
 		this.canvas.setSize(GameConf.PIXEL_W, GameConf.PIXEL_H);
 		this.canvas.setLocation(0, 0);
 
-		// Open Shell
-		this.shell.setSize(GameConf.PIXEL_W, GameConf.PIXEL_H);
+		// Open Shell (5,28) seems to be the additional size of my window
+		// decoration (boder, title, close button etc)
+		this.shell.setSize(GameConf.PIXEL_W + 5, GameConf.PIXEL_H + 28);
 		this.shell.setLocation(SwtUtils.calcCenter(this.shell));
 		this.shell.open();
 
