@@ -34,8 +34,6 @@ public class Main {
 		View view = View.getView(model);
 		Controller controller = Controller.getController(model);
 
-		model.registerSceneChangeListener(controller);
-
 		// Start MVC
 		model.start();
 

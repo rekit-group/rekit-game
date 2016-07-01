@@ -12,15 +12,15 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
  */
 public abstract class InputCommand implements Command {
 	/**
-	 * The corresponding entity
+	 * The corresponding supervisor
 	 */
-	protected Entity entity;
+	protected CommandSupervisor supervisor;
 
-	public InputCommand(Entity entity) {
-		if (entity == null) {
-			throw new IllegalArgumentException("Entity cannot be null");
+	public InputCommand(CommandSupervisor supervisor) {
+		if (supervisor == null) {
+			throw new IllegalArgumentException("Supervisor cannot be null");
 		}
-		this.entity = entity;
+		this.supervisor = supervisor;
 	}
 
 }

@@ -7,12 +7,12 @@ public class MenuCommand implements Command {
 		UP, DOWN, BACK, SELECT
 	}
 
-	private MenuItem item;
+	private CommandSupervisor supervisor;
 
 	private Dir dir;
 
-	public MenuCommand(MenuItem item, Dir dir) {
-		this.item = item;
+	public MenuCommand(CommandSupervisor supervisor, Dir dir) {
+		this.supervisor = supervisor;
 		this.dir = dir;
 	}
 
@@ -21,24 +21,20 @@ public class MenuCommand implements Command {
 		if (inputMethod != InputMethod.RELEASE) {
 			return;
 		}
-
+		MenuItem item = this.supervisor.getMenu(this);
 		switch (this.dir) {
 		case UP:
-			this.item.up();
+			item.up();
 			break;
-
 		case DOWN:
-			this.item.down();
+			item.down();
 			break;
-
 		case BACK:
-			this.item.back();
+			item.back();
 			break;
-
 		case SELECT:
-			this.item.select();
+			item.select();
 			break;
-
 		default:
 			break;
 		}

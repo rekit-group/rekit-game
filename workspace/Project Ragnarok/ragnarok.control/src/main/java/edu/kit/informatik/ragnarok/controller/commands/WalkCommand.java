@@ -24,8 +24,8 @@ public class WalkCommand extends InputCommand {
 	 * @param dir
 	 *            the direction
 	 */
-	public WalkCommand(Entity entity, Direction dir) {
-		super(entity);
+	public WalkCommand(CommandSupervisor supervisor, Direction dir) {
+		super(supervisor);
 		this.dir = dir;
 	}
 
@@ -34,9 +34,10 @@ public class WalkCommand extends InputCommand {
 		if (inputMethod == InputMethod.RELEASE) {
 			return;
 		}
+		Entity entity = this.supervisor.getEntity(this);
 
 		// Update x velocity with corresponding direction and acceleration
-		Vec newVel = this.entity.getVel().addX(this.dir.getVector().getX() * GameConf.PLAYER_WALK_ACCEL);
+		Vec newVel = entity.getVel().addX(this.dir.getVector().getX() * GameConf.PLAYER_WALK_ACCEL);
 
 		// check if max speed achieved
 		if (Math.abs(newVel.getX()) > GameConf.PLAYER_WALK_MAX_SPEED) {
@@ -44,6 +45,6 @@ public class WalkCommand extends InputCommand {
 		}
 
 		// Save new velocity
-		this.entity.setVel(newVel);
+		entity.setVel(newVel);
 	}
 }

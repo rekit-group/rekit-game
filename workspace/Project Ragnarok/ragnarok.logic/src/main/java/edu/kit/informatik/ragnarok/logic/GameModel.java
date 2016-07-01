@@ -3,13 +3,12 @@ package edu.kit.informatik.ragnarok.logic;
 import java.security.SecureRandom;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.CameraTarget;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
+import edu.kit.informatik.ragnarok.logic.gameelements.gui.menu.MenuItem;
 import edu.kit.informatik.ragnarok.logic.levelcreator.InfiniteLevelCreator;
 import edu.kit.informatik.ragnarok.logic.scene.LevelScene;
 import edu.kit.informatik.ragnarok.logic.scene.MenuScene;
@@ -29,11 +28,10 @@ public class GameModel implements CameraTarget, Model {
 	private long lastTime;
 	private Scene curScene;
 	private boolean endGame;
-	private List<SceneChangeListener> sceneChangeListeners;
+	private GameState state;
 
 	public GameModel() {
 		this.endGame = false;
-		this.sceneChangeListeners = new ArrayList<>();
 		this.curScene = new NullScene(this);
 	}
 
@@ -87,11 +85,13 @@ public class GameModel implements CameraTarget, Model {
 		switch (sceneId) {
 		case 0:
 			nextScene = new MenuScene(this);
+			this.state = GameState.MENU;
 			break;
 
 		case 1:
 			InfiniteLevelCreator infiniteCreator = new InfiniteLevelCreator(new SecureRandom().nextInt());
 			nextScene = new LevelScene(this, infiniteCreator);
+			this.state = GameState.INGAME;
 			break;
 
 		case 2:
@@ -99,6 +99,7 @@ public class GameModel implements CameraTarget, Model {
 			int seed = Integer.parseInt(levelOfTheDayFormat.format(Calendar.getInstance().getTime()));
 			InfiniteLevelCreator levelOfTheDayCreator = new InfiniteLevelCreator(seed);
 			nextScene = new LevelScene(this, levelOfTheDayCreator);
+			this.state = GameState.INGAME;
 			break;
 
 		default:
@@ -112,7 +113,6 @@ public class GameModel implements CameraTarget, Model {
 		this.lastTime = 0;
 		this.curScene = nextScene;
 
-		this.updateSceneChangeListeners();
 	}
 
 	@Override
@@ -127,7 +127,18 @@ public class GameModel implements CameraTarget, Model {
 	 */
 	@Override
 	public Player getPlayer() {
+		if (this.state != GameState.INGAME) {
+			return null;
+		}
 		return this.curScene.getPlayer();
+	}
+
+	@Override
+	public MenuItem getMenu() {
+		if (this.state != GameState.MENU) {
+			return null;
+		}
+		return ((MenuScene) this.curScene).getMenu();
 	}
 
 	@Override
@@ -136,14 +147,8 @@ public class GameModel implements CameraTarget, Model {
 	}
 
 	@Override
-	public void registerSceneChangeListener(SceneChangeListener l) {
-		this.sceneChangeListeners.add(l);
-	}
-
-	public void updateSceneChangeListeners() {
-		for (SceneChangeListener sceneChangeListener : this.sceneChangeListeners) {
-			sceneChangeListener.sceneChanged(this.curScene);
-		}
+	public GameState getState() {
+		return this.state;
 	}
 
 }

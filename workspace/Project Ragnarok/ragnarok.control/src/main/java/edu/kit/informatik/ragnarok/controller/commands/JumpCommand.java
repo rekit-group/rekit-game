@@ -12,18 +12,19 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.state.JumpState;
  *
  */
 public class JumpCommand extends InputCommand {
-	public JumpCommand(Entity entity) {
-		super(entity);
+	public JumpCommand(CommandSupervisor supervisor) {
+		super(supervisor);
 	}
 
 	@Override
 	public void execute(InputMethod inputMethod) {
+		Entity entity = this.supervisor.getEntity(this);
 		if (inputMethod == InputMethod.PRESS) {
-			if (this.entity.getEntityState().canJump()) {
-				this.entity.setEntityState(new JumpState(this.entity));
+			if (entity.getEntityState().canJump()) {
+				entity.setEntityState(new JumpState(entity));
 			}
 		} else {
-			this.entity.setEntityState(new FallState(this.entity));
+			entity.setEntityState(new FallState(entity));
 		}
 
 	}

@@ -1,6 +1,7 @@
 package edu.kit.informatik.ragnarok.logic;
 
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
+import edu.kit.informatik.ragnarok.logic.gameelements.gui.menu.MenuItem;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
 
 /**
@@ -22,9 +23,17 @@ public interface Model {
 	/**
 	 * Get the Player
 	 *
-	 * @return the player
+	 * @return the player or {@code null} when not in GAME
 	 */
 	Entity getPlayer();
+
+	/**
+	 * Get the Menu
+	 *
+	 * @return the menu or {@code null} when not in MENU
+	 */
+
+	MenuItem getMenu();
 
 	/**
 	 * Start the model
@@ -39,11 +48,10 @@ public interface Model {
 	Scene getScene();
 
 	/**
-	 * Register a listener which will be notified when the scene is changed.
-	 *
-	 * @param l
-	 *            the listener to register
+	 * Get the current state
+	 * 
+	 * @return the state
 	 */
-	void registerSceneChangeListener(SceneChangeListener l);
+	GameState getState();
 
 }
