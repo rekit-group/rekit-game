@@ -37,6 +37,13 @@ public abstract class Boss extends Entity {
 		this.target = target;
 	}
 
+	public BossStructure getBossStructure() {
+		BossStructure structure = new BossStructure(new int[][] { { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 } }, this);
+		System.err.println("Error while spawning Boss: " + this.getID() + " did not specify getBossStructure()");
+		this.setBossStructure(structure);
+		return structure;
+	}
+
 	@Override
 	public final void destroy() {
 		this.bossStructure.endBattle(this.scene);

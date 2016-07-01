@@ -6,9 +6,9 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
+import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElementFactory;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.type.Boss;
-import edu.kit.informatik.ragnarok.logic.levelcreator.bossstructure.BossStructure;
 import edu.kit.informatik.ragnarok.logic.levelcreator.parser.FileParser;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 
@@ -137,9 +137,16 @@ public class StructureManager extends Configurable {
 				String numString = String.valueOf(i);
 				if (this.isSettingSet(numString)) {
 					int bossId = this.getSettingValue(numString);
-					Structure bossStructure = new BossStructure((Boss) GameElementFactory.getPrototype(bossId).create(new Vec()));
-					StructureManager.this.unitsBuilt += bossStructure.getWidth();
-					return bossStructure;
+					GameElement bossGameElement = GameElementFactory.getPrototype(bossId).create(new Vec());
+					if (bossGameElement instanceof Boss) {
+						Boss boss = (Boss) bossGameElement;
+						Structure bossStructure = boss.getBossStructure();
+						StructureManager.this.unitsBuilt += bossStructure.getWidth();
+						return bossStructure;
+					} else {
+						System.err.println("Error while spawning Boss: " + bossId + " is not a BossID");
+					}
+
 				}
 			}
 			return null;
