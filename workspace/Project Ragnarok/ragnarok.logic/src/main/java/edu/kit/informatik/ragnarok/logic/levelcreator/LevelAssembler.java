@@ -68,7 +68,7 @@ public class LevelAssembler {
 	 *            the lowest x position that must still be generated at.
 	 */
 	public void generate(int max) {
-		while (this.generatedUntil < max) {
+		while (this.generatedUntil < max && this.manager.hasNext()) {
 			// build structure
 			this.generatedUntil += this.manager.next().build(this.generatedUntil + 1, this.manager.isSettingSet("autoCoinSpawn"));
 		}
