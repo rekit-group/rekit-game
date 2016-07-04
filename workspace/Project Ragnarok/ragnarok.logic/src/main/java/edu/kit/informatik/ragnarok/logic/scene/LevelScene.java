@@ -13,17 +13,18 @@ import java.util.Iterator;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.GameModel;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.logic.gameelements.GameElementFactory;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.CameraTarget;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.EntityFactory;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.LifeGui;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.ScoreGui;
-import edu.kit.informatik.ragnarok.logic.levelcreator.LevelCreator;
+import edu.kit.informatik.ragnarok.logic.levelcreator.LevelAssembler;
 import edu.kit.informatik.ragnarok.logic.parallax.HeapElementCloud;
 import edu.kit.informatik.ragnarok.logic.parallax.HeapElementMountain;
 import edu.kit.informatik.ragnarok.logic.parallax.HeapLayer;
 import edu.kit.informatik.ragnarok.logic.parallax.ParallaxContainer;
 import edu.kit.informatik.ragnarok.logic.parallax.TriangulationLayer;
+import edu.kit.informatik.ragnarok.logic.save.LevelManager;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Vec;
@@ -40,7 +41,7 @@ public class LevelScene extends Scene {
 
 	private Player player = new Player(new Vec(3, 5));
 
-	private LevelCreator levelCreator;
+	private LevelAssembler levelAssembler;
 
 	private CameraTarget cameraTarget;
 
@@ -52,10 +53,10 @@ public class LevelScene extends Scene {
 
 	protected ParallaxContainer parallax;
 
-	public LevelScene(GameModel model, LevelCreator levelCreator) {
+	public LevelScene(GameModel model, LevelAssembler levelAssembler) {
 		super(model);
 
-		this.levelCreator = levelCreator;
+		this.levelAssembler = levelAssembler;
 	}
 
 	@Override
@@ -68,10 +69,11 @@ public class LevelScene extends Scene {
 		this.addGameElement(this.player);
 
 		// Init EnemyFactory with model
-		EntityFactory.init(this);
+		GameElementFactory.init(this);
 
-		this.levelCreator.init(this);
-		this.levelCreator.generate(GameConf.GRID_W);
+		new LevelManager();
+		this.levelAssembler.init();
+		this.levelAssembler.generate(GameConf.GRID_W);
 
 		// Create parallax background
 		this.parallax = new ParallaxContainer(this);
@@ -119,7 +121,7 @@ public class LevelScene extends Scene {
 	@Override
 	protected void logicLoopPre(float timeDelta) {
 
-		this.levelCreator.generate((int) (this.getCameraOffset() + GameConf.GRID_W + 1));
+		this.levelAssembler.generate((int) (this.getCameraOffset() + GameConf.GRID_W + 1));
 
 		// dont allow player to go behind currentOffset
 		float minX = this.getCameraOffset() + this.player.getSize().getX() / 2f;

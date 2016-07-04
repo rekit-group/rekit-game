@@ -1,5 +1,6 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.inanimate;
 
+import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.Team;
@@ -10,9 +11,11 @@ import edu.kit.informatik.ragnarok.util.RGBColor;
 
 public class Inanimate extends GameElement {
 
+	private static Inanimate instance;
+
 	protected RGBColor color;
 
-	public Inanimate(Vec pos, Vec size, RGBColor color) {
+	protected Inanimate(Vec pos, Vec size, RGBColor color) {
 		super(pos, new Vec(), size, Team.NEUTRAL);
 		this.color = color;
 	}
@@ -53,4 +56,19 @@ public class Inanimate extends GameElement {
 		return 0;
 	}
 
+	@Override
+	public Inanimate create(Vec pos) {
+		if (pos.getY() + 1 >= GameConf.GRID_H) {
+			return InanimateFloor.staticCreate(pos);
+		} else {
+			return InanimateBox.staticCreate(pos);
+		}
+	}
+
+	public static Inanimate getPrototype() {
+		if (Inanimate.instance == null) {
+			Inanimate.instance = new Inanimate(new Vec(), new Vec(1, 1), new RGBColor(0, 0, 0));
+		}
+		return Inanimate.instance;
+	}
 }

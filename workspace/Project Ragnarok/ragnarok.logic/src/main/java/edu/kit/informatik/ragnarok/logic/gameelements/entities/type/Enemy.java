@@ -9,7 +9,7 @@ import edu.kit.informatik.ragnarok.logic.util.ReflectUtils;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 
 public abstract class Enemy extends Entity {
-	public static final Set<Enemy> getBossPrototypes() {
+	public static final Set<Enemy> getEnemyPrototypes() {
 		return ReflectUtils.get("edu.kit.informatik", Enemy.class);
 	}
 
