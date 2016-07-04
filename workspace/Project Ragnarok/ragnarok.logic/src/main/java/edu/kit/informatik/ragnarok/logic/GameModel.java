@@ -1,6 +1,5 @@
 package edu.kit.informatik.ragnarok.logic;
 
-import java.security.SecureRandom;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -9,7 +8,7 @@ import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.CameraTarget;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.menu.MenuItem;
-import edu.kit.informatik.ragnarok.logic.levelcreator.InfiniteLevelCreator;
+import edu.kit.informatik.ragnarok.logic.levelcreator.LevelAssembler;
 import edu.kit.informatik.ragnarok.logic.scene.LevelScene;
 import edu.kit.informatik.ragnarok.logic.scene.MenuScene;
 import edu.kit.informatik.ragnarok.logic.scene.NullScene;
@@ -48,12 +47,12 @@ public class GameModel implements CameraTarget, Model {
 		this.init();
 		ThreadUtils.runDaemon(() -> {
 			// repeat until player is dead
-			while (!this.endGame) {
-				this.logicLoop();
-				ThreadUtils.sleep(GameConf.LOGIC_DELTA);
-			}
-			this.end();
-		});
+				while (!this.endGame) {
+					this.logicLoop();
+					ThreadUtils.sleep(GameConf.LOGIC_DELTA);
+				}
+				this.end();
+			});
 	}
 
 	/**
@@ -89,15 +88,16 @@ public class GameModel implements CameraTarget, Model {
 			break;
 
 		case 1:
-			InfiniteLevelCreator infiniteCreator = new InfiniteLevelCreator(new SecureRandom().nextInt());
-			nextScene = new LevelScene(this, infiniteCreator);
+
+			LevelAssembler assembler = new LevelAssembler("infinite");
+			nextScene = new LevelScene(this, assembler);
 			this.state = GameState.INGAME;
 			break;
 
 		case 2:
 			DateFormat levelOfTheDayFormat = new SimpleDateFormat("ddMMyyyy");
 			int seed = Integer.parseInt(levelOfTheDayFormat.format(Calendar.getInstance().getTime()));
-			InfiniteLevelCreator levelOfTheDayCreator = new InfiniteLevelCreator(seed);
+			LevelAssembler levelOfTheDayCreator = new LevelAssembler("infinite", seed);
 			nextScene = new LevelScene(this, levelOfTheDayCreator);
 			this.state = GameState.INGAME;
 			break;
