@@ -24,6 +24,7 @@ import edu.kit.informatik.ragnarok.logic.parallax.HeapElementMountain;
 import edu.kit.informatik.ragnarok.logic.parallax.HeapLayer;
 import edu.kit.informatik.ragnarok.logic.parallax.ParallaxContainer;
 import edu.kit.informatik.ragnarok.logic.parallax.TriangulationLayer;
+import edu.kit.informatik.ragnarok.logic.save.LevelManager;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Vec;
@@ -70,6 +71,7 @@ public class LevelScene extends Scene {
 		// Init EnemyFactory with model
 		GameElementFactory.init(this);
 
+		new LevelManager();
 		this.levelAssembler.init();
 		this.levelAssembler.generate(GameConf.GRID_W);
 
