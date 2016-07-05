@@ -1,13 +1,46 @@
 package edu.kit.informatik.ragnarok.util;
 
+/**
+ * This class defines a tuple
+ * 
+ * @author Dominik Fuchß
+ *
+ * @param <T>
+ *            type1
+ * @param <U>
+ *            type2
+ */
 public class Tuple<T, U> {
+	/**
+	 * First entry
+	 */
 	private final T t;
+	/**
+	 * Second entry
+	 */
 	private final U u;
 
+	/**
+	 * Create a new Tuple
+	 * 
+	 * @param v
+	 *            the first parameter
+	 * @param w
+	 *            the second parameter
+	 * @return the tuple
+	 */
 	public static final <V, W> Tuple<V, W> create(V v, W w) {
 		return new Tuple<>(v, w);
 	}
 
+	/**
+	 * Instantiate a new Tuple
+	 * 
+	 * @param t
+	 *            the first entry
+	 * @param u
+	 *            the second entry
+	 */
 	public Tuple(T t, U u) {
 		if (t == null || u == null) {
 			throw new IllegalArgumentException("Tuple arguments cannot be null");
@@ -16,10 +49,20 @@ public class Tuple<T, U> {
 		this.u = u;
 	}
 
+	/**
+	 * Get the first entry
+	 * 
+	 * @return the first entry
+	 */
 	public T getT() {
 		return this.t;
 	}
 
+	/**
+	 * Get the second entry
+	 * 
+	 * @return the second entry
+	 */
 	public U getU() {
 		return this.u;
 	}
@@ -43,17 +86,7 @@ public class Tuple<T, U> {
 			return false;
 		}
 		Tuple other = (Tuple) obj;
-		if (this.t == null && other.t != null) {
-			return false;
-		} else if (!this.t.equals(other.t)) {
-			return false;
-		}
-		if (this.u == null && other.u != null) {
-			return false;
-		} else if (!this.u.equals(other.u)) {
-			return false;
-		}
-		return true;
+		return this.t.equals(other.t) && this.u.equals(other.u);
 	}
 
 }

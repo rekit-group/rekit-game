@@ -7,6 +7,7 @@ import edu.kit.informatik.ragnarok.visitor.AfterVisit;
 import edu.kit.informatik.ragnarok.visitor.NoVisit;
 import edu.kit.informatik.ragnarok.visitor.VisitInfo;
 import edu.kit.informatik.ragnarok.visitor.Visitable;
+import edu.kit.informatik.ragnarok.visitor.parser.Parser;
 
 /**
  * Configuration class that holds static options
@@ -17,7 +18,9 @@ import edu.kit.informatik.ragnarok.visitor.Visitable;
  */
 @VisitInfo(res = "conf/game", visit = true)
 public class GameConf implements Visitable {
-
+	/**
+	 * Prevent instantiation
+	 */
 	private GameConf() {
 	}
 
@@ -72,51 +75,106 @@ public class GameConf implements Visitable {
 	 * accelerates upon falling.
 	 */
 	public static float G;
-
+	/**
+	 * The default camera offset for a player
+	 */
 	public static float PLAYER_CAMERA_OFFSET;
-
+	/**
+	 * The player's walk acceleration
+	 */
 	public static float PLAYER_WALK_ACCEL;
+	/**
+	 * The player's stop acceleration
+	 */
 	public static float PLAYER_STOP_ACCEL;
-
+	/**
+	 * The player's walk max speed
+	 */
 	public static float PLAYER_WALK_MAX_SPEED;
-
+	/**
+	 * The player's jump boost
+	 */
 	public static float PLAYER_JUMP_BOOST;
+	/**
+	 * The player's maximum jump time
+	 */
 	public static float PLAYER_JUMP_TIME;
+	/**
+	 * The player's bottom boost (used when colliding from bottom)
+	 */
 	public static float PLAYER_BOTTOM_BOOST;
-
-	public static int PLAYER_LIFES;
+	/**
+	 * The player's default amount of lives
+	 */
+	public static int PLAYER_LIVES;
 
 	public static float SLURP_SPEED;
 	public static float SLURP_POPOFFS_PER_SEC;
-
 	public static float WARPER_WARP_DELTA;
-
+	/**
+	 * The menu's background color
+	 */
 	public static RGBColor MENU_BACKGROUND_COLOR;
+	/**
+	 * The menu's box color (default)
+	 */
 	public static RGBColor MENU_BOX_COLOR;
+	/**
+	 * The menu's box color (selected)
+	 */
 	public static RGBColor MENU_BOX_SELECT_COLOR;
-
+	/**
+	 * The menu's text color
+	 */
 	public static RGBColor MENU_TEXT_COLOR;
+	/**
+	 * The menu's text font
+	 */
 	public static String MENU_TEXT_FONT;
+	/**
+	 * The menu's text size
+	 */
 	public static int MENU_TEXT_SIZE;
-
+	/**
+	 * The game's background color
+	 */
 	public static RGBColor GAME_BACKGROUD_COLOR;
-
+	/**
+	 * The game's text color
+	 */
 	public static RGBColor GAME_TEXT_COLOR;
+	/**
+	 * The game's text font
+	 */
 	public static String GAME_TEXT_FONT;
+	/**
+	 * The game's text size
+	 */
 	public static int GAME_TEXT_SIZE;
-
+	/**
+	 * The game's debug text color
+	 */
 	@NoVisit
 	public static RGBColor DEBUG_TEXT_COLOR;
-
+	/**
+	 * The game's text options
+	 */
 	@NoVisit
 	public static TextOptions DEFAULT_TEXT;
-
+	/**
+	 * The game's text options (menu)
+	 */
 	@NoVisit
 	public static TextOptions MENU_TEXT;
-
+	/**
+	 * The game's text options (hints)
+	 */
 	@NoVisit
 	public static TextOptions HINT_TEXT;
 
+	/**
+	 * Set values which cannot be loaded by {@link Parser Parsers}
+	 */
 	@AfterVisit
 	public static void afterVisit() {
 		GameConf.PIXEL_W = GameConf.GRID_W * GameConf.PX_PER_UNIT;

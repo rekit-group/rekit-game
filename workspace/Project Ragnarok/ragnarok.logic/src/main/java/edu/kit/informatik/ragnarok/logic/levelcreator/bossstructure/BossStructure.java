@@ -195,8 +195,8 @@ public class BossStructure extends Structure {
 			// re-apply velocity to Player
 			player.setVel(playerVelSave);
 			// give player full health
-			if (player.getLifes() < GameConf.PLAYER_LIFES) {
-				player.setLifes(GameConf.PLAYER_LIFES);
+			if (player.getLifes() < GameConf.PLAYER_LIVES) {
+				player.setLifes(GameConf.PLAYER_LIVES);
 			}
 			// set camera back to player
 			player.resetCameraOffset();

@@ -25,7 +25,7 @@ public class Player extends Entity implements CameraTarget {
 
 	public void init() {
 		this.setPos(this.startPos);
-		this.lifes = GameConf.PLAYER_LIFES;
+		this.lifes = GameConf.PLAYER_LIVES;
 		this.points = 0;
 		this.currentDirection = Direction.RIGHT;
 		this.setVel(new Vec(0, 0));
