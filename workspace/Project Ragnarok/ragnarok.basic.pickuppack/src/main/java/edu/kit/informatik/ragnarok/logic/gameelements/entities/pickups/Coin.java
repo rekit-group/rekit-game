@@ -8,7 +8,16 @@ import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 
+/**
+ * This class defines a simple {@link Pickup}; a <b>Coin</b> which will give the
+ * player points
+ *
+ *
+ */
 public class Coin extends Pickup {
+	/**
+	 * Prototype Constructor
+	 */
 	public Coin() {
 		super();
 	}

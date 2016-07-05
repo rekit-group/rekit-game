@@ -13,4 +13,6 @@
   		<version>0.2-ALPHA</version>
   	</dependency>
   </dependencies>
+    <name>Basic - PickupPack</name>
+    <description>This pack includes a set of pickups</description>
 </project>

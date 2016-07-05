@@ -7,7 +7,16 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.type.Pickup;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 
+/**
+ * This class defines a simple {@link Pickup}; a <b>Life</b> which will give the
+ * player points
+ *
+ *
+ */
 public class Life extends Pickup {
+	/**
+	 * Prototype Constructor
+	 */
 	public Life() {
 		super();
 	}
