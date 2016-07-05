@@ -8,7 +8,8 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
  * and is linked to an {@link Entity}
  *
  * @author Dominik Fuchß
- *
+ * @see JumpCommand
+ * @see WalkCommand
  */
 public abstract class InputCommand implements Command {
 	/**
@@ -16,6 +17,12 @@ public abstract class InputCommand implements Command {
 	 */
 	protected CommandSupervisor supervisor;
 
+	/**
+	 * Instantiate the Command
+	 * 
+	 * @param supervisor
+	 *            the supervisor
+	 */
 	public InputCommand(CommandSupervisor supervisor) {
 		if (supervisor == null) {
 			throw new IllegalArgumentException("Supervisor cannot be null");

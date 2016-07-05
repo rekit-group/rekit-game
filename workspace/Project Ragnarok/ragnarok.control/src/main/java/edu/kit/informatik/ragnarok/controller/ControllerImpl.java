@@ -28,7 +28,7 @@ import edu.kit.informatik.ragnarok.util.Tuple;
  */
 class ControllerImpl implements Observer, Controller, CommandSupervisor {
 	/**
-	 * Map Key-ID, State --> Command
+	 * Map State, Key-ID --> Command
 	 */
 	private Map<Tuple<GameState, Integer>, Command> mpCmd;
 	/**

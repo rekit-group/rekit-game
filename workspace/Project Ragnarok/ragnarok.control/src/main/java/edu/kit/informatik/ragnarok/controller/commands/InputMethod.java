@@ -7,5 +7,12 @@ package edu.kit.informatik.ragnarok.controller.commands;
  *
  */
 public enum InputMethod {
-	PRESS, RELEASE
+	/**
+	 * Key Pressed
+	 */
+	PRESS,
+	/**
+	 * Key Released
+	 */
+	RELEASE
 }
