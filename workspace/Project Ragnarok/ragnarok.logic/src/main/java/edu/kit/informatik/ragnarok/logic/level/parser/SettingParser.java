@@ -1,9 +1,9 @@
-package edu.kit.informatik.ragnarok.logic.levelcreator.parser;
+package edu.kit.informatik.ragnarok.logic.level.parser;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import edu.kit.informatik.ragnarok.logic.levelcreator.Configurable;
+import edu.kit.informatik.ragnarok.logic.level.Configurable;
 
 public class SettingParser {
 	public SettingParser(Configurable configurable, String input) {

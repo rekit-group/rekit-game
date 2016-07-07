@@ -1,4 +1,4 @@
-package edu.kit.informatik.ragnarok.logic.levelcreator;
+package edu.kit.informatik.ragnarok.logic.level;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElementFactory;

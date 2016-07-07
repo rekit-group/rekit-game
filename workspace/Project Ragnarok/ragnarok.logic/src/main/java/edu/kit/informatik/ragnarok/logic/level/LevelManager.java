@@ -1,4 +1,4 @@
-package edu.kit.informatik.ragnarok.logic.save;
+package edu.kit.informatik.ragnarok.logic.level;
 
 import java.io.File;
 import java.io.FileInputStream;

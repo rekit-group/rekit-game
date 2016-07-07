@@ -1,4 +1,4 @@
-package edu.kit.informatik.ragnarok.logic.levelcreator.bossstructure;
+package edu.kit.informatik.ragnarok.logic.level.bossstructure;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElementFactory;
@@ -11,7 +11,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.gui.Text;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.TimeDecorator;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateDoor;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateTrigger;
-import edu.kit.informatik.ragnarok.logic.levelcreator.Structure;
+import edu.kit.informatik.ragnarok.logic.level.Structure;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.ProgressDependency;
 import edu.kit.informatik.ragnarok.primitives.TimeDependency;

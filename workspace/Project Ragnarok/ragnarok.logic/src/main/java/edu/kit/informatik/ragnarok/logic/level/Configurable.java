@@ -1,9 +1,9 @@
-package edu.kit.informatik.ragnarok.logic.levelcreator;
+package edu.kit.informatik.ragnarok.logic.level;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import edu.kit.informatik.ragnarok.logic.levelcreator.parser.SettingParser;
+import edu.kit.informatik.ragnarok.logic.level.parser.SettingParser;
 
 /**
  * <p>

@@ -1,4 +1,4 @@
-package edu.kit.informatik.ragnarok.logic.levelcreator;
+package edu.kit.informatik.ragnarok.logic.level;
 
 import java.io.InputStream;
 import java.util.HashMap;
@@ -14,8 +14,8 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.type.Boss;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.type.Enemy;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateTrigger;
-import edu.kit.informatik.ragnarok.logic.levelcreator.bossstructure.BossStructure;
-import edu.kit.informatik.ragnarok.logic.levelcreator.parser.FileParser;
+import edu.kit.informatik.ragnarok.logic.level.bossstructure.BossStructure;
+import edu.kit.informatik.ragnarok.logic.level.parser.FileParser;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 
 /**

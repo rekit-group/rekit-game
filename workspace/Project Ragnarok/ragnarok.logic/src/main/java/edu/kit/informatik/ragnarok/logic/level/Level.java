@@ -1,9 +1,8 @@
-package edu.kit.informatik.ragnarok.logic.save;
+package edu.kit.informatik.ragnarok.logic.level;
 
 import java.util.Random;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
-import edu.kit.informatik.ragnarok.logic.levelcreator.LevelAssembler;
 
 public class Level {
 

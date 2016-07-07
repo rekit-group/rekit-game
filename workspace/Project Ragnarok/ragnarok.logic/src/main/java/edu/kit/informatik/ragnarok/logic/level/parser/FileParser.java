@@ -1,9 +1,9 @@
-package edu.kit.informatik.ragnarok.logic.levelcreator.parser;
+package edu.kit.informatik.ragnarok.logic.level.parser;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import edu.kit.informatik.ragnarok.logic.levelcreator.StructureManager;
+import edu.kit.informatik.ragnarok.logic.level.StructureManager;
 
 public class FileParser extends Parser {
 

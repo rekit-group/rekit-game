@@ -1,10 +1,10 @@
-package edu.kit.informatik.ragnarok.logic.levelcreator.parser;
+package edu.kit.informatik.ragnarok.logic.level.parser;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import edu.kit.informatik.ragnarok.logic.levelcreator.Structure;
-import edu.kit.informatik.ragnarok.logic.levelcreator.StructureManager;
+import edu.kit.informatik.ragnarok.logic.level.Structure;
+import edu.kit.informatik.ragnarok.logic.level.StructureManager;
 
 public class StructureParser {
 

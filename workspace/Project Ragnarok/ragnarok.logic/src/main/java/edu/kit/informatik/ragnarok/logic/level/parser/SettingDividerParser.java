@@ -1,6 +1,6 @@
-package edu.kit.informatik.ragnarok.logic.levelcreator.parser;
+package edu.kit.informatik.ragnarok.logic.level.parser;
 
-import edu.kit.informatik.ragnarok.logic.levelcreator.Configurable;
+import edu.kit.informatik.ragnarok.logic.level.Configurable;
 
 public class SettingDividerParser {
 

@@ -1,6 +1,6 @@
-package edu.kit.informatik.ragnarok.logic.levelcreator.parser;
+package edu.kit.informatik.ragnarok.logic.level.parser;
 
-import edu.kit.informatik.ragnarok.logic.levelcreator.StructureManager;
+import edu.kit.informatik.ragnarok.logic.level.StructureManager;
 
 public class StructureDividerParser {
 	public StructureDividerParser(StructureManager employer, String input) {
