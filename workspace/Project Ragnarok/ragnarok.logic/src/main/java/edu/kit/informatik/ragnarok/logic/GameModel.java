@@ -5,6 +5,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.CameraTarget;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.menu.MenuItem;
 import edu.kit.informatik.ragnarok.logic.level.LevelManager;
+import edu.kit.informatik.ragnarok.logic.scene.ArcadeMenuScene;
 import edu.kit.informatik.ragnarok.logic.scene.LevelScene;
 import edu.kit.informatik.ragnarok.logic.scene.MenuScene;
 import edu.kit.informatik.ragnarok.logic.scene.NullScene;
@@ -72,6 +73,8 @@ public class GameModel implements CameraTarget, Model {
 
 	}
 
+	public int selectedArcadeId = 0;
+
 	public void switchScene(Scenes s) {
 		int sceneId = s.id;
 		Scene nextScene = null;
@@ -88,6 +91,14 @@ public class GameModel implements CameraTarget, Model {
 			break;
 		case 2:
 			nextScene = new LevelScene(this, LevelManager.getLOTDLevel());
+			this.state = GameState.INGAME;
+			break;
+		case 3:
+			nextScene = new ArcadeMenuScene(this);
+			this.state = GameState.MENU;
+			break;
+		case 4:
+			nextScene = new LevelScene(this, LevelManager.getArcadeLevel(this.selectedArcadeId));
 			this.state = GameState.INGAME;
 			break;
 

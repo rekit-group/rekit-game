@@ -3,16 +3,18 @@ package edu.kit.informatik.ragnarok.logic.scene;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.GameModel;
 import edu.kit.informatik.ragnarok.logic.Scenes;
+import edu.kit.informatik.ragnarok.logic.gameelements.gui.menu.ArcadeSelectionMenuItem;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.menu.MenuActionItem;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.menu.MenuItem;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.menu.MenuSubMenu;
+import edu.kit.informatik.ragnarok.logic.level.LevelManager;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 
-public class MenuScene extends Scene {
+public class ArcadeMenuScene extends MenuScene {
 
 	private MenuSubMenu menu;
 
-	public MenuScene(GameModel model) {
+	public ArcadeMenuScene(GameModel model) {
 		super(model);
 	}
 
@@ -20,29 +22,28 @@ public class MenuScene extends Scene {
 	public void init() {
 		super.init();
 
-		this.menu = new MenuSubMenu(this, "Main Menu");
+		this.menu = new MenuSubMenu(this, "Arcade");
 		this.menu.setPos(new Vec(GameConf.PIXEL_W / 2f, GameConf.PIXEL_H / 2f));
 
-		MenuActionItem play = new MenuActionItem(this, "Infinite", () -> MenuScene.this.model.switchScene(Scenes.INFINIT));
+		for (int i = 0; i <= LevelManager.getLastArcadeLevelId(); i++) {
 
-		MenuActionItem lod = new MenuActionItem(this, "Level of the Day", () -> MenuScene.this.model.switchScene(Scenes.LOD));
+			final int id = i;
+			MenuActionItem button = new ArcadeSelectionMenuItem(this, String.valueOf(id + 1), new Runnable() {
+				@Override
+				public void run() {
+					ArcadeMenuScene.this.model.selectedArcadeId = id;
+					ArcadeMenuScene.this.model.switchScene(Scenes.ARCADE);
+				}
 
-		MenuActionItem arcade = new MenuActionItem(this, "Arcade", () -> MenuScene.this.model.switchScene(Scenes.ARCADE_MENU));
-
-		MenuSubMenu settings = new MenuSubMenu(this, "Settings");
-
-		MenuSubMenu about = new MenuSubMenu(this, "About");
-
-		this.menu.addItem(play);
-		this.menu.addItem(lod);
-		this.menu.addItem(arcade);
-		this.menu.addItem(settings);
-		this.menu.addItem(about);
+			});
+			this.menu.addItem(button);
+		}
 
 		this.addGuiElement(this.menu);
 		this.menu.select();
 	}
 
+	@Override
 	public MenuItem getMenu() {
 		return this.menu;
 	}
