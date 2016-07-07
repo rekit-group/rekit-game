@@ -74,4 +74,13 @@ public class LevelAssembler {
 		}
 	}
 
+	/**
+	 * Return if the level is infinite or not.
+	 * 
+	 * @return true if the level is infinite, false otherwise.
+	 */
+	public boolean isInfinite() {
+		return this.manager.isSettingSet("infinite");
+	}
+
 }

@@ -88,10 +88,14 @@ public class LevelScene extends Scene {
 	}
 
 	@Override
-	public void end() {
-		// save score if higher than highscore
-		if (this.getScore() > this.getHighScore()) {
-			this.setHighScore(this.getScore());
+	public void end(boolean won) {
+		// only save score if the level is infinite or the player has won
+		// don't save it upon losing in finite level
+		if (this.level.getLevelAssember().isInfinite() || won) {
+			// save score if higher than highscore
+			if (this.getScore() > this.getHighScore()) {
+				this.setHighScore(this.getScore());
+			}
 		}
 
 		// restart game
@@ -159,7 +163,7 @@ public class LevelScene extends Scene {
 		}
 
 		if (this.player.getDeleteMe()) {
-			this.end();
+			this.end(false);
 		}
 	}
 

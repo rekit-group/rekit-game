@@ -51,7 +51,7 @@ public abstract class Scene implements CameraTarget {
 	public void start() {
 	}
 
-	public void end() {
+	public void end(boolean won) {
 		this.model.switchScene(Scenes.MENU);
 	}
 
