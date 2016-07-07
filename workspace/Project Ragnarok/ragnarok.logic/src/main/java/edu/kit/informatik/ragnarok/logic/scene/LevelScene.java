@@ -3,11 +3,6 @@
  */
 package edu.kit.informatik.ragnarok.logic.scene;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Iterator;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
@@ -18,13 +13,12 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.CameraTarget;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.LifeGui;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.ScoreGui;
-import edu.kit.informatik.ragnarok.logic.levelcreator.LevelAssembler;
 import edu.kit.informatik.ragnarok.logic.parallax.HeapElementCloud;
 import edu.kit.informatik.ragnarok.logic.parallax.HeapElementMountain;
 import edu.kit.informatik.ragnarok.logic.parallax.HeapLayer;
 import edu.kit.informatik.ragnarok.logic.parallax.ParallaxContainer;
 import edu.kit.informatik.ragnarok.logic.parallax.TriangulationLayer;
-import edu.kit.informatik.ragnarok.logic.save.LevelManager;
+import edu.kit.informatik.ragnarok.logic.save.Level;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Vec;
@@ -32,7 +26,7 @@ import edu.kit.informatik.ragnarok.util.ThreadUtils;
 
 /**
  * Scene that holds a playable Level created by a LevelCreator. Different Levels
- * are possible by changing the LevelCreator in the costructor.
+ * are possible by changing the LevelCreator in the constructor.
  *
  * @author matze
  *
@@ -41,11 +35,9 @@ public class LevelScene extends Scene {
 
 	private Player player = new Player(new Vec(3, 5));
 
-	private LevelAssembler levelAssembler;
+	private Level level;
 
 	private CameraTarget cameraTarget;
-
-	private int highScore = -1;
 
 	private ScoreGui scoreGui;
 
@@ -53,10 +45,10 @@ public class LevelScene extends Scene {
 
 	protected ParallaxContainer parallax;
 
-	public LevelScene(GameModel model, LevelAssembler levelAssembler) {
+	public LevelScene(GameModel model, Level level) {
 		super(model);
 
-		this.levelAssembler = levelAssembler;
+		this.level = level;
 	}
 
 	@Override
@@ -71,9 +63,7 @@ public class LevelScene extends Scene {
 		// Init EnemyFactory with model
 		GameElementFactory.init(this);
 
-		new LevelManager();
-		this.levelAssembler.init();
-		this.levelAssembler.generate(GameConf.GRID_W);
+		this.level.init();
 
 		// Create parallax background
 		this.parallax = new ParallaxContainer(this);
@@ -121,7 +111,7 @@ public class LevelScene extends Scene {
 	@Override
 	protected void logicLoopPre(float timeDelta) {
 
-		this.levelAssembler.generate((int) (this.getCameraOffset() + GameConf.GRID_W + 1));
+		this.level.getLevelAssember().generate((int) (this.getCameraOffset() + GameConf.GRID_W + 1));
 
 		// dont allow player to go behind currentOffset
 		float minX = this.getCameraOffset() + this.player.getSize().getX() / 2f;
@@ -252,34 +242,11 @@ public class LevelScene extends Scene {
 	}
 
 	public int getHighScore() {
-		if (this.highScore != -1) {
-			return this.highScore;
-		}
-
-		int highScore = 0;
-		try {
-			BufferedReader in = new BufferedReader(new FileReader("score.dat"));
-			String input = in.readLine();
-			highScore = Integer.parseInt(input);
-			in.close();
-		} catch (IOException e) {
-			highScore = 0;
-		}
-
-		return highScore;
+		return this.level.getHighScore();
 	}
 
-	public int setHighScore(int highScore) {
-		try {
-			BufferedWriter out = new BufferedWriter(new FileWriter("score.dat"));
-			out.write(Integer.toString(highScore));
-			out.close();
-			this.highScore = highScore;
-		} catch (IOException e) {
-			System.err.println("Cannot write highscore: " + e.getMessage());
-		}
-
-		return highScore;
+	public void setHighScore(int highScore) {
+		this.level.setHighScore(highScore);
 	}
 
 }

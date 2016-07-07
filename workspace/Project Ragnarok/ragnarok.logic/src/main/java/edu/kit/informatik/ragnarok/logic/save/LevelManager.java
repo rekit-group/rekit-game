@@ -3,34 +3,43 @@ package edu.kit.informatik.ragnarok.logic.save;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 
 public class LevelManager {
 
-	private Map<String, Level> levelMap;
+	private final static Map<String, Level> levelMap;
 
-	public LevelManager() {
-		this.levelMap = new HashMap<String, Level>();
-		this.loadFromFile();
+	private final static File FILE = new File("levelManager.dat");
+
+	private LevelManager() {
+
 	}
 
-	public void addLevel(Level level) {
-		this.levelMap.put(level.stringIdentifier, level);
-		level.register(this);
+	static {
+		levelMap = new HashMap<String, Level>();
+		LevelManager.loadFromFile();
 	}
 
-	public Level getInfiniteLevel() {
-		return this.getLevelByIdentifier("infinite");
+	public static void addLevel(Level level) {
+		LevelManager.levelMap.put(level.stringIdentifier, level);
 	}
 
-	public Level getLOTDLevel() {
-		Level level = this.getLevelByIdentifier("lotd");
+	public static Level getInfiniteLevel() {
+		return LevelManager.getLevelByIdentifier("infinite");
+	}
+
+	public static Level getLOTDLevel() {
+		Level level = LevelManager.getLevelByIdentifier("lotd");
 		DateFormat levelOfTheDayFormat = new SimpleDateFormat("ddMMyyyy");
 		int seed = Integer.parseInt(levelOfTheDayFormat.format(Calendar.getInstance().getTime()));
 		level.setSeed(seed);
@@ -38,59 +47,110 @@ public class LevelManager {
 		return level;
 	}
 
-	public Level getArcadeLevel(int arcadeId) {
-		return this.getLevelByIdentifier(arcadeId + "");
+	public static Level getArcadeLevel(int arcadeId) {
+		return LevelManager.getLevelByIdentifier(arcadeId + "");
 	}
 
-	private Level getLevelByIdentifier(String identifier) {
+	private static Level getLevelByIdentifier(String identifier) {
 		// If no entry for this specific level: create level instance
-		if (!this.levelMap.containsKey(identifier)) {
-			this.addLevel(new Level(identifier, 0));
+		if (!LevelManager.levelMap.containsKey(identifier)) {
+			LevelManager.addLevel(new Level(identifier, 0));
 		}
-		return this.levelMap.get(identifier);
+		return LevelManager.levelMap.get(identifier);
 	}
 
-	public int getLastUnlockedArcadeLevelId() {
+	public static int getLastUnlockedArcadeLevelId() {
 		int id = 0;
 		// check largest id where score is still above 0
-		while (this.levelMap.containsKey(id + "") && this.levelMap.get(id + "").getHighScore() > 0) {
+		while (LevelManager.levelMap.containsKey(id + "") && LevelManager.levelMap.get(id + "").getHighScore() > 0) {
 			id++;
 		}
 		return id;
 	}
 
-	public void contentChanged() {
-		this.saveToFile();
+	public static int getLastArcadeLevelId() {
+		return 0; // TODO could be dynamic?
 	}
 
-	private void loadFromFile() {
-		// create Scanner from InputStream
-		InputStream levelStream;
+	public static void contentChanged() {
+		LevelManager.saveToFile();
+	}
+
+	private static void loadFromFile() {
 		try {
-			levelStream = new FileInputStream(new File("levelManager.dat"));
+			// create InputStream from File
+			InputStream levelStream;
+			levelStream = new FileInputStream(LevelManager.FILE);
+
+			// create Scanner from InputStream
+			Scanner scanner = new Scanner(levelStream);
+
+			// iterate lines
+			while (scanner.hasNext()) {
+				String line = scanner.next();
+
+				// input parse level from this lines content.
+				Level level = Level.fromString(line);
+
+				// Save this level in local data structure
+				LevelManager.addLevel(level);
+			}
+
+			// close scanner and FileInputStream after use to prevent
+			// java-typical
+			// resource-wasting ;)
+			scanner.close();
+			levelStream.close();
 		} catch (FileNotFoundException e) {
-			System.err.println("Error while loading levelManager.dat for scores and saves: FileNotFound");
+			System.err.println("Error while opening " + LevelManager.FILE.getAbsolutePath() + " for scores and saves: FileNotFound");
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.err.println("Error while loading " + LevelManager.FILE.getAbsolutePath() + " for scores and saves: IOException");
+			e.printStackTrace();
+		}
+	}
+
+	public static String convertToString() {
+		StringBuilder result = new StringBuilder();
+
+		Iterator<Level> it = LevelManager.levelMap.values().iterator();
+		while (it.hasNext()) {
+			Level next = it.next();
+			result.append(next.toString());
+			result.append("\n");
+		}
+
+		return result.toString();
+	}
+
+	private static void saveToFile() {
+		// create OutputStream
+		OutputStream levelStream;
+		try {
+			levelStream = new FileOutputStream(LevelManager.FILE);
+		} catch (FileNotFoundException e) {
+			System.err.println("Error while opening " + LevelManager.FILE.getAbsolutePath() + " for saving scores and saves: FileNotFound");
 			e.printStackTrace();
 			return;
 		}
-		Scanner scanner = new java.util.Scanner(levelStream);
 
-		while (scanner.hasNext()) {
-			String line = scanner.next();
+		// get byte-array from String
+		byte[] bytes = LevelManager.convertToString().getBytes();
 
-			// input parse level from this lines content.
-			Level level = Level.fromString(line);
+		try {
+			// write out contents to Buffer
+			levelStream.write(bytes);
 
-			// Save this level in local data structure
-			this.addLevel(level);
+			// write buffer to actual File
+			levelStream.flush();
+
+			// close FileInputStream after use to prevent java-typical
+			// resource-wasting ;)
+			levelStream.close();
+		} catch (IOException e) {
+			System.err.println("Error while saving " + LevelManager.FILE.getAbsolutePath() + " for scores and saves: IOException");
+			e.printStackTrace();
 		}
-
-		// close scanner after use to prevent java-typical resource-wasting ;)
-		scanner.close();
-	}
-
-	private void saveToFile() {
-
 	}
 
 }

@@ -1,14 +1,10 @@
 package edu.kit.informatik.ragnarok.logic;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.CameraTarget;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.menu.MenuItem;
-import edu.kit.informatik.ragnarok.logic.levelcreator.LevelAssembler;
+import edu.kit.informatik.ragnarok.logic.save.LevelManager;
 import edu.kit.informatik.ragnarok.logic.scene.LevelScene;
 import edu.kit.informatik.ragnarok.logic.scene.MenuScene;
 import edu.kit.informatik.ragnarok.logic.scene.NullScene;
@@ -86,19 +82,12 @@ public class GameModel implements CameraTarget, Model {
 			nextScene = new MenuScene(this);
 			this.state = GameState.MENU;
 			break;
-
 		case 1:
-
-			LevelAssembler assembler = new LevelAssembler("infinite");
-			nextScene = new LevelScene(this, assembler);
+			nextScene = new LevelScene(this, LevelManager.getInfiniteLevel());
 			this.state = GameState.INGAME;
 			break;
-
 		case 2:
-			DateFormat levelOfTheDayFormat = new SimpleDateFormat("ddMMyyyy");
-			int seed = Integer.parseInt(levelOfTheDayFormat.format(Calendar.getInstance().getTime()));
-			LevelAssembler levelOfTheDayCreator = new LevelAssembler("infinite", seed);
-			nextScene = new LevelScene(this, levelOfTheDayCreator);
+			nextScene = new LevelScene(this, LevelManager.getLOTDLevel());
 			this.state = GameState.INGAME;
 			break;
 

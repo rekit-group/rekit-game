@@ -111,13 +111,13 @@ public class StructureManager extends Configurable implements Iterator<Structure
 	 */
 	public static StructureManager load(int randomSeed, String levelName) {
 
-		// get InputStream from resource with path level_<i>{levelName}</i>.dat
+		// get InputStream from resource with path level_{levelName}.dat
 		InputStream levelStream = StructureManager.class.getResourceAsStream("/level_" + levelName + ".dat");
 
 		// create Scanner from InputStream
 		Scanner scanner = new java.util.Scanner(levelStream);
 		// don't use line-ending-wise iteration, but get the whole file at once
-		// (\\A = <EOF>)
+		// \\A = <EOF>
 		scanner.useDelimiter("\\A");
 		// get whole file content as String
 		String input = scanner.hasNext() ? scanner.next() : "";

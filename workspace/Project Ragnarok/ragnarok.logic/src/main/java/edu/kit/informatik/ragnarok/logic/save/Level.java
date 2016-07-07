@@ -2,6 +2,7 @@ package edu.kit.informatik.ragnarok.logic.save;
 
 import java.util.Random;
 
+import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.levelcreator.LevelAssembler;
 
 public class Level {
@@ -12,18 +13,15 @@ public class Level {
 	 */
 	public String stringIdentifier;
 	private int levelSeed;
-	private LevelManager mediator;
 	private int highScore = 0;
 	private static Random RNG = new Random();
+
+	private LevelAssembler levelAssembler;
 
 	public Level(String stringIdentifier, int highScore) {
 		this.stringIdentifier = stringIdentifier;
 		this.levelSeed = Level.RNG.nextInt();
 		this.highScore = highScore;
-	}
-
-	public void register(LevelManager mediator) {
-		this.mediator = mediator;
 	}
 
 	/**
@@ -54,6 +52,7 @@ public class Level {
 	public void setHighScore(int highScore) {
 		if (highScore > this.highScore) {
 			this.highScore = highScore;
+			this.notifyChange();
 		}
 	}
 
@@ -62,18 +61,28 @@ public class Level {
 	 * content changed.
 	 */
 	public void notifyChange() {
-		if (this.mediator != null) {
-			this.mediator.contentChanged();
-		}
+		LevelManager.contentChanged();
 	}
 
 	/**
-	 * Creates and returns a LevelAssember for this level.
+	 * Creates and returns a LevelAssember for this level if not created
+	 * already. Singleton.
 	 *
-	 * @return
+	 * @return the only instance of a LevelAssembler
 	 */
 	public LevelAssembler getLevelAssember() {
-		return new LevelAssembler(this.stringIdentifier, this.levelSeed);
+		if (this.levelAssembler == null) {
+			// TODO Not rly cool
+			String actualStringIdentifier = this.stringIdentifier.equals("lotd") ? "infinite" : this.stringIdentifier;
+			this.levelAssembler = new LevelAssembler(actualStringIdentifier, this.levelSeed);
+		}
+
+		return this.levelAssembler;
+	}
+
+	public void init() {
+		this.getLevelAssember().init();
+		this.getLevelAssember().generate(GameConf.GRID_W);
 	}
 
 	@Override
