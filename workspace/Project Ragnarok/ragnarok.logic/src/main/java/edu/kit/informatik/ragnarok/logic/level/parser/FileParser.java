@@ -8,7 +8,7 @@ import edu.kit.informatik.ragnarok.logic.level.StructureManager;
 public class FileParser extends Parser {
 
 	private static String n = System.getProperty("line.separator");
-	private static String patternStr = "(?s)^\\{([0-9a-zA-Z,: ]+)\\}" + FileParser.n + "\\{([0-9a-zA-Z,: ]+)\\}" + FileParser.n + "" + FileParser.n
+	private static String patternStr = "(?s)^\\{([0-9a-zA-Z,: ]+)\\}" + FileParser.n + "\\{([0-9a-zA-Z,: ]*)\\}" + FileParser.n + "" + FileParser.n
 			+ "(.+)" + FileParser.n + "$";
 
 	public FileParser(StructureManager employer, String input) {
