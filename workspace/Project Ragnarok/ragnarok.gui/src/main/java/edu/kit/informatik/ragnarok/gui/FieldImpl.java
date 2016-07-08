@@ -80,7 +80,7 @@ public class FieldImpl extends Field {
 			this.gc.fillPolygon(pixelArray);
 		} else {
 			this.gc.setForeground(color);
-			this.gc.setLineWidth(2);
+			this.gc.setLineWidth(1);
 			this.gc.drawPolygon(pixelArray);
 		}
 

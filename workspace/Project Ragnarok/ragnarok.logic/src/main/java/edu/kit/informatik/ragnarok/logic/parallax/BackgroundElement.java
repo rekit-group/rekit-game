@@ -20,8 +20,7 @@ public abstract class BackgroundElement extends GameElement {
 
 	@Override
 	public int getOrderZ() {
-		// no actual scaling, but useful
-		return (int) this.parent.fieldXtoLayerX(this.backgroundZ);
+		return this.backgroundZ;
 	}
 
 	@Override
