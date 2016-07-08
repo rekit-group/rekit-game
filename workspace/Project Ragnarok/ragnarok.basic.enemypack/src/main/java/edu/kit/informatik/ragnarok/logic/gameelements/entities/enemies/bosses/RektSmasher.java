@@ -5,7 +5,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.RektKiller;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.type.Boss;
+import edu.kit.informatik.ragnarok.logic.gameelements.type.Boss;
 import edu.kit.informatik.ragnarok.logic.level.bossstructure.BossStructure;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;

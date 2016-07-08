@@ -146,4 +146,8 @@ public class GameModel implements CameraTarget, Model {
 		return this.state;
 	}
 
+	public long getTime() {
+		return this.lastTime;
+	}
+
 }

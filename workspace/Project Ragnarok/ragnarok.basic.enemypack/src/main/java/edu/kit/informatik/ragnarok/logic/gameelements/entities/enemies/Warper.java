@@ -6,7 +6,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawner;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.type.Enemy;
+import edu.kit.informatik.ragnarok.logic.gameelements.type.Enemy;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.TimeDependency;

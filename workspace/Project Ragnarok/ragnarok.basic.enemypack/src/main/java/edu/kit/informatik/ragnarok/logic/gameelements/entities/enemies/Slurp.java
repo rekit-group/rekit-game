@@ -7,7 +7,7 @@ import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.type.Enemy;
+import edu.kit.informatik.ragnarok.logic.gameelements.type.Enemy;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Vec;
@@ -57,11 +57,11 @@ public class Slurp extends Enemy {
 
 		// calculate velocity (by currentDirection)
 		if (this.currentDirection == Direction.LEFT || this.currentDirection == Direction.RIGHT) {
-			this.setVel(new Vec(this.currentDirection.getVector().getX() * GameConf.SLURP_SPEED,
-					this.currentDirection.getNextAntiClockwise().getVector().getY() * 3));
+			this.setVel(new Vec(this.currentDirection.getVector().getX() * GameConf.SLURP_SPEED, this.currentDirection.getNextAntiClockwise()
+					.getVector().getY() * 3));
 		} else {
-			this.setVel(new Vec(this.currentDirection.getNextAntiClockwise().getVector().getX() * 3,
-					this.currentDirection.getVector().getY() * GameConf.SLURP_SPEED));
+			this.setVel(new Vec(this.currentDirection.getNextAntiClockwise().getVector().getX() * 3, this.currentDirection.getVector().getY()
+					* GameConf.SLURP_SPEED));
 		}
 
 		super.logicLoop(deltaTime);

@@ -4,11 +4,11 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.Set;
 
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.type.Boss;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.type.Enemy;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.type.Pickup;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.EndTrigger;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
+import edu.kit.informatik.ragnarok.logic.gameelements.type.Boss;
+import edu.kit.informatik.ragnarok.logic.gameelements.type.Enemy;
+import edu.kit.informatik.ragnarok.logic.gameelements.type.Pickup;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 

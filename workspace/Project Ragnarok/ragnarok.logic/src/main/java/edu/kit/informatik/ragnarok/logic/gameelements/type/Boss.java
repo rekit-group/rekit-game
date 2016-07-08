@@ -1,4 +1,4 @@
-package edu.kit.informatik.ragnarok.logic.gameelements.entities.type;
+package edu.kit.informatik.ragnarok.logic.gameelements.type;
 
 import java.util.Set;
 

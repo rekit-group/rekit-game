@@ -4,7 +4,7 @@ import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.type.Enemy;
+import edu.kit.informatik.ragnarok.logic.gameelements.type.Enemy;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Polygon;
@@ -261,7 +261,7 @@ public class RektKiller extends Enemy {
 	/**
 	 * Getter for the number whose first 4 bits are used as booleans for the
 	 * spikes at each side.
-	 * 
+	 *
 	 * @return the int <i>sides</i> that represents spike positions.
 	 */
 	public int getSides() {
@@ -271,7 +271,7 @@ public class RektKiller extends Enemy {
 	/**
 	 * Setter for the number whose first 4 bits are used as booleans for the
 	 * spikes at each side.
-	 * 
+	 *
 	 * @param sides
 	 *            the int <i>sides</i> that represents spike positions.
 	 */

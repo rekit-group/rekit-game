@@ -3,7 +3,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities.pickups;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.type.Pickup;
+import edu.kit.informatik.ragnarok.logic.gameelements.type.Pickup;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 
@@ -23,7 +23,7 @@ public class Life extends Pickup {
 
 	/**
 	 * Instantiate a Life by start position
-	 * 
+	 *
 	 * @param startPos
 	 *            the start position
 	 */

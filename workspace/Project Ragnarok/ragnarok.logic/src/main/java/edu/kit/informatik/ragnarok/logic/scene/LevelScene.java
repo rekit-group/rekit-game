@@ -47,7 +47,6 @@ public class LevelScene extends Scene {
 
 	public LevelScene(GameModel model, Level level) {
 		super(model);
-
 		this.level = level;
 	}
 
