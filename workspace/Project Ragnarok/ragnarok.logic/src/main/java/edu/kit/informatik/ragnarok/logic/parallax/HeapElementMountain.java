@@ -19,28 +19,38 @@ public class HeapElementMountain extends HeapElement {
 	}
 
 	@Override
+	protected float heapDistanceMu() {
+		return 15;
+	}
+
+	@Override
+	protected float heapDistanceSigma() {
+		return 2;
+	}
+
+	@Override
 	protected final int elemColRMu() {
-		return 232;
+		return 180;
 	}
 
 	@Override
 	protected final int elemColRSigma() {
-		return 23;
+		return 10;
 	}
 
 	@Override
 	protected final int elemColGMu() {
-		return 120;
+		return 160;
 	}
 
 	@Override
 	protected final int elemColGSigma() {
-		return 40;
+		return 10;
 	}
 
 	@Override
 	protected final int elemColBMu() {
-		return 25;
+		return 160;
 	}
 
 	@Override
@@ -80,7 +90,7 @@ public class HeapElementMountain extends HeapElement {
 
 	@Override
 	protected float elemWidthMu() {
-		return 3.2f;
+		return 5.2f;
 	}
 
 	@Override
@@ -90,7 +100,7 @@ public class HeapElementMountain extends HeapElement {
 
 	@Override
 	protected float elemHeightMu() {
-		return 3.5f;
+		return 2.5f;
 	}
 
 	@Override

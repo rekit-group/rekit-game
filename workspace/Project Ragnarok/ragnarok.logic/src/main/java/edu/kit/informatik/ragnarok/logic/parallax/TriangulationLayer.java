@@ -140,8 +140,8 @@ public class TriangulationLayer extends ParallaxLayer {
 		}
 
 		public void initToRender() {
-			this.col = new RGBColor((int) HeapLayer.calcWithVariance(190, 23), (int) HeapLayer.calcWithVariance(120, 40),
-					(int) HeapLayer.calcWithVariance(25, 10));
+			this.col = new RGBColor((int) HeapLayer.calcWithVariance(240, 15), (int) HeapLayer.calcWithVariance(206, 10),
+					(int) HeapLayer.calcWithVariance(140, 10));
 			this.darkCol = this.col.darken(0.9f);
 			this.setPos(this.getPos().setZ(TriangulationLayer.this.perspectiveZ));
 		}
