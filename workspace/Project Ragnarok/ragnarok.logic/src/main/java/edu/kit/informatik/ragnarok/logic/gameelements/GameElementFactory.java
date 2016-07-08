@@ -10,6 +10,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateDoor;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateFloor;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateTrigger;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Boss;
+import edu.kit.informatik.ragnarok.logic.gameelements.type.DynamicInanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Enemy;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Inanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Pickup;
@@ -38,6 +39,8 @@ import edu.kit.informatik.ragnarok.primitives.Vec;
  * <li>60 {@link InanimateDoor}</li>
  * <li>70 {@link InanimateTrigger}</li>
  * <li>71 {@link EndTrigger}</li>
+ *
+ * <li>80 {@link ToggleBox}</li>
  *
  * <li>100 {@link RektSmasher}
  * </ul>
@@ -109,11 +112,11 @@ public class GameElementFactory {
 		HashMap<Integer, GameElement[]> protoTypes = new HashMap<>();
 
 		// Put Blocks in collection
-		protos.put(1, Inanimate.getPrototype());
-		protos.put(50, EndTrigger.getPrototype());
+		protos.put(Inanimate.getPrototype().getID(), Inanimate.getPrototype());
+		protos.put(EndTrigger.getPrototype().getID(), EndTrigger.getPrototype());
 
 		// Put all Inanimates in collection
-		Set<Inanimate> inanimatePrototypes = Inanimate.getInanimatePrototypes();
+		Set<DynamicInanimate> inanimatePrototypes = Inanimate.getInanimatePrototypes();
 		for (Inanimate e : inanimatePrototypes) {
 			protos.put(e.getID(), e);
 		}

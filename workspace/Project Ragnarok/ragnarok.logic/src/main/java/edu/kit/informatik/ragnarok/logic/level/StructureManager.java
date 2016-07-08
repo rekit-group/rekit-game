@@ -363,8 +363,6 @@ public class StructureManager extends Configurable implements Iterator<Structure
 	 */
 	private Structure getEndStructure() {
 
-		// TODO add InanimateTrigger that ends level!
-
 		// Vertical wall
 		Structure structure = new Structure(new int[][] { { 0 }, { 0 }, { 0 }, { 0 }, { 71 }, { 0 }, { 0 }, { 0 }, { 0 } });
 

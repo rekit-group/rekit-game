@@ -25,8 +25,8 @@ public class Inanimate extends GameElement {
 		this.color = color;
 	}
 
-	public static final Set<Inanimate> getInanimatePrototypes() {
-		return ReflectUtils.get("edu.kit.informatik", Inanimate.class);
+	public static final Set<DynamicInanimate> getInanimatePrototypes() {
+		return ReflectUtils.get("edu.kit.informatik", DynamicInanimate.class);
 	}
 
 	@Override
@@ -37,16 +37,6 @@ public class Inanimate extends GameElement {
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
 		element.collidedWith(this.getCollisionFrame(), dir);
-	}
-
-	@Override
-	public void addDamage(int damage) {
-		// Do nothing, blocks cannot be damaged
-	}
-
-	@Override
-	public void addPoints(int points) {
-		// Do nothing, blocks cannot get points
 	}
 
 	@Override
