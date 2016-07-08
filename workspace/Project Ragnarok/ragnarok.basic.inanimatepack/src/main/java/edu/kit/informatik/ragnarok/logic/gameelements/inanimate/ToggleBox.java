@@ -14,7 +14,7 @@ public class ToggleBox extends DynamicInanimate {
 
 	protected InanimateBox innerBox;
 
-	protected static final long PERIOD = 3000;
+	protected static final long PERIOD = 4000;
 
 	protected long offset = 0;
 
