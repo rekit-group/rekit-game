@@ -7,6 +7,7 @@ import java.util.Set;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.type.Boss;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.type.Enemy;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.type.Pickup;
+import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.EndTrigger;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.Vec;
@@ -74,9 +75,11 @@ public class GameElementFactory {
 		HashMap<Integer, GameElement> protos = new HashMap<>();
 		HashMap<Integer, GameElement[]> protoTypes = new HashMap<>();
 
-		// Put Inanimates in collection
+		// Put Blocks in collection
 		protos.put(1, Inanimate.getPrototype());
+		protos.put(50, EndTrigger.getPrototype());
 
+		// Put all Bosses in collection
 		Set<Boss> bossPrototypes = Boss.getBossPrototypes();
 		for (Boss e : bossPrototypes) {
 			protos.put(e.getID(), e);

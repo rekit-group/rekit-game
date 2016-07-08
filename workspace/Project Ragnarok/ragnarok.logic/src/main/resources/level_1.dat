@@ -1,0 +1,13 @@
+{shuffle:false, doGaps:false, infinite:false, autoCoinSpawn:false}
+{100:false}
+
+{}
+0	0	0	0	0	0	0	0	0
+0	0	0	0	0	0	0	0	0
+0	0	0	0	0	0	0	0	0
+0	0	0	0	0	0	10	10	0
+0	0	0	10	10	0	0	0	0
+0	0	0	0	0	0	1	1	0
+0	0	0	1	1	0	0	0	0
+0	0	0	0	0	0	0	0	0
+1	1	1	1	1	1	1	1	1
