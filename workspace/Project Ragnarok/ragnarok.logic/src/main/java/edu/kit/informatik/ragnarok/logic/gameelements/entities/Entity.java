@@ -128,7 +128,7 @@ public abstract class Entity extends GameElement {
 		// apply slowing down walk
 		newVel = newVel.addX(-Math.signum(newVel.getX()) * GameConf.PLAYER_STOP_ACCEL);
 		// we dont want weird floating point velocities
-		if (Math.abs(newVel.getX()) < 0.01) {
+		if (Math.abs(newVel.getX()) < 0.05) {
 			newVel = newVel.setX(0);
 		}
 		// save new velocity
