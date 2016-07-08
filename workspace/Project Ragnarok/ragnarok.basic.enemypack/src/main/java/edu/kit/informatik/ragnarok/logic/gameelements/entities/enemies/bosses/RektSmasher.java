@@ -28,13 +28,13 @@ public class RektSmasher extends Boss {
 		this.innerRektKiller = new RektKiller(startPos, this.getSize(), 15);
 		this.innerRektKiller.setCurrentDirection(Direction.DOWN);
 		this.innerRektKiller.prepare();
-		this.setLifes(3);
+		this.setLives(3);
 	}
 
 	@Override
 	public void addDamage(int damage) {
 		super.addDamage(damage);
-		this.speed = 0.5f + (3 - this.getLifes()) * 0.25f;
+		this.speed = 0.5f + (3 - this.getLives()) * 0.25f;
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class RektSmasher extends Boss {
 		// Render innerRektKiller
 		this.innerRektKiller.internalRender(f);
 		// Add face image above regular innerRektKiller visualization
-		int lifes = this.getLifes() > 3 ? 3 : this.getLifes();
+		int lifes = this.getLives() > 3 ? 3 : this.getLives();
 		f.drawImage(this.getPos(), this.getSize().multiply(0.8f), "rektSmasher_" + lifes + ".png");
 	}
 
@@ -129,7 +129,7 @@ public class RektSmasher extends Boss {
 			this.isHarmless = true;
 		}
 		// we dont want him damaging the player when hes actually dead
-		if (this.getLifes() <= 0) {
+		if (this.getLives() <= 0) {
 			this.isHarmless = true;
 		}
 

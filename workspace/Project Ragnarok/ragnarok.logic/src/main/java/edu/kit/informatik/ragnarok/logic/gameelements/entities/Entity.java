@@ -16,7 +16,7 @@ public abstract class Entity extends GameElement {
 	/**
 	 * The amount of lifes the Entity has. Upon reaching 0 lifes, he dies
 	 */
-	protected int lifes = 1;
+	protected int lives = 1;
 
 	/**
 	 * The amount of points the Entity has scored
@@ -27,9 +27,18 @@ public abstract class Entity extends GameElement {
 	 * The current State the Entity is in and determines the jump behavior
 	 */
 	protected EntityState entityState;
-
+	/**
+	 * This {@link TimeDependency} defines invincibility of an {@link Entity}
+	 * ({@code null} --> not invincible)
+	 */
 	protected TimeDependency invincibility = null;
 
+	/**
+	 * Minimal Constructor by {@link Team}
+	 *
+	 * @param team
+	 *            the team
+	 */
 	protected Entity(Team team) {
 		super(team);
 	}
@@ -39,6 +48,10 @@ public abstract class Entity extends GameElement {
 	 *
 	 * @param startPos
 	 *            the position this entity shall be in
+	 * @param vel
+	 *            the velocity
+	 * @param size
+	 *            the size
 	 * @param team
 	 *            the team
 	 */
@@ -73,23 +86,29 @@ public abstract class Entity extends GameElement {
 		if (damage > 0 && this.invincibility != null && !this.invincibility.timeUp()) {
 			return;
 		}
-		this.lifes -= damage;
+		this.lives -= damage;
 		if (damage > 0) {
 			this.invincibility = new TimeDependency(2);
 		}
-		if (this.lifes <= 0) {
-			this.lifes = 0;
+		if (this.lives <= 0) {
+			this.lives = 0;
 			this.destroy();
 		}
 	}
 
-	public final void setLifes(int lifes) {
-		this.lifes = lifes;
+	/**
+	 * Set current lives
+	 *
+	 * @param lives
+	 *            the lives
+	 */
+	public final void setLives(int lives) {
+		this.lives = lives;
 	}
 
 	@Override
-	public final int getLifes() {
-		return this.lifes;
+	public final int getLives() {
+		return this.lives;
 	}
 
 	@Override
@@ -135,7 +154,7 @@ public abstract class Entity extends GameElement {
 		this.setVel(newVel);
 		// check if entity fell out of the world
 		if (this.getPos().getY() > GameConf.GRID_H) {
-			this.addDamage(this.getLifes());
+			this.addDamage(this.getLives());
 		}
 	}
 
@@ -184,8 +203,19 @@ public abstract class Entity extends GameElement {
 		return super.isVisible();
 	}
 
+	/**
+	 * Get the ID of the entity
+	 * 
+	 * @return the id
+	 */
 	public abstract int getID();
 
+	/**
+	 * Set the Entity's LevelScene
+	 * 
+	 * @param value
+	 *            the levelscene
+	 */
 	public void setLevelScene(LevelScene value) {
 		super.setScene(value);
 	}

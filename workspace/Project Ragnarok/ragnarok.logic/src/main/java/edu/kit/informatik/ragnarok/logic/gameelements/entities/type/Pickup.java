@@ -2,6 +2,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities.type;
 
 import java.util.Set;
 
+import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.util.ReflectUtils;
@@ -19,6 +20,9 @@ public abstract class Pickup extends Entity {
 	protected Pickup(Vec startPos, Vec vel, Vec size) {
 		super(startPos, vel, size, Team.PICKUP);
 	}
+
+	@Override
+	public abstract GameElement create(Vec startPos);
 
 	@Override
 	public void logicLoop(float deltaTime) {
