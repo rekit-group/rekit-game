@@ -2,7 +2,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.type;
 
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
 import edu.kit.informatik.ragnarok.primitives.Vec;
-import edu.kit.informatik.ragnarok.util.RGBColor;
+import edu.kit.informatik.ragnarok.util.RGBAColor;
 
 public abstract class DynamicInanimate extends Inanimate {
 
@@ -10,10 +10,10 @@ public abstract class DynamicInanimate extends Inanimate {
 	 * Prototype Constructor
 	 */
 	public DynamicInanimate() {
-		super(new Vec(), new Vec(1), new RGBColor(0, 0, 0));
+		super(new Vec(), new Vec(1), new RGBAColor(0, 0, 0, 255));
 	}
 
-	protected DynamicInanimate(Vec pos, Vec size, RGBColor color) {
+	protected DynamicInanimate(Vec pos, Vec size, RGBAColor color) {
 		super(pos, size, color);
 	}
 

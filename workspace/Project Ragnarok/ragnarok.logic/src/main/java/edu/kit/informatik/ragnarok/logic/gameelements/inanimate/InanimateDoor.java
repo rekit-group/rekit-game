@@ -2,12 +2,13 @@ package edu.kit.informatik.ragnarok.logic.gameelements.inanimate;
 
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.primitives.Vec;
+import edu.kit.informatik.ragnarok.util.RGBAColor;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 
 public class InanimateDoor extends InanimateBox {
 
 	public InanimateDoor(Vec pos) {
-		super(pos, new Vec(1, 7), new RGBColor(130, 130, 130));
+		super(pos, new Vec(1, 7), new RGBAColor(130, 130, 130, 255));
 	}
 
 	@Override

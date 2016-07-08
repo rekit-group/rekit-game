@@ -8,7 +8,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.DynamicInanimate;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Vec;
-import edu.kit.informatik.ragnarok.util.RGBColor;
+import edu.kit.informatik.ragnarok.util.RGBAColor;
 
 public class ToggleBox extends DynamicInanimate {
 
@@ -29,13 +29,13 @@ public class ToggleBox extends DynamicInanimate {
 		super();
 	}
 
-	protected ToggleBox(Vec pos, Vec size, RGBColor color) {
+	protected ToggleBox(Vec pos, Vec size, RGBAColor color) {
 		super(pos, size, color);
 
 		// create inner InanimateBox with given position
 		this.innerBox = (InanimateBox) InanimateBox.staticCreate(pos);
 		// and set color
-		this.innerBox.color = new RGBColor(80, 80, 255);
+		this.innerBox.color = new RGBAColor(80, 80, 255, 255);
 
 		// instantiate the two strategies
 		this.strategies = new HashMap<>();
@@ -67,7 +67,7 @@ public class ToggleBox extends DynamicInanimate {
 
 	@Override
 	public ToggleBox create(Vec startPos) {
-		return new ToggleBox(startPos, new Vec(1), new RGBColor(80, 80, 255));
+		return new ToggleBox(startPos, new Vec(1), new RGBAColor(80, 80, 255, 255));
 	}
 
 	private abstract class ToggleBoxStrategy {
@@ -81,8 +81,15 @@ public class ToggleBox extends DynamicInanimate {
 			// Do nothing
 		}
 
+		public abstract int getAlpha();
+
 		public void internalRender(Field f) {
-			// Do nothing
+			// Fill alpha of color with value given of
+			RGBAColor c = this.parent.color;
+			this.parent.innerBox.color = new RGBAColor(c.red, c.green, c.blue, this.getAlpha());
+
+			// Call decorated InanimateBoxes internalRender
+			this.parent.innerBox.internalRender(f);
 		}
 	}
 
@@ -98,14 +105,19 @@ public class ToggleBox extends DynamicInanimate {
 		}
 
 		@Override
-		public void internalRender(Field f) {
-			this.parent.innerBox.internalRender(f);
+		public int getAlpha() {
+			return 220;
 		}
 	}
 
 	private class ToggleBoxStrategyInvisible extends ToggleBoxStrategy {
 		ToggleBoxStrategyInvisible(ToggleBox parent) {
 			super(parent);
+		}
+
+		@Override
+		public int getAlpha() {
+			return 80;
 		}
 	}
 

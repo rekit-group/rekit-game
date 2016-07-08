@@ -11,15 +11,15 @@ import edu.kit.informatik.ragnarok.logic.util.ReflectUtils;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Vec;
-import edu.kit.informatik.ragnarok.util.RGBColor;
+import edu.kit.informatik.ragnarok.util.RGBAColor;
 
 public class Inanimate extends GameElement {
 
 	private static Inanimate instance;
 
-	protected RGBColor color;
+	protected RGBAColor color;
 
-	protected Inanimate(Vec pos, Vec size, RGBColor color) {
+	protected Inanimate(Vec pos, Vec size, RGBAColor color) {
 		super(pos, new Vec(), size, Team.NEUTRAL);
 		this.color = color;
 	}
@@ -64,7 +64,7 @@ public class Inanimate extends GameElement {
 
 	public static Inanimate getPrototype() {
 		if (Inanimate.instance == null) {
-			Inanimate.instance = new Inanimate(new Vec(), new Vec(1, 1), new RGBColor(0, 0, 0));
+			Inanimate.instance = new Inanimate(new Vec(), new Vec(1, 1), new RGBAColor(0, 0, 0, 0));
 		}
 		return Inanimate.instance;
 	}

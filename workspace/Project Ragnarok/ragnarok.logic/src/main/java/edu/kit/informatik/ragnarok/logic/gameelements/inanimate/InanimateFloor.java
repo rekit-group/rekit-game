@@ -6,6 +6,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.Particl
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Vec;
+import edu.kit.informatik.ragnarok.util.RGBAColor;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 
 public class InanimateFloor extends Inanimate {
@@ -18,7 +19,7 @@ public class InanimateFloor extends Inanimate {
 	private static final ParticleSpawnerOption dustParticleAngleTop = new ParticleSpawnerOption((float) (-(1 / 2f) * Math.PI),
 			(float) ((1 / 2f) * Math.PI), 0, 0);
 
-	protected InanimateFloor(Vec pos, Vec size, RGBColor color) {
+	protected InanimateFloor(Vec pos, Vec size, RGBAColor color) {
 		super(pos, size, color);
 
 		this.dustParticles = new ParticleSpawner();
@@ -74,7 +75,7 @@ public class InanimateFloor extends Inanimate {
 	public static Inanimate staticCreate(Vec pos) {
 		int randColG = (int) (Math.random() * 100 + 100);
 		int randColRB = (int) (Math.random() * 40 + 30);
-		return new InanimateFloor(pos, new Vec(1, 1), new RGBColor(randColRB, randColG, randColRB));
+		return new InanimateFloor(pos, new Vec(1, 1), new RGBAColor(randColRB, randColG, randColRB, 255));
 	}
 
 	@Override

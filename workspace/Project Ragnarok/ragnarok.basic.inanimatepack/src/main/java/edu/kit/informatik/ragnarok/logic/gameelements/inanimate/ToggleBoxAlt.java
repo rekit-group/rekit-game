@@ -1,7 +1,7 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.inanimate;
 
 import edu.kit.informatik.ragnarok.primitives.Vec;
-import edu.kit.informatik.ragnarok.util.RGBColor;
+import edu.kit.informatik.ragnarok.util.RGBAColor;
 
 public class ToggleBoxAlt extends ToggleBox {
 	/**
@@ -11,7 +11,7 @@ public class ToggleBoxAlt extends ToggleBox {
 		super();
 	}
 
-	protected ToggleBoxAlt(Vec pos, Vec size, RGBColor color) {
+	protected ToggleBoxAlt(Vec pos, Vec size, RGBAColor color) {
 		super(pos, size, color);
 		this.offset = ToggleBox.PERIOD / 2;
 	}
@@ -23,6 +23,6 @@ public class ToggleBoxAlt extends ToggleBox {
 
 	@Override
 	public ToggleBox create(Vec startPos) {
-		return new ToggleBoxAlt(startPos, new Vec(1), new RGBColor(80, 80, 255));
+		return new ToggleBoxAlt(startPos, new Vec(1), new RGBAColor(80, 80, 255, 255));
 	}
 }
