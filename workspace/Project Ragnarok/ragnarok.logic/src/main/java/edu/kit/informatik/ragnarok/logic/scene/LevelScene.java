@@ -252,4 +252,9 @@ public class LevelScene extends Scene {
 		this.level.setHighScore(highScore);
 	}
 
+	@Override
+	public long getTime() {
+		return this.model.getTime();
+	}
+
 }

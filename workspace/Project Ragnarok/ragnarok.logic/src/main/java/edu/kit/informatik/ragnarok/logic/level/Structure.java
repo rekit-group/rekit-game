@@ -96,8 +96,6 @@ public class Structure extends Configurable {
 				// if there is something to build here:
 				if (this.structureArray[y][x] != 0) {
 					// let GameElementFactory handle the rest
-					System.out.println("building id " + this.structureArray[y][x] + ": "
-							+ GameElementFactory.getPrototype(this.structureArray[y][x]).getClass().getSimpleName()); //
 					GameElementFactory.generate(this.structureArray[y][x], levelX + x, aY);
 				} else {
 					// otherwise check if we must generate random coins

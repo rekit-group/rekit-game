@@ -1,4 +1,4 @@
-package edu.kit.informatik.ragnarok.logic.gameelements.type;
+package edu.kit.informatik.ragnarok.logic.gameelements.inanimate;
 
 import java.util.Set;
 
@@ -6,8 +6,7 @@ import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.Team;
-import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateBox;
-import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateFloor;
+import edu.kit.informatik.ragnarok.logic.gameelements.type.DynamicInanimate;
 import edu.kit.informatik.ragnarok.logic.util.ReflectUtils;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;

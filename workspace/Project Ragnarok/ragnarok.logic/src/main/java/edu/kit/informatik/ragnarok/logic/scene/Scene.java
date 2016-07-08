@@ -221,4 +221,8 @@ public abstract class Scene implements CameraTarget {
 		return null;
 	}
 
+	public long getTime() {
+		return 0;
+	}
+
 }

@@ -1,7 +1,6 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.inanimate;
 
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
-import edu.kit.informatik.ragnarok.logic.gameelements.type.Inanimate;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 

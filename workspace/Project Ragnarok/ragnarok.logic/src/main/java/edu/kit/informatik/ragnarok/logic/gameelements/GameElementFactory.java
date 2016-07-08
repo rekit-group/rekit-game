@@ -5,6 +5,7 @@ import java.util.Random;
 import java.util.Set;
 
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.EndTrigger;
+import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateBox;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateDoor;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateFloor;
@@ -12,7 +13,6 @@ import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateTrigger
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Boss;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.DynamicInanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Enemy;
-import edu.kit.informatik.ragnarok.logic.gameelements.type.Inanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Pickup;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.Vec;
@@ -84,6 +84,12 @@ public class GameElementFactory {
 			GameElement[] elemArray = GameElementFactory.prototypeTypes.get(id);
 			element = elemArray[GameElementFactory.RNG.nextInt(elemArray.length)];
 		}
+
+		// if this GameElement is not defined
+		if (element == null) {
+			System.err.println("Error in GameElementFactory: Tried to get Prototype of GameElement with unknown ID " + id);
+			element = GameElementFactory.prototypes.get(1);
+		}
 		return element;
 	}
 
@@ -117,7 +123,7 @@ public class GameElementFactory {
 
 		// Put all Inanimates in collection
 		Set<DynamicInanimate> inanimatePrototypes = Inanimate.getInanimatePrototypes();
-		for (Inanimate e : inanimatePrototypes) {
+		for (DynamicInanimate e : inanimatePrototypes) {
 			protos.put(e.getID(), e);
 		}
 
