@@ -22,8 +22,7 @@ public class Inanimate extends GameElement {
 
 	@Override
 	public void internalRender(Field f) {
-		Vec pos = this.getPos();
-		f.drawRectangle(pos, this.getSize().multiply(0.95f), this.color);
+		f.drawRectangle(this.getPos(), this.getSize().multiply(0.95f), this.color);
 	}
 
 	@Override
@@ -52,7 +51,7 @@ public class Inanimate extends GameElement {
 	}
 
 	@Override
-	public int getLifes() {
+	public int getLives() {
 		return 0;
 	}
 

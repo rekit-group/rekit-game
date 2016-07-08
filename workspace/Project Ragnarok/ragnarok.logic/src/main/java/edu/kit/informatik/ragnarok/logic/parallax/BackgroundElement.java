@@ -41,7 +41,7 @@ public abstract class BackgroundElement extends GameElement {
 	}
 
 	@Override
-	public int getLifes() {
+	public int getLives() {
 		// Do nothing
 		return 0;
 	}

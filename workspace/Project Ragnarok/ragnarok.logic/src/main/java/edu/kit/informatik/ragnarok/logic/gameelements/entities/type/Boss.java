@@ -45,6 +45,9 @@ public abstract class Boss extends Entity {
 	}
 
 	@Override
+	public abstract GameElement create(Vec startPos);
+
+	@Override
 	public final void destroy() {
 		this.bossStructure.endBattle(this.scene);
 		this.isHarmless = true;

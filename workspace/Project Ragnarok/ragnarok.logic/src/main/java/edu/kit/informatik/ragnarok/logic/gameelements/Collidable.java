@@ -42,7 +42,7 @@ public interface Collidable {
 	 *
 	 * @return the amount of lifes of the GameElement
 	 */
-	default public int getLifes() {
+	default public int getLives() {
 		return 0;
 	};
 
