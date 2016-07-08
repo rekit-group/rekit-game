@@ -11,24 +11,70 @@ import edu.kit.informatik.ragnarok.primitives.Polygon;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 
+/**
+ * <p>
+ * Enemy that moves either horizontal or vertical and reflects upon colliding.
+ * On each side it has either spikes or not, specified by the first 4 bits in
+ * the int <i>sides</i>.
+ * </p>
+ * <p>
+ * It has one life and gets damaged when touched by the Player on a side without
+ * spikes, while damaging the Player if he touches a side with spikes.
+ * </p>
+ *
+ * @author Angelo Aracri
+ * @version 1.0
+ */
 public class RektKiller extends Enemy {
 
+	/**
+	 * Number whose first 4 bits are used as booleans for the spike at each
+	 * side. First bit represents UP, the rest is clockwise.
+	 */
 	private int sides;
+
+	/**
+	 * Cache the Polygon of the visualization of spikes that will later on be
+	 * rotated and rendered
+	 */
 	private Polygon spikePolygon;
+
+	/**
+	 * Holds the Direction the RektKiller is currently moving to.
+	 */
 	private Direction currentDirection;
 
 	/**
-	 * Prototype Constructor
+	 * Prototype Constructor.
 	 */
 	public RektKiller() {
 		super();
 	}
 
-	public RektKiller(Vec startPos, int sides, Vec size) {
+	/**
+	 * Standard Constructor that saves position, size and the integer that
+	 * represents which sides have spikes.
+	 *
+	 * @param startPos
+	 *            the initial position of the Enemy.
+	 * @param size
+	 *            the initial size of the Enemy.
+	 * @param sides
+	 *            the integer that represents which sides have sides.
+	 */
+	public RektKiller(Vec startPos, Vec size, int sides) {
 		this(startPos, sides);
 		this.size = size;
 	}
 
+	/**
+	 * Alternative Constructor that uses the default size of (0.6, 0.6)
+	 *
+	 * @param startPos
+	 *            the initial position of the Enemy
+	 * @param sides
+	 *            the integer that represents which sides have sides.
+	 */
 	public RektKiller(Vec startPos, int sides) {
 		super(startPos, new Vec(), new Vec(0.6f, 0.6f));
 		if (sides < 0 || sides > 15) {
@@ -42,6 +88,10 @@ public class RektKiller extends Enemy {
 		this.prepare();
 	}
 
+	/**
+	 * Calculates the Polygon for the size-dependent spikes and saves them in
+	 * the attribute <i>spikePolygon</i>
+	 */
 	public void prepare() {
 		// calculate size dependent Polygon for spikes
 		this.spikePolygon = new Polygon(new Vec(), new Vec[] { //
@@ -55,11 +105,27 @@ public class RektKiller extends Enemy {
 				});
 	}
 
+	/**
+	 * Checks whether the RektKiller has spikes on a given side.
+	 *
+	 * @param dir
+	 *            the {@link Direction} that is checked.
+	 * @return true if the RektKiller has spikes at the side <i>dir</i>, false
+	 *         otherwise.
+	 */
 	public boolean hasSide(Direction dir) {
 		int bitPos = this.dirToInt(dir);
 		return ((this.getSides() >> bitPos) & 1) == 1;
 	}
 
+	/**
+	 * Sets if the RektKiller shall have spikes or not at a given side.
+	 *
+	 * @param dir
+	 *            the {@link Direction} where to set/remove spikes to/from.
+	 * @param spikes
+	 *            true to set, false to remove spikes.
+	 */
 	public void setSide(Direction dir, boolean spikes) {
 		int bitPos = this.dirToInt(dir);
 		if (spikes) {
@@ -67,9 +133,21 @@ public class RektKiller extends Enemy {
 		} else {
 			this.setSides(this.getSides() & ~(1 << bitPos));
 		}
-
 	}
 
+	/**
+	 * <p>
+	 * Converts a given {@link Direction} to the corresponding int that will be
+	 * used for determining the bit position of <i>sides</i>.
+	 * </p>
+	 * <p>
+	 * 1 represents UP, the rest is clockwise.
+	 * </p>
+	 *
+	 * @param dir
+	 *            the {@link Direction} to convert.
+	 * @return the int corresponding to the {@link Direction} <i>dir</i>.
+	 */
 	private int dirToInt(Direction dir) {
 		int bitPos;
 		switch (dir) {
@@ -161,18 +239,42 @@ public class RektKiller extends Enemy {
 		return new RektKiller(startPos, Enemy.PRNG.nextInt(16));
 	}
 
+	/**
+	 * Getter for the current {@link Direction}, the RektKiller moves to.
+	 *
+	 * @return the current {@link Direction}, the RektKiller moves to.
+	 */
 	public Direction getCurrentDirection() {
 		return this.currentDirection;
 	}
 
+	/**
+	 * Setter for the current {@link Direction}, the RektKiller shall move to.
+	 *
+	 * @param currentDirection
+	 *            the {@link Direction} the RektKiller shall move to.
+	 */
 	public void setCurrentDirection(Direction currentDirection) {
 		this.currentDirection = currentDirection;
 	}
 
+	/**
+	 * Getter for the number whose first 4 bits are used as booleans for the
+	 * spikes at each side.
+	 * 
+	 * @return the int <i>sides</i> that represents spike positions.
+	 */
 	public int getSides() {
 		return this.sides;
 	}
 
+	/**
+	 * Setter for the number whose first 4 bits are used as booleans for the
+	 * spikes at each side.
+	 * 
+	 * @param sides
+	 *            the int <i>sides</i> that represents spike positions.
+	 */
 	public void setSides(int sides) {
 		this.sides = sides;
 	}

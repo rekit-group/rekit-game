@@ -25,7 +25,7 @@ public class RektSmasher extends Boss {
 		// Configure own attributes
 		super(startPos, new Vec(), new Vec(2f, 2f));
 		// Configure innerRektKiller
-		this.innerRektKiller = new RektKiller(startPos, 15, this.getSize());
+		this.innerRektKiller = new RektKiller(startPos, this.getSize(), 15);
 		this.innerRektKiller.setCurrentDirection(Direction.DOWN);
 		this.innerRektKiller.prepare();
 		this.setLifes(3);

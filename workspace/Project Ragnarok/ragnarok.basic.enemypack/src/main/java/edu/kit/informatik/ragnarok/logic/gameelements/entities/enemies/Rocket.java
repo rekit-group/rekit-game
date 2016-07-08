@@ -22,6 +22,9 @@ public class Rocket extends Enemy {
 		super();
 	}
 
+	/**
+	 * The {@link RGBColor}
+	 */
 	private static RGBColor innerColor = new RGBColor(90, 90, 90);
 	private static RGBColor frontColor = new RGBColor(150, 30, 30);
 	private static RGBColor outerColor = new RGBColor(50, 50, 50);
