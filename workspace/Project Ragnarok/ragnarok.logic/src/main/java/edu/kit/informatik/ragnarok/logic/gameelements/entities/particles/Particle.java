@@ -4,7 +4,6 @@ import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.primitives.Direction;
-import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Polygon;
 import edu.kit.informatik.ragnarok.primitives.ProgressDependency;
 import edu.kit.informatik.ragnarok.primitives.TimeDependency;
@@ -25,6 +24,7 @@ import edu.kit.informatik.ragnarok.util.RGBAColor;
  */
 public class Particle extends GameElement {
 
+	private Polygon initialPolygon;
 	private Polygon polygon;
 
 	private ProgressDependency colorR;
@@ -34,6 +34,8 @@ public class Particle extends GameElement {
 
 	private ProgressDependency speed;
 	private ProgressDependency angle;
+
+	private ProgressDependency scale;
 
 	private TimeDependency timer;
 
@@ -68,15 +70,15 @@ public class Particle extends GameElement {
 	 *            the <i>ProgressDendency</i> for the polygons alpha color
 	 *            channel
 	 */
-	public Particle(Polygon polygon, Vec pos, float lifeTime, ProgressDependency size, ProgressDependency speed, ProgressDependency angle,
+	public Particle(Polygon polygon, Vec pos, float lifeTime, ProgressDependency scale, ProgressDependency speed, ProgressDependency angle,
 			ProgressDependency colorR, ProgressDependency colorG, ProgressDependency colorB, ProgressDependency colorA) {
 		super(pos, new Vec(), new Vec(1), Team.NEUTRAL);
 
 		// clone polygon so we can work with it
-		this.polygon = polygon.clone();
+		this.polygon = this.initialPolygon = polygon.clone();
 
 		// set shape options
-		// this.size = size;
+		this.scale = scale;
 
 		// set movement options
 		this.speed = speed;
@@ -112,6 +114,11 @@ public class Particle extends GameElement {
 			// get speed and angle relative to progress
 			float speed = this.speed.getNow(progress);
 			float angle = this.angle.getNow(progress);
+			float scale = this.scale.getNow(progress);
+
+			if (scale != 1) {
+				this.polygon = this.initialPolygon.scale(scale);
+			}
 
 			// only recalculate movement vector if speed and angle are dynamic
 			if (this.movementVec == null || !this.speed.isStatic() || !this.angle.isStatic()) {
@@ -153,33 +160,6 @@ public class Particle extends GameElement {
 	public int capColor(float col) {
 		int intCol = (int) col;
 		return intCol > 255 ? 255 : (intCol < 0 ? 0 : intCol);
-	}
-
-	@Override
-	public void addPoints(int points) {
-		// Do nothing
-	}
-
-	@Override
-	public int getPoints() {
-		// Do nothing
-		return 0;
-	}
-
-	@Override
-	public void addDamage(int damage) {
-		// Do nothing
-	}
-
-	@Override
-	public int getLifes() {
-		// Do nothing
-		return 0;
-	}
-
-	@Override
-	public void collidedWith(Frame collision, Direction dir) {
-		// Do nothing
 	}
 
 }

@@ -90,7 +90,9 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 		}
 	}
 
-	protected abstract void internalRender(Field f);
+	protected void internalRender(Field f) {
+		// do nothing
+	};
 
 	protected int getOrderZ() {
 		return 0;

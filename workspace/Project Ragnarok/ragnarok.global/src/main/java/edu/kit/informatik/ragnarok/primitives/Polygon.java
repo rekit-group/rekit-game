@@ -81,7 +81,7 @@ public class Polygon implements Cloneable {
 
 	/**
 	 * Move a polygon to target location
-	 * 
+	 *
 	 * @param targetLocation
 	 *            the target location
 	 */
@@ -91,7 +91,7 @@ public class Polygon implements Cloneable {
 
 	/**
 	 * Add a new relative point
-	 * 
+	 *
 	 * @param relPt
 	 *            the point
 	 */
@@ -101,7 +101,7 @@ public class Polygon implements Cloneable {
 
 	/**
 	 * Rotate the polygon by angle
-	 * 
+	 *
 	 * @param angle
 	 *            the angle
 	 * @return the rotated polygon
@@ -112,7 +112,7 @@ public class Polygon implements Cloneable {
 
 	/**
 	 * Rotate the polygon by angle and anchor
-	 * 
+	 *
 	 * @param angle
 	 *            the angle
 	 * @param rotationAnchor
@@ -136,7 +136,7 @@ public class Polygon implements Cloneable {
 
 	/**
 	 * Get the absolute positions of all points
-	 * 
+	 *
 	 * @return the points
 	 */
 	public float[] getAbsoluteArray() {
@@ -158,4 +158,11 @@ public class Polygon implements Cloneable {
 		return actualArray;
 	}
 
+	public Polygon scale(float scale) {
+		List<Vec> newRelPts = new LinkedList<>();
+		for (Vec relPt2scale : this.relPts) {
+			newRelPts.add(relPt2scale.multiply(scale));
+		}
+		return new Polygon(this.startPoint, newRelPts);
+	}
 }

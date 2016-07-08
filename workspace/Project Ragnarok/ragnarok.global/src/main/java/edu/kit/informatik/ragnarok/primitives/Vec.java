@@ -10,7 +10,7 @@ package edu.kit.informatik.ragnarok.primitives;
 public class Vec implements Cloneable {
 	/**
 	 * Create a new Vector
-	 * 
+	 *
 	 * @param x
 	 *            posX
 	 * @param y
@@ -190,6 +190,23 @@ public class Vec implements Cloneable {
 	 */
 	public Vec multiply(float scalarX, float scalarY) {
 		return new Vec(this.getX() * scalarX, this.getY() * scalarY, this.z);
+	}
+
+	/**
+	 * Multiplies the vectors x-component and its y-component with the
+	 * x-component and y-component of another Vector and <b>returns a new
+	 * Vector</b>.
+	 *
+	 * @param vec
+	 *            vector to multiply with
+	 * @return the resulting vector
+	 */
+	public Vec multiply(Vec vec) {
+		return new Vec(this.getX() * vec.getX(), this.getY() * vec.getY(), this.z);
+	}
+
+	public Vec sin() {
+		return new Vec((float) Math.sin(this.getX()), (float) Math.sin(this.getY()));
 	}
 
 	public Vec rotate(double angle, Vec relative) {
