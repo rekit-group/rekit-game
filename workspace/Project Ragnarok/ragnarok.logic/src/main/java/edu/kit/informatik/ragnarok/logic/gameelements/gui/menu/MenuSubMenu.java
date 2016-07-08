@@ -64,6 +64,8 @@ public class MenuSubMenu extends MenuItem {
 			this.unselect();
 			this.inMenu = true;
 			this.menuItems.get(this.index).select();
+		} else if(this.inMenu) {
+			this.menuItems.get(this.index).select();
 		} else {
 			this.selected = true;
 			this.index = 0;

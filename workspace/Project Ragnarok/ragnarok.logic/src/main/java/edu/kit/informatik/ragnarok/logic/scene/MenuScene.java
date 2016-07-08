@@ -3,9 +3,11 @@ package edu.kit.informatik.ragnarok.logic.scene;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.GameModel;
 import edu.kit.informatik.ragnarok.logic.Scenes;
+import edu.kit.informatik.ragnarok.logic.gameelements.gui.menu.ArcadeSelectionMenuItem;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.menu.MenuActionItem;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.menu.MenuItem;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.menu.MenuSubMenu;
+import edu.kit.informatik.ragnarok.logic.level.LevelManager;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 
 public class MenuScene extends Scene {
@@ -27,11 +29,25 @@ public class MenuScene extends Scene {
 
 		MenuActionItem lod = new MenuActionItem(this, "Level of the Day", () -> MenuScene.this.model.switchScene(Scenes.LOD));
 
-		MenuActionItem arcade = new MenuActionItem(this, "Arcade", () -> MenuScene.this.model.switchScene(Scenes.ARCADE_MENU));
+		MenuSubMenu arcade = new MenuSubMenu(this, "Arcade");
 
 		MenuSubMenu settings = new MenuSubMenu(this, "Settings");
 
 		MenuSubMenu about = new MenuSubMenu(this, "About");
+		
+		
+		for (int i = 0; i <= LevelManager.getLastArcadeLevelId(); i++) {
+
+			final int id = i;
+			MenuActionItem button = new ArcadeSelectionMenuItem(this, String.valueOf(id + 1), () -> {
+					this.model.selectedArcadeId = id;
+					this.model.switchScene(Scenes.ARCADE);
+				}
+
+			);
+			arcade.addItem(button);
+		}
+
 
 		this.menu.addItem(play);
 		this.menu.addItem(lod);
