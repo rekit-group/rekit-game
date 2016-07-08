@@ -63,6 +63,12 @@ public class Visitor {
 		}
 	};
 
+	/**
+	 * Visit a visitable (only non-static)
+	 *
+	 * @param v
+	 *            the visitable
+	 */
 	private void visitMe(Visitable v) {
 		VisitInfo info = v.getClass().getAnnotation(VisitInfo.class);
 		if (info == null || !info.visit()) {
@@ -78,6 +84,12 @@ public class Visitor {
 		}
 	}
 
+	/**
+	 * Visit a visitable (only static)
+	 *
+	 * @param v
+	 *            the visitable
+	 */
 	private void visitMeStatic(Class<? extends Visitable> v) {
 		VisitInfo info = v.getAnnotation(VisitInfo.class);
 		if (info == null || !info.visit()) {
@@ -93,6 +105,12 @@ public class Visitor {
 		}
 	}
 
+	/**
+	 * Invoke method of a visitable (only static)
+	 *
+	 * @param m
+	 *            the method
+	 */
 	private void afterStatic(Method m) {
 		try {
 			if (!Modifier.isStatic(m.getModifiers())) {
@@ -110,6 +128,14 @@ public class Visitor {
 
 	}
 
+	/**
+	 * Apply a value to a field (only static)
+	 * 
+	 * @param field
+	 *            the field
+	 * @param bundle
+	 *            the bundle
+	 */
 	private void applyStatic(Field field, ResourceBundle bundle) {
 		try {
 			if (field.getAnnotation(NoVisit.class) != null) {
@@ -131,6 +157,14 @@ public class Visitor {
 		}
 	}
 
+	/**
+	 * Invoke method of a visitable (only non-static)
+	 *
+	 * @param v
+	 *            the visitable
+	 * @param m
+	 *            the method
+	 */
 	private void afterObject(Visitable v, Method m) {
 		try {
 			if (Modifier.isStatic(m.getModifiers())) {
@@ -148,6 +182,16 @@ public class Visitor {
 
 	}
 
+	/**
+	 * Apply a value to a field (only non-static)
+	 * 
+	 * @param v
+	 *            the visitable
+	 * @param field
+	 *            the field
+	 * @param bundle
+	 *            the bundle
+	 */
 	private void applyObject(Visitable v, Field field, ResourceBundle bundle) {
 		try {
 			if (field.getAnnotation(NoVisit.class) != null) {

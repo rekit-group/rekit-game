@@ -7,6 +7,7 @@ package edu.kit.informatik.ragnarok.visitor;
  * @author Dominik Fuchß
  * @see VisitInfo
  * @see AfterVisit
+ * @see NoVisit
  *
  */
 public interface Visitable {

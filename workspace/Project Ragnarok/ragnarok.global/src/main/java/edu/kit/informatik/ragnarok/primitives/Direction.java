@@ -24,10 +24,23 @@ public enum Direction {
 	 * Represents the Direction down with the Vector (0|1)
 	 */
 	DOWN(Vec.create(0, 1), 1 * Math.PI);
-
+	/**
+	 * The representing vector
+	 */
 	private Vec vec;
+	/**
+	 * The representing angle
+	 */
 	private double angle;
 
+	/**
+	 * Create a Direction
+	 *
+	 * @param vec
+	 *            the vector
+	 * @param angle
+	 *            the angle
+	 */
 	private Direction(Vec vec, double angle) {
 		this.vec = vec;
 		this.angle = angle;
@@ -36,7 +49,7 @@ public enum Direction {
 	/**
 	 * Get the vector to a corresponding direction
 	 *
-	 * @return
+	 * @return the vector
 	 */
 	public Vec getVector() {
 		return this.vec;
@@ -45,7 +58,7 @@ public enum Direction {
 	/**
 	 * Get the angle to a corresponding direction relative to direction up
 	 *
-	 * @return
+	 * @return the angle
 	 */
 	public double getAngle() {
 		return this.angle;
@@ -54,7 +67,7 @@ public enum Direction {
 	/**
 	 * Get the opposite direction to a direction
 	 *
-	 * @return
+	 * @return the direction or {@code null} if none defined
 	 */
 	public Direction getOpposite() {
 		switch (this) {
@@ -64,15 +77,17 @@ public enum Direction {
 			return Direction.LEFT;
 		case DOWN:
 			return Direction.UP;
-		default:
+		case LEFT:
 			return Direction.RIGHT;
+		default:
+			return null;
 		}
 	}
 
 	/**
 	 * Get the next direction to a direction (clockwise)
 	 *
-	 * @return
+	 * @return the direction or {@code null} if none defined
 	 */
 	public Direction getNextClockwise() {
 		switch (this) {
@@ -82,15 +97,17 @@ public enum Direction {
 			return Direction.DOWN;
 		case DOWN:
 			return Direction.LEFT;
-		default:
+		case LEFT:
 			return Direction.UP;
+		default:
+			return null;
 		}
 	}
 
 	/**
 	 * Get the next direction to a direction (anticlockwise)
 	 *
-	 * @return
+	 * @return the direction or {@code null} if none defined
 	 */
 	public Direction getNextAntiClockwise() {
 		switch (this) {
@@ -100,11 +117,18 @@ public enum Direction {
 			return Direction.UP;
 		case DOWN:
 			return Direction.RIGHT;
-		default:
+		case LEFT:
 			return Direction.DOWN;
+		default:
+			return null;
 		}
 	}
 
+	/**
+	 * Get a random Direction
+	 * 
+	 * @return the direction or {@code null} if none defined
+	 */
 	public static Direction getRandom() {
 		return Direction.values()[(int) (Math.random() * Direction.values().length)];
 	}

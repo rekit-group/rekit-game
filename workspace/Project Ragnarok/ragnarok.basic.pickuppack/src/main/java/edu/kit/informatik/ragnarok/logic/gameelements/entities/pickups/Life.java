@@ -21,6 +21,12 @@ public class Life extends Pickup {
 		super();
 	}
 
+	/**
+	 * Instantiate a Life by start position
+	 * 
+	 * @param startPos
+	 *            the start position
+	 */
 	public Life(Vec startPos) {
 		super(startPos, new Vec(), new Vec(1));
 	}

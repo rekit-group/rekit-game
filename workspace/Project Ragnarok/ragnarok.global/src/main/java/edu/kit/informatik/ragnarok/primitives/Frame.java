@@ -1,32 +1,56 @@
 package edu.kit.informatik.ragnarok.primitives;
 
+/**
+ *
+ * This class defines a Frame which will be used to check collisions
+ *
+ */
 public class Frame {
+	/**
+	 * The first anchor of the frame
+	 */
+	private Vec upperLeftAnchor;
+	/**
+	 * The second anchor of the frame
+	 */
+	private Vec bottomRightAnchor;
 
-	private Vec vec1;
-	private Vec vec2;
-
+	/**
+	 * Create a frame by two anchors
+	 *
+	 * @param v1
+	 *            the upperLeft anchor
+	 * @param v2
+	 *            the bottomRight anchor
+	 */
 	public Frame(Vec v1, Vec v2) {
-		this.setFrame(v1, v2);
+		this.upperLeftAnchor = v1;
+		this.bottomRightAnchor = v2;
 	}
 
-	public Frame(float x1, float y1, float x2, float y2) {
-
-		this.setFrame(Vec.create(x1, y1), Vec.create(x2, y2));
-
-	}
-
-	public void setFrame(Vec v1, Vec v2) {
-		this.vec1 = v1;
-		this.vec2 = v2;
-	}
-
+	/**
+	 * Check whether this frame collides with another
+	 *
+	 * @param otherFrame
+	 *            the other frame
+	 * @return {@code true} if collision detected, {@code false} otherwise
+	 */
 	public boolean collidesWith(Frame otherFrame) {
-		return this.vec1.getX() < otherFrame.vec2.getX() && this.vec1.getY() < otherFrame.vec2.getY() && this.vec2.getX() > otherFrame.vec1.getX()
-				&& this.vec2.getY() > otherFrame.vec1.getY();
+		return this.upperLeftAnchor.getX() < otherFrame.bottomRightAnchor.getX() && this.upperLeftAnchor.getY() < otherFrame.bottomRightAnchor.getY()
+				&& this.bottomRightAnchor.getX() > otherFrame.upperLeftAnchor.getX()
+				&& this.bottomRightAnchor.getY() > otherFrame.upperLeftAnchor.getY();
 	}
 
-	public boolean collidesWith(Vec vec) {
-		return vec.getX() > this.vec1.getX() && vec.getX() < this.vec2.getX() && vec.getY() > this.vec1.getY() && vec.getY() < this.vec2.getY();
+	/**
+	 * Check whether this frame collides with another object
+	 *
+	 * @param position
+	 *            of the object
+	 * @return {@code true} if collision detected, {@code false} otherwise
+	 */
+	public boolean collidesWith(Vec position) {
+		return position.getX() > this.upperLeftAnchor.getX() && position.getX() < this.bottomRightAnchor.getX()
+				&& position.getY() > this.upperLeftAnchor.getY() && position.getY() < this.bottomRightAnchor.getY();
 	}
 
 	/**
@@ -34,29 +58,30 @@ public class Frame {
 	 *
 	 * @param dir
 	 *            The direction of border
-	 * @return the corresponding coordinate component of the border
+	 * @return the corresponding coordinate component of the border or
+	 *         {@code -1} on failure
 	 */
 	public float getBorder(Direction dir) {
 		switch (dir) {
 		case UP:
 			// In case we want the upper border: take highest y
-			return this.vec1.getY() > this.vec2.getY() ? this.vec1.getY() : this.vec2.getY();
+			return this.upperLeftAnchor.getY() > this.bottomRightAnchor.getY() ? this.upperLeftAnchor.getY() : this.bottomRightAnchor.getY();
 		case RIGHT:
 			// In case we want the right border: take highest x
-			return this.vec1.getX() > this.vec2.getX() ? this.vec1.getX() : this.vec2.getX();
+			return this.upperLeftAnchor.getX() > this.bottomRightAnchor.getX() ? this.upperLeftAnchor.getX() : this.bottomRightAnchor.getX();
 		case DOWN:
 			// In case we want the lower border: take lowest y
-			return this.vec1.getY() > this.vec2.getY() ? this.vec2.getY() : this.vec1.getY();
+			return this.upperLeftAnchor.getY() > this.bottomRightAnchor.getY() ? this.bottomRightAnchor.getY() : this.upperLeftAnchor.getY();
 		case LEFT:
 			// In case we want the left border: take lowest x
-			return this.vec1.getX() > this.vec2.getX() ? this.vec2.getX() : this.vec1.getX();
+			return this.upperLeftAnchor.getX() > this.bottomRightAnchor.getX() ? this.bottomRightAnchor.getX() : this.upperLeftAnchor.getX();
 		}
 		return -1;
 	}
 
 	@Override
 	public String toString() {
-		return "(" + this.vec1.toString() + ", " + this.vec2.toString() + ")";
+		return "(" + this.upperLeftAnchor.toString() + ", " + this.bottomRightAnchor.toString() + ")";
 	}
 
 }

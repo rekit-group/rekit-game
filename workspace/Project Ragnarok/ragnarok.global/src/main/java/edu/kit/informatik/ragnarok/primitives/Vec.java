@@ -8,6 +8,15 @@ package edu.kit.informatik.ragnarok.primitives;
  */
 
 public class Vec implements Cloneable {
+	/**
+	 * Create a new Vector
+	 * 
+	 * @param x
+	 *            posX
+	 * @param y
+	 *            posY
+	 * @return the vector
+	 */
 	public static Vec create(float x, float y) {
 		return new Vec(x, y);
 	}

@@ -2,7 +2,7 @@ package edu.kit.informatik.ragnarok.util;
 
 /**
  * This class contains several methods for a better usability of Threads
- * 
+ *
  * @author Dominik Fuchß
  *
  */
@@ -15,7 +15,7 @@ public final class ThreadUtils {
 
 	/**
 	 * Same as {@link Thread#sleep(long)}
-	 * 
+	 *
 	 * @param the
 	 *            length of time to sleep in milliseconds
 	 * @return {@code true} if successfully sleeped the time, {@code false}
@@ -32,7 +32,7 @@ public final class ThreadUtils {
 
 	/**
 	 * Run a {@link Runnable} as daemon
-	 * 
+	 *
 	 * @param r
 	 *            the runnable
 	 */
@@ -42,7 +42,7 @@ public final class ThreadUtils {
 
 	/**
 	 * Run a {@link Runnable}
-	 * 
+	 *
 	 * @param r
 	 *            the runnable
 	 */
@@ -50,6 +50,14 @@ public final class ThreadUtils {
 		ThreadUtils.runThread(r, false);
 	}
 
+	/**
+	 * Run a {@link Runnable}
+	 * 
+	 * @param r
+	 *            the runnable
+	 * @param daemon
+	 *            daemon?
+	 */
 	private static final void runThread(Runnable r, boolean daemon) {
 		Thread t = new Thread(r);
 		t.setDaemon(daemon);

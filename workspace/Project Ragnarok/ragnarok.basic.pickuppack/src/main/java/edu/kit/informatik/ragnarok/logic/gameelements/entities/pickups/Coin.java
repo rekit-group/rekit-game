@@ -22,12 +22,29 @@ public class Coin extends Pickup {
 		super();
 	}
 
+	/**
+	 * The default color of the coin
+	 */
 	private static RGBColor color = new RGBColor(232, 214, 16);
+	/**
+	 * The shadow color of the coin
+	 */
 	private static RGBColor darkColor = new RGBColor(192, 174, 6);
+	/**
+	 * The X-Coordinate
+	 */
 	private float x = 0;
+	/**
+	 * Sin(X) for spinning coin
+	 */
 	private double sin = 0;
-	private Vec size = new Vec();
 
+	/**
+	 * Instantiate a Coin by position
+	 * 
+	 * @param startPos
+	 *            the start position
+	 */
 	public Coin(Vec startPos) {
 		super(startPos, new Vec(), new Vec(0.7f, 0.7f));
 	}
