@@ -10,10 +10,10 @@ import java.util.Scanner;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElementFactory;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
-import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateTrigger;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Boss;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Enemy;
+import edu.kit.informatik.ragnarok.logic.gameelements.type.Inanimate;
 import edu.kit.informatik.ragnarok.logic.level.bossstructure.BossStructure;
 import edu.kit.informatik.ragnarok.logic.level.parser.FileParser;
 import edu.kit.informatik.ragnarok.primitives.Vec;
@@ -366,7 +366,7 @@ public class StructureManager extends Configurable implements Iterator<Structure
 		// TODO add InanimateTrigger that ends level!
 
 		// Vertical wall
-		Structure structure = new Structure(new int[][] { { 0 }, { 0 }, { 0 }, { 0 }, { 50 }, { 0 }, { 0 }, { 0 }, { 0 } });
+		Structure structure = new Structure(new int[][] { { 0 }, { 0 }, { 0 }, { 0 }, { 71 }, { 0 }, { 0 }, { 0 }, { 0 } });
 
 		// keep track of how far we built
 		this.unitsBuilt += structure.getWidth();

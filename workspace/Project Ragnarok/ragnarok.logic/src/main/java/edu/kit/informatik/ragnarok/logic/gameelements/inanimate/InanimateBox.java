@@ -1,6 +1,7 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.inanimate;
 
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
+import edu.kit.informatik.ragnarok.logic.gameelements.type.Inanimate;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 
@@ -27,5 +28,10 @@ public class InanimateBox extends Inanimate {
 	public static Inanimate staticCreate(Vec pos) {
 		int randCol = (int) (Math.random() * 60 + 50);
 		return new InanimateBox(pos, new Vec(1, 1), new RGBColor(randCol, randCol, randCol));
+	}
+
+	@Override
+	public int getID() {
+		return 50;
 	}
 }

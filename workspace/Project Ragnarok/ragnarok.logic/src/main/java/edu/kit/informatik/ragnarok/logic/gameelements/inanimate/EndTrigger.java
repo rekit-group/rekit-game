@@ -8,6 +8,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawner;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
+import edu.kit.informatik.ragnarok.logic.gameelements.type.Inanimate;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBAColor;
 
@@ -139,5 +140,10 @@ public class EndTrigger extends InanimateTrigger {
 			EndTrigger.instance = new EndTrigger(new Vec(), new Vec(1.5f, GameConf.GRID_H));
 		}
 		return EndTrigger.instance;
+	}
+
+	@Override
+	public int getID() {
+		return 71;
 	}
 }

@@ -4,6 +4,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawner;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
+import edu.kit.informatik.ragnarok.logic.gameelements.type.Inanimate;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBColor;
@@ -75,6 +76,11 @@ public class InanimateFloor extends Inanimate {
 		int randColG = (int) (Math.random() * 100 + 100);
 		int randColRB = (int) (Math.random() * 40 + 30);
 		return new InanimateFloor(pos, new Vec(1, 1), new RGBColor(randColRB, randColG, randColRB));
+	}
+
+	@Override
+	public int getID() {
+		return 51;
 	}
 
 }

@@ -1,9 +1,14 @@
-package edu.kit.informatik.ragnarok.logic.gameelements.inanimate;
+package edu.kit.informatik.ragnarok.logic.gameelements.type;
+
+import java.util.Set;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.Team;
+import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateBox;
+import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateFloor;
+import edu.kit.informatik.ragnarok.logic.util.ReflectUtils;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Vec;
@@ -18,6 +23,10 @@ public class Inanimate extends GameElement {
 	protected Inanimate(Vec pos, Vec size, RGBColor color) {
 		super(pos, new Vec(), size, Team.NEUTRAL);
 		this.color = color;
+	}
+
+	public static final Set<Inanimate> getInanimatePrototypes() {
+		return ReflectUtils.get("edu.kit.informatik", Inanimate.class);
 	}
 
 	@Override
@@ -69,5 +78,9 @@ public class Inanimate extends GameElement {
 			Inanimate.instance = new Inanimate(new Vec(), new Vec(1, 1), new RGBColor(0, 0, 0));
 		}
 		return Inanimate.instance;
+	}
+
+	public int getID() {
+		return 1;
 	}
 }
