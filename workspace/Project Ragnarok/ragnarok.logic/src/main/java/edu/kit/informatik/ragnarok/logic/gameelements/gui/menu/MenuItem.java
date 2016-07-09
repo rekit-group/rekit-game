@@ -12,7 +12,7 @@ public abstract class MenuItem extends GuiElement {
 
 	protected String text;
 
-	private MenuItem parent;
+	protected MenuItem parent;
 
 	private boolean hover;
 
@@ -20,6 +20,11 @@ public abstract class MenuItem extends GuiElement {
 		super(scene);
 		this.text = text;
 		this.setSize(new Vec(400, 80));
+	}
+
+	public MenuItem(Scene scene, String text, Vec size) {
+		this(scene, text);
+		this.setSize(size);
 	}
 
 	public void setHover(boolean value) {
@@ -32,6 +37,9 @@ public abstract class MenuItem extends GuiElement {
 
 	public void unselect() {
 		this.selected = false;
+		if (this.parent != null) {
+			this.parent.focus();
+		}
 	}
 
 	public void up() {
@@ -42,11 +50,8 @@ public abstract class MenuItem extends GuiElement {
 
 	}
 
-	public void back() {
-		if (this.parent != null) {
-			this.unselect();
-			this.parent.select();
-		}
+	protected void focus() {
+
 	}
 
 	public void setParent(MenuItem i) {
@@ -55,8 +60,20 @@ public abstract class MenuItem extends GuiElement {
 
 	@Override
 	protected void internalRender(Field f) {
+		this.renderItem(f);
+	}
+
+	protected void renderItem(Field f) {
 		f.drawRectangle(this.getPos(), this.getSize(), this.hover ? GameConf.MENU_BOX_SELECT_COLOR : GameConf.MENU_BOX_COLOR, false);
 		f.drawText(this.getPos(), this.text, GameConf.MENU_TEXT, false);
+	}
+
+	public void left() {
+
+	}
+
+	public void right() {
+
 	}
 
 }

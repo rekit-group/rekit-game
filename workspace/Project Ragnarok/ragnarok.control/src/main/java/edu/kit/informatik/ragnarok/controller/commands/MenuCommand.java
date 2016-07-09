@@ -17,7 +17,7 @@ public class MenuCommand implements Command {
 	 *
 	 */
 	public enum Dir {
-		UP, DOWN, BACK, SELECT
+		UP, DOWN, LEFT, RIGHT, BACK, SELECT
 	}
 
 	/**
@@ -31,7 +31,7 @@ public class MenuCommand implements Command {
 
 	/**
 	 * Instantiate the MenuCommand
-	 * 
+	 *
 	 * @param supervisor
 	 *            the supervisor
 	 * @param dir
@@ -55,8 +55,14 @@ public class MenuCommand implements Command {
 		case DOWN:
 			item.down();
 			break;
+		case LEFT:
+			item.left();
+			break;
+		case RIGHT:
+			item.right();
+			break;
 		case BACK:
-			item.back();
+			item.unselect();
 			break;
 		case SELECT:
 			item.select();
