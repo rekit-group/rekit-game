@@ -51,7 +51,7 @@ public class RGBAColor {
 	 * @return the darken color
 	 */
 	public RGBAColor darken(float p) {
-		return new RGBAColor((int) (this.red * p), (int) (this.green * p), (int) (this.blue * p), (int) (this.alpha * p));
+		return new RGBAColor((int) (this.red * p), (int) (this.green * p), (int) (this.blue * p), (this.alpha));
 	}
 
 }

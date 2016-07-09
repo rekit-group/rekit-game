@@ -1,9 +1,14 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.inanimate;
 
+import java.util.Random;
+
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawner;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.DynamicInanimate;
 import edu.kit.informatik.ragnarok.primitives.Direction;
+import edu.kit.informatik.ragnarok.primitives.Polygon;
 import edu.kit.informatik.ragnarok.primitives.TimeDependency;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBAColor;
@@ -22,6 +27,26 @@ public class MovingBox extends DynamicInanimate {
 
 	private RGBAColor darkCol;
 
+	private Vec[] rocketPolygonRelPts;
+
+	private float sizeX16;
+
+	private final static Random RNG = new Random();
+
+	private static ParticleSpawner sparkParticles = null;
+	static {
+		MovingBox.sparkParticles = new ParticleSpawner();
+		MovingBox.sparkParticles.angle = new ParticleSpawnerOption((float) Math.PI * 0.9f, (float) Math.PI * 1.1f, 0, 0);
+		MovingBox.sparkParticles.colorR = new ParticleSpawnerOption(200, 230, 10, 25);
+		MovingBox.sparkParticles.colorG = new ParticleSpawnerOption(200, 250, -140, -120);
+		MovingBox.sparkParticles.colorB = new ParticleSpawnerOption(150, 200, -140, -120);
+		MovingBox.sparkParticles.colorA = new ParticleSpawnerOption(230, 250, -120, -180);
+		MovingBox.sparkParticles.timeMin = 0.1f;
+		MovingBox.sparkParticles.amountMin = 1;
+		MovingBox.sparkParticles.amountMax = 1;
+		MovingBox.sparkParticles.speed = new ParticleSpawnerOption(3, 6, -1, 1);
+	}
+
 	/**
 	 * Prototype Constructor
 	 */
@@ -30,7 +55,13 @@ public class MovingBox extends DynamicInanimate {
 	}
 
 	protected MovingBox(Vec pos, int dist) {
-		super(pos, new Vec(1, 0.3f), new RGBAColor(100, 100, 100, 255));
+		super(pos, new Vec(1, 0.6f), new RGBAColor(100, 100, 100, 255));
+
+		// precalculate relative points for rocket polygon
+		Vec s = this.getSize();
+		this.rocketPolygonRelPts = new Vec[] { new Vec(s.getX() * (-2 / 16f), 0), new Vec(s.getX() * (-3 / 16f), s.getY() / 2f),
+				new Vec(s.getX() * (1 / 16f), s.getY() / 2f), new Vec() };
+		this.sizeX16 = this.getSize().getX() / 16;
 
 		// set starting and ending point
 		this.a = pos.addY(-dist);
@@ -41,7 +72,7 @@ public class MovingBox extends DynamicInanimate {
 		this.relativeTarget = this.b.add(this.currentStart.multiply(-1));
 
 		// calculate accent color
-		this.darkCol = this.color.darken(0.1f);
+		this.darkCol = this.color.darken(0.8f);
 
 		// initialize movement timer
 		this.timer = new TimeDependency(dist / (2 * MovingBox.SPEED));
@@ -58,6 +89,12 @@ public class MovingBox extends DynamicInanimate {
 	public void logicLoop(float deltaTime) {
 		this.timer.removeTime(deltaTime);
 		this.pos = this.currentStart.add(this.relativeTarget.multiply(this.timer.getProgress()));
+
+		if (MovingBox.RNG.nextFloat() > 0.6f) {
+			MovingBox.sparkParticles.spawn(this.scene, this.getPos().addX(-5.5f * this.sizeX16).addY(this.getSize().getY() / 3));
+			MovingBox.sparkParticles.spawn(this.scene, this.getPos().addX(2.5f * this.sizeX16).addY(this.getSize().getY() / 3));
+		}
+
 		if (this.timer.timeUp()) {
 			if (this.currentStart == this.a) {
 				this.currentStart = this.b;
@@ -72,7 +109,10 @@ public class MovingBox extends DynamicInanimate {
 
 	@Override
 	public void internalRender(Field f) {
-		f.drawRectangle(this.getPos(), this.getSize(), this.color);
+		f.drawRectangle(this.getPos().addY(this.getSize().getY() / -4f), this.getSize().multiply(1, 1 / 2f), this.color);
+
+		f.drawPolygon(new Polygon(this.getPos().addX(-3 * this.sizeX16), this.rocketPolygonRelPts), this.darkCol, true);
+		f.drawPolygon(new Polygon(this.getPos().addX(5 * this.sizeX16), this.rocketPolygonRelPts), this.darkCol, true);
 	}
 
 	@Override
