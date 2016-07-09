@@ -236,7 +236,18 @@ public class RektKiller extends Enemy {
 
 	@Override
 	public Entity create(Vec startPos, int[] options) {
-		return new RektKiller(startPos, Enemy.PRNG.nextInt(16));
+		RektKiller inst = new RektKiller(startPos, Enemy.PRNG.nextInt(16));
+
+		// if option 0 is given: set defined direction
+		if (options.length >= 1) {
+			if (options[0] >= 0 && options[0] < Direction.values().length) {
+				inst.setCurrentDirection(Direction.values()[options[0]]);
+			} else {
+				System.err.println("Error, RektKiller was supplied invalid option " + options[0] + " at index 0 for Direction");
+			}
+		}
+
+		return inst;
 	}
 
 	/**

@@ -67,7 +67,13 @@ public class ToggleBox extends DynamicInanimate {
 
 	@Override
 	public ToggleBox create(Vec startPos, int[] options) {
-		return new ToggleBox(startPos, new Vec(1), new RGBAColor(80, 80, 255, 255));
+		ToggleBox inst = new ToggleBox(startPos, new Vec(1), new RGBAColor(80, 80, 255, 255));
+		if (options.length >= 1) {
+			if (options[0] == 1) {
+				inst.offset = ToggleBox.PERIOD / 2;
+			}
+		}
+		return inst;
 	}
 
 	private abstract class ToggleBoxStrategy {
