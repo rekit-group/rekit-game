@@ -51,13 +51,15 @@ public class EndTrigger extends InanimateTrigger {
 		for (int i = 0; i < EndTrigger.PORTAL_NUM; i++) {
 			Vec frequency = new Vec(rng.nextFloat() * 8 + 6, rng.nextFloat() * 8 + 6);
 			lastAmplitude = amplitude;
-			amplitude = new Vec(rng.nextFloat() / 20 + 0.04f, rng.nextFloat() / 20 + 0.04f);
+			amplitude = new Vec(rng.nextFloat() / 20 + 0.04f, rng.nextFloat() / 20 + 0.1f);
 			Vec phase = new Vec(rng.nextFloat() * 2 + 1, rng.nextFloat() * 2 + 1);
 
 			RGBAColor color = new RGBAColor((int) (rng.nextFloat() * 50), (int) (rng.nextFloat() * 30 + 7 * i), (int) (rng.nextFloat() * 80 + 175),
 					10 * i);
 
 			size = size.add(lastAmplitude.add(amplitude).multiply(-1f));
+
+			pos = pos.addX(0.003f * i);
 
 			this.innerPortals[i] = new Portal(pos, size, amplitude, frequency, phase, color);
 		}
@@ -131,7 +133,7 @@ public class EndTrigger extends InanimateTrigger {
 
 	@Override
 	public EndTrigger create(Vec startPos, int[] options) {
-		return new EndTrigger(this.pos, this.getSize());
+		return new EndTrigger(startPos, this.getSize());
 	}
 
 	public static Inanimate getPrototype() {
