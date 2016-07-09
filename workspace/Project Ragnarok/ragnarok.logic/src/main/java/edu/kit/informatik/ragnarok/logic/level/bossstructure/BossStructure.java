@@ -57,7 +57,7 @@ public class BossStructure extends Structure {
 		BossStructure.fireworkParticles.speed = new ParticleSpawnerOption(3, 5, -1, 1);
 	}
 
-	public BossStructure(int[][] structure, Boss boss) {
+	public BossStructure(int[][][] structure, Boss boss) {
 		super(structure);
 		this.boss = boss;
 	}

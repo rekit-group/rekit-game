@@ -334,7 +334,7 @@ public class StructureManager extends Configurable implements Iterator<Structure
 	 */
 	private Structure getInitialStructure() {
 		// Flat floor
-		Structure structure = new Structure(new int[][] { { 1, 1, 1, 1, 1, 1, 1, 1 } });
+		Structure structure = new Structure(new int[][][] { { { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 } } });
 
 		// keep track of how far we built (only works because we know structure
 		// has no gap!)
@@ -364,7 +364,8 @@ public class StructureManager extends Configurable implements Iterator<Structure
 	private Structure getEndStructure() {
 
 		// Vertical wall
-		Structure structure = new Structure(new int[][] { { 0 }, { 0 }, { 0 }, { 0 }, { 71 }, { 0 }, { 0 }, { 0 }, { 0 } });
+		Structure structure = new Structure(new int[][][] { { { 0 } }, { { 0 } }, { { 0 } }, { { 0 } }, { { 71 } }, { { 0 } }, { { 0 } }, { { 0 } },
+				{ { 0 } } });
 
 		// keep track of how far we built
 		this.unitsBuilt += structure.getWidth();

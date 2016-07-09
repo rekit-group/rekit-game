@@ -20,21 +20,25 @@ public class StructureParser {
 			return;
 		}
 
-		int[][] result;
+		int[][][] result;
 
 		// get all lines of elements
 		String[] lines = matcher.group(2).split("\n");
-		result = new int[lines.length][];
+		result = new int[lines.length][][];
 
 		for (int y = 0; y < lines.length; y++) {
 
 			// get all elements of this line
 			String[] elements = lines[y].split("\t");
-			result[y] = new int[elements.length];
+			result[y] = new int[elements.length][];
 
 			// construct every char into array
 			for (int x = 0; x < elements.length; x++) {
-				result[y][x] = Integer.parseInt(elements[x].trim());
+				String[] nums = elements[x].split(":");
+				result[y][x] = new int[nums.length];
+				for (int i = 0; i < nums.length; i++) {
+					result[y][x][i] = Integer.parseInt(nums[i].trim());
+				}
 			}
 		}
 

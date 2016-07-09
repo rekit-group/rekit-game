@@ -1,5 +1,7 @@
 package edu.kit.informatik.ragnarok.logic.level;
 
+import java.util.Arrays;
+
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElementFactory;
 
@@ -37,7 +39,7 @@ public class Structure extends Configurable {
 	 * GameElements. The mapping from each integer to GameElements is specified
 	 * by the {@link GameElementFactory}.
 	 */
-	private int[][] structureArray;
+	private int[][][] structureArray;
 
 	/**
 	 * Value that specifies how many columns to right of the Structure will be
@@ -56,7 +58,7 @@ public class Structure extends Configurable {
 	 *            the two dimensional template of the GameElements of this
 	 *            Structure.
 	 */
-	public Structure(int[][] structureArray) {
+	public Structure(int[][][] structureArray) {
 		this.structureArray = structureArray;
 	}
 
@@ -93,10 +95,12 @@ public class Structure extends Configurable {
 				// map: structureArray y --> actual level y
 				int aY = (GameConf.GRID_H - this.structureArray.length) + y;
 
-				// if there is something to build here:
-				if (this.structureArray[y][x] != 0) {
+				int[] elemInfo = this.structureArray[y][x];
+
+				// if id != 0 => there is something to build here:
+				if (elemInfo[0] != 0) {
 					// let GameElementFactory handle the rest
-					GameElementFactory.generate(this.structureArray[y][x], levelX + x, aY);
+					GameElementFactory.generate(elemInfo[0], levelX + x, aY, Arrays.copyOfRange(elemInfo, 1, elemInfo.length));
 				} else {
 					// otherwise check if we must generate random coins
 					if (autoCoinSpawn && Math.random() > 0.95f) {
