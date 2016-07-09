@@ -69,7 +69,7 @@ public class LevelManager {
 	}
 
 	public static int getNumberOfArcadeLevels() {
-		return 4; // TODO could be dynamic?
+		return 5; // TODO could be dynamic?
 	}
 
 	public static void contentChanged() {

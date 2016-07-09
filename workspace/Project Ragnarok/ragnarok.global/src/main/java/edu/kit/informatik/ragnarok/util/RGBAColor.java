@@ -44,6 +44,19 @@ public class RGBAColor {
 	}
 
 	/**
+	 * Create a color by an int coded ARGB color
+	 *
+	 * @param color
+	 *            the ARGB color
+	 */
+	public RGBAColor(int color) {
+		this.alpha = (color >> 24) & 0xFF;
+		this.red = (color >> 16) & 0xFF;
+		this.green = (color >> 8) & 0xFF;
+		this.blue = (color) & 0xFF;
+	}
+
+	/**
 	 * Darken the color
 	 *
 	 * @param p
