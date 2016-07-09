@@ -30,7 +30,7 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 		this.setPos(startPos);
 	}
 
-	public GameElement create(Vec startPos) {
+	public GameElement create(Vec startPos, int[] options) {
 		throw new UnsupportedOperationException("Create not supported for " + this.getClass().getSimpleName());
 	}
 

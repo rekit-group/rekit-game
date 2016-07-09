@@ -94,12 +94,15 @@ public class GameElementFactory {
 	}
 
 	public static void generate(int id, int x, int y) {
+		GameElementFactory.generate(id, x, y, new int[] {});
+	}
+
+	public static void generate(int id, int x, int y, int[] options) {
 		GameElement prototype = GameElementFactory.getPrototype(id);
 		if (prototype != null) {
 			// Add enemy to model
-			GameElementFactory.scene.addGameElement(prototype.create(new Vec(x, y)));
+			GameElementFactory.scene.addGameElement(prototype.create(new Vec(x, y), options));
 		}
-
 	}
 
 	public static void generate(GameElement element) {

@@ -130,8 +130,8 @@ public class EndTrigger extends InanimateTrigger {
 	}
 
 	@Override
-	public EndTrigger create(Vec pos) {
-		return new EndTrigger(pos, this.getSize());
+	public EndTrigger create(Vec startPos, int[] options) {
+		return new EndTrigger(this.pos, this.getSize());
 	}
 
 	public static Inanimate getPrototype() {

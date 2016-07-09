@@ -159,7 +159,7 @@ public class RektSmasher extends Boss {
 	}
 
 	@Override
-	public Entity create(Vec startPos) {
+	public Entity create(Vec startPos, int[] options) {
 		RektSmasher clone = new RektSmasher(startPos);
 		clone.setTarget(this.target);
 		clone.setBossStructure(this.bossStructure);

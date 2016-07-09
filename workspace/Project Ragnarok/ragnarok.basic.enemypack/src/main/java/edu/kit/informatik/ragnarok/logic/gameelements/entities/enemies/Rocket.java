@@ -136,7 +136,7 @@ public class Rocket extends Enemy {
 	}
 
 	@Override
-	public Entity create(Vec startPos) {
+	public Entity create(Vec startPos, int[] options) {
 		return new Rocket(startPos);
 	}
 

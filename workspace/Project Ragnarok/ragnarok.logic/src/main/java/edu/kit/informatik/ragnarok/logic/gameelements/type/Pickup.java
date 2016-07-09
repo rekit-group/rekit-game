@@ -22,7 +22,7 @@ public abstract class Pickup extends Entity {
 	}
 
 	@Override
-	public abstract GameElement create(Vec startPos);
+	public abstract GameElement create(Vec startPos, int[] options);
 
 	@Override
 	public void logicLoop(float deltaTime) {

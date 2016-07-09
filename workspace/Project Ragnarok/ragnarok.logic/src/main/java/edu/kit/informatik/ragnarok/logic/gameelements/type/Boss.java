@@ -45,7 +45,7 @@ public abstract class Boss extends Entity {
 	}
 
 	@Override
-	public abstract GameElement create(Vec startPos);
+	public abstract GameElement create(Vec startPos, int[] options);
 
 	@Override
 	public final void destroy() {

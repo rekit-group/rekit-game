@@ -96,7 +96,7 @@ public class BossStructure extends Structure {
 		this.cameraTarget = this.levelX + 5 + GameConf.PLAYER_CAMERA_OFFSET + player.getSize().getX() / 2;
 
 		// Prepare boss
-		this.boss = (Boss) this.boss.create(new Vec(this.levelX + this.getWidth() / 2, GameConf.GRID_H / 2 + 1));
+		this.boss = (Boss) this.boss.create(new Vec(this.levelX + this.getWidth() / 2, GameConf.GRID_H / 2 + 1), new int[] {});
 		this.boss.setBossStructure(this);
 		this.boss.setTarget(player);
 

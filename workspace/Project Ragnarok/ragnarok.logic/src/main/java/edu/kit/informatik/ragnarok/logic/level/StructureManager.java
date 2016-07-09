@@ -304,7 +304,7 @@ public class StructureManager extends Configurable implements Iterator<Structure
 				String numString = String.valueOf(i);
 				if (this.isSettingSet(numString)) {
 					int bossId = this.getSettingValue(numString);
-					GameElement bossGameElement = GameElementFactory.getPrototype(bossId).create(new Vec());
+					GameElement bossGameElement = GameElementFactory.getPrototype(bossId).create(new Vec(), new int[] {});
 					if (bossGameElement instanceof Boss) {
 						Boss boss = (Boss) bossGameElement;
 						Structure bossStructure = boss.getBossStructure();

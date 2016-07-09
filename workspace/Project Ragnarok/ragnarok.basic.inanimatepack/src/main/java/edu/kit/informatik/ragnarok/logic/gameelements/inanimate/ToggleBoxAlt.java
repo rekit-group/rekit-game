@@ -22,7 +22,7 @@ public class ToggleBoxAlt extends ToggleBox {
 	}
 
 	@Override
-	public ToggleBox create(Vec startPos) {
+	public ToggleBox create(Vec startPos, int[] options) {
 		return new ToggleBoxAlt(startPos, new Vec(1), new RGBAColor(80, 80, 255, 255));
 	}
 }

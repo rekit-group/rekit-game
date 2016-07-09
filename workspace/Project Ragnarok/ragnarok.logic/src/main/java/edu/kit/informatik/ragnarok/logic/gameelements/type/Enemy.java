@@ -24,7 +24,7 @@ public abstract class Enemy extends Entity {
 	protected static final Random PRNG = new Random();
 
 	@Override
-	public abstract GameElement create(Vec startPos);
+	public abstract GameElement create(Vec startPos, int[] options);
 
 	protected Enemy(Vec startPos, Vec vel, Vec size) {
 		super(startPos, vel, size, Team.ENEMY);
