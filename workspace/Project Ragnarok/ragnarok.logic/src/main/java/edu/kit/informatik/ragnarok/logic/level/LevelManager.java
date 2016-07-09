@@ -26,7 +26,7 @@ public class LevelManager {
 	}
 
 	static {
-		levelMap = new HashMap<String, Level>();
+		levelMap = new HashMap<>();
 		LevelManager.loadFromFile();
 	}
 
@@ -68,8 +68,8 @@ public class LevelManager {
 		return id;
 	}
 
-	public static int getLastArcadeLevelId() {
-		return 2; // TODO could be dynamic?
+	public static int getNumberOfArcadeLevels() {
+		return 3; // TODO could be dynamic?
 	}
 
 	public static void contentChanged() {

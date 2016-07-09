@@ -7,6 +7,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.gui.menu.MenuActionItem;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.menu.MenuGrid;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.menu.MenuItem;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.menu.MenuSubMenu;
+import edu.kit.informatik.ragnarok.logic.level.LevelManager;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 
 public class MenuScene extends Scene {
@@ -35,7 +36,7 @@ public class MenuScene extends Scene {
 
 		MenuSubMenu about = new MenuSubMenu(this, "About");
 
-		for (int i = 0; i <= 20 /* LevelManager.getLastArcadeLevelId() */; i++) {
+		for (int i = 0; i < LevelManager.getNumberOfArcadeLevels(); i++) {
 			final int id = i;
 			MenuActionItem button = new MenuActionItem(this, String.valueOf(id + 1), () -> {
 				this.model.selectedArcadeId = id;
