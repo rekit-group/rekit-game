@@ -1,7 +1,5 @@
 package edu.kit.informatik.ragnarok.logic.parallax;
 
-import java.util.Random;
-
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
@@ -15,8 +13,6 @@ public abstract class ParallaxLayer {
 	private final Object sync = new Object();
 
 	protected Scene scene;
-
-	protected static final Random RNG = new Random();
 
 	protected float currentlyGeneratedUntil = 0;
 

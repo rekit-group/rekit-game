@@ -1,9 +1,9 @@
 package edu.kit.informatik.ragnarok.logic.gameelements;
 
 import java.util.HashMap;
-import java.util.Random;
 import java.util.Set;
 
+import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.EndTrigger;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateBox;
@@ -55,7 +55,6 @@ public class GameElementFactory {
 	public static void init(Scene scene) {
 		GameElementFactory.scene = scene;
 		GameElementFactory.load();
-		GameElementFactory.RNG = new Random();
 	}
 
 	/**
@@ -70,8 +69,6 @@ public class GameElementFactory {
 	 */
 	private static HashMap<String, GameElement> prototypes;
 
-	private static Random RNG;
-
 	public static GameElement getPrototype(String id) {
 		GameElement element = GameElementFactory.prototypes.get(id);
 		if (element != null) {
@@ -80,7 +77,7 @@ public class GameElementFactory {
 
 		GameElement[] elemArray = GameElementFactory.prototypeTypes.get(id);
 		if (elemArray != null) {
-			return elemArray[GameElementFactory.RNG.nextInt(elemArray.length)];
+			return elemArray[GameConf.PRNG.nextInt(elemArray.length)];
 		}
 		System.err.println("Error in GameElementFactory: Tried to get Prototype of GameElement with unknown ID " + id);
 		element = GameElementFactory.prototypes.get(InanimateBox.class.getName());

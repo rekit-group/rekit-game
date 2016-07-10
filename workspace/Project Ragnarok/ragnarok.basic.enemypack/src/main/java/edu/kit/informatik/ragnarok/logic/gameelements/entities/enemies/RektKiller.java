@@ -81,7 +81,7 @@ public class RektKiller extends Enemy {
 			throw new IllegalArgumentException("RektKiller must be give a number between 0 and 14");
 		}
 		// save initial attributes
-		int x = Enemy.PRNG.nextInt(Direction.values().length);
+		int x = GameConf.PRNG.nextInt(Direction.values().length);
 		this.setCurrentDirection(Direction.values()[x]);
 		this.setSides(sides);
 
@@ -237,7 +237,7 @@ public class RektKiller extends Enemy {
 
 	@Override
 	public Entity create(Vec startPos, String[] options) {
-		RektKiller inst = new RektKiller(startPos, Enemy.PRNG.nextInt(16));
+		RektKiller inst = new RektKiller(startPos, GameConf.PRNG.nextInt(16));
 
 		// if option 0 is given: set defined direction
 		if (options.length >= 1 && options[0] != null && options[0].matches("(\\+|-)?[0-9]+")) {

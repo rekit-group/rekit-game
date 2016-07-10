@@ -1,7 +1,5 @@
 package edu.kit.informatik.ragnarok.logic.level;
 
-import java.util.Random;
-
 import edu.kit.informatik.ragnarok.config.GameConf;
 
 public class Level {
@@ -13,13 +11,12 @@ public class Level {
 	public String stringIdentifier;
 	private int levelSeed;
 	private int highScore = 0;
-	private static Random RNG = new Random();
 
 	private LevelAssembler levelAssembler;
 
 	public Level(String stringIdentifier, int highScore) {
 		this.stringIdentifier = stringIdentifier;
-		this.levelSeed = Level.RNG.nextInt();
+		this.levelSeed = GameConf.PRNG.nextInt();
 		this.highScore = highScore;
 	}
 

@@ -104,7 +104,7 @@ public class Structure extends Configurable {
 				if (elemInfo == null) {
 					// Nothing set here:
 					// check if we must generate random coins
-					if (autoCoinSpawn && Math.random() > 0.95f) {
+					if (autoCoinSpawn && GameConf.PRNG.nextDouble() > 0.95f) {
 						GameElementFactory.generateCoin(levelX + x, aY);
 					}
 					continue;
@@ -120,7 +120,7 @@ public class Structure extends Configurable {
 					GameElementFactory.generate(splitted[0], levelX + x, aY, Arrays.copyOfRange(splitted, 1, splitted.length));
 				} else {
 					// otherwise check if we must generate random coins
-					if (autoCoinSpawn && Math.random() > 0.95f) {
+					if (autoCoinSpawn && GameConf.PRNG.nextDouble() > 0.95f) {
 						GameElementFactory.generateCoin(levelX + x, aY);
 					}
 				}

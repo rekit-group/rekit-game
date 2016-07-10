@@ -1,7 +1,6 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.inanimate;
 
-import java.util.Random;
-
+import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawner;
@@ -30,9 +29,6 @@ public class MovingBox extends DynamicInanimate {
 	private Vec[] rocketPolygonRelPts;
 
 	private float sizeX16;
-
-	private final static Random RNG = new Random();
-
 	private static ParticleSpawner sparkParticles = null;
 	static {
 		MovingBox.sparkParticles = new ParticleSpawner();
@@ -90,7 +86,7 @@ public class MovingBox extends DynamicInanimate {
 		this.timer.removeTime(deltaTime);
 		this.pos = this.currentStart.add(this.relativeTarget.multiply(this.timer.getProgress()));
 
-		if (MovingBox.RNG.nextFloat() > 0.6f) {
+		if (GameConf.PRNG.nextFloat() > 0.6f) {
 			MovingBox.sparkParticles.spawn(this.scene, this.getPos().addX(-5.5f * this.sizeX16).addY(this.getSize().getY() / 3));
 			MovingBox.sparkParticles.spawn(this.scene, this.getPos().addX(2.5f * this.sizeX16).addY(this.getSize().getY() / 3));
 		}

@@ -1,7 +1,6 @@
 package edu.kit.informatik.ragnarok.logic.level;
 
-import java.util.Random;
-
+import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 
 /**
@@ -32,7 +31,7 @@ public class LevelAssembler {
 	 *            the name of the level to be assembled.
 	 */
 	public LevelAssembler(String levelName) {
-		this(levelName, new Random().nextInt());
+		this(levelName, GameConf.PRNG.nextInt());
 	}
 
 	/**
@@ -76,7 +75,7 @@ public class LevelAssembler {
 
 	/**
 	 * Return if the level is infinite or not.
-	 * 
+	 *
 	 * @return true if the level is infinite, false otherwise.
 	 */
 	public boolean isInfinite() {

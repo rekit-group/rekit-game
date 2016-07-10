@@ -39,11 +39,11 @@ public class TriangulationLayer extends ParallaxLayer {
 			// determine which Point of the last Edge is further right, then:
 			// go even further (x-wise) and to the other side (y-wise)
 			if (this.lastIterationEdge.start.getX() >= this.lastIterationEdge.end.getX()) {
-				x = this.lastIterationEdge.start.getX() + ParallaxLayer.RNG.nextFloat() * 3 + 3;
+				x = this.lastIterationEdge.start.getX() + GameConf.PRNG.nextFloat() * 3 + 3;
 				y = this.lastIterationEdge.end.getY();
 				smallestX = this.lastIterationEdge.end.getX();
 			} else {
-				x = this.lastIterationEdge.end.getX() + ParallaxLayer.RNG.nextFloat() * 3 + 3;
+				x = this.lastIterationEdge.end.getX() + GameConf.PRNG.nextFloat() * 3 + 3;
 				y = this.lastIterationEdge.start.getY();
 				smallestX = this.lastIterationEdge.start.getX();
 			}
@@ -79,7 +79,7 @@ public class TriangulationLayer extends ParallaxLayer {
 
 	public void recursiveTriangulation(List<Triangle> yet, int depthLeft, Triangle triangle) {
 		// is number between 0 and 2 (inclusively)
-		int randCorner = ParallaxLayer.RNG.nextInt(3);
+		int randCorner = GameConf.PRNG.nextInt(3);
 
 		// get corresponding corner
 		Vec separatingCorner = triangle.getCorner(randCorner);
@@ -169,7 +169,7 @@ public class TriangulationLayer extends ParallaxLayer {
 		}
 	}
 
-	private class Edge {
+	private static class Edge {
 		private Vec start;
 		private Vec end;
 
@@ -179,7 +179,7 @@ public class TriangulationLayer extends ParallaxLayer {
 		}
 
 		public Vec getRandomVecInBetween() {
-			return this.start.add((this.end.add(this.start.multiply(-1))).multiply(0.4f + ParallaxLayer.RNG.nextFloat() / 5f));
+			return this.start.add((this.end.add(this.start.multiply(-1))).multiply(0.4f + GameConf.PRNG.nextFloat() / 5f));
 		}
 	}
 

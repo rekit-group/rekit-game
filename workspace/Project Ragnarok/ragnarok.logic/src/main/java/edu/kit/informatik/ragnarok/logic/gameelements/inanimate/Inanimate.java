@@ -62,7 +62,7 @@ public class Inanimate extends GameElement {
 		}
 	}
 
-	public static Inanimate getPrototype() {
+	public synchronized static Inanimate getPrototype() {
 		if (Inanimate.instance == null) {
 			Inanimate.instance = new Inanimate(new Vec(), new Vec(1, 1), new RGBAColor(0, 0, 0, 0));
 		}

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import edu.kit.informatik.ragnarok.logic.level.Level;
 import edu.kit.informatik.ragnarok.logic.level.Structure;
 import edu.kit.informatik.ragnarok.logic.level.StructureManager;
 import edu.kit.informatik.ragnarok.logic.level.parser.token.Token;
@@ -12,19 +13,36 @@ import edu.kit.informatik.ragnarok.logic.level.parser.token.TokenType;
 import edu.kit.informatik.ragnarok.logic.level.parser.token.Tokenizer;
 import edu.kit.informatik.ragnarok.logic.level.parser.token.UnexpectedTokenException;
 
-class FileParser extends LevelParser {
-
+/**
+ * This class directly parses an {@link Level} from an {@link String} to a
+ * {@link StructureManager}
+ *
+ * @author Dominik Fuchß
+ *
+ */
+class StringParser extends LevelParser {
+	/**
+	 * The tokenizer
+	 */
 	private Tokenizer tokenizer;
 	/** The look ahead Token. */
 	private Token lookAhead;
 
-	FileParser(String input) {
+	/**
+	 * Instantiate the parser by the input string
+	 *
+	 * @param input
+	 */
+	StringParser(String input) {
 		super(input);
 		this.tokenizer = new Tokenizer(this.input);
 	}
 
 	@Override
 	public void parse(StructureManager manager) {
+		if (manager == null) {
+			throw new IllegalArgumentException("manager cannot be null");
+		}
 		this.lookAhead = this.tokenizer.nextToken();
 		while (this.isToken(TokenType.SETTING) || this.isToken(TokenType.BOSS_SETTING) || this.isToken(TokenType.ALIAS)) {
 			if (this.isToken(TokenType.ALIAS)) {

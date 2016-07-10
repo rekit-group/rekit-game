@@ -3,6 +3,7 @@ package edu.kit.informatik.ragnarok.logic.parallax;
 import java.util.LinkedList;
 import java.util.List;
 
+import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBAColor;
 
@@ -20,7 +21,7 @@ public class HeapLayer extends ParallaxLayer {
 
 	public HeapLayer(HeapElement prototype, float distanceFromFront) {
 		super(distanceFromFront);
-		this.elems = new LinkedList<HeapElement>();
+		this.elems = new LinkedList<>();
 		this.prototype = prototype;
 	}
 
@@ -68,6 +69,6 @@ public class HeapLayer extends ParallaxLayer {
 	}
 
 	public static float calcWithVariance(float mu, float sigma) {
-		return mu + (ParallaxLayer.RNG.nextFloat() * 2 * sigma) - sigma;
+		return mu + (GameConf.PRNG.nextFloat() * 2 * sigma) - sigma;
 	}
 }

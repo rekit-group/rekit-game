@@ -1,5 +1,6 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.inanimate;
 
+import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawner;
@@ -73,8 +74,8 @@ public class InanimateFloor extends Inanimate {
 	}
 
 	public static Inanimate staticCreate(Vec pos) {
-		int randColG = (int) (Math.random() * 100 + 100);
-		int randColRB = (int) (Math.random() * 40 + 30);
+		int randColG = (int) (GameConf.PRNG.nextDouble() * 100 + 100);
+		int randColRB = (int) (GameConf.PRNG.nextDouble() * 40 + 30);
 		return new InanimateFloor(pos, new Vec(1, 1), new RGBAColor(randColRB, randColG, randColRB, 255));
 	}
 

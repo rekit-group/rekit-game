@@ -1,5 +1,6 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities.particles;
 
+import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.Polygon;
 import edu.kit.informatik.ragnarok.primitives.Vec;
@@ -52,10 +53,10 @@ public class ParticleSpawner {
 
 	public void spawn(Scene scene, Vec pos) {
 
-		int randomAmount = (int) (this.amountMin + Math.random() * (this.amountMax - this.amountMin));
+		int randomAmount = (int) (this.amountMin + GameConf.PRNG.nextDouble() * (this.amountMax - this.amountMin));
 
 		for (int i = 0; i < randomAmount; i++) {
-			float randomTime = (float) (this.timeMin + Math.random() * (this.timeMax - this.timeMin));
+			float randomTime = (float) (this.timeMin + GameConf.PRNG.nextDouble() * (this.timeMax - this.timeMin));
 
 			this.polygon.moveTo(pos);
 

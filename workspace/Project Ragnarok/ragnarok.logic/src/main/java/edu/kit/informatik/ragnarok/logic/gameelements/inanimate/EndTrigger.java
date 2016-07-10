@@ -1,7 +1,5 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.inanimate;
 
-import java.util.Random;
-
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
@@ -46,16 +44,14 @@ public class EndTrigger extends InanimateTrigger {
 		Vec lastAmplitude;
 		Vec amplitude = new Vec();
 
-		Random rng = new Random();
-
 		for (int i = 0; i < EndTrigger.PORTAL_NUM; i++) {
-			Vec frequency = new Vec(rng.nextFloat() * 8 + 6, rng.nextFloat() * 8 + 6);
+			Vec frequency = new Vec(GameConf.PRNG.nextFloat() * 8 + 6, GameConf.PRNG.nextFloat() * 8 + 6);
 			lastAmplitude = amplitude;
-			amplitude = new Vec(rng.nextFloat() / 20 + 0.04f, rng.nextFloat() / 20 + 0.1f);
-			Vec phase = new Vec(rng.nextFloat() * 2 + 1, rng.nextFloat() * 2 + 1);
+			amplitude = new Vec(GameConf.PRNG.nextFloat() / 20 + 0.04f, GameConf.PRNG.nextFloat() / 20 + 0.1f);
+			Vec phase = new Vec(GameConf.PRNG.nextFloat() * 2 + 1, GameConf.PRNG.nextFloat() * 2 + 1);
 
-			RGBAColor color = new RGBAColor((int) (rng.nextFloat() * 50), (int) (rng.nextFloat() * 30 + 7 * i), (int) (rng.nextFloat() * 80 + 175),
-					10 * i);
+			RGBAColor color = new RGBAColor((int) (GameConf.PRNG.nextFloat() * 50), (int) (GameConf.PRNG.nextFloat() * 30 + 7 * i),
+					(int) (GameConf.PRNG.nextFloat() * 80 + 175), 10 * i);
 
 			size = size.add(lastAmplitude.add(amplitude).multiply(-1f));
 
@@ -96,7 +92,7 @@ public class EndTrigger extends InanimateTrigger {
 			// some weird "amplitude * sin(phase + frequency * x)" action
 			this.currentSize = this.getSize().add(this.amplitude.multiply(this.phase.add(this.frequency.multiply(this.x)).sin()));
 
-			float randomAngle = (float) (Math.random() * 2 * Math.PI);
+			float randomAngle = (float) (GameConf.PRNG.nextDouble() * 2 * Math.PI);
 			float r = this.currentSize.getX() * 2;
 
 			float x = (float) (Math.cos(randomAngle) * r);
@@ -136,7 +132,7 @@ public class EndTrigger extends InanimateTrigger {
 		return new EndTrigger(startPos, this.getSize());
 	}
 
-	public static Inanimate getPrototype() {
+	public synchronized static Inanimate getPrototype() {
 		if (EndTrigger.instance == null) {
 			EndTrigger.instance = new EndTrigger(new Vec(), new Vec(1.5f, GameConf.GRID_H));
 		}

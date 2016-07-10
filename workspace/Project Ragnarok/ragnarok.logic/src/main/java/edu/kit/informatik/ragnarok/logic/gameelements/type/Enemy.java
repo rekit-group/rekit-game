@@ -1,6 +1,5 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.type;
 
-import java.util.Random;
 import java.util.Set;
 
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
@@ -20,8 +19,6 @@ public abstract class Enemy extends Entity {
 	protected Enemy() {
 		super(Team.ENEMY);
 	}
-
-	protected static final Random PRNG = new Random();
 
 	@Override
 	public abstract GameElement create(Vec startPos, String[] options);

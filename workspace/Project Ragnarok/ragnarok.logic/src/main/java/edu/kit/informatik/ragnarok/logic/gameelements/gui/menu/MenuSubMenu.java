@@ -33,7 +33,8 @@ public class MenuSubMenu extends MenuItem {
 
 	public void removeItem(MenuItem i) {
 		i.setParent(null);
-		this.removeItem(i);
+		// TODO That cant be right
+		// this.removeItem(i);
 		this.calcItemPos();
 	}
 

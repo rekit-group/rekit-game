@@ -3,6 +3,12 @@ package edu.kit.informatik.ragnarok.logic.level.parser.token;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This class represents a token for the LevelLanguage
+ *
+ * @author Dominik Fuchß
+ * @see TokenType
+ */
 public class Token {
 
 	/** Map for Special Identifiers to Special TokenType. */
@@ -59,6 +65,13 @@ public class Token {
 		return type;
 	}
 
+	/**
+	 * Find value from content
+	 * 
+	 * @param input
+	 *            the input
+	 * @return the type
+	 */
 	private TokenType determinateByContent(String input) {
 		if (input.matches("#ALIAS::(\\w|(\\+|-)?\\d|\\.)+->(\\w|\\d|\\.)+")) {
 			return TokenType.ALIAS;

@@ -157,8 +157,8 @@ public class BossStructure extends Structure {
 				ThreadUtils.sleep(GameConf.LOGIC_DELTA);
 				// phase one: show explosions
 				if (timer.getProgress() < 0.4) {
-					if (Math.random() > 0.9) {
-						Vec randPos = BossStructure.this.boss.getPos().add(new Vec((float) Math.random() * 2 - 1, (float) Math.random() * 2f - 1));
+					if (GameConf.PRNG.nextDouble() > 0.9) {
+						Vec randPos = BossStructure.this.boss.getPos().add(new Vec((float) GameConf.PRNG.nextDouble() * 2 - 1, (float) GameConf.PRNG.nextDouble() * 2f - 1));
 						BossStructure.explosionParticles.spawn(scene, randPos);
 					}
 				}
@@ -168,14 +168,14 @@ public class BossStructure extends Structure {
 					scene.removeGameElement(BossStructure.this.boss);
 
 					// show fireworks
-					if (Math.random() > 0.9) {
+					if (GameConf.PRNG.nextDouble() > 0.9) {
 						float deltaX = GameConf.GRID_W / 2f;
 						float midX = BossStructure.this.levelX + deltaX;
 
 						float deltaY = GameConf.GRID_H / 2f;
 						float midY = deltaY;
 
-						Vec randPos = new Vec(midX + (float) Math.random() * deltaX * 2 - deltaX, midY + (float) Math.random() * deltaY * 2 - deltaY);
+						Vec randPos = new Vec(midX + (float) GameConf.PRNG.nextDouble() * deltaX * 2 - deltaX, midY + (float) GameConf.PRNG.nextDouble() * deltaY * 2 - deltaY);
 						BossStructure.fireworkParticles.spawn(scene, randPos);
 					}
 

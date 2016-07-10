@@ -32,12 +32,12 @@ public class Slurp extends Enemy {
 		this.slurpDurps = new ArrayList<>();
 		for (int i = 0; i < 15; i++) {
 			// randomize position, and pulsing options
-			float randX = Enemy.PRNG.nextFloat() * (sizeX) - (sizeX / 2.0f);
-			float randY = Enemy.PRNG.nextFloat() * (sizeY) - (sizeY / 2.0f);
-			float baseSize = 0.2f + Enemy.PRNG.nextFloat() / 2f;
-			float frequency = Enemy.PRNG.nextFloat() * 10f;
-			float amplitude = Enemy.PRNG.nextFloat() / 4.0f;
-			float phase = (float) (Enemy.PRNG.nextFloat() * 2 * Math.PI);
+			float randX = GameConf.PRNG.nextFloat() * (sizeX) - (sizeX / 2.0f);
+			float randY = GameConf.PRNG.nextFloat() * (sizeY) - (sizeY / 2.0f);
+			float baseSize = 0.2f + GameConf.PRNG.nextFloat() / 2f;
+			float frequency = GameConf.PRNG.nextFloat() * 10f;
+			float amplitude = GameConf.PRNG.nextFloat() / 4.0f;
+			float phase = (float) (GameConf.PRNG.nextFloat() * 2 * Math.PI);
 			// add SlurpDurp to List
 			this.slurpDurps.add(new SlurpDurp(this.getPos(), new Vec(randX, randY), baseSize, frequency, amplitude, phase));
 		}
@@ -76,7 +76,7 @@ public class Slurp extends Enemy {
 		}
 
 		// Randomly determine if SlurpDurp should pop off
-		if (Math.random() >= (1.0 - GameConf.SLURP_POPOFFS_PER_SEC * deltaTime)) {
+		if (GameConf.PRNG.nextDouble() >= (1.0 - GameConf.SLURP_POPOFFS_PER_SEC * deltaTime)) {
 			// get and remove one SlurpDurp from list
 			SlurpDurp poppedOf = this.slurpDurps.remove(0);
 

@@ -1,5 +1,6 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.inanimate;
 
+import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBAColor;
@@ -25,7 +26,7 @@ public class InanimateBox extends Inanimate {
 	}
 
 	public static Inanimate staticCreate(Vec pos) {
-		int randCol = (int) (Math.random() * 60 + 50);
+		int randCol = (int) (GameConf.PRNG.nextDouble() * 60 + 50);
 		return new InanimateBox(pos, new Vec(1, 1), new RGBAColor(randCol, randCol, randCol, 255));
 	}
 

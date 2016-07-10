@@ -1,5 +1,7 @@
 package edu.kit.informatik.ragnarok.config;
 
+import java.util.Random;
+
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 import edu.kit.informatik.ragnarok.util.TextOptions;
@@ -23,6 +25,9 @@ public class GameConf implements Visitable {
 	 */
 	private GameConf() {
 	}
+
+	@NoVisit
+	public static final Random PRNG = new Random();
 
 	@NoVisit
 	public static final boolean DEBUG = true;

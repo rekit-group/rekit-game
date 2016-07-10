@@ -74,7 +74,7 @@ public class RektSmasher extends Boss {
 		}
 
 		// Randomly change direction sometimes
-		if (Math.random() > 0.8) {
+		if (GameConf.PRNG.nextDouble() > 0.8) {
 			newDir = Direction.getRandom();
 		}
 
@@ -85,7 +85,7 @@ public class RektSmasher extends Boss {
 		this.innerRektKiller.setCurrentDirection(newDir);
 
 		// Randomly remove spikes on colliding side sometimes
-		if (Math.random() > 0.8 && this.innerRektKiller.hasSide(dir.getOpposite())) {
+		if (GameConf.PRNG.nextDouble() > 0.8 && this.innerRektKiller.hasSide(dir.getOpposite())) {
 			// remove side
 			this.innerRektKiller.setSide(dir.getOpposite(), false);
 

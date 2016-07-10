@@ -1,5 +1,6 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities.particles;
 
+import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.primitives.ProgressDependency;
 
 /**
@@ -86,12 +87,13 @@ public class ParticleSpawnerOption {
 	public ProgressDependency randomizeProgressDependency() {
 		// calculate random start value between startMin and startMax
 		// (only if startMin != startMax)
-		float start = this.startMin == this.startMax ? this.startMin : (float) (this.startMin + Math.random() * (this.startMax - this.startMin));
+		float start = this.startMin == this.startMax ? this.startMin
+				: (float) (this.startMin + GameConf.PRNG.nextDouble() * (this.startMax - this.startMin));
 
 		// calculate random delta value between deltaMin and deltaMax
 		// (only if deltaMin != deltaMax)
 		float delta = Math.abs(this.deltaMin - this.deltaMax) < 1E-8 ? this.deltaMin
-				: (float) (this.deltaMin + Math.random() * (this.deltaMax - this.deltaMin));
+				: (float) (this.deltaMin + GameConf.PRNG.nextDouble() * (this.deltaMax - this.deltaMin));
 
 		// we don't wanna optimize case delta=0 => start+delta = delta,
 		// ProgressDependency does that

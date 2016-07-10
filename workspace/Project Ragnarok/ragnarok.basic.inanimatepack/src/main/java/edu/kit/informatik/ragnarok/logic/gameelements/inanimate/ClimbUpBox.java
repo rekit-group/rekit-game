@@ -2,7 +2,6 @@ package edu.kit.informatik.ragnarok.logic.gameelements.inanimate;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
@@ -40,8 +39,6 @@ public class ClimbUpBox extends DynamicInanimate {
 	private RGBAColor darkCol;
 	private static RGBColor energyCol = new RGBColor(255, 100, 0);
 	private TimeDependency timer;
-
-	private final static Random RNG = new Random();
 
 	private static ParticleSpawner particles = null;
 
@@ -193,7 +190,7 @@ public class ClimbUpBox extends DynamicInanimate {
 			f.drawRectangle(ClimbUpBox.this.getPos().addY(0.4f), ClimbUpBox.this.getSize().multiply(1, 0.2f), ClimbUpBox.energyCol);
 
 			Vec pos = this.parent.getPos().addY(this.parent.getSize().getY() / 2f + 1).addX(-0.5f);
-			pos = pos.addX(this.parent.getSize().getX() * ClimbUpBox.RNG.nextFloat());
+			pos = pos.addX(this.parent.getSize().getX() * GameConf.PRNG.nextFloat());
 
 			ClimbUpBox.particles.spawn(this.parent.scene, pos);
 		}

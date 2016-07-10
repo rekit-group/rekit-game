@@ -1,5 +1,7 @@
 package edu.kit.informatik.ragnarok.primitives;
 
+import edu.kit.informatik.ragnarok.config.GameConf;
+
 /**
  * Representation of the 4 directions there are
  *
@@ -126,10 +128,10 @@ public enum Direction {
 
 	/**
 	 * Get a random Direction
-	 * 
+	 *
 	 * @return the direction or {@code null} if none defined
 	 */
 	public static Direction getRandom() {
-		return Direction.values()[(int) (Math.random() * Direction.values().length)];
+		return Direction.values()[(int) (GameConf.PRNG.nextDouble() * Direction.values().length)];
 	}
 }
