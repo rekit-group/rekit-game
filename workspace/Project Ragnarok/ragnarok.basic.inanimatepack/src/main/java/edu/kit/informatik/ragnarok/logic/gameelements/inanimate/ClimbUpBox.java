@@ -63,7 +63,7 @@ public class ClimbUpBox extends DynamicInanimate {
 		super();
 	}
 
-	protected ClimbUpBox(Vec pos, Vec size, RGBAColor color) {
+	protected ClimbUpBox(Vec pos, Vec size, RGBAColor color, long offset) {
 		super(pos, size, color);
 
 		// create inner InanimateBox with given position
@@ -77,7 +77,9 @@ public class ClimbUpBox extends DynamicInanimate {
 		this.strategies.put(0, new NoClimb(this));
 		this.strategies.put(1, new BoostClimb(this));
 		this.strategy = this.strategies.get(0);
-
+		
+		this.offset = offset;
+		System.out.println(this.scene);
 		this.timer = new TimeDependency(ClimbUpBox.PERIOD);
 	}
 
@@ -90,7 +92,11 @@ public class ClimbUpBox extends DynamicInanimate {
 		long nowTime = this.scene.getTime();
 		// init lastTime in first run
 		if (this.lastTime == -1) {
-			this.lastTime = nowTime;
+			this.lastTime = nowTime - this.offset - ((nowTime) % ClimbUpBox.PERIOD);
+			if ((nowTime / ClimbUpBox.PERIOD) % 2 == 0) {
+				nextStrategy();
+			}
+			System.out.println("calced " + (nowTime - this.lastTime));
 		}
 		// update timer
 		this.timer.removeTime(nowTime - this.lastTime);
@@ -99,12 +105,14 @@ public class ClimbUpBox extends DynamicInanimate {
 
 		// Get new strategy from strategy map
 		if (this.timer.timeUp()) {
-			this.current = (this.current + 1) % this.strategies.size();
-			this.strategy = this.strategies.get(this.current);
-
+			nextStrategy();
 			this.timer.reset();
 		}
-
+	}
+	
+	private void nextStrategy() {
+		this.current = (this.current + 1) % this.strategies.size();
+		this.strategy = this.strategies.get(this.current);
 	}
 
 	@Override
@@ -136,7 +144,11 @@ public class ClimbUpBox extends DynamicInanimate {
 
 	@Override
 	public ClimbUpBox create(Vec startPos, String[] options) {
-		return new ClimbUpBox(startPos, new Vec(1), new RGBAColor(110, 110, 110, 255));
+		long offset = 0; 
+		if (options.length >= 1 && options[0] != null && options[0].matches("(\\+|-)?[1]")) {
+			offset = PERIOD;
+		}
+		return new ClimbUpBox(startPos, new Vec(1), new RGBAColor(110, 110, 110, 255), offset);
 	}
 
 	private abstract class ClimbBoxStrategy {

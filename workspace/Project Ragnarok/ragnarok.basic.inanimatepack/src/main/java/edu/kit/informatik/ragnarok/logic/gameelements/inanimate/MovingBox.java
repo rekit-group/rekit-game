@@ -50,7 +50,7 @@ public class MovingBox extends DynamicInanimate {
 		super();
 	}
 
-	protected MovingBox(Vec pos, int dist) {
+	protected MovingBox(Vec pos, int dist, boolean offset) {
 		super(pos, new Vec(1, 0.6f), new RGBAColor(100, 100, 100, 255));
 
 		// precalculate relative points for rocket polygon
@@ -71,7 +71,9 @@ public class MovingBox extends DynamicInanimate {
 		this.darkCol = this.color.darken(0.8f);
 
 		// initialize movement timer
-		this.timer = new TimeDependency(dist / (2 * MovingBox.SPEED));
+		float period = dist / (2 * MovingBox.SPEED);
+		this.timer = new TimeDependency(period);
+		this.timer.removeTime(offset ? period / 2f : 0);
 	}
 
 	@Override
@@ -114,10 +116,14 @@ public class MovingBox extends DynamicInanimate {
 	@Override
 	public MovingBox create(Vec startPos, String[] options) {
 		int dist = 1;
+		boolean offset = false;
 		if (options.length >= 1 && options[0] != null && options[0].matches("(\\+|-)?[0-9]+")) {
 			dist = Integer.parseInt(options[0]);
 		}
-		MovingBox inst = new MovingBox(startPos, dist);
+		if (options.length >= 2 && options[1] != null && options[1].matches("(\\+|-)?[1]")) {
+			offset = true;
+		}
+		MovingBox inst = new MovingBox(startPos, dist, offset);
 		return inst;
 	}
 }
