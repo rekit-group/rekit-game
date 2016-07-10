@@ -1,7 +1,7 @@
 package edu.kit.informatik.ragnarok.sound.sound;
 
 public enum SoundType {
-	Coin("coin", 4);
+	Coin("collect_coin", 6);
 
 	protected final String fileName;
 	protected final int variations;

@@ -6,6 +6,8 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Pickup;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Vec;
+import edu.kit.informatik.ragnarok.sound.sound.Sound;
+import edu.kit.informatik.ragnarok.sound.sound.SoundType;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 
 /**
@@ -54,6 +56,7 @@ public class Coin extends Pickup {
 		if (this.team.isHostile(element.getTeam())) {
 			element.addPoints(10);
 			this.addDamage(1);
+			Sound.play(SoundType.Coin);
 		}
 	}
 
