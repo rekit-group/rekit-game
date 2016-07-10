@@ -63,6 +63,9 @@ public class Token {
 		if (input.matches("#ALIAS::(\\w|(\\+|-)?\\d|\\.)+->(\\w|\\d|\\.)+")) {
 			return TokenType.ALIAS;
 		}
+		if (input.matches("#BOSS_SETTING::(\\w|(\\+|-)?\\d|\\.)+->(\\w|\\d|\\.)+")) {
+			return TokenType.BOSS_SETTING;
+		}
 		if (input.matches("#SETTING::(\\w|(\\+|-)?\\d|\\.)+->(\\w|\\d|\\.)+")) {
 			return TokenType.SETTING;
 		}

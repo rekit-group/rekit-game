@@ -276,7 +276,7 @@ public class StructureManager extends Configurable implements Iterator<Structure
 	 * @author Angelo Aracri
 	 * @version 1.0
 	 */
-	private class BossSettings extends Configurable {
+	public class BossSettings extends Configurable {
 
 		/**
 		 * Uses information stored in the upper instance of
@@ -303,16 +303,16 @@ public class StructureManager extends Configurable implements Iterator<Structure
 		 */
 		public Structure getNextOrNull(int fromX, int toX) {
 			for (int i = fromX; i <= toX; i++) {
-				String numString = String.valueOf(i);
-				if (this.isSettingSet(numString)) {
-					GameElement bossGameElement = GameElementFactory.getPrototype(this.getSettingValue(numString)).create(new Vec(), new String[] {});
+				String setting = "AT" + i;
+				if (this.isSettingSet(setting)) {
+					GameElement bossGameElement = GameElementFactory.getPrototype(this.getSettingValue(setting)).create(new Vec(), new String[] {});
 					if (bossGameElement instanceof Boss) {
 						Boss boss = (Boss) bossGameElement;
 						Structure bossStructure = boss.getBossStructure();
 						StructureManager.this.unitsBuilt += bossStructure.getWidth();
 						return bossStructure;
 					} else {
-						System.err.println("Error while spawning Boss: " + this.getSettingValue(numString) + " is not a BossID");
+						System.err.println("Error while spawning Boss: " + this.getSettingValue(setting) + " is not a BossID");
 					}
 
 				}

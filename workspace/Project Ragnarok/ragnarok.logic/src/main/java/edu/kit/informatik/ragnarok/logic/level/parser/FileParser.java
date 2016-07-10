@@ -26,11 +26,13 @@ class FileParser extends LevelParser {
 	@Override
 	public void parse(StructureManager manager) {
 		this.lookAhead = this.tokenizer.nextToken();
-		while (this.isToken(TokenType.SETTING) || this.isToken(TokenType.ALIAS)) {
+		while (this.isToken(TokenType.SETTING) || this.isToken(TokenType.BOSS_SETTING) || this.isToken(TokenType.ALIAS)) {
 			if (this.isToken(TokenType.ALIAS)) {
 				this.parseAlias(manager);
-			} else {
+			} else if (this.isToken(TokenType.SETTING)) {
 				this.parseSetting(manager);
+			} else {
+				this.parseBossSetting(manager);
 			}
 		}
 		while (this.isToken(TokenType.BEGIN)) {
@@ -80,9 +82,16 @@ class FileParser extends LevelParser {
 	}
 
 	private void parseSetting(StructureManager manager) {
-		Token alias = this.readToken(TokenType.SETTING);
-		String[] mapping = alias.getValue().split("::")[1].split("->");
+		Token setting = this.readToken(TokenType.SETTING);
+		String[] mapping = setting.getValue().split("::")[1].split("->");
 		manager.setSetting(mapping[0], mapping[1]);
+
+	}
+
+	private void parseBossSetting(StructureManager manager) {
+		Token setting = this.readToken(TokenType.BOSS_SETTING);
+		String[] mapping = setting.getValue().split("::")[1].split("->");
+		manager.bossSettings.setSetting(mapping[0], mapping[1]);
 
 	}
 

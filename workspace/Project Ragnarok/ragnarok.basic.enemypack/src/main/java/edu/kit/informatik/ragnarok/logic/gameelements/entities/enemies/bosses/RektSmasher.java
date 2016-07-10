@@ -170,7 +170,7 @@ public class RektSmasher extends Boss {
 						{ 0 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 } } };
 		for (int i = 0; i < oldStruct.length; i++) {
 			String[] l = new String[oldStruct[i].length];
-			for (int j = 0; j < oldStruct[i].length; i++) {
+			for (int j = 0; j < oldStruct[i].length; j++) {
 				if (oldStruct[i][j][0] == 0) {
 					l[j] = null;
 				} else if (oldStruct[i][j][0] == 1) {
