@@ -43,6 +43,7 @@ class StringParser extends LevelParser {
 		if (manager == null) {
 			throw new IllegalArgumentException("manager cannot be null");
 		}
+		System.out.println("BEGIN OF PARSING");
 		this.lookAhead = this.tokenizer.nextToken();
 		while (this.isToken(TokenType.SETTING) || this.isToken(TokenType.BOSS_SETTING) || this.isToken(TokenType.ALIAS)) {
 			if (this.isToken(TokenType.ALIAS)) {
@@ -56,12 +57,13 @@ class StringParser extends LevelParser {
 		while (this.isToken(TokenType.BEGIN)) {
 			this.parseLevel(manager);
 		}
+		System.out.println("END OF PARSING");
 		this.readToken(TokenType.EOS);
 		this.reset();
 	}
 
 	private void parseLevel(StructureManager manager) {
-		System.out.println("parsing level part");
+		System.out.println("Begin parsing level part");
 		this.readToken(TokenType.BEGIN);
 		List<String[]> lines = new LinkedList<>();
 		while (this.isToken(TokenType.BEGIN)) {
@@ -70,7 +72,7 @@ class StringParser extends LevelParser {
 		this.readToken(TokenType.END);
 		Structure s = new Structure(lines, manager.getAlias());
 		manager.addStructure(s);
-		System.out.println("end parsing level part");
+		System.out.println("End parsing level part");
 
 	}
 
@@ -97,12 +99,14 @@ class StringParser extends LevelParser {
 		Token alias = this.readToken(TokenType.ALIAS);
 		String[] mapping = alias.getValue().split("::")[1].split("->");
 		manager.setAlias(mapping[0], mapping[1]);
+		System.out.println("Set ALIAS " + Arrays.toString(mapping));
 	}
 
 	private void parseSetting(StructureManager manager) {
 		Token setting = this.readToken(TokenType.SETTING);
 		String[] mapping = setting.getValue().split("::")[1].split("->");
 		manager.setSetting(mapping[0], mapping[1]);
+		System.out.println("Set SETTING " + Arrays.toString(mapping));
 
 	}
 
@@ -110,6 +114,7 @@ class StringParser extends LevelParser {
 		Token setting = this.readToken(TokenType.BOSS_SETTING);
 		String[] mapping = setting.getValue().split("::")[1].split("->");
 		manager.bossSettings.setSetting(mapping[0], mapping[1]);
+		System.out.println("Set BOSS_SETTING " + Arrays.toString(mapping));
 
 	}
 
