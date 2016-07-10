@@ -3,19 +3,19 @@
   <parent>
     <groupId>edu.kit.informatik</groupId>
     <artifactId>ragnarok</artifactId>
-    <version>0.2-ALPHA</version>
+    <version>0.3-ALPHA</version>
   </parent>
   <artifactId>ragnarok.control</artifactId>
   <dependencies>
   	<dependency>
   		<groupId>edu.kit.informatik</groupId>
   		<artifactId>ragnarok.gui</artifactId>
-  		<version>0.2-ALPHA</version>
+  		<version>${ragnarok.version}</version>
   	</dependency>
   	<dependency>
   		<groupId>edu.kit.informatik</groupId>
   		<artifactId>ragnarok.logic</artifactId>
-  		<version>0.2-ALPHA</version>
+  		<version>${ragnarok.version}</version>
   	</dependency>
   </dependencies>
 </project>

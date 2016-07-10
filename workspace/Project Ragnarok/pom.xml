@@ -3,12 +3,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>edu.kit.informatik</groupId>
 	<artifactId>ragnarok</artifactId>
-	<version>0.2-ALPHA</version>
+	<version>0.3-ALPHA</version>
 	<packaging>pom</packaging>
 	<name>Project Ragnarok</name>
 	<properties>
 		<main.class>edu.kit.informatik.ragnarok.Main</main.class>
 		<swt.version>4.5.2</swt.version>
+		<ragnarok.version>0.3-ALPHA</ragnarok.version>
 		<opengl.version>3.0.0</opengl.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
