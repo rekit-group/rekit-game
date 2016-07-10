@@ -11,6 +11,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
+import javax.sound.sampled.Line;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
@@ -24,10 +25,11 @@ public abstract class Sound {
 		int variations = type.variations;
 
 		int randomVariation = Sound.RNG.nextInt(variations);
-
+		
+		
+		
 		Clip clip = Sound.getClip(type.fileName + "_" + randomVariation);
 
-		clip.start();
 	}
 
 	private static Clip getClip(String path) {
@@ -45,6 +47,7 @@ public abstract class Sound {
 						audioInputStream);
 
 				DataLine.Info info = new DataLine.Info(Clip.class, format);
+				
 				Clip clip = (Clip) AudioSystem.getLine(info);
 				clip.open(audioInputStream);
 				clip.start();

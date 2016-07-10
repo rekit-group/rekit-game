@@ -37,5 +37,10 @@
   		<artifactId>ragnarok.basic.inanimatepack</artifactId>
   		<version>0.2-ALPHA</version>
   	</dependency>
+  	<dependency>
+  		<groupId>edu.kit.informatik</groupId>
+  		<artifactId>ragnarok.sound</artifactId>
+  		<version>0.2-ALPHA</version>
+  	</dependency>
   </dependencies>
 </project>
