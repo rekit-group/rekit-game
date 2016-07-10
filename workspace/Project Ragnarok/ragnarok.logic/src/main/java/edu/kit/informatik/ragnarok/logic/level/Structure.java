@@ -101,8 +101,16 @@ public class Structure extends Configurable {
 				int aY = (GameConf.GRID_H - this.structure.size()) + y;
 
 				String elemInfo = this.structure.get(y)[x];
-				String[] splitted = elemInfo.split(":");
+				if (elemInfo == null) {
+					// Nothing set here:
+					// check if we must generate random coins
+					if (autoCoinSpawn && Math.random() > 0.95f) {
+						GameElementFactory.generateCoin(levelX + x, aY);
+					}
+					continue;
+				}
 
+				String[] splitted = elemInfo.split(":");
 				if (splitted[0].matches("(-|\\+)?[0-9]+")) {
 					splitted[0] = this.alias(splitted[0]);
 				}
@@ -130,7 +138,11 @@ public class Structure extends Configurable {
 	}
 
 	private String alias(String string) {
-		return this.alias.get(string);
+		String alias = this.alias.get(string);
+		if (alias == null && !"0".equals(string)) {
+			System.err.println("Waring: No alias found for ID " + string);
+		}
+		return alias;
 	}
 
 	/**

@@ -59,6 +59,10 @@ public abstract class Configurable {
 		if (!this.settings.containsKey(settingName)) {
 			return false;
 		}
+		String setting = this.settings.get(settingName);
+		if (setting.matches("(true|false)")) {
+			return setting.equals("true");
+		}
 		return this.settings.get(settingName) != null;
 	}
 
