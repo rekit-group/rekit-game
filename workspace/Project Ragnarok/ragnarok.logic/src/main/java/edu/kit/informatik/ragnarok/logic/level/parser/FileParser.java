@@ -1,28 +1,121 @@
 package edu.kit.informatik.ragnarok.logic.level.parser;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
+import edu.kit.informatik.ragnarok.logic.level.Structure;
 import edu.kit.informatik.ragnarok.logic.level.StructureManager;
+import edu.kit.informatik.ragnarok.logic.level.parser.token.Token;
+import edu.kit.informatik.ragnarok.logic.level.parser.token.TokenType;
+import edu.kit.informatik.ragnarok.logic.level.parser.token.Tokenizer;
+import edu.kit.informatik.ragnarok.logic.level.parser.token.UnexpectedTokenException;
 
-public class FileParser extends Parser {
+class FileParser extends LevelParser {
 
-	private static String n = System.getProperty("line.separator");
-	private static String patternStr = "(?s)^\\{([0-9a-zA-Z,: ]+)\\}" + FileParser.n + "\\{([0-9a-zA-Z,: ]*)\\}" + FileParser.n + "" + FileParser.n
-			+ "(.+)" + FileParser.n + "$";
+	private Tokenizer tokenizer;
+	/** The look ahead Token. */
+	private Token lookAhead;
 
-	public FileParser(StructureManager employer, String input) {
+	FileParser(String input) {
+		super(input);
+		this.tokenizer = new Tokenizer(this.input);
+	}
 
-		Pattern pattern = Pattern.compile(FileParser.patternStr);
-		Matcher matcher = pattern.matcher(input);
-		if (!matcher.find()) {
-			System.err.println("StructureManager: " + input + " is no valid file");
-			return;
+	@Override
+	public void parse(StructureManager manager) {
+		this.lookAhead = this.tokenizer.nextToken();
+		while (this.isToken(TokenType.SETTING) || this.isToken(TokenType.ALIAS)) {
+			if (this.isToken(TokenType.ALIAS)) {
+				this.parseAlias(manager);
+			} else {
+				this.parseSetting(manager);
+			}
 		}
+		while (this.isToken(TokenType.BEGIN)) {
+			this.parseLevel(manager);
+		}
+		this.readToken(TokenType.EOS);
+		this.reset();
+	}
 
-		new SettingDividerParser(employer, matcher.group(1));
-		new SettingDividerParser(employer.bossSettings, matcher.group(2));
-		new StructureDividerParser(employer, matcher.group(3));
+	private void parseLevel(StructureManager manager) {
+		System.out.println("parsing level part");
+		this.readToken(TokenType.BEGIN);
+		List<String[]> lines = new LinkedList<>();
+		while (this.isToken(TokenType.BEGIN)) {
+			this.readLevelLine(lines);
+		}
+		this.readToken(TokenType.END);
+		Structure s = new Structure(lines, manager.getAlias());
+		manager.addStructure(s);
+		System.out.println("end parsing level part");
+
+	}
+
+	private void readLevelLine(List<String[]> lines) {
+		this.readToken(TokenType.BEGIN);
+
+		List<String> line = new ArrayList<>();
+
+		while (!this.isToken(TokenType.END)) {
+			line.add(this.readToken(TokenType.RAW).getValue());
+		}
+		this.readToken(TokenType.END);
+		String[] res = new String[line.size()];
+		int i = 0;
+		for (String o : line) {
+			res[i++] = o;
+		}
+		System.out.println("parsed line: " + Arrays.toString(res));
+		lines.add(res);
+
+	}
+
+	private void parseAlias(StructureManager manager) {
+		Token alias = this.readToken(TokenType.ALIAS);
+		String[] mapping = alias.getValue().split("::")[1].split("->");
+		manager.setAlias(mapping[0], mapping[1]);
+	}
+
+	private void parseSetting(StructureManager manager) {
+		Token alias = this.readToken(TokenType.SETTING);
+		String[] mapping = alias.getValue().split("::")[1].split("->");
+		manager.setSetting(mapping[0], mapping[1]);
+
+	}
+
+	private void reset() {
+		this.tokenizer = new Tokenizer(this.input);
+		this.lookAhead = null;
+	}
+
+	/**
+	 * Checks if is token.
+	 *
+	 * @param type
+	 *            the type
+	 * @return true, if is token
+	 */
+	private boolean isToken(TokenType type) {
+		return this.lookAhead.getType() == type;
+	}
+
+	/**
+	 * Read token.
+	 *
+	 * @param type
+	 *            the type
+	 * @return the token
+	 */
+	private Token readToken(TokenType type) {
+		if (!this.isToken(type)) {
+			throw new UnexpectedTokenException(this.lookAhead, type);
+		}
+		Token token = this.lookAhead;
+		this.lookAhead = this.tokenizer.nextToken();
+		return token;
 
 	}
 }

@@ -111,7 +111,7 @@ public class Warper extends Enemy {
 	}
 
 	@Override
-	public Entity create(Vec startPos, int[] options) {
+	public Entity create(Vec startPos, String[] options) {
 		return new Warper(startPos);
 	}
 

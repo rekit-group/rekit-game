@@ -57,11 +57,11 @@ public class Slurp extends Enemy {
 
 		// calculate velocity (by currentDirection)
 		if (this.currentDirection == Direction.LEFT || this.currentDirection == Direction.RIGHT) {
-			this.setVel(new Vec(this.currentDirection.getVector().getX() * GameConf.SLURP_SPEED, this.currentDirection.getNextAntiClockwise()
-					.getVector().getY() * 3));
+			this.setVel(new Vec(this.currentDirection.getVector().getX() * GameConf.SLURP_SPEED,
+					this.currentDirection.getNextAntiClockwise().getVector().getY() * 3));
 		} else {
-			this.setVel(new Vec(this.currentDirection.getNextAntiClockwise().getVector().getX() * 3, this.currentDirection.getVector().getY()
-					* GameConf.SLURP_SPEED));
+			this.setVel(new Vec(this.currentDirection.getNextAntiClockwise().getVector().getX() * 3,
+					this.currentDirection.getVector().getY() * GameConf.SLURP_SPEED));
 		}
 
 		super.logicLoop(deltaTime);
@@ -121,7 +121,7 @@ public class Slurp extends Enemy {
 	}
 
 	@Override
-	public Entity create(Vec startPos, int[] options) {
+	public Entity create(Vec startPos, String[] options) {
 		return new Slurp(startPos);
 	}
 

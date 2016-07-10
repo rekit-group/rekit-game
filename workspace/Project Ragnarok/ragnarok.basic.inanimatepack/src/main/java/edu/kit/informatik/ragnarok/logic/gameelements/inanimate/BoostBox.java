@@ -117,7 +117,7 @@ public class BoostBox extends DynamicInanimate {
 	}
 
 	@Override
-	public BoostBox create(Vec startPos, int[] options) {
+	public BoostBox create(Vec startPos, String[] options) {
 		return new BoostBox(startPos, new Vec(1), new RGBAColor(80, 80, 255, 255));
 	}
 

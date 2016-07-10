@@ -80,7 +80,7 @@ public class Coin extends Pickup {
 	}
 
 	@Override
-	public Entity create(Vec startPos, int[] options) {
+	public Entity create(Vec startPos, String[] options) {
 		return new Coin(startPos);
 	}
 

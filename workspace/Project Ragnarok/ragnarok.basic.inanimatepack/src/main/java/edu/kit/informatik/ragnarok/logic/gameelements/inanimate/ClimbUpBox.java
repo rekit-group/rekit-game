@@ -36,21 +36,21 @@ public class ClimbUpBox extends DynamicInanimate {
 	private int current = 0;
 
 	private ClimbBoxStrategy strategy;
-	
+
 	private RGBAColor darkCol;
 	private static RGBColor energyCol = new RGBColor(255, 100, 0);
 	private TimeDependency timer;
-	
+
 	private final static Random RNG = new Random();
-	
+
 	private static ParticleSpawner particles = null;
 
 	static {
 		ClimbUpBox.particles = new ParticleSpawner();
 		ClimbUpBox.particles.angle = new ParticleSpawnerOption(0);
-		ClimbUpBox.particles.colorR = new ParticleSpawnerOption(energyCol.red);
-		ClimbUpBox.particles.colorG = new ParticleSpawnerOption(energyCol.green);
-		ClimbUpBox.particles.colorB = new ParticleSpawnerOption(energyCol.blue);
+		ClimbUpBox.particles.colorR = new ParticleSpawnerOption(ClimbUpBox.energyCol.red);
+		ClimbUpBox.particles.colorG = new ParticleSpawnerOption(ClimbUpBox.energyCol.green);
+		ClimbUpBox.particles.colorB = new ParticleSpawnerOption(ClimbUpBox.energyCol.blue);
 		ClimbUpBox.particles.colorA = new ParticleSpawnerOption(0, 220);
 		ClimbUpBox.particles.timeMin = 0.2f;
 		ClimbUpBox.particles.timeMax = 0.4F;
@@ -58,9 +58,6 @@ public class ClimbUpBox extends DynamicInanimate {
 		ClimbUpBox.particles.size = new ParticleSpawnerOption(0.3f, 0.5f, 0, 0);
 		ClimbUpBox.particles.speed = new ParticleSpawnerOption(2, 3, -1, 1);
 	}
-
-	
-	
 
 	/**
 	 * Prototype Constructor
@@ -74,7 +71,7 @@ public class ClimbUpBox extends DynamicInanimate {
 
 		// create inner InanimateBox with given position
 		this.innerBox = (InanimateBox) InanimateBox.staticCreate(pos);
-		
+
 		// prepare colors for rendering
 		this.darkCol = color.darken(0.8f);
 
@@ -83,32 +80,32 @@ public class ClimbUpBox extends DynamicInanimate {
 		this.strategies.put(0, new NoClimb(this));
 		this.strategies.put(1, new BoostClimb(this));
 		this.strategy = this.strategies.get(0);
-		
-		timer = new TimeDependency(ClimbUpBox.PERIOD);
+
+		this.timer = new TimeDependency(ClimbUpBox.PERIOD);
 	}
 
 	private long lastTime = -1;
 
 	@Override
 	public void logicLoop(float deltaTime) {
-		
+
 		// get time
 		long nowTime = this.scene.getTime();
-		// init lastTime in first run 
-		if (lastTime == -1) {
-			lastTime = nowTime;
+		// init lastTime in first run
+		if (this.lastTime == -1) {
+			this.lastTime = nowTime;
 		}
 		// update timer
 		this.timer.removeTime(nowTime - this.lastTime);
 		// save current time for next iteration
 		this.lastTime = nowTime;
-		
+
 		// Get new strategy from strategy map
-		if (timer.timeUp()) {
+		if (this.timer.timeUp()) {
 			this.current = (this.current + 1) % this.strategies.size();
 			this.strategy = this.strategies.get(this.current);
-			
-			timer.reset();
+
+			this.timer.reset();
 		}
 
 	}
@@ -120,24 +117,24 @@ public class ClimbUpBox extends DynamicInanimate {
 
 	@Override
 	public void internalRender(Field f) {
-		f.drawRectangle(getPos(), getSize(), this.color);
-		f.drawRectangle(getPos().addY(-0.1f), getSize().multiply(0.2f, 0.8f), darkCol);
-		f.drawRectangle(getPos().addY(0.4f), getSize().multiply(1, 0.2f), darkCol);
-		
+		f.drawRectangle(this.getPos(), this.getSize(), this.color);
+		f.drawRectangle(this.getPos().addY(-0.1f), this.getSize().multiply(0.2f, 0.8f), this.darkCol);
+		f.drawRectangle(this.getPos().addY(0.4f), this.getSize().multiply(1, 0.2f), this.darkCol);
+
 		this.renderEnergy(f, this.strategy.getEnergyStart(this.timer.getProgress()), this.strategy.getEnergyEnd(this.timer.getProgress()));
-		
+
 		this.strategy.internalRender(f);
 	}
-	
+
 	public void renderEnergy(Field f, float start, float end) {
 
 		float h = end - start;
-		f.drawRectangle(getPos().addY(h/2f - getSize().getY()/2f + start), getSize().multiply(0.2f, h), energyCol);
-		
+		f.drawRectangle(this.getPos().addY(h / 2f - this.getSize().getY() / 2f + start), this.getSize().multiply(0.2f, h), ClimbUpBox.energyCol);
+
 		if (end == 1) {
-			f.drawRectangle(getPos().addY(0.4f), getSize().multiply(1, 0.2f), energyCol);
+			f.drawRectangle(this.getPos().addY(0.4f), this.getSize().multiply(1, 0.2f), ClimbUpBox.energyCol);
 		}
-		
+
 	}
 
 	@Override
@@ -146,7 +143,7 @@ public class ClimbUpBox extends DynamicInanimate {
 	}
 
 	@Override
-	public ClimbUpBox create(Vec startPos, int[] options) {
+	public ClimbUpBox create(Vec startPos, String[] options) {
 		return new ClimbUpBox(startPos, new Vec(1), new RGBAColor(110, 110, 110, 255));
 	}
 
@@ -162,10 +159,11 @@ public class ClimbUpBox extends DynamicInanimate {
 		}
 
 		public void internalRender(Field f) {
-			
+
 		}
-		
+
 		public abstract float getEnergyStart(float progress);
+
 		public abstract float getEnergyEnd(float progress);
 	}
 
@@ -189,15 +187,17 @@ public class ClimbUpBox extends DynamicInanimate {
 		BoostClimb(ClimbUpBox parent) {
 			super(parent);
 		}
-		
+
+		@Override
 		public void internalRender(Field f) {
-			f.drawRectangle(getPos().addY(0.4f), getSize().multiply(1, 0.2f), energyCol);
-			
+			f.drawRectangle(ClimbUpBox.this.getPos().addY(0.4f), ClimbUpBox.this.getSize().multiply(1, 0.2f), ClimbUpBox.energyCol);
+
 			Vec pos = this.parent.getPos().addY(this.parent.getSize().getY() / 2f + 1).addX(-0.5f);
-			pos = pos.addX(this.parent.getSize().getX() * RNG.nextFloat());
-			
-			particles.spawn(this.parent.scene, pos);
+			pos = pos.addX(this.parent.getSize().getX() * ClimbUpBox.RNG.nextFloat());
+
+			ClimbUpBox.particles.spawn(this.parent.scene, pos);
 		}
+
 		@Override
 		public void reactToCollision(GameElement element, Direction dir) {
 			element.collidedWith(this.parent.getCollisionFrame(), dir);

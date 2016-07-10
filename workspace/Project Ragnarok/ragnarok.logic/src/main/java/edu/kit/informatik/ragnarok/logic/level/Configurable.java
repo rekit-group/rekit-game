@@ -3,8 +3,6 @@ package edu.kit.informatik.ragnarok.logic.level;
 import java.util.HashMap;
 import java.util.Map;
 
-import edu.kit.informatik.ragnarok.logic.level.parser.SettingParser;
-
 /**
  * <p>
  * Abstract class and interface declaration that supplies defining settings.
@@ -21,9 +19,6 @@ import edu.kit.informatik.ragnarok.logic.level.parser.SettingParser;
  * settingValue)</i>
  * </p>
  * <p>
- * This class is mainly - but not only - used by the {@link SettingParser}.
- * </p>
- * <p>
  * The data structure used to hold these saved settings is entirely managed by
  * this abstract class and therefore private.
  * </p>
@@ -35,7 +30,7 @@ public abstract class Configurable {
 	/**
 	 * Internal data structure used to hold all specified settings.
 	 */
-	private Map<String, Integer> settings = new HashMap<String, Integer>();
+	private Map<String, String> settings = new HashMap<>();
 
 	/**
 	 * Sets a setting of name <i>settingName</i> to the given value
@@ -44,11 +39,11 @@ public abstract class Configurable {
 	 *
 	 * @param settingName
 	 *            The name of the setting to set/overwrite
-	 * @param settingValue
+	 * @param value
 	 *            The new value for the setting
 	 */
-	public void setSetting(String settingName, int settingValue) {
-		this.settings.put(settingName, settingValue);
+	public void setSetting(String settingName, String value) {
+		this.settings.put(settingName, value);
 	}
 
 	/**
@@ -64,20 +59,20 @@ public abstract class Configurable {
 		if (!this.settings.containsKey(settingName)) {
 			return false;
 		}
-		return this.settings.get(settingName) != 0;
+		return this.settings.get(settingName) != null;
 	}
 
 	/**
-	 * Returns the value of the setting of a given <i>settingName</i> or 0 if it
-	 * is not defined.
+	 * Returns the value of the setting of a given <i>settingName</i> or 0´null
+	 * if it is not defined.
 	 *
 	 * @param settingName
 	 *            the name of the setting to get the value from.
-	 * @return the value of the setting if defined, <i>0</i> otherwise.
+	 * @return the value of the setting if defined, <i>null</i> otherwise.
 	 */
-	protected int getSettingValue(String settingName) {
+	protected String getSettingValue(String settingName) {
 		if (!this.isSettingSet(settingName)) {
-			return 0;
+			return null;
 		}
 		return this.settings.get(settingName);
 	}

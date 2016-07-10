@@ -1,5 +1,7 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.type;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
@@ -38,15 +40,19 @@ public abstract class Boss extends Entity {
 	}
 
 	public BossStructure getBossStructure() {
-		BossStructure structure = new BossStructure(new int[][][] { { { 1 } }, { { 1 } }, { { 1 } }, { { 1 } }, { { 1 } }, { { 1 } }, { { 1 } },
-				{ { 1 } }, { { 1 } } }, this);
+		List<String[]> struct = new ArrayList<>();
+		for (int i = 0; i < 9; i++) {
+			struct.add(new String[] { "edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate" });
+		}
+
+		BossStructure structure = new BossStructure(struct, this);
 		System.err.println("Error while spawning Boss: " + this.getID() + " did not specify getBossStructure()");
 		this.setBossStructure(structure);
 		return structure;
 	}
 
 	@Override
-	public abstract GameElement create(Vec startPos, int[] options);
+	public abstract GameElement create(Vec startPos, String[] options);
 
 	@Override
 	public final void destroy() {

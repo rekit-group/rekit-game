@@ -1,6 +1,8 @@
 package edu.kit.informatik.ragnarok.logic.level;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElementFactory;
@@ -39,7 +41,7 @@ public class Structure extends Configurable {
 	 * GameElements. The mapping from each integer to GameElements is specified
 	 * by the {@link GameElementFactory}.
 	 */
-	private int[][][] structureArray;
+	private List<String[]> structure;
 
 	/**
 	 * Value that specifies how many columns to right of the Structure will be
@@ -48,18 +50,21 @@ public class Structure extends Configurable {
 	 */
 	private int gapWidth;
 
+	private Map<String, String> alias;
+
 	/**
 	 * Constructor that requires a not null two dimensional array that acts as a
 	 * template for building actual GameElements. It will be saved locally. The
 	 * mapping from each integer to GameElements is specified by the
 	 * {@link GameElementFactory}.
 	 *
-	 * @param structureArray
+	 * @param lines
 	 *            the two dimensional template of the GameElements of this
 	 *            Structure.
 	 */
-	public Structure(int[][][] structureArray) {
-		this.structureArray = structureArray;
+	public Structure(List<String[]> lines, Map<String, String> alias) {
+		this.structure = lines;
+		this.alias = alias;
 	}
 
 	/**
@@ -93,18 +98,22 @@ public class Structure extends Configurable {
 		for (int y = 0; y < this.getHeight(); y++) {
 			for (int x = 0; x < this.getWidth(); x++) {
 				// map: structureArray y --> actual level y
-				int aY = (GameConf.GRID_H - this.structureArray.length) + y;
+				int aY = (GameConf.GRID_H - this.structure.size()) + y;
 
-				int[] elemInfo = this.structureArray[y][x];
+				String elemInfo = this.structure.get(y)[x];
+				String[] splitted = elemInfo.split(":");
 
+				if (splitted[0].matches("(-|\\+)?[0-9]+")) {
+					splitted[0] = this.alias(splitted[0]);
+				}
 				// if id != 0 => there is something to build here:
-				if (elemInfo[0] != 0) {
+				if (splitted[0] != null) {
 					// let GameElementFactory handle the rest
-					GameElementFactory.generate(elemInfo[0], levelX + x, aY, Arrays.copyOfRange(elemInfo, 1, elemInfo.length));
+					GameElementFactory.generate(splitted[0], levelX + x, aY, Arrays.copyOfRange(splitted, 1, splitted.length));
 				} else {
 					// otherwise check if we must generate random coins
 					if (autoCoinSpawn && Math.random() > 0.95f) {
-						GameElementFactory.generate(10, levelX + x, aY);
+						GameElementFactory.generateCoin(levelX + x, aY);
 					}
 				}
 			}
@@ -113,11 +122,15 @@ public class Structure extends Configurable {
 		// add gap to the block right to the structure build so far, with given
 		// width.
 		for (int x = 0; x < this.gapWidth; x++) {
-			GameElementFactory.generate(1, levelX + this.structureArray[0].length + x, GameConf.GRID_H - 1);
+			GameElementFactory.generateInanimate(levelX + this.structure.get(0).length + x, GameConf.GRID_H - 1);
 		}
 
 		// return structure width plus gapWidth
 		return this.getWidth() + this.gapWidth;
+	}
+
+	private String alias(String string) {
+		return this.alias.get(string);
 	}
 
 	/**
@@ -126,7 +139,7 @@ public class Structure extends Configurable {
 	 * @return the height of the Structures template.
 	 */
 	public int getHeight() {
-		return this.structureArray.length;
+		return this.structure.size();
 	}
 
 	/**
@@ -140,7 +153,7 @@ public class Structure extends Configurable {
 	 * @return the width of the Structures template.
 	 */
 	public int getWidth() {
-		return this.structureArray[0].length;
+		return this.structure.get(0).length;
 	}
 
 	/**

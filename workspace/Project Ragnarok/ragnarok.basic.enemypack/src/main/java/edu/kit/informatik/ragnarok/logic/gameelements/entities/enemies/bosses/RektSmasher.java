@@ -1,10 +1,14 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.bosses;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.RektKiller;
+import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Boss;
 import edu.kit.informatik.ragnarok.logic.level.bossstructure.BossStructure;
 import edu.kit.informatik.ragnarok.primitives.Direction;
@@ -144,9 +148,10 @@ public class RektSmasher extends Boss {
 
 	@Override
 	public BossStructure getBossStructure() {
-		BossStructure structure = new BossStructure(new int[][][] {
-				{ { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 },
-						{ 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 } },
+		List<String[]> struct = new ArrayList<>();
+		int[][][] oldStruct = new int[][][] {
+				{ { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 },
+						{ 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 } },
 				{ { 1 }, { 2, 0 }, { 0 }, { 0 }, { 0 }, { 2, 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 1 }, { 1 },
 						{ 0 }, { 0 }, { 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 } },
 				{ { 1 }, { 0 }, { 2, 0 }, { 0 }, { 2, 0 }, { 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 },
@@ -157,18 +162,32 @@ public class RektSmasher extends Boss {
 						{ 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 1 }, { 1 }, { 0 } },
 				{ { 1 }, { 2, 0 }, { 0 }, { 0 }, { 0 }, { 2, 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 },
 						{ 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 } },
-				{ { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 1 }, { 0 }, { 1 }, { 1 }, { 1 },
-						{ 1 }, { 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 } },
-				{ { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 1 }, { 0 }, { 1 }, { 1 }, { 1 },
-						{ 1 }, { 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 } },
-				{ { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 0 }, { 1 }, { 1 }, { 1 },
-						{ 1 }, { 0 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 } } }, this);
+				{ { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 1 }, { 0 }, { 1 }, { 1 }, { 1 }, { 1 },
+						{ 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 } },
+				{ { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 1 }, { 0 }, { 1 }, { 1 }, { 1 }, { 1 },
+						{ 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 } },
+				{ { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 0 }, { 1 }, { 1 }, { 1 }, { 1 },
+						{ 0 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 } } };
+		for (int i = 0; i < oldStruct.length; i++) {
+			String[] l = new String[oldStruct[i].length];
+			for (int j = 0; j < oldStruct[i].length; i++) {
+				if (oldStruct[i][j][0] == 0) {
+					l[j] = null;
+				} else if (oldStruct[i][j][0] == 1) {
+					l[j] = Inanimate.class.getName();
+				} else if (oldStruct[i][j][0] == 2) {
+					l[j] = RektKiller.class.getName();
+				}
+			}
+			struct.add(l);
+		}
+		BossStructure structure = new BossStructure(struct, this);
 		this.setBossStructure(structure);
 		return structure;
 	}
 
 	@Override
-	public Entity create(Vec startPos, int[] options) {
+	public Entity create(Vec startPos, String[] options) {
 		RektSmasher clone = new RektSmasher(startPos);
 		clone.setTarget(this.target);
 		clone.setBossStructure(this.bossStructure);

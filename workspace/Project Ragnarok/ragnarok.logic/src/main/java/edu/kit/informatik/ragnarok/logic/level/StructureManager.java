@@ -1,8 +1,10 @@
 package edu.kit.informatik.ragnarok.logic.level;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
@@ -15,7 +17,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateTrigger
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Boss;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Enemy;
 import edu.kit.informatik.ragnarok.logic.level.bossstructure.BossStructure;
-import edu.kit.informatik.ragnarok.logic.level.parser.FileParser;
+import edu.kit.informatik.ragnarok.logic.level.parser.LevelParser;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 
 /**
@@ -30,7 +32,7 @@ import edu.kit.informatik.ragnarok.primitives.Vec;
  * StructureManager from a file called level_<i>{levelName}</i>.dat, fills
  * itself with all specified settings (first line of file), boss settings
  * (second line of file) and {@link Structure}-templates (rest of file) using
- * the {@link FileParser}.
+ * the {@link LevelParser}.
  * </p>
  *
  * @author Angelo Aracri
@@ -82,7 +84,7 @@ public class StructureManager extends Configurable implements Iterator<Structure
 	 */
 	private StructureManager(int randomSeed) {
 		super();
-		this.structures = new HashMap<Integer, Structure>();
+		this.structures = new HashMap<>();
 		this.rand = new Random(randomSeed);
 	}
 
@@ -99,7 +101,7 @@ public class StructureManager extends Configurable implements Iterator<Structure
 	 * Static factory method that creates a new StructureManager from a file
 	 * called level_<i>{levelName}</i>.dat, fills it with all specified settings
 	 * (first line of file), boss settings (second line of file) and
-	 * {@link Structure}-templates (rest of file) using the {@link FileParser}.
+	 * {@link Structure}-templates (rest of file) using the {@link LevelParser}.
 	 *
 	 * @param randomSeed
 	 *            the seed to used for the StructureManager that will be used
@@ -115,7 +117,7 @@ public class StructureManager extends Configurable implements Iterator<Structure
 		InputStream levelStream = StructureManager.class.getResourceAsStream("/level_" + levelName + ".dat");
 
 		// create Scanner from InputStream
-		Scanner scanner = new java.util.Scanner(levelStream);
+		Scanner scanner = new Scanner(levelStream);
 		// don't use line-ending-wise iteration, but get the whole file at once
 		// \\A = <EOF>
 		scanner.useDelimiter("\\A");
@@ -134,8 +136,9 @@ public class StructureManager extends Configurable implements Iterator<Structure
 		// But what is this?????
 		instance.bossSettings = instance.new BossSettings();
 
+		LevelParser parser = LevelParser.getParser(input);
 		// create Parser to extract all information of file-String
-		new FileParser(instance, input);
+		parser.parse(instance);
 
 		// return newly created instance of StructureManager
 		return instance;
@@ -284,9 +287,8 @@ public class StructureManager extends Configurable implements Iterator<Structure
 		 * to be spawned because the level generation reached the threshold
 		 * (=<i>settingName</i>) and therefore returns a fully prepared
 		 * {@link BossStructure} containing a {@link Boss} already.</li>
-		 * <li>
-		 * Or there is currently no Boss to be spawned at this time (or at all)
-		 * and therefore return <i>null</i>.</li>
+		 * <li>Or there is currently no Boss to be spawned at this time (or at
+		 * all) and therefore return <i>null</i>.</li>
 		 * </ul>
 		 *
 		 * @param fromX
@@ -303,15 +305,14 @@ public class StructureManager extends Configurable implements Iterator<Structure
 			for (int i = fromX; i <= toX; i++) {
 				String numString = String.valueOf(i);
 				if (this.isSettingSet(numString)) {
-					int bossId = this.getSettingValue(numString);
-					GameElement bossGameElement = GameElementFactory.getPrototype(bossId).create(new Vec(), new int[] {});
+					GameElement bossGameElement = GameElementFactory.getPrototype(this.getSettingValue(numString)).create(new Vec(), new String[] {});
 					if (bossGameElement instanceof Boss) {
 						Boss boss = (Boss) bossGameElement;
 						Structure bossStructure = boss.getBossStructure();
 						StructureManager.this.unitsBuilt += bossStructure.getWidth();
 						return bossStructure;
 					} else {
-						System.err.println("Error while spawning Boss: " + bossId + " is not a BossID");
+						System.err.println("Error while spawning Boss: " + this.getSettingValue(numString) + " is not a BossID");
 					}
 
 				}
@@ -334,7 +335,10 @@ public class StructureManager extends Configurable implements Iterator<Structure
 	 */
 	private Structure getInitialStructure() {
 		// Flat floor
-		Structure structure = new Structure(new int[][][] { { { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 } } });
+		String floor = "edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate";
+		List<String[]> lines = new ArrayList<>();
+		lines.add(new String[] { floor, floor, floor, floor, floor, floor, floor, floor });
+		Structure structure = new Structure(lines, new HashMap<>());
 
 		// keep track of how far we built (only works because we know structure
 		// has no gap!)
@@ -363,9 +367,16 @@ public class StructureManager extends Configurable implements Iterator<Structure
 	 */
 	private Structure getEndStructure() {
 
+		String verticalTrigger = "edu.kit.informatik.ragnarok.logic.gameelements.inanimate.EndTrigger";
 		// Vertical wall
-		Structure structure = new Structure(new int[][][] { { { 0 } }, { { 0 } }, { { 0 } }, { { 0 } }, { { 71 } }, { { 0 } }, { { 0 } }, { { 0 } },
-				{ { 0 } } });
+
+		List<String[]> lines = new ArrayList<>();
+		for (int i = 0; i < 9; i++) {
+			lines.add(new String[1]);
+		}
+		lines.get(4)[0] = verticalTrigger;
+
+		Structure structure = new Structure(lines, new HashMap<>());
 
 		// keep track of how far we built
 		this.unitsBuilt += structure.getWidth();
@@ -376,6 +387,17 @@ public class StructureManager extends Configurable implements Iterator<Structure
 	@Override
 	public boolean hasNext() {
 		return this.isSettingSet("infinite") || this.currentStructureId < this.structures.size();
+	}
+
+	private Map<String, String> alias = new HashMap<>();
+
+	public void setAlias(String toReplace, String replaceWith) {
+		this.alias.put(toReplace, replaceWith);
+
+	}
+
+	public Map<String, String> getAlias() {
+		return this.alias;
 	}
 
 }

@@ -94,8 +94,9 @@ public class RektKiller extends Enemy {
 	 */
 	public void prepare() {
 		// calculate size dependent Polygon for spikes
-		this.spikePolygon = new Polygon(new Vec(), new Vec[] { //
-				new Vec(0.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
+		this.spikePolygon = new Polygon(new Vec(),
+				new Vec[] { //
+						new Vec(0.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
 						new Vec(1.0f * ((this.getSize().getX() * 0.8f) / 3f), 0),
 						new Vec(1.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
 						new Vec(2.0f * ((this.getSize().getX() * 0.8f) / 3f), 0),
@@ -235,13 +236,14 @@ public class RektKiller extends Enemy {
 	}
 
 	@Override
-	public Entity create(Vec startPos, int[] options) {
+	public Entity create(Vec startPos, String[] options) {
 		RektKiller inst = new RektKiller(startPos, Enemy.PRNG.nextInt(16));
 
 		// if option 0 is given: set defined direction
-		if (options.length >= 1) {
-			if (options[0] >= 0 && options[0] < Direction.values().length) {
-				inst.setCurrentDirection(Direction.values()[options[0]]);
+		if (options.length >= 1 && options[0] != null && options[0].matches("(\\+|-)?[0-9]+")) {
+			int opt = Integer.parseInt(options[0]);
+			if (opt >= 0 && opt < Direction.values().length) {
+				inst.setCurrentDirection(Direction.values()[opt]);
 			} else {
 				System.err.println("Error, RektKiller was supplied invalid option " + options[0] + " at index 0 for Direction");
 			}

@@ -45,7 +45,7 @@ public class Life extends Pickup {
 	}
 
 	@Override
-	public Entity create(Vec startPos, int[] options) {
+	public Entity create(Vec startPos, String[] options) {
 		return new Life(startPos);
 	}
 

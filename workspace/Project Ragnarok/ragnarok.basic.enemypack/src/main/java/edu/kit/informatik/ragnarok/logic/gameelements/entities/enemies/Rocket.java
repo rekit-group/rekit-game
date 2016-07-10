@@ -72,7 +72,7 @@ public class Rocket extends Enemy {
 		// draw spike at front
 		Vec startPt = this.getPos().addX(-this.getSize().multiply(0.5f).getX());
 		Vec[] relPts = new Vec[] { //
-		new Vec(this.getSize().multiply(0.1f).getX(), -this.getSize().multiply(0.5f).getY()),
+				new Vec(this.getSize().multiply(0.1f).getX(), -this.getSize().multiply(0.5f).getY()),
 				new Vec(this.getSize().multiply(0.1f).getX(), this.getSize().multiply(0.5f).getY()), //
 				new Vec() //
 		};
@@ -87,7 +87,7 @@ public class Rocket extends Enemy {
 		// draw drive at back
 		startPt = this.getPos().addX(this.getSize().multiply(0.5f).getX()).addY(-this.getSize().multiply(0.5f).getY());
 		relPts = new Vec[] { //
-		new Vec(0, this.getSize().getY()), new Vec(-this.getSize().getX() * 0.1f, this.getSize().getY() * 0.8f),
+				new Vec(0, this.getSize().getY()), new Vec(-this.getSize().getX() * 0.1f, this.getSize().getY() * 0.8f),
 				new Vec(-this.getSize().getX() * 0.1f, this.getSize().getY() * 0.2f), //
 				new Vec() //
 		};
@@ -136,7 +136,7 @@ public class Rocket extends Enemy {
 	}
 
 	@Override
-	public Entity create(Vec startPos, int[] options) {
+	public Entity create(Vec startPos, String[] options) {
 		return new Rocket(startPos);
 	}
 
