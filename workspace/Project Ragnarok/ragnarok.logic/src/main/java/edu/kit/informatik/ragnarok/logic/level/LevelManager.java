@@ -69,7 +69,13 @@ public class LevelManager {
 	}
 
 	public static int getNumberOfArcadeLevels() {
-		return 1; // TODO could be dynamic?
+		int num = 0;
+		for (;; num++) {
+			if (LevelManager.class.getResourceAsStream("/level_" + num + ".dat") == null) {
+				break;
+			}
+		}
+		return num;
 	}
 
 	public static void contentChanged() {

@@ -112,7 +112,9 @@ public class HeapElementMountain extends HeapElement {
 
 	public HeapElementMountain(HeapLayer parent, Vec pos, Vec size, RGBAColor col) {
 		super(parent, pos, size, col);
-		this.polygon = new Polygon(new Vec(), new Vec[] { new Vec(-size.getX() / 2, -size.getY()), new Vec(-size.getX(), 0), new Vec() });
+		if (size != null && pos != null) {
+			this.polygon = new Polygon(new Vec(), new Vec[] { new Vec(-size.getX() / 2, -size.getY()), new Vec(-size.getX(), 0), new Vec() });
+		}
 
 	}
 
