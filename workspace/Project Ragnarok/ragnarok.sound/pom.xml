@@ -6,16 +6,11 @@
 		<artifactId>ragnarok</artifactId>
 		<version>0.2-ALPHA</version>
 	</parent>
-	<artifactId>ragnarok.logic</artifactId>
+	<artifactId>ragnarok.sound</artifactId>
 	<dependencies>
 		<dependency>
 			<groupId>edu.kit.informatik</groupId>
 			<artifactId>ragnarok.global</artifactId>
-			<version>0.2-ALPHA</version>
-		</dependency>
-		<dependency>
-			<groupId>edu.kit.informatik</groupId>
-			<artifactId>ragnarok.sound</artifactId>
 			<version>0.2-ALPHA</version>
 		</dependency>
 		<dependency>
