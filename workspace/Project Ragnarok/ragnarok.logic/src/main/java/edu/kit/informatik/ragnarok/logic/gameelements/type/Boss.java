@@ -7,6 +7,7 @@ import java.util.Set;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
+import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
 import edu.kit.informatik.ragnarok.logic.level.bossstructure.BossStructure;
 import edu.kit.informatik.ragnarok.logic.util.ReflectUtils;
 import edu.kit.informatik.ragnarok.primitives.Vec;
@@ -42,7 +43,7 @@ public abstract class Boss extends Entity {
 	public BossStructure getBossStructure() {
 		List<String[]> struct = new ArrayList<>();
 		for (int i = 0; i < 9; i++) {
-			struct.add(new String[] { "edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate" });
+			struct.add(new String[] { Inanimate.class.getName() });
 		}
 
 		BossStructure structure = new BossStructure(struct, this);
