@@ -5,8 +5,7 @@ import edu.kit.informatik.ragnarok.logic.scene.MenuScene;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
 
 public enum Scenes {
-	MENU(0, MenuScene.class), INFINIT(1, LevelScene.class), LOD(2, LevelScene.class), ARCADE(3,
-			LevelScene.class);
+	MENU(0, MenuScene.class), INFINIT(1, LevelScene.class), LOD(2, LevelScene.class), ARCADE(3, LevelScene.class);
 
 	protected final int id;
 	protected final Class<? extends Scene> sceneClass;

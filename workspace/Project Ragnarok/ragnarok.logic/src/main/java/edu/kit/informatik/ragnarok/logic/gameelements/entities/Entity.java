@@ -204,13 +204,6 @@ public abstract class Entity extends GameElement {
 	}
 
 	/**
-	 * Get the ID of the entity
-	 * 
-	 * @return the id
-	 */
-	public abstract int getID();
-
-	/**
 	 * Set the Entity's LevelScene
 	 * 
 	 * @param value

@@ -292,9 +292,4 @@ public class RektKiller extends Enemy {
 		this.sides = sides;
 	}
 
-	@Override
-	public int getID() {
-		return 2;
-	}
-
 }

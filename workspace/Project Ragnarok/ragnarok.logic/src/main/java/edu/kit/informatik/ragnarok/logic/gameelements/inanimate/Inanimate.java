@@ -69,7 +69,4 @@ public class Inanimate extends GameElement {
 		return Inanimate.instance;
 	}
 
-	public int getID() {
-		return 1;
-	}
 }

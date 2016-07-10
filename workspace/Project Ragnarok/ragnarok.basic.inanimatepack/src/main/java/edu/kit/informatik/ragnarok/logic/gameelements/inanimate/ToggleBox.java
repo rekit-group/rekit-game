@@ -61,11 +61,6 @@ public class ToggleBox extends DynamicInanimate {
 	}
 
 	@Override
-	public int getID() {
-		return 80;
-	}
-
-	@Override
 	public ToggleBox create(Vec startPos, String[] options) {
 		ToggleBox inst = new ToggleBox(startPos, new Vec(1), new RGBAColor(80, 80, 255, 255));
 		if (options.length >= 1) {

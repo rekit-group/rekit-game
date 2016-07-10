@@ -135,11 +135,6 @@ public class ClimbUpBox extends DynamicInanimate {
 	}
 
 	@Override
-	public int getID() {
-		return 86;
-	}
-
-	@Override
 	public ClimbUpBox create(Vec startPos, String[] options) {
 		return new ClimbUpBox(startPos, new Vec(1), new RGBAColor(110, 110, 110, 255));
 	}

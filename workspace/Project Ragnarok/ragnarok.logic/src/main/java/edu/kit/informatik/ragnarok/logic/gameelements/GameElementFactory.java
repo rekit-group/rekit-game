@@ -65,7 +65,7 @@ public class GameElementFactory {
 
 	/**
 	 * A HashMap containing every spawnable GameElement mapped from their
-	 * respective getId().
+	 * respective class name .
 	 */
 	private static HashMap<String, GameElement> prototypes;
 

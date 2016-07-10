@@ -84,9 +84,4 @@ public class Coin extends Pickup {
 		return new Coin(startPos);
 	}
 
-	@Override
-	public int getID() {
-		return 10;
-	}
-
 }

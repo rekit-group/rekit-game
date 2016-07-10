@@ -93,9 +93,4 @@ public class Player extends Entity implements CameraTarget {
 		return this.currentCameraOffset;
 	}
 
-	@Override
-	public int getID() {
-		return 0;
-	}
-
 }

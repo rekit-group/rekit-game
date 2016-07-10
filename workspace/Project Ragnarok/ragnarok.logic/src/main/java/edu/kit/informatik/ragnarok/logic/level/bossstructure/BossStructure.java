@@ -158,7 +158,8 @@ public class BossStructure extends Structure {
 				// phase one: show explosions
 				if (timer.getProgress() < 0.4) {
 					if (GameConf.PRNG.nextDouble() > 0.9) {
-						Vec randPos = BossStructure.this.boss.getPos().add(new Vec((float) GameConf.PRNG.nextDouble() * 2 - 1, (float) GameConf.PRNG.nextDouble() * 2f - 1));
+						Vec randPos = BossStructure.this.boss.getPos()
+								.add(new Vec((float) GameConf.PRNG.nextDouble() * 2 - 1, (float) GameConf.PRNG.nextDouble() * 2f - 1));
 						BossStructure.explosionParticles.spawn(scene, randPos);
 					}
 				}
@@ -175,7 +176,8 @@ public class BossStructure extends Structure {
 						float deltaY = GameConf.GRID_H / 2f;
 						float midY = deltaY;
 
-						Vec randPos = new Vec(midX + (float) GameConf.PRNG.nextDouble() * deltaX * 2 - deltaX, midY + (float) GameConf.PRNG.nextDouble() * deltaY * 2 - deltaY);
+						Vec randPos = new Vec(midX + (float) GameConf.PRNG.nextDouble() * deltaX * 2 - deltaX,
+								midY + (float) GameConf.PRNG.nextDouble() * deltaY * 2 - deltaY);
 						BossStructure.fireworkParticles.spawn(scene, randPos);
 					}
 

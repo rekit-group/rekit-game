@@ -140,9 +140,4 @@ public class Rocket extends Enemy {
 		return new Rocket(startPos);
 	}
 
-	@Override
-	public int getID() {
-		return 3;
-	}
-
 }

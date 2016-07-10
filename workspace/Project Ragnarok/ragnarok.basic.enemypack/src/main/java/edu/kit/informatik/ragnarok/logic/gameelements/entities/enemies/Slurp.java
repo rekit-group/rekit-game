@@ -125,9 +125,4 @@ public class Slurp extends Enemy {
 		return new Slurp(startPos);
 	}
 
-	@Override
-	public int getID() {
-		return 5;
-	}
-
 }

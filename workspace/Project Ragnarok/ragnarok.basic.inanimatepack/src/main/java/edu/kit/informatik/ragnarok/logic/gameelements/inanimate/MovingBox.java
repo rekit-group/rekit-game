@@ -112,11 +112,6 @@ public class MovingBox extends DynamicInanimate {
 	}
 
 	@Override
-	public int getID() {
-		return 81;
-	}
-
-	@Override
 	public MovingBox create(Vec startPos, String[] options) {
 		int dist = 1;
 		if (options.length >= 1 && options[0] != null && options[0].matches("(\\+|-)?[0-9]+")) {

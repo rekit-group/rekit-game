@@ -79,9 +79,4 @@ public class InanimateFloor extends Inanimate {
 		return new InanimateFloor(pos, new Vec(1, 1), new RGBAColor(randColRB, randColG, randColRB, 255));
 	}
 
-	@Override
-	public int getID() {
-		return 51;
-	}
-
 }

@@ -17,7 +17,4 @@ public abstract class DynamicInanimate extends Inanimate {
 		super(pos, size, color);
 	}
 
-	@Override
-	public abstract int getID();
-
 }

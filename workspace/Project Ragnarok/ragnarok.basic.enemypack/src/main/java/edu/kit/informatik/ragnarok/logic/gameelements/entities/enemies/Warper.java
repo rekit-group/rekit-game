@@ -115,9 +115,4 @@ public class Warper extends Enemy {
 		return new Warper(startPos);
 	}
 
-	@Override
-	public int getID() {
-		return 4;
-	}
-
 }

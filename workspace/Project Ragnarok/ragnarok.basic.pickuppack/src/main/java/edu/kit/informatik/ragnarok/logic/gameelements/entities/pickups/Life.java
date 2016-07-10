@@ -49,9 +49,4 @@ public class Life extends Pickup {
 		return new Life(startPos);
 	}
 
-	@Override
-	public int getID() {
-		return 20;
-	}
-
 }

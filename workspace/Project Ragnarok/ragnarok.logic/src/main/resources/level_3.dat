@@ -1,24 +1,32 @@
-{shuffle:false, doGaps:false, infinite:false, autoCoinSpawn:false}
-{}
+#SETTING::shuffle->false
+#SETTING::doGaps->false
+#SETTING::infinite->false
+#SETTING::autoCoinSpawn->false
 
-{}
-0	0	0	10	10	0	0	0	0
-0	0	0	0	0	0	0	0	0
-0	0	0	0	0	0	0	0	0
-0	0	0	0	0	0	0	0	0
-0	0	0	0	0	0	0	0	0
-0	0	0	81:2	81:2	0	0	0	0
-0	0	0	0	0	0	0	0	0
-0	0	0	0	0	0	0	0	0
-1	1	1	1	1	1	1	1	1
+#ALIAS::1->edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate
+#ALIAS::10->edu.kit.informatik.ragnarok.logic.gameelements.entities.pickups.Coin
+#ALIAS::81->edu.kit.informatik.ragnarok.logic.gameelements.inanimate.MovingBox
 
-{}
-0	0	0	0	0	0	0	0	0
-0	0	0	0	0	0	0	0	0
-0	0	0	0	0	0	0	0	81
-0	0	0	0	0	0	0	0	0
-0	0	0	0	81	81	0	0	0
-0	0	0	0	0	0	0	0	0
-0	0	81	81	0	0	0	0	0
-0	0	0	0	0	0	0	0	0
-1	1	1	1	1	1	1	1	1
+
+{
+{0	0	0	10	10	0	0	0	0}
+{0	0	0	0	0	0	0	0	0}
+{0	0	0	0	0	0	0	0	0}
+{0	0	0	0	0	0	0	0	0}
+{0	0	0	0	0	0	0	0	0}
+{0	0	0	81:2	81:2	0	0	0	0}
+{0	0	0	0	0	0	0	0	0}
+{0	0	0	0	0	0	0	0	0}
+{1	1	1	1	1	1	1	1	1}
+}
+{ 
+{0	0	0	0	0	0	0	0	0}
+{0	0	0	0	0	0	0	0	0}
+{0	0	0	0	0	0	0	0	81}
+{0	0	0	0	0	0	0	0	0}
+{0	0	0	0	81	81	0	0	0}
+{0	0	0	0	0	0	0	0	0}
+{0	0	81	81	0	0	0	0	0}
+{0	0	0	0	0	0	0	0	0}
+{1	1	1	1	1	1	1	1	1}
+}

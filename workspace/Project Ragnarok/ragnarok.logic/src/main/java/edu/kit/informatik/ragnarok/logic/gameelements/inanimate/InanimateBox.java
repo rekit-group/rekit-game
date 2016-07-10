@@ -30,8 +30,4 @@ public class InanimateBox extends Inanimate {
 		return new InanimateBox(pos, new Vec(1, 1), new RGBAColor(randCol, randCol, randCol, 255));
 	}
 
-	@Override
-	public int getID() {
-		return 50;
-	}
 }

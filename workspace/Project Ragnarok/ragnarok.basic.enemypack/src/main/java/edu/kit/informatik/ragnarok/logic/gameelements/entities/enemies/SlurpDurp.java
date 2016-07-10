@@ -58,9 +58,4 @@ public class SlurpDurp extends Entity {
 		f.drawCircle(this.parentPos.add(this.innerPos), this.size, new RGBColor(94, 233, 101));
 	}
 
-	@Override
-	public int getID() {
-		return -1;
-	}
-
 }

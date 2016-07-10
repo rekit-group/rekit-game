@@ -139,8 +139,4 @@ public class EndTrigger extends InanimateTrigger {
 		return EndTrigger.instance;
 	}
 
-	@Override
-	public int getID() {
-		return 71;
-	}
 }

@@ -32,9 +32,4 @@ public class InanimateTrigger extends Inanimate {
 
 	}
 
-	@Override
-	public int getID() {
-		return 70;
-	}
-
 }

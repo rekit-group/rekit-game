@@ -29,9 +29,4 @@ public class InanimateDoor extends InanimateBox {
 		}
 	}
 
-	@Override
-	public int getID() {
-		return 60;
-	}
-
 }

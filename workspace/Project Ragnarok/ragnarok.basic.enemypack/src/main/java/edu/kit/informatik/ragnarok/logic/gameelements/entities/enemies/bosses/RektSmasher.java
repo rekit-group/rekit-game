@@ -194,9 +194,4 @@ public class RektSmasher extends Boss {
 		return clone;
 	}
 
-	@Override
-	public int getID() {
-		return 100;
-	}
-
 }
