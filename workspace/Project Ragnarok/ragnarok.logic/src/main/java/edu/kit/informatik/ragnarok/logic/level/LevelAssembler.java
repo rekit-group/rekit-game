@@ -8,7 +8,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
  * Manages assembling a level piece by piece for not having to build a level
  * whole at once. The method <i>generate(int max)</i> must be called at least
  * every time <i>max</i> changes to give the LevelAssembler the change to check
- * if it must generate more {@link GameElement}s.
+ * if it must generate more {@link GameElement GameElements}.
  * </p>
  * <p>
  * Internally, it uses a {@link StructureManager} to get the the next pieces (=

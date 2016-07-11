@@ -23,7 +23,7 @@ import edu.kit.informatik.ragnarok.visitor.parser.StringParser;
  * @see AfterVisit
  *
  */
-public class Visitor {
+public final class Visitor {
 	/**
 	 * Set values / attributes of classes (only static)
 	 *
@@ -42,6 +42,39 @@ public class Visitor {
 	 */
 	public static final void visit(Visitable v) {
 		new Visitor().visitMe(v);
+	}
+
+	/**
+	 * Get a new modifiable visitor
+	 *
+	 * @return the new visior
+	 * @see #setParser(Class, Parser)
+	 */
+	public Visitor getNewVisitor() {
+		return new Visitor();
+	}
+
+	/**
+	 * Set a parser for a target type to be visited later on <br>
+	 * {@code parser} == {@code null} indicates that you want to delete a parser
+	 * for the target type
+	 * 
+	 * @param target
+	 *            the target type
+	 * @param parser
+	 *            the parser
+	 */
+	public synchronized void setParser(Class<?> target, Parser parser) {
+		if (parser == null) {
+			this.parsers.remove(target);
+		}
+		this.parsers.put(target, parser);
+	}
+
+	/**
+	 * Prevent illegal instantiation
+	 */
+	private Visitor() {
 	}
 
 	/**
@@ -69,7 +102,7 @@ public class Visitor {
 	 * @param v
 	 *            the visitable
 	 */
-	private void visitMe(Visitable v) {
+	private synchronized void visitMe(Visitable v) {
 		VisitInfo info = v.getClass().getAnnotation(VisitInfo.class);
 		if (info == null || !info.visit()) {
 			System.err.println("WARNING: No info defined or disabled for " + v.getClass().getSimpleName());
@@ -90,7 +123,7 @@ public class Visitor {
 	 * @param v
 	 *            the visitable
 	 */
-	private void visitMeStatic(Class<? extends Visitable> v) {
+	private synchronized void visitMeStatic(Class<? extends Visitable> v) {
 		VisitInfo info = v.getAnnotation(VisitInfo.class);
 		if (info == null || !info.visit()) {
 			System.err.println("WARNING: No info defined or disabled for " + v.getSimpleName());
@@ -130,7 +163,7 @@ public class Visitor {
 
 	/**
 	 * Apply a value to a field (only static)
-	 * 
+	 *
 	 * @param field
 	 *            the field
 	 * @param bundle
@@ -184,7 +217,7 @@ public class Visitor {
 
 	/**
 	 * Apply a value to a field (only non-static)
-	 * 
+	 *
 	 * @param v
 	 *            the visitable
 	 * @param field

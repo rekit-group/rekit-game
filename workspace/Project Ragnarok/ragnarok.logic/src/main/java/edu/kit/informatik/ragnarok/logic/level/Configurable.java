@@ -60,8 +60,8 @@ public abstract class Configurable {
 			return false;
 		}
 		String setting = this.settings.get(settingName);
-		if (setting.matches("(true|false)")) {
-			return setting.equals("true");
+		if (setting.toLowerCase().matches("(true|false)")) {
+			return setting.equalsIgnoreCase("true");
 		}
 		return this.settings.get(settingName) != null;
 	}
