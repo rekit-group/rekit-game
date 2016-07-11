@@ -145,8 +145,8 @@ public class ClimbUpBox extends DynamicInanimate {
 	@Override
 	public ClimbUpBox create(Vec startPos, String[] options) {
 		long offset = 0; 
-		if (options.length >= 1 && options[0] != null && options[0].matches("(\\+|-)?[1]")) {
-			offset = PERIOD;
+		if (options.length >= 1 && options[0] != null && options[0].matches("(\\+|-)?[0-9]")) {
+			offset = Integer.parseInt(options[0]) * PERIOD / 2;
 		}
 		return new ClimbUpBox(startPos, new Vec(1), new RGBAColor(110, 110, 110, 255), offset);
 	}

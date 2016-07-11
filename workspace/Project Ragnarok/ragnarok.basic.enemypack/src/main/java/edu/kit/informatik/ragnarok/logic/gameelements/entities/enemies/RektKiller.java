@@ -248,6 +248,11 @@ public class RektKiller extends Enemy {
 				System.err.println("Error, RektKiller was supplied invalid option " + options[0] + " at index 0 for Direction");
 			}
 		}
+				
+		// if option 1 is given: set defined sides
+		if (options.length >= 2 && options[1] != null && options[1].matches("(\\+|-)?[0-9]+")) {
+			inst.setSides(Integer.parseInt(options[1]));
+		}
 
 		return inst;
 	}

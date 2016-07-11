@@ -30,60 +30,10 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 		this.setPos(startPos);
 	}
 
-	public GameElement create(Vec startPos, String[] modifiers) {
-		throw new UnsupportedOperationException("Create not supported for " + this.getClass().getSimpleName());
-	}
-
-	public void destroy() {
-		this.deleteMe = true;
-	}
-
-	@Override
-	public void reactToCollision(GameElement element, Direction dir) {
-		// Do nothing
-	}
-
 	public void logicLoop(float deltaTime) {
 		// Do nothing
 	}
-
-	public final Vec getVel() {
-		return this.vel;
-	}
-
-	public final void setPos(Vec value) {
-		if (this.pos == null) {
-			this.lastPos = value.clone();
-		} else {
-			this.lastPos = this.pos.clone();
-		}
-
-		this.pos = value.clone();
-	}
-
-	public final Vec getPos() {
-		return this.pos;
-	}
-
-	public final Vec getLastPos() {
-		return this.lastPos;
-	}
-
-	public final Vec getSize() {
-		return this.size;
-	}
-
-	public final void setScene(Scene value) {
-		this.scene = value;
-	}
-
-	public final Frame getCollisionFrame() {
-		Vec v1 = this.getPos().add(this.getSize().multiply(-0.5f));
-		Vec v2 = this.getPos().add(this.getSize().multiply(0.5f));
-
-		return new Frame(v1, v2);
-	}
-
+	
 	public final void render(Field f) {
 		if (this.isVisible()) {
 			this.internalRender(f);
@@ -94,28 +44,78 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 		// do nothing
 	};
 
+	protected boolean isVisible() {
+		return this.visible;
+	}
+	
+	public final Vec getPos() {
+		return this.pos;
+	}
+
+	public final Vec getLastPos() {
+		return this.lastPos;
+	}
+	
+	public final Vec getVel() {
+		return this.vel;
+	}
+	
+	public final void setVel(Vec newVel) {
+		this.vel = newVel;
+	}
+	
+	public final void setPos(Vec value) {
+		if (this.pos == null) {
+			this.lastPos = value.clone();
+		} else {
+			this.lastPos = this.pos.clone();
+		}
+
+		this.pos = value.clone();
+	}
+	
+	public final Vec getSize() {
+		return this.size;
+	}
+	
+	@Override
+	public void reactToCollision(GameElement element, Direction dir) {
+		// Do nothing
+	}
+	
+	public final Frame getCollisionFrame() {
+		Vec v1 = this.getPos().add(this.getSize().multiply(-0.5f));
+		Vec v2 = this.getPos().add(this.getSize().multiply(0.5f));
+
+		return new Frame(v1, v2);
+	}
+	
+	public final void setScene(Scene value) {
+		this.scene = value;
+	}
+	
+	public final Team getTeam() {
+		return this.team;
+	}
+	
 	protected int getOrderZ() {
 		return 0;
 	}
-
+	
 	@Override
 	public final int compareTo(GameElement other) {
 		return this.getOrderZ() - other.getOrderZ();
 	}
-
-	protected boolean isVisible() {
-		return this.visible;
+	
+	public GameElement create(Vec startPos, String[] modifiers) {
+		throw new UnsupportedOperationException("Create not supported for " + this.getClass().getSimpleName());
 	}
 
-	public final Team getTeam() {
-		return this.team;
+	public void destroy() {
+		this.deleteMe = true;
 	}
-
+	
 	public final boolean getDeleteMe() {
 		return this.deleteMe;
-	}
-
-	public final void setVel(Vec newVel) {
-		this.vel = newVel;
 	}
 }
