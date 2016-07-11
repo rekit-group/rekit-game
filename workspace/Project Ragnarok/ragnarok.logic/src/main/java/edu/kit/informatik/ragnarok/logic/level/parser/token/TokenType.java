@@ -20,6 +20,10 @@ public enum TokenType {
 	 */
 	ALIAS,
 	/**
+	 * Mapping
+	 */
+	MAPPING,
+	/**
 	 * Begin of an Level or an LevelLine (equals "{")
 	 */
 	BEGIN,
@@ -34,5 +38,9 @@ public enum TokenType {
 	/**
 	 * Token for RAW content
 	 */
-	RAW
+	RAW,
+	/**
+	 * Token for an delimiter of an Setting or Alias (equals "::")
+	 */
+	DELIMITER
 }

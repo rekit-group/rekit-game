@@ -21,6 +21,7 @@ public class Token {
 		{
 			this.put("{", TokenType.BEGIN);
 			this.put("}", TokenType.END);
+			this.put("::", TokenType.DELIMITER);
 
 		}
 	};
@@ -67,20 +68,23 @@ public class Token {
 
 	/**
 	 * Find value from content
-	 * 
+	 *
 	 * @param input
 	 *            the input
 	 * @return the type
 	 */
 	private TokenType determinateByContent(String input) {
-		if (input.matches("#ALIAS::(\\w|(\\+|-)?\\d|\\.)+->(\\w|\\d|\\.)+")) {
+		if (input.equals("#ALIAS")) {
 			return TokenType.ALIAS;
 		}
-		if (input.matches("#BOSS_SETTING::(\\w|(\\+|-)?\\d|\\.)+->(\\w|\\d|\\.)+")) {
+		if (input.equals("#BOSS_SETTING")) {
 			return TokenType.BOSS_SETTING;
 		}
-		if (input.matches("#SETTING::(\\w|(\\+|-)?\\d|\\.)+->(\\w|\\d|\\.)+")) {
+		if (input.equals("#SETTING")) {
 			return TokenType.SETTING;
+		}
+		if (input.matches("(\\w|(\\+|-)?\\d|\\.)+->(\\w|\\d|\\.)+")) {
+			return TokenType.MAPPING;
 		}
 		return TokenType.RAW;
 	}

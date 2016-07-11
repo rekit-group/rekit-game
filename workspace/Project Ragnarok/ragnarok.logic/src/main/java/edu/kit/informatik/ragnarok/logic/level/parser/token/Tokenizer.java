@@ -2,6 +2,8 @@ package edu.kit.informatik.ragnarok.logic.level.parser.token;
 
 import java.util.StringTokenizer;
 
+import edu.kit.informatik.ragnarok.visitor.parser.StringParser;
+
 /**
  * This class realizes a tokenizer for the LevelLanguage
  *
@@ -31,12 +33,12 @@ public class Tokenizer {
 			throw new IllegalArgumentException("Null is no input!");
 		}
 		this.input = "" + input;
-		this.scanner = new StringTokenizer(this.input.replace("{", " { ").replace("}", " } "), " \t\n\r");
+		this.scanner = new StringTokenizer(this.input.replace("::", " :: ").replace("{", " { ").replace("}", " } "), " \t\n\r");
 	}
 
 	/**
 	 * Get the next token
-	 * 
+	 *
 	 * @return the token
 	 */
 	public Token nextToken() {

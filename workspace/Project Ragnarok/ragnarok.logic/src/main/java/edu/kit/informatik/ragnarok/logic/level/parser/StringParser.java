@@ -1,7 +1,6 @@
 package edu.kit.informatik.ragnarok.logic.level.parser;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,7 +24,7 @@ class StringParser extends LevelParser {
 	 * The tokenizer
 	 */
 	private Tokenizer tokenizer;
-	/** The look ahead Token. */
+	/** The look ahead Token */
 	private Token lookAhead;
 
 	/**
@@ -43,27 +42,31 @@ class StringParser extends LevelParser {
 		if (manager == null) {
 			throw new IllegalArgumentException("manager cannot be null");
 		}
-		System.out.println("BEGIN OF PARSING");
 		this.lookAhead = this.tokenizer.nextToken();
-		while (this.isToken(TokenType.SETTING) || this.isToken(TokenType.BOSS_SETTING) || this.isToken(TokenType.ALIAS)) {
-			if (this.isToken(TokenType.ALIAS)) {
-				this.parseAlias(manager);
-			} else if (this.isToken(TokenType.SETTING)) {
-				this.parseSetting(manager);
-			} else {
-				this.parseBossSetting(manager);
-			}
-		}
-		while (this.isToken(TokenType.BEGIN)) {
-			this.parseLevel(manager);
-		}
-		System.out.println("END OF PARSING");
+		this.parseStructure(manager);
 		this.readToken(TokenType.EOS);
 		this.reset();
 	}
 
+	private void parseStructure(StructureManager manager) {
+		if (this.isToken(TokenType.ALIAS)) {
+			this.parseAlias(manager);
+		}
+		if (this.isToken(TokenType.SETTING)) {
+			this.parseSetting(manager);
+		}
+		if (this.isToken(TokenType.BOSS_SETTING)) {
+			this.parseBossSetting(manager);
+		}
+		if (this.isToken(TokenType.BEGIN)) {
+			this.parseLevel(manager);
+		}
+		if (!this.isToken(TokenType.EOS)) {
+			this.parseStructure(manager);
+		}
+	}
+
 	private void parseLevel(StructureManager manager) {
-		System.out.println("Begin parsing level part");
 		this.readToken(TokenType.BEGIN);
 		List<String[]> lines = new LinkedList<>();
 		while (this.isToken(TokenType.BEGIN)) {
@@ -72,8 +75,6 @@ class StringParser extends LevelParser {
 		this.readToken(TokenType.END);
 		Structure s = new Structure(lines, manager.getAlias());
 		manager.addStructure(s);
-		System.out.println("End parsing level part");
-
 	}
 
 	private void readLevelLine(List<String[]> lines) {
@@ -86,36 +87,33 @@ class StringParser extends LevelParser {
 		}
 		this.readToken(TokenType.END);
 		String[] res = new String[line.size()];
-		int i = 0;
-		for (String o : line) {
-			res[i++] = o;
-		}
-		System.out.println("parsed line: " + Arrays.toString(res));
+		line.toArray(res);
 		lines.add(res);
-
 	}
 
 	private void parseAlias(StructureManager manager) {
-		Token alias = this.readToken(TokenType.ALIAS);
-		String[] mapping = alias.getValue().split("::")[1].split("->");
+		this.readToken(TokenType.ALIAS);
+		this.readToken(TokenType.DELIMITER);
+		String[] mapping = this.parseMapping();
 		manager.setAlias(mapping[0], mapping[1]);
-		System.out.println("Set ALIAS " + Arrays.toString(mapping));
 	}
 
 	private void parseSetting(StructureManager manager) {
-		Token setting = this.readToken(TokenType.SETTING);
-		String[] mapping = setting.getValue().split("::")[1].split("->");
+		this.readToken(TokenType.SETTING);
+		this.readToken(TokenType.DELIMITER);
+		String[] mapping = this.parseMapping();
 		manager.setSetting(mapping[0], mapping[1]);
-		System.out.println("Set SETTING " + Arrays.toString(mapping));
-
 	}
 
 	private void parseBossSetting(StructureManager manager) {
-		Token setting = this.readToken(TokenType.BOSS_SETTING);
-		String[] mapping = setting.getValue().split("::")[1].split("->");
+		this.readToken(TokenType.BOSS_SETTING);
+		this.readToken(TokenType.DELIMITER);
+		String[] mapping = this.parseMapping();
 		manager.bossSettings.setSetting(mapping[0], mapping[1]);
-		System.out.println("Set BOSS_SETTING " + Arrays.toString(mapping));
+	}
 
+	private String[] parseMapping() {
+		return this.readToken(TokenType.MAPPING).getValue().split("->");
 	}
 
 	private void reset() {
