@@ -1,11 +1,15 @@
 package edu.kit.informatik.ragnarok.logic;
 
-import edu.kit.informatik.ragnarok.logic.scene.LevelScene;
+import java.lang.reflect.Method;
+
+import edu.kit.informatik.ragnarok.logic.scene.ArcadeLevelScene;
+import edu.kit.informatik.ragnarok.logic.scene.InfiniteLevelScene;
+import edu.kit.informatik.ragnarok.logic.scene.LevelOfTheDayScene;
 import edu.kit.informatik.ragnarok.logic.scene.MenuScene;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
 
 public enum Scenes {
-	MENU(0, MenuScene.class), INFINIT(1, LevelScene.class), LOD(2, LevelScene.class), ARCADE(3, LevelScene.class);
+	MENU(0, MenuScene.class), INFINIT(1, InfiniteLevelScene.class), LOD(2, LevelOfTheDayScene.class), ARCADE(3, ArcadeLevelScene.class);
 
 	protected final int id;
 	protected final Class<? extends Scene> sceneClass;
@@ -26,5 +30,15 @@ public enum Scenes {
 
 	public boolean isMenu() {
 		return this.sceneClass.isAssignableFrom(MenuScene.class);
+	}
+
+	public Scene getNewScene(GameModel model, String[] options) {
+		try {
+			Method test = this.sceneClass.getDeclaredMethod("create", GameModel.class, String[].class);
+			return (Scene) test.invoke(null, model, options);
+		} catch (Exception e) {
+			throw new UnsupportedOperationException("Cant create a " + this.sceneClass.getName());
+		}
+
 	}
 }

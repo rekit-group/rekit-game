@@ -4,8 +4,6 @@ import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.CameraTarget;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.menu.MenuItem;
-import edu.kit.informatik.ragnarok.logic.level.LevelManager;
-import edu.kit.informatik.ragnarok.logic.scene.LevelScene;
 import edu.kit.informatik.ragnarok.logic.scene.MenuScene;
 import edu.kit.informatik.ragnarok.logic.scene.NullScene;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
@@ -72,42 +70,34 @@ public class GameModel implements CameraTarget, Model {
 
 	}
 
-	public int selectedArcadeId = 0;
-
+	/**
+	 * {@link #switchScene(Scenes, String[])} with null as options
+	 * 
+	 * @param s
+	 */
 	public void switchScene(Scenes s) {
-		int sceneId = s.id;
-		Scene nextScene = null;
+		this.switchScene(s, null);
+	}
 
-		// TODO: move scene creation to Enum
-		switch (sceneId) {
-		case 0:
-			nextScene = new MenuScene(this);
-			this.state = GameState.MENU;
-			break;
-		case 1:
-			nextScene = new LevelScene(this, LevelManager.getInfiniteLevel());
-			this.state = GameState.INGAME;
-			break;
-		case 2:
-			nextScene = new LevelScene(this, LevelManager.getLOTDLevel());
-			this.state = GameState.INGAME;
-			break;
-		case 3:
-			nextScene = new LevelScene(this, LevelManager.getArcadeLevel(this.selectedArcadeId));
-			this.state = GameState.INGAME;
-			break;
-
-		default:
-			throw new IllegalArgumentException("no scene with id " + sceneId);
-		}
-
+	/**
+	 * Switch to a different {@link Scene}. The new Scene will be initialized an
+	 * started immediately. </br>
+	 * Before you can switch to a newly created Scene you must create an entry
+	 * in the {@link Scenes} enum.
+	 *
+	 * @param s
+	 *            the scene to switch to
+	 * @param options
+	 *            pass options to the scene (e.g. the arcade level id)
+	 */
+	public void switchScene(Scenes s, String[] options) {
+		Scene nextScene = s.getNewScene(this, options);
 		nextScene.init();
 		nextScene.start();
 		this.curScene.stop();
-
 		this.lastTime = 0;
 		this.curScene = nextScene;
-
+		this.state = Scenes.getByInstance(this.curScene).isMenu() ? GameState.MENU : GameState.INGAME;
 	}
 
 	@Override

@@ -12,6 +12,26 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.CameraTarget;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.GuiElement;
 
+/**
+ * Based on the concept of scenes in Unity. </br>
+ * "Scenes contain the objects of your game. They can be used to create a main
+ * menu, individual levels, and anything else. Think of each unique Scene file
+ * as a unique level. In each Scene, you will place your environments,
+ * obstacles, and decorations, essentially designing and building your game in
+ * pieces." <a href=" https://docs.unity3d.com/Manual/CreatingScenes.html">Unity
+ * Manual</a>
+ * </p>
+ * A new Scene needs an entry in {@link Scenes} and a method with the Signature:
+ * {@code public static Scene create(GameModel, String[])}, for the GameModel to
+ * be able to start that Scene.</br>
+ * For Scene switching take a look at
+ * {@link GameModel#switchScene(Scenes, String[])}
+ *
+ *
+ * @author Matthias Schmitt
+ *
+ * @version 1.0
+ */
 public abstract class Scene implements CameraTarget {
 
 	/**
@@ -46,7 +66,7 @@ public abstract class Scene implements CameraTarget {
 	}
 
 	/**
-	 * Start the scene. Begin drawing. e.g. Player/Enemies will begin to move
+	 * Start the scene. Begin drawing and Player/Enemies will begin to move.
 	 */
 	public void start() {
 	}

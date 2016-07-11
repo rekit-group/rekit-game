@@ -18,6 +18,10 @@ public class MenuScene extends Scene {
 		super(model);
 	}
 
+	public static Scene create(GameModel model, String[] options) {
+		return new MenuScene(model);
+	}
+
 	@Override
 	public void init() {
 		super.init();
@@ -39,8 +43,7 @@ public class MenuScene extends Scene {
 		for (int i = 0; i < LevelManager.getNumberOfArcadeLevels(); i++) {
 			final int id = i;
 			MenuActionItem button = new MenuActionItem(this, String.valueOf(id + 1), () -> {
-				this.model.selectedArcadeId = id;
-				this.model.switchScene(Scenes.ARCADE);
+				this.model.switchScene(Scenes.ARCADE, new String[] { "" + id });
 			});
 			button.setSize(new Vec(80, 80));
 			arcade.addItem(button);
