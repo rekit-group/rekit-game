@@ -92,7 +92,7 @@ public class MenuSubMenu extends MenuItem {
 	@Override
 	public void select() {
 		if (this.selected) {
-			this.unselect();
+			this.selected = false;
 			this.inMenu = true;
 			this.menuItems.get(this.index).select();
 		} else if (this.inMenu) {

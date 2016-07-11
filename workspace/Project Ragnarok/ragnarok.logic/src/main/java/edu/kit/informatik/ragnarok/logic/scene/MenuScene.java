@@ -29,16 +29,18 @@ public class MenuScene extends Scene {
 		this.menu = new MenuSubMenu(this, "Main Menu");
 		this.menu.setPos(new Vec(GameConf.PIXEL_W / 2f, GameConf.PIXEL_H / 2f));
 
-		MenuActionItem play = new MenuActionItem(this, "Infinite", () -> MenuScene.this.model.switchScene(Scenes.INFINIT));
-
-		MenuActionItem lod = new MenuActionItem(this, "Level of the Day", () -> MenuScene.this.model.switchScene(Scenes.LOD));
-
-		MenuGrid arcade = new MenuGrid(this, "Arcade", 6);
-		arcade.setItemSize(new Vec(100, 100));
+		MenuSubMenu play = new MenuSubMenu(this, "Play");
 
 		MenuSubMenu settings = new MenuSubMenu(this, "Settings");
 
 		MenuSubMenu about = new MenuSubMenu(this, "About");
+
+		MenuActionItem inf = new MenuActionItem(this, "Infinite Fun", () -> MenuScene.this.model.switchScene(Scenes.INFINIT));
+
+		MenuActionItem lod = new MenuActionItem(this, "Level of the Day", () -> MenuScene.this.model.switchScene(Scenes.LOD));
+
+		MenuGrid arcade = new MenuGrid(this, "Arcade Mode", 6);
+		arcade.setItemSize(new Vec(100, 100));
 
 		for (int i = 0; i < LevelManager.getNumberOfArcadeLevels(); i++) {
 			final int id = i;
@@ -49,15 +51,23 @@ public class MenuScene extends Scene {
 			arcade.addItem(button);
 		}
 
-		settings.addItem(new MenuActionItem(this, "Dummy", () -> {
+		MenuSubMenu modPlay = new MenuSubMenu(this, "Mod Scenes");
+
+		modPlay.addItem(new MenuActionItem(this, "no Mod Scenes :(", () -> {
 		}));
 
-		about.addItem(new MenuActionItem(this, "Dummy", () -> {
+		play.addItem(inf);
+		play.addItem(lod);
+		play.addItem(arcade);
+		play.addItem(modPlay);
+
+		settings.addItem(new MenuActionItem(this, "no Settings :/", () -> {
+		}));
+
+		about.addItem(new MenuActionItem(this, "under construction", () -> {
 		}));
 
 		this.menu.addItem(play);
-		this.menu.addItem(lod);
-		this.menu.addItem(arcade);
 		this.menu.addItem(settings);
 		this.menu.addItem(about);
 

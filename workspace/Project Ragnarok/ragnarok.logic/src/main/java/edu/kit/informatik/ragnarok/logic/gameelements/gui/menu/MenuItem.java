@@ -76,4 +76,9 @@ public abstract class MenuItem extends GuiElement {
 
 	}
 
+	@Override
+	public String toString() {
+		return this.text;
+	}
+
 }
