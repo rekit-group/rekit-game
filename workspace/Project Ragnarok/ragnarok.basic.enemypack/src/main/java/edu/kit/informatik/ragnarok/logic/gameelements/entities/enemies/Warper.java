@@ -86,10 +86,6 @@ public class Warper extends Enemy {
 
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
-		if (this.deleteMe) {
-			return;
-		}
-
 		if (this.team.isHostile(element.getTeam())) {
 
 			// Give player damage

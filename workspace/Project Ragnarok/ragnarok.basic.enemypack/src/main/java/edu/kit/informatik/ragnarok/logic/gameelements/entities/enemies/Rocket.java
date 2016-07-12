@@ -109,10 +109,6 @@ public class Rocket extends Enemy {
 
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
-		if (this.deleteMe) {
-			return;
-		}
-
 		if (this.team.isHostile(element.getTeam())) {
 
 			if (dir == Direction.UP) {

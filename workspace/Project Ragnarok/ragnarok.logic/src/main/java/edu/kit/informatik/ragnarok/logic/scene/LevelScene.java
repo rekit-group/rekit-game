@@ -167,6 +167,11 @@ public abstract class LevelScene extends Scene {
 	}
 
 	private void checkCollision(GameElement e1, GameElement e2, Vec e1lastPos, Vec e2lastPos) {
+		// Return if one of the elements is about to be deleted.
+		if (e1.getDeleteMe() || e2.getDeleteMe()) {
+			return;
+		}
+		
 		// Return if there is no collision
 		if (!e1.getCollisionFrame().collidesWith(e2.getCollisionFrame())) {
 			return;
