@@ -4,14 +4,11 @@ import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Pickup;
-import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 
 /**
  * This class defines a simple {@link Pickup}; a <b>Life</b> which will give the
- * player points
- *
- *
+ * player lives.
  */
 public class Life extends Pickup {
 	/**
@@ -32,11 +29,9 @@ public class Life extends Pickup {
 	}
 
 	@Override
-	public void reactToCollision(GameElement element, Direction dir) {
-		if (this.team.isHostile(element.getTeam())) {
-			element.addDamage(-1);
-			this.addDamage(1);
-		}
+	public void perform(GameElement collector) {
+		collector.addDamage(-1);
+		this.addDamage(1);
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.util.ReflectUtils;
+import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 
 public abstract class Pickup extends Entity {
@@ -23,7 +24,21 @@ public abstract class Pickup extends Entity {
 
 	@Override
 	public abstract GameElement create(Vec startPos, String[] options);
-
+	
+	/**
+	 * Template method that should be overwritten in concrete {@link PickUp PickUps} to add the action
+	 * that is performed upon being collected by the Player.
+	 * @param collector
+	 */
+	public abstract void perform(GameElement collector);
+	
+	@Override
+	public final void reactToCollision(GameElement element, Direction dir) {
+		if (this.team.isHostile(element.getTeam())) {
+			perform(element);
+		}
+	}
+	
 	@Override
 	public void logicLoop(float deltaTime) {
 		// no logic
