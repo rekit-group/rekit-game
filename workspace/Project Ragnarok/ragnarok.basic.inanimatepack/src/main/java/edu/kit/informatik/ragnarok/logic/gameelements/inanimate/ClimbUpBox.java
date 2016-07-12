@@ -79,7 +79,6 @@ public class ClimbUpBox extends DynamicInanimate {
 		this.strategy = this.strategies.get(0);
 		
 		this.offset = offset;
-		System.out.println(this.scene);
 		this.timer = new TimeDependency(ClimbUpBox.PERIOD);
 	}
 
@@ -96,7 +95,6 @@ public class ClimbUpBox extends DynamicInanimate {
 			if ((nowTime / ClimbUpBox.PERIOD) % 2 == 0) {
 				nextStrategy();
 			}
-			System.out.println("calced " + (nowTime - this.lastTime));
 		}
 		// update timer
 		this.timer.removeTime(nowTime - this.lastTime);
