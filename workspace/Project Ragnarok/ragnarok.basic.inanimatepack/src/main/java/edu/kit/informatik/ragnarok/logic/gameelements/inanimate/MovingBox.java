@@ -86,7 +86,7 @@ public class MovingBox extends DynamicInanimate {
 	@Override
 	public void logicLoop(float deltaTime) {
 		this.timer.removeTime(deltaTime);
-		this.pos = this.currentStart.add(this.relativeTarget.multiply(this.timer.getProgress()));
+		this.setPos(this.currentStart.add(this.relativeTarget.multiply(this.timer.getProgress())));
 
 		if (GameConf.PRNG.nextFloat() > 0.6f) {
 			MovingBox.sparkParticles.spawn(this.scene, this.getPos().addX(-5.5f * this.sizeX16).addY(this.getSize().getY() / 3));
