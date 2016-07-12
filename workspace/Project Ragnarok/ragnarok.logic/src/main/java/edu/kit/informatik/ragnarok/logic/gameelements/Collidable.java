@@ -63,10 +63,14 @@ public interface Collidable {
 	};
 
 	/**
+	 * <p>
 	 * Notification that this GameElement has been collided with from another
-	 * GameElement <i>element</i> from the given direction <i>dir</i>. Define
-	 * optional reactions that the GameElement performs on the other GameElement
-	 * upon collision
+	 * GameElement <i>element</i> from the given direction <i>dir</i>.
+	 * </p>
+	 * <p>
+	 * Can be overwritten for defining an optional reaction that the GameElement
+	 * performs on the other GameElement and/or itself upon collision.
+	 * </p>
 	 *
 	 * @param element
 	 *            the GameElement that collided with this GameElement
