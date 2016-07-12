@@ -33,7 +33,7 @@ public class JumpState extends EntityState {
 	public void logicLoop(float deltaTime) {
 		this.timeLeft -= deltaTime;
 
-		if (this.timeLeft > 0) {
+		if (this.timeLeft > 0 && this.entity.getVel().getY() > GameConf.PLAYER_JUMP_BOOST) {
 			this.entity.setVel(new Vec(this.entity.getVel().getX(), GameConf.PLAYER_JUMP_BOOST));
 		}
 	}

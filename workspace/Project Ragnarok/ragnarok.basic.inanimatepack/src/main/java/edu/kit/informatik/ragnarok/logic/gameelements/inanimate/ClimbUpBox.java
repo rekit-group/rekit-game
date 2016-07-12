@@ -35,9 +35,11 @@ public class ClimbUpBox extends DynamicInanimate {
 	private int current = 0;
 
 	private ClimbBoxStrategy strategy;
-
-	private RGBAColor darkCol;
+	
+	private static RGBAColor outerCol = new RGBAColor(110, 110, 110, 255);
+	private static RGBAColor darkCol = new RGBAColor(90, 90, 90, 255);
 	private static RGBColor energyCol = new RGBColor(255, 100, 0);
+	
 	private TimeDependency timer;
 
 	private static ParticleSpawner particles = null;
@@ -63,14 +65,11 @@ public class ClimbUpBox extends DynamicInanimate {
 		super();
 	}
 
-	protected ClimbUpBox(Vec pos, Vec size, RGBAColor color, long offset) {
-		super(pos, size, color);
+	protected ClimbUpBox(Vec pos, long offset) {
+		super(pos, new Vec(1), outerCol);
 
 		// create inner InanimateBox with given position
 		this.innerBox = (InanimateBox) InanimateBox.staticCreate(pos);
-
-		// prepare colors for rendering
-		this.darkCol = color.darken(0.8f);
 
 		// instantiate the two strategies
 		this.strategies = new HashMap<>();
@@ -121,8 +120,8 @@ public class ClimbUpBox extends DynamicInanimate {
 	@Override
 	public void internalRender(Field f) {
 		f.drawRectangle(this.getPos(), this.getSize(), this.color);
-		f.drawRectangle(this.getPos().addY(-0.1f), this.getSize().multiply(0.2f, 0.8f), this.darkCol);
-		f.drawRectangle(this.getPos().addY(0.4f), this.getSize().multiply(1, 0.2f), this.darkCol);
+		f.drawRectangle(this.getPos().addY(-0.1f), this.getSize().multiply(0.2f, 0.8f), ClimbUpBox.darkCol);
+		f.drawRectangle(this.getPos().addY(0.4f), this.getSize().multiply(1, 0.2f), ClimbUpBox.darkCol);
 
 		this.renderEnergy(f, this.strategy.getEnergyStart(this.timer.getProgress()), this.strategy.getEnergyEnd(this.timer.getProgress()));
 
@@ -146,7 +145,7 @@ public class ClimbUpBox extends DynamicInanimate {
 		if (options.length >= 1 && options[0] != null && options[0].matches("(\\+|-)?[0-9]")) {
 			offset = Integer.parseInt(options[0]) * PERIOD / 2;
 		}
-		return new ClimbUpBox(startPos, new Vec(1), new RGBAColor(110, 110, 110, 255), offset);
+		return new ClimbUpBox(startPos, offset);
 	}
 
 	private abstract class ClimbBoxStrategy {
@@ -157,7 +156,7 @@ public class ClimbUpBox extends DynamicInanimate {
 		}
 
 		public void reactToCollision(GameElement element, Direction dir) {
-			this.parent.innerBox.reactToCollision(element, dir);
+			innerBox.reactToCollision(element, dir);
 		}
 
 		public void internalRender(Field f) {
