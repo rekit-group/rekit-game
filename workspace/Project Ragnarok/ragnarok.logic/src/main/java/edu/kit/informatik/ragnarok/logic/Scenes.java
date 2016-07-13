@@ -11,8 +11,8 @@ import edu.kit.informatik.ragnarok.logic.scene.Scene;
 public enum Scenes {
 	MENU(0, MenuScene.class), INFINIT(1, InfiniteLevelScene.class), LOD(2, LevelOfTheDayScene.class), ARCADE(3, ArcadeLevelScene.class);
 
-	protected final int id;
-	protected final Class<? extends Scene> sceneClass;
+	private final int id;
+	private final Class<? extends Scene> sceneClass;
 
 	private Scenes(int id, Class<? extends Scene> sceneClass) {
 		this.id = id;
@@ -30,6 +30,10 @@ public enum Scenes {
 
 	public boolean isMenu() {
 		return this.sceneClass.isAssignableFrom(MenuScene.class);
+	}
+
+	public int getId() {
+		return this.id;
 	}
 
 	public Scene getNewScene(GameModel model, String[] options) {

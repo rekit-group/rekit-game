@@ -1,6 +1,7 @@
 package edu.kit.informatik.ragnarok.logic.level;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -60,7 +61,7 @@ public abstract class Configurable {
 			return false;
 		}
 		String setting = this.settings.get(settingName);
-		if (setting.toLowerCase().matches("(true|false)")) {
+		if (setting.toLowerCase(Locale.ENGLISH).matches("(true|false)")) {
 			return setting.equalsIgnoreCase("true");
 		}
 		return this.settings.get(settingName) != null;

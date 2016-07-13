@@ -78,7 +78,7 @@ public class MenuGrid extends MenuSubMenu {
 	@Override
 	protected void calcItemPos() {
 		// render menu as grid with max colCount items per row
-		this.rowCount = (int) Math.floor(this.menuItems.size() / this.colCount) + 1;
+		this.rowCount = this.menuItems.size() / this.colCount + 1;
 		final Vec startOffset = new Vec(-((this.colCount - 1) * this.itemSize.getY()) / 2, -((this.rowCount - 1) * this.itemSize.getY()) / 2);
 		Vec offset = startOffset.clone();
 

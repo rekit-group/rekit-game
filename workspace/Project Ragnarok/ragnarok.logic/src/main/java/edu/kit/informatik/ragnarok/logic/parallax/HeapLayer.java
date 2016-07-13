@@ -1,8 +1,5 @@
 package edu.kit.informatik.ragnarok.logic.parallax;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBAColor;
@@ -14,14 +11,8 @@ public class HeapLayer extends ParallaxLayer {
 	 */
 	private HeapElement prototype;
 
-	/**
-	 * Holds a list of all heapElements to render
-	 */
-	protected List<HeapElement> elems;
-
 	public HeapLayer(HeapElement prototype, float distanceFromFront) {
 		super(distanceFromFront);
-		this.elems = new LinkedList<>();
 		this.prototype = prototype;
 	}
 

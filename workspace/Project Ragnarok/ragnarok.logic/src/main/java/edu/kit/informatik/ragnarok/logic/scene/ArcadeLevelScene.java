@@ -5,7 +5,7 @@ import edu.kit.informatik.ragnarok.logic.level.LevelManager;
 
 public class ArcadeLevelScene extends LevelScene {
 
-	private int arcadeLevelId;
+	private final int arcadeLevelId;
 
 	public ArcadeLevelScene(GameModel model, int arcadeLevelId) {
 		super(model, LevelManager.getArcadeLevel(arcadeLevelId));
@@ -20,6 +20,10 @@ public class ArcadeLevelScene extends LevelScene {
 		}
 		int arcadeId = Integer.parseInt(options[0]);
 		return new ArcadeLevelScene(model, arcadeId);
+	}
+
+	public int getArcadeId() {
+		return this.arcadeLevelId;
 	}
 
 }

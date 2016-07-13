@@ -1,6 +1,7 @@
 package edu.kit.informatik.ragnarok.logic;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.PriorityQueue;
 
 /**
@@ -21,14 +22,14 @@ public class PriorityQueueIterator<T> implements Iterator<T> {
 
 	/**
 	 * Creates an Iterator for a given PriorityQueue.
-	 * 
+	 *
 	 * @param queue
 	 *            the PriorityQueue to iterate over
 	 */
 	public PriorityQueueIterator(PriorityQueue<T> queue) {
 
 		// create own Queue in Iterator
-		this.queue = new PriorityQueue<T>();
+		this.queue = new PriorityQueue<>();
 
 		// add elements unsortedly
 		Iterator<T> it = queue.iterator();
@@ -44,6 +45,9 @@ public class PriorityQueueIterator<T> implements Iterator<T> {
 
 	@Override
 	public T next() {
+		if (this.queue.isEmpty()) {
+			throw new NoSuchElementException("Queue is empty");
+		}
 		return this.queue.remove();
 	}
 

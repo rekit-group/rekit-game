@@ -12,7 +12,7 @@ public abstract class ParallaxLayer {
 
 	private final Object sync = new Object();
 
-	protected Scene scene;
+	protected Scene scene = null;
 
 	protected float currentlyGeneratedUntil = 0;
 

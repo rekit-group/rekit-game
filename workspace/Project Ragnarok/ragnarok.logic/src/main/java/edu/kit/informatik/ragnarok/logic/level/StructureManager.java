@@ -1,6 +1,7 @@
 package edu.kit.informatik.ragnarok.logic.level;
 
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -117,7 +118,7 @@ public class StructureManager extends Configurable implements Iterator<Structure
 		InputStream levelStream = StructureManager.class.getResourceAsStream("/level_" + levelName + ".dat");
 
 		// create Scanner from InputStream
-		Scanner scanner = new Scanner(levelStream);
+		Scanner scanner = new Scanner(levelStream, Charset.defaultCharset().name());
 		// don't use line-ending-wise iteration, but get the whole file at once
 		// \\A = <EOF>
 		scanner.useDelimiter("\\A");

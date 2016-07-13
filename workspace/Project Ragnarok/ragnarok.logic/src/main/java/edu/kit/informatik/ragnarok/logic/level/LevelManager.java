@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -141,7 +142,7 @@ public final class LevelManager {
 	private static void loadFromFile() {
 		try {
 			// create Scanner from InputStream
-			Scanner scanner = new Scanner(LevelManager.FILE);
+			Scanner scanner = new Scanner(LevelManager.FILE, Charset.defaultCharset().name());
 			// iterate lines
 			while (scanner.hasNext()) {
 				String line = scanner.next();
@@ -178,15 +179,15 @@ public final class LevelManager {
 	 */
 	private static void saveToFile() {
 		// create OutputStream
-		OutputStream levelStream;
+		OutputStream levelStream = null;
 		try {
 			levelStream = new FileOutputStream(LevelManager.FILE);
-		} catch (FileNotFoundException e) {
+		} catch (IOException e) {
 			System.err.println("Error while opening " + LevelManager.FILE.getAbsolutePath() + " for saving scores and saves: FileNotFound");
 			return;
 		}
 		// get byte-array from String
-		byte[] bytes = LevelManager.convertToString().getBytes();
+		byte[] bytes = LevelManager.convertToString().getBytes(Charset.defaultCharset());
 		try {
 			// write out contents to Buffer
 			levelStream.write(bytes);
@@ -196,6 +197,10 @@ public final class LevelManager {
 			levelStream.close();
 		} catch (IOException e) {
 			System.err.println("Error while saving " + LevelManager.FILE.getAbsolutePath() + " for scores and saves: IOException");
+			try {
+				levelStream.close();
+			} catch (IOException e1) {
+			}
 		}
 	}
 
