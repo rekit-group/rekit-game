@@ -1,7 +1,7 @@
 package edu.kit.informatik.ragnarok.logic.parallax;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
-import edu.kit.informatik.ragnarok.logic.gameelements.Field;
+import edu.kit.informatik.ragnarok.logic.Field;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
 
 public abstract class ParallaxLayer {

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
-import edu.kit.informatik.ragnarok.logic.gameelements.Field;
+import edu.kit.informatik.ragnarok.logic.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;

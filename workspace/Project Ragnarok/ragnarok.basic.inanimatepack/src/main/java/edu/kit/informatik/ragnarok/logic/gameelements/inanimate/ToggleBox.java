@@ -3,7 +3,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.inanimate;
 import java.util.HashMap;
 import java.util.Map;
 
-import edu.kit.informatik.ragnarok.logic.gameelements.Field;
+import edu.kit.informatik.ragnarok.logic.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.DynamicInanimate;
 import edu.kit.informatik.ragnarok.primitives.Direction;

@@ -1,5 +1,6 @@
 package edu.kit.informatik.ragnarok.logic.gameelements;
 
+import edu.kit.informatik.ragnarok.logic.Field;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;

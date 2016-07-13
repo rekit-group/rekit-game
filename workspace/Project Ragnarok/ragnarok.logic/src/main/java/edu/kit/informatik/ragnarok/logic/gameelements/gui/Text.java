@@ -1,6 +1,6 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.gui;
 
-import edu.kit.informatik.ragnarok.logic.gameelements.Field;
+import edu.kit.informatik.ragnarok.logic.Field;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.util.TextOptions;
 

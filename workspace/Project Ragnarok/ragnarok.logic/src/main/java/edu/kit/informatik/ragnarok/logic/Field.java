@@ -1,5 +1,7 @@
-package edu.kit.informatik.ragnarok.logic.gameelements;
+package edu.kit.informatik.ragnarok.logic;
 
+import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.logic.gameelements.gui.GuiElement;
 import edu.kit.informatik.ragnarok.primitives.Polygon;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBAColor;
@@ -12,7 +14,6 @@ import edu.kit.informatik.ragnarok.util.TextOptions;
  *
  *
  */
-// TODO What means ingame??
 public abstract class Field {
 	/**
 	 * Set the current camera offset (e.g. for Bosses)
@@ -46,6 +47,9 @@ public abstract class Field {
 	 * @param color
 	 *            the color
 	 * @param inGame
+	 *            this indicates whether the drawing belongs to a
+	 *            {@link GameElement} (ingame -> CameraDependend) or a
+	 *            {@link GuiElement} (not ingame -> FrameDepenedend)
 	 *
 	 */
 	public abstract void drawRectangle(Vec pos, Vec size, RGBColor color, boolean inGame);
@@ -74,12 +78,15 @@ public abstract class Field {
 	 * @param rgbaColor
 	 *            the color
 	 * @param inGame
+	 *            this indicates whether the drawing belongs to a
+	 *            {@link GameElement} (ingame -> CameraDependend) or a
+	 *            {@link GuiElement} (not ingame -> FrameDepenedend)
 	 */
 	public abstract void drawRectangle(Vec pos, Vec size, RGBAColor rgbaColor, boolean inGame);
 
 	/**
 	 * Draw a circle
-	 * 
+	 *
 	 * @param pos
 	 *            the position
 	 * @param size
@@ -93,7 +100,7 @@ public abstract class Field {
 
 	/**
 	 * Draw a circle
-	 * 
+	 *
 	 * @param pos
 	 *            the position
 	 * @param size
@@ -101,12 +108,15 @@ public abstract class Field {
 	 * @param color
 	 *            the color
 	 * @param inGame
+	 *            this indicates whether the drawing belongs to a
+	 *            {@link GameElement} (ingame -> CameraDependend) or a
+	 *            {@link GuiElement} (not ingame -> FrameDepenedend)
 	 */
 	public abstract void drawCircle(Vec pos, Vec size, RGBColor color, boolean inGame);
 
 	/**
 	 * Draw a circle
-	 * 
+	 *
 	 * @param pos
 	 *            the position
 	 * @param size
@@ -120,7 +130,7 @@ public abstract class Field {
 
 	/**
 	 * Draw a circle
-	 * 
+	 *
 	 * @param pos
 	 *            the position
 	 * @param size
@@ -128,12 +138,15 @@ public abstract class Field {
 	 * @param color
 	 *            the color
 	 * @param inGame
+	 *            this indicates whether the drawing belongs to a
+	 *            {@link GameElement} (ingame -> CameraDependend) or a
+	 *            {@link GuiElement} (not ingame -> FrameDepenedend)
 	 */
 	public abstract void drawCircle(Vec pos, Vec size, RGBAColor color, boolean inGame);
 
 	/**
 	 * Draw an image
-	 * 
+	 *
 	 * @param pos
 	 *            the position
 	 * @param size
@@ -147,7 +160,7 @@ public abstract class Field {
 
 	/**
 	 * Draw an image
-	 * 
+	 *
 	 * @param pos
 	 *            the position
 	 * @param size
@@ -155,12 +168,15 @@ public abstract class Field {
 	 * @param imagePath
 	 *            the path to the image
 	 * @param inGame
+	 *            this indicates whether the drawing belongs to a
+	 *            {@link GameElement} (ingame -> CameraDependend) or a
+	 *            {@link GuiElement} (not ingame -> FrameDepenedend)
 	 */
 	public abstract void drawImage(Vec pos, Vec size, String imagePath, boolean inGame);
 
 	/**
 	 * Draw a polygon
-	 * 
+	 *
 	 * @param polygon
 	 *            the polygon
 	 * @param color
@@ -174,7 +190,7 @@ public abstract class Field {
 
 	/**
 	 * Draw a polygon
-	 * 
+	 *
 	 * @param polygon
 	 *            the polygon
 	 * @param color
@@ -182,12 +198,15 @@ public abstract class Field {
 	 * @param fill
 	 *            indicates whether the polygon shall be filled or not
 	 * @param inGame
+	 *            this indicates whether the drawing belongs to a
+	 *            {@link GameElement} (ingame -> CameraDependend) or a
+	 *            {@link GuiElement} (not ingame -> FrameDepenedend)
 	 */
 	public abstract void drawPolygon(Polygon polygon, RGBColor color, boolean fill, boolean inGame);
 
 	/**
 	 * Draw a polygon
-	 * 
+	 *
 	 * @param polygon
 	 *            the polygon
 	 * @param color
@@ -201,7 +220,7 @@ public abstract class Field {
 
 	/**
 	 * Draw a polygon
-	 * 
+	 *
 	 * @param polygon
 	 *            the polygon
 	 * @param color
@@ -209,12 +228,15 @@ public abstract class Field {
 	 * @param fill
 	 *            indicates whether the polygon shall be filled or not
 	 * @param inGame
+	 *            this indicates whether the drawing belongs to a
+	 *            {@link GameElement} (ingame -> CameraDependend) or a
+	 *            {@link GuiElement} (not ingame -> FrameDepenedend)
 	 */
 	public abstract void drawPolygon(Polygon polygon, RGBAColor color, boolean fill, boolean inGame);
 
 	/**
 	 * Draw a text
-	 * 
+	 *
 	 * @param pos
 	 *            the position
 	 * @param text
@@ -222,6 +244,9 @@ public abstract class Field {
 	 * @param options
 	 *            the text's options
 	 * @param inGame
+	 *            this indicates whether the drawing belongs to a
+	 *            {@link GameElement} (ingame -> CameraDependend) or a
+	 *            {@link GuiElement} (not ingame -> FrameDepenedend)
 	 */
 	public abstract void drawText(Vec pos, String text, TextOptions options, boolean inGame);
 }

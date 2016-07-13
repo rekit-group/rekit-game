@@ -1,6 +1,6 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities.particles;
 
-import edu.kit.informatik.ragnarok.logic.gameelements.Field;
+import edu.kit.informatik.ragnarok.logic.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.primitives.Direction;

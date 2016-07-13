@@ -1,10 +1,7 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.inanimate;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import edu.kit.informatik.ragnarok.config.GameConf;
-import edu.kit.informatik.ragnarok.logic.gameelements.Field;
+import edu.kit.informatik.ragnarok.logic.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawner;
@@ -24,19 +21,29 @@ import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
  */
 @LoadMe
 public class BoostBox extends DynamicInanimate {
-
+	/**
+	 * The inner inanimate box
+	 */
 	protected InanimateBox innerBox;
-
+	/**
+	 * The time between strategy changes
+	 */
 	protected static final long PERIOD = 4500;
-
+	/**
+	 * The current time offset
+	 */
 	protected long offset = 0;
-
-	private Map<Integer, BoostBoxStrategy> strategies;
-
+	/**
+	 * All strategies
+	 */
+	private BoostBoxStrategy[] strategies;
+	/**
+	 * The current stategy id
+	 */
 	private int current = 0;
-
-	private BoostBoxStrategy strategy;
-
+	/**
+	 * The particle spawner
+	 */
 	private static ParticleSpawner particles = null;
 
 	static {
@@ -52,7 +59,9 @@ public class BoostBox extends DynamicInanimate {
 
 		BoostBox.particles.speed = new ParticleSpawnerOption(2, 3, -1, 1);
 	}
-
+	/**
+	 * This bool indicates whether particles shall spawn
+	 */
 	private boolean sparkling;
 
 	/**
@@ -62,6 +71,16 @@ public class BoostBox extends DynamicInanimate {
 		super();
 	}
 
+	/**
+	 * Creaze a BoostBox
+	 *
+	 * @param pos
+	 *            the position
+	 * @param size
+	 *            the size
+	 * @param color
+	 *            the color
+	 */
 	protected BoostBox(Vec pos, Vec size, RGBAColor color) {
 		super(pos, size, color);
 
@@ -69,15 +88,14 @@ public class BoostBox extends DynamicInanimate {
 		this.innerBox = (InanimateBox) InanimateBox.staticCreate(pos);
 		// and set color
 		this.innerBox.color = new RGBAColor(80, 80, 255, 255);
-
 		// instantiate the two strategies
-		this.strategies = new HashMap<>();
-		this.strategies.put(0, new NoBoost(this));
-		this.strategies.put(1, new BoostFirstState(this));
-		this.strategies.put(2, new BoostMaxState(this));
-		this.strategy = this.strategies.get(0);
+		this.strategies = new BoostBoxStrategy[] { new NoBoost(this), new BoostFirstState(this), new BoostMaxState(this) };
+
 	}
 
+	/**
+	 * The last time when {@link #logicLoop(float)} was invoked
+	 */
 	private long lastTime = 0;
 
 	@Override
@@ -95,19 +113,18 @@ public class BoostBox extends DynamicInanimate {
 			return;
 		}
 		this.offset = 0;
-		this.current = (this.current + 1) % this.strategies.size();
-		this.strategy = this.strategies.get(this.current);
+		this.current = (this.current + 1) % this.strategies.length;
 
 	}
 
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
-		this.strategy.reactToCollision(element, dir);
+		this.strategies[this.current].reactToCollision(element, dir);
 	}
 
 	@Override
 	public void internalRender(Field f) {
-		this.strategy.internalRender(f);
+		this.strategies[this.current].internalRender(f);
 		if (this.sparkling) {
 			BoostBox.particles.spawn(this.scene, this.pos);
 		}
@@ -118,19 +135,51 @@ public class BoostBox extends DynamicInanimate {
 		return new BoostBox(startPos, new Vec(1), new RGBAColor(80, 80, 255, 255));
 	}
 
+	/**
+	 * This class is the base class for all different behaviors of a
+	 * {@link BoostBox}
+	 *
+	 * @author Dominik Fuchß
+	 *
+	 */
 	private abstract class BoostBoxStrategy {
 		protected BoostBox parent;
 
+		/**
+		 * Create strategy by parent
+		 * 
+		 * @param parent
+		 *            the parent
+		 */
 		BoostBoxStrategy(BoostBox parent) {
 			this.parent = parent;
 		}
 
+		/**
+		 * Same as {@link BoostBox#reactToCollision(GameElement, Direction)}
+		 *
+		 * @param element
+		 *            the element
+		 * @param dir
+		 *            the direction
+		 */
 		public void reactToCollision(GameElement element, Direction dir) {
 			// Do nothing
 		}
 
+		/**
+		 * Get the current color of the box
+		 *
+		 * @return the color
+		 */
 		public abstract RGBAColor getColor();
 
+		/**
+		 * Same as {@link BoostBox#internalRender(Field)}
+		 *
+		 * @param f
+		 *            the field
+		 */
 		public void internalRender(Field f) {
 			this.parent.innerBox.color = this.getColor();
 			// Call decorated InanimateBoxes internalRender
@@ -138,8 +187,19 @@ public class BoostBox extends DynamicInanimate {
 		}
 	}
 
+	/**
+	 * The default strategy: A normal {@link InanimateBox}
+	 * 
+	 * @author Dominik Fuchß
+	 *
+	 */
 	private class NoBoost extends BoostBoxStrategy {
-
+		/**
+		 * Create strategy by parent
+		 * 
+		 * @param parent
+		 *            the parent
+		 */
 		NoBoost(BoostBox parent) {
 			super(parent);
 		}
@@ -156,7 +216,19 @@ public class BoostBox extends DynamicInanimate {
 
 	}
 
+	/**
+	 * The first level strategy: A small boost upwards
+	 * 
+	 * @author Dominik Fuchß
+	 *
+	 */
 	private class BoostFirstState extends BoostBoxStrategy {
+		/**
+		 * Create strategy by parent
+		 * 
+		 * @param parent
+		 *            the parent
+		 */
 		BoostFirstState(BoostBox parent) {
 			super(parent);
 		}
@@ -177,7 +249,19 @@ public class BoostBox extends DynamicInanimate {
 		}
 	}
 
+	/**
+	 * The max level strategy: A huge boost upwards
+	 * 
+	 * @author Dominik Fuchß
+	 *
+	 */
 	private class BoostMaxState extends BoostBoxStrategy {
+		/**
+		 * Create strategy by parent
+		 * 
+		 * @param parent
+		 *            the parent
+		 */
 		BoostMaxState(BoostBox parent) {
 			super(parent);
 		}

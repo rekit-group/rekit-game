@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
-import edu.kit.informatik.ragnarok.logic.gameelements.Field;
+import edu.kit.informatik.ragnarok.logic.Field;
 import edu.kit.informatik.ragnarok.primitives.Polygon;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBColor;
