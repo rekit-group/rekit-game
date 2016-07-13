@@ -190,6 +190,9 @@ public class ClimbUpBox extends DynamicInanimate {
 	 *
 	 */
 	private abstract class ClimbBoxStrategy {
+		/**
+		 * The parent
+		 */
 		protected ClimbUpBox parent;
 
 		/**
@@ -226,7 +229,7 @@ public class ClimbUpBox extends DynamicInanimate {
 
 		/**
 		 * Get the energy's start level
-		 * 
+		 *
 		 * @param progress
 		 *            the progress
 		 * @return the calculated level
@@ -235,7 +238,7 @@ public class ClimbUpBox extends DynamicInanimate {
 
 		/**
 		 * Get the energy's end level
-		 * 
+		 *
 		 * @param progress
 		 *            the progress
 		 * @return the calculated level

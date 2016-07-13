@@ -4,6 +4,7 @@ import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.Team;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawner;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.DynamicInanimate;
@@ -12,12 +13,23 @@ import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBAColor;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 
+/**
+ * This class realizes a Box which will "reflect" your {@link Player}
+ *
+ */
 @LoadMe
 public class ReflectionBox extends DynamicInanimate {
-
+	/**
+	 * The outer color
+	 */
 	private static RGBAColor outerCol = new RGBAColor(100, 100, 100, 255);
+	/**
+	 * The inner color
+	 */
 	private static RGBAColor innerCol = new RGBAColor(80, 140, 80, 255);
-
+	/**
+	 * The particles of this box
+	 */
 	private static ParticleSpawner particles = null;
 
 	static {
@@ -41,8 +53,16 @@ public class ReflectionBox extends DynamicInanimate {
 		super();
 	}
 
-	protected ReflectionBox(Vec pos, Vec size, RGBAColor color) {
-		super(pos, size, color);
+	/**
+	 * Create a ReflectionBox
+	 *
+	 * @param pos
+	 *            the position
+	 * @param size
+	 *            the size
+	 */
+	protected ReflectionBox(Vec pos, Vec size) {
+		super(pos, size, ReflectionBox.outerCol);
 	}
 
 	@Override
@@ -83,6 +103,6 @@ public class ReflectionBox extends DynamicInanimate {
 
 	@Override
 	public ReflectionBox create(Vec startPos, String[] options) {
-		return new ReflectionBox(startPos, new Vec(1, 1), ReflectionBox.outerCol);
+		return new ReflectionBox(startPos, new Vec(1, 1));
 	}
 }

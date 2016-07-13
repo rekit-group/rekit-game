@@ -143,11 +143,14 @@ public class BoostBox extends DynamicInanimate {
 	 *
 	 */
 	private abstract class BoostBoxStrategy {
+		/**
+		 * The parent
+		 */
 		protected BoostBox parent;
 
 		/**
 		 * Create strategy by parent
-		 * 
+		 *
 		 * @param parent
 		 *            the parent
 		 */
@@ -189,14 +192,14 @@ public class BoostBox extends DynamicInanimate {
 
 	/**
 	 * The default strategy: A normal {@link InanimateBox}
-	 * 
+	 *
 	 * @author Dominik Fuchß
 	 *
 	 */
 	private class NoBoost extends BoostBoxStrategy {
 		/**
 		 * Create strategy by parent
-		 * 
+		 *
 		 * @param parent
 		 *            the parent
 		 */
@@ -218,14 +221,14 @@ public class BoostBox extends DynamicInanimate {
 
 	/**
 	 * The first level strategy: A small boost upwards
-	 * 
+	 *
 	 * @author Dominik Fuchß
 	 *
 	 */
 	private class BoostFirstState extends BoostBoxStrategy {
 		/**
 		 * Create strategy by parent
-		 * 
+		 *
 		 * @param parent
 		 *            the parent
 		 */
@@ -251,14 +254,14 @@ public class BoostBox extends DynamicInanimate {
 
 	/**
 	 * The max level strategy: A huge boost upwards
-	 * 
+	 *
 	 * @author Dominik Fuchß
 	 *
 	 */
 	private class BoostMaxState extends BoostBoxStrategy {
 		/**
 		 * Create strategy by parent
-		 * 
+		 *
 		 * @param parent
 		 *            the parent
 		 */

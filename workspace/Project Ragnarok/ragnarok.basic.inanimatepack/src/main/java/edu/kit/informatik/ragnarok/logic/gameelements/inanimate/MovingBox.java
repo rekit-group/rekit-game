@@ -3,6 +3,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.inanimate;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawner;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.DynamicInanimate;
@@ -13,24 +14,53 @@ import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBAColor;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 
+/**
+ *
+ * As the class name already said; this Class realizes a moving box.<br>
+ * The {@link Player} can jump on it to solve a level
+ *
+ */
 @LoadMe
 public class MovingBox extends DynamicInanimate {
-
+	/**
+	 * The movement speed
+	 */
 	private final static float SPEED = 0.3f;
-
+	/**
+	 * The first movement anchor
+	 */
 	private Vec a;
+	/**
+	 * The second movement anchor
+	 */
 	private Vec b;
-
+	/**
+	 * A timer for the direction change of the platform
+	 */
 	private TimeDependency timer;
-
+	/**
+	 * The current start of the platform
+	 */
 	private Vec currentStart;
+	/**
+	 * The target of the box
+	 */
 	private Vec relativeTarget;
-
+	/**
+	 * A dark color
+	 */
 	private RGBAColor darkCol;
-
+	/**
+	 * The relative points for the rocket (the engine of the platform)
+	 */
 	private Vec[] rocketPolygonRelPts;
-
+	/**
+	 * The X size divided by 16
+	 */
 	private float sizeX16;
+	/**
+	 * The particle spawner
+	 */
 	private static ParticleSpawner sparkParticles = null;
 	static {
 		MovingBox.sparkParticles = new ParticleSpawner();
@@ -52,6 +82,16 @@ public class MovingBox extends DynamicInanimate {
 		super();
 	}
 
+	/**
+	 * Create a moving box
+	 * 
+	 * @param pos
+	 *            the position
+	 * @param dist
+	 *            the distance of movement
+	 * @param offset
+	 *            indicates whether you want an offset of period/2
+	 */
 	protected MovingBox(Vec pos, int dist, boolean offset) {
 		super(pos, new Vec(1, 0.6f), new RGBAColor(100, 100, 100, 255));
 
