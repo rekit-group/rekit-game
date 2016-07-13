@@ -9,20 +9,47 @@ import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 
-public class Player extends Entity implements CameraTarget {
-
+/**
+ * The (maybe) most important {@link Entity} of the Game:<br>
+ * The Player (most likely you)
+ *
+ * @author Dominik Fuchß
+ * @author Angelo Aracri
+ *
+ */
+public final class Player extends Entity implements CameraTarget {
+	/**
+	 * The start position
+	 */
 	private Vec startPos;
-
+	/**
+	 * The particle spawner for taking damage
+	 */
 	private ParticleSpawner damageParticles;
+	/**
+	 * The current walk direction
+	 */
 	private Direction currentDirection;
+	/**
+	 * The player's camera offset
+	 */
 	private float currentCameraOffset;
 
+	/**
+	 * Create a player by start position
+	 * 
+	 * @param startPos
+	 *            the start position
+	 */
 	public Player(Vec startPos) {
 		super(startPos, new Vec(), new Vec(0.8f, 0.8f), Team.PLAYER);
 		this.startPos = startPos;
 		this.init();
 	}
 
+	/**
+	 * Initialize the player
+	 */
 	public void init() {
 		this.setPos(this.startPos);
 		this.lives = GameConf.PLAYER_LIVES;
@@ -79,6 +106,9 @@ public class Player extends Entity implements CameraTarget {
 		return 10;
 	}
 
+	/**
+	 * Reset current camera offset
+	 */
 	public void resetCameraOffset() {
 		this.currentCameraOffset = 0;
 	}

@@ -5,12 +5,23 @@ import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.state.DefaultState;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.state.EntityState;
+import edu.kit.informatik.ragnarok.logic.gameelements.type.Enemy;
+import edu.kit.informatik.ragnarok.logic.gameelements.type.Pickup;
 import edu.kit.informatik.ragnarok.logic.scene.LevelScene;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.TimeDependency;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 
+/**
+ * This class represents one of the most important {@link GameElement}-Type:<br>
+ * These are the moving GameElements, which can interact between each other, so
+ * as the {@link Player}, {@link Enemy Enemies}, {@link Pickup Pickups}, etc.
+ *
+ * @author Dominik Fuchß
+ * @author Angelo Aracri
+ *
+ */
 public abstract class Entity extends GameElement {
 
 	/**
@@ -65,6 +76,7 @@ public abstract class Entity extends GameElement {
 	 * Set the Entities <i>EntitiyState</i> that determines its jump behavior
 	 *
 	 * @param value
+	 *            the new EntityState
 	 */
 	public final void setEntityState(EntityState value) {
 		this.entityState = value;
@@ -121,6 +133,10 @@ public abstract class Entity extends GameElement {
 		return this.points;
 	}
 
+	/**
+	 * This method will calculate the next position of the Entity depending on
+	 * the velocity
+	 */
 	@Override
 	public void logicLoop(float deltaTime) {
 		// if delta is too big, clipping likely to appear...
@@ -154,10 +170,14 @@ public abstract class Entity extends GameElement {
 		this.setVel(newVel);
 		// check if entity fell out of the world
 		if (this.getPos().getY() > GameConf.GRID_H) {
-			this.addDamage(this.getLives());
+			this.destroy();
 		}
 	}
 
+	/**
+	 * This implementation will ensure that no entity is able to fall through
+	 * the ground or into another Object
+	 */
 	@Override
 	public void collidedWith(Frame collision, Direction dir) {
 		// saving last position
@@ -190,6 +210,9 @@ public abstract class Entity extends GameElement {
 		this.lastPos = lastPos;
 	}
 
+	/**
+	 * By default this will return {@code 1}
+	 */
 	@Override
 	public int getOrderZ() {
 		return 1;
@@ -205,7 +228,7 @@ public abstract class Entity extends GameElement {
 
 	/**
 	 * Set the Entity's LevelScene
-	 * 
+	 *
 	 * @param value
 	 *            the levelscene
 	 */

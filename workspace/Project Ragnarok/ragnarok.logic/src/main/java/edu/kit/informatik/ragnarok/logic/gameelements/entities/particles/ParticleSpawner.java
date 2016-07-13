@@ -5,6 +5,13 @@ import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.Polygon;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 
+/**
+ *
+ * This class will be used to manage the spawning of particles<br>
+ * <b>You have to set the parameters of the particles by the public Fields of
+ * your ParticleSpawner Object</b>
+ *
+ */
 public class ParticleSpawner {
 
 	public Polygon polygon;
@@ -24,6 +31,9 @@ public class ParticleSpawner {
 	public float timeMin;
 	public float timeMax;
 
+	/**
+	 * Create a new particle spawner with its default values
+	 */
 	public ParticleSpawner() {
 
 		// default polygon is square wit a = 0.2
@@ -51,6 +61,14 @@ public class ParticleSpawner {
 		this.timeMax = 0.6f;
 	}
 
+	/**
+	 * Spawn particles in a {@link Scene} at a position
+	 * 
+	 * @param scene
+	 *            the scene
+	 * @param pos
+	 *            the position
+	 */
 	public void spawn(Scene scene, Vec pos) {
 
 		int randomAmount = (int) (this.amountMin + GameConf.PRNG.nextDouble() * (this.amountMax - this.amountMin));
