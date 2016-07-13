@@ -44,10 +44,9 @@ public class MenuScene extends Scene {
 
 		for (int i = 0; i < LevelManager.getNumberOfArcadeLevels(); i++) {
 			final int id = i;
-			MenuActionItem button = new MenuActionItem(this, String.valueOf(id + 1), () -> {
+			MenuActionItem button = new MenuActionItem(this, new Vec(80, 80), String.valueOf(id + 1), () -> {
 				this.model.switchScene(Scenes.ARCADE, new String[] { "" + id });
 			});
-			button.setSize(new Vec(80, 80));
 			arcade.addItem(button);
 		}
 

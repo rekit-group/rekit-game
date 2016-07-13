@@ -1,28 +1,48 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.gui;
 
 import edu.kit.informatik.ragnarok.logic.Field;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 
+/**
+ *
+ * This {@link GuiElement} realizes a status view of the {@link Player Player's}
+ * Lives
+ *
+ */
 public class LifeGui extends GuiElement {
-
+	/**
+	 * The image name
+	 */
 	private String image = "mrRekt_glasses_right.png";
+	/**
+	 * The image size
+	 */
 	private Vec imageSize = new Vec(10);
-	private int playerLifes;
+	/**
+	 * The amount of the player's lives
+	 */
+	private int playerLives;
 
+	/**
+	 * Create the status view for lives
+	 * 
+	 * @param scene
+	 *            the scene
+	 */
 	public LifeGui(Scene scene) {
 		super(scene);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void logicLoop(float deltaTime) {
-		this.playerLifes = this.getScene().getPlayer().getLives();
+		this.playerLives = this.getScene().getPlayer().getLives();
 	}
 
 	@Override
 	public void internalRender(Field f) {
-		for (int i = 0; i < this.playerLifes; i++) {
+		for (int i = 0; i < this.playerLives; i++) {
 			f.drawImage(this.getPos().addX(50 * i), this.imageSize, this.image, false);
 		}
 	}

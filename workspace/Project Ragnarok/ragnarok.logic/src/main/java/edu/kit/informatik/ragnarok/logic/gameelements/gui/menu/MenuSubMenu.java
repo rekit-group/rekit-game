@@ -8,16 +8,38 @@ import edu.kit.informatik.ragnarok.logic.Field;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 
+/**
+ *
+ * This class realizes a Menu of SubMenus
+ *
+ */
 public class MenuSubMenu extends MenuItem {
-
+	/**
+	 * The contained Items
+	 */
 	protected List<MenuItem> menuItems;
-
+	/**
+	 * The size of each item
+	 */
 	protected Vec itemSize;
-
+	/**
+	 * The current index
+	 */
 	protected int index = 0;
-
+	/**
+	 * This bool indicates whether this Menu (false) or its Items (true) shall
+	 * be rendered
+	 */
 	protected boolean inMenu = false;
 
+	/**
+	 * Create the submenu
+	 * 
+	 * @param scene
+	 *            the scene
+	 * @param text
+	 *            the text (name)
+	 */
 	public MenuSubMenu(Scene scene, String text) {
 		super(scene, text);
 		this.menuItems = new ArrayList<>();
@@ -25,12 +47,24 @@ public class MenuSubMenu extends MenuItem {
 		this.itemSize = new Vec(400, 100);
 	}
 
+	/**
+	 * Add an Item
+	 * 
+	 * @param i
+	 *            the item
+	 */
 	public void addItem(MenuItem i) {
 		i.setParent(this);
 		this.menuItems.add(i);
 		this.calcItemPos();
 	}
 
+	/**
+	 * Remove an Item
+	 * 
+	 * @param i
+	 *            the item
+	 */
 	public void removeItem(MenuItem i) {
 		i.setParent(null);
 		// TODO That cant be right
@@ -38,6 +72,12 @@ public class MenuSubMenu extends MenuItem {
 		this.calcItemPos();
 	}
 
+	/**
+	 * Set the size of Items
+	 * 
+	 * @param value
+	 *            the new size
+	 */
 	public void setItemSize(Vec value) {
 		this.itemSize = value;
 		this.calcItemPos();
@@ -140,6 +180,9 @@ public class MenuSubMenu extends MenuItem {
 		}
 	}
 
+	/**
+	 * Calculate the new Position of each Item
+	 */
 	protected void calcItemPos() {
 		// render menu as list
 		Vec offset = new Vec(0, -((this.menuItems.size() - 1) * this.itemSize.getY()) / 2);

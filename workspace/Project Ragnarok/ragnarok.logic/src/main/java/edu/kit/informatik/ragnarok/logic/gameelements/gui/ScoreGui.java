@@ -2,16 +2,37 @@ package edu.kit.informatik.ragnarok.logic.gameelements.gui;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.Field;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.scene.LevelScene;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.TextOptions;
 
+/**
+ *
+ * This {@link GuiElement} realizes a status view of the {@link Player Player's}
+ * Score
+ *
+ */
 public class ScoreGui extends GuiElement {
-
+	/**
+	 * The points of the {@link Player}
+	 */
 	private Text points;
+	/**
+	 * The Highscore of the current Level
+	 */
 	private Text highscore;
+	/**
+	 * The text options
+	 */
 	private TextOptions op;
 
+	/**
+	 * Create the status view
+	 * 
+	 * @param scene
+	 *            the scene
+	 */
 	public ScoreGui(LevelScene scene) {
 		super(scene);
 		this.op = new TextOptions(new Vec(-1, 0), GameConf.GAME_TEXT_SIZE, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, 1);

@@ -3,11 +3,32 @@ package edu.kit.informatik.ragnarok.logic.gameelements.gui.menu;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 
+/**
+ *
+ * This class realizes a {@link MenuSubMenu}. In this SubMenu Items will be
+ * arranged as Grid
+ *
+ */
 public class MenuGrid extends MenuSubMenu {
-
+	/**
+	 * Number of columns
+	 */
 	private int colCount;
+	/**
+	 * Number of rows
+	 */
 	private int rowCount;
 
+	/**
+	 * Create a MenuGrid
+	 * 
+	 * @param scene
+	 *            the scene
+	 * @param text
+	 *            the text (name)
+	 * @param colCount
+	 *            the column count
+	 */
 	public MenuGrid(Scene scene, String text, int colCount) {
 		super(scene, text);
 		this.colCount = colCount;

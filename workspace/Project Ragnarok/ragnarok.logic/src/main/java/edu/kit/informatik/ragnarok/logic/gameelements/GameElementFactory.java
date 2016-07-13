@@ -7,9 +7,6 @@ import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.EndTrigger;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateBox;
-import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateDoor;
-import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateFloor;
-import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateTrigger;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Boss;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.DynamicInanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Enemy;
@@ -17,37 +14,6 @@ import edu.kit.informatik.ragnarok.logic.gameelements.type.Pickup;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 
-/**
- * ID Dictionary:
- *
- * <ul>
- * <li>-2 Random pickup</li>
- * <li>-1 Random enemy</li>
- *
- * <li>1 {@link Inanimate} (handles {@link InanimateBox} and
- * {@link InanimateFloor} itself)</li>
- * <li>2 {@link RektKiller}</li>
- * <li>3 {@link Rocket}</li>
- * <li>4 {@link Warper}</li>
- * <li>5 {@link Slurp}</li>
- *
- * <li>10 {@link Coin}</li>
- * <li>20 {@link Life}</li>
- *
- * <li>50 {@link InanimateBox}</li>
- * <li>51 {@link InanimateFloor}</li>
- * <li>60 {@link InanimateDoor}</li>
- * <li>70 {@link InanimateTrigger}</li>
- * <li>71 {@link EndTrigger}</li>
- *
- * <li>80 {@link ToggleBox}</li>
- *
- * <li>100 {@link RektSmasher}
- * </ul>
- *
- * @author Angelo Aracri
- * @version 1.0
- */
 public class GameElementFactory {
 
 	private static Scene scene;
@@ -57,16 +23,8 @@ public class GameElementFactory {
 		GameElementFactory.load();
 	}
 
-	/**
-	 * A HashMap containing every spawnable GameElement sorted by its type. -1
-	 * is reserved for enemies, -2 is reserved for pickups.
-	 */
 	private static HashMap<String, GameElement[]> prototypeTypes;
 
-	/**
-	 * A HashMap containing every spawnable GameElement mapped from their
-	 * respective class name .
-	 */
 	private static HashMap<String, GameElement> prototypes;
 
 	public static GameElement getPrototype(String id) {
