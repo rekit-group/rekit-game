@@ -9,6 +9,7 @@
 #ALIAS::-1->edu.kit.informatik.ragnarok.logic.gameelements.type.Enemy
 #ALIAS::1->edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate
 #ALIAS::2->edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.RektKiller
+#ALIAS::3->edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.Rocket
 #ALIAS::10->edu.kit.informatik.ragnarok.logic.gameelements.entities.pickups.Coin
 
 { 
