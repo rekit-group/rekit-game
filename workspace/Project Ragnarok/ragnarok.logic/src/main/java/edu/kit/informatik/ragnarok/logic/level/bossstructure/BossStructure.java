@@ -70,7 +70,7 @@ public class BossStructure extends Structure {
 		this.levelX = levelX;
 
 		// generate and add door after room
-		this.door = new InanimateDoor(new Vec(levelX + width - 1, (float) GameConf.GRID_H / 2));
+		this.door = new InanimateDoor(new Vec(levelX + width - 1, (float) Math.ceil(GameConf.GRID_H / 2)));
 		GameElementFactory.generate(this.door);
 
 		// generate trigger at door entrance
