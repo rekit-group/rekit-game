@@ -14,21 +14,54 @@ import edu.kit.informatik.ragnarok.primitives.Vec;
  */
 public class ParticleSpawner {
 
+	/**
+	 * The current polygon
+	 */
 	public Polygon polygon;
-
+	/**
+	 * Red Channel
+	 */
 	public ParticleSpawnerOption colorR;
+	/**
+	 * Green Channel
+	 */
 	public ParticleSpawnerOption colorG;
+	/**
+	 * Blue Channel
+	 */
 	public ParticleSpawnerOption colorB;
+	/**
+	 * Alpha Channel
+	 */
 	public ParticleSpawnerOption colorA;
-
-	public ParticleSpawnerOption size;
+	/**
+	 * The speed of the particle
+	 */
 	public ParticleSpawnerOption speed;
+	/**
+	 * The angle of the particle
+	 */
 	public ParticleSpawnerOption angle;
 
+	/**
+	 * The size of the particle
+	 */
+	public ParticleSpawnerOption size;
+	/**
+	 * The minimum amount of particles
+	 */
 	public int amountMin;
+	/**
+	 * The maximum amount of particles
+	 */
 	public int amountMax;
-
+	/**
+	 * The minimum lifetime
+	 */
 	public float timeMin;
+	/**
+	 * The maximum lifetime
+	 */
 	public float timeMax;
 
 	/**
@@ -63,7 +96,7 @@ public class ParticleSpawner {
 
 	/**
 	 * Spawn particles in a {@link Scene} at a position
-	 * 
+	 *
 	 * @param scene
 	 *            the scene
 	 * @param pos

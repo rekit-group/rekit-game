@@ -23,23 +23,53 @@ import edu.kit.informatik.ragnarok.util.RGBAColor;
  * @version 1.0
  */
 public class Particle extends GameElement {
-
+	/**
+	 * The initial polygon
+	 */
 	private Polygon initialPolygon;
+	/**
+	 * The current polygon
+	 */
 	private Polygon polygon;
-
+	/**
+	 * Red Channel
+	 */
 	private ProgressDependency colorR;
+	/**
+	 * Green Channel
+	 */
 	private ProgressDependency colorG;
+	/**
+	 * Blue Channel
+	 */
 	private ProgressDependency colorB;
+	/**
+	 * Alpha Channel
+	 */
 	private ProgressDependency colorA;
-
+	/**
+	 * The speed of the particle
+	 */
 	private ProgressDependency speed;
+	/**
+	 * The angle of the particle
+	 */
 	private ProgressDependency angle;
-
+	/**
+	 * The scale of the particle
+	 */
 	private ProgressDependency scale;
-
+	/**
+	 * The lifetime timer of the particle
+	 */
 	private TimeDependency timer;
-
+	/**
+	 * The current color
+	 */
 	private RGBAColor currentCol = new RGBAColor(0, 0, 0, 0);
+	/**
+	 * The current movement vector
+	 */
 	private Vec movementVec = null;
 
 	/**

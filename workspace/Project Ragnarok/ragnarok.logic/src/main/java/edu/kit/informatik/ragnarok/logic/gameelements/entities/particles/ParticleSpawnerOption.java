@@ -17,10 +17,21 @@ import edu.kit.informatik.ragnarok.primitives.ProgressDependency;
  * @version 1.0
  */
 public class ParticleSpawnerOption {
-
+	/**
+	 * The minimum of the start-value
+	 */
 	private float startMin;
+	/**
+	 * The maximum of the start-value
+	 */
 	private float startMax;
+	/**
+	 * The minimum of the delta-value
+	 */
 	private float deltaMin;
+	/**
+	 * The maximum of the delta-value
+	 */
 	private float deltaMax;
 
 	/**
