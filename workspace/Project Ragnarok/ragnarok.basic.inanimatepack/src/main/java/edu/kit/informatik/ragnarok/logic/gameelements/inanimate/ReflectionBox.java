@@ -1,6 +1,5 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.inanimate;
 
-
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
@@ -11,8 +10,9 @@ import edu.kit.informatik.ragnarok.logic.gameelements.type.DynamicInanimate;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBAColor;
+import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 
-
+@LoadMe
 public class ReflectionBox extends DynamicInanimate {
 
 	private static RGBAColor outerCol = new RGBAColor(100, 100, 100, 255);
@@ -55,18 +55,17 @@ public class ReflectionBox extends DynamicInanimate {
 			} else {
 				v = new Vec(dir.getVector().getX() * GameConf.PLAYER_WALK_MAX_SPEED, 0.8f * GameConf.PLAYER_JUMP_BOOST);
 			}
-			
+
 			System.out.println(dir + ": " + v.toString() + " => " + element.getVel().toString());
-			
+
 			// use internal collision
 			super.reactToCollision(element, dir);
-			
-			
+
 			// apply new velocity
 			element.setVel(v);
 		} else {
 			super.reactToCollision(element, dir);
-			
+
 		}
 	}
 
@@ -74,16 +73,16 @@ public class ReflectionBox extends DynamicInanimate {
 	public void internalRender(Field f) {
 		Vec s = this.getSize();
 		Vec p = this.getPos();
-		
-		f.drawRectangle(p, s, outerCol);
-		f.drawRectangle(p.add(s.multiply(1/4f, 1/4f)), s.multiply(1/3f), innerCol);
-		f.drawRectangle(p.add(s.multiply(1/4f, -1/4f)), s.multiply(1/3f), innerCol);
-		f.drawRectangle(p.add(s.multiply(-1/4f, 1/4f)), s.multiply(1/3f), innerCol);
-		f.drawRectangle(p.add(s.multiply(-1/4f, -1/4f)), s.multiply(1/3f), innerCol);
+
+		f.drawRectangle(p, s, ReflectionBox.outerCol);
+		f.drawRectangle(p.add(s.multiply(1 / 4f, 1 / 4f)), s.multiply(1 / 3f), ReflectionBox.innerCol);
+		f.drawRectangle(p.add(s.multiply(1 / 4f, -1 / 4f)), s.multiply(1 / 3f), ReflectionBox.innerCol);
+		f.drawRectangle(p.add(s.multiply(-1 / 4f, 1 / 4f)), s.multiply(1 / 3f), ReflectionBox.innerCol);
+		f.drawRectangle(p.add(s.multiply(-1 / 4f, -1 / 4f)), s.multiply(1 / 3f), ReflectionBox.innerCol);
 	}
 
 	@Override
 	public ReflectionBox create(Vec startPos, String[] options) {
-		return new ReflectionBox(startPos, new Vec(1,1), outerCol);
+		return new ReflectionBox(startPos, new Vec(1, 1), ReflectionBox.outerCol);
 	}
 }

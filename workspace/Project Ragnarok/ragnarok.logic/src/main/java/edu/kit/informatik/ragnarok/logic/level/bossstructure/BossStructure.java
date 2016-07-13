@@ -1,7 +1,6 @@
 package edu.kit.informatik.ragnarok.logic.level.bossstructure;
 
 import java.util.HashMap;
-import java.util.List;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElementFactory;
@@ -60,7 +59,7 @@ public class BossStructure extends Structure {
 		BossStructure.fireworkParticles.speed = new ParticleSpawnerOption(3, 5, -1, 1);
 	}
 
-	public BossStructure(List<String[]> structure, Boss boss) {
+	public BossStructure(String[][] structure, Boss boss) {
 		super(structure, new HashMap<>());
 		this.boss = boss;
 	}
@@ -71,7 +70,7 @@ public class BossStructure extends Structure {
 		this.levelX = levelX;
 
 		// generate and add door after room
-		this.door = new InanimateDoor(new Vec(levelX + width - 1, (float) Math.ceil(GameConf.GRID_H / 2)));
+		this.door = new InanimateDoor(new Vec(levelX + width - 1, (float) GameConf.GRID_H / 2));
 		GameElementFactory.generate(this.door);
 
 		// generate trigger at door entrance

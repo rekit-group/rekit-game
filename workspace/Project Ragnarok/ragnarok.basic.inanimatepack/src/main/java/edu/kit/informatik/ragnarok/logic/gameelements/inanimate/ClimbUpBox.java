@@ -15,6 +15,7 @@ import edu.kit.informatik.ragnarok.primitives.TimeDependency;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBAColor;
 import edu.kit.informatik.ragnarok.util.RGBColor;
+import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 
 /**
  * This Box realizes an {@link Inanimate} which the Player can climb up
@@ -22,6 +23,7 @@ import edu.kit.informatik.ragnarok.util.RGBColor;
  * @author Dominik Fuchß
  *
  */
+@LoadMe
 public class ClimbUpBox extends DynamicInanimate {
 
 	protected InanimateBox innerBox;
@@ -35,11 +37,11 @@ public class ClimbUpBox extends DynamicInanimate {
 	private int current = 0;
 
 	private ClimbBoxStrategy strategy;
-	
+
 	private static RGBAColor outerCol = new RGBAColor(110, 110, 110, 255);
 	private static RGBAColor darkCol = new RGBAColor(90, 90, 90, 255);
 	private static RGBColor energyCol = new RGBColor(255, 100, 0);
-	
+
 	private TimeDependency timer;
 
 	private static ParticleSpawner particles = null;
@@ -66,7 +68,7 @@ public class ClimbUpBox extends DynamicInanimate {
 	}
 
 	protected ClimbUpBox(Vec pos, long offset) {
-		super(pos, new Vec(1), outerCol);
+		super(pos, new Vec(1), ClimbUpBox.outerCol);
 
 		// create inner InanimateBox with given position
 		this.innerBox = (InanimateBox) InanimateBox.staticCreate(pos);
@@ -76,7 +78,7 @@ public class ClimbUpBox extends DynamicInanimate {
 		this.strategies.put(0, new NoClimb(this));
 		this.strategies.put(1, new BoostClimb(this));
 		this.strategy = this.strategies.get(0);
-		
+
 		this.offset = offset;
 		this.timer = new TimeDependency(ClimbUpBox.PERIOD);
 	}
@@ -92,7 +94,7 @@ public class ClimbUpBox extends DynamicInanimate {
 		if (this.lastTime == -1) {
 			this.lastTime = nowTime - this.offset - ((nowTime) % ClimbUpBox.PERIOD);
 			if ((nowTime / ClimbUpBox.PERIOD) % 2 == 0) {
-				nextStrategy();
+				this.nextStrategy();
 			}
 		}
 		// update timer
@@ -102,11 +104,11 @@ public class ClimbUpBox extends DynamicInanimate {
 
 		// Get new strategy from strategy map
 		if (this.timer.timeUp()) {
-			nextStrategy();
+			this.nextStrategy();
 			this.timer.reset();
 		}
 	}
-	
+
 	private void nextStrategy() {
 		this.current = (this.current + 1) % this.strategies.size();
 		this.strategy = this.strategies.get(this.current);
@@ -141,9 +143,9 @@ public class ClimbUpBox extends DynamicInanimate {
 
 	@Override
 	public ClimbUpBox create(Vec startPos, String[] options) {
-		long offset = 0; 
+		long offset = 0;
 		if (options.length >= 1 && options[0] != null && options[0].matches("(\\+|-)?[0-9]")) {
-			offset = Integer.parseInt(options[0]) * PERIOD / 2;
+			offset = Integer.parseInt(options[0]) * ClimbUpBox.PERIOD / 2;
 		}
 		return new ClimbUpBox(startPos, offset);
 	}
@@ -156,7 +158,7 @@ public class ClimbUpBox extends DynamicInanimate {
 		}
 
 		public void reactToCollision(GameElement element, Direction dir) {
-			innerBox.reactToCollision(element, dir);
+			ClimbUpBox.this.innerBox.reactToCollision(element, dir);
 		}
 
 		public void internalRender(Field f) {

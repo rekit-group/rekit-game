@@ -1,5 +1,7 @@
-package edu.kit.informatik.ragnarok.logic.util;
+package edu.kit.informatik.ragnarok.util;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
@@ -11,7 +13,7 @@ import org.reflections.Reflections;
 /**
  * This class contains several methods for using Java Reflections in a proper
  * way
- * 
+ *
  * @author Dominik Fuchß
  *
  */
@@ -23,9 +25,10 @@ public final class ReflectUtils {
 	}
 
 	/**
-	 * Load all implementations of a class by search path (-> classpath) <br>
+	 * Load all implementations that shall be loaded (see {@link LoadMe}) of a
+	 * class by search path (-> classpath) <br>
 	 * If a class wants to be loaded, the class needs a default constructor
-	 * 
+	 *
 	 * @param searchPath
 	 *            the search path (e.g. java.lang)
 	 * @param type
@@ -37,7 +40,7 @@ public final class ReflectUtils {
 		Set<Class<? extends T>> classes = new Reflections(searchPath).getSubTypesOf(type);
 		Set<T> objects = new HashSet<>();
 		for (Class<?> clazz : classes) {
-			if (Modifier.isAbstract(clazz.getModifiers())) {
+			if (Modifier.isAbstract(clazz.getModifiers()) || clazz.getAnnotation(LoadMe.class) == null) {
 				continue;
 			}
 			try {
@@ -50,5 +53,17 @@ public final class ReflectUtils {
 		}
 		return objects;
 
+	}
+
+	/**
+	 * This annotation has to be applied to Classes which shall be loaded as
+	 * implementation of a specific class
+	 *
+	 * @author Dominik Fuchß
+	 * @see ReflectUtils#get(String, Class)
+	 *
+	 */
+	@Retention(RetentionPolicy.RUNTIME)
+	public @interface LoadMe {
 	}
 }

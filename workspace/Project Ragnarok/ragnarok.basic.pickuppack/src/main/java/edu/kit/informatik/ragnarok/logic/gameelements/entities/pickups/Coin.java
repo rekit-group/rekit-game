@@ -6,6 +6,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Pickup;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBColor;
+import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 
 /**
  * This class defines a simple {@link Pickup}; a <b>Coin</b> which will give the
@@ -13,6 +14,7 @@ import edu.kit.informatik.ragnarok.util.RGBColor;
  *
  *
  */
+@LoadMe
 public class Coin extends Pickup {
 	/**
 	 * Prototype Constructor
@@ -47,7 +49,7 @@ public class Coin extends Pickup {
 	public Coin(Vec startPos) {
 		super(startPos, new Vec(), new Vec(0.7f, 0.7f));
 	}
-	
+
 	@Override
 	public void perform(GameElement collector) {
 		collector.addPoints(10);

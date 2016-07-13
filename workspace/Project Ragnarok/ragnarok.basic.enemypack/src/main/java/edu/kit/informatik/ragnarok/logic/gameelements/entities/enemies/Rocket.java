@@ -13,7 +13,14 @@ import edu.kit.informatik.ragnarok.primitives.Polygon;
 import edu.kit.informatik.ragnarok.primitives.TimeDependency;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBColor;
+import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 
+/**
+ *
+ * As its name says, this Enemy is a rocket
+ *
+ */
+@LoadMe
 public class Rocket extends Enemy {
 	/**
 	 * Prototype Constructor
@@ -23,13 +30,25 @@ public class Rocket extends Enemy {
 	}
 
 	/**
-	 * The {@link RGBColor}
+	 * The inner color of the rocket
 	 */
-	private static RGBColor innerColor = new RGBColor(90, 90, 90);
-	private static RGBColor frontColor = new RGBColor(150, 30, 30);
-	private static RGBColor outerColor = new RGBColor(50, 50, 50);
-	private static float particleSpawnTime = 0.05f;
+	private final static RGBColor INNER_COLOR = new RGBColor(90, 90, 90);
+	/**
+	 * The color of the front
+	 */
+	private final static RGBColor FRONT_COLOR = new RGBColor(150, 30, 30);
 
+	/**
+	 * The outer color of the rocket
+	 */
+	private final static RGBColor OUTER_COLOR = new RGBColor(50, 50, 50);
+	/**
+	 * The Particles's spawn time
+	 */
+	private final static float PARTICLE_SPAWN_TIME = 0.05f;
+	/**
+	 * The particle spawner for the rocket
+	 */
 	private static ParticleSpawner sparkParticles = null;
 	static {
 		Rocket.sparkParticles = new ParticleSpawner();
@@ -57,18 +76,26 @@ public class Rocket extends Enemy {
 		Rocket.explosionParticles.amountMax = 50;
 		Rocket.explosionParticles.speed = new ParticleSpawnerOption(4, 9, -1, 1);
 	}
-
+	/**
+	 * The timer of the particles
+	 */
 	private TimeDependency paricleTimer;
 
+	/**
+	 * Create a rocket by start position
+	 * 
+	 * @param startPos
+	 *            the start position
+	 */
 	public Rocket(Vec startPos) {
 		super(startPos, new Vec(), new Vec(1.8f, 0.5f));
-		this.paricleTimer = new TimeDependency(Rocket.particleSpawnTime);
+		this.paricleTimer = new TimeDependency(Rocket.PARTICLE_SPAWN_TIME);
 	}
 
 	@Override
 	public void internalRender(Field f) {
 		// draw body
-		f.drawRectangle(this.getPos(), this.getSize().multiply(0.8f, 0.6f), Rocket.innerColor);
+		f.drawRectangle(this.getPos(), this.getSize().multiply(0.8f, 0.6f), Rocket.INNER_COLOR);
 		// draw spike at front
 		Vec startPt = this.getPos().addX(-this.getSize().multiply(0.5f).getX());
 		Vec[] relPts = new Vec[] { //
@@ -76,12 +103,12 @@ public class Rocket extends Enemy {
 				new Vec(this.getSize().multiply(0.1f).getX(), this.getSize().multiply(0.5f).getY()), //
 				new Vec() //
 		};
-		f.drawPolygon(new Polygon(startPt, relPts), Rocket.frontColor, true);
+		f.drawPolygon(new Polygon(startPt, relPts), Rocket.FRONT_COLOR, true);
 
 		// draw stripes
 		Vec stripeStart = this.getPos().addX(-this.getSize().multiply(0.4f - 0.05f - 0.025f).getX());
 		for (int x = 0; x < 9; x++) {
-			f.drawRectangle(stripeStart.addX(0.15f * x), this.getSize().multiply(0.05f, 0.75f), Rocket.outerColor);
+			f.drawRectangle(stripeStart.addX(0.15f * x), this.getSize().multiply(0.05f, 0.75f), Rocket.OUTER_COLOR);
 		}
 
 		// draw drive at back
@@ -91,7 +118,7 @@ public class Rocket extends Enemy {
 				new Vec(-this.getSize().getX() * 0.1f, this.getSize().getY() * 0.2f), //
 				new Vec() //
 		};
-		f.drawPolygon(new Polygon(startPt, relPts), Rocket.outerColor, true);
+		f.drawPolygon(new Polygon(startPt, relPts), Rocket.OUTER_COLOR, true);
 	}
 
 	@Override

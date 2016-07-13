@@ -5,11 +5,13 @@ import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Pickup;
 import edu.kit.informatik.ragnarok.primitives.Vec;
+import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 
 /**
  * This class defines a simple {@link Pickup}; a <b>Life</b> which will give the
  * player lives.
  */
+@LoadMe
 public class Life extends Pickup {
 	/**
 	 * Prototype Constructor

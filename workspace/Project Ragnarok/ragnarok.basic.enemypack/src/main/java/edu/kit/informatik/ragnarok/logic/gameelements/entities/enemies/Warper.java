@@ -12,10 +12,24 @@ import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.TimeDependency;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBColor;
+import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 
+/**
+ *
+ * This class realizes on of the most dangerous {@link Enemy Enemies}<br>
+ * No Player can destroy that circle of colors, the only chance to destroy: "Run
+ * away"
+ *
+ */
+@LoadMe
 public class Warper extends Enemy {
-
+	/**
+	 * The time between the next jump (to next position)
+	 */
 	private TimeDependency warpAction = new TimeDependency(GameConf.WARPER_WARP_DELTA);
+	/**
+	 * The particles of the warper
+	 */
 	private static ParticleSpawner warpParticles = null;
 
 	static {
@@ -36,6 +50,12 @@ public class Warper extends Enemy {
 		super();
 	}
 
+	/**
+	 * Create a warper by start position
+	 * 
+	 * @param startPos
+	 *            the start position
+	 */
 	public Warper(Vec startPos) {
 		super(startPos, new Vec(), new Vec(0.6f, 0.6f));
 	}

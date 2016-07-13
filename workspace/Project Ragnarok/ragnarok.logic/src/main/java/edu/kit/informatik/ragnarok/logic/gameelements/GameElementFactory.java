@@ -76,7 +76,7 @@ public class GameElementFactory {
 		}
 
 		GameElement[] elemArray = GameElementFactory.prototypeTypes.get(id);
-		if (elemArray != null) {
+		if (elemArray != null && elemArray.length != 0) {
 			return elemArray[GameConf.PRNG.nextInt(elemArray.length)];
 		}
 		System.err.println("Error in GameElementFactory: Tried to get Prototype of GameElement with unknown ID " + id);

@@ -11,7 +11,9 @@ import edu.kit.informatik.ragnarok.primitives.Polygon;
 import edu.kit.informatik.ragnarok.primitives.TimeDependency;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBAColor;
+import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 
+@LoadMe
 public class MovingBox extends DynamicInanimate {
 
 	private final static float SPEED = 0.3f;

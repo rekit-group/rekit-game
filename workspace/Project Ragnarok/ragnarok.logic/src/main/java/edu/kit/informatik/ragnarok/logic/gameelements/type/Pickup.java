@@ -5,9 +5,9 @@ import java.util.Set;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
-import edu.kit.informatik.ragnarok.logic.util.ReflectUtils;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Vec;
+import edu.kit.informatik.ragnarok.util.ReflectUtils;
 
 public abstract class Pickup extends Entity {
 	public static final Set<Pickup> getPickupPrototypes() {

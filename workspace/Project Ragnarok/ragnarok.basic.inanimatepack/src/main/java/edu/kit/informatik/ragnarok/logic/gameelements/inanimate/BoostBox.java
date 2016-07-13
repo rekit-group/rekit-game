@@ -13,6 +13,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.type.DynamicInanimate;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBAColor;
+import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 
 /**
  * This Box realizes an {@link Inanimate} which boosts the Player from time to
@@ -21,6 +22,7 @@ import edu.kit.informatik.ragnarok.util.RGBAColor;
  * @author Dominik Fuchß
  *
  */
+@LoadMe
 public class BoostBox extends DynamicInanimate {
 
 	protected InanimateBox innerBox;

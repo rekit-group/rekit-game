@@ -7,13 +7,26 @@ import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Enemy;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Vec;
+import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 
+/**
+ * This class realizes a simple enemy that will not hurt the {@link Player} but
+ * slows the player. This enemy consits of {@link SlurpDurp} (green bubbles)
+ * which will slow down the {@link Player} at collision
+ *
+ * @author Dominik Fuchß
+ *
+ */
+@LoadMe
 public class Slurp extends Enemy {
-
+	/**
+	 * The Slurp's SlurpDurps
+	 */
 	private List<SlurpDurp> slurpDurps;
 
 	/**
@@ -23,6 +36,12 @@ public class Slurp extends Enemy {
 		super();
 	}
 
+	/**
+	 * Create a slurp by start position
+	 *
+	 * @param startPos
+	 *            the start position
+	 */
 	public Slurp(Vec startPos) {
 		super(startPos, new Vec(), new Vec(1));
 
@@ -43,8 +62,14 @@ public class Slurp extends Enemy {
 		}
 	}
 
+	/**
+	 * The current direction of the Slurp
+	 */
 	private Direction currentDirection = Direction.LEFT;
 
+	/**
+	 * This bool indicates whether the Slurp has contact to a wall
+	 */
 	private boolean hasWallContact = true;
 
 	@Override

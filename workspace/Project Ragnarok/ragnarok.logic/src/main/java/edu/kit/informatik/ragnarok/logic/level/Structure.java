@@ -74,6 +74,25 @@ public class Structure extends Configurable {
 	}
 
 	/**
+	 * Constructor that requires a not null two dimensional array that acts as a
+	 * template for building actual GameElements. It will be saved locally. The
+	 * mapping from each integer to GameElements is specified by the
+	 * {@link GameElementFactory}.
+	 *
+	 * @param lines
+	 *            the two dimensional template of the GameElements of this
+	 *            Structure.
+	 */
+	public Structure(String[][] lines, Map<String, String> alias) {
+		this.structure = new String[lines.length][];
+		int i = 0;
+		for (String[] line : lines) {
+			this.structure[i++] = line.clone();
+		}
+		this.alias = alias;
+	}
+
+	/**
 	 * <p>
 	 * Adds all GameElements specified in the Structures template
 	 * <i>structureArray</i> relative to a given x position. Also, it generates

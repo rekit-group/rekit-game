@@ -1,7 +1,5 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.type;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
@@ -9,8 +7,8 @@ import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
 import edu.kit.informatik.ragnarok.logic.level.bossstructure.BossStructure;
-import edu.kit.informatik.ragnarok.logic.util.ReflectUtils;
 import edu.kit.informatik.ragnarok.primitives.Vec;
+import edu.kit.informatik.ragnarok.util.ReflectUtils;
 
 public abstract class Boss extends Entity {
 
@@ -41,9 +39,9 @@ public abstract class Boss extends Entity {
 	}
 
 	public BossStructure getBossStructure() {
-		List<String[]> struct = new ArrayList<>();
-		for (int i = 0; i < 9; i++) {
-			struct.add(new String[] { Inanimate.class.getName() });
+		String[][] struct = new String[9][];
+		for (int i = 0; i < struct.length; i++) {
+			struct[i] = new String[] { Inanimate.class.getName() };
 		}
 
 		BossStructure structure = new BossStructure(struct, this);

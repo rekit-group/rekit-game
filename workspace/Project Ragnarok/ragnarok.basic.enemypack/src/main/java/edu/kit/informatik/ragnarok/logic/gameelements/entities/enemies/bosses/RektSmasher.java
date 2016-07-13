@@ -1,12 +1,10 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.bosses;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.RektKiller;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Boss;
@@ -14,17 +12,40 @@ import edu.kit.informatik.ragnarok.logic.level.bossstructure.BossStructure;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Vec;
+import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 import edu.kit.informatik.ragnarok.util.ThreadUtils;
 
+/**
+ *
+ * This class realizes a simple {@link Boss}:<br>
+ * This boss is a square with <i>sharp</i> triangles at each side, which can
+ * hurt a {@link Player}; these will disappear from time to time
+ *
+ */
+@LoadMe
 public class RektSmasher extends Boss {
-
+	/**
+	 * The internal {@link RektKiller}
+	 */
 	private RektKiller innerRektKiller;
+	/**
+	 * The current movement speed
+	 */
 	private float speed = 0.5f;
 
+	/**
+	 * Prototype Constructor
+	 */
 	public RektSmasher() {
 		super();
 	}
 
+	/**
+	 * Create a RektSmasher by start position
+	 *
+	 * @param startPos
+	 *            the start position
+	 */
 	public RektSmasher(Vec startPos) {
 		// Configure own attributes
 		super(startPos, new Vec(), new Vec(2f, 2f));
@@ -148,7 +169,8 @@ public class RektSmasher extends Boss {
 
 	@Override
 	public BossStructure getBossStructure() {
-		List<String[]> struct = new ArrayList<>();
+		// TODO Refactor to new Layout
+
 		int[][][] oldStruct = new int[][][] {
 				{ { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 },
 						{ 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 } },
@@ -168,6 +190,7 @@ public class RektSmasher extends Boss {
 						{ 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 } },
 				{ { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 0 }, { 1 }, { 1 }, { 1 }, { 1 },
 						{ 0 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 } } };
+		String[][] struct = new String[oldStruct.length][];
 		for (int i = 0; i < oldStruct.length; i++) {
 			String[] l = new String[oldStruct[i].length];
 			for (int j = 0; j < oldStruct[i].length; j++) {
@@ -179,7 +202,7 @@ public class RektSmasher extends Boss {
 					l[j] = RektKiller.class.getName();
 				}
 			}
-			struct.add(l);
+			struct[i] = l;
 		}
 		BossStructure structure = new BossStructure(struct, this);
 		this.setBossStructure(structure);
