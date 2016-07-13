@@ -32,7 +32,8 @@ import edu.kit.informatik.ragnarok.logic.gameelements.GameElementFactory;
  * </p>
  *
  * @author Angelo Aracri
- * @version 1.0
+ * @author Dominik Fuch�
+ * @version 1.1
  */
 public class Structure extends Configurable {
 
@@ -41,7 +42,7 @@ public class Structure extends Configurable {
 	 * GameElements. The mapping from each integer to GameElements is specified
 	 * by the {@link GameElementFactory}.
 	 */
-	private List<String[]> structure;
+	private String[][] structure;
 
 	/**
 	 * Value that specifies how many columns to right of the Structure will be
@@ -63,7 +64,12 @@ public class Structure extends Configurable {
 	 *            Structure.
 	 */
 	public Structure(List<String[]> lines, Map<String, String> alias) {
-		this.structure = lines;
+		this.structure = new String[lines.size()][];
+		int i = 0;
+		for (String[] line : lines) {
+			this.structure[i++] = line.clone();
+		}
+
 		this.alias = alias;
 	}
 
@@ -98,9 +104,9 @@ public class Structure extends Configurable {
 		for (int y = 0; y < this.getHeight(); y++) {
 			for (int x = 0; x < this.getWidth(); x++) {
 				// map: structureArray y --> actual level y
-				int aY = (GameConf.GRID_H - this.structure.size()) + y;
+				int aY = (GameConf.GRID_H - this.structure.length) + y;
 
-				String elemInfo = this.structure.get(y)[x];
+				String elemInfo = this.structure[y][x];
 				if (elemInfo == null) {
 					// Nothing set here:
 					// check if we must generate random coins
@@ -130,7 +136,7 @@ public class Structure extends Configurable {
 		// add gap to the block right to the structure build so far, with given
 		// width.
 		for (int x = 0; x < this.gapWidth; x++) {
-			GameElementFactory.generateInanimate(levelX + this.structure.get(0).length + x, GameConf.GRID_H - 1);
+			GameElementFactory.generateInanimate(levelX + this.structure[0].length + x, GameConf.GRID_H - 1);
 		}
 
 		// return structure width plus gapWidth
@@ -151,7 +157,7 @@ public class Structure extends Configurable {
 	 * @return the height of the Structures template.
 	 */
 	public int getHeight() {
-		return this.structure.size();
+		return this.structure.length;
 	}
 
 	/**
@@ -165,7 +171,7 @@ public class Structure extends Configurable {
 	 * @return the width of the Structures template.
 	 */
 	public int getWidth() {
-		return this.structure.get(0).length;
+		return this.structure[0].length;
 	}
 
 	/**

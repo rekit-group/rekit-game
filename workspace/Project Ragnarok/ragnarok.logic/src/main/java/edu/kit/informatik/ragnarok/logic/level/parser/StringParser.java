@@ -24,7 +24,9 @@ class StringParser extends LevelParser {
 	 * The tokenizer
 	 */
 	private Tokenizer tokenizer;
-	/** The look ahead Token */
+	/**
+	 * The look ahead Token
+	 */
 	private Token lookAhead;
 
 	/**
