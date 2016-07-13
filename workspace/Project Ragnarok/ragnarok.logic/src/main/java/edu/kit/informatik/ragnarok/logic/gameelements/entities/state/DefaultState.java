@@ -10,7 +10,12 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
  * @version 1.0
  */
 public class DefaultState extends EntityState {
-
+	/**
+	 * Create State
+	 * 
+	 * @param entitiy
+	 *            the entity
+	 */
 	public DefaultState(Entity entitiy) {
 		super(entitiy);
 	}

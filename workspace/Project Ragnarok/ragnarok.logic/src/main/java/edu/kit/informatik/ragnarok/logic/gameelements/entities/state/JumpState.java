@@ -12,8 +12,17 @@ import edu.kit.informatik.ragnarok.primitives.Vec;
  * @version 1.0
  */
 public class JumpState extends EntityState {
+	/**
+	 * The time left for the jump
+	 */
 	private float timeLeft = 0;
 
+	/**
+	 * Create State
+	 * 
+	 * @param entitiy
+	 *            the entity
+	 */
 	public JumpState(Entity entity) {
 		super(entity);
 		this.timeLeft = GameConf.PLAYER_JUMP_TIME;
