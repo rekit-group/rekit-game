@@ -45,9 +45,13 @@ class GameView implements View {
 	 * Represents a graphic window
 	 */
 	private Shell shell;
-
+	/**
+	 * The last render time
+	 */
 	private long lastRenderTime;
-
+	/**
+	 * The queue used for fps calculation
+	 */
 	private Queue<Float> fpsQueue = new ArrayDeque<>();
 
 	/**
@@ -59,7 +63,9 @@ class GameView implements View {
 	 * The Field that manages the graphic context
 	 */
 	private FieldImpl field;
-
+	/**
+	 * The GC of the {@link Canvas}
+	 */
 	private GC gc;
 
 	/**
@@ -110,6 +116,9 @@ class GameView implements View {
 		display.dispose();
 	}
 
+	/**
+	 * "Update-Thread" content
+	 */
 	private void update() {
 		Display disp = Display.getDefault();
 		while (!disp.isDisposed()) {
@@ -185,6 +194,11 @@ class GameView implements View {
 
 	}
 
+	/**
+	 * Get a String with stats about all {@link GameElement GameElements}
+	 *
+	 * @return the String
+	 */
 	private String getGameElementStats() {
 		HashMap<Class<?>, Integer> classCounter = new HashMap<>();
 
@@ -214,7 +228,12 @@ class GameView implements View {
 		return result.toString();
 	}
 
-	private float getFPS() {
+	/**
+	 * Get the latest FPS
+	 *
+	 * @return the FPS
+	 */
+	private int getFPS() {
 		long thisTime = System.currentTimeMillis();
 		long deltaTime = thisTime - this.lastRenderTime;
 		this.lastRenderTime = System.currentTimeMillis();
@@ -226,10 +245,9 @@ class GameView implements View {
 			sum += f;
 		}
 
-		if (this.fpsQueue.size() > 5) {
+		if (this.fpsQueue.size() > 200) {
 			this.fpsQueue.remove();
 		}
-
 		return (int) (10000f / (sum / this.fpsQueue.size()) / 10f);
 	}
 

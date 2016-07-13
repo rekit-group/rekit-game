@@ -21,6 +21,8 @@ public class WalkCommand extends InputCommand {
 	/**
 	 * Instantiate the WalkCommand
 	 *
+	 * @param supervisor
+	 *            the supervisor
 	 * @param dir
 	 *            the direction
 	 */

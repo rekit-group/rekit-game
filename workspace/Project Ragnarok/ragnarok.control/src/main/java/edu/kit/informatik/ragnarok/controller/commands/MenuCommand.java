@@ -68,7 +68,7 @@ public class MenuCommand implements Command {
 			item.select();
 			break;
 		default:
-			break;
+			throw new Error("This is impossible: Direction cannot be null");
 		}
 	}
 

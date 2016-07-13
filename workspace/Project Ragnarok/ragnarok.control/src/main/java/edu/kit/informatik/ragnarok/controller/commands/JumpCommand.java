@@ -12,6 +12,12 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.state.JumpState;
  *
  */
 public class JumpCommand extends InputCommand {
+	/**
+	 * Create the Command
+	 * 
+	 * @param supervisor
+	 *            the supervisor
+	 */
 	public JumpCommand(CommandSupervisor supervisor) {
 		super(supervisor);
 	}

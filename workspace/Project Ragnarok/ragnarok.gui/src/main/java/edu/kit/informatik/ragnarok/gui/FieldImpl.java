@@ -28,9 +28,17 @@ import edu.kit.informatik.ragnarok.util.TextOptions;
  *
  */
 public class FieldImpl extends Field {
-
+	/**
+	 * The GC
+	 */
 	private GC gc;
+	/**
+	 * The current camera offset
+	 */
 	private int cameraOffset = 0;
+	/**
+	 * The current camera offset in units
+	 */
 	private float cameraOffsetUnits = 0;
 
 	@Override
@@ -39,6 +47,12 @@ public class FieldImpl extends Field {
 		this.cameraOffset = -CalcUtil.units2pixel(cameraOffset);
 	}
 
+	/**
+	 * Set the background of the field
+	 *
+	 * @param col
+	 *            the color
+	 */
 	public void setBackground(RGB col) {
 		this.gc.setBackground(new Color(Display.getCurrent(), col));
 		this.gc.fillRectangle(0, 0, GameConf.PIXEL_W, GameConf.PIXEL_H);
@@ -89,6 +103,16 @@ public class FieldImpl extends Field {
 		this.gc.setAlpha(255);
 	}
 
+	/**
+	 * Draw an image
+	 *
+	 * @param pos
+	 *            the position
+	 * @param size
+	 *            the size
+	 * @param imagePath
+	 *            the image path
+	 */
 	private void drawImageImpl(Vec pos, Vec size, String imagePath) {
 		Image image = ImageLoader.get(imagePath);
 		this.gc.drawImage(image, // image
@@ -97,6 +121,16 @@ public class FieldImpl extends Field {
 		);
 	}
 
+	/**
+	 * Draw an text
+	 *
+	 * @param pos
+	 *            the position
+	 * @param text
+	 *            the text
+	 * @param options
+	 *            the options
+	 */
 	private void drawTextImpl(Vec pos, String text, TextOptions options) {
 		// Set color to red and set font
 		RGB rgb = new RGB(options.getColor().red, options.getColor().green, options.getColor().blue);
@@ -116,10 +150,23 @@ public class FieldImpl extends Field {
 		font.dispose();
 	}
 
+	/**
+	 * Set the current GC
+	 * 
+	 * @param gc
+	 *            the gc
+	 */
 	public void setGC(GC gc) {
 		this.gc = gc;
 	}
 
+	/**
+	 * Translate a vec3D to a vec2D
+	 * 
+	 * @param vec3D
+	 *            the vec3D
+	 * @return the vec2D
+	 */
 	private Vec translate2D(Vec vec3D) {
 		if (vec3D.getZ() != 1) {
 			return vec3D.translate2D(this.cameraOffsetUnits);

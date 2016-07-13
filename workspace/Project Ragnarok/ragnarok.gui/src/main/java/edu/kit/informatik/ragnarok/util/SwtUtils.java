@@ -50,10 +50,24 @@ public final class SwtUtils {
 
 	}
 
+	/**
+	 * Convert a {@link RGBColor} to a {@link RGB}
+	 * 
+	 * @param color
+	 *            the color
+	 * @return the converted color
+	 */
 	public static RGB calcRGB(RGBColor color) {
 		return new RGB(color.red, color.green, color.blue);
 	}
 
+	/**
+	 * Convert a {@link RGBAColor} to a {@link RGBA}
+	 * 
+	 * @param color
+	 *            the color
+	 * @return the converted color
+	 */
 	public static RGBA calcRGBA(RGBAColor color) {
 		return new RGBA(color.red, color.green, color.blue, color.alpha);
 
