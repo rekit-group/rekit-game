@@ -34,7 +34,7 @@ public class MenuSubMenu extends MenuItem {
 
 	/**
 	 * Create the submenu
-	 * 
+	 *
 	 * @param scene
 	 *            the scene
 	 * @param text
@@ -49,7 +49,7 @@ public class MenuSubMenu extends MenuItem {
 
 	/**
 	 * Add an Item
-	 * 
+	 *
 	 * @param i
 	 *            the item
 	 */
@@ -61,20 +61,20 @@ public class MenuSubMenu extends MenuItem {
 
 	/**
 	 * Remove an Item
-	 * 
+	 *
 	 * @param i
 	 *            the item
 	 */
 	public void removeItem(MenuItem i) {
 		i.setParent(null);
-		// TODO That cant be right
-		// this.removeItem(i);
+		this.menuItems.remove(i);
+		this.index = 0;
 		this.calcItemPos();
 	}
 
 	/**
 	 * Set the size of Items
-	 * 
+	 *
 	 * @param value
 	 *            the new size
 	 */

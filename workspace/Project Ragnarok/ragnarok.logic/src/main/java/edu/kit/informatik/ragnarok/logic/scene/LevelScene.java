@@ -82,8 +82,7 @@ public abstract class LevelScene extends Scene {
 
 	@Override
 	public void start() {
-		// TODO Auto-generated method stub
-
+		return;
 	}
 
 	@Override
@@ -171,7 +170,7 @@ public abstract class LevelScene extends Scene {
 		if (e1.getDeleteMe() || e2.getDeleteMe()) {
 			return;
 		}
-		
+
 		// Return if there is no collision
 		if (!e1.getCollisionFrame().collidesWith(e2.getCollisionFrame())) {
 			return;
