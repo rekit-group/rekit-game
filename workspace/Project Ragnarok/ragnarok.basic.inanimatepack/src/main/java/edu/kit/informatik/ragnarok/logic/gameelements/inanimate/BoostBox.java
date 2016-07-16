@@ -102,8 +102,8 @@ public class BoostBox extends DynamicInanimate {
 	public void logicLoop(float deltaTime) {
 		// Get new strategy from strategy map
 
-		this.offset += (this.scene.getTime() - this.lastTime);
-		this.lastTime = this.scene.getTime();
+		this.offset += (this.getScene().getTime() - this.lastTime);
+		this.lastTime = this.getScene().getTime();
 		if (this.offset > BoostBox.PERIOD - 750) {
 			this.sparkling = true;
 		} else {
@@ -126,7 +126,7 @@ public class BoostBox extends DynamicInanimate {
 	public void internalRender(Field f) {
 		this.strategies[this.current].internalRender(f);
 		if (this.sparkling) {
-			BoostBox.particles.spawn(this.scene, this.pos);
+			BoostBox.particles.spawn(this.getScene(), this.getPos());
 		}
 	}
 

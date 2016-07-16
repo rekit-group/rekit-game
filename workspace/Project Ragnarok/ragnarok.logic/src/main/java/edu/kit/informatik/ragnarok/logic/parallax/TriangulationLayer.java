@@ -134,7 +134,7 @@ public class TriangulationLayer extends ParallaxLayer {
 				maxY = Math.max(this.corners[i].getY(), maxY);
 			}
 			this.setPos(new Vec(minX + (maxX - minX) / 2f, minY + (maxY - minY) / 2f));
-			this.size = new Vec(maxX - minX, maxY - minY);
+			this.setSize(new Vec(maxX - minX, maxY - minY));
 
 			this.polygon = new Polygon(new Vec(), new Vec[] { corner1.add(corner0.multiply(-1)), corner2.add(corner0.multiply(-1)), new Vec() });
 		}

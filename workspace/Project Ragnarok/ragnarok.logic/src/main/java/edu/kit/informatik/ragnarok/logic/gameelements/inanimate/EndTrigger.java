@@ -105,7 +105,7 @@ public class EndTrigger extends InanimateTrigger {
 			EndTrigger.portalParticles.colorG = new ParticleSpawnerOption((float) (this.color.green * 1.2));
 			EndTrigger.portalParticles.colorB = new ParticleSpawnerOption((float) (this.color.blue * 1.2));
 
-			EndTrigger.portalParticles.spawn(EndTrigger.this.scene, new Vec(x, y).add(this.getPos()));
+			EndTrigger.portalParticles.spawn(EndTrigger.this.getScene(), new Vec(x, y).add(this.getPos()));
 
 		}
 
@@ -124,7 +124,7 @@ public class EndTrigger extends InanimateTrigger {
 
 	@Override
 	public void perform() {
-		this.scene.end(true);
+		this.getScene().end(true);
 	}
 
 	@Override

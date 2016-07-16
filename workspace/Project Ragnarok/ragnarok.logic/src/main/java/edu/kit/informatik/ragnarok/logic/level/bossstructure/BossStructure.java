@@ -80,7 +80,7 @@ public class BossStructure extends Structure {
 			@Override
 			public void perform() {
 				if (!this.deleteMe) {
-					BossStructure.this.startBattle(this.scene);
+					BossStructure.this.startBattle(this.getScene());
 				}
 			}
 		};

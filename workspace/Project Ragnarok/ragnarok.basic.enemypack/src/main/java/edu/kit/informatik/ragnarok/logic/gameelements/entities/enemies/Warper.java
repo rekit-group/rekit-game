@@ -52,7 +52,7 @@ public class Warper extends Enemy {
 
 	/**
 	 * Create a warper by start position
-	 * 
+	 *
 	 * @param startPos
 	 *            the start position
 	 */
@@ -79,7 +79,7 @@ public class Warper extends Enemy {
 		// animate particles
 		Warper.warpParticles.amountMin = -5;
 		Warper.warpParticles.amountMax = 2;
-		Warper.warpParticles.spawn(this.scene, this.getPos());
+		Warper.warpParticles.spawn(this.getScene(), this.getPos());
 
 		// if time is up
 		if (this.warpAction.timeUp()) {
@@ -87,12 +87,12 @@ public class Warper extends Enemy {
 			this.warpAction.reset();
 
 			// get target (player)
-			Vec target = this.scene.getPlayer().getPos();
+			Vec target = this.getScene().getPlayer().getPos();
 
 			// animate particles
 			Warper.warpParticles.amountMin = 5;
 			Warper.warpParticles.amountMax = 8;
-			Warper.warpParticles.spawn(this.scene, this.getPos());
+			Warper.warpParticles.spawn(this.getScene(), this.getPos());
 
 			// determine if x or y is greater in distance
 			Vec dif = this.getPos().add(target.multiply(-1));
@@ -106,7 +106,7 @@ public class Warper extends Enemy {
 
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
-		if (this.team.isHostile(element.getTeam())) {
+		if (this.getTeam().isHostile(element.getTeam())) {
 
 			// Give player damage
 			element.addDamage(1);

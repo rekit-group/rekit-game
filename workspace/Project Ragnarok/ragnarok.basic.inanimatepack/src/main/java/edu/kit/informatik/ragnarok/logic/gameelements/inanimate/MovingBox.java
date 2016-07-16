@@ -84,7 +84,7 @@ public class MovingBox extends DynamicInanimate {
 
 	/**
 	 * Create a moving box
-	 * 
+	 *
 	 * @param pos
 	 *            the position
 	 * @param dist
@@ -131,8 +131,8 @@ public class MovingBox extends DynamicInanimate {
 		this.setPos(this.currentStart.add(this.relativeTarget.multiply(this.timer.getProgress())));
 
 		if (GameConf.PRNG.nextFloat() > 0.6f) {
-			MovingBox.sparkParticles.spawn(this.scene, this.getPos().addX(-5.5f * this.sizeX16).addY(this.getSize().getY() / 3));
-			MovingBox.sparkParticles.spawn(this.scene, this.getPos().addX(2.5f * this.sizeX16).addY(this.getSize().getY() / 3));
+			MovingBox.sparkParticles.spawn(this.getScene(), this.getPos().addX(-5.5f * this.sizeX16).addY(this.getSize().getY() / 3));
+			MovingBox.sparkParticles.spawn(this.getScene(), this.getPos().addX(2.5f * this.sizeX16).addY(this.getSize().getY() / 3));
 		}
 
 		if (this.timer.timeUp()) {

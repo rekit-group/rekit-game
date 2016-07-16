@@ -124,7 +124,7 @@ public class RektSmasher extends Boss {
 		if (this.isHarmless) {
 			return;
 		}
-		if (this.team.isHostile(element.getTeam())) {
+		if (this.getTeam().isHostile(element.getTeam())) {
 			// Touched harmless side
 			if (!this.innerRektKiller.hasSide(dir)) {
 				// Let the player jump if he landed on top

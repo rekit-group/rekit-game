@@ -12,17 +12,21 @@ public class InanimateBox extends Inanimate {
 
 	@Override
 	public void internalRender(Field f) {
-		f.drawRectangle(this.pos, this.size, this.color);
+		f.drawRectangle(this.getPos(), this.getSize(), this.color);
 
 		RGBAColor darkColor = new RGBAColor(this.color.red - 30, this.color.green - 30, this.color.blue - 30, this.color.alpha);
 		float plateThickness = 0.10f;
 
-		f.drawRectangle(this.pos.add(new Vec(0, this.size.getY() / 2f - plateThickness / 2f)), this.size.setY(plateThickness), darkColor);
-		f.drawRectangle(this.pos.add(new Vec(0, -this.size.getY() / 2f + plateThickness / 2f)), this.size.setY(plateThickness), darkColor);
+		f.drawRectangle(this.getPos().add(new Vec(0, this.getSize().getY() / 2f - plateThickness / 2f)), this.getSize().setY(plateThickness),
+				darkColor);
+		f.drawRectangle(this.getPos().add(new Vec(0, -this.getSize().getY() / 2f + plateThickness / 2f)), this.getSize().setY(plateThickness),
+				darkColor);
 
-		f.drawRectangle(this.pos.add(new Vec(this.size.getX() / 2f - plateThickness / 2f, 0)), this.size.setX(plateThickness), darkColor);
-		f.drawRectangle(this.pos.add(new Vec(-this.size.getX() / 2f + plateThickness / 2f, 0)), this.size.setX(plateThickness), darkColor);
-		f.drawRectangle(this.pos, this.size.multiply(0.5f), darkColor);
+		f.drawRectangle(this.getPos().add(new Vec(this.getSize().getX() / 2f - plateThickness / 2f, 0)), this.getSize().setX(plateThickness),
+				darkColor);
+		f.drawRectangle(this.getPos().add(new Vec(-this.getSize().getX() / 2f + plateThickness / 2f, 0)), this.getSize().setX(plateThickness),
+				darkColor);
+		f.drawRectangle(this.getPos(), this.getSize().multiply(0.5f), darkColor);
 	}
 
 	public static Inanimate staticCreate(Vec pos) {

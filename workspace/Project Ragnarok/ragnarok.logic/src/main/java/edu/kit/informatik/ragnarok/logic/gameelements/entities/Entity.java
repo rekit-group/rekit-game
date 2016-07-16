@@ -5,6 +5,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.state.DefaultState;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.state.EntityState;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.state.NotInitializedState;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Enemy;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Pickup;
 import edu.kit.informatik.ragnarok.logic.scene.LevelScene;
@@ -45,13 +46,15 @@ public abstract class Entity extends GameElement {
 	protected TimeDependency invincibility = null;
 
 	/**
-	 * Minimal Constructor by {@link Team}
+	 * Minimal Constructor by {@link Team} used for prototype constructors The
+	 * element will not be initialized
 	 *
 	 * @param team
 	 *            the team
 	 */
 	protected Entity(Team team) {
 		super(team);
+		this.setEntityState(new NotInitializedState(this));
 	}
 
 	/**
@@ -207,7 +210,7 @@ public abstract class Entity extends GameElement {
 		}
 
 		// resetting lastPos
-		this.lastPos = lastPos;
+		this.setLastPos(lastPos);
 	}
 
 	/**

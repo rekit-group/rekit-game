@@ -60,20 +60,20 @@ public class Coin extends Pickup {
 	public void logicLoop(float renderDelta) {
 		this.x += renderDelta;
 		this.sin = Math.sin(this.x * 3);
-		this.size = new Vec((float) (0.7f * this.sin), 0.7f);
+		this.setSize(new Vec((float) (0.7f * this.sin), 0.7f));
 	}
 
 	@Override
 	public void internalRender(Field f) {
 
 		for (float x = -0.020f; x <= 0.020f; x += 0.005f) {
-			f.drawCircle(this.getPos().addX(x), this.size, Coin.color);
+			f.drawCircle(this.getPos().addX(x), this.getSize(), Coin.color);
 		}
 		if (this.sin < 0) {
-			f.drawCircle(this.getPos().addX(-0.03f), this.size, Coin.darkColor);
+			f.drawCircle(this.getPos().addX(-0.03f), this.getSize(), Coin.darkColor);
 		}
 		if (this.sin > 0) {
-			f.drawCircle(this.getPos().addX(0.03f), this.size, Coin.darkColor);
+			f.drawCircle(this.getPos().addX(0.03f), this.getSize(), Coin.darkColor);
 		}
 
 	}

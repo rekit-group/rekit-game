@@ -37,7 +37,7 @@ public final class Player extends Entity implements CameraTarget {
 
 	/**
 	 * Create a player by start position
-	 * 
+	 *
 	 * @param startPos
 	 *            the start position
 	 */
@@ -96,7 +96,7 @@ public final class Player extends Entity implements CameraTarget {
 	@Override
 	public void addDamage(int damage) {
 		// spawn particles
-		this.damageParticles.spawn(this.scene, this.getPos());
+		this.damageParticles.spawn(this.getScene(), this.getPos());
 		// Do usual life logic
 		super.addDamage(damage);
 	}

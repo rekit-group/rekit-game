@@ -115,7 +115,7 @@ public class ClimbUpBox extends DynamicInanimate {
 	public void logicLoop(float deltaTime) {
 
 		// get time
-		long nowTime = this.scene.getTime();
+		long nowTime = this.getScene().getTime();
 		// init lastTime in first run
 		if (this.lastTime == -1) {
 			this.lastTime = nowTime - this.offset - ((nowTime) % ClimbUpBox.PERIOD);
@@ -298,7 +298,7 @@ public class ClimbUpBox extends DynamicInanimate {
 			Vec pos = this.parent.getPos().addY(this.parent.getSize().getY() / 2f + 1).addX(-0.5f);
 			pos = pos.addX(this.parent.getSize().getX() * GameConf.PRNG.nextFloat());
 
-			ClimbUpBox.particles.spawn(this.parent.scene, pos);
+			ClimbUpBox.particles.spawn(this.parent.getScene(), pos);
 		}
 
 		@Override

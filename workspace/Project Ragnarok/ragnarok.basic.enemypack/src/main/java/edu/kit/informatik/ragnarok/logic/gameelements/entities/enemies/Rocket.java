@@ -83,7 +83,7 @@ public class Rocket extends Enemy {
 
 	/**
 	 * Create a rocket by start position
-	 * 
+	 *
 	 * @param startPos
 	 *            the start position
 	 */
@@ -130,13 +130,13 @@ public class Rocket extends Enemy {
 		this.paricleTimer.removeTime(deltaTime);
 		if (this.paricleTimer.timeUp()) {
 			this.paricleTimer.reset();
-			Rocket.sparkParticles.spawn(this.scene, this.getPos().addX(this.getSize().getX() / 2));
+			Rocket.sparkParticles.spawn(this.getScene(), this.getPos().addX(this.getSize().getX() / 2));
 		}
 	}
 
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
-		if (this.team.isHostile(element.getTeam())) {
+		if (this.getTeam().isHostile(element.getTeam())) {
 
 			if (dir == Direction.UP) {
 				element.setVel(element.getVel().setY(GameConf.PLAYER_JUMP_BOOST));
@@ -148,7 +148,7 @@ public class Rocket extends Enemy {
 				element.addDamage(1);
 				// Kill the rocket itself
 				this.destroy();
-				Rocket.explosionParticles.spawn(this.scene, this.getPos());
+				Rocket.explosionParticles.spawn(this.getScene(), this.getPos());
 			}
 		}
 	}

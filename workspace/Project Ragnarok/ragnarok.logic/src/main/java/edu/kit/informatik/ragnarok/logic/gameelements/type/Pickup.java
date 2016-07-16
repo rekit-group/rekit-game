@@ -24,21 +24,23 @@ public abstract class Pickup extends Entity {
 
 	@Override
 	public abstract GameElement create(Vec startPos, String[] options);
-	
+
 	/**
-	 * Template method that should be overwritten in concrete {@link PickUp PickUps} to add the action
-	 * that is performed upon being collected by the Player.
+	 * Template method that should be overwritten in concrete {@link PickUp
+	 * PickUps} to add the action that is performed upon being collected by the
+	 * Player.
+	 * 
 	 * @param collector
 	 */
 	public abstract void perform(GameElement collector);
-	
+
 	@Override
 	public final void reactToCollision(GameElement element, Direction dir) {
-		if (this.team.isHostile(element.getTeam())) {
-			perform(element);
+		if (this.getTeam().isHostile(element.getTeam())) {
+			this.perform(element);
 		}
 	}
-	
+
 	@Override
 	public void logicLoop(float deltaTime) {
 		// no logic

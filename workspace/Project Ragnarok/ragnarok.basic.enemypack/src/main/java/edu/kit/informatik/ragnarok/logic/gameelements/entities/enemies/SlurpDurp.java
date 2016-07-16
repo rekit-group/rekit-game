@@ -54,7 +54,7 @@ public class SlurpDurp extends Entity {
 
 	/**
 	 * Create a slurp durp
-	 * 
+	 *
 	 * @param parentPos
 	 *            the parent Position
 	 * @param innerPos
@@ -80,14 +80,14 @@ public class SlurpDurp extends Entity {
 
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
-		if (this.team.isHostile(element.getTeam())) {
+		if (this.getTeam().isHostile(element.getTeam())) {
 			element.setVel(element.getVel().multiply(0.9f));
 		}
 	}
 
 	/**
 	 * Set the position of the parent {@link Slurp}
-	 * 
+	 *
 	 * @param parentPos
 	 *            the parent position
 	 */
@@ -98,13 +98,13 @@ public class SlurpDurp extends Entity {
 	@Override
 	public void logicLoop(float deltaTime) {
 		this.currentX += deltaTime;
-		this.size = new Vec(this.baseSize + (float) (this.amplitude * Math.sin(this.currentX * this.frequency + this.phase)));
+		this.setSize(new Vec(this.baseSize + (float) (this.amplitude * Math.sin(this.currentX * this.frequency + this.phase))));
 
 	}
 
 	@Override
 	public void internalRender(Field f) {
-		f.drawCircle(this.parentPos.add(this.innerPos), this.size, new RGBColor(94, 233, 101));
+		f.drawCircle(this.parentPos.add(this.innerPos), this.getSize(), new RGBColor(94, 233, 101));
 	}
 
 }

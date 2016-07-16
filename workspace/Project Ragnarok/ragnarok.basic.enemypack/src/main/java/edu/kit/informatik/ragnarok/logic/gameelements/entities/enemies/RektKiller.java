@@ -65,8 +65,16 @@ public class RektKiller extends Enemy {
 	 *            the integer that represents which sides have sides.
 	 */
 	public RektKiller(Vec startPos, Vec size, int sides) {
-		this(startPos, sides);
-		this.size = size;
+		super(startPos, new Vec(), size);
+		if (sides < 0 || sides > 15) {
+			throw new IllegalArgumentException("RektKiller must be give a number between 0 and 14");
+		}
+		// save initial attributes
+		int x = GameConf.PRNG.nextInt(Direction.values().length);
+		this.setCurrentDirection(Direction.values()[x]);
+		this.setSides(sides);
+
+		this.prepare();
 	}
 
 	/**
@@ -78,16 +86,7 @@ public class RektKiller extends Enemy {
 	 *            the integer that represents which sides have sides.
 	 */
 	public RektKiller(Vec startPos, int sides) {
-		super(startPos, new Vec(), new Vec(0.6f, 0.6f));
-		if (sides < 0 || sides > 15) {
-			throw new IllegalArgumentException("RektKiller must be give a number between 0 and 14");
-		}
-		// save initial attributes
-		int x = GameConf.PRNG.nextInt(Direction.values().length);
-		this.setCurrentDirection(Direction.values()[x]);
-		this.setSides(sides);
-
-		this.prepare();
+		this(startPos, new Vec(0.6f, 0.6f), sides);
 	}
 
 	/**
@@ -175,13 +174,13 @@ public class RektKiller extends Enemy {
 		RGBColor innerColor = new RGBColor(150, 30, 30);
 		RGBColor spikeColor = new RGBColor(80, 80, 80);
 		// draw rectangle in the middle
-		f.drawRectangle(this.pos, this.size.multiply(0.8f), innerColor);
+		f.drawRectangle(this.getPos(), this.getSize().multiply(0.8f), innerColor);
 		// move to upper position
-		this.spikePolygon.moveTo(this.pos.add(this.size.multiply(-0.8f / 2f)));
+		this.spikePolygon.moveTo(this.getPos().add(this.getSize().multiply(-0.8f / 2f)));
 		for (Direction d : Direction.values()) {
 			if (this.hasSide(d)) {
 				double angle = d.getAngle();
-				Polygon rotatedSpikes = this.spikePolygon.rotate((float) angle, this.pos);
+				Polygon rotatedSpikes = this.spikePolygon.rotate((float) angle, this.getPos());
 				f.drawPolygon(rotatedSpikes, spikeColor, true);
 			}
 		}
@@ -206,7 +205,7 @@ public class RektKiller extends Enemy {
 
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
-		if (this.team.isHostile(element.getTeam())) {
+		if (this.getTeam().isHostile(element.getTeam())) {
 			// Touched harmless side
 			if (!this.hasSide(dir)) {
 				// give the player 40 points

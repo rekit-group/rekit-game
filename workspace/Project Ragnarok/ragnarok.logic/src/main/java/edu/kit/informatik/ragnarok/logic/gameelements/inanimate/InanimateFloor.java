@@ -54,7 +54,7 @@ public class InanimateFloor extends Inanimate {
 
 		if (Math.abs(element.getVel().getY()) > 6) {
 			this.dustParticles.angle = InanimateFloor.dustParticleAngleTop;
-			this.dustParticles.spawn(this.scene, this.getPos().addY(-this.getSize().getY() / 2));
+			this.dustParticles.spawn(this.getScene(), this.getPos().addY(-this.getSize().getY() / 2));
 		}
 		// if strong velocity in x direction
 		else if (Math.abs(element.getVel().getX()) > 5) {
@@ -67,7 +67,7 @@ public class InanimateFloor extends Inanimate {
 
 			Vec pos = this.getPos().addY(-this.getSize().getY() / 2).setX(element.getPos().getX());
 
-			this.dustParticles.spawn(this.scene, pos);
+			this.dustParticles.spawn(this.getScene(), pos);
 		}
 
 		super.reactToCollision(element, dir);

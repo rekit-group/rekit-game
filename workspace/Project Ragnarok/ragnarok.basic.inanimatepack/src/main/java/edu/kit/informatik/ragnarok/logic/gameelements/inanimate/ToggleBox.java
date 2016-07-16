@@ -74,7 +74,7 @@ public class ToggleBox extends DynamicInanimate {
 	@Override
 	public void logicLoop(float deltaTime) {
 		// Get new strategy from strategy map
-		this.currentStrategy = this.strategies.get((this.scene.getTime() + this.offset) % ToggleBox.PERIOD < ToggleBox.PERIOD / 2);
+		this.currentStrategy = this.strategies.get((this.getScene().getTime() + this.offset) % ToggleBox.PERIOD < ToggleBox.PERIOD / 2);
 	}
 
 	@Override
@@ -156,7 +156,7 @@ public class ToggleBox extends DynamicInanimate {
 	}
 
 	/**
-	 * 
+	 *
 	 * This is the strategy for the visible time of the {@link ToggleBox} While
 	 * this is the strategy of the ToggleBox it's a solid block
 	 */

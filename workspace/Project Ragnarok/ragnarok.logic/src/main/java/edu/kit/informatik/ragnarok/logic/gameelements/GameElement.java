@@ -30,6 +30,7 @@ import edu.kit.informatik.ragnarok.primitives.Vec;
  * </p>
  *
  * @author Angelo Aracri
+ * @author Dominik Fuchß
  */
 public abstract class GameElement implements Collidable, Comparable<GameElement> {
 
@@ -49,13 +50,13 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 	 * The {@link GameElement GameElements} size that can be imagined as a box
 	 * of this {@link Vec Vecs} dimensions around the {@link Vec} <i>pos</i>.
 	 */
-	protected Vec size;
+	private Vec size;
 
 	/**
 	 * The {@link GameElement GameElements} velocity that can be used to alter
 	 * its position in the <i>logicLoop</i>
 	 */
-	protected Vec vel;
+	private Vec vel;
 
 	/**
 	 * <p>
@@ -66,7 +67,7 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 	 * {@link GameElement}.
 	 * </p>
 	 */
-	protected Vec pos;
+	private Vec pos;
 
 	/**
 	 * <p>
@@ -79,19 +80,19 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 	 * {@link GameElement}.
 	 * </p>
 	 */
-	protected Vec lastPos;
+	private Vec lastPos;
 
 	/**
 	 * The {@link Team} the {@link GameElement} is in that mainly specifies
 	 * behavior upon collision.
 	 */
-	protected Team team;
+	private Team team;
 
 	/**
 	 * The {@link} Scene the {@link GameElement} is in and manages this and all
 	 * other {@link GameElement GameElements}.
 	 */
-	protected Scene scene;
+	private Scene scene;
 
 	/**
 	 * Prototype constructor. Use the constructor <i>GameElement(Vec startPos,
@@ -223,12 +224,12 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 	 */
 	public final void setPos(Vec value) {
 		if (this.pos == null) {
-			this.lastPos = value.clone();
+			this.lastPos = value;
 		} else {
-			this.lastPos = this.pos.clone();
+			this.lastPos = this.pos;
 		}
 
-		this.pos = value.clone();
+		this.pos = value;
 	}
 
 	/**
@@ -246,6 +247,16 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 	 */
 	public final Vec getLastPos() {
 		return this.lastPos;
+	}
+
+	/**
+	 * Set the last valid position
+	 * 
+	 * @param lastPos
+	 *            the last valid position
+	 */
+	protected final void setLastPos(Vec lastPos) {
+		this.lastPos = lastPos;
 	}
 
 	/**
@@ -282,6 +293,16 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 		return this.size;
 	}
 
+	/**
+	 * Set the size of the GameElement
+	 *
+	 * @param size
+	 *            the size
+	 */
+	public void setSize(Vec size) {
+		this.size = size;
+	}
+
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
 		// Do nothing
@@ -297,7 +318,6 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 	public final Frame getCollisionFrame() {
 		Vec v1 = this.getPos().add(this.getSize().multiply(-0.5f));
 		Vec v2 = this.getPos().add(this.getSize().multiply(0.5f));
-
 		return new Frame(v1, v2);
 	}
 
@@ -309,6 +329,15 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 	 */
 	public final void setScene(Scene value) {
 		this.scene = value;
+	}
+
+	/**
+	 * Get the current scene
+	 *
+	 * @return the current scene
+	 */
+	public final Scene getScene() {
+		return this.scene;
 	}
 
 	/**
