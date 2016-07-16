@@ -54,6 +54,9 @@ public abstract class Entity extends GameElement {
 	 */
 	protected Entity(Team team) {
 		super(team);
+		this.setPos(new Vec());
+		this.setSize(new Vec());
+		this.setVel(new Vec());
 		this.setEntityState(new NotInitializedState(this));
 	}
 
@@ -202,7 +205,7 @@ public abstract class Entity extends GameElement {
 		case UP:
 		case DOWN:
 			// move entities lower side to collisions top side / vice versa
-			float newY = collision.getBorder(dir.getOpposite()) + signum * this.getSize().getY() / 1.9f;
+			float newY = collision.getBorder(Direction.getOpposite(dir)) + signum * this.getSize().getY() / 1.9f;
 			this.setPos(this.getPos().setY(newY));
 			// stop velocity in y dimension
 			this.setVel(this.getVel().setY(0));

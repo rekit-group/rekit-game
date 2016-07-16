@@ -230,7 +230,7 @@ public class RektKiller extends Enemy {
 	@Override
 	public void collidedWith(Frame collision, Direction dir) {
 		super.collidedWith(collision, dir);
-		this.setCurrentDirection(this.getCurrentDirection().getOpposite());
+		this.setCurrentDirection(Direction.getOpposite(this.getCurrentDirection()));
 	}
 
 	@Override

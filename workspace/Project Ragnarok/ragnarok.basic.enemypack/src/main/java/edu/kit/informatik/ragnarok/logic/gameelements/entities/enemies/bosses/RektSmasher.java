@@ -106,14 +106,14 @@ public class RektSmasher extends Boss {
 		this.innerRektKiller.setCurrentDirection(newDir);
 
 		// Randomly remove spikes on colliding side sometimes
-		if (GameConf.PRNG.nextDouble() > 0.8 && this.innerRektKiller.hasSide(dir.getOpposite())) {
+		if (GameConf.PRNG.nextDouble() > 0.8 && this.innerRektKiller.hasSide(Direction.getOpposite(dir))) {
 			// remove side
-			this.innerRektKiller.setSide(dir.getOpposite(), false);
+			this.innerRektKiller.setSide(Direction.getOpposite(dir), false);
 
 			// start thread to re-add spikes after time
 			ThreadUtils.runThread(() -> {
 				ThreadUtils.sleep(5000);
-				this.innerRektKiller.setSide(dir.getOpposite(), true);
+				this.innerRektKiller.setSide(Direction.getOpposite(dir), true);
 			});
 
 		}

@@ -125,7 +125,7 @@ public class Slurp extends Enemy {
 			this.hasWallContact = true;
 		}
 		// If Slurp ran against wall
-		if (this.currentDirection == dir.getOpposite()) {
+		if (this.currentDirection == Direction.getOpposite(dir)) {
 			// Turn him
 			this.currentDirection = this.currentDirection.getNextClockwise();
 			this.hasWallContact = true;

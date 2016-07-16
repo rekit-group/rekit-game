@@ -68,11 +68,14 @@ public enum Direction {
 
 	/**
 	 * Get the opposite direction to a direction
+	 * 
+	 * @param dir
+	 *            the direction
 	 *
-	 * @return the direction or {@code null} if none defined
+	 * @return the direction or random if dir == null
 	 */
-	public Direction getOpposite() {
-		switch (this) {
+	public static Direction getOpposite(Direction dir) {
+		switch (dir) {
 		case UP:
 			return Direction.DOWN;
 		case RIGHT:
@@ -82,7 +85,7 @@ public enum Direction {
 		case LEFT:
 			return Direction.RIGHT;
 		default:
-			return null;
+			return Direction.getRandom();
 		}
 	}
 
