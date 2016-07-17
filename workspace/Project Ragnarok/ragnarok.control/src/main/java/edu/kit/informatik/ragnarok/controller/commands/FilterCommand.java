@@ -1,7 +1,7 @@
 package edu.kit.informatik.ragnarok.controller.commands;
 
-import edu.kit.informatik.ragnarok.gui.Filter;
 import edu.kit.informatik.ragnarok.gui.View;
+import edu.kit.informatik.ragnarok.gui.filters.Filter;
 
 public class FilterCommand implements Command {
 	private boolean enable;

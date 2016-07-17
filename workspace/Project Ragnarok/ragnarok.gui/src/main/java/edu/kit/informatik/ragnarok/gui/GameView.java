@@ -11,15 +11,19 @@ import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
+import edu.kit.informatik.ragnarok.gui.filters.Filter;
 import edu.kit.informatik.ragnarok.logic.Model;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.GuiElement;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
+import edu.kit.informatik.ragnarok.primitives.AbstractImage;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.InputHelper;
 import edu.kit.informatik.ragnarok.util.SwtUtils;
@@ -183,7 +187,11 @@ class GameView implements View {
 		if (this.filter == null) {
 			this.gc.drawImage(image, 0, 0);
 		} else {
-			this.gc.drawImage(new Image(this.shell.getDisplay(), this.filter.apply(image.getImageData())), 0, 0);
+			Rectangle bounds = image.getBounds();
+			ImageData target = (ImageData) image.getImageData().clone();
+			AbstractImage res = this.filter.apply(new AbstractImage(bounds.height, bounds.width, target.data));
+			target.data = res.pixels;
+			this.gc.drawImage(new Image(this.shell.getDisplay(), target), 0, 0);
 		}
 
 		// put trash outside

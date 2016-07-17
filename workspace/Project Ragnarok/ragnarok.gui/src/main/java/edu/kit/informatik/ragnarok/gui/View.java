@@ -1,5 +1,6 @@
 package edu.kit.informatik.ragnarok.gui;
 
+import edu.kit.informatik.ragnarok.gui.filters.Filter;
 import edu.kit.informatik.ragnarok.logic.Model;
 import edu.kit.informatik.ragnarok.util.InputHelper;
 

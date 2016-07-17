@@ -1,4 +1,4 @@
-package edu.kit.informatik.ragnarok.gui;
+package edu.kit.informatik.ragnarok.gui.filters;
 
 public class InvertedMode extends GrayScaleMode {
 

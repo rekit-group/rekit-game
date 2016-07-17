@@ -1,10 +1,11 @@
-package edu.kit.informatik.ragnarok.gui;
+package edu.kit.informatik.ragnarok.gui.filters;
 
+import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import org.eclipse.swt.graphics.ImageData;
+import edu.kit.informatik.ragnarok.primitives.AbstractImage;
 
 /**
  * Detects edges via the Sobel filter operator.
@@ -22,12 +23,12 @@ public class GrayScaleMode implements Filter {
 	}
 
 	@Override
-	public ImageData apply(final ImageData image) {
+	public AbstractImage apply(final AbstractImage image) {
 		this.w = image.width;
 		this.h = image.height;
-		ImageData res = (ImageData) image.clone();
-		this.orig = image.data;
-		this.result = res.data;
+
+		this.orig = image.pixels;
+		this.result = Arrays.copyOf(image.pixels, image.pixels.length);
 
 		int taskSize = (this.h > this.numThreads) ? (this.h / this.numThreads) : (this.h);
 		if (taskSize == this.h) {
@@ -45,7 +46,7 @@ public class GrayScaleMode implements Filter {
 		} catch (InterruptedException ex) {
 			ex.printStackTrace();
 		}
-		return res;
+		return new AbstractImage(this.h, this.w, this.result);
 
 	}
 
