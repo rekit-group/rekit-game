@@ -6,10 +6,12 @@ import java.util.Map;
 
 import edu.kit.informatik.ragnarok.controller.commands.Command;
 import edu.kit.informatik.ragnarok.controller.commands.CommandSupervisor;
+import edu.kit.informatik.ragnarok.controller.commands.FilterCommand;
 import edu.kit.informatik.ragnarok.controller.commands.InputMethod;
 import edu.kit.informatik.ragnarok.controller.commands.JumpCommand;
 import edu.kit.informatik.ragnarok.controller.commands.MenuCommand;
 import edu.kit.informatik.ragnarok.controller.commands.WalkCommand;
+import edu.kit.informatik.ragnarok.gui.GrayScaleMode;
 import edu.kit.informatik.ragnarok.gui.View;
 import edu.kit.informatik.ragnarok.logic.GameState;
 import edu.kit.informatik.ragnarok.logic.Model;
@@ -67,6 +69,12 @@ class ControllerImpl implements Observer, Controller, CommandSupervisor {
 		this.mpCmd.put(Tuple.create(GameState.INGAME, InputHelper.ARROW_UP), new JumpCommand(this));
 		this.mpCmd.put(Tuple.create(GameState.INGAME, InputHelper.ARROW_LEFT), new WalkCommand(this, Direction.LEFT));
 		this.mpCmd.put(Tuple.create(GameState.INGAME, InputHelper.ARROW_RIGHT), new WalkCommand(this, Direction.RIGHT));
+
+		// Filter Commands ... a test ('o' and 'p' key)
+		this.mpCmd.put(Tuple.create(GameState.MENU, 111), new FilterCommand(true));
+		this.mpCmd.put(Tuple.create(GameState.MENU, 112), new FilterCommand(false));
+		this.mpCmd.put(Tuple.create(GameState.INGAME, 111), new FilterCommand(true));
+		this.mpCmd.put(Tuple.create(GameState.INGAME, 112), new FilterCommand(false));
 	}
 
 	/**
@@ -87,6 +95,13 @@ class ControllerImpl implements Observer, Controller, CommandSupervisor {
 
 	@Override
 	public void start(View view) {
+
+		// Filter Commands ... a test ('o' and 'p' key)
+		((FilterCommand) this.mpCmd.get(Tuple.create(GameState.MENU, 111))).init(view, new GrayScaleMode());
+		((FilterCommand) this.mpCmd.get(Tuple.create(GameState.MENU, 112))).init(view, null);
+		((FilterCommand) this.mpCmd.get(Tuple.create(GameState.INGAME, 111))).init(view, new GrayScaleMode());
+		((FilterCommand) this.mpCmd.get(Tuple.create(GameState.INGAME, 112))).init(view, null);
+
 		this.helper.initialize(view);
 	}
 

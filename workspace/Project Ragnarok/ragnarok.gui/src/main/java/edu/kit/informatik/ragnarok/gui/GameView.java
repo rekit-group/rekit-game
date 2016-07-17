@@ -67,6 +67,10 @@ class GameView implements View {
 	 * The GC of the {@link Canvas}
 	 */
 	private GC gc;
+	/**
+	 * A filter
+	 */
+	private Filter filter;
 
 	/**
 	 * Constructor that creates a new window with a canvas and prepares all
@@ -176,7 +180,11 @@ class GameView implements View {
 		}
 
 		// draw temporary image on actual cavans
-		this.gc.drawImage(image, 0, 0);
+		if (this.filter == null) {
+			this.gc.drawImage(image, 0, 0);
+		} else {
+			this.gc.drawImage(new Image(this.shell.getDisplay(), this.filter.apply(image.getImageData())), 0, 0);
+		}
 
 		// put trash outside
 		image.dispose();
@@ -271,6 +279,17 @@ class GameView implements View {
 		};
 		this.canvas.addKeyListener(adapter);
 
+	}
+
+	@Override
+	public void injectFilter(Filter f) {
+		this.filter = f;
+
+	}
+
+	@Override
+	public void removeFilter() {
+		this.filter = null;
 	}
 
 }

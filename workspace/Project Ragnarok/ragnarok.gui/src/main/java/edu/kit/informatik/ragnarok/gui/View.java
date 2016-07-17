@@ -28,9 +28,22 @@ public interface View {
 
 	/**
 	 * Attach a {@link InputHelper}
-	 * 
+	 *
 	 * @param inputHelper
 	 *            the inputHelper
 	 */
 	void attachMe(InputHelper inputHelper);
+
+	/**
+	 * Inject a filter
+	 * 
+	 * @param f
+	 *            the filter
+	 */
+	void injectFilter(Filter f);
+
+	/**
+	 * Remove all filters
+	 */
+	void removeFilter();
 }
