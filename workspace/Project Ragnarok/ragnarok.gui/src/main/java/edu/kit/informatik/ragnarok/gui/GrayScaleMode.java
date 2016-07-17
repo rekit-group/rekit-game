@@ -11,11 +11,11 @@ import org.eclipse.swt.graphics.ImageData;
  */
 public class GrayScaleMode implements Filter {
 
-	private int numThreads;
-	private int w;
-	private int h;
-	private byte[] orig;
-	private byte[] result;
+	protected int numThreads;
+	protected int w;
+	protected int h;
+	protected byte[] orig;
+	protected byte[] result;
 
 	public GrayScaleMode() {
 		this.numThreads = Runtime.getRuntime().availableProcessors();
@@ -49,7 +49,7 @@ public class GrayScaleMode implements Filter {
 
 	}
 
-	private void runIt(int taskSize, int task) {
+	protected void runIt(int taskSize, int task) {
 		int start = (task * taskSize);
 		int stop = (task == this.numThreads - 1) ? this.h : ((task + 1) * taskSize);
 		for (int i = start * this.w * 4; i < (this.w + stop * this.w) * 4; i += 4) {
