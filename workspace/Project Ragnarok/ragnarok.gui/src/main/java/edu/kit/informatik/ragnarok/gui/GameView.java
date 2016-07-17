@@ -191,7 +191,9 @@ class GameView implements View {
 			ImageData target = (ImageData) image.getImageData().clone();
 			AbstractImage res = this.filter.apply(new AbstractImage(bounds.height, bounds.width, target.data));
 			target.data = res.pixels;
-			this.gc.drawImage(new Image(this.shell.getDisplay(), target), 0, 0);
+			Image toDraw = new Image(this.shell.getDisplay(), target);
+			this.gc.drawImage(toDraw, 0, 0);
+			toDraw.dispose();
 		}
 
 		// put trash outside
