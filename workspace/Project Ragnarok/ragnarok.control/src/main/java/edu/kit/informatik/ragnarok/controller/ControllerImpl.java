@@ -53,12 +53,16 @@ class ControllerImpl implements Observer, Controller, CommandSupervisor {
 	public ControllerImpl(Model model) {
 		this.mpCmd = new HashMap<>();
 		this.helper = new InputHelperImpl();
-		this.helper.register(this);
 		this.model = model;
-		this.init();
 	}
 
-	private void init() {
+	/**
+	 * Initialize all commands
+	 *
+	 * @param view
+	 *            the view
+	 */
+	private void init(View view) {
 		// Menu
 		this.mpCmd.put(Tuple.create(GameState.MENU, InputHelper.ESCAPE), new MenuCommand(this, MenuCommand.Dir.BACK));
 		this.mpCmd.put(Tuple.create(GameState.MENU, InputHelper.ENTER), new MenuCommand(this, MenuCommand.Dir.SELECT));
@@ -73,20 +77,11 @@ class ControllerImpl implements Observer, Controller, CommandSupervisor {
 		this.mpCmd.put(Tuple.create(GameState.INGAME, InputHelper.ARROW_RIGHT), new WalkCommand(this, Direction.RIGHT));
 
 		// Filter Commands ... a test ('u', 'i', 'o' and 'p' key)
-		this.mpCmd.put(Tuple.create(GameState.MENU, 117), new FilterCommand(true));
-		this.mpCmd.put(Tuple.create(GameState.INGAME, 117), new FilterCommand(true));
-		
-		this.mpCmd.put(Tuple.create(GameState.MENU, 105), new FilterCommand(true));
-		this.mpCmd.put(Tuple.create(GameState.INGAME, 105), new FilterCommand(true));
-		
-		this.mpCmd.put(Tuple.create(GameState.MENU, 111), new FilterCommand(true));
-		this.mpCmd.put(Tuple.create(GameState.INGAME, 111), new FilterCommand(true));
-		
-		this.mpCmd.put(Tuple.create(GameState.MENU, 112), new FilterCommand(false));
-		this.mpCmd.put(Tuple.create(GameState.INGAME, 112), new FilterCommand(false));
-		
-		
-		
+		this.mpCmd.put(Tuple.create(null, 117), new FilterCommand(true, view, new RandomMode()));
+		this.mpCmd.put(Tuple.create(null, 105), new FilterCommand(true, view, new InvertedMode()));
+		this.mpCmd.put(Tuple.create(null, 111), new FilterCommand(true, view, new GrayScaleMode()));
+		this.mpCmd.put(Tuple.create(null, 112), new FilterCommand(false, view, null));
+
 	}
 
 	/**
@@ -97,32 +92,25 @@ class ControllerImpl implements Observer, Controller, CommandSupervisor {
 	 */
 	public void handleEvent(int id, InputMethod inputMethod) {
 		Tuple<GameState, Integer> key = Tuple.create(this.model.getState(), id);
+		Tuple<GameState, Integer> idKey = Tuple.create(null, id);
 		// return if we do not have a command defined for this key
-		if (!this.mpCmd.containsKey(key)) {
-			System.err.println("Warning: No Event defined for Key-ID: " + id + " State: " + this.model.getState());
+		if (this.mpCmd.containsKey(key)) {
+			this.mpCmd.get(key).execute(inputMethod);
 			return;
 		}
-		this.mpCmd.get(key).execute(inputMethod);
+		if (this.mpCmd.containsKey(idKey)) {
+			this.mpCmd.get(idKey).execute(inputMethod);
+			return;
+		}
+		System.err.println("Warning: No Event defined for Key-ID: " + id + " State: " + this.model.getState());
+
 	}
 
 	@Override
 	public void start(View view) {
-
-		// Filter Commands ... a test ('u', 'i', 'o' and 'p' key)
-		((FilterCommand) this.mpCmd.get(Tuple.create(GameState.MENU, 117))).init(view, new RandomMode());
-		((FilterCommand) this.mpCmd.get(Tuple.create(GameState.INGAME, 117))).init(view, new RandomMode());
-		
-		((FilterCommand) this.mpCmd.get(Tuple.create(GameState.MENU, 105))).init(view, new InvertedMode());
-		((FilterCommand) this.mpCmd.get(Tuple.create(GameState.INGAME, 105))).init(view, new InvertedMode());
-		
-		((FilterCommand) this.mpCmd.get(Tuple.create(GameState.MENU, 111))).init(view, new GrayScaleMode());
-		((FilterCommand) this.mpCmd.get(Tuple.create(GameState.INGAME, 111))).init(view, new GrayScaleMode());
-		
-		((FilterCommand) this.mpCmd.get(Tuple.create(GameState.MENU, 112))).init(view, null);
-		((FilterCommand) this.mpCmd.get(Tuple.create(GameState.INGAME, 112))).init(view, null);
-		
-
+		this.init(view);
 		this.helper.initialize(view);
+		this.helper.register(this);
 	}
 
 	@Override

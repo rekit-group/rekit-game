@@ -4,7 +4,7 @@ import edu.kit.informatik.ragnarok.controller.Controller;
 
 /**
  * This interface defines a command for a {@link Controller}
- * 
+ *
  * @author Dominik Fuchß
  *
  */
@@ -15,6 +15,6 @@ public interface Command {
 	 * @param inputMethod
 	 *            the key state
 	 */
-	public void execute(InputMethod inputMethod);
+	void execute(InputMethod inputMethod);
 
 }

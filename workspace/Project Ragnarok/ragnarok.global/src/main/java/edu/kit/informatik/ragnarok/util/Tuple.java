@@ -2,7 +2,7 @@ package edu.kit.informatik.ragnarok.util;
 
 /**
  * This class defines a tuple
- * 
+ *
  * @author Dominik Fuchß
  *
  * @param <T>
@@ -22,7 +22,7 @@ public class Tuple<T, U> {
 
 	/**
 	 * Create a new Tuple
-	 * 
+	 *
 	 * @param v
 	 *            the first parameter
 	 * @param w
@@ -35,23 +35,20 @@ public class Tuple<T, U> {
 
 	/**
 	 * Instantiate a new Tuple
-	 * 
+	 *
 	 * @param t
 	 *            the first entry
 	 * @param u
 	 *            the second entry
 	 */
 	public Tuple(T t, U u) {
-		if (t == null || u == null) {
-			throw new IllegalArgumentException("Tuple arguments cannot be null");
-		}
 		this.t = t;
 		this.u = u;
 	}
 
 	/**
 	 * Get the first entry
-	 * 
+	 *
 	 * @return the first entry
 	 */
 	public T getT() {
@@ -60,7 +57,7 @@ public class Tuple<T, U> {
 
 	/**
 	 * Get the second entry
-	 * 
+	 *
 	 * @return the second entry
 	 */
 	public U getU() {
@@ -86,7 +83,10 @@ public class Tuple<T, U> {
 			return false;
 		}
 		Tuple other = (Tuple) obj;
-		return this.t.equals(other.t) && this.u.equals(other.u);
+		boolean equal = true;
+		equal &= (this.t == null ? other.t == null : this.t.equals(other.t));
+		equal &= (this.u == null ? other.u == null : this.u.equals(other.u));
+		return equal;
 	}
 
 }
