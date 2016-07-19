@@ -75,6 +75,10 @@ class GameView implements View {
 	 * A filter
 	 */
 	private Filter filter;
+	/**
+	 * Indicates a change of a filter
+	 */
+	private boolean filterChange = false;
 
 	/**
 	 * Constructor that creates a new window with a canvas and prepares all
@@ -160,11 +164,15 @@ class GameView implements View {
 		// Double buffering reduces flickering
 		Image image = new Image(this.shell.getDisplay(), this.canvas.getBounds());
 		GC tempGC = new GC(image);
+		if (this.filterChange) {
+			this.field.setFilter(this.filter);
+			this.filterChange = false;
+		}
 		this.field.setGC(tempGC);
 
 		// set current camera position
 		this.field.setCurrentOffset(scene.getCameraOffset());
-		this.field.setBackground(SwtUtils.calcRGB(GameConf.GAME_BACKGROUD_COLOR));
+		this.field.setBackground(GameConf.GAME_BACKGROUD_COLOR);
 
 		synchronized (scene.synchronize()) {
 			// Get a z-index-ordered iterator
@@ -184,7 +192,7 @@ class GameView implements View {
 		}
 
 		// draw temporary image on actual cavans
-		if (this.filter == null) {
+		if (this.filter == null || this.filter.isApplyPixel()) {
 			this.gc.drawImage(image, 0, 0);
 		} else {
 			Rectangle bounds = image.getBounds();
@@ -294,12 +302,14 @@ class GameView implements View {
 	@Override
 	public void injectFilter(Filter f) {
 		this.filter = f;
+		this.filterChange = true;
 
 	}
 
 	@Override
 	public void removeFilter() {
 		this.filter = null;
+		this.filterChange = true;
 	}
 
 }

@@ -6,11 +6,11 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.graphics.RGBA;
 import org.eclipse.swt.widgets.Display;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
+import edu.kit.informatik.ragnarok.gui.filters.Filter;
 import edu.kit.informatik.ragnarok.logic.Field;
 import edu.kit.informatik.ragnarok.primitives.Polygon;
 import edu.kit.informatik.ragnarok.primitives.Vec;
@@ -41,21 +41,12 @@ public class FieldImpl extends Field {
 	 */
 	private float cameraOffsetUnits = 0;
 
+	private Filter filter;
+
 	@Override
 	public void setCurrentOffset(float cameraOffset) {
 		this.cameraOffsetUnits = cameraOffset;
 		this.cameraOffset = -CalcUtil.units2pixel(cameraOffset);
-	}
-
-	/**
-	 * Set the background of the field
-	 *
-	 * @param col
-	 *            the color
-	 */
-	public void setBackground(RGB col) {
-		this.gc.setBackground(new Color(Display.getCurrent(), col));
-		this.gc.fillRectangle(0, 0, GameConf.PIXEL_W, GameConf.PIXEL_H);
 	}
 
 	private void drawCircleImpl(Vec pos, Vec size, RGBA col) {
@@ -119,6 +110,7 @@ public class FieldImpl extends Field {
 				(int) (pos.getX() - size.getX() / 2f), // dstX
 				(int) (pos.getY() - size.getY() / 2f) // dstY
 		);
+
 	}
 
 	/**
@@ -133,8 +125,9 @@ public class FieldImpl extends Field {
 	 */
 	private void drawTextImpl(Vec pos, String text, TextOptions options) {
 		// Set color to red and set font
-		RGB rgb = new RGB(options.getColor().red, options.getColor().green, options.getColor().blue);
-		Color color = new Color(Display.getCurrent(), rgb);
+		RGBColor in = new RGBColor(options.getColor().red, options.getColor().green, options.getColor().blue);
+		RGBColor col = this.filter == null ? in : this.filter.apply(in);
+		Color color = new Color(Display.getCurrent(), SwtUtils.calcRGB(col));
 		this.gc.setForeground(color);
 		color.dispose();
 
@@ -152,7 +145,7 @@ public class FieldImpl extends Field {
 
 	/**
 	 * Set the current GC
-	 * 
+	 *
 	 * @param gc
 	 *            the gc
 	 */
@@ -162,7 +155,7 @@ public class FieldImpl extends Field {
 
 	/**
 	 * Translate a vec3D to a vec2D
-	 * 
+	 *
 	 * @param vec3D
 	 *            the vec3D
 	 * @return the vec2D
@@ -182,9 +175,10 @@ public class FieldImpl extends Field {
 	}
 
 	@Override
-	public void drawRectangle(Vec pos, Vec size, RGBAColor rgbaColor, boolean inGame) {
+	public void drawRectangle(Vec pos, Vec size, RGBAColor in, boolean inGame) {
+		RGBAColor col = this.filter == null ? in : this.filter.apply(in);
 		if (!inGame) {
-			this.drawRectangleImpl(this.translate2D(pos), size, SwtUtils.calcRGBA(rgbaColor));
+			this.drawRectangleImpl(this.translate2D(pos), size, SwtUtils.calcRGBA(col));
 		} else {
 			Vec newPos = this.translate2D(pos);
 			newPos = CalcUtil.units2pixel(newPos);
@@ -192,7 +186,7 @@ public class FieldImpl extends Field {
 
 			Vec newSize = CalcUtil.units2pixel(size);
 
-			this.drawRectangleImpl(newPos, newSize, SwtUtils.calcRGBA(rgbaColor));
+			this.drawRectangleImpl(newPos, newSize, SwtUtils.calcRGBA(col));
 		}
 	}
 
@@ -202,9 +196,10 @@ public class FieldImpl extends Field {
 	}
 
 	@Override
-	public void drawCircle(Vec pos, Vec size, RGBAColor rgbaColor, boolean inGame) {
+	public void drawCircle(Vec pos, Vec size, RGBAColor in, boolean inGame) {
+		RGBAColor col = this.filter == null ? in : this.filter.apply(in);
 		if (!inGame) {
-			this.drawCircleImpl(this.translate2D(pos), size, SwtUtils.calcRGBA(rgbaColor));
+			this.drawCircleImpl(this.translate2D(pos), size, SwtUtils.calcRGBA(col));
 		} else {
 			Vec newPos = this.translate2D(pos);
 			newPos = CalcUtil.units2pixel(newPos);
@@ -212,7 +207,7 @@ public class FieldImpl extends Field {
 
 			Vec newSize = CalcUtil.units2pixel(size);
 
-			this.drawCircleImpl(newPos, newSize, SwtUtils.calcRGBA(rgbaColor));
+			this.drawCircleImpl(newPos, newSize, SwtUtils.calcRGBA(col));
 		}
 	}
 
@@ -222,7 +217,8 @@ public class FieldImpl extends Field {
 	}
 
 	@Override
-	public void drawPolygon(Polygon polygon, RGBAColor color, boolean fill, boolean inGame) {
+	public void drawPolygon(Polygon polygon, RGBAColor in, boolean fill, boolean inGame) {
+		RGBAColor col = this.filter == null ? in : this.filter.apply(in);
 		polygon.moveTo(this.translate2D(polygon.getStartPoint()));
 
 		float[] unitArray = polygon.getAbsoluteArray();
@@ -234,7 +230,7 @@ public class FieldImpl extends Field {
 			pixelArray[i + 1] = CalcUtil.units2pixel(unitArray[i + 1]);
 		}
 
-		this.drawPolygonImpl(pixelArray, SwtUtils.calcRGBA(color), fill);
+		this.drawPolygonImpl(pixelArray, SwtUtils.calcRGBA(col), fill);
 	}
 
 	@Override
@@ -258,6 +254,28 @@ public class FieldImpl extends Field {
 			newPos = newPos.addX(this.cameraOffset);
 			this.drawTextImpl(newPos, text, options);
 		}
+	}
+
+	public void setFilter(Filter filter) {
+		if (filter == null || !filter.isApplyPixel()) {
+			this.filter = null;
+		} else {
+			this.filter = filter;
+		}
+	}
+
+	/**
+	 * Set the background of the field
+	 *
+	 * @param col
+	 *            the color
+	 */
+
+	public void setBackground(RGBColor in) {
+		RGBColor col = this.filter == null ? in : this.filter.apply(in);
+		this.gc.setBackground(new Color(Display.getCurrent(), SwtUtils.calcRGB(col)));
+		this.gc.fillRectangle(0, 0, GameConf.PIXEL_W, GameConf.PIXEL_H);
+
 	}
 
 }
