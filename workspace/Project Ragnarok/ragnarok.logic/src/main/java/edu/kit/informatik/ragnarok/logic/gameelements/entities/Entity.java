@@ -161,7 +161,7 @@ public abstract class Entity extends GameElement {
 
 		// calculate new position
 		// s1 = s0 + v*t because physics, thats why!
-		this.setPos(this.getPos().add(this.getVel().multiply(deltaTime)));
+		this.setPos(this.getPos().add(this.getVel().scalar(deltaTime)));
 
 		Vec newVel = this.getVel();
 		// apply gravity

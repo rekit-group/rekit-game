@@ -70,12 +70,12 @@ public class RektSmasher extends Boss {
 		this.innerRektKiller.internalRender(f);
 		// Add face image above regular innerRektKiller visualization
 		int lifes = this.getLives() > 3 ? 3 : this.getLives();
-		f.drawImage(this.getPos(), this.getSize().multiply(0.8f), "rektSmasher_" + lifes + ".png");
+		f.drawImage(this.getPos(), this.getSize().scalar(0.8f), "rektSmasher_" + lifes + ".png");
 	}
 
 	@Override
 	public void collidedWith(Frame collision, final Direction dir) {
-		Vec dif = this.getPos().add(this.target.getPos().multiply(-1));
+		Vec dif = this.getPos().add(this.target.getPos().scalar(-1));
 		super.collidedWith(collision, dir);
 
 		Direction newDir;
@@ -158,7 +158,7 @@ public class RektSmasher extends Boss {
 			this.isHarmless = true;
 		}
 
-		this.setVel(this.innerRektKiller.getCurrentDirection().getVector().multiply(this.speed * GameConf.PLAYER_WALK_MAX_SPEED));
+		this.setVel(this.innerRektKiller.getCurrentDirection().getVector().scalar(this.speed * GameConf.PLAYER_WALK_MAX_SPEED));
 		super.logicLoop(deltaTime);
 	}
 

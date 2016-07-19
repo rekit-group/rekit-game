@@ -95,10 +95,10 @@ public class ReflectionBox extends DynamicInanimate {
 		Vec p = this.getPos();
 
 		f.drawRectangle(p, s, ReflectionBox.outerCol);
-		f.drawRectangle(p.add(s.multiply(1 / 4f, 1 / 4f)), s.multiply(1 / 3f), ReflectionBox.innerCol);
-		f.drawRectangle(p.add(s.multiply(1 / 4f, -1 / 4f)), s.multiply(1 / 3f), ReflectionBox.innerCol);
-		f.drawRectangle(p.add(s.multiply(-1 / 4f, 1 / 4f)), s.multiply(1 / 3f), ReflectionBox.innerCol);
-		f.drawRectangle(p.add(s.multiply(-1 / 4f, -1 / 4f)), s.multiply(1 / 3f), ReflectionBox.innerCol);
+		f.drawRectangle(p.add(s.scalar(1 / 4f, 1 / 4f)), s.scalar(1 / 3f), ReflectionBox.innerCol);
+		f.drawRectangle(p.add(s.scalar(1 / 4f, -1 / 4f)), s.scalar(1 / 3f), ReflectionBox.innerCol);
+		f.drawRectangle(p.add(s.scalar(-1 / 4f, 1 / 4f)), s.scalar(1 / 3f), ReflectionBox.innerCol);
+		f.drawRectangle(p.add(s.scalar(-1 / 4f, -1 / 4f)), s.scalar(1 / 3f), ReflectionBox.innerCol);
 	}
 
 	@Override

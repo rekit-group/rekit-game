@@ -15,7 +15,7 @@ public class InanimateDoor extends InanimateBox {
 	public void internalRender(Field f) {
 		f.drawRectangle(this.getPos(), this.getSize(), this.color);
 
-		Vec start = this.getPos().add(this.getSize().multiply(-(1 / 2f))).add(new Vec(0.1f, 0.1f));
+		Vec start = this.getPos().add(this.getSize().scalar(-(1 / 2f))).add(new Vec(0.1f, 0.1f));
 		Vec end = start.add(this.getSize()).add(new Vec(-0.2f, -0.2f));
 
 		for (float x = start.getX(); x <= end.getX(); x += 0.2) {

@@ -1,4 +1,4 @@
-package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies;
+package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.slurp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -135,7 +135,7 @@ public class Slurp extends Enemy {
 
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
-		element.setVel(element.getVel().multiply(0.6f));
+		element.setVel(element.getVel().scalar(0.6f));
 	}
 
 	@Override

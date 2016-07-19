@@ -1,24 +1,18 @@
 package edu.kit.informatik.ragnarok.primitives;
 
-/**
- * Data class that holds an <i>start</i> and an <i>end</i> float. It can return
- * the corresponding value in between in the same ratio as a given number
- * <i>progress</i> to 0 and 1.
- *
- * @author Angelo Aracri
- * @version 1.0
- */
-public class ProgressDependency {
-
+public class OpProgress<T> {
+	
+	private boolean isStatic = false;
+	
 	/**
 	 * Saved version of the start value
 	 */
-	private float start;
+	private Operable<T> start;
 
 	/**
 	 * Saved version of the delta value, calculated by end-initial
 	 */
-	private float delta;
+	private Operable<T> delta;
 
 	/**
 	 * Constructor that takes the start and end value for calculating values in
@@ -29,11 +23,16 @@ public class ProgressDependency {
 	 * @param end
 	 *            the end value that will be returned for progress = 1
 	 */
-	public ProgressDependency(float start, float end) {
+	@SuppressWarnings("unchecked")
+	public OpProgress(Operable<T> start, Operable<T> end) {
 		this.start = start;
-		this.delta = end - start;
+		this.delta = (Operable<T>)end.sub((T)start);
+		
+		if (start.equals(end)) {
+			this.isStatic = true;
+		}
 	}
-
+	
 	/**
 	 * Calculates a value between <i>start</i> and <i>end</i> in the same ratio
 	 * as progress has to 0 and 1. Has no defined behavior for other numbers.
@@ -43,18 +42,9 @@ public class ProgressDependency {
 	 * @return the calculated value between <i>start</i> and <i>end</i>
 	 *         (inclusive)
 	 */
-	public float getNow(float progress) {
+	@SuppressWarnings("unchecked")
+	public T getNow(float progress) {
 		// if no change required then there must be no calculation
-		return this.isStatic() ? this.start : this.start + this.delta * progress;
-	}
-
-	/**
-	 * Returns true if start = end, which means there are no calculations
-	 * required in <i>getNow(float progress)</i>.
-	 * 
-	 * @return true if getNows output never changes, false otherwise
-	 */
-	public boolean isStatic() {
-		return this.delta == 0;
+		return this.isStatic ? (T)this.start : this.start.add((T)this.delta.scalar(progress));
 	}
 }

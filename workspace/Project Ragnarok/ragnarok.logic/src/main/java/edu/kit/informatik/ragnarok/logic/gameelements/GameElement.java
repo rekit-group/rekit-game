@@ -316,8 +316,8 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 	 * @return the {@link GameElement GameElements} collision box
 	 */
 	public final Frame getCollisionFrame() {
-		Vec v1 = this.getPos().add(this.getSize().multiply(-0.5f));
-		Vec v2 = this.getPos().add(this.getSize().multiply(0.5f));
+		Vec v1 = this.getPos().add(this.getSize().scalar(-0.5f));
+		Vec v2 = this.getPos().add(this.getSize().scalar(0.5f));
 		return new Frame(v1, v2);
 	}
 

@@ -66,7 +66,7 @@ public class Warper extends Enemy {
 		for (float i = 1; i >= 0.2; i -= 0.1) {
 			RGBColor innerColor = new RGBColor((int) (250 * i), (int) (250 * (1 - progress)), (150));
 			// draw body
-			f.drawCircle(this.getPos(), this.getSize().multiply(i), innerColor);
+			f.drawCircle(this.getPos(), this.getSize().scalar(i), innerColor);
 		}
 
 	}
@@ -95,7 +95,7 @@ public class Warper extends Enemy {
 			Warper.warpParticles.spawn(this.getScene(), this.getPos());
 
 			// determine if x or y is greater in distance
-			Vec dif = this.getPos().add(target.multiply(-1));
+			Vec dif = this.getPos().add(target.scalar(-1));
 			if (Math.abs(dif.getX()) > Math.abs(dif.getY())) {
 				this.setPos(this.getPos().addX(-Math.signum(dif.getX())));
 			} else {

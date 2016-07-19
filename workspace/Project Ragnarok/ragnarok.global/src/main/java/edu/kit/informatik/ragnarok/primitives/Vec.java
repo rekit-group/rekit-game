@@ -7,7 +7,7 @@ package edu.kit.informatik.ragnarok.primitives;
  * @version 1.0
  */
 
-public class Vec implements Cloneable {
+public class Vec implements Cloneable, Operable<Vec> {
 	/**
 	 * Create a new Vector
 	 *
@@ -166,6 +166,12 @@ public class Vec implements Cloneable {
 	public Vec add(Vec vec) {
 		return new Vec(this.getX() + vec.getX(), this.getY() + vec.getY(), this.z);
 	}
+	
+
+	@Override
+	public Vec sub(Vec other) {
+		return this.add(other.scalar(-1));
+	}
 
 	/**
 	 * Multiplies the vector with a scalar and <b>returns a new Vector</b>
@@ -174,8 +180,8 @@ public class Vec implements Cloneable {
 	 *            the scalar to multiply the vector with
 	 * @return the resulting vector
 	 */
-	public Vec multiply(float scalar) {
-		return this.multiply(scalar, scalar);
+	public Vec scalar(float scalar) {
+		return this.scalar(scalar, scalar);
 	}
 
 	/**
@@ -188,7 +194,7 @@ public class Vec implements Cloneable {
 	 *            the scalar to multiply the vectors x-component with
 	 * @return the resulting vector
 	 */
-	public Vec multiply(float scalarX, float scalarY) {
+	public Vec scalar(float scalarX, float scalarY) {
 		return new Vec(this.getX() * scalarX, this.getY() * scalarY, this.z);
 	}
 
@@ -211,7 +217,7 @@ public class Vec implements Cloneable {
 
 	public Vec rotate(double angle, Vec relative) {
 		// translate toTurn to (0, 0) relative to relative
-		Vec shifted = this.add(relative.multiply(-1));
+		Vec shifted = this.add(relative.scalar(-1));
 
 		// rotate shifted vector
 		Vec rotated = new Vec();

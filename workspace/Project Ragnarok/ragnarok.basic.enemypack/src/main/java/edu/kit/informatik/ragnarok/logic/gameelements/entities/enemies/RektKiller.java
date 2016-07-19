@@ -174,9 +174,9 @@ public class RektKiller extends Enemy {
 		RGBColor innerColor = new RGBColor(150, 30, 30);
 		RGBColor spikeColor = new RGBColor(80, 80, 80);
 		// draw rectangle in the middle
-		f.drawRectangle(this.getPos(), this.getSize().multiply(0.8f), innerColor);
+		f.drawRectangle(this.getPos(), this.getSize().scalar(0.8f), innerColor);
 		// move to upper position
-		this.spikePolygon.moveTo(this.getPos().add(this.getSize().multiply(-0.8f / 2f)));
+		this.spikePolygon.moveTo(this.getPos().add(this.getSize().scalar(-0.8f / 2f)));
 		for (Direction d : Direction.values()) {
 			if (this.hasSide(d)) {
 				double angle = d.getAngle();
@@ -200,7 +200,7 @@ public class RektKiller extends Enemy {
 		}
 
 		// We dont want this guy to fall
-		this.setVel(this.getCurrentDirection().getVector().multiply(GameConf.PLAYER_WALK_MAX_SPEED));
+		this.setVel(this.getCurrentDirection().getVector().scalar(GameConf.PLAYER_WALK_MAX_SPEED));
 	}
 
 	@Override

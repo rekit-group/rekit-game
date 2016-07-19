@@ -40,7 +40,7 @@ public class EndTrigger extends InanimateTrigger {
 		this.innerPortals = new Portal[EndTrigger.PORTAL_NUM];
 
 		Vec pos = this.getPos();
-		Vec size = this.getSize().multiply(2f, 1f);
+		Vec size = this.getSize().scalar(2f, 1f);
 		Vec lastAmplitude;
 		Vec amplitude = new Vec();
 
@@ -53,7 +53,7 @@ public class EndTrigger extends InanimateTrigger {
 			RGBAColor color = new RGBAColor((int) (GameConf.PRNG.nextFloat() * 50), (int) (GameConf.PRNG.nextFloat() * 30 + 7 * i),
 					(int) (GameConf.PRNG.nextFloat() * 80 + 175), 10 * i);
 
-			size = size.add(lastAmplitude.add(amplitude).multiply(-1f));
+			size = size.add(lastAmplitude.add(amplitude).scalar(-1f));
 
 			pos = pos.addX(0.003f * i);
 
@@ -90,7 +90,7 @@ public class EndTrigger extends InanimateTrigger {
 			this.x += deltaTime;
 
 			// some weird "amplitude * sin(phase + frequency * x)" action
-			this.currentSize = this.getSize().add(this.amplitude.multiply(this.phase.add(this.frequency.multiply(this.x)).sin()));
+			this.currentSize = this.getSize().add(this.amplitude.multiply(this.phase.add(this.frequency.scalar(this.x)).sin()));
 
 			float randomAngle = (float) (GameConf.PRNG.nextDouble() * 2 * Math.PI);
 			float r = this.currentSize.getX() * 2;

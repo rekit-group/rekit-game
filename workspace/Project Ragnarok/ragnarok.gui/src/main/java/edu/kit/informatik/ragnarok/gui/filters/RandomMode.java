@@ -5,7 +5,7 @@ import edu.kit.informatik.ragnarok.util.RGBAColor;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 
 public class RandomMode implements Filter {
-	private Integer[][][] map = new Integer[256][256][256];
+	private Integer[] map = new Integer[256 << 16];
 
 	/**
 	 * Flyweight getter method for getting a random value between 1 and 255 for
@@ -16,18 +16,17 @@ public class RandomMode implements Filter {
 	 * @return the intrinsic, random color
 	 */
 	protected RGBAColor getMapping(RGBAColor color) {
-
-		if (this.map[color.red][color.green][color.blue] == null) {
+		if (this.map[color.red + (color.green << 8) + (color.blue << 16)] == null) {
 			synchronized (this) {
-				if (this.map[color.red][color.green][color.blue] == null) {
+				if (this.map[color.red + (color.green << 8) + (color.blue << 16)] == null) {
 					int red = GameConf.PRNG.nextInt(256);
 					int green = GameConf.PRNG.nextInt(256);
 					int blue = GameConf.PRNG.nextInt(256);
-					this.map[color.red][color.green][color.blue] = (red << 16) | (green << 8) | blue;
+					this.map[color.red + (color.green << 8) + (color.blue << 16)] = (red << 16) | (green << 8) | blue;
 				}
 			}
 		}
-		return new RGBAColor(this.map[color.red][color.green][color.blue] | (color.alpha << 24));
+		return new RGBAColor(this.map[color.red + (color.green << 8) + (color.blue << 16)] | (color.alpha << 24));
 	}
 
 	protected RGBAColor getMapping(RGBColor color) {
