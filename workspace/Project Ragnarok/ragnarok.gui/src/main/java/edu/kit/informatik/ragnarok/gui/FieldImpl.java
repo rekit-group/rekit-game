@@ -183,6 +183,27 @@ public class FieldImpl extends Field {
 		return vec3D;
 	}
 
+	public void setFilter(Filter filter) {
+		if (filter == null || !filter.isApplyPixel()) {
+			this.filter = null;
+		} else {
+			this.filter = filter;
+		}
+	}
+
+	/**
+	 * Set the background of the field
+	 *
+	 * @param col
+	 *            the color
+	 */
+	public void setBackground(RGBColor in) {
+		RGBColor col = this.filter == null ? in : this.filter.apply(in);
+		this.gc.setBackground(new Color(Display.getCurrent(), SwtUtils.calcRGB(col)));
+		this.gc.fillRectangle(0, 0, GameConf.PIXEL_W, GameConf.PIXEL_H);
+
+	}
+
 	// Adapt methods (separate world position calculation from drawing)
 
 	@Override
@@ -255,27 +276,6 @@ public class FieldImpl extends Field {
 			newPos = newPos.addX(this.cameraOffset);
 			this.drawTextImpl(newPos, text, options);
 		}
-	}
-
-	public void setFilter(Filter filter) {
-		if (filter == null || !filter.isApplyPixel()) {
-			this.filter = null;
-		} else {
-			this.filter = filter;
-		}
-	}
-
-	/**
-	 * Set the background of the field
-	 *
-	 * @param col
-	 *            the color
-	 */
-	public void setBackground(RGBColor in) {
-		RGBColor col = this.filter == null ? in : this.filter.apply(in);
-		this.gc.setBackground(new Color(Display.getCurrent(), SwtUtils.calcRGB(col)));
-		this.gc.fillRectangle(0, 0, GameConf.PIXEL_W, GameConf.PIXEL_H);
-
 	}
 
 	@Override
