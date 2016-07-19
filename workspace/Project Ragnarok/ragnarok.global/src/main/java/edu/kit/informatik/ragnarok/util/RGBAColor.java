@@ -66,24 +66,32 @@ public class RGBAColor {
 	public RGBAColor darken(float p) {
 		return new RGBAColor((int) (this.red * p), (int) (this.green * p), (int) (this.blue * p), (this.alpha));
 	}
-	
-	@Override
-	public boolean equals(Object other) {
-		if (!(other instanceof RGBAColor)) {
-			return false;
-		}
-		RGBAColor converted = (RGBAColor) other;
-		return converted.red == this.red && converted.green == this.green &&
-				converted.blue == this.blue && converted.alpha == this.alpha;
-	}
-	
+
 	@Override
 	public int hashCode() {
-		return red + green + blue + alpha;
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + this.alpha;
+		result = prime * result + this.blue;
+		result = prime * result + this.green;
+		result = prime * result + this.red;
+		return result;
 	}
-	
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null || this.getClass() != obj.getClass()) {
+			return false;
+		}
+		RGBAColor other = (RGBAColor) obj;
+		return this.alpha == other.alpha && this.blue == other.blue && this.green == other.green && this.red == other.red;
+	}
+
 	/**
-	 * Convert to {@link RGBColor}, losing the alpha channel. 
+	 * Convert to {@link RGBColor}, losing the alpha channel.
 	 *
 	 * @return the RGBColor
 	 */

@@ -51,17 +51,29 @@ public class RGBColor implements Cloneable {
 	public RGBColor darken(float p) {
 		return new RGBColor((int) (this.red * p), (int) (this.green * p), (int) (this.blue * p));
 	}
-	
+
 	@Override
-	public boolean equals(Object other) {
-		if (!(other instanceof RGBColor)) {
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + this.blue;
+		result = prime * result + this.green;
+		result = prime * result + this.red;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null || this.getClass() != obj.getClass()) {
 			return false;
 		}
-		RGBColor converted = (RGBColor) other;
-		return converted.red == this.red && converted.green == this.green &&
-				converted.blue == this.blue;
+		RGBColor other = (RGBColor) obj;
+		return this.blue == other.blue && this.green == other.green && this.red == other.red;
 	}
-	
+
 	/**
 	 * Convert to {@link RGBAColor}
 	 *
