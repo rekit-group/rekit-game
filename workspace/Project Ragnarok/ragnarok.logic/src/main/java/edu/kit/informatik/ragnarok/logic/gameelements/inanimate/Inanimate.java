@@ -34,7 +34,7 @@ public class Inanimate extends GameElement {
 
 	@Override
 	public void internalRender(Field f) {
-		f.drawRectangle(this.getPos(), this.getSize().multiply(0.95f), this.color);
+		f.drawRectangle(this.getPos(), this.getSize().scalar(0.95f), this.color);
 	}
 
 	@Override

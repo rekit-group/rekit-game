@@ -136,7 +136,7 @@ public class TriangulationLayer extends ParallaxLayer {
 			this.setPos(new Vec(minX + (maxX - minX) / 2f, minY + (maxY - minY) / 2f));
 			this.setSize(new Vec(maxX - minX, maxY - minY));
 
-			this.polygon = new Polygon(new Vec(), new Vec[] { corner1.add(corner0.multiply(-1)), corner2.add(corner0.multiply(-1)), new Vec() });
+			this.polygon = new Polygon(new Vec(), new Vec[] { corner1.add(corner0.scalar(-1)), corner2.add(corner0.scalar(-1)), new Vec() });
 		}
 
 		public void initToRender() {
@@ -179,7 +179,7 @@ public class TriangulationLayer extends ParallaxLayer {
 		}
 
 		public Vec getRandomVecInBetween() {
-			return this.start.add((this.end.add(this.start.multiply(-1))).multiply(0.4f + GameConf.PRNG.nextFloat() / 5f));
+			return this.start.add((this.end.add(this.start.scalar(-1))).scalar(0.4f + GameConf.PRNG.nextFloat() / 5f));
 		}
 	}
 

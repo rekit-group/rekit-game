@@ -95,24 +95,24 @@ public class Rocket extends Enemy {
 	@Override
 	public void internalRender(Field f) {
 		// draw body
-		f.drawRectangle(this.getPos(), this.getSize().multiply(0.8f, 0.6f), Rocket.INNER_COLOR);
+		f.drawRectangle(this.getPos(), this.getSize().scalar(0.8f, 0.6f), Rocket.INNER_COLOR);
 		// draw spike at front
-		Vec startPt = this.getPos().addX(-this.getSize().multiply(0.5f).getX());
+		Vec startPt = this.getPos().addX(-this.getSize().scalar(0.5f).getX());
 		Vec[] relPts = new Vec[] { //
-				new Vec(this.getSize().multiply(0.1f).getX(), -this.getSize().multiply(0.5f).getY()),
-				new Vec(this.getSize().multiply(0.1f).getX(), this.getSize().multiply(0.5f).getY()), //
+				new Vec(this.getSize().scalar(0.1f).getX(), -this.getSize().scalar(0.5f).getY()),
+				new Vec(this.getSize().scalar(0.1f).getX(), this.getSize().scalar(0.5f).getY()), //
 				new Vec() //
 		};
 		f.drawPolygon(new Polygon(startPt, relPts), Rocket.FRONT_COLOR, true);
 
 		// draw stripes
-		Vec stripeStart = this.getPos().addX(-this.getSize().multiply(0.4f - 0.05f - 0.025f).getX());
+		Vec stripeStart = this.getPos().addX(-this.getSize().scalar(0.4f - 0.05f - 0.025f).getX());
 		for (int x = 0; x < 9; x++) {
-			f.drawRectangle(stripeStart.addX(0.15f * x), this.getSize().multiply(0.05f, 0.75f), Rocket.OUTER_COLOR);
+			f.drawRectangle(stripeStart.addX(0.15f * x), this.getSize().scalar(0.05f, 0.75f), Rocket.OUTER_COLOR);
 		}
 
 		// draw drive at back
-		startPt = this.getPos().addX(this.getSize().multiply(0.5f).getX()).addY(-this.getSize().multiply(0.5f).getY());
+		startPt = this.getPos().addX(this.getSize().scalar(0.5f).getX()).addY(-this.getSize().scalar(0.5f).getY());
 		relPts = new Vec[] { //
 				new Vec(0, this.getSize().getY()), new Vec(-this.getSize().getX() * 0.1f, this.getSize().getY() * 0.8f),
 				new Vec(-this.getSize().getX() * 0.1f, this.getSize().getY() * 0.2f), //

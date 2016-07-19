@@ -135,7 +135,7 @@ public class Slurp extends Enemy {
 
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
-		element.setVel(element.getVel().multiply(0.6f));
+		element.setVel(element.getVel().scalar(0.6f));
 	}
 
 	@Override

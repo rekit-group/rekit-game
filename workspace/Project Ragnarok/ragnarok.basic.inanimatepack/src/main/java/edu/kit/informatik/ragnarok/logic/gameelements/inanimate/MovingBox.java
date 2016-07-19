@@ -107,7 +107,7 @@ public class MovingBox extends DynamicInanimate {
 
 		// set current starting and ending point
 		this.currentStart = this.a;
-		this.relativeTarget = this.b.add(this.currentStart.multiply(-1));
+		this.relativeTarget = this.b.add(this.currentStart.scalar(-1));
 
 		// calculate accent color
 		this.darkCol = this.color.darken(0.8f);
@@ -128,7 +128,7 @@ public class MovingBox extends DynamicInanimate {
 	@Override
 	public void logicLoop(float deltaTime) {
 		this.timer.removeTime(deltaTime);
-		this.setPos(this.currentStart.add(this.relativeTarget.multiply(this.timer.getProgress())));
+		this.setPos(this.currentStart.add(this.relativeTarget.scalar(this.timer.getProgress())));
 
 		if (GameConf.PRNG.nextFloat() > 0.6f) {
 			MovingBox.sparkParticles.spawn(this.getScene(), this.getPos().addX(-5.5f * this.sizeX16).addY(this.getSize().getY() / 3));
@@ -138,10 +138,10 @@ public class MovingBox extends DynamicInanimate {
 		if (this.timer.timeUp()) {
 			if (this.currentStart == this.a) {
 				this.currentStart = this.b;
-				this.relativeTarget = this.a.add(this.b.multiply(-1));
+				this.relativeTarget = this.a.add(this.b.scalar(-1));
 			} else {
 				this.currentStart = this.a;
-				this.relativeTarget = this.b.add(this.a.multiply(-1));
+				this.relativeTarget = this.b.add(this.a.scalar(-1));
 			}
 			this.timer.reset();
 		}
@@ -149,7 +149,7 @@ public class MovingBox extends DynamicInanimate {
 
 	@Override
 	public void internalRender(Field f) {
-		f.drawRectangle(this.getPos().addY(this.getSize().getY() / -4f), this.getSize().multiply(1, 1 / 2f), this.color);
+		f.drawRectangle(this.getPos().addY(this.getSize().getY() / -4f), this.getSize().scalar(1, 1 / 2f), this.color);
 
 		f.drawPolygon(new Polygon(this.getPos().addX(-3 * this.sizeX16), this.rocketPolygonRelPts), this.darkCol, true);
 		f.drawPolygon(new Polygon(this.getPos().addX(5 * this.sizeX16), this.rocketPolygonRelPts), this.darkCol, true);

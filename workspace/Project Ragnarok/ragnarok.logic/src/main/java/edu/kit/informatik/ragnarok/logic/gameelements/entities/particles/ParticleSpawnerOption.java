@@ -1,7 +1,7 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities.particles;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
-import edu.kit.informatik.ragnarok.primitives.ProgressDependency;
+import edu.kit.informatik.ragnarok.primitives.Progress;
 
 /**
  * Represents an option for a <i>ProgressDependency</i>. A ProgressDependency
@@ -95,7 +95,7 @@ public class ParticleSpawnerOption {
 	 *
 	 * @return the randomized ProgressDependency
 	 */
-	public ProgressDependency randomizeProgressDependency() {
+	public Progress randomizeProgressDependency() {
 		// calculate random start value between startMin and startMax
 		// (only if startMin != startMax)
 		float start = this.startMin == this.startMax ? this.startMin
@@ -108,7 +108,7 @@ public class ParticleSpawnerOption {
 
 		// we don't wanna optimize case delta=0 => start+delta = delta,
 		// ProgressDependency does that
-		return new ProgressDependency(start, start + delta);
+		return new Progress(start, start + delta);
 	}
 
 }

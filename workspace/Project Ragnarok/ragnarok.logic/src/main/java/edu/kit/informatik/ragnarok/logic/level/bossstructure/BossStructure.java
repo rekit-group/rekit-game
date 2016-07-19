@@ -15,7 +15,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateTrigger
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Boss;
 import edu.kit.informatik.ragnarok.logic.level.Structure;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
-import edu.kit.informatik.ragnarok.primitives.ProgressDependency;
+import edu.kit.informatik.ragnarok.primitives.Progress;
 import edu.kit.informatik.ragnarok.primitives.TimeDependency;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.CalcUtil;
@@ -133,11 +133,11 @@ public class BossStructure extends Structure {
 		final TimeDependency timer = new TimeDependency(7f);
 
 		// Needed for animating camera movement
-		ProgressDependency cameraMover = new ProgressDependency(this.cameraTarget - GameConf.PLAYER_CAMERA_OFFSET,
+		Progress cameraMover = new Progress(this.cameraTarget - GameConf.PLAYER_CAMERA_OFFSET,
 				player.getPos().getX() - GameConf.PLAYER_CAMERA_OFFSET);
 
 		// Needed for animating door movement
-		ProgressDependency doorMover = new ProgressDependency(this.door.getPos().getY(), this.door.getPos().getY() - 10);
+		Progress doorMover = new Progress(this.door.getPos().getY(), this.door.getPos().getY() - 10);
 
 		// Create thread for asynchronous stuff
 		ThreadUtils.runThread(() -> {

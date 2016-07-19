@@ -6,7 +6,8 @@ import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.primitives.Direction;
-import edu.kit.informatik.ragnarok.primitives.ProgressDependency;
+import edu.kit.informatik.ragnarok.primitives.OpProgress;
+import edu.kit.informatik.ragnarok.primitives.Progress;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 
@@ -51,23 +52,23 @@ public class SlurpDurp extends Entity {
 	private static SlurpDurpVisComp[] circles;
 	
 	static {
-		ProgressDependency red = new ProgressDependency(94, 184);
-		ProgressDependency green = new ProgressDependency(233, 255);
-		ProgressDependency blue = new ProgressDependency(101, 201);
-		
-		ProgressDependency relW = new ProgressDependency(1, 0.1f);
-		ProgressDependency relH = new ProgressDependency(1, 0.1f);
-		
-		ProgressDependency relX = new ProgressDependency(0, -0.45f);
-		ProgressDependency relY = new ProgressDependency(0, -0.45f);
+		Progress red = new Progress(94, 184);
+		Progress green = new Progress(233, 255);
+		Progress blue = new Progress(101, 201);
 
+		@SuppressWarnings({ "unchecked", "rawtypes"})
+		OpProgress relPos = new OpProgress(new Vec(0), new Vec(-0.45f));
+		
+		@SuppressWarnings({ "unchecked", "rawtypes"})
+		OpProgress relSize = new OpProgress(new Vec(1), new Vec(0.1f)); 
+		
 		circles = new SlurpDurpVisComp[ITERATIONS];
 		
 		for (int i = 0; i < ITERATIONS; ++i) {
 			float progress = i / (float)ITERATIONS;
 			
-			Vec size = new Vec(relW.getNow(progress), relH.getNow(progress));
-			Vec pos = new Vec(relX.getNow(progress), relY.getNow(progress));
+			Vec size = (Vec) relSize.getNow(progress);
+			Vec pos = (Vec) relPos.getNow(progress);
 			
 			SlurpDurp.circles[i] = new SlurpDurpVisComp(pos, size,
 					new RGBColor((int)red.getNow(progress), (int)green.getNow(progress), (int)blue.getNow(progress)));
@@ -110,7 +111,7 @@ public class SlurpDurp extends Entity {
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
 		if (this.getTeam().isHostile(element.getTeam())) {
-			element.setVel(element.getVel().multiply(0.9f));
+			element.setVel(element.getVel().scalar(0.9f));
 		}
 	}
 

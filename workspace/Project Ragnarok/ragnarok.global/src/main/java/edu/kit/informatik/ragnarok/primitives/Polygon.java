@@ -161,7 +161,7 @@ public class Polygon implements Cloneable {
 	public Polygon scale(float scale) {
 		List<Vec> newRelPts = new LinkedList<>();
 		for (Vec relPt2scale : this.relPts) {
-			newRelPts.add(relPt2scale.multiply(scale));
+			newRelPts.add(relPt2scale.scalar(scale));
 		}
 		return new Polygon(this.startPoint, newRelPts);
 	}

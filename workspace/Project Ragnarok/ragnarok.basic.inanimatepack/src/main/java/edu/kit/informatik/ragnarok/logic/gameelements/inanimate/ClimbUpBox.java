@@ -143,8 +143,8 @@ public class ClimbUpBox extends DynamicInanimate {
 	@Override
 	public void internalRender(Field f) {
 		f.drawRectangle(this.getPos(), this.getSize(), this.color);
-		f.drawRectangle(this.getPos().addY(-0.1f), this.getSize().multiply(0.2f, 0.8f), ClimbUpBox.darkCol);
-		f.drawRectangle(this.getPos().addY(0.4f), this.getSize().multiply(1, 0.2f), ClimbUpBox.darkCol);
+		f.drawRectangle(this.getPos().addY(-0.1f), this.getSize().scalar(0.2f, 0.8f), ClimbUpBox.darkCol);
+		f.drawRectangle(this.getPos().addY(0.4f), this.getSize().scalar(1, 0.2f), ClimbUpBox.darkCol);
 
 		this.renderEnergy(f, //
 				this.strategies[this.current].getEnergyStart(this.timer.getProgress()),
@@ -165,10 +165,10 @@ public class ClimbUpBox extends DynamicInanimate {
 	public void renderEnergy(Field f, float start, float end) {
 
 		float h = end - start;
-		f.drawRectangle(this.getPos().addY(h / 2f - this.getSize().getY() / 2f + start), this.getSize().multiply(0.2f, h), ClimbUpBox.energyCol);
+		f.drawRectangle(this.getPos().addY(h / 2f - this.getSize().getY() / 2f + start), this.getSize().scalar(0.2f, h), ClimbUpBox.energyCol);
 
 		if (end == 1) {
-			f.drawRectangle(this.getPos().addY(0.4f), this.getSize().multiply(1, 0.2f), ClimbUpBox.energyCol);
+			f.drawRectangle(this.getPos().addY(0.4f), this.getSize().scalar(1, 0.2f), ClimbUpBox.energyCol);
 		}
 
 	}
@@ -293,7 +293,7 @@ public class ClimbUpBox extends DynamicInanimate {
 
 		@Override
 		public void internalRender(Field f) {
-			f.drawRectangle(ClimbUpBox.this.getPos().addY(0.4f), ClimbUpBox.this.getSize().multiply(1, 0.2f), ClimbUpBox.energyCol);
+			f.drawRectangle(ClimbUpBox.this.getPos().addY(0.4f), ClimbUpBox.this.getSize().scalar(1, 0.2f), ClimbUpBox.energyCol);
 
 			Vec pos = this.parent.getPos().addY(this.parent.getSize().getY() / 2f + 1).addX(-0.5f);
 			pos = pos.addX(this.parent.getSize().getX() * GameConf.PRNG.nextFloat());

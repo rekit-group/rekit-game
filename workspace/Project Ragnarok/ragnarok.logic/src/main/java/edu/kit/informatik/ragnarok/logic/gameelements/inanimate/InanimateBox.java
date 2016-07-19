@@ -26,7 +26,7 @@ public class InanimateBox extends Inanimate {
 				darkColor);
 		f.drawRectangle(this.getPos().add(new Vec(-this.getSize().getX() / 2f + plateThickness / 2f, 0)), this.getSize().setX(plateThickness),
 				darkColor);
-		f.drawRectangle(this.getPos(), this.getSize().multiply(0.5f), darkColor);
+		f.drawRectangle(this.getPos(), this.getSize().scalar(0.5f), darkColor);
 	}
 
 	public static Inanimate staticCreate(Vec pos) {

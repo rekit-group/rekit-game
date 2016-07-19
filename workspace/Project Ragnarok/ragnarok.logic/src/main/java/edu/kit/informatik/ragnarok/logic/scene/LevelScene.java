@@ -178,19 +178,19 @@ public abstract class LevelScene extends Scene {
 
 		// Simulate CollisionFrame with last Y position
 		Vec e1lastYVec = new Vec(e1.getPos().getX(), e1lastPos.getY());
-		Frame e1lastYFrame = new Frame(e1lastYVec.add(e1.getSize().multiply(-0.5f)), e1lastYVec.add(e1.getSize().multiply(0.5f)));
+		Frame e1lastYFrame = new Frame(e1lastYVec.add(e1.getSize().scalar(-0.5f)), e1lastYVec.add(e1.getSize().scalar(0.5f)));
 
 		// Simulate CollisionFrame with last X position
 		Vec e1lastXVec = new Vec(e1lastPos.getX(), e1.getPos().getY());
-		Frame e1lastXFrame = new Frame(e1lastXVec.add(e1.getSize().multiply(-0.5f)), e1lastXVec.add(e1.getSize().multiply(0.5f)));
+		Frame e1lastXFrame = new Frame(e1lastXVec.add(e1.getSize().scalar(-0.5f)), e1lastXVec.add(e1.getSize().scalar(0.5f)));
 
 		// Simulate CollisionFrame with last Y position
 		Vec e2lastYVec = new Vec(e2.getPos().getX(), e2lastPos.getY());
-		Frame e2lastYFrame = new Frame(e2lastYVec.add(e2.getSize().multiply(-0.5f)), e2lastYVec.add(e2.getSize().multiply(0.5f)));
+		Frame e2lastYFrame = new Frame(e2lastYVec.add(e2.getSize().scalar(-0.5f)), e2lastYVec.add(e2.getSize().scalar(0.5f)));
 
 		// Simulate CollisionFrame with last X position
 		Vec e2lastXVec = new Vec(e2lastPos.getX(), e2.getPos().getY());
-		Frame e2lastXFrame = new Frame(e2lastXVec.add(e2.getSize().multiply(-0.5f)), e2lastXVec.add(e2.getSize().multiply(0.5f)));
+		Frame e2lastXFrame = new Frame(e2lastXVec.add(e2.getSize().scalar(-0.5f)), e2lastXVec.add(e2.getSize().scalar(0.5f)));
 
 		// If they still collide with the old x positions:
 		// it must be because of the y position

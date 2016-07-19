@@ -5,7 +5,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Polygon;
-import edu.kit.informatik.ragnarok.primitives.ProgressDependency;
+import edu.kit.informatik.ragnarok.primitives.Progress;
 import edu.kit.informatik.ragnarok.primitives.TimeDependency;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBAColor;
@@ -34,31 +34,31 @@ public class Particle extends GameElement {
 	/**
 	 * Red Channel
 	 */
-	private ProgressDependency colorR;
+	private Progress colorR;
 	/**
 	 * Green Channel
 	 */
-	private ProgressDependency colorG;
+	private Progress colorG;
 	/**
 	 * Blue Channel
 	 */
-	private ProgressDependency colorB;
+	private Progress colorB;
 	/**
 	 * Alpha Channel
 	 */
-	private ProgressDependency colorA;
+	private Progress colorA;
 	/**
 	 * The speed of the particle
 	 */
-	private ProgressDependency speed;
+	private Progress speed;
 	/**
 	 * The angle of the particle
 	 */
-	private ProgressDependency angle;
+	private Progress angle;
 	/**
 	 * The scale of the particle
 	 */
-	private ProgressDependency scale;
+	private Progress scale;
 	/**
 	 * The lifetime timer of the particle
 	 */
@@ -100,8 +100,8 @@ public class Particle extends GameElement {
 	 *            the <i>ProgressDendency</i> for the polygons alpha color
 	 *            channel
 	 */
-	public Particle(Polygon polygon, Vec pos, float lifeTime, ProgressDependency scale, ProgressDependency speed, ProgressDependency angle,
-			ProgressDependency colorR, ProgressDependency colorG, ProgressDependency colorB, ProgressDependency colorA) {
+	public Particle(Polygon polygon, Vec pos, float lifeTime, Progress scale, Progress speed, Progress angle,
+			Progress colorR, Progress colorG, Progress colorB, Progress colorA) {
 		super(pos, new Vec(), new Vec(1), Team.NEUTRAL);
 
 		// clone polygon so we can work with it
@@ -156,7 +156,7 @@ public class Particle extends GameElement {
 				this.movementVec = Direction.UP.getVector();
 
 				// set Amount in units/time
-				this.movementVec = this.movementVec.multiply(speed * deltaTime);
+				this.movementVec = this.movementVec.scalar(speed * deltaTime);
 
 				// set Angle
 				this.movementVec = this.movementVec.rotate(angle);
