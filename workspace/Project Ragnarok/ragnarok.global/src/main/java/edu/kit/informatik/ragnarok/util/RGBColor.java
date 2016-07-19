@@ -51,7 +51,17 @@ public class RGBColor implements Cloneable {
 	public RGBColor darken(float p) {
 		return new RGBColor((int) (this.red * p), (int) (this.green * p), (int) (this.blue * p));
 	}
-
+	
+	@Override
+	public boolean equals(Object other) {
+		if (!(other instanceof RGBColor)) {
+			return false;
+		}
+		RGBColor converted = (RGBColor) other;
+		return converted.red == this.red && converted.green == this.green &&
+				converted.blue == this.blue;
+	}
+	
 	/**
 	 * Convert to {@link RGBAColor}
 	 *
