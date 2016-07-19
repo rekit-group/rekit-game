@@ -1,12 +1,16 @@
 package edu.kit.informatik.ragnarok.util;
 
+import edu.kit.informatik.ragnarok.primitives.operable.Operable;
+import edu.kit.informatik.ragnarok.primitives.operable.Operator;
+
 /**
  * This class defines a Color with RGB channels
  *
  * @author Dominik Fuchß
+ * @author Angelo Aracri
  *
  */
-public class RGBColor implements Cloneable {
+public class RGBColor implements Cloneable, Operator<RGBColor>, Operable<RGBColor> {
 	/**
 	 * The red channel
 	 */
@@ -41,17 +45,6 @@ public class RGBColor implements Cloneable {
 		return new RGBColor(this.red, this.green, this.blue);
 	}
 
-	/**
-	 * Darken the color
-	 *
-	 * @param p
-	 *            the percentage
-	 * @return the darken color
-	 */
-	public RGBColor darken(float p) {
-		return new RGBColor((int) (this.red * p), (int) (this.green * p), (int) (this.blue * p));
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -81,6 +74,36 @@ public class RGBColor implements Cloneable {
 	 */
 	public RGBAColor toRGBA() {
 		return new RGBAColor(this.red, this.green, this.blue, 255);
+	}
+
+	@Override
+	public RGBColor scalar(float p) {
+		return new RGBColor((int) (this.red * p), (int) (this.green * p), (int) (this.blue * p));
+	}
+
+	@Override
+	public RGBColor multiply(RGBColor other) {
+		return new RGBColor((int) (this.red * other.red), (int) (this.green * other.green), (int) (this.blue * other.blue));
+	}
+
+	@Override
+	public RGBColor add(RGBColor other) {
+		return new RGBColor((int) (this.red + other.red), (int) (this.green + other.green), (int) (this.blue + other.blue));
+	}
+
+	@Override
+	public RGBColor sub(RGBColor other) {
+		return new RGBColor((int) (this.red - other.red), (int) (this.green - other.green), (int) (this.blue - other.blue));
+	}
+
+	@Override
+	public RGBColor get() {
+		return this;
+	}
+
+	@Override
+	public Operable<RGBColor> getOperable() {
+		return this;
 	}
 
 }

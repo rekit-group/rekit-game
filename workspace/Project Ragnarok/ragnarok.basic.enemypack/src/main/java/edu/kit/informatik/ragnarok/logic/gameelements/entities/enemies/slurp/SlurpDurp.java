@@ -6,7 +6,6 @@ import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.primitives.Direction;
-import edu.kit.informatik.ragnarok.primitives.Progress;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.primitives.operable.OpProgress;
 import edu.kit.informatik.ragnarok.util.RGBColor;
@@ -52,26 +51,15 @@ public class SlurpDurp extends Entity {
 	private static SlurpDurpVisComp[] circles;
 	
 	static {
-		Progress red = new Progress(94, 184);
-		Progress green = new Progress(233, 255);
-		Progress blue = new Progress(101, 201);
-
-		@SuppressWarnings({ "unchecked", "rawtypes"})
-		OpProgress relPos = new OpProgress(new Vec(0), new Vec(-0.45f));
-		
-		@SuppressWarnings({ "unchecked", "rawtypes"})
-		OpProgress relSize = new OpProgress(new Vec(1), new Vec(0.1f)); 
+		OpProgress<RGBColor> col = new OpProgress<>(new RGBColor(94, 233, 101), new RGBColor(184, 255, 201));
+		OpProgress<Vec> relPos = new OpProgress<>(new Vec(0), new Vec(-0.45f));
+		OpProgress<Vec> relSize = new OpProgress<>(new Vec(1), new Vec(0.1f)); 
 		
 		circles = new SlurpDurpVisComp[ITERATIONS];
 		
 		for (int i = 0; i < ITERATIONS; ++i) {
 			float progress = i / (float)ITERATIONS;
-			
-			Vec size = (Vec) relSize.getNow(progress);
-			Vec pos = (Vec) relPos.getNow(progress);
-			
-			SlurpDurp.circles[i] = new SlurpDurpVisComp(pos, size,
-					new RGBColor((int)red.getNow(progress), (int)green.getNow(progress), (int)blue.getNow(progress)));
+			SlurpDurp.circles[i] = new SlurpDurpVisComp(relPos.getNow(progress), relSize.getNow(progress), col.getNow(progress));
 		}
 	}
 	
