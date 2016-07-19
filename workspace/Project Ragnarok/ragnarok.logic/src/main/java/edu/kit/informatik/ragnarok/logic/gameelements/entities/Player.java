@@ -8,6 +8,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.Particl
 import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Vec;
+import edu.kit.informatik.ragnarok.util.RGBAColor;
 
 /**
  * The (maybe) most important {@link Entity} of the Game:<br>
@@ -75,9 +76,7 @@ public final class Player extends Entity implements CameraTarget {
 			this.currentDirection = Direction.LEFT;
 		}
 
-		// draw player background image
-		f.drawImage(this.getPos(), this.getSize(), "mrRekt_background.png");
-		// draw player glasses image
+		f.drawRoundRectangle(this.getPos(), this.getSize(), new RGBAColor(232, 148, 16, 255), 0.4F, 0.4F);
 		String src = this.currentDirection == Direction.RIGHT //
 				? "mrRekt_glasses_right.png" // facing right
 				: "mrRekt_glasses_left.png"; // facing left

@@ -74,6 +74,22 @@ public class FieldImpl extends Field {
 		this.gc.setAlpha(255);
 	}
 
+	private void drawRoundRectangleImpl(Vec pos, Vec size, RGBA col, int arcWidth, int arcHeight) {
+		// set color
+		this.gc.setAlpha(col.alpha);
+		Color color = new Color(Display.getCurrent(), col);
+		this.gc.setBackground(color);
+		color.dispose();
+		this.gc.fillRoundRectangle( //
+				(int) (pos.getX() - size.getX() / 2f), // X
+				(int) (pos.getY() - size.getY() / 2f), // Y
+				(int) size.getX(), (int) size.getY(), // Size
+				arcWidth, arcHeight); // arc
+		// reset alpha
+		this.gc.setAlpha(255);
+
+	}
+
 	private void drawPolygonImpl(int[] pixelArray, RGBA col, boolean fill) {
 		// set color
 		this.gc.setAlpha(col.alpha);
@@ -170,11 +186,6 @@ public class FieldImpl extends Field {
 	// Adapt methods (separate world position calculation from drawing)
 
 	@Override
-	public void drawRectangle(Vec pos, Vec size, RGBColor color, boolean inGame) {
-		this.drawRectangle(pos, size, color.toRGBA(), inGame);
-	}
-
-	@Override
 	public void drawRectangle(Vec pos, Vec size, RGBAColor in, boolean inGame) {
 		RGBAColor col = this.filter == null ? in : this.filter.apply(in);
 		if (!inGame) {
@@ -191,11 +202,6 @@ public class FieldImpl extends Field {
 	}
 
 	@Override
-	public void drawCircle(Vec pos, Vec size, RGBColor color, boolean inGame) {
-		this.drawCircle(pos, size, color.toRGBA(), inGame);
-	}
-
-	@Override
 	public void drawCircle(Vec pos, Vec size, RGBAColor in, boolean inGame) {
 		RGBAColor col = this.filter == null ? in : this.filter.apply(in);
 		if (!inGame) {
@@ -209,11 +215,6 @@ public class FieldImpl extends Field {
 
 			this.drawCircleImpl(newPos, newSize, SwtUtils.calcRGBA(col));
 		}
-	}
-
-	@Override
-	public void drawPolygon(Polygon polygon, RGBColor color, boolean fill, boolean inGame) {
-		this.drawPolygon(polygon, color.toRGBA(), fill, inGame);
 	}
 
 	@Override
@@ -270,11 +271,27 @@ public class FieldImpl extends Field {
 	 * @param col
 	 *            the color
 	 */
-
 	public void setBackground(RGBColor in) {
 		RGBColor col = this.filter == null ? in : this.filter.apply(in);
 		this.gc.setBackground(new Color(Display.getCurrent(), SwtUtils.calcRGB(col)));
 		this.gc.fillRectangle(0, 0, GameConf.PIXEL_W, GameConf.PIXEL_H);
+
+	}
+
+	@Override
+	public void drawRoundRectangle(Vec pos, Vec size, RGBAColor in, float arcWidth, float arcHeight, boolean inGame) {
+		RGBAColor col = this.filter == null ? in : this.filter.apply(in);
+		if (!inGame) {
+			this.drawRoundRectangleImpl(this.translate2D(pos), size, SwtUtils.calcRGBA(col), (int) arcWidth, (int) arcHeight);
+		} else {
+			Vec newPos = this.translate2D(pos);
+			newPos = CalcUtil.units2pixel(newPos);
+			newPos = newPos.addX(this.cameraOffset);
+
+			Vec newSize = CalcUtil.units2pixel(size);
+
+			this.drawRoundRectangleImpl(newPos, newSize, SwtUtils.calcRGBA(col), CalcUtil.units2pixel(arcWidth), CalcUtil.units2pixel(arcHeight));
+		}
 
 	}
 
