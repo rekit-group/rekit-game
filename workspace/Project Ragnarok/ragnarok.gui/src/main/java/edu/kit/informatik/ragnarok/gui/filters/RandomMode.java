@@ -1,46 +1,40 @@
 package edu.kit.informatik.ragnarok.gui.filters;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.util.RGBAColor;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 
 public class RandomMode implements Filter {
 
-	protected Map<RGBAColor, RGBAColor> colMapping = new HashMap<>();
+	protected int[] valueMapping = new int[256];
 
 	/**
 	 * Flyweight getter method for getting a random value between 1 and 255 for
 	 * every value between 0 and 255.
 	 *
 	 * @param index
-	 *            the extrinsic, original color
-	 * @return the intrinsic, random color
+	 *            the extrinsic, original color value between 0 and 255.
+	 * @return the intrinsic, random color value between 1 and 255.
 	 */
-	protected RGBAColor getMapping(RGBAColor color) {
-		System.out.println(this.colMapping.size());
-		if (!this.colMapping.containsKey(color)) {
+	protected int getMapping(int index) {
+		if (this.valueMapping[index] == 0) {
 			synchronized (this) {
-				this.colMapping.put(color, new RGBAColor(GameConf.PRNG.nextInt(256), GameConf.PRNG.nextInt(256), GameConf.PRNG.nextInt(256), color.alpha));
+				if (this.valueMapping[index] == 0) {
+					this.valueMapping[index] = GameConf.PRNG.nextInt(256);
+				}
 			}
 		}
-		return this.colMapping.get(color);
-	}
-	
-	protected RGBAColor getMapping(RGBColor color) {
-		return this.getMapping(color.toRGBA());
+		return this.valueMapping[index];
 	}
 
 	@Override
 	public RGBAColor apply(RGBAColor color) {
-		return this.getMapping(color);
+		return new RGBAColor(this.getMapping(color.red), this.getMapping(color.green), this.getMapping(color.blue), color.alpha);
 	}
 
 	@Override
 	public RGBColor apply(RGBColor color) {
-		return this.getMapping(color).toRGB();
+		return new RGBColor(this.getMapping(color.red), this.getMapping(color.green), this.getMapping(color.blue));
 	}
 
 	@Override
