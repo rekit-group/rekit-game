@@ -1,5 +1,8 @@
 package edu.kit.informatik.ragnarok.primitives;
 
+import edu.kit.informatik.ragnarok.primitives.operable.Operable;
+import edu.kit.informatik.ragnarok.primitives.operable.Operator;
+
 /**
  * A two dimensional Vector with operations
  *
@@ -7,7 +10,7 @@ package edu.kit.informatik.ragnarok.primitives;
  * @version 1.0
  */
 
-public class Vec implements Cloneable, Operable<Vec> {
+public class Vec implements Cloneable, Operator<Vec>, Operable<Vec> {
 	/**
 	 * Create a new Vector
 	 *
@@ -163,10 +166,10 @@ public class Vec implements Cloneable, Operable<Vec> {
 	 *            the other vector to add
 	 * @return the sum of the vectors
 	 */
+	@Override
 	public Vec add(Vec vec) {
 		return new Vec(this.getX() + vec.getX(), this.getY() + vec.getY(), this.z);
 	}
-	
 
 	@Override
 	public Vec sub(Vec other) {
@@ -180,6 +183,7 @@ public class Vec implements Cloneable, Operable<Vec> {
 	 *            the scalar to multiply the vector with
 	 * @return the resulting vector
 	 */
+	@Override
 	public Vec scalar(float scalar) {
 		return this.scalar(scalar, scalar);
 	}
@@ -207,6 +211,7 @@ public class Vec implements Cloneable, Operable<Vec> {
 	 *            vector to multiply with
 	 * @return the resulting vector
 	 */
+	@Override
 	public Vec multiply(Vec vec) {
 		return new Vec(this.getX() * vec.getX(), this.getY() * vec.getY(), this.z);
 	}
@@ -250,6 +255,16 @@ public class Vec implements Cloneable, Operable<Vec> {
 		if (this.getZ() != 1) {
 			return new Vec(this.getX() + offset / this.getZ(), this.getY());
 		}
+		return this;
+	}
+
+	@Override
+	public Operable<Vec> getOperable() {
+		return this;
+	}
+
+	@Override
+	public Vec get() {
 		return this;
 	}
 
