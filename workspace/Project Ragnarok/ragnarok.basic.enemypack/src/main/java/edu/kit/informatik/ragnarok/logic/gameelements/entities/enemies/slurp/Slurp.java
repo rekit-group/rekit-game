@@ -1,4 +1,4 @@
-package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies;
+package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.slurp;
 
 import java.util.ArrayList;
 import java.util.List;

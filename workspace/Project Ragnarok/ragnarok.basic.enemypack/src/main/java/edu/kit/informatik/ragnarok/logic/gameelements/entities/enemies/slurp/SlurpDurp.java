@@ -1,4 +1,4 @@
-package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies;
+package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.slurp;
 
 import edu.kit.informatik.ragnarok.logic.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
@@ -6,6 +6,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.primitives.Direction;
+import edu.kit.informatik.ragnarok.primitives.ProgressDependency;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 
@@ -44,7 +45,35 @@ public class SlurpDurp extends Entity {
 	 * The current X position
 	 */
 	private float currentX = 0;
+	
+	private static final int ITERATIONS = 7;
+	
+	private static SlurpDurpVisComp[] circles;
+	
+	static {
+		ProgressDependency red = new ProgressDependency(94, 184);
+		ProgressDependency green = new ProgressDependency(233, 255);
+		ProgressDependency blue = new ProgressDependency(101, 201);
+		
+		ProgressDependency relW = new ProgressDependency(1, 0.1f);
+		ProgressDependency relH = new ProgressDependency(1, 0.1f);
+		
+		ProgressDependency relX = new ProgressDependency(0, -0.45f);
+		ProgressDependency relY = new ProgressDependency(0, -0.45f);
 
+		circles = new SlurpDurpVisComp[ITERATIONS];
+		
+		for (int i = 0; i < ITERATIONS; ++i) {
+			float progress = i / (float)ITERATIONS;
+			
+			Vec size = new Vec(relW.getNow(progress), relH.getNow(progress));
+			Vec pos = new Vec(relX.getNow(progress), relY.getNow(progress));
+			
+			SlurpDurp.circles[i] = new SlurpDurpVisComp(pos, size,
+					new RGBColor((int)red.getNow(progress), (int)green.getNow(progress), (int)blue.getNow(progress)));
+		}
+	}
+	
 	/**
 	 * Prototype Constructor
 	 */
@@ -104,7 +133,10 @@ public class SlurpDurp extends Entity {
 
 	@Override
 	public void internalRender(Field f) {
-		f.drawCircle(this.parentPos.add(this.innerPos), this.getSize(), new RGBColor(94, 233, 101));
+		for (SlurpDurpVisComp vis : SlurpDurp.circles) {
+			vis.render(f, this.parentPos.add(this.innerPos), this.getSize());
+		}
+		//f.drawCircle(this.parentPos.add(this.innerPos), this.getSize(), new RGBColor(94, 233, 101));
 	}
 
 }
