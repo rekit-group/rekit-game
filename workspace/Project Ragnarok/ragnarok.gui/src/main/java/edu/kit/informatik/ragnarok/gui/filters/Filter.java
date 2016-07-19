@@ -1,10 +1,23 @@
 package edu.kit.informatik.ragnarok.gui.filters;
 
+import java.util.Set;
+
 import edu.kit.informatik.ragnarok.primitives.AbstractImage;
 import edu.kit.informatik.ragnarok.util.RGBAColor;
 import edu.kit.informatik.ragnarok.util.RGBColor;
+import edu.kit.informatik.ragnarok.util.ReflectUtils;
 
 public interface Filter {
+
+	/**
+	 * Get all dynamic filters
+	 *
+	 * @return the set of all filters
+	 */
+	static Set<Filter> getAllFilters() {
+		return ReflectUtils.get("edu.kit.informatik", Filter.class);
+	}
+
 	/**
 	 * This boolean indicates whether this filter can be applied pixel per pixel
 	 * (fast) or only on the final image (slow)

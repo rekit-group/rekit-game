@@ -6,10 +6,6 @@ import edu.kit.informatik.ragnarok.util.RGBColor;
 
 public class RandomMode implements Filter {
 
-	// public RandomMode() {
-	// super();
-	// }
-
 	protected int[] valueMapping = new int[256];
 
 	/**
@@ -28,7 +24,6 @@ public class RandomMode implements Filter {
 				}
 			}
 		}
-
 		return this.valueMapping[index];
 	}
 
@@ -41,21 +36,6 @@ public class RandomMode implements Filter {
 	public RGBColor apply(RGBColor color) {
 		return new RGBColor(this.getMapping(color.red), this.getMapping(color.green), this.getMapping(color.blue));
 	}
-	// @Override
-	// protected void runIt(int taskSize, int task) {
-	// int start = (task * taskSize);
-	// int stop = (task == this.numThreads - 1) ? this.h : ((task + 1) *
-	// taskSize);
-	//
-	// for (int i = start * this.w * 4; i < (this.w + stop * this.w) * 4; i +=
-	// 4) {
-	// this.result[i + 0] = getMapping(this.orig[i + 0]);
-	// this.result[i + 1] = getMapping(this.orig[i + 1]);
-	// this.result[i + 2] = getMapping(this.orig[i + 2]);
-	// }
-	//
-	//
-	// }
 
 	@Override
 	public boolean isApplyPixel() {

@@ -46,19 +46,6 @@ public class GrayScaleMode implements Filter {
 	// return new AbstractImage(this.h, this.w, this.result);
 	//
 	// }
-	@Override
-	public RGBAColor apply(RGBAColor color) {
-		int gray = color.red + color.green + color.blue;
-		gray /= 3;
-		return new RGBAColor(gray, gray, gray, color.alpha);
-	}
-
-	@Override
-	public RGBColor apply(RGBColor color) {
-		int gray = color.red + color.green + color.blue;
-		gray /= 3;
-		return new RGBColor(gray, gray, gray);
-	}
 	// protected void runIt(int taskSize, int task) {
 	// int start = (task * taskSize);
 	// int stop = (task == this.numThreads - 1) ? this.h : ((task + 1) *
@@ -74,6 +61,20 @@ public class GrayScaleMode implements Filter {
 	// this.result[i + 2] = (byte) b;
 	// }
 	// }
+
+	@Override
+	public RGBAColor apply(RGBAColor color) {
+		int gray = color.red + color.green + color.blue;
+		gray /= 3;
+		return new RGBAColor(gray, gray, gray, color.alpha);
+	}
+
+	@Override
+	public RGBColor apply(RGBColor color) {
+		int gray = color.red + color.green + color.blue;
+		gray /= 3;
+		return new RGBColor(gray, gray, gray);
+	}
 
 	@Override
 	public boolean isApplyPixel() {
