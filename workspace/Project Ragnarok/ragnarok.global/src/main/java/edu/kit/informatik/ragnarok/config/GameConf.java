@@ -19,7 +19,7 @@ import edu.kit.informatik.ragnarok.visitor.parser.Parser;
  * @version 1.1
  */
 @VisitInfo(res = "conf/game", visit = true)
-public class GameConf implements Visitable {
+public final class GameConf implements Visitable {
 	/**
 	 * Prevent instantiation
 	 */
@@ -52,14 +52,14 @@ public class GameConf implements Visitable {
 	public static int GRID_H;
 
 	/**
-	 * Width of the window. Calculated by {@link GameConf.GRID_W} *
-	 * {@link GameConf.PX_PER_UNIT}.
+	 * Width of the window.<br>
+	 * Calculated by {@link GameConf.GRID_W} * {@link GameConf.PX_PER_UNIT}.
 	 */
 	@NoVisit
 	public static int PIXEL_W;
 	/**
-	 * Height of the window. Calculated by {@link GameConf.GRID_H} *
-	 * {@link GameConf.PX_PER_UNIT}.
+	 * Height of the window.<br>
+	 * Calculated by {@link GameConf.GRID_H} * {@link GameConf.PX_PER_UNIT}.
 	 */
 	@NoVisit
 	public static int PIXEL_H;

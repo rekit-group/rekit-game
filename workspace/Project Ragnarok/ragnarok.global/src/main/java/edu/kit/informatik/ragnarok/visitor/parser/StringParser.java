@@ -10,7 +10,7 @@ import edu.kit.informatik.ragnarok.visitor.Visitable;
  * @author Dominik Fuchß
  *
  */
-public class StringParser implements Parser {
+public final class StringParser implements Parser {
 	@Override
 	public boolean parse(Visitable obj, Field field, String definition) throws Exception {
 		if (!Parser.super.parse(obj, field, definition)) {

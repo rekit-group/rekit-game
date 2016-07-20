@@ -27,7 +27,8 @@ public final class ReflectUtils {
 	/**
 	 * Load all implementations that shall be loaded (see {@link LoadMe}) of a
 	 * class by search path (-> classpath) <br>
-	 * If a class wants to be loaded, the class needs a default constructor
+	 * If a class wants to be loaded, the class needs a <b>default
+	 * constructor</b>
 	 *
 	 * @param searchPath
 	 *            the search path (e.g. java.lang)
@@ -36,7 +37,7 @@ public final class ReflectUtils {
 	 * @return a set of instances of the found classes
 	 */
 	@SuppressWarnings("unchecked")
-	public static final <T> Set<T> get(String searchPath, Class<T> type) {
+	public static final <T> Set<T> loadInstances(String searchPath, Class<T> type) {
 		Set<T> objects = new HashSet<>();
 		for (Class<?> clazz : ReflectUtils.getClasses(searchPath, type)) {
 			if (Modifier.isAbstract(clazz.getModifiers()) || clazz.getAnnotation(LoadMe.class) == null) {
@@ -55,7 +56,7 @@ public final class ReflectUtils {
 	}
 
 	/**
-	 * Load all implementations of a class by search path (-> classpath) <br>
+	 * Get all implementations of a class by search path (-> classpath) <br>
 	 *
 	 * @param searchPath
 	 *            the search path (e.g. java.lang)
@@ -69,10 +70,10 @@ public final class ReflectUtils {
 
 	/**
 	 * This annotation has to be applied to Classes which shall be loaded as
-	 * implementation of a specific class
+	 * implementation of a specific class and shall be instantiated
 	 *
 	 * @author Dominik Fuchß
-	 * @see ReflectUtils#get(String, Class)
+	 * @see ReflectUtils#loadInstances(String, Class)
 	 *
 	 */
 	@Retention(RetentionPolicy.RUNTIME)

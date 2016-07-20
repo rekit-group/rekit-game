@@ -9,7 +9,7 @@ import edu.kit.informatik.ragnarok.primitives.operable.Operable;
  * @version 1.0
  */
 
-public class Vec implements Cloneable, Operable<Vec> {
+public final class Vec implements Cloneable, Operable<Vec> {
 	/**
 	 * Create a new Vector
 	 *

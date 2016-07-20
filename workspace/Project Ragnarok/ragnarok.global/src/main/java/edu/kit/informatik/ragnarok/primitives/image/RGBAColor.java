@@ -6,7 +6,7 @@ package edu.kit.informatik.ragnarok.primitives.image;
  * @author Dominik Fuchß
  *
  */
-public class RGBAColor {
+public final class RGBAColor {
 	/**
 	 * The red channel
 	 */

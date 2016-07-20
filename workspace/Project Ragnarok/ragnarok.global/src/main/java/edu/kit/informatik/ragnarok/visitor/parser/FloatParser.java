@@ -6,11 +6,11 @@ import edu.kit.informatik.ragnarok.visitor.Visitable;
 
 /**
  * This {@link Parser} is used for parsing {@link Float Floats}
- * 
+ *
  * @author Dominik Fuchß
  *
  */
-public class FloatParser implements Parser {
+public final class FloatParser implements Parser {
 	@Override
 	public boolean parse(Visitable obj, Field field, String definition) throws Exception {
 		if (!Parser.super.parse(obj, field, definition)) {

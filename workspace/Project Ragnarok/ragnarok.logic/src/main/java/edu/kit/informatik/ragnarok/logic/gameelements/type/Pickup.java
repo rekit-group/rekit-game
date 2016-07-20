@@ -11,7 +11,7 @@ import edu.kit.informatik.ragnarok.util.ReflectUtils;
 
 public abstract class Pickup extends Entity {
 	public static final Set<Pickup> getPickupPrototypes() {
-		return ReflectUtils.get("edu.kit.informatik", Pickup.class);
+		return ReflectUtils.loadInstances("edu.kit.informatik", Pickup.class);
 	}
 
 	protected Pickup() {

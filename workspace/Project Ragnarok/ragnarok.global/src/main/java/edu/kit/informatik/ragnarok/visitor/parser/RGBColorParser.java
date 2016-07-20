@@ -9,11 +9,11 @@ import edu.kit.informatik.ragnarok.visitor.Visitable;
 
 /**
  * This {@link Parser} is used for parsing {@link RGBColor RGBColors}
- * 
+ *
  * @author Dominik Fuchß
  *
  */
-public class RGBColorParser implements Parser {
+public final class RGBColorParser implements Parser {
 	@Override
 	public boolean parse(Visitable obj, Field field, String definition) throws Exception {
 		if (!Parser.super.parse(obj, field, definition)) {

@@ -6,11 +6,11 @@ import edu.kit.informatik.ragnarok.visitor.Visitable;
 
 /**
  * This {@link Parser} is used for parsing {@link Integer Integers}
- * 
+ *
  * @author Dominik Fuchß
  *
  */
-public class IntParser implements Parser {
+public final class IntParser implements Parser {
 	@Override
 	public boolean parse(Visitable obj, Field field, String definition) throws Exception {
 		if (!Parser.super.parse(obj, field, definition)) {

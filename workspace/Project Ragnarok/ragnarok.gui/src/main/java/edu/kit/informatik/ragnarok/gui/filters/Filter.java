@@ -15,7 +15,7 @@ public interface Filter {
 	 * @return the set of all filters
 	 */
 	static Set<Filter> getAllFilters() {
-		return ReflectUtils.get("edu.kit.informatik", Filter.class);
+		return ReflectUtils.loadInstances("edu.kit.informatik", Filter.class);
 	}
 
 	/**
@@ -23,8 +23,8 @@ public interface Filter {
 	 * (fast) or only on the final image (slow)
 	 *
 	 * @return {@code true} if {@link #apply(RGBAColor)} and
-	 *         {@link #apply(RGBColor)} shall be used, {@code false} otherwise
-	 *         ({@link #apply(AbstractImage)})
+	 *         {@link #apply(RGBColor)} shall be used,<br>
+	 * 		{@code false} otherwise ({@link #apply(AbstractImage)})
 	 */
 	boolean isApplyPixel();
 
