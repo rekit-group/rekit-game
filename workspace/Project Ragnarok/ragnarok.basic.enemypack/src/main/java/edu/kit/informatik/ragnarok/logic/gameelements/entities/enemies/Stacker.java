@@ -10,6 +10,8 @@ import edu.kit.informatik.ragnarok.logic.gameelements.type.Enemy;
 import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
+import edu.kit.informatik.ragnarok.primitives.operable.OpProgress;
+import edu.kit.informatik.ragnarok.primitives.time.TimeDependency;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 
 @LoadMe
@@ -18,6 +20,12 @@ public class Stacker extends Enemy {
 	private List<StackerElement> elements;
 	
 	private boolean init = false;
+	
+	private final OpProgress<Vec> dimensions = new OpProgress<>(new Vec(0.76f), new Vec(0.76f, 0));
+	
+	private int highestOffset;
+	
+	private static final int ITERATIONS = 3;
 	
 	/**
 	 * Prototype Constructor.
@@ -37,11 +45,13 @@ public class Stacker extends Enemy {
 		Vec rel = new Vec(0, 0.5f - new StackerElement(new Vec(), 0).getSize().getY() / 2);
 		
 		// creation loop
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < ITERATIONS; i++) {
 			StackerElement elem = new StackerElement(rel, i);
 			rel = rel.addY(-elem.getSize().getY() - 0.02f);
 			elements.add(elem);
 		}
+		
+		highestOffset = ITERATIONS - 1;
 	}
 	
 	public void logicLoop(float deltaTime) {
@@ -66,9 +76,11 @@ public class Stacker extends Enemy {
 		private final int offset;
 		
 		private final int faceId;
+		
+		private TimeDependency timeToDie;
 				
 		StackerElement (Vec relPos, int offset) {
-			super(Stacker.this.getPos().add(relPos), new Vec(), new Vec(0.76f));
+			super(Stacker.this.getPos().add(relPos), new Vec(), dimensions.getNow(0));
 			this.relPos = relPos;
 			this.offset = offset;
 			
@@ -84,26 +96,49 @@ public class Stacker extends Enemy {
 		@Override
 		public void logicLoop(float deltaTime) {
 			this.setPos(Stacker.this.getPos().add(relPos).addX((float)(0.1*Math.sin(0.1 * this.getScene().getTime() / 30 + offset))));
+			
+			if (timeToDie != null) {
+				timeToDie.removeTime(deltaTime);
+				if (timeToDie.timeUp()) {
+					this.addDamage(1);
+				}
+			}
 		}
 		
 		@Override
 		public void internalRender(Field f) {
-			f.drawCircle(this.getPos(), this.getSize(), this.col);
-			f.drawImage(this.getPos(), this.getSize(), "stacker/stackerFaces_0" + this.faceId + ".png");
+			if (timeToDie != null) {
+				Vec size = dimensions.getNow(timeToDie.getProgress());
+				f.drawCircle(this.getPos().addY((this.getSize().getY() - size.getY()) / 2), size, this.col);
+			} else {
+				f.drawCircle(this.getPos(), this.getSize(), this.col);
+				f.drawImage(this.getPos(), this.getSize(), "stacker/stackerFaces_0" + this.faceId + ".png");
+			}
 		}
 		
 		@Override
 		public void reactToCollision(GameElement element, Direction dir) {
 			if (this.getTeam().isHostile(element.getTeam())) {
 				if (dir == Direction.DOWN || dir == Direction.UP) {
-					element.setVel(element.getVel().setY(1.2f * GameConf.PLAYER_JUMP_BOOST));
-					element.collidedWith(this.getCollisionFrame(), dir);
-					this.addDamage(1);
+					if (this.timeToDie == null) {
+						element.setVel(element.getVel().setY(1.2f * GameConf.PLAYER_JUMP_BOOST));
+						element.collidedWith(this.getCollisionFrame(), dir);
+						this.customDie();
+					} else {
+						element.collidedWith(this.getCollisionFrame(), dir);
+					}
 				} else {
 					element.addDamage(1);
 					element.collidedWith(this.getCollisionFrame(), dir);
 				}
 			}	
+		}
+		
+		public void customDie() {
+			if (this.offset == Stacker.this.highestOffset) {
+				this.timeToDie = new TimeDependency(0.5f);
+				Stacker.this.highestOffset --;
+			}
 		}
 		
 	}
