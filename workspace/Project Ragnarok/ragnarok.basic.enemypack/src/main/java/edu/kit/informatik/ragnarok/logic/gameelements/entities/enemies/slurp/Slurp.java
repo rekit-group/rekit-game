@@ -13,6 +13,9 @@ import edu.kit.informatik.ragnarok.primitives.Direction;
 import edu.kit.informatik.ragnarok.primitives.Frame;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
+import edu.kit.informatik.ragnarok.visitor.NoVisit;
+import edu.kit.informatik.ragnarok.visitor.VisitInfo;
+import edu.kit.informatik.ragnarok.visitor.Visitable;
 
 /**
  * This class realizes a simple enemy that will not hurt the {@link Player} but
@@ -23,11 +26,16 @@ import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
  *
  */
 @LoadMe
-public class Slurp extends Enemy {
+@VisitInfo(res = "conf/basic_enemypack", visit = true)
+public class Slurp extends Enemy implements Visitable {
 	/**
 	 * The Slurp's SlurpDurps
 	 */
+	@NoVisit
 	private List<SlurpDurp> slurpDurps;
+
+	private static float SLURP_SPEED;
+	private static float SLURP_POPOFFS_PER_SEC;
 
 	/**
 	 * Prototype Constructor
@@ -65,11 +73,13 @@ public class Slurp extends Enemy {
 	/**
 	 * The current direction of the Slurp
 	 */
+	@NoVisit
 	private Direction currentDirection = Direction.LEFT;
 
 	/**
 	 * This bool indicates whether the Slurp has contact to a wall
 	 */
+	@NoVisit
 	private boolean hasWallContact = true;
 
 	@Override
@@ -82,11 +92,11 @@ public class Slurp extends Enemy {
 
 		// calculate velocity (by currentDirection)
 		if (this.currentDirection == Direction.LEFT || this.currentDirection == Direction.RIGHT) {
-			this.setVel(new Vec(this.currentDirection.getVector().getX() * GameConf.SLURP_SPEED,
+			this.setVel(new Vec(this.currentDirection.getVector().getX() * Slurp.SLURP_SPEED,
 					this.currentDirection.getNextAntiClockwise().getVector().getY() * 3));
 		} else {
 			this.setVel(new Vec(this.currentDirection.getNextAntiClockwise().getVector().getX() * 3,
-					this.currentDirection.getVector().getY() * GameConf.SLURP_SPEED));
+					this.currentDirection.getVector().getY() * Slurp.SLURP_SPEED));
 		}
 
 		super.logicLoop(deltaTime);
@@ -101,7 +111,7 @@ public class Slurp extends Enemy {
 		}
 
 		// Randomly determine if SlurpDurp should pop off
-		if (GameConf.PRNG.nextDouble() >= (1.0 - GameConf.SLURP_POPOFFS_PER_SEC * deltaTime)) {
+		if (GameConf.PRNG.nextDouble() >= (1.0 - Slurp.SLURP_POPOFFS_PER_SEC * deltaTime)) {
 			// get and remove one SlurpDurp from list
 			SlurpDurp poppedOf = this.slurpDurps.remove(0);
 

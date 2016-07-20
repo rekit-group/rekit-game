@@ -56,6 +56,19 @@ public final class ReflectUtils {
 	}
 
 	/**
+	 * Load all implementations of a class by search path (-> classpath) <br>
+	 *
+	 * @param searchPath
+	 *            the search path (e.g. java.lang)
+	 * @param type
+	 *            the class
+	 * @return a set of the found classes
+	 */
+	public static final <T> Set<Class<? extends T>> getClasses(String searchPath, Class<T> type) {
+		return new Reflections(searchPath).getSubTypesOf(type);
+	}
+
+	/**
 	 * This annotation has to be applied to Classes which shall be loaded as
 	 * implementation of a specific class
 	 *
@@ -66,4 +79,5 @@ public final class ReflectUtils {
 	@Retention(RetentionPolicy.RUNTIME)
 	public @interface LoadMe {
 	}
+
 }

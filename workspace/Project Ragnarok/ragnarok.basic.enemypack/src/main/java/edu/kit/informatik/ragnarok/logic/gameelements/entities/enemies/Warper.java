@@ -1,6 +1,5 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies;
 
-import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
@@ -13,6 +12,9 @@ import edu.kit.informatik.ragnarok.primitives.TimeDependency;
 import edu.kit.informatik.ragnarok.primitives.Vec;
 import edu.kit.informatik.ragnarok.util.RGBColor;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
+import edu.kit.informatik.ragnarok.visitor.NoVisit;
+import edu.kit.informatik.ragnarok.visitor.VisitInfo;
+import edu.kit.informatik.ragnarok.visitor.Visitable;
 
 /**
  *
@@ -22,14 +24,21 @@ import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
  *
  */
 @LoadMe
-public class Warper extends Enemy {
+@VisitInfo(res = "conf/basic_enemypack", visit = true)
+public class Warper extends Enemy implements Visitable {
+
+	private static float WARPER_WARP_DELTA;
+
 	/**
 	 * The time between the next jump (to next position)
 	 */
-	private TimeDependency warpAction = new TimeDependency(GameConf.WARPER_WARP_DELTA);
+	@NoVisit
+	private TimeDependency warpAction = new TimeDependency(Warper.WARPER_WARP_DELTA);
+
 	/**
 	 * The particles of the warper
 	 */
+	@NoVisit
 	private static ParticleSpawner warpParticles = null;
 
 	static {

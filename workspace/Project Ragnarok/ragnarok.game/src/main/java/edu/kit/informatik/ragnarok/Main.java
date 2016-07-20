@@ -1,6 +1,5 @@
 package edu.kit.informatik.ragnarok;
 
-import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.controller.Controller;
 import edu.kit.informatik.ragnarok.gui.View;
 import edu.kit.informatik.ragnarok.logic.Model;
@@ -23,8 +22,8 @@ public class Main {
 	 *            not used
 	 */
 	public static void main(String[] args) {
-		// Load Config
-		Visitor.visitStatic(GameConf.class);
+		// Load All Configs
+		Visitor.visitAllStatic();
 
 		// Create MVC
 		// Set References:

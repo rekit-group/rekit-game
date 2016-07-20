@@ -6,8 +6,10 @@ import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import edu.kit.informatik.ragnarok.util.RGBColor;
+import edu.kit.informatik.ragnarok.util.ReflectUtils;
 import edu.kit.informatik.ragnarok.visitor.parser.FloatParser;
 import edu.kit.informatik.ragnarok.visitor.parser.IntParser;
 import edu.kit.informatik.ragnarok.visitor.parser.Parser;
@@ -24,6 +26,18 @@ import edu.kit.informatik.ragnarok.visitor.parser.StringParser;
  *
  */
 public final class Visitor {
+
+	/**
+	 * Visit all Classes which shall be visited
+	 */
+	public static final void visitAllStatic() {
+		Set<Class<? extends Visitable>> toVisit = ReflectUtils.getClasses("edu.kit.informatik", Visitable.class);
+		Visitor visitor = Visitor.getNewVisitor();
+		for (Class<? extends Visitable> v : toVisit) {
+			visitor.visitMeStatic(v);
+		}
+	}
+
 	/**
 	 * Set values / attributes of classes (only static)
 	 *
@@ -50,7 +64,7 @@ public final class Visitor {
 	 * @return the new visior
 	 * @see #setParser(Class, Parser)
 	 */
-	public Visitor getNewVisitor() {
+	public static final Visitor getNewVisitor() {
 		return new Visitor();
 	}
 
@@ -58,7 +72,7 @@ public final class Visitor {
 	 * Set a parser for a target type to be visited later on <br>
 	 * {@code parser} == {@code null} indicates that you want to delete a parser
 	 * for the target type
-	 * 
+	 *
 	 * @param target
 	 *            the target type
 	 * @param parser
@@ -130,10 +144,10 @@ public final class Visitor {
 			return;
 		}
 		ResourceBundle bundle = ResourceBundle.getBundle(info.res());
-		for (Field field : v.getFields()) {
+		for (Field field : v.getDeclaredFields()) {
 			this.applyStatic(field, bundle);
 		}
-		for (Method m : v.getMethods()) {
+		for (Method m : v.getDeclaredMethods()) {
 			this.afterStatic(m);
 		}
 	}
@@ -246,4 +260,5 @@ public final class Visitor {
 		}
 
 	}
+
 }

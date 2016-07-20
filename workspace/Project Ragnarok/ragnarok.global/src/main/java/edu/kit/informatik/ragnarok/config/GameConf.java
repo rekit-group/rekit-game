@@ -113,10 +113,6 @@ public class GameConf implements Visitable {
 	 */
 	public static int PLAYER_LIVES;
 
-	// TODO These fields are NOT global
-	public static float SLURP_SPEED;
-	public static float SLURP_POPOFFS_PER_SEC;
-	public static float WARPER_WARP_DELTA;
 	/**
 	 * The menu's background color
 	 */
