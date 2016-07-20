@@ -76,7 +76,7 @@ public final class Player extends Entity implements CameraTarget {
 			this.currentDirection = Direction.LEFT;
 		}
 
-		f.drawRoundRectangle(this.getPos(), this.getSize(), new RGBAColor(232, 148, 16, 255), 0.4F, 0.4F);
+		f.drawRoundRectangle(this.getPos(), this.getSize(), new RGBAColor(232, 148, 16, 255), 0.45F, 0.45F);
 		String src = this.currentDirection == Direction.RIGHT //
 				? "mrRekt_glasses_right.png" // facing right
 				: "mrRekt_glasses_left.png"; // facing left
