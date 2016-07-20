@@ -218,6 +218,10 @@ public class Vec implements Cloneable, Operable<Vec> {
 	public Vec sin() {
 		return new Vec((float) Math.sin(this.getX()), (float) Math.sin(this.getY()));
 	}
+	
+	public float getAngleTo(Vec other) {
+		return (float)Math.atan2(other.y - this.y, other.x - this.x);
+	}
 
 	public Vec rotate(double angle, Vec relative) {
 		// translate toTurn to (0, 0) relative to relative
