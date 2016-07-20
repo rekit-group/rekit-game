@@ -10,7 +10,7 @@ package edu.kit.informatik.ragnarok.util;
  * @param <U>
  *            type2
  */
-public class Tuple<T, U> {
+public final class Tuple<T, U> {
 	/**
 	 * First entry
 	 */

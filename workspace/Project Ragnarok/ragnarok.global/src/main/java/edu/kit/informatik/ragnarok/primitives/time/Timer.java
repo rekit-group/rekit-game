@@ -6,7 +6,8 @@ package edu.kit.informatik.ragnarok.primitives.time;
  * @author Angelo Aracri
  * @version 1.0
  */
-public class Timer {
+public final class Timer {
+
 	/**
 	 * The duration
 	 */
@@ -55,7 +56,7 @@ public class Timer {
 
 	/**
 	 * Get current progress
-	 * 
+	 *
 	 * @return percentage as float in [0,1]
 	 */
 	public float getProgress() {

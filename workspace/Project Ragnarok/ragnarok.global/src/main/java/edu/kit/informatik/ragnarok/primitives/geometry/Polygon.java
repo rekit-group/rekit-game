@@ -9,7 +9,7 @@ import java.util.List;
  * This class defines a polygon
  *
  */
-public class Polygon implements Cloneable {
+public final class Polygon implements Cloneable {
 	/**
 	 * The first point's position
 	 */

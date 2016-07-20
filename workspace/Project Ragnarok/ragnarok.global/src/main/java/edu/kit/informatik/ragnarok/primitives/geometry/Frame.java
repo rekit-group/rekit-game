@@ -5,7 +5,7 @@ package edu.kit.informatik.ragnarok.primitives.geometry;
  * This class defines a Frame which will be used to check collisions
  *
  */
-public class Frame {
+public final class Frame {
 	/**
 	 * The first anchor of the frame
 	 */

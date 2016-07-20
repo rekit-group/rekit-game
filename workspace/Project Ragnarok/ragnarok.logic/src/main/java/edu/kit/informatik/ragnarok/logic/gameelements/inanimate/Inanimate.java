@@ -29,7 +29,7 @@ public class Inanimate extends GameElement {
 	}
 
 	public static final Set<DynamicInanimate> getInanimatePrototypes() {
-		return ReflectUtils.get("edu.kit.informatik", DynamicInanimate.class);
+		return ReflectUtils.loadInstances("edu.kit.informatik", DynamicInanimate.class);
 	}
 
 	@Override

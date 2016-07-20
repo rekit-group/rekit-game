@@ -10,7 +10,7 @@ import edu.kit.informatik.ragnarok.util.ReflectUtils;
 
 public abstract class Enemy extends Entity {
 	public static final Set<Enemy> getEnemyPrototypes() {
-		return ReflectUtils.get("edu.kit.informatik", Enemy.class);
+		return ReflectUtils.loadInstances("edu.kit.informatik", Enemy.class);
 	}
 
 	/**

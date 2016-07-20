@@ -9,11 +9,11 @@ import edu.kit.informatik.ragnarok.visitor.Visitable;
 
 /**
  * This {@link Parser} is used for parsing {@link Vec Vectors}
- * 
+ *
  * @author Angelo Aracri
  *
  */
-public class VecParser implements Parser {
+public final class VecParser implements Parser {
 	@Override
 	public boolean parse(Visitable obj, Field field, String definition) throws Exception {
 		if (!Parser.super.parse(obj, field, definition)) {
@@ -25,11 +25,11 @@ public class VecParser implements Parser {
 			System.err.println("BundleHelper: " + definition + " is no Vec");
 			return false;
 		}
-		
+
 		// TODO Use actual FloatParser
 		float x = Float.parseFloat(matcher.group(1));
 		float y = Float.parseFloat(matcher.group(2));
-		
+
 		field.set(obj, new Vec(x, y));
 		return true;
 	}

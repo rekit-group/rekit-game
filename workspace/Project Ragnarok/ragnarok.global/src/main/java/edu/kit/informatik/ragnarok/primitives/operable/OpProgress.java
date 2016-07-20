@@ -1,6 +1,6 @@
 package edu.kit.informatik.ragnarok.primitives.operable;
 
-public class OpProgress<T extends Operable<T>> {
+public final class OpProgress<T extends Operable<T>> {
 
 	private boolean isStatic = false;
 

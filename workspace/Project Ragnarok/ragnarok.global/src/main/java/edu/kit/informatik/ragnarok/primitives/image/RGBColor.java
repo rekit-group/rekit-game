@@ -9,7 +9,7 @@ import edu.kit.informatik.ragnarok.primitives.operable.Operable;
  * @author Angelo Aracri
  *
  */
-public class RGBColor implements Cloneable, Operable<RGBColor> {
+public final class RGBColor implements Cloneable, Operable<RGBColor> {
 	/**
 	 * The red channel
 	 */

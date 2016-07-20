@@ -68,7 +68,7 @@ public enum Direction {
 
 	/**
 	 * Get the opposite direction to a direction
-	 * 
+	 *
 	 * @param dir
 	 *            the direction
 	 *
