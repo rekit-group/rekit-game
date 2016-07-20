@@ -220,7 +220,7 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	}
 	
 	public float getAngleTo(Vec other) {
-		return (float)Math.atan2(other.y - this.y, other.x - this.x);
+		return (float)Math.atan2(other.x - this.x, other.y - this.y);
 	}
 
 	public Vec rotate(double angle, Vec relative) {

@@ -1,0 +1,24 @@
+#SETTING::shuffle->false
+#SETTING::doGaps->false
+#SETTING::infinite->false
+#SETTING::autoCoinSpawn->false
+
+#ALIAS::1->edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate
+#ALIAS::10->edu.kit.informatik.ragnarok.logic.gameelements.entities.pickups.Coin
+#ALIAS::80->edu.kit.informatik.ragnarok.logic.gameelements.inanimate.ToggleBox
+#ALIAS::85->edu.kit.informatik.ragnarok.logic.gameelements.inanimate.BoostBox
+#ALIAS::86->edu.kit.informatik.ragnarok.logic.gameelements.inanimate.ClimbUpBox
+
+#ALIAS::20->edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.canon.Canon
+
+{ 
+{0	0	0	1	1	1	0	0	0}
+{0	0	0	0	20	0	0	0	0}
+{0	0	0	0	0	0	0	0	0}
+{0	0	0	0	0	0	0	0	0}
+{0	0	0	0	0	0	0	0	0}
+{0	0	0	0	0	0	0	0	0}
+{0	0	0	0	0	0	0	0	0}
+{0	0	0	0	0	0	0	0	0}
+{1	1	1	1	1	1	1	1	1}
+}

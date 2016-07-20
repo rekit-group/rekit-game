@@ -8,6 +8,10 @@ public abstract class State {
 	protected StateMachine parent;
 	protected Timer timer;
 	
+	public State() {
+		this.timer = new Timer(getTimerTime());
+	}
+	
 	public void enter(StateMachine parent) {
 		this.parent = parent;
 	}
@@ -18,7 +22,7 @@ public abstract class State {
 	
 	public float getTargetAngle() {
 		// default: return DOWN
-		return (float)Math.PI;
+		return 0;
 	}
 	
 	public void logicLoop(float deltaTime) {
@@ -29,5 +33,7 @@ public abstract class State {
 	}
 	
 	public abstract State getNextState();
+	
+	public abstract float getTimerTime();
 	
 }
