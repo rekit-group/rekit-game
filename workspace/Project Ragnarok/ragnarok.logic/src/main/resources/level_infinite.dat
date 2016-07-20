@@ -15,7 +15,7 @@
 #ALIAS::12->edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.Rocket
 #ALIAS::13->edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.Stacker
 #ALIAS::14->edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.Warper
-#ALIAS::15->edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.Slurp
+#ALIAS::15->edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.slurp.Slurp
 
 { 
 {1}
