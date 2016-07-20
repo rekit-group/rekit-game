@@ -1,4 +1,4 @@
-package edu.kit.informatik.ragnarok.primitives;
+package edu.kit.informatik.ragnarok.primitives.geometry;
 
 import java.util.Iterator;
 import java.util.LinkedList;

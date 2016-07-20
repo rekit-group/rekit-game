@@ -37,9 +37,8 @@ public final class ReflectUtils {
 	 */
 	@SuppressWarnings("unchecked")
 	public static final <T> Set<T> get(String searchPath, Class<T> type) {
-		Set<Class<? extends T>> classes = new Reflections(searchPath).getSubTypesOf(type);
 		Set<T> objects = new HashSet<>();
-		for (Class<?> clazz : classes) {
+		for (Class<?> clazz : ReflectUtils.getClasses(searchPath, type)) {
 			if (Modifier.isAbstract(clazz.getModifiers()) || clazz.getAnnotation(LoadMe.class) == null) {
 				continue;
 			}

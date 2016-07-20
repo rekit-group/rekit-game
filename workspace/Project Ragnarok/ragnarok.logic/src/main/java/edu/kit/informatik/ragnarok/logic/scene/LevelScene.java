@@ -19,9 +19,9 @@ import edu.kit.informatik.ragnarok.logic.parallax.HeapElementMountain;
 import edu.kit.informatik.ragnarok.logic.parallax.HeapLayer;
 import edu.kit.informatik.ragnarok.logic.parallax.ParallaxContainer;
 import edu.kit.informatik.ragnarok.logic.parallax.TriangulationLayer;
-import edu.kit.informatik.ragnarok.primitives.Direction;
-import edu.kit.informatik.ragnarok.primitives.Frame;
-import edu.kit.informatik.ragnarok.primitives.Vec;
+import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
+import edu.kit.informatik.ragnarok.primitives.geometry.Frame;
+import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.util.ThreadUtils;
 
 /**

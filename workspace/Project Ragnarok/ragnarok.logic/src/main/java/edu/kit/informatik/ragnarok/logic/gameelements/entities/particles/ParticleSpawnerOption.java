@@ -1,7 +1,7 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities.particles;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
-import edu.kit.informatik.ragnarok.primitives.Progress;
+import edu.kit.informatik.ragnarok.primitives.time.Progress;
 
 /**
  * Represents an option for a <i>ProgressDependency</i>. A ProgressDependency

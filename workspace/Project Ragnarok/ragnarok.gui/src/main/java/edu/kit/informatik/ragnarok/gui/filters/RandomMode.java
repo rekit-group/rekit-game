@@ -1,8 +1,8 @@
 package edu.kit.informatik.ragnarok.gui.filters;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
-import edu.kit.informatik.ragnarok.util.RGBAColor;
-import edu.kit.informatik.ragnarok.util.RGBColor;
+import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
+import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
 
 public class RandomMode implements Filter {
 	private Integer[] map = new Integer[256 << 16];

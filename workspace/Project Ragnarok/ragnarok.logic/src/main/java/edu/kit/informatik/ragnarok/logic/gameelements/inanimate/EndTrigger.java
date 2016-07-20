@@ -6,8 +6,8 @@ import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawner;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
-import edu.kit.informatik.ragnarok.primitives.Vec;
-import edu.kit.informatik.ragnarok.util.RGBAColor;
+import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
+import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
 
 public class EndTrigger extends InanimateTrigger {
 

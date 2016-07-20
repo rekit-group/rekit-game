@@ -1,8 +1,8 @@
 package edu.kit.informatik.ragnarok.logic.parallax;
 
 import edu.kit.informatik.ragnarok.logic.Field;
-import edu.kit.informatik.ragnarok.primitives.Vec;
-import edu.kit.informatik.ragnarok.util.RGBAColor;
+import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
+import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
 
 public abstract class HeapElement extends BackgroundElement {
 

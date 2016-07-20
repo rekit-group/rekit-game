@@ -1,8 +1,8 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.type;
 
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
-import edu.kit.informatik.ragnarok.primitives.Vec;
-import edu.kit.informatik.ragnarok.util.RGBAColor;
+import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
+import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
 
 public abstract class DynamicInanimate extends Inanimate {
 

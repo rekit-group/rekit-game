@@ -1,4 +1,4 @@
-package edu.kit.informatik.ragnarok.primitives;
+package edu.kit.informatik.ragnarok.primitives.time;
 
 /**
  * Data class that holds an duration time

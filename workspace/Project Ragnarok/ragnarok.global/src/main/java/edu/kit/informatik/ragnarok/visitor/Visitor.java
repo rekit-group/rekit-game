@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import edu.kit.informatik.ragnarok.util.RGBColor;
+import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
 import edu.kit.informatik.ragnarok.util.ReflectUtils;
 import edu.kit.informatik.ragnarok.visitor.parser.FloatParser;
 import edu.kit.informatik.ragnarok.visitor.parser.IntParser;

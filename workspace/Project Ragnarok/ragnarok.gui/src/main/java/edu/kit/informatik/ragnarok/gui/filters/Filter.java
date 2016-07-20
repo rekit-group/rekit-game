@@ -2,9 +2,9 @@ package edu.kit.informatik.ragnarok.gui.filters;
 
 import java.util.Set;
 
-import edu.kit.informatik.ragnarok.primitives.AbstractImage;
-import edu.kit.informatik.ragnarok.util.RGBAColor;
-import edu.kit.informatik.ragnarok.util.RGBColor;
+import edu.kit.informatik.ragnarok.primitives.image.AbstractImage;
+import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
+import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
 import edu.kit.informatik.ragnarok.util.ReflectUtils;
 
 public interface Filter {

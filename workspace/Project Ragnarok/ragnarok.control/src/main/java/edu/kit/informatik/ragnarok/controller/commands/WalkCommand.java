@@ -2,8 +2,8 @@ package edu.kit.informatik.ragnarok.controller.commands;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
-import edu.kit.informatik.ragnarok.primitives.Direction;
-import edu.kit.informatik.ragnarok.primitives.Vec;
+import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
+import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 
 /**
  * This {@link InputCommand} will cause a Walk of an {@link Entity}

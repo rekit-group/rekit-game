@@ -12,7 +12,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.type.DynamicInanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Enemy;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Pickup;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
-import edu.kit.informatik.ragnarok.primitives.Vec;
+import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 
 public class GameElementFactory {
 

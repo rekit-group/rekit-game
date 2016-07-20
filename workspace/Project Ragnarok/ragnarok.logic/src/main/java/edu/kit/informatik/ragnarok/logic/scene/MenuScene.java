@@ -8,7 +8,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.gui.menu.MenuGrid;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.menu.MenuItem;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.menu.MenuSubMenu;
 import edu.kit.informatik.ragnarok.logic.level.LevelManager;
-import edu.kit.informatik.ragnarok.primitives.Vec;
+import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 
 public class MenuScene extends Scene {
 

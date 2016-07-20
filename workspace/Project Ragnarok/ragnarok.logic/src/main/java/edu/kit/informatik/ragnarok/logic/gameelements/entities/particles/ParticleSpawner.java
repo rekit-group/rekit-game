@@ -2,8 +2,8 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities.particles;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
-import edu.kit.informatik.ragnarok.primitives.Polygon;
-import edu.kit.informatik.ragnarok.primitives.Vec;
+import edu.kit.informatik.ragnarok.primitives.geometry.Polygon;
+import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 
 /**
  *

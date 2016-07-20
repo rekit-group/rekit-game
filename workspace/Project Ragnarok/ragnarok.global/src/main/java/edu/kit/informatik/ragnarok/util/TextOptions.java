@@ -1,6 +1,7 @@
 package edu.kit.informatik.ragnarok.util;
 
-import edu.kit.informatik.ragnarok.primitives.Vec;
+import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
+import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
 
 public class TextOptions implements Cloneable {
 

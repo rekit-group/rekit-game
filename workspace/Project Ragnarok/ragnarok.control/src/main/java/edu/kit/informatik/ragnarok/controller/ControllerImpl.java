@@ -19,7 +19,7 @@ import edu.kit.informatik.ragnarok.logic.GameState;
 import edu.kit.informatik.ragnarok.logic.Model;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.menu.MenuItem;
-import edu.kit.informatik.ragnarok.primitives.Direction;
+import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
 import edu.kit.informatik.ragnarok.util.InputHelper;
 import edu.kit.informatik.ragnarok.util.Tuple;
 

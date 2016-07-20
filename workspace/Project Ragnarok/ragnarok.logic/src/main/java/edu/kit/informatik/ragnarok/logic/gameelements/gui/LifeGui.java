@@ -3,7 +3,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.gui;
 import edu.kit.informatik.ragnarok.logic.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
-import edu.kit.informatik.ragnarok.primitives.Vec;
+import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 
 /**
  *

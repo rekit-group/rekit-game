@@ -1,4 +1,4 @@
-package edu.kit.informatik.ragnarok.primitives;
+package edu.kit.informatik.ragnarok.primitives.time;
 
 /**
  * Data class that holds an <i>start</i> and an <i>end</i> float. It can return

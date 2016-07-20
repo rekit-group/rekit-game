@@ -2,7 +2,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.gui;
 
 import edu.kit.informatik.ragnarok.logic.Field;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
-import edu.kit.informatik.ragnarok.primitives.TimeDependency;
+import edu.kit.informatik.ragnarok.primitives.time.TimeDependency;
 
 /**
  *

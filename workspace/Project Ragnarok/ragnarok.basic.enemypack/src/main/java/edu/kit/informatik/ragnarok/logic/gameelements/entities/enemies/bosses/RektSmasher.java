@@ -9,9 +9,9 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.RektKille
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Boss;
 import edu.kit.informatik.ragnarok.logic.level.bossstructure.BossStructure;
-import edu.kit.informatik.ragnarok.primitives.Direction;
-import edu.kit.informatik.ragnarok.primitives.Frame;
-import edu.kit.informatik.ragnarok.primitives.Vec;
+import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
+import edu.kit.informatik.ragnarok.primitives.geometry.Frame;
+import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 import edu.kit.informatik.ragnarok.util.ThreadUtils;
 

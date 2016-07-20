@@ -1,4 +1,4 @@
-package edu.kit.informatik.ragnarok.primitives;
+package edu.kit.informatik.ragnarok.primitives.image;
 
 /**
  * This class represents an abstract version of an Image

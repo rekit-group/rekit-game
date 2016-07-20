@@ -1,8 +1,8 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.slurp;
 
 import edu.kit.informatik.ragnarok.logic.Field;
-import edu.kit.informatik.ragnarok.primitives.Vec;
-import edu.kit.informatik.ragnarok.util.RGBColor;
+import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
+import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
 
 /**
  * Simple data-holding class that represents a component of the visualization

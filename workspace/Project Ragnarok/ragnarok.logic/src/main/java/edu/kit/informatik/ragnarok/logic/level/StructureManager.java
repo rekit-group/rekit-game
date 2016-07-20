@@ -19,7 +19,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.type.Boss;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Enemy;
 import edu.kit.informatik.ragnarok.logic.level.bossstructure.BossStructure;
 import edu.kit.informatik.ragnarok.logic.level.parser.LevelParser;
-import edu.kit.informatik.ragnarok.primitives.Vec;
+import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 
 /**
  * <p>

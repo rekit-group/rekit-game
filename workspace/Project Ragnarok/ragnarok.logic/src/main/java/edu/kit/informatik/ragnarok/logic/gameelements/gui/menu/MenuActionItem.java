@@ -1,7 +1,7 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.gui.menu;
 
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
-import edu.kit.informatik.ragnarok.primitives.Vec;
+import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 
 /**
  *

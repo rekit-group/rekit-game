@@ -1,4 +1,4 @@
-package edu.kit.informatik.ragnarok.util;
+package edu.kit.informatik.ragnarok.primitives.image;
 
 /**
  * This class defines a Color with RGBA channels

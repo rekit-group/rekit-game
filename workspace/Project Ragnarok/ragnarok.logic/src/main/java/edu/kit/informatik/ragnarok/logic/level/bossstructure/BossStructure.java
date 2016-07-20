@@ -15,9 +15,9 @@ import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateTrigger
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Boss;
 import edu.kit.informatik.ragnarok.logic.level.Structure;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
-import edu.kit.informatik.ragnarok.primitives.Progress;
-import edu.kit.informatik.ragnarok.primitives.TimeDependency;
-import edu.kit.informatik.ragnarok.primitives.Vec;
+import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
+import edu.kit.informatik.ragnarok.primitives.time.Progress;
+import edu.kit.informatik.ragnarok.primitives.time.TimeDependency;
 import edu.kit.informatik.ragnarok.util.CalcUtil;
 import edu.kit.informatik.ragnarok.util.TextOptions;
 import edu.kit.informatik.ragnarok.util.ThreadUtils;

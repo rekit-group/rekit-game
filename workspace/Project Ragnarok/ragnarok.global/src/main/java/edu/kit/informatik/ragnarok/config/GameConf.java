@@ -2,8 +2,8 @@ package edu.kit.informatik.ragnarok.config;
 
 import java.util.Random;
 
-import edu.kit.informatik.ragnarok.primitives.Vec;
-import edu.kit.informatik.ragnarok.util.RGBColor;
+import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
+import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
 import edu.kit.informatik.ragnarok.util.TextOptions;
 import edu.kit.informatik.ragnarok.visitor.AfterVisit;
 import edu.kit.informatik.ragnarok.visitor.NoVisit;

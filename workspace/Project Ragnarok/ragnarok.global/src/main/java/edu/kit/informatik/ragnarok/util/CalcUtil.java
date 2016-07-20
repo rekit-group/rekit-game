@@ -1,7 +1,7 @@
 package edu.kit.informatik.ragnarok.util;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
-import edu.kit.informatik.ragnarok.primitives.Vec;
+import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 
 /**
  * This class contains several methods to calculate between units

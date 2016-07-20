@@ -7,6 +7,9 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 
+import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
+import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
+
 /**
  * This class contains several tools for working with SWT
  *

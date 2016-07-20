@@ -3,12 +3,12 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities.particles;
 import edu.kit.informatik.ragnarok.logic.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.Team;
-import edu.kit.informatik.ragnarok.primitives.Direction;
-import edu.kit.informatik.ragnarok.primitives.Polygon;
-import edu.kit.informatik.ragnarok.primitives.Progress;
-import edu.kit.informatik.ragnarok.primitives.TimeDependency;
-import edu.kit.informatik.ragnarok.primitives.Vec;
-import edu.kit.informatik.ragnarok.util.RGBAColor;
+import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
+import edu.kit.informatik.ragnarok.primitives.geometry.Polygon;
+import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
+import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
+import edu.kit.informatik.ragnarok.primitives.time.Progress;
+import edu.kit.informatik.ragnarok.primitives.time.TimeDependency;
 
 /**
  * A simple GameElement with no collision and only with graphical effects. Every
