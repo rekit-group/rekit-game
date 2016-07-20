@@ -34,10 +34,10 @@ public class Stacker extends Enemy {
 		elements = new LinkedList<>();
 		
 		// This will be used to calculate positions recursively
-		Vec rel = new Vec(0, new StackerElement(new Vec(), 0).getSize().getY() / 2);
+		Vec rel = new Vec(0, 0.5f - new StackerElement(new Vec(), 0).getSize().getY() / 2);
 		
 		// creation loop
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 3; i++) {
 			StackerElement elem = new StackerElement(rel, i);
 			rel = rel.addY(-elem.getSize().getY() - 0.02f);
 			elements.add(elem);
@@ -62,13 +62,17 @@ public class Stacker extends Enemy {
 	private class StackerElement extends Enemy {
 		
 		private Vec relPos;
-		private final RGBAColor col = new RGBAColor(255, 255, 0, 255);
+		private final RGBAColor col = new RGBAColor(249, 185, 22, 255);
 		private final int offset;
+		
+		private final int faceId;
 				
 		StackerElement (Vec relPos, int offset) {
-			super(Stacker.this.getPos().add(relPos), new Vec(), new Vec(0.45f));
+			super(Stacker.this.getPos().add(relPos), new Vec(), new Vec(0.76f));
 			this.relPos = relPos;
 			this.offset = offset;
+			
+			this.faceId = GameConf.PRNG.nextInt(5) + 1;
 		}
 		
 		@Override
@@ -85,6 +89,7 @@ public class Stacker extends Enemy {
 		@Override
 		public void internalRender(Field f) {
 			f.drawCircle(this.getPos(), this.getSize(), this.col);
+			f.drawImage(this.getPos(), this.getSize(), "stacker/stackerFaces_0" + this.faceId + ".png");
 		}
 		
 		@Override
