@@ -10,7 +10,7 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
 import edu.kit.informatik.ragnarok.primitives.geometry.Frame;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
-import edu.kit.informatik.ragnarok.primitives.time.TimeDependency;
+import edu.kit.informatik.ragnarok.primitives.time.Timer;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 import edu.kit.informatik.ragnarok.visitor.NoVisit;
 import edu.kit.informatik.ragnarok.visitor.VisitInfo;
@@ -33,7 +33,7 @@ public class Warper extends Enemy implements Visitable {
 	 * The time between the next jump (to next position)
 	 */
 	@NoVisit
-	private TimeDependency warpAction = new TimeDependency(Warper.WARPER_WARP_DELTA);
+	private Timer warpAction = new Timer(Warper.WARPER_WARP_DELTA);
 
 	/**
 	 * The particles of the warper

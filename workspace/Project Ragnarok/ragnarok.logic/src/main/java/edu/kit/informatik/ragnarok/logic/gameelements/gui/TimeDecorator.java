@@ -2,7 +2,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.gui;
 
 import edu.kit.informatik.ragnarok.logic.Field;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
-import edu.kit.informatik.ragnarok.primitives.time.TimeDependency;
+import edu.kit.informatik.ragnarok.primitives.time.Timer;
 
 /**
  *
@@ -18,7 +18,7 @@ public class TimeDecorator extends GuiElement {
 	/**
 	 * The timer
 	 */
-	private TimeDependency timer;
+	private Timer timer;
 
 	/**
 	 * Create a TimeDecorator
@@ -30,7 +30,7 @@ public class TimeDecorator extends GuiElement {
 	 * @param timer
 	 *            the timer
 	 */
-	public TimeDecorator(Scene scene, GuiElement element, TimeDependency timer) {
+	public TimeDecorator(Scene scene, GuiElement element, Timer timer) {
 		super(scene);
 		this.element = element;
 		this.timer = timer;

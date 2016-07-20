@@ -17,7 +17,7 @@ import edu.kit.informatik.ragnarok.logic.level.Structure;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.time.Progress;
-import edu.kit.informatik.ragnarok.primitives.time.TimeDependency;
+import edu.kit.informatik.ragnarok.primitives.time.Timer;
 import edu.kit.informatik.ragnarok.util.CalcUtil;
 import edu.kit.informatik.ragnarok.util.TextOptions;
 import edu.kit.informatik.ragnarok.util.ThreadUtils;
@@ -121,7 +121,7 @@ public class BossStructure extends Structure {
 			Text bossText = new Text(scene, op);
 			bossText.setText(BossStructure.this.boss.getName());
 			bossText.setPos(CalcUtil.units2pixel(new Vec(GameConf.GRID_W / 2f, GameConf.GRID_H / 2f)));
-			TimeDecorator bossTextGui = new TimeDecorator(scene, bossText, new TimeDependency(3));
+			TimeDecorator bossTextGui = new TimeDecorator(scene, bossText, new Timer(3));
 			scene.addGuiElement(bossTextGui);
 		});
 
@@ -130,7 +130,7 @@ public class BossStructure extends Structure {
 	public void endBattle(Scene scene) {
 		final Player player = scene.getPlayer();
 
-		final TimeDependency timer = new TimeDependency(7f);
+		final Timer timer = new Timer(7f);
 
 		// Needed for animating camera movement
 		Progress cameraMover = new Progress(this.cameraTarget - GameConf.PLAYER_CAMERA_OFFSET,

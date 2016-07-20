@@ -6,7 +6,7 @@ package edu.kit.informatik.ragnarok.primitives.time;
  * @author Angelo Aracri
  * @version 1.0
  */
-public class TimeDependency {
+public class Timer {
 	/**
 	 * The duration
 	 */
@@ -22,7 +22,7 @@ public class TimeDependency {
 	 * @param duration
 	 *            the duration time
 	 */
-	public TimeDependency(float duration) {
+	public Timer(float duration) {
 		this.duration = duration;
 		this.timeLeft = duration;
 	}

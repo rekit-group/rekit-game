@@ -12,7 +12,7 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Frame;
 import edu.kit.informatik.ragnarok.primitives.geometry.Polygon;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
-import edu.kit.informatik.ragnarok.primitives.time.TimeDependency;
+import edu.kit.informatik.ragnarok.primitives.time.Timer;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 import edu.kit.informatik.ragnarok.visitor.AfterVisit;
 import edu.kit.informatik.ragnarok.visitor.NoVisit;
@@ -90,7 +90,7 @@ public class Rocket extends Enemy implements Visitable {
 	 * The timer of the particles
 	 */
 	@NoVisit
-	private TimeDependency paricleTimer;
+	private Timer paricleTimer;
 
 	/**
 	 * Create a rocket by start position
@@ -100,7 +100,7 @@ public class Rocket extends Enemy implements Visitable {
 	 */
 	public Rocket(Vec startPos) {
 		super(startPos, new Vec(), new Vec(1.8f, 0.5f));
-		this.paricleTimer = new TimeDependency(Rocket.PARTICLE_SPAWN_TIME);
+		this.paricleTimer = new Timer(Rocket.PARTICLE_SPAWN_TIME);
 	}
 
 	@Override

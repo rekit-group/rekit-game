@@ -11,7 +11,7 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
 import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
-import edu.kit.informatik.ragnarok.primitives.time.TimeDependency;
+import edu.kit.informatik.ragnarok.primitives.time.Timer;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 
 /**
@@ -57,7 +57,7 @@ public class ClimbUpBox extends DynamicInanimate {
 	/**
 	 * The timer (how long climb enables?)
 	 */
-	private TimeDependency timer;
+	private Timer timer;
 	/**
 	 * The particles of the ClimbUpBox
 	 */
@@ -102,7 +102,7 @@ public class ClimbUpBox extends DynamicInanimate {
 		this.strategies = new ClimbBoxStrategy[] { new NoClimb(this), new BoostClimb(this) };
 
 		this.offset = offset;
-		this.timer = new TimeDependency(ClimbUpBox.PERIOD);
+		this.timer = new Timer(ClimbUpBox.PERIOD);
 	}
 
 	/**

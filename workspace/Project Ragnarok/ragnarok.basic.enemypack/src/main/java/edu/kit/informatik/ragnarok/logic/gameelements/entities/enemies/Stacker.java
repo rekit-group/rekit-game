@@ -11,7 +11,7 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
 import edu.kit.informatik.ragnarok.primitives.operable.OpProgress;
-import edu.kit.informatik.ragnarok.primitives.time.TimeDependency;
+import edu.kit.informatik.ragnarok.primitives.time.Timer;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 import edu.kit.informatik.ragnarok.visitor.AfterVisit;
 import edu.kit.informatik.ragnarok.visitor.NoVisit;
@@ -73,7 +73,6 @@ public class Stacker extends Enemy implements Visitable {
 	
 	@AfterVisit
 	private static void afterVisit() {
-		System.out.println(SIZE_REGULAR + " -> "+ SIZE_DYING);
 		dimensions = new OpProgress<>(SIZE_REGULAR, SIZE_DYING);
 	}
 
@@ -99,7 +98,7 @@ public class Stacker extends Enemy implements Visitable {
 		
 		private final int faceId;
 		
-		private TimeDependency timeToDie;
+		private Timer timeToDie;
 				
 		StackerElement (Vec relPos, int offset) {
 			super(Stacker.this.getPos().add(relPos), new Vec(), dimensions.getNow(0));
@@ -158,7 +157,7 @@ public class Stacker extends Enemy implements Visitable {
 		
 		public void customDie() {
 			if (this.offset == Stacker.this.highestOffset) {
-				this.timeToDie = new TimeDependency(DIE_ANIMATION_TIME);
+				this.timeToDie = new Timer(DIE_ANIMATION_TIME);
 				Stacker.this.highestOffset --;
 			}
 		}

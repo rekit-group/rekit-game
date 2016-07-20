@@ -8,7 +8,7 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Polygon;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
 import edu.kit.informatik.ragnarok.primitives.time.Progress;
-import edu.kit.informatik.ragnarok.primitives.time.TimeDependency;
+import edu.kit.informatik.ragnarok.primitives.time.Timer;
 
 /**
  * A simple GameElement with no collision and only with graphical effects. Every
@@ -62,7 +62,7 @@ public class Particle extends GameElement {
 	/**
 	 * The lifetime timer of the particle
 	 */
-	private TimeDependency timer;
+	private Timer timer;
 	/**
 	 * The current color
 	 */
@@ -121,7 +121,7 @@ public class Particle extends GameElement {
 		this.colorA = colorA;
 
 		// create timer to get progress between 0 and 1 relative to time
-		this.timer = new TimeDependency(lifeTime);
+		this.timer = new Timer(lifeTime);
 
 		// set position
 		this.setPos(pos.clone());

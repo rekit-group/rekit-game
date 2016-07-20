@@ -12,7 +12,7 @@ import edu.kit.informatik.ragnarok.logic.scene.LevelScene;
 import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
 import edu.kit.informatik.ragnarok.primitives.geometry.Frame;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
-import edu.kit.informatik.ragnarok.primitives.time.TimeDependency;
+import edu.kit.informatik.ragnarok.primitives.time.Timer;
 
 /**
  * This class represents one of the most important {@link GameElement}-Type:<br>
@@ -40,10 +40,10 @@ public abstract class Entity extends GameElement {
 	 */
 	protected EntityState entityState;
 	/**
-	 * This {@link TimeDependency} defines invincibility of an {@link Entity}
+	 * This {@link Timer} defines invincibility of an {@link Entity}
 	 * ({@code null} --> not invincible)
 	 */
-	protected TimeDependency invincibility = null;
+	protected Timer invincibility = null;
 
 	/**
 	 * Minimal Constructor by {@link Team} used for prototype constructors The
@@ -106,7 +106,7 @@ public abstract class Entity extends GameElement {
 		}
 		this.lives -= damage;
 		if (damage > 0) {
-			this.invincibility = new TimeDependency(2);
+			this.invincibility = new Timer(2);
 		}
 		if (this.lives <= 0) {
 			this.lives = 0;

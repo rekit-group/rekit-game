@@ -11,7 +11,7 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
 import edu.kit.informatik.ragnarok.primitives.geometry.Polygon;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
-import edu.kit.informatik.ragnarok.primitives.time.TimeDependency;
+import edu.kit.informatik.ragnarok.primitives.time.Timer;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 
 /**
@@ -37,7 +37,7 @@ public class MovingBox extends DynamicInanimate {
 	/**
 	 * A timer for the direction change of the platform
 	 */
-	private TimeDependency timer;
+	private Timer timer;
 	/**
 	 * The current start of the platform
 	 */
@@ -114,7 +114,7 @@ public class MovingBox extends DynamicInanimate {
 
 		// initialize movement timer
 		float period = dist / (2 * MovingBox.SPEED);
-		this.timer = new TimeDependency(period);
+		this.timer = new Timer(period);
 		this.timer.removeTime(offset ? period / 2f : 0);
 	}
 
