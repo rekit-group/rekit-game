@@ -42,18 +42,26 @@ class ControllerImpl implements Observer, Controller, CommandSupervisor {
 	/**
 	 * The model
 	 */
-	private Model model;
+	private final Model model;
+	/**
+	 * The view
+	 */
+	private final View view;
 
 	/**
 	 * Instantiate the Controller
 	 *
 	 * @param model
 	 *            the model
+	 * @param view
+	 *            the view
 	 */
-	public ControllerImpl(Model model) {
+	public ControllerImpl(Model model, View view) {
 		this.mpCmd = new HashMap<>();
 		this.helper = new InputHelperImpl();
 		this.model = model;
+		this.view = view;
+		this.init();
 	}
 
 	/**
@@ -62,7 +70,7 @@ class ControllerImpl implements Observer, Controller, CommandSupervisor {
 	 * @param view
 	 *            the view
 	 */
-	private void init(View view) {
+	private void init() {
 		// Menu
 		this.mpCmd.put(Tuple.create(GameState.MENU, InputHelper.ESCAPE), new MenuCommand(this, MenuCommand.Dir.BACK));
 		this.mpCmd.put(Tuple.create(GameState.MENU, InputHelper.ENTER), new MenuCommand(this, MenuCommand.Dir.SELECT));
@@ -77,10 +85,10 @@ class ControllerImpl implements Observer, Controller, CommandSupervisor {
 		this.mpCmd.put(Tuple.create(GameState.INGAME, InputHelper.ARROW_RIGHT), new WalkCommand(this, Direction.RIGHT));
 
 		// Filter Commands ... a test ('u', 'i', 'o' and 'p' key)
-		this.mpCmd.put(Tuple.create(null, 117), new FilterCommand(true, view, new RandomMode()));
-		this.mpCmd.put(Tuple.create(null, 105), new FilterCommand(true, view, new InvertedMode()));
-		this.mpCmd.put(Tuple.create(null, 111), new FilterCommand(true, view, new GrayScaleMode()));
-		this.mpCmd.put(Tuple.create(null, 112), new FilterCommand(false, view, null));
+		this.mpCmd.put(Tuple.create(null, 117), new FilterCommand(true, this.view, new RandomMode()));
+		this.mpCmd.put(Tuple.create(null, 105), new FilterCommand(true, this.view, new InvertedMode()));
+		this.mpCmd.put(Tuple.create(null, 111), new FilterCommand(true, this.view, new GrayScaleMode()));
+		this.mpCmd.put(Tuple.create(null, 112), new FilterCommand(false, this.view, null));
 
 	}
 
@@ -107,9 +115,8 @@ class ControllerImpl implements Observer, Controller, CommandSupervisor {
 	}
 
 	@Override
-	public void start(View view) {
-		this.init(view);
-		this.helper.initialize(view);
+	public void start() {
+		this.helper.initialize(this.view);
 		this.helper.register(this);
 	}
 

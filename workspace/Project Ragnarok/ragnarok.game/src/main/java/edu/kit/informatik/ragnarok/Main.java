@@ -28,16 +28,15 @@ public class Main {
 		// Create MVC
 		// Set References:
 		// V----> M <----C
+		// ^-------------|
 
 		Model model = Model.getModel();
 		View view = View.getView(model);
-		Controller controller = Controller.getController(model);
+		Controller controller = Controller.getController(model, view);
 
 		// Start MVC
 		model.start();
-
-		// Instantiate InputHelper that requires a shell
-		controller.start(view);
+		controller.start();
 		view.start();
 
 	}

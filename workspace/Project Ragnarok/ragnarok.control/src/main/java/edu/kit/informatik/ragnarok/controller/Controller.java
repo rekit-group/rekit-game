@@ -17,8 +17,8 @@ public interface Controller {
 	 *            the model
 	 * @return the controller
 	 */
-	static Controller getController(Model model) {
-		return new ControllerImpl(model);
+	static Controller getController(Model model, View view) {
+		return new ControllerImpl(model, view);
 	}
 
 	/**
@@ -27,6 +27,6 @@ public interface Controller {
 	 * @param view
 	 *            the view to attach all controls
 	 */
-	void start(View view);
+	void start();
 
 }
