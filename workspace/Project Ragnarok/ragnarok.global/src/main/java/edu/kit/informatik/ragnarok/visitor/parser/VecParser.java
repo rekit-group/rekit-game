@@ -25,7 +25,8 @@ public class VecParser implements Parser {
 			System.err.println("BundleHelper: " + definition + " is no Vec");
 			return false;
 		}
-
+		
+		// TODO Use actual FloatParser
 		float x = Float.parseFloat(matcher.group(1));
 		float y = Float.parseFloat(matcher.group(2));
 		
