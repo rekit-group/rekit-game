@@ -1,7 +1,6 @@
 package edu.kit.informatik.ragnarok.util;
 
 import edu.kit.informatik.ragnarok.primitives.operable.Operable;
-import edu.kit.informatik.ragnarok.primitives.operable.Operator;
 
 /**
  * This class defines a Color with RGB channels
@@ -10,7 +9,7 @@ import edu.kit.informatik.ragnarok.primitives.operable.Operator;
  * @author Angelo Aracri
  *
  */
-public class RGBColor implements Cloneable, Operator<RGBColor>, Operable<RGBColor> {
+public class RGBColor implements Cloneable, Operable<RGBColor> {
 	/**
 	 * The red channel
 	 */
@@ -83,26 +82,21 @@ public class RGBColor implements Cloneable, Operator<RGBColor>, Operable<RGBColo
 
 	@Override
 	public RGBColor multiply(RGBColor other) {
-		return new RGBColor((int) (this.red * other.red), (int) (this.green * other.green), (int) (this.blue * other.blue));
+		return new RGBColor(this.red * other.red, this.green * other.green, this.blue * other.blue);
 	}
 
 	@Override
 	public RGBColor add(RGBColor other) {
-		return new RGBColor((int) (this.red + other.red), (int) (this.green + other.green), (int) (this.blue + other.blue));
+		return new RGBColor(this.red + other.red, this.green + other.green, this.blue + other.blue);
 	}
 
 	@Override
 	public RGBColor sub(RGBColor other) {
-		return new RGBColor((int) (this.red - other.red), (int) (this.green - other.green), (int) (this.blue - other.blue));
+		return new RGBColor(this.red - other.red, this.green - other.green, this.blue - other.blue);
 	}
 
 	@Override
 	public RGBColor get() {
-		return this;
-	}
-
-	@Override
-	public Operable<RGBColor> getOperable() {
 		return this;
 	}
 

@@ -1,6 +1,6 @@
 package edu.kit.informatik.ragnarok.primitives.operable;
 
-public class OpProgress<T extends Operator<T>> {
+public class OpProgress<T extends Operable<T>> {
 
 	private boolean isStatic = false;
 
@@ -25,7 +25,7 @@ public class OpProgress<T extends Operator<T>> {
 	 */
 	public OpProgress(Operable<T> start, Operable<T> end) {
 		this.start = start;
-		this.delta = end.sub(start.get()).getOperable();
+		this.delta = end.sub(start.get());
 
 		if (start.equals(end)) {
 			this.isStatic = true;
