@@ -31,8 +31,17 @@ public final class Visitor {
 	 * Visit all Classes which shall be visited
 	 */
 	public static final void visitAllStatic() {
+		Visitor.visitAllStatic(Visitor.getNewVisitor());
+	}
+
+	/**
+	 * Visit all Classes which shall be visited
+	 *
+	 * @param visitor
+	 *            the visitor
+	 */
+	public static final void visitAllStatic(Visitor visitor) {
 		Set<Class<? extends Visitable>> toVisit = ReflectUtils.getClasses("edu.kit.informatik", Visitable.class);
-		Visitor visitor = Visitor.getNewVisitor();
 		for (Class<? extends Visitable> v : toVisit) {
 			visitor.visitMeStatic(v);
 		}
@@ -197,7 +206,9 @@ public final class Visitor {
 			if (parser == null) {
 				return;
 			}
-			parser.parse(null, field, bundle.getString(field.getName()));
+			if (!parser.parse(null, field, bundle.getString(field.getName()))) {
+				System.err.println("Syntax-Error: Parser rejected content for " + field.getName());
+			}
 
 		} catch (Exception e) {
 			System.err.println("Cannot apply to field: " + field.getName());
@@ -253,7 +264,9 @@ public final class Visitor {
 			if (parser == null) {
 				return;
 			}
-			parser.parse(v, field, bundle.getString(field.getName()));
+			if (!parser.parse(v, field, bundle.getString(field.getName()))) {
+				System.err.println("Syntax-Error: Parser rejected content for " + field.getName());
+			}
 
 		} catch (Exception e) {
 			System.err.println("Cannot apply to field: " + field.getName());

@@ -14,6 +14,10 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
 import edu.kit.informatik.ragnarok.primitives.time.TimeDependency;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
+import edu.kit.informatik.ragnarok.visitor.AfterVisit;
+import edu.kit.informatik.ragnarok.visitor.NoVisit;
+import edu.kit.informatik.ragnarok.visitor.VisitInfo;
+import edu.kit.informatik.ragnarok.visitor.Visitable;
 
 /**
  *
@@ -21,7 +25,8 @@ import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
  *
  */
 @LoadMe
-public class Rocket extends Enemy {
+@VisitInfo(res = "conf/rocket", visit = true)
+public class Rocket extends Enemy implements Visitable {
 	/**
 	 * Prototype Constructor
 	 */
@@ -32,53 +37,59 @@ public class Rocket extends Enemy {
 	/**
 	 * The inner color of the rocket
 	 */
-	private final static RGBColor INNER_COLOR = new RGBColor(90, 90, 90);
+	private static RGBColor INNER_COLOR;
 	/**
 	 * The color of the front
 	 */
-	private final static RGBColor FRONT_COLOR = new RGBColor(150, 30, 30);
+	private static RGBColor FRONT_COLOR;
 
 	/**
 	 * The outer color of the rocket
 	 */
-	private final static RGBColor OUTER_COLOR = new RGBColor(50, 50, 50);
+	private static RGBColor OUTER_COLOR;
 	/**
 	 * The Particles's spawn time
 	 */
-	private final static float PARTICLE_SPAWN_TIME = 0.05f;
+	private static float PARTICLE_SPAWN_TIME;
+
+	// Sparkling particles
+	private static ParticleSpawnerOption colorRSpark;
+	private static ParticleSpawnerOption colorGSpark;
+	private static ParticleSpawnerOption colorBSpark;
+	private static ParticleSpawnerOption colorASpark;
+	private static ParticleSpawnerOption angleSpark;
+	private static float timeMinSpark;
+	private static int amountMinSpark;
+	private static int amountMaxSpark;
+	private static ParticleSpawnerOption speedSpark;
+
+	// Explosion particles
+	private static ParticleSpawnerOption angleExp;
+	private static ParticleSpawnerOption colorRExp;
+	private static ParticleSpawnerOption colorGExp;
+	private static ParticleSpawnerOption colorBExp;
+	private static ParticleSpawnerOption colorAExp;
+	private static float timeMinExp;
+	private static float timeMaxExp;
+	private static int amountMinExp;
+	private static int amountMaxExp;
+	private static ParticleSpawnerOption speedExp;
+
 	/**
-	 * The particle spawner for the rocket
+	 * The particle spawner for the rocket's flight
 	 */
+	@NoVisit
 	private static ParticleSpawner sparkParticles = null;
-	static {
-		Rocket.sparkParticles = new ParticleSpawner();
-		Rocket.sparkParticles.angle = new ParticleSpawnerOption((float) ((1 / 4f) * Math.PI), (float) ((3 / 4f) * Math.PI), 0, 0);
-		Rocket.sparkParticles.colorR = new ParticleSpawnerOption(200, 230, 10, 25);
-		Rocket.sparkParticles.colorG = new ParticleSpawnerOption(200, 250, -140, -120);
-		Rocket.sparkParticles.colorB = new ParticleSpawnerOption(150, 200, -140, -120);
-		Rocket.sparkParticles.colorA = new ParticleSpawnerOption(230, 250, -150, -230);
-		Rocket.sparkParticles.timeMin = 0.1f;
-		Rocket.sparkParticles.amountMin = 1;
-		Rocket.sparkParticles.amountMax = 3;
-		Rocket.sparkParticles.speed = new ParticleSpawnerOption(3, 6, -1, 1);
-	}
+	/**
+	 * The particle spawner for the rocket's explosion
+	 */
+	@NoVisit
 	private static ParticleSpawner explosionParticles = null;
-	static {
-		Rocket.explosionParticles = new ParticleSpawner();
-		Rocket.explosionParticles.angle = new ParticleSpawnerOption(0, (float) (2 * Math.PI), 0, 0);
-		Rocket.explosionParticles.colorR = new ParticleSpawnerOption(200, 230, 10, 25);
-		Rocket.explosionParticles.colorG = new ParticleSpawnerOption(200, 250, -130, -110);
-		Rocket.explosionParticles.colorB = new ParticleSpawnerOption(150, 200, -130, -110);
-		Rocket.explosionParticles.colorA = new ParticleSpawnerOption(230, 250, -120, -200);
-		Rocket.explosionParticles.timeMin = 0.1f;
-		Rocket.explosionParticles.timeMax = 0.2f;
-		Rocket.explosionParticles.amountMin = 40;
-		Rocket.explosionParticles.amountMax = 50;
-		Rocket.explosionParticles.speed = new ParticleSpawnerOption(4, 9, -1, 1);
-	}
+
 	/**
 	 * The timer of the particles
 	 */
+	@NoVisit
 	private TimeDependency paricleTimer;
 
 	/**
@@ -161,6 +172,36 @@ public class Rocket extends Enemy {
 	@Override
 	public Entity create(Vec startPos, String[] options) {
 		return new Rocket(startPos);
+	}
+
+	@AfterVisit
+	private static void afterVisit() {
+		Rocket.sparkParticles = new ParticleSpawner();
+		Rocket.explosionParticles = new ParticleSpawner();
+
+		// Sparkling
+		Rocket.sparkParticles.angle = Rocket.angleSpark;
+		Rocket.sparkParticles.colorR = Rocket.colorRSpark;
+		Rocket.sparkParticles.colorG = Rocket.colorGSpark;
+		Rocket.sparkParticles.colorB = Rocket.colorBSpark;
+		Rocket.sparkParticles.colorA = Rocket.colorASpark;
+		Rocket.sparkParticles.timeMin = Rocket.timeMinSpark;
+		Rocket.sparkParticles.amountMin = Rocket.amountMinSpark;
+		Rocket.sparkParticles.amountMax = Rocket.amountMaxSpark;
+		Rocket.sparkParticles.speed = Rocket.speedSpark;
+
+		// Explosion
+		Rocket.explosionParticles.angle = Rocket.angleExp;
+		Rocket.explosionParticles.colorR = Rocket.colorRExp;
+		Rocket.explosionParticles.colorG = Rocket.colorGExp;
+		Rocket.explosionParticles.colorB = Rocket.colorBExp;
+		Rocket.explosionParticles.colorA = Rocket.colorAExp;
+		Rocket.explosionParticles.timeMin = Rocket.timeMinExp;
+		Rocket.explosionParticles.timeMax = Rocket.timeMaxExp;
+		Rocket.explosionParticles.amountMin = Rocket.amountMinExp;
+		Rocket.explosionParticles.amountMax = Rocket.amountMaxExp;
+		Rocket.explosionParticles.speed = Rocket.speedExp;
+
 	}
 
 }
