@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
 import edu.kit.informatik.ragnarok.util.ReflectUtils;
 import edu.kit.informatik.ragnarok.visitor.parser.FloatParser;
@@ -15,6 +16,7 @@ import edu.kit.informatik.ragnarok.visitor.parser.IntParser;
 import edu.kit.informatik.ragnarok.visitor.parser.Parser;
 import edu.kit.informatik.ragnarok.visitor.parser.RGBColorParser;
 import edu.kit.informatik.ragnarok.visitor.parser.StringParser;
+import edu.kit.informatik.ragnarok.visitor.parser.VecParser;
 
 /**
  * This class supports the setting of Values and/or Attributes to Classes and
@@ -115,6 +117,7 @@ public final class Visitor {
 			this.put(Float.class, new FloatParser());
 			this.put(Float.TYPE, new FloatParser());
 			this.put(RGBColor.class, new RGBColorParser());
+			this.put(Vec.class, new VecParser());
 			this.put(String.class, new StringParser());
 		}
 	};
