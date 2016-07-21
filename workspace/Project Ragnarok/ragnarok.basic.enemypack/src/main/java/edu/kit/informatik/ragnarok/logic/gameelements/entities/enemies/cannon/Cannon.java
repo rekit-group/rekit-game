@@ -100,4 +100,8 @@ public class Cannon extends Enemy implements Visitable, StateMachine {
 		currentState = next;
 	}
 	
+	public void hitSomething() {
+		this.currentState.hitSomething();
+	}
+	
 }

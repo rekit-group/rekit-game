@@ -17,7 +17,7 @@ public abstract class State {
 	}
 	
 	public void leave() {
-	
+		// Do nothing
 	}
 	
 	public float getTargetAngle() {
@@ -26,6 +26,7 @@ public abstract class State {
 	}
 	
 	public float getCannonShake() {
+		// default: no shaking
 		return 0;
 	}
 	
@@ -39,5 +40,9 @@ public abstract class State {
 	public abstract State getNextState();
 	
 	public abstract float getTimerTime();
+	
+	public void hitSomething() {
+		// Do nothing
+	}
 	
 }

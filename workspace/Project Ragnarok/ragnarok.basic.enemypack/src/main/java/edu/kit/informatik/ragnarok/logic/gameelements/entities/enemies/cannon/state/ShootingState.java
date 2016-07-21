@@ -15,6 +15,8 @@ public class ShootingState extends ChargingState {
 	
 	private ParticleSpawner spawner;
 	
+	private boolean keepShooting = true; 
+	
 	public ShootingState(float angle) {
 		super(angle);
 	}
@@ -23,7 +25,7 @@ public class ShootingState extends ChargingState {
 	public void enter(StateMachine parent) {
 		super.enter(parent);
 		
-		spawner = new ParticleSpawner(new CannonParticle());
+		spawner = new ParticleSpawner(new CannonParticle((Cannon)this.parent));
 		
 		spawner.amountMin = 1;
 		spawner.amountMax = 1;
@@ -31,11 +33,10 @@ public class ShootingState extends ChargingState {
 		spawner.colorG = new ParticleSpawnerOption(255);
 		spawner.colorB = new ParticleSpawnerOption(100);
 		spawner.colorA = new ParticleSpawnerOption(200, -100);
-		spawner.speed = new ParticleSpawnerOption(0.1f);
-		spawner.timeMin = Cannon.STATE_SHOOTING_DURATION;
-		spawner.timeMax = Cannon.STATE_SHOOTING_DURATION;
+		spawner.speed = new ParticleSpawnerOption(0.03f);
+		spawner.timeMin = spawner.timeMax = Cannon.STATE_SHOOTING_DURATION;
 		
-		spawner.rotation = new ParticleSpawnerOption(-this.angle, -this.angle, (float)Math.PI / 4, (float)Math.PI / 8);
+		//spawner.rotation = new ParticleSpawnerOption(-this.angle, -this.angle, (float)Math.PI / 4, (float)Math.PI / 8);
 
 		
 	}
@@ -48,7 +49,7 @@ public class ShootingState extends ChargingState {
 		float distanceSigma = 0.05f;
 		float maxDistance = 40;
 		
-		if (currentDistance < maxDistance) {
+		if (currentDistance < maxDistance && this.keepShooting) {
 			currentDistance += CalcUtil.randomize(distanceMu, distanceSigma);
 			
 			// move cannon position down and rotate it around cannon.
@@ -61,7 +62,6 @@ public class ShootingState extends ChargingState {
 			// Spawn the killer particle at pos
 			spawner.spawn(this.parent.getScene(), pos);
 		}
-		
 	}
 	
 	@Override
@@ -77,6 +77,11 @@ public class ShootingState extends ChargingState {
 	@Override
 	public float getTimerTime() {
 		return Cannon.STATE_SHOOTING_DURATION;
+	}
+	
+	@Override
+	public void hitSomething() {
+		this.keepShooting = false;
 	}
 	
 }

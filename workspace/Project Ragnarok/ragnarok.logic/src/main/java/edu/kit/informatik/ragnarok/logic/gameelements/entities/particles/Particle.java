@@ -130,7 +130,7 @@ public class Particle extends GameElement {
 		this.timer = new Timer(lifeTime);
 	
 		// set position
-		this.setPos(pos.clone());
+		this.setPos(pos.clone().add(new Vec(-0.1f, -0.1f)));
 	}
 	
 	
@@ -194,7 +194,6 @@ public class Particle extends GameElement {
 
 	@Override
 	public void internalRender(Field f) {
-		// float progress = timer.getProgress();
 		this.polygon.moveTo(this.getPos());
 
 		f.drawPolygon(this.polygon, this.currentCol, true);
