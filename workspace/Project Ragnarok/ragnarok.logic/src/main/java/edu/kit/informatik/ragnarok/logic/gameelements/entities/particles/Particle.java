@@ -56,6 +56,10 @@ public class Particle extends GameElement {
 	 */
 	private Progress angle;
 	/**
+	 * The rotation of the particle
+	 */
+	private Progress rotation;
+	/**
 	 * The scale of the particle
 	 */
 	private Progress scale;
@@ -100,7 +104,7 @@ public class Particle extends GameElement {
 	 *            the <i>ProgressDendency</i> for the polygons alpha color
 	 *            channel
 	 */
-	public Particle(Polygon polygon, Vec pos, float lifeTime, Progress scale, Progress speed, Progress angle,
+	public Particle(Polygon polygon, Vec pos, float lifeTime, Progress scale, Progress speed, Progress rotation, Progress angle,
 			Progress colorR, Progress colorG, Progress colorB, Progress colorA) {
 		super(pos, new Vec(), new Vec(1), Team.NEUTRAL);
 
@@ -109,10 +113,12 @@ public class Particle extends GameElement {
 
 		// set shape options
 		this.scale = scale;
-
+		this.rotation = rotation;
+			
 		// set movement options
 		this.speed = speed;
 		this.angle = angle;
+		
 
 		// set color options
 		this.colorR = colorR;
@@ -144,11 +150,20 @@ public class Particle extends GameElement {
 			// get speed and angle relative to progress
 			float speed = this.speed.getNow(progress);
 			float angle = this.angle.getNow(progress);
+			
+			// get rotation and scale of polygon
+			float rotation = this.rotation.getNow(progress);
 			float scale = this.scale.getNow(progress);
 
-			if (scale != 1) {
-				this.polygon = this.initialPolygon.scale(scale);
+			if (rotation != 0) {
+				System.out.println("rotating " + rotation);
+				this.polygon = this.initialPolygon.rotate(rotation, this.getPos().add(new Vec(0.1f, 0.1f)));
 			}
+			
+			if (scale != 1) {
+				this.polygon = this.polygon.scale(scale);
+			}
+			
 
 			// only recalculate movement vector if speed and angle are dynamic
 			if (this.movementVec == null || !this.speed.isStatic() || !this.angle.isStatic()) {

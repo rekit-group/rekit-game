@@ -42,6 +42,11 @@ public class ParticleSpawner {
 	 * The angle of the particle
 	 */
 	public ParticleSpawnerOption angle;
+	
+	/**
+	 * The rotation of the particle
+	 */
+	public ParticleSpawnerOption rotation;
 
 	/**
 	 * The size of the particle
@@ -84,6 +89,8 @@ public class ParticleSpawner {
 		this.speed = new ParticleSpawnerOption(4, 5, -1, 1);
 		// default angle is between 0 and 2PI
 		this.angle = new ParticleSpawnerOption(0, (float) Math.PI * 2, 0, 0);
+		
+		this.rotation = new ParticleSpawnerOption(0);
 
 		// some spawns between 8 and 12
 		this.amountMin = 8;
@@ -112,7 +119,7 @@ public class ParticleSpawner {
 			this.polygon.moveTo(pos);
 
 			Particle p = new Particle(this.polygon, pos, randomTime, this.size.randomizeProgressDependency(),
-					this.speed.randomizeProgressDependency(), this.angle.randomizeProgressDependency(), this.colorR.randomizeProgressDependency(),
+					this.speed.randomizeProgressDependency(), this.rotation.randomizeProgressDependency(), this.angle.randomizeProgressDependency(), this.colorR.randomizeProgressDependency(),
 					this.colorG.randomizeProgressDependency(), this.colorB.randomizeProgressDependency(), this.colorA.randomizeProgressDependency());
 
 			scene.addGameElement(p);

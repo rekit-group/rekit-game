@@ -35,4 +35,12 @@ public final class CalcUtil {
 	public static Vec units2pixel(Vec pos) {
 		return new Vec(pos.getX() * GameConf.PX_PER_UNIT, pos.getY() * GameConf.PX_PER_UNIT);
 	}
+	
+	public static float randomize(double mu, double sigma) {
+		return randomize((float) mu, (float) sigma);
+	}
+	
+	public static float randomize(float mu, float sigma) {
+		return mu + (GameConf.PRNG.nextFloat()*2 - 1) * sigma;
+	}
 }
