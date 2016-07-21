@@ -67,8 +67,10 @@ public class Canon extends Enemy implements Visitable, StateMachine {
 	
 	@Override
 	public void internalRender(Field f) {
-
+		
 		f.drawCircle(this.getPos(), this.getSize(), COLOR_BASE);
+		f.drawRectangle(this.getPos().addY(-this.getSize().getY() / 4f), this.getSize().scalar(1, 0.5f), COLOR_BASE);
+		f.drawCircle(this.getPos(), this.getSize().scalar(0.8f), COLOR_CANON);
 		f.drawPolygon(this.polygon.rotate(-this.currentAngle, this.getPos()), COLOR_CANON, true);
 	}
 

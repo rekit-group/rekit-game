@@ -156,7 +156,6 @@ public class Particle extends GameElement {
 			float scale = this.scale.getNow(progress);
 
 			if (rotation != 0) {
-				System.out.println("rotating " + rotation);
 				this.polygon = this.initialPolygon.rotate(rotation, this.getPos().add(new Vec(0.1f, 0.1f)));
 			}
 			
