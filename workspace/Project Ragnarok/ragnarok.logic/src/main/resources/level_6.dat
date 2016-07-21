@@ -9,14 +9,14 @@
 #ALIAS::85->edu.kit.informatik.ragnarok.logic.gameelements.inanimate.BoostBox
 #ALIAS::86->edu.kit.informatik.ragnarok.logic.gameelements.inanimate.ClimbUpBox
 
-#ALIAS::20->edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.canon.Canon
+#ALIAS::20->edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.Cannon
 
 { 
 {0	0	0	1	1	1	0	0	0}
 {0	0	0	0	20	0	0	0	0}
 {0	0	0	0	0	0	0	0	0}
 {0	0	0	0	0	0	0	0	0}
-{0	0	0	0	0	0	0	0	0}
+{0	0	0	1	0	1	0	0	0}
 {0	0	0	0	0	0	0	0	0}
 {0	0	0	0	0	0	0	0	0}
 {0	0	0	0	0	0	0	0	0}

@@ -25,7 +25,7 @@ public class Inanimate extends GameElement {
 	}
 
 	protected Inanimate(Vec pos, Vec size, RGBAColor color) {
-		this(pos, size, color, Team.NEUTRAL);
+		this(pos, size, color, Team.INANIMATE);
 	}
 
 	public static final Set<DynamicInanimate> getInanimatePrototypes() {

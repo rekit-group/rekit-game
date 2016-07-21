@@ -22,7 +22,7 @@ import edu.kit.informatik.ragnarok.primitives.time.Timer;
  * @author Angelo Aracri
  * @version 1.0
  */
-public class Particle extends GameElement {
+public class Particle extends GameElement implements Cloneable {
 	/**
 	 * The initial polygon
 	 */
@@ -56,6 +56,10 @@ public class Particle extends GameElement {
 	 */
 	private Progress angle;
 	/**
+	 * The rotation of the particle
+	 */
+	private Progress rotation;
+	/**
 	 * The scale of the particle
 	 */
 	private Progress scale;
@@ -72,9 +76,12 @@ public class Particle extends GameElement {
 	 */
 	private Vec movementVec = null;
 
+	public Particle() {
+		super(new Vec(), new Vec(), new Vec(1), Team.NEUTRAL);
+	}
+
 	/**
-	 * Constructor that takes all ProgressDependencies required for the Particle
-	 * behavior
+	 * saves all ProgressDependencies required for the Particle behavior
 	 *
 	 * @param polygon
 	 *            the shape that the particle should be drawn with
@@ -100,15 +107,14 @@ public class Particle extends GameElement {
 	 *            the <i>ProgressDendency</i> for the polygons alpha color
 	 *            channel
 	 */
-	public Particle(Polygon polygon, Vec pos, float lifeTime, Progress scale, Progress speed, Progress angle,
+	public void setProperties(Polygon polygon, Vec pos, float lifeTime, Progress scale, Progress speed, Progress rotation, Progress angle,
 			Progress colorR, Progress colorG, Progress colorB, Progress colorA) {
-		super(pos, new Vec(), new Vec(1), Team.NEUTRAL);
-
 		// clone polygon so we can work with it
 		this.polygon = this.initialPolygon = polygon.clone();
 
 		// set shape options
 		this.scale = scale;
+		this.rotation = rotation;
 
 		// set movement options
 		this.speed = speed;
@@ -124,7 +130,12 @@ public class Particle extends GameElement {
 		this.timer = new Timer(lifeTime);
 
 		// set position
-		this.setPos(pos.clone());
+		this.setPos(pos.clone().add(new Vec(-0.1f, -0.1f)));
+	}
+
+	@Override
+	public Particle clone() {
+		return new Particle();
 	}
 
 	@Override
@@ -144,10 +155,17 @@ public class Particle extends GameElement {
 			// get speed and angle relative to progress
 			float speed = this.speed.getNow(progress);
 			float angle = this.angle.getNow(progress);
+
+			// get rotation and scale of polygon
+			float rotation = this.rotation.getNow(progress);
 			float scale = this.scale.getNow(progress);
 
+			if (rotation != 0) {
+				this.polygon = this.initialPolygon.rotate(rotation, this.getPos().add(new Vec(0.1f, 0.1f)));
+			}
+
 			if (scale != 1) {
-				this.polygon = this.initialPolygon.scale(scale);
+				this.polygon = this.polygon.scale(scale);
 			}
 
 			// only recalculate movement vector if speed and angle are dynamic
@@ -174,7 +192,6 @@ public class Particle extends GameElement {
 
 	@Override
 	public void internalRender(Field f) {
-		// float progress = timer.getProgress();
 		this.polygon.moveTo(this.getPos());
 
 		f.drawPolygon(this.polygon, this.currentCol, true);

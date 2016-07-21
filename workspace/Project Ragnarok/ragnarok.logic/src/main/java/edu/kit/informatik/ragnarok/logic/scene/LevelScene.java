@@ -9,6 +9,7 @@ import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.GameModel;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElementFactory;
+import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.CameraTarget;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.LifeGui;
@@ -150,11 +151,17 @@ public abstract class LevelScene extends Scene {
 			Iterator<GameElement> it1 = this.getGameElementIterator();
 			while (it1.hasNext()) {
 				GameElement e1 = it1.next();
-				Iterator<GameElement> it2 = this.getGameElementIterator();
-				while (it2.hasNext()) {
-					GameElement e2 = it2.next();
-					if (e1 != e2) {
-						this.checkCollision(e1, e2, e1.getLastPos(), e2.getLastPos());
+				// we don't want neutral element collision 
+				if (e1.getTeam() != Team.NEUTRAL) {
+					Iterator<GameElement> it2 = this.getGameElementIterator();
+					while (it2.hasNext()) {
+						GameElement e2 = it2.next();
+						// we don't want neutral element collision 
+						if (e2.getTeam() != Team.NEUTRAL) {
+							if (e1 != e2) {
+								this.checkCollision(e1, e2, e1.getLastPos(), e2.getLastPos());
+							}
+						}
 					}
 				}
 			}

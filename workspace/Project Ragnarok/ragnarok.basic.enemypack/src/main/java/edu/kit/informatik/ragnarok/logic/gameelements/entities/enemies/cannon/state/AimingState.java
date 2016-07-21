@@ -1,14 +1,14 @@
-package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.canon.canonstate;
+package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.state;
 
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.canon.Canon;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.Cannon;
 import edu.kit.informatik.ragnarok.primitives.time.Timer;
 
 public class AimingState extends State {
 	
 	private Player target;
 	
-	protected Timer timer = new Timer(Canon.STATE_AIMING_DURATION);
+	protected Timer timer = new Timer(Cannon.STATE_AIMING_DURATION);
 	
 	public AimingState(Player target) {
 		this.target = target;
@@ -20,12 +20,12 @@ public class AimingState extends State {
 	
 	@Override
 	public State getNextState() {
-		return new ShootingState(this.getTargetAngle());
+		return new ChargingState(this.getTargetAngle());
 	}
 	
 	@Override
 	public float getTimerTime() {
-		return Canon.STATE_AIMING_DURATION;
+		return Cannon.STATE_AIMING_DURATION;
 	}
 	
 }
