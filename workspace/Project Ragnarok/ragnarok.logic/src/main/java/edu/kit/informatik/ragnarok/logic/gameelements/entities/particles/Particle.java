@@ -22,7 +22,7 @@ import edu.kit.informatik.ragnarok.primitives.time.Timer;
  * @author Angelo Aracri
  * @version 1.0
  */
-public class Particle extends GameElement {
+public class Particle extends GameElement implements Cloneable {
 	/**
 	 * The initial polygon
 	 */
@@ -75,11 +75,11 @@ public class Particle extends GameElement {
 	 * The current movement vector
 	 */
 	private Vec movementVec = null;
-	
+
 	public Particle() {
 		super(new Vec(), new Vec(), new Vec(1), Team.NEUTRAL);
 	}
-	
+
 	/**
 	 * saves all ProgressDependencies required for the Particle behavior
 	 *
@@ -111,33 +111,32 @@ public class Particle extends GameElement {
 			Progress colorR, Progress colorG, Progress colorB, Progress colorA) {
 		// clone polygon so we can work with it
 		this.polygon = this.initialPolygon = polygon.clone();
-	
+
 		// set shape options
 		this.scale = scale;
 		this.rotation = rotation;
-			
+
 		// set movement options
 		this.speed = speed;
 		this.angle = angle;
-	
+
 		// set color options
 		this.colorR = colorR;
 		this.colorG = colorG;
 		this.colorB = colorB;
 		this.colorA = colorA;
-	
+
 		// create timer to get progress between 0 and 1 relative to time
 		this.timer = new Timer(lifeTime);
-	
+
 		// set position
 		this.setPos(pos.clone().add(new Vec(-0.1f, -0.1f)));
 	}
-	
-	
+
+	@Override
 	public Particle clone() {
 		return new Particle();
 	}
-	
 
 	@Override
 	public void logicLoop(float deltaTime) {
@@ -156,7 +155,7 @@ public class Particle extends GameElement {
 			// get speed and angle relative to progress
 			float speed = this.speed.getNow(progress);
 			float angle = this.angle.getNow(progress);
-			
+
 			// get rotation and scale of polygon
 			float rotation = this.rotation.getNow(progress);
 			float scale = this.scale.getNow(progress);
@@ -164,11 +163,10 @@ public class Particle extends GameElement {
 			if (rotation != 0) {
 				this.polygon = this.initialPolygon.rotate(rotation, this.getPos().add(new Vec(0.1f, 0.1f)));
 			}
-			
+
 			if (scale != 1) {
 				this.polygon = this.polygon.scale(scale);
 			}
-			
 
 			// only recalculate movement vector if speed and angle are dynamic
 			if (this.movementVec == null || !this.speed.isStatic() || !this.angle.isStatic()) {
