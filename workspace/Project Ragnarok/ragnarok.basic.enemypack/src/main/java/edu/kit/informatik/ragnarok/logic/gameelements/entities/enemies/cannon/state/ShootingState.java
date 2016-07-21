@@ -27,30 +27,23 @@ public class ShootingState extends ChargingState {
 
 		spawner = new ParticleSpawner(new CannonParticle(this.parentCannon));
 
-		spawner.amountMin = 1;
-		spawner.amountMax = 1;
-		spawner.colorR = new ParticleSpawnerOption(50);
-		spawner.colorG = new ParticleSpawnerOption(255);
-		spawner.colorB = new ParticleSpawnerOption(100);
-		spawner.colorA = new ParticleSpawnerOption(200, -100);
-		spawner.speed = new ParticleSpawnerOption(0.03f);
-		spawner.timeMin = spawner.timeMax = Cannon.STATE_SHOOTING_DURATION;
-
-		// spawner.rotation = new ParticleSpawnerOption(-this.angle,
-		// -this.angle, (float)Math.PI / 4, (float)Math.PI / 8);
-
+		spawner.amountMin = Cannon.PARTICLE_AMOUNT_MIN;
+		spawner.amountMax = Cannon.PARTICLE_AMOUNT_MAX;
+		spawner.colorR = Cannon.PARTICLE_COLOR_R;
+		spawner.colorG = Cannon.PARTICLE_COLOR_G;
+		spawner.colorB = Cannon.PARTICLE_COLOR_B;
+		spawner.colorA = Cannon.PARTICLE_COLOR_A;
+		spawner.speed = Cannon.PARTICLE_SPEED;
+		spawner.timeMin = Cannon.PARTICLE_TIME_MIN;
+		spawner.timeMax = Cannon.PARTICLE_TIME_MAX;
 	}
 
 	@Override
 	public void logicLoop(float deltaTime) {
 		super.logicLoop(deltaTime);
 
-		float distanceMu = 0.2f;
-		float distanceSigma = 0.05f;
-		float maxDistance = 40;
-
-		if (currentDistance < maxDistance && this.keepShooting) {
-			currentDistance += CalcUtil.randomize(distanceMu, distanceSigma);
+		if (this.keepShooting) {
+			currentDistance += CalcUtil.randomize(Cannon.PARTICLE_DISTANCE_MU, Cannon.PARTICLE_DISTANCE_SIGMA);
 
 			// move cannon position down and rotate it around cannon.
 			Vec pos = this.parentCannon.getPos().addY(currentDistance).rotate(-this.angle, this.parentCannon.getPos());

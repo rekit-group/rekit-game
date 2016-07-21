@@ -3,6 +3,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon;
 import edu.kit.informatik.ragnarok.logic.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.state.IdleState;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Enemy;
 import edu.kit.informatik.ragnarok.logic.state.TimeStateMachine;
 import edu.kit.informatik.ragnarok.primitives.geometry.Polygon;
@@ -46,6 +47,26 @@ public class Cannon extends Enemy implements Visitable {
 	public static RGBColor COLOR_BASE;
 	public static RGBColor COLOR_CANNON;
 
+	public static float PIPE_W;
+	public static float PIPE_H;
+
+	public static float JOINT_RATIO;
+
+	public static float MAX_SHAKING;
+
+	public static int PARTICLE_AMOUNT_MIN;
+	public static int PARTICLE_AMOUNT_MAX;
+	public static ParticleSpawnerOption PARTICLE_COLOR_R;
+	public static ParticleSpawnerOption PARTICLE_COLOR_G;
+	public static ParticleSpawnerOption PARTICLE_COLOR_B;
+	public static ParticleSpawnerOption PARTICLE_COLOR_A;
+	public static ParticleSpawnerOption PARTICLE_SPEED;
+	public static float PARTICLE_TIME_MIN;
+	public static float PARTICLE_TIME_MAX;
+
+	public static float PARTICLE_DISTANCE_MU;
+	public static float PARTICLE_DISTANCE_SIGMA;
+
 	@NoVisit
 	private CannonStateMachine innerStateMachine;
 
@@ -68,10 +89,8 @@ public class Cannon extends Enemy implements Visitable {
 
 		this.currentAngle = innerStateMachine.getState().getTargetAngle();
 
-		float x = 0.3f;
-		float y = 0.9f;
-		this.polygon = new Polygon(this.getPos(), new Vec[] { new Vec(x / 2, 0), new Vec(x / 2, y), new Vec(-x / 2, y), new Vec(-x / 2, 0),
-				new Vec(0, 0) });
+		this.polygon = new Polygon(new Vec(), new Vec[] { new Vec(PIPE_W / 2, 0), new Vec(PIPE_W / 2, PIPE_H), new Vec(-PIPE_W / 2, PIPE_H),
+				new Vec(-PIPE_W / 2, 0), new Vec(0, 0) });
 	}
 
 	@Override
@@ -88,7 +107,7 @@ public class Cannon extends Enemy implements Visitable {
 
 		// draw rotated cannon with (optional) shaking
 		Vec cannonPos = this.getPos().addX(this.innerStateMachine.getState().getCannonShake());
-		f.drawCircle(cannonPos, this.getSize().scalar(0.8f), COLOR_CANNON);
+		f.drawCircle(cannonPos, this.getSize().scalar(JOINT_RATIO), COLOR_CANNON);
 		this.polygon.moveTo(cannonPos);
 		f.drawPolygon(this.polygon.rotate(-this.currentAngle, this.getPos()), COLOR_CANNON, true);
 	}
@@ -100,7 +119,7 @@ public class Cannon extends Enemy implements Visitable {
 		// move angle in right direction
 		this.currentAngle += Math.signum(this.innerStateMachine.getState().getTargetAngle() - this.currentAngle) * deltaTime * ANGLE_SPEED;
 
-		if (Math.abs(this.innerStateMachine.getState().getTargetAngle() - this.currentAngle) < ANGLE_SPEED / 10) {
+		if (Math.abs(this.innerStateMachine.getState().getTargetAngle() - this.currentAngle) < ANGLE_SPEED / 20) {
 			this.currentAngle = this.innerStateMachine.getState().getTargetAngle();
 		}
 	}
