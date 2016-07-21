@@ -1,22 +1,61 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.state;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.Cannon;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.CannonParticle;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawner;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
+import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
 import edu.kit.informatik.ragnarok.logic.state.TimeStateMachine;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.util.CalcUtil;
 
+/**
+ * <p>
+ * IMA FIRIN MAH LAZOR!
+ * </p>
+ * <p>
+ * Fourth and last {@link CannonState} of the {@link State} that represents the
+ * phase where the {@link Cannon} unleashed his fierce and widow-creating laser
+ * beam.
+ * </p>
+ * <p>
+ * The beam consists of a number of {@link CannonParticle CannonParticles} that
+ * will be spawned one at a time until colliding with the {@link Player} or an
+ * {@link Inanimate}.
+ * </p>
+ * <p>
+ * It extends the {@link ChargingState} to enable the shaking effect.
+ * </p>
+ * 
+ * @author Angelo Aracri
+ */
 public class ShootingState extends ChargingState {
 
+	/**
+	 * Distance from the {@link Cannon} to the next {@link CannonParticle} to be
+	 * spawned.
+	 */
 	private float currentDistance = 1;
 
+	/**
+	 * The {@link ParticleSpawner} that can spawn specialized
+	 * {@link CannonParticle CannonParticles}.
+	 */
 	private ParticleSpawner spawner;
 
+	/**
+	 * Boolean flag to indicate whether the {@link Cannon} is supposed to spawn
+	 * more {@link CannonParticles} (a.k.a shoot more laser) or not.
+	 */
 	private boolean keepShooting = true;
 
+	/**
+	 * Specialized constructor that saves the angle in radians to shoot at.
+	 * 
+	 * @param angle
+	 */
 	public ShootingState(float angle) {
 		super(angle);
 	}
