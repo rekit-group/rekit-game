@@ -20,7 +20,7 @@ public class AimingState extends State {
 	
 	@Override
 	public State getNextState() {
-		return new ShootingState(this.getTargetAngle());
+		return new ChargingState(this.getTargetAngle());
 	}
 	
 	@Override

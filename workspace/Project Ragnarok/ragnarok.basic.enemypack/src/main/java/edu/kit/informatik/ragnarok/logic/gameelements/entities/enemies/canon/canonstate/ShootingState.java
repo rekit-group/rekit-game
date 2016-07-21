@@ -8,12 +8,10 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.Particl
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.util.CalcUtil;
 
-public class ShootingState extends State {
-	
-	private float angle;
+public class ShootingState extends ChargingState {
 	
 	public ShootingState(float angle) {
-		this.angle = angle;
+		super(angle);
 	}
 	
 	@Override
@@ -27,7 +25,7 @@ public class ShootingState extends State {
 		spawner.colorR = new ParticleSpawnerOption(50);
 		spawner.colorG = new ParticleSpawnerOption(255);
 		spawner.colorB = new ParticleSpawnerOption(100);
-		spawner.colorA = new ParticleSpawnerOption(200);
+		spawner.colorA = new ParticleSpawnerOption(200, -100);
 		spawner.rotation = new ParticleSpawnerOption(-this.angle, -this.angle, (float)Math.PI / 4, (float)Math.PI / 8);
 		spawner.speed = new ParticleSpawnerOption(0.1f);
 		spawner.timeMin = Canon.STATE_SHOOTING_DURATION;
@@ -37,7 +35,7 @@ public class ShootingState extends State {
 		float distanceSigma = 0.05f;
 		float maxDistance = 40;
 		
-		float currentDistance = 0;
+		float currentDistance = 1;
 		while (currentDistance <= maxDistance) {
 			currentDistance += CalcUtil.randomize(distanceMu, distanceSigma);
 			
@@ -55,8 +53,9 @@ public class ShootingState extends State {
 		
 	}
 	
-	public float getTargetAngle() {
-		return this.angle;
+	@Override
+	public float shakeStrength() {
+		return 1;
 	}
 	
 	@Override

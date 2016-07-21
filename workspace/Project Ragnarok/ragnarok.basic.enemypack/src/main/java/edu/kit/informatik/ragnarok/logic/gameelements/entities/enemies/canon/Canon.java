@@ -20,6 +20,7 @@ public class Canon extends Enemy implements Visitable, StateMachine {
 	private static Vec SIZE;
 	public static float STATE_IDLE_DURATION;
 	public static float STATE_AIMING_DURATION;
+	public static float STATE_CHARGING_DURATION;
 	public static float STATE_SHOOTING_DURATION;
 	
 	public static float ANGLE_SPEED;
@@ -68,9 +69,14 @@ public class Canon extends Enemy implements Visitable, StateMachine {
 	@Override
 	public void internalRender(Field f) {
 		
+		// draw canon base
 		f.drawCircle(this.getPos(), this.getSize(), COLOR_BASE);
 		f.drawRectangle(this.getPos().addY(-this.getSize().getY() / 4f), this.getSize().scalar(1, 0.5f), COLOR_BASE);
-		f.drawCircle(this.getPos(), this.getSize().scalar(0.8f), COLOR_CANON);
+		
+		// draw rotated canon with (optional) shaking
+		Vec canonPos = this.getPos().addX(this.currentState.getCanonShake());
+		f.drawCircle(canonPos, this.getSize().scalar(0.8f), COLOR_CANON);
+		this.polygon.moveTo(canonPos);
 		f.drawPolygon(this.polygon.rotate(-this.currentAngle, this.getPos()), COLOR_CANON, true);
 	}
 

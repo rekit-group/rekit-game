@@ -25,6 +25,10 @@ public abstract class State {
 		return 0;
 	}
 	
+	public float getCanonShake() {
+		return 0;
+	}
+	
 	public void logicLoop(float deltaTime) {
 		timer.removeTime(deltaTime);
 		if (timer.timeUp()) {
