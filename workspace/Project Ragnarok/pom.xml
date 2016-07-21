@@ -7,7 +7,6 @@
 	<packaging>pom</packaging>
 	<name>Project Ragnarok</name>
 	<properties>
-		<main.class>edu.kit.informatik.ragnarok.Main</main.class>
 		<swt.version>4.5.2</swt.version>
 		<ragnarok.version>0.3-ALPHA</ragnarok.version>
 		<opengl.version>3.0.0</opengl.version>
@@ -26,7 +25,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
-				<version>2.10</version>
 				<executions>
 					<execution>
 						<id>copy-dependencies</id>
@@ -43,29 +41,18 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.4</version>
-				<configuration>
-					<archive>
-						<manifest>
-							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-							<addClasspath>true</addClasspath>
-							<classpathPrefix>lib/</classpathPrefix>
-							<mainClass>${main.class}</mainClass>
-						</manifest>
-					</archive>
-				</configuration>
-			</plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-clean-plugin</artifactId>
-					<version>3.0.0</version>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>2.4</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<version>2.10</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
