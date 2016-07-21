@@ -9,16 +9,18 @@
 #ALIAS::85->edu.kit.informatik.ragnarok.logic.gameelements.inanimate.BoostBox
 #ALIAS::86->edu.kit.informatik.ragnarok.logic.gameelements.inanimate.ClimbUpBox
 
+
 #ALIAS::20->edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.Cannon
+#ALIAS::21->edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.RektKiller
 
 { 
-{0	0	0	1	1	1	0	0	0}
-{0	0	0	0	20	0	0	0	0}
-{0	0	0	0	0	0	0	0	0}
-{0	0	0	0	0	0	0	0	0}
-{0	0	0	1	0	1	0	0	0}
-{0	0	0	0	0	0	0	0	0}
-{0	0	0	0	0	0	0	0	0}
-{0	0	0	0	0	0	0	0	0}
-{1	1	1	1	1	1	1	1	1}
+{1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1}
+{0	0	0	20	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0}
+{0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	1	0	0	0	0	0	0	0}
+{0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0}
+{0	0	1	0	1	0	1	0	80	80	80	80	0	0	0	1	1	0	0	1	21	1	0	0	0	0	0}
+{0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0}
+{0	0	0	0	0	0	0	0	0	0	0	0	0	1	1	0	0	0	0	0	0	0	0	0	0	0	0}
+{0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0}
+{1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1}
 }

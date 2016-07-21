@@ -3,7 +3,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.s
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.Cannon;
 
-public class ChargingState extends State {
+public class ChargingState extends CannonState {
 	
 	protected float angle;
 	private float currentShake;
@@ -13,7 +13,7 @@ public class ChargingState extends State {
 	}
 	
 	@Override
-	public State getNextState() {
+	public CannonState getNextState() {
 		return new ShootingState(this.getTargetAngle());
 	}
 	
