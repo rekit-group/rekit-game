@@ -212,7 +212,7 @@ public class Cannon extends Enemy implements Visitable {
 
 	@Override
 	public void logicLoop(float deltaTime) {
-		this.innerStateMachine.getState().logicLoop(deltaTime);
+		this.innerStateMachine.logicLoop(deltaTime);
 
 		// move angle in right direction
 		this.currentAngle += Math.signum(this.innerStateMachine.getState().getTargetAngle() - this.currentAngle) * deltaTime * ANGLE_SPEED;
@@ -234,6 +234,7 @@ public class Cannon extends Enemy implements Visitable {
 	/**
 	 * Signal that one of the {@link Particle Particles} collided with something
 	 * and the laser should stop. Is only used while in the {@ShootingState
+	 * 
 	 * }.
 	 */
 	public void hitSomething() {
