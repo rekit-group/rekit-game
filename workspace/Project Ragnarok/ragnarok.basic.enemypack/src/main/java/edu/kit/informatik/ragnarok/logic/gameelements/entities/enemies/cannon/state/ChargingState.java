@@ -1,7 +1,7 @@
-package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.canon.canonstate;
+package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.state;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.canon.Canon;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.Cannon;
 
 public class ChargingState extends State {
 	
@@ -22,7 +22,7 @@ public class ChargingState extends State {
 	}
 	
 	@Override
-	public final float getCanonShake() {
+	public final float getCannonShake() {
 		return currentShake;
 	}
 	
@@ -38,6 +38,6 @@ public class ChargingState extends State {
 	
 	@Override
 	public float getTimerTime() {
-		return Canon.STATE_CHARGING_DURATION;
+		return Cannon.STATE_CHARGING_DURATION;
 	}
 }

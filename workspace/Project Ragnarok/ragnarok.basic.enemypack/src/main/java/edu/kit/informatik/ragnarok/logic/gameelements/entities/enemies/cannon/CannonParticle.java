@@ -1,13 +1,13 @@
-package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.canon;
+package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon;
 
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.Particle;
 import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
 
-public class CanonParticle extends Particle {
+public class CannonParticle extends Particle {
 	
-	public CanonParticle() {
+	public CannonParticle() {
 		super();
 		this.team = Team.ENEMY;
 	}
@@ -21,6 +21,6 @@ public class CanonParticle extends Particle {
 	
 	@Override
 	public Particle clone() {
-		return new CanonParticle();
+		return new CannonParticle();
 	}
 }

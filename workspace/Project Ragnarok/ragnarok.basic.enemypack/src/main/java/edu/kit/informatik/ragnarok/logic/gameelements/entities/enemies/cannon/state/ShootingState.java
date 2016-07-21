@@ -1,9 +1,9 @@
-package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.canon.canonstate;
+package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.state;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.canon.Canon;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.canon.CanonParticle;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.canon.StateMachine;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.Cannon;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.CannonParticle;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.StateMachine;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawner;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
@@ -23,7 +23,7 @@ public class ShootingState extends ChargingState {
 	public void enter(StateMachine parent) {
 		super.enter(parent);
 		
-		spawner = new ParticleSpawner(new CanonParticle());
+		spawner = new ParticleSpawner(new CannonParticle());
 		
 		spawner.amountMin = 1;
 		spawner.amountMax = 1;
@@ -32,8 +32,8 @@ public class ShootingState extends ChargingState {
 		spawner.colorB = new ParticleSpawnerOption(100);
 		spawner.colorA = new ParticleSpawnerOption(200, -100);
 		spawner.speed = new ParticleSpawnerOption(0.1f);
-		spawner.timeMin = Canon.STATE_SHOOTING_DURATION;
-		spawner.timeMax = Canon.STATE_SHOOTING_DURATION;
+		spawner.timeMin = Cannon.STATE_SHOOTING_DURATION;
+		spawner.timeMax = Cannon.STATE_SHOOTING_DURATION;
 		
 		spawner.rotation = new ParticleSpawnerOption(-this.angle, -this.angle, (float)Math.PI / 4, (float)Math.PI / 8);
 
@@ -51,7 +51,7 @@ public class ShootingState extends ChargingState {
 		if (currentDistance < maxDistance) {
 			currentDistance += CalcUtil.randomize(distanceMu, distanceSigma);
 			
-			// move canon position down and rotate it around canon.
+			// move cannon position down and rotate it around cannon.
 			Vec pos = this.parent.getPos().addY(currentDistance).rotate(-this.angle, this.parent.getPos());
 			spawner.rotation = new ParticleSpawnerOption(-this.angle, CalcUtil.randomize(Math.PI / 4, Math.PI / 8));
 			
@@ -76,7 +76,7 @@ public class ShootingState extends ChargingState {
 
 	@Override
 	public float getTimerTime() {
-		return Canon.STATE_SHOOTING_DURATION;
+		return Cannon.STATE_SHOOTING_DURATION;
 	}
 	
 }

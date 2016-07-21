@@ -1,9 +1,9 @@
-package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.canon;
+package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon;
 
 import edu.kit.informatik.ragnarok.logic.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.canon.canonstate.IdleState;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.canon.canonstate.State;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.state.IdleState;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.state.State;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Enemy;
 import edu.kit.informatik.ragnarok.primitives.geometry.Polygon;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
@@ -14,8 +14,8 @@ import edu.kit.informatik.ragnarok.visitor.VisitInfo;
 import edu.kit.informatik.ragnarok.visitor.Visitable;
 
 @LoadMe
-@VisitInfo(res = "conf/canon", visit = true)
-public class Canon extends Enemy implements Visitable, StateMachine {
+@VisitInfo(res = "conf/cannon", visit = true)
+public class Cannon extends Enemy implements Visitable, StateMachine {
 
 	private static Vec SIZE;
 	public static float STATE_IDLE_DURATION;
@@ -26,7 +26,7 @@ public class Canon extends Enemy implements Visitable, StateMachine {
 	public static float ANGLE_SPEED;
 	
 	public static RGBColor COLOR_BASE;
-	public static RGBColor COLOR_CANON;
+	public static RGBColor COLOR_CANNON;
 	
 	@NoVisit
 	private State currentState;
@@ -40,10 +40,10 @@ public class Canon extends Enemy implements Visitable, StateMachine {
 	/**
 	 * Prototype constructor
 	 */
-	public Canon() {
+	public Cannon() {
 	}
 	
-	public Canon(Vec pos) {
+	public Cannon(Vec pos) {
 		super(pos.addY(-0.5f + SIZE.getY() / 2f), new Vec(), SIZE);
 		
 		this.currentState = new IdleState();
@@ -63,21 +63,21 @@ public class Canon extends Enemy implements Visitable, StateMachine {
 	
 	@Override
 	public GameElement create(Vec startPos, String[] options) {
-		return new Canon(startPos);
+		return new Cannon(startPos);
 	}
 	
 	@Override
 	public void internalRender(Field f) {
 		
-		// draw canon base
+		// draw cannon base
 		f.drawCircle(this.getPos(), this.getSize(), COLOR_BASE);
 		f.drawRectangle(this.getPos().addY(-this.getSize().getY() / 4f), this.getSize().scalar(1, 0.5f), COLOR_BASE);
 		
-		// draw rotated canon with (optional) shaking
-		Vec canonPos = this.getPos().addX(this.currentState.getCanonShake());
-		f.drawCircle(canonPos, this.getSize().scalar(0.8f), COLOR_CANON);
-		this.polygon.moveTo(canonPos);
-		f.drawPolygon(this.polygon.rotate(-this.currentAngle, this.getPos()), COLOR_CANON, true);
+		// draw rotated cannon with (optional) shaking
+		Vec cannonPos = this.getPos().addX(this.currentState.getCannonShake());
+		f.drawCircle(cannonPos, this.getSize().scalar(0.8f), COLOR_CANNON);
+		this.polygon.moveTo(cannonPos);
+		f.drawPolygon(this.polygon.rotate(-this.currentAngle, this.getPos()), COLOR_CANNON, true);
 	}
 
 	@Override

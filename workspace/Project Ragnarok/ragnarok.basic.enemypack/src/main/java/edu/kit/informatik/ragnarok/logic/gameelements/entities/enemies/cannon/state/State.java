@@ -1,6 +1,6 @@
-package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.canon.canonstate;
+package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.state;
 
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.canon.StateMachine;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.StateMachine;
 import edu.kit.informatik.ragnarok.primitives.time.Timer;
 
 public abstract class State {
@@ -25,7 +25,7 @@ public abstract class State {
 		return 0;
 	}
 	
-	public float getCanonShake() {
+	public float getCannonShake() {
 		return 0;
 	}
 	
