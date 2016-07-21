@@ -235,6 +235,8 @@ public class Cannon extends Enemy implements Visitable {
 	 * Signal that one of the {@link Particle Particles} collided with something
 	 * and the laser should stop. Is only used while in the {@ShootingState
 	 * 
+	 * 
+	 * 
 	 * }.
 	 */
 	public void hitSomething() {
