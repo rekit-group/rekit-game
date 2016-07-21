@@ -26,11 +26,6 @@ public class MenuSubMenu extends MenuItem {
 	 * The current index
 	 */
 	protected int index = 0;
-	/**
-	 * This bool indicates whether this Menu (false) or its Items (true) shall
-	 * be rendered
-	 */
-	protected boolean inMenu = false;
 
 	/**
 	 * Create the submenu
@@ -133,9 +128,8 @@ public class MenuSubMenu extends MenuItem {
 	public void select() {
 		if (this.selected) {
 			this.selected = false;
-			this.inMenu = true;
 			this.menuItems.get(this.index).select();
-		} else if (this.inMenu) {
+		} else if (this.menuItems.get(this.index).selected) {
 			this.menuItems.get(this.index).select();
 		} else {
 			this.selected = true;
@@ -147,12 +141,11 @@ public class MenuSubMenu extends MenuItem {
 	public void unselect() {
 		if (this.selected) {
 			this.selected = false;
-			this.inMenu = false;
 
 			if (this.parent != null) {
 				this.parent.focus();
 			}
-		} else if (this.inMenu) {
+		} else {
 			// pass unselect
 			this.menuItems.get(this.index).unselect();
 		}
@@ -161,7 +154,6 @@ public class MenuSubMenu extends MenuItem {
 	@Override
 	protected void focus() {
 		this.selected = true;
-		this.inMenu = false;
 	}
 
 	@Override
@@ -169,14 +161,11 @@ public class MenuSubMenu extends MenuItem {
 		if (this.selected) {
 			// render this menu as complete Menu
 			for (final MenuItem menuItem : this.menuItems) {
-				menuItem.internalRender(f);
+				menuItem.renderItem(f);
 			}
-		} else if (this.inMenu) {
+		} else {
 			// pass the render to the selected MenuItem
 			this.menuItems.get(this.index).internalRender(f);
-		} else {
-			// render this menu as MenuItem
-			this.renderItem(f);
 		}
 	}
 
