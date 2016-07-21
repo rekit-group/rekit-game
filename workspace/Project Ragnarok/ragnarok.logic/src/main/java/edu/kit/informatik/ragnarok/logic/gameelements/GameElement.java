@@ -86,7 +86,7 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 	 * The {@link Team} the {@link GameElement} is in that mainly specifies
 	 * behavior upon collision.
 	 */
-	private Team team;
+	protected Team team;
 
 	/**
 	 * The {@link} Scene the {@link GameElement} is in and manages this and all

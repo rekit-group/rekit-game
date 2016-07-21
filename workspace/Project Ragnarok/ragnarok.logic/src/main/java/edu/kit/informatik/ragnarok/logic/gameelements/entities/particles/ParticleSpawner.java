@@ -13,7 +13,9 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
  *
  */
 public class ParticleSpawner {
-
+	
+	private Particle particlePrototype = new Particle();
+	
 	/**
 	 * The current polygon
 	 */
@@ -68,7 +70,11 @@ public class ParticleSpawner {
 	 * The maximum lifetime
 	 */
 	public float timeMax;
-
+	
+	public ParticleSpawner(Particle prototype) {
+		this();
+		this.particlePrototype = prototype;
+	}
 	/**
 	 * Create a new particle spawner with its default values
 	 */
@@ -118,9 +124,10 @@ public class ParticleSpawner {
 
 			this.polygon.moveTo(pos);
 
-			Particle p = new Particle(this.polygon, pos, randomTime, this.size.randomizeProgressDependency(),
-					this.speed.randomizeProgressDependency(), this.rotation.randomizeProgressDependency(), this.angle.randomizeProgressDependency(), this.colorR.randomizeProgressDependency(),
-					this.colorG.randomizeProgressDependency(), this.colorB.randomizeProgressDependency(), this.colorA.randomizeProgressDependency());
+			Particle p = this.particlePrototype.clone();
+			p.setProperties(this.polygon, pos, randomTime, this.size.randomize(),
+					this.speed.randomize(), this.rotation.randomize(), this.angle.randomize(), this.colorR.randomize(),
+					this.colorG.randomize(), this.colorB.randomize(), this.colorA.randomize());
 
 			scene.addGameElement(p);
 		}

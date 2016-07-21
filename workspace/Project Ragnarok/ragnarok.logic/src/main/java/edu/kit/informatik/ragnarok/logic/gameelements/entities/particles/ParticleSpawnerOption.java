@@ -95,7 +95,7 @@ public class ParticleSpawnerOption {
 	 *
 	 * @return the randomized ProgressDependency
 	 */
-	public Progress randomizeProgressDependency() {
+	public Progress randomize() {
 		// calculate random start value between startMin and startMax
 		// (only if startMin != startMax)
 		float start = this.startMin == this.startMax ? this.startMin

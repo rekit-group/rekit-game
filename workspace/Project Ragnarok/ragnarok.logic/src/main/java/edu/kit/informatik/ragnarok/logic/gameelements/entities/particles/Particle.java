@@ -75,10 +75,13 @@ public class Particle extends GameElement {
 	 * The current movement vector
 	 */
 	private Vec movementVec = null;
-
+	
+	public Particle() {
+		super(new Vec(), new Vec(), new Vec(1), Team.NEUTRAL);
+	}
+	
 	/**
-	 * Constructor that takes all ProgressDependencies required for the Particle
-	 * behavior
+	 * saves all ProgressDependencies required for the Particle behavior
 	 *
 	 * @param polygon
 	 *            the shape that the particle should be drawn with
@@ -104,13 +107,11 @@ public class Particle extends GameElement {
 	 *            the <i>ProgressDendency</i> for the polygons alpha color
 	 *            channel
 	 */
-	public Particle(Polygon polygon, Vec pos, float lifeTime, Progress scale, Progress speed, Progress rotation, Progress angle,
+	public void setProperties(Polygon polygon, Vec pos, float lifeTime, Progress scale, Progress speed, Progress rotation, Progress angle,
 			Progress colorR, Progress colorG, Progress colorB, Progress colorA) {
-		super(pos, new Vec(), new Vec(1), Team.NEUTRAL);
-
 		// clone polygon so we can work with it
 		this.polygon = this.initialPolygon = polygon.clone();
-
+	
 		// set shape options
 		this.scale = scale;
 		this.rotation = rotation;
@@ -118,20 +119,25 @@ public class Particle extends GameElement {
 		// set movement options
 		this.speed = speed;
 		this.angle = angle;
-		
-
+	
 		// set color options
 		this.colorR = colorR;
 		this.colorG = colorG;
 		this.colorB = colorB;
 		this.colorA = colorA;
-
+	
 		// create timer to get progress between 0 and 1 relative to time
 		this.timer = new Timer(lifeTime);
-
+	
 		// set position
 		this.setPos(pos.clone());
 	}
+	
+	
+	public Particle clone() {
+		return new Particle();
+	}
+	
 
 	@Override
 	public void logicLoop(float deltaTime) {
