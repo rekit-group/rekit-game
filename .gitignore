@@ -8,3 +8,4 @@ workspace/ragnarok/src/**/*.class
 *.settings
 *.project
 sh.exe.stackdump
+stat.html
