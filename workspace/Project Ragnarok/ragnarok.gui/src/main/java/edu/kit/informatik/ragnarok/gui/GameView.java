@@ -92,7 +92,7 @@ class GameView implements View {
 		// Create window
 
 		this.shell = new Shell(Display.getDefault(), SWT.DIALOG_TRIM | SWT.MIN | SWT.PRIMARY_MODAL | SWT.NO_BACKGROUND);
-		this.shell.setText(GameConf.NAME);
+		this.shell.setText(GameConf.NAME + " (" + GameConf.VERSION + ")");
 
 		// Create and position a canvas
 		this.canvas = new Canvas(this.shell, SWT.NONE);
