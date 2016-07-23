@@ -16,15 +16,18 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gui.GuiElement;
 
 /**
- * Based on the concept of scenes in Unity. </br> "Scenes contain the objects of
- * your game. They can be used to create a main menu, individual levels, and
- * anything else. Think of each unique Scene file as a unique level. In each
- * Scene, you will place your environments, obstacles, and decorations,
- * essentially designing and building your game in pieces." <a href="
- * https://docs.unity3d.com/Manual/CreatingScenes.html">Unity Manual</a> </p> A
- * new Scene needs an entry in {@link Scenes} and a method with the Signature:
+ * Based on the concept of scenes in Unity. </br>
+ * "Scenes contain the objects of your game. They can be used to create a main
+ * menu, individual levels, and anything else. Think of each unique Scene file
+ * as a unique level. In each Scene, you will place your environments,
+ * obstacles, and decorations, essentially designing and building your game in
+ * pieces." <a href=" https://docs.unity3d.com/Manual/CreatingScenes.html">Unity
+ * Manual</a>
+ * </p>
+ * A new Scene needs an entry in {@link Scenes} and a method with the Signature:
  * {@code public static Scene create(GameModel, String[])}, for the GameModel to
- * be able to start that Scene.</br> For Scene switching take a look at
+ * be able to start that Scene.</br>
+ * For Scene switching take a look at
  * {@link GameModel#switchScene(Scenes, String[])}
  *
  *
@@ -132,10 +135,9 @@ public abstract class Scene implements CameraTarget {
 		}
 
 		// Debug: Save time before logicLoop
-		long timeBefore;
+		long timeBefore = 0;
 		if (GameConf.DEBUG) {
 			timeBefore = System.currentTimeMillis();
-
 		}
 
 		e.logicLoop(timeDelta);
@@ -271,7 +273,7 @@ public abstract class Scene implements CameraTarget {
 	public Map<Class<?>, Long> getGameElementDurations() {
 		// Reset debug info
 		Map<Class<?>, Long> ret = this.gameElementDurations;
-		gameElementDurations = new HashMap<>();
+		this.gameElementDurations = new HashMap<>();
 		return ret;
 	}
 
