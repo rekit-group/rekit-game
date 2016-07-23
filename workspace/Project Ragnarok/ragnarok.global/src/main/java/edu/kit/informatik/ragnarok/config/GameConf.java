@@ -30,7 +30,7 @@ public final class GameConf implements Visitable {
 	public static final Random PRNG = new Random();
 
 	@NoVisit
-	public static final boolean DEBUG = true;
+	public static boolean DEBUG = true;
 
 	/**
 	 * The Name of the Game
@@ -130,6 +130,10 @@ public final class GameConf implements Visitable {
 	 * The menu's box color (selected)
 	 */
 	public static RGBColor MENU_BOX_SELECT_COLOR;
+	/**
+	 * The menu's box color (option)
+	 */
+	public static RGBColor MENU_BOX_OPTION_COLOR;
 	/**
 	 * The menu's text color
 	 */

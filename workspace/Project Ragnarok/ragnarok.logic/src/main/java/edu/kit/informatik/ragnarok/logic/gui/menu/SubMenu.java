@@ -3,7 +3,6 @@ package edu.kit.informatik.ragnarok.logic.gui.menu;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.Field;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
@@ -43,7 +42,6 @@ public abstract class SubMenu extends MenuItem {
 	public SubMenu(Scene scene, String text) {
 		super(scene, text);
 		this.menuItems = new ArrayList<>();
-		this.setPos(new Vec(GameConf.PIXEL_W / 2f, GameConf.PIXEL_H / 2f));
 	}
 
 	/**
@@ -170,12 +168,12 @@ public abstract class SubMenu extends MenuItem {
 	@Override
 	public void unselect() {
 		if (this.selected) {
+			if (this.parent == null) {
+				return;
+			}
 			this.selected = false;
 			this.inMenu = false;
-
-			if (this.parent != null) {
-				this.parent.focus();
-			}
+			this.parent.focus();
 		} else if (this.inMenu) {
 			// pass unselect
 			this.menuItems.get(this.index).unselect();

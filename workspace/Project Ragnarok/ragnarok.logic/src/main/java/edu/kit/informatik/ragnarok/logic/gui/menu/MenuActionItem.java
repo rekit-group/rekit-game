@@ -16,7 +16,7 @@ public class MenuActionItem extends MenuItem {
 
 	/**
 	 * Create MenuActionItem
-	 * 
+	 *
 	 * @param scene
 	 *            the scene
 	 * @param text
@@ -31,7 +31,7 @@ public class MenuActionItem extends MenuItem {
 
 	/**
 	 * Create MenuActionItem
-	 * 
+	 *
 	 * @param scene
 	 *            the scene
 	 * @param text

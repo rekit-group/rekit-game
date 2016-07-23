@@ -7,6 +7,7 @@ import edu.kit.informatik.ragnarok.logic.gui.menu.MenuActionItem;
 import edu.kit.informatik.ragnarok.logic.gui.menu.MenuGrid;
 import edu.kit.informatik.ragnarok.logic.gui.menu.MenuItem;
 import edu.kit.informatik.ragnarok.logic.gui.menu.MenuList;
+import edu.kit.informatik.ragnarok.logic.gui.menu.SettingToggle;
 import edu.kit.informatik.ragnarok.logic.gui.menu.SubMenu;
 import edu.kit.informatik.ragnarok.logic.level.LevelManager;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
@@ -31,10 +32,6 @@ public class MenuScene extends Scene {
 		this.menu.setPos(new Vec(GameConf.PIXEL_W / 2f, GameConf.PIXEL_H / 2f));
 
 		MenuList play = new MenuList(this, "Play");
-
-		MenuList settings = new MenuList(this, "Settings");
-
-		MenuList about = new MenuList(this, "About");
 
 		MenuActionItem inf = new MenuActionItem(this, "Infinite Fun", () -> MenuScene.this.model.switchScene(Scenes.INFINIT));
 
@@ -61,8 +58,11 @@ public class MenuScene extends Scene {
 		play.addItem(arcade);
 		play.addItem(modPlay);
 
-		settings.addItem(new MenuActionItem(this, "no Settings :/", () -> {
-		}));
+		MenuList settings = new MenuList(this, "Settings");
+
+		settings.addItem(new SettingToggle(this, "Debug Mode", "DEBUG"));
+
+		MenuList about = new MenuList(this, "About");
 
 		about.addItem(new MenuActionItem(this, "under construction", () -> {
 		}));

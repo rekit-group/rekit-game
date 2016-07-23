@@ -4,7 +4,7 @@
 #SETTING::doEpicNeuralNetStuff->true
 #SETTING::takeOverWorld->false
 #SETTING::autoCoinSpawn->false
-#BOSS_SETTING::AT100->edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.bosses.RektSmasher
+#BOSS_SETTING::AT500->edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.bosses.RektSmasher
 
 #ALIAS::-1->edu.kit.informatik.ragnarok.logic.gameelements.type.Enemy
 #ALIAS::1->edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate

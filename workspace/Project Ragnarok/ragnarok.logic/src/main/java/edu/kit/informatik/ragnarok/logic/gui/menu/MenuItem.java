@@ -18,7 +18,7 @@ public abstract class MenuItem extends GuiElement {
 	/**
 	 * The text (name) of the item
 	 */
-	protected String text;
+	private String text;
 	/**
 	 * The parent of the Item or {@code null} if none exist
 	 */
@@ -38,6 +38,7 @@ public abstract class MenuItem extends GuiElement {
 	 */
 	protected MenuItem(Scene scene, String text) {
 		this(scene, text, new Vec(400, 80));
+		this.setPos(new Vec(GameConf.PIXEL_W / 2f, GameConf.PIXEL_H / 2f));
 	}
 
 	/**
@@ -53,6 +54,10 @@ public abstract class MenuItem extends GuiElement {
 	protected MenuItem(Scene scene, String text, Vec size) {
 		super(scene, size);
 		this.text = text;
+	}
+
+	protected String getText() {
+		return this.text;
 	}
 
 	/**
@@ -141,7 +146,7 @@ public abstract class MenuItem extends GuiElement {
 	 */
 	protected void renderItem(Field f) {
 		f.drawRectangle(this.getPos(), this.getSize(), this.hover ? GameConf.MENU_BOX_SELECT_COLOR : GameConf.MENU_BOX_COLOR, false);
-		f.drawText(this.getPos(), this.text, GameConf.MENU_TEXT, false);
+		f.drawText(this.getPos(), this.getText(), GameConf.MENU_TEXT, false);
 	}
 
 	@Override
