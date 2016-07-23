@@ -12,6 +12,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.Particl
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Enemy;
+import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
 import edu.kit.informatik.ragnarok.primitives.geometry.Polygon;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
@@ -166,6 +167,12 @@ public class Cannon extends Enemy implements Visitable {
 	 */
 	private Polygon pipePolygon;
 
+	@NoVisit
+	/**
+	 * The {@link Direction} this Cannon will be (graphically) attached to.
+	 */
+	private Direction attachedSide;
+
 	/**
 	 * Prototype constructor. Should not be used unless you know what you are
 	 * doing.
@@ -180,12 +187,14 @@ public class Cannon extends Enemy implements Visitable {
 	 * @param pos
 	 *            the position of the {@link Cannon}.
 	 */
-	public Cannon(Vec pos) {
+	public Cannon(Vec pos, Direction attachedSide) {
 		super(pos.addY(-0.5f + SIZE.getY() / 2f), new Vec(), SIZE);
 
 		this.innerStateMachine = new CannonStateMachine(this, new IdleState());
 
 		this.currentAngle = innerStateMachine.getState().getTargetAngle();
+
+		this.attachedSide = attachedSide;
 
 		this.pipePolygon = new Polygon(new Vec(), new Vec[] { new Vec(PIPE_W / 2, 0), new Vec(PIPE_W / 2, PIPE_H), new Vec(-PIPE_W / 2, PIPE_H),
 				new Vec(-PIPE_W / 2, 0), new Vec(0, 0) });
@@ -193,7 +202,12 @@ public class Cannon extends Enemy implements Visitable {
 
 	@Override
 	public GameElement create(Vec startPos, String[] options) {
-		return new Cannon(startPos);
+		Direction attachedSide = Direction.UP;
+		if (options.length >= 1 && options[0] != null && options[0].matches("[0-3]+")) {
+			attachedSide = Direction.values()[Integer.parseInt(options[0])];
+		}
+
+		return new Cannon(startPos, attachedSide);
 	}
 
 	@Override
@@ -201,7 +215,31 @@ public class Cannon extends Enemy implements Visitable {
 
 		// draw cannon base
 		f.drawCircle(this.getPos(), this.getSize(), COLOR_BASE);
-		f.drawRectangle(this.getPos().addY(-this.getSize().getY() / 4f), this.getSize().scalar(1, 0.5f), COLOR_BASE);
+
+		Vec size;
+		Vec pos;
+		switch (attachedSide) {
+		case UP:
+			pos = this.getPos().addY(-this.getSize().getY() / 4f);
+			size = this.getSize().scalar(1, 0.5f);
+			break;
+		case DOWN:
+			pos = this.getPos().addY(this.getSize().getY() / 4f);
+			size = this.getSize().scalar(1, 0.5f);
+			break;
+		case LEFT:
+			pos = this.getPos().addX(-this.getSize().getY() / 4f);
+			size = this.getSize().scalar(0.5f, 1);
+			break;
+		case RIGHT:
+			pos = this.getPos().addX(this.getSize().getY() / 4f);
+			size = this.getSize().scalar(0.5f, 1);
+			break;
+		default:
+			pos = new Vec();
+			size = new Vec();
+		}
+		f.drawRectangle(pos, size, COLOR_BASE);
 
 		// draw rotated cannon with (optional) shaking
 		Vec cannonPos = this.getPos().addX(this.innerStateMachine.getState().getCannonShake());
