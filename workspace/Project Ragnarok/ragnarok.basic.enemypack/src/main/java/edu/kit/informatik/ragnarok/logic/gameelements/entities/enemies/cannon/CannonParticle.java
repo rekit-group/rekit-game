@@ -1,12 +1,11 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon;
 
-import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
-import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.DamageParticle;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.Particle;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
 import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
+import edu.kit.informatik.ragnarok.primitives.geometry.Frame;
 
 /**
  * {@link Particle} that extends {@link DamageParticle} that is extended by
@@ -42,11 +41,7 @@ public class CannonParticle extends DamageParticle {
 	}
 
 	@Override
-	public void reactToCollision(GameElement element, Direction dir) {
-		super.reactToCollision(element, dir);
-		Team t = element.getTeam();
-		if (t == Team.INANIMATE || t == Team.PLAYER) {
-			this.parent.hitSomething();
-		}
+	public void collidedWith(Frame collision, Direction dir) {
+		this.parent.hitSomething();
 	}
 }
