@@ -72,13 +72,9 @@ class GameView implements View {
 	 */
 	private GC gc;
 	/**
-	 * A filter
+	 * The filter from the model
 	 */
 	private Filter filter;
-	/**
-	 * Indicates a change of a filter
-	 */
-	private boolean filterChange = false;
 
 	/**
 	 * Constructor that creates a new window with a canvas and prepares all
@@ -164,9 +160,9 @@ class GameView implements View {
 		// Double buffering reduces flickering
 		Image image = new Image(this.shell.getDisplay(), this.canvas.getBounds());
 		GC tempGC = new GC(image);
-		if (this.filterChange) {
+		if (this.model.filterChanged()) {
+			this.filter = this.model.getFilter();
 			this.field.setFilter(this.filter);
-			this.filterChange = false;
 		}
 		this.field.setGC(tempGC);
 
@@ -297,19 +293,6 @@ class GameView implements View {
 		};
 		this.canvas.addKeyListener(adapter);
 
-	}
-
-	@Override
-	public void setFilter(Filter f) {
-		this.filter = f;
-		this.filterChange = true;
-
-	}
-
-	@Override
-	public void removeFilter() {
-		this.filter = null;
-		this.filterChange = true;
 	}
 
 }

@@ -85,10 +85,10 @@ class ControllerImpl implements Observer, Controller, CommandSupervisor {
 		this.mpCmd.put(Tuple.create(GameState.INGAME, InputHelper.ARROW_RIGHT), new WalkCommand(this, Direction.RIGHT));
 
 		// Filter Commands ... a test ('u', 'i', 'o' and 'p' key)
-		this.mpCmd.put(Tuple.create(null, 117), new FilterCommand(true, this.view, new RandomMode()));
-		this.mpCmd.put(Tuple.create(null, 105), new FilterCommand(true, this.view, new InvertedMode()));
-		this.mpCmd.put(Tuple.create(null, 111), new FilterCommand(true, this.view, new GrayScaleMode()));
-		this.mpCmd.put(Tuple.create(null, 112), new FilterCommand(false, this.view, null));
+		this.mpCmd.put(Tuple.create(null, 117), new FilterCommand(true, this.model, new RandomMode()));
+		this.mpCmd.put(Tuple.create(null, 105), new FilterCommand(true, this.model, new InvertedMode()));
+		this.mpCmd.put(Tuple.create(null, 111), new FilterCommand(true, this.model, new GrayScaleMode()));
+		this.mpCmd.put(Tuple.create(null, 112), new FilterCommand(false, this.model, null));
 
 	}
 

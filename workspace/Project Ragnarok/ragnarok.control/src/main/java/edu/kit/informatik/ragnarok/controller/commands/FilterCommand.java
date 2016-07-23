@@ -1,6 +1,7 @@
 package edu.kit.informatik.ragnarok.controller.commands;
 
 import edu.kit.informatik.ragnarok.gui.View;
+import edu.kit.informatik.ragnarok.logic.Model;
 import edu.kit.informatik.ragnarok.primitives.image.Filter;
 
 /**
@@ -16,9 +17,9 @@ public class FilterCommand implements Command {
 	 */
 	private final boolean enable;
 	/**
-	 * The view
+	 * The model
 	 */
-	private final View view;
+	private final Model model;
 	/**
 	 * The filter
 	 */
@@ -34,18 +35,18 @@ public class FilterCommand implements Command {
 	 * @param filter
 	 *            the filter or ignored if {@code enable == false}
 	 */
-	public FilterCommand(boolean enable, View view, Filter filter) {
+	public FilterCommand(boolean enable, Model model, Filter filter) {
 		this.enable = enable;
-		this.view = view;
+		this.model = model;
 		this.filter = filter;
 	}
 
 	@Override
 	public void execute(InputMethod inputMethod) {
 		if (this.enable) {
-			this.view.setFilter(this.filter);
+			this.model.setFilter(this.filter);
 		} else {
-			this.view.removeFilter();
+			this.model.removeFilter();
 		}
 	}
 
