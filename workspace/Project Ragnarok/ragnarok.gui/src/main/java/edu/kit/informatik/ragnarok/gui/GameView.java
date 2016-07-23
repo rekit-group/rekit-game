@@ -3,6 +3,7 @@ package edu.kit.informatik.ragnarok.gui;
 import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Queue;
 
@@ -210,22 +211,16 @@ class GameView implements View {
 
 		// draw FPS
 		this.field.setGC(this.gc);
-		String debugInfo = "FPS: " + this.getFPS() + "\nGameElements: " + this.model.getScene().getGameElementCount();
+		String debugInfo = "FPS: " + this.getFPS();
+		this.field.drawText(new Vec(GameConf.PIXEL_W - 10, GameConf.PIXEL_H - 60), debugInfo, GameConf.HINT_TEXT, false);
+
 		if (GameConf.DEBUG) {
-			debugInfo += "\n" + this.getGameElementStats();
-			this.field.drawText(new Vec(GameConf.PIXEL_W - 10, GameConf.PIXEL_H / 2f), debugInfo, GameConf.HINT_TEXT, false);
-		} else {
-			this.field.drawText(new Vec(GameConf.PIXEL_W - 10, GameConf.PIXEL_H - 60), debugInfo, GameConf.HINT_TEXT, false);
+			drawDebug();
 		}
 
 	}
 
-	/**
-	 * Get a String with stats about all {@link GameElement GameElements}
-	 *
-	 * @return the String
-	 */
-	private String getGameElementStats() {
+	private void drawDebug() {
 		HashMap<Class<?>, Integer> classCounter = new HashMap<>();
 
 		synchronized (this.model.getScene().synchronize()) {
@@ -241,17 +236,32 @@ class GameView implements View {
 			}
 		}
 
-		StringBuilder result = new StringBuilder();
+		StringBuilder resultName = new StringBuilder();
+		StringBuilder resultNum = new StringBuilder();
+		StringBuilder resultDur = new StringBuilder();
+
+		resultName.append("GameElements");
+		resultName.append("\n");
+		resultNum.append(this.model.getScene().getGameElementCount());
+		resultNum.append("\n");
+		resultDur.append("\n");
+
+		Map<Class<?>, Long> durations = this.model.getScene().getGameElementDurations();
+
 		Iterator<Entry<Class<?>, Integer>> it2 = classCounter.entrySet().iterator();
 		while (it2.hasNext()) {
 			Entry<Class<?>, Integer> e = it2.next();
-			result.append(e.getKey().getSimpleName());
-			result.append(": ");
-			result.append(e.getValue());
-			result.append("\n");
+			resultName.append(e.getKey().getSimpleName());
+			resultName.append("\n");
+			resultNum.append(e.getValue());
+			resultNum.append("\n");
+			resultDur.append(durations.get(e.getKey()));
+			resultDur.append("\n");
 		}
 
-		return result.toString();
+		this.field.drawText(new Vec(GameConf.PIXEL_W - 55, GameConf.PIXEL_H / 2f), resultName.toString(), GameConf.HINT_TEXT, false);
+		this.field.drawText(new Vec(GameConf.PIXEL_W - 30, GameConf.PIXEL_H / 2f), resultNum.toString(), GameConf.HINT_TEXT, false);
+		this.field.drawText(new Vec(GameConf.PIXEL_W - 5, GameConf.PIXEL_H / 2f), resultDur.toString(), GameConf.HINT_TEXT, false);
 	}
 
 	/**

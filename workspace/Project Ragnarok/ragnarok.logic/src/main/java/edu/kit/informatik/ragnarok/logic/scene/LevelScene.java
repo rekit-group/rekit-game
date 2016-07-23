@@ -127,36 +127,18 @@ public abstract class LevelScene extends Scene {
 	}
 
 	@Override
-	protected void logicLoopGameElement(float timeDelta, Iterator<GameElement> it) {
-		GameElement e = it.next();
-
-		// if this GameElement is marked for destruction
-		if (e.getDeleteMe()) {
-			it.remove();
-		}
-
-		// check if we can delete this
-		if (e.getPos().translate2D(this.getCameraOffset()).getX() + e.getSize().getX() / 2 < this.getCameraOffset()) {
-
-			this.removeGameElement(e);
-		} else {
-			e.logicLoop(timeDelta);
-		}
-	}
-
-	@Override
 	protected void logicLoopAfter() {
 		synchronized (this.synchronize()) {
 			// iterate all GameElements to detect collision
 			Iterator<GameElement> it1 = this.getGameElementIterator();
 			while (it1.hasNext()) {
 				GameElement e1 = it1.next();
-				// we don't want neutral element collision 
+				// we don't want neutral element collision
 				if (e1.getTeam() != Team.NEUTRAL) {
 					Iterator<GameElement> it2 = this.getGameElementIterator();
 					while (it2.hasNext()) {
 						GameElement e2 = it2.next();
-						// we don't want neutral element collision 
+						// we don't want neutral element collision
 						if (e2.getTeam() != Team.NEUTRAL) {
 							if (e1 != e2) {
 								this.checkCollision(e1, e2, e1.getLastPos(), e2.getLastPos());
