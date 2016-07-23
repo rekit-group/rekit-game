@@ -1,4 +1,4 @@
-package edu.kit.informatik.ragnarok.gui.filters;
+package edu.kit.informatik.ragnarok.primitives.image;
 
 import java.util.Set;
 

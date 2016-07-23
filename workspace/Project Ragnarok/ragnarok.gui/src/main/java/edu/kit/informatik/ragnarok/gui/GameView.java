@@ -18,13 +18,13 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
-import edu.kit.informatik.ragnarok.gui.filters.Filter;
 import edu.kit.informatik.ragnarok.logic.Model;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.GuiElement;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.AbstractImage;
+import edu.kit.informatik.ragnarok.primitives.image.Filter;
 import edu.kit.informatik.ragnarok.util.InputHelper;
 import edu.kit.informatik.ragnarok.util.SwtUtils;
 import edu.kit.informatik.ragnarok.util.ThreadUtils;
@@ -300,7 +300,7 @@ class GameView implements View {
 	}
 
 	@Override
-	public void injectFilter(Filter f) {
+	public void setFilter(Filter f) {
 		this.filter = f;
 		this.filterChange = true;
 

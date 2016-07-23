@@ -22,7 +22,7 @@ public final class AbstractImage {
 
 	/**
 	 * Create an Abstract Image
-	 * 
+	 *
 	 * @param height
 	 *            the height
 	 * @param width
@@ -34,5 +34,28 @@ public final class AbstractImage {
 		this.height = height;
 		this.width = width;
 		this.pixels = pixels;
+	}
+
+	/**
+	 * Create an Abstract Image
+	 *
+	 * @param height
+	 *            the height
+	 * @param width
+	 *            the width
+	 * @param pixels
+	 *            the pixels (one entry is equal to one RGBA
+	 */
+
+	public AbstractImage(int height, int width, int[] pixels) {
+		this.height = height;
+		this.width = width;
+		this.pixels = new byte[4 * pixels.length];
+		for (int i = 0; i < pixels.length; i++) {
+			this.pixels[4 * i] = (byte) ((pixels[i] >> 16) & 0xFF);
+			this.pixels[4 * i + 1] = (byte) ((pixels[i] >> 8) & 0xFF);
+			this.pixels[4 * i + 2] = (byte) ((pixels[i]) & 0xFF);
+			this.pixels[4 * i + 3] = (byte) ((pixels[i] >> 24) & 0xFF);
+		}
 	}
 }

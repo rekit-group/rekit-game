@@ -1,7 +1,7 @@
 package edu.kit.informatik.ragnarok.controller.commands;
 
 import edu.kit.informatik.ragnarok.gui.View;
-import edu.kit.informatik.ragnarok.gui.filters.Filter;
+import edu.kit.informatik.ragnarok.primitives.image.Filter;
 
 /**
  * This Command Type is used for attaching and/or detaching {@link Filter
@@ -43,7 +43,7 @@ public class FilterCommand implements Command {
 	@Override
 	public void execute(InputMethod inputMethod) {
 		if (this.enable) {
-			this.view.injectFilter(this.filter);
+			this.view.setFilter(this.filter);
 		} else {
 			this.view.removeFilter();
 		}
