@@ -13,7 +13,7 @@ public class TriangulationLayer extends ParallaxLayer {
 
 	private Edge lastIterationEdge;
 
-	private float minY = GameConf.GRID_H - 3.5f;
+	private float minY = GameConf.GRID_H - 3.2f;
 	private float maxY = GameConf.GRID_H;
 
 	private int triangleId;

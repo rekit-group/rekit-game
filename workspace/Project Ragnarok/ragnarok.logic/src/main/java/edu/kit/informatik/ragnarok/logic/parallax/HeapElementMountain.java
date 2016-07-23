@@ -80,7 +80,7 @@ public class HeapElementMountain extends HeapElement {
 
 	@Override
 	protected final float elemYMu() {
-		return GameConf.GRID_H - 3.5f;
+		return GameConf.GRID_H - 3.2f;
 	}
 
 	@Override
