@@ -1,4 +1,4 @@
-package edu.kit.informatik.ragnarok.logic.gameelements.gui.menu;
+package edu.kit.informatik.ragnarok.logic.gui.menu;
 
 import java.util.ArrayList;
 import java.util.List;

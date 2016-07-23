@@ -1,4 +1,4 @@
-package edu.kit.informatik.ragnarok.logic.gameelements.gui;
+package edu.kit.informatik.ragnarok.logic.gui;
 
 import edu.kit.informatik.ragnarok.logic.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;

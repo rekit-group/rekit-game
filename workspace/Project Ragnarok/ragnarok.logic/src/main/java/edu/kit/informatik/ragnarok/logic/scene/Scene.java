@@ -13,7 +13,7 @@ import edu.kit.informatik.ragnarok.logic.Scenes;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.CameraTarget;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
-import edu.kit.informatik.ragnarok.logic.gameelements.gui.GuiElement;
+import edu.kit.informatik.ragnarok.logic.gui.GuiElement;
 
 /**
  * Based on the concept of scenes in Unity. </br> "Scenes contain the objects of

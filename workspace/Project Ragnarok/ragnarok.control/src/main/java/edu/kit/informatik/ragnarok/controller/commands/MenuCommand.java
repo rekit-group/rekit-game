@@ -1,7 +1,7 @@
 package edu.kit.informatik.ragnarok.controller.commands;
 
 import edu.kit.informatik.ragnarok.logic.GameState;
-import edu.kit.informatik.ragnarok.logic.gameelements.gui.menu.MenuItem;
+import edu.kit.informatik.ragnarok.logic.gui.menu.MenuItem;
 
 /**
  * This class is used for the {@link GameState#MENU MenuGameState}

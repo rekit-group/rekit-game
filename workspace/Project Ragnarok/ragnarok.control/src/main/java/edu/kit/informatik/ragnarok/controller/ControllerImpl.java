@@ -18,7 +18,7 @@ import edu.kit.informatik.ragnarok.logic.filters.GrayScaleMode;
 import edu.kit.informatik.ragnarok.logic.filters.InvertedMode;
 import edu.kit.informatik.ragnarok.logic.filters.RandomMode;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
-import edu.kit.informatik.ragnarok.logic.gameelements.gui.menu.MenuItem;
+import edu.kit.informatik.ragnarok.logic.gui.menu.MenuItem;
 import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
 import edu.kit.informatik.ragnarok.util.InputHelper;
 import edu.kit.informatik.ragnarok.util.Tuple;

@@ -8,11 +8,11 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.FixedCameraTarget
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawner;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
-import edu.kit.informatik.ragnarok.logic.gameelements.gui.Text;
-import edu.kit.informatik.ragnarok.logic.gameelements.gui.TimeDecorator;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateDoor;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateTrigger;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Boss;
+import edu.kit.informatik.ragnarok.logic.gui.Text;
+import edu.kit.informatik.ragnarok.logic.gui.TimeDecorator;
 import edu.kit.informatik.ragnarok.logic.level.Structure;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;

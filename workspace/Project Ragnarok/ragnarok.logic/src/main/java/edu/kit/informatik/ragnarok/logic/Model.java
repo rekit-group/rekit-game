@@ -1,7 +1,7 @@
 package edu.kit.informatik.ragnarok.logic;
 
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
-import edu.kit.informatik.ragnarok.logic.gameelements.gui.menu.MenuItem;
+import edu.kit.informatik.ragnarok.logic.gui.menu.MenuItem;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.image.Filter;
 

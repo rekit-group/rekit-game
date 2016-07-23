@@ -1,8 +1,8 @@
-package edu.kit.informatik.ragnarok.logic.gameelements.gui.menu;
+package edu.kit.informatik.ragnarok.logic.gui.menu;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.Field;
-import edu.kit.informatik.ragnarok.logic.gameelements.gui.GuiElement;
+import edu.kit.informatik.ragnarok.logic.gui.GuiElement;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 
