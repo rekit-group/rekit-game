@@ -37,7 +37,7 @@ public class ShootingState extends ChargingState {
 	 * Distance from the {@link Cannon} to the next {@link CannonParticle} to be
 	 * spawned.
 	 */
-	private float currentDistance = 1;
+	private float currentDistance = 0.5f;
 
 	/**
 	 * The {@link ParticleSpawner} that can spawn specialized
