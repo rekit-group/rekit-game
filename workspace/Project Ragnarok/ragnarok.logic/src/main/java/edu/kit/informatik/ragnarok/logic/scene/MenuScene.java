@@ -6,13 +6,14 @@ import edu.kit.informatik.ragnarok.logic.Scenes;
 import edu.kit.informatik.ragnarok.logic.gui.menu.MenuActionItem;
 import edu.kit.informatik.ragnarok.logic.gui.menu.MenuGrid;
 import edu.kit.informatik.ragnarok.logic.gui.menu.MenuItem;
-import edu.kit.informatik.ragnarok.logic.gui.menu.MenuSubMenu;
+import edu.kit.informatik.ragnarok.logic.gui.menu.MenuList;
+import edu.kit.informatik.ragnarok.logic.gui.menu.SubMenu;
 import edu.kit.informatik.ragnarok.logic.level.LevelManager;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 
 public class MenuScene extends Scene {
 
-	private MenuSubMenu menu;
+	private SubMenu menu;
 
 	public MenuScene(GameModel model) {
 		super(model);
@@ -26,14 +27,14 @@ public class MenuScene extends Scene {
 	public void init() {
 		super.init();
 
-		this.menu = new MenuSubMenu(this, "Main Menu");
+		this.menu = new MenuList(this, "Main Menu");
 		this.menu.setPos(new Vec(GameConf.PIXEL_W / 2f, GameConf.PIXEL_H / 2f));
 
-		MenuSubMenu play = new MenuSubMenu(this, "Play");
+		MenuList play = new MenuList(this, "Play");
 
-		MenuSubMenu settings = new MenuSubMenu(this, "Settings");
+		MenuList settings = new MenuList(this, "Settings");
 
-		MenuSubMenu about = new MenuSubMenu(this, "About");
+		MenuList about = new MenuList(this, "About");
 
 		MenuActionItem inf = new MenuActionItem(this, "Infinite Fun", () -> MenuScene.this.model.switchScene(Scenes.INFINIT));
 
@@ -50,7 +51,7 @@ public class MenuScene extends Scene {
 			arcade.addItem(button);
 		}
 
-		MenuSubMenu modPlay = new MenuSubMenu(this, "Mod Scenes");
+		MenuList modPlay = new MenuList(this, "Mod Scenes");
 
 		modPlay.addItem(new MenuActionItem(this, "no Mod Scenes :(", () -> {
 		}));

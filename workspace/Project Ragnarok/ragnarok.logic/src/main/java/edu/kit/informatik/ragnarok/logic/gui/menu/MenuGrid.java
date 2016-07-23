@@ -5,11 +5,11 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 
 /**
  *
- * This class realizes a {@link MenuSubMenu}. In this SubMenu Items will be
+ * This class realizes a {@link MenuList}. In this SubMenu Items will be
  * arranged as Grid
  *
  */
-public class MenuGrid extends MenuSubMenu {
+public class MenuGrid extends SubMenu {
 	/**
 	 * Number of columns
 	 */
@@ -21,7 +21,7 @@ public class MenuGrid extends MenuSubMenu {
 
 	/**
 	 * Create a MenuGrid
-	 * 
+	 *
 	 * @param scene
 	 *            the scene
 	 * @param text
@@ -36,64 +36,48 @@ public class MenuGrid extends MenuSubMenu {
 	}
 
 	@Override
-	public void up() {
-		if (this.selected) {
-			this.menuItems.get(this.index).setHover(false);
-			this.index -= this.colCount;
+	public void menuUp() {
+		this.menuItems.get(this.index).setHover(false);
+		this.index -= this.colCount;
 
-			if (this.index < 0) {
-				this.index += this.rowCount * this.colCount;
-				if (this.index >= this.menuItems.size()) {
-					this.index -= this.colCount;
-				}
-			}
-
-			this.menuItems.get(this.index).setHover(true);
-		} else {
-			this.menuItems.get(this.index).up();
-		}
-	}
-
-	@Override
-	public void down() {
-		if (this.selected) {
-			this.menuItems.get(this.index).setHover(false);
-			this.index += this.colCount;
+		if (this.index < 0) {
+			this.index += this.rowCount * this.colCount;
 			if (this.index >= this.menuItems.size()) {
-				this.index %= this.colCount;
+				this.index -= this.colCount;
 			}
-			this.menuItems.get(this.index).setHover(true);
-		} else {
-			this.menuItems.get(this.index).down();
 		}
+
+		this.menuItems.get(this.index).setHover(true);
 	}
 
 	@Override
-	public void left() {
-		if (this.selected) {
-			this.menuItems.get(this.index).setHover(false);
-			this.index -= 1;
-			if (this.index < 0) {
-				this.index = this.menuItems.size() - 1;
-			}
-			this.menuItems.get(this.index).setHover(true);
-		} else {
-			this.menuItems.get(this.index).up();
+	public void menuDown() {
+		this.menuItems.get(this.index).setHover(false);
+		this.index += this.colCount;
+		if (this.index >= this.menuItems.size()) {
+			this.index %= this.colCount;
 		}
+		this.menuItems.get(this.index).setHover(true);
 	}
 
 	@Override
-	public void right() {
-		if (this.selected) {
-			this.menuItems.get(this.index).setHover(false);
-			this.index += 1;
-			if (this.index >= this.menuItems.size()) {
-				this.index = 0;
-			}
-			this.menuItems.get(this.index).setHover(true);
-		} else {
-			this.menuItems.get(this.index).down();
+	public void menuLeft() {
+		this.menuItems.get(this.index).setHover(false);
+		this.index -= 1;
+		if (this.index < 0) {
+			this.index = this.menuItems.size() - 1;
 		}
+		this.menuItems.get(this.index).setHover(true);
+	}
+
+	@Override
+	public void menuRight() {
+		this.menuItems.get(this.index).setHover(false);
+		this.index += 1;
+		if (this.index >= this.menuItems.size()) {
+			this.index = 0;
+		}
+		this.menuItems.get(this.index).setHover(true);
 	}
 
 	@Override

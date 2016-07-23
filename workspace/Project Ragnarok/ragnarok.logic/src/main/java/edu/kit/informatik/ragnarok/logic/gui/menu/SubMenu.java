@@ -10,27 +10,27 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 
 /**
  *
- * This class realizes a Menu of SubMenus
+ * This class realizes a Menu displaying a list of MenuItems
  *
  */
-public class MenuSubMenu extends MenuItem {
-	/**
-	 * The contained Items
-	 */
-	protected List<MenuItem> menuItems;
-	/**
-	 * The size of each item
-	 */
-	protected Vec itemSize;
-	/**
-	 * The current index
-	 */
-	protected int index = 0;
+public abstract class SubMenu extends MenuItem {
 	/**
 	 * This bool indicates whether this Menu (false) or its Items (true) shall
 	 * be rendered
 	 */
 	protected boolean inMenu = false;
+
+	/**
+	 * The current index
+	 */
+	protected int index = 0;
+
+	/**
+	 * The contained Items
+	 */
+	protected List<MenuItem> menuItems;
+
+	protected Vec itemSize;
 
 	/**
 	 * Create the submenu
@@ -40,11 +40,10 @@ public class MenuSubMenu extends MenuItem {
 	 * @param text
 	 *            the text (name)
 	 */
-	public MenuSubMenu(Scene scene, String text) {
+	public SubMenu(Scene scene, String text) {
 		super(scene, text);
 		this.menuItems = new ArrayList<>();
 		this.setPos(new Vec(GameConf.PIXEL_W / 2f, GameConf.PIXEL_H / 2f));
-		this.itemSize = new Vec(400, 100);
 	}
 
 	/**
@@ -84,15 +83,9 @@ public class MenuSubMenu extends MenuItem {
 	}
 
 	@Override
-	public void up() {
+	public final void up() {
 		if (this.selected) {
-			// hover up
-			this.menuItems.get(this.index).setHover(false);
-			this.index -= 1;
-			if (this.index < 0) {
-				this.index = this.menuItems.size() - 1;
-			}
-			this.menuItems.get(this.index).setHover(true);
+			this.menuUp();
 		} else if (this.inMenu) {
 			// pass up
 			this.menuItems.get(this.index).up();
@@ -100,15 +93,9 @@ public class MenuSubMenu extends MenuItem {
 	}
 
 	@Override
-	public void down() {
+	public final void down() {
 		if (this.selected) {
-			// hover down
-			this.menuItems.get(this.index).setHover(false);
-			this.index += 1;
-			if (this.index >= this.menuItems.size()) {
-				this.index = 0;
-			}
-			this.menuItems.get(this.index).setHover(true);
+			this.menuDown();
 		} else if (this.inMenu) {
 			// pass down
 			this.menuItems.get(this.index).down();
@@ -116,9 +103,9 @@ public class MenuSubMenu extends MenuItem {
 	}
 
 	@Override
-	public void left() {
+	public final void left() {
 		if (this.selected) {
-
+			this.menuLeft();
 		} else if (this.inMenu) {
 			// pass left
 			this.menuItems.get(this.index).left();
@@ -126,13 +113,41 @@ public class MenuSubMenu extends MenuItem {
 	}
 
 	@Override
-	public void right() {
+	public final void right() {
 		if (this.selected) {
-
+			this.menuRight();
 		} else if (this.inMenu) {
 			// pass right
 			this.menuItems.get(this.index).right();
 		}
+	}
+
+	/**
+	 * Process up while this menu is selected.
+	 */
+	protected void menuUp() {
+
+	}
+
+	/**
+	 * Process down while this menu is selected.
+	 */
+	protected void menuDown() {
+
+	}
+
+	/**
+	 * Process left while this menu is selected.
+	 */
+	protected void menuLeft() {
+
+	}
+
+	/**
+	 * Process right while this menu is selected.
+	 */
+	protected void menuRight() {
+
 	}
 
 	@Override
@@ -174,12 +189,10 @@ public class MenuSubMenu extends MenuItem {
 	}
 
 	@Override
-	protected void internalRender(Field f) {
+	protected final void internalRender(Field f) {
 		if (this.selected) {
 			// render this menu as complete Menu
-			for (final MenuItem menuItem : this.menuItems) {
-				menuItem.renderItem(f);
-			}
+			this.renderMenu(f);
 		} else if (this.inMenu) {
 			// pass the render to the selected MenuItem
 			this.menuItems.get(this.index).internalRender(f);
@@ -187,16 +200,20 @@ public class MenuSubMenu extends MenuItem {
 	}
 
 	/**
-	 * Calculate the new Position of each Item
+	 * Renders all items of this menu. Called when this menu is selected
+	 * (displaying its children).
+	 *
+	 * @param f
 	 */
-	protected void calcItemPos() {
-		// render menu as list
-		Vec offset = new Vec(0, -((this.menuItems.size() - 1) * this.itemSize.getY()) / 2);
-
+	protected void renderMenu(Field f) {
 		for (final MenuItem menuItem : this.menuItems) {
-			menuItem.setPos(this.getPos().add(offset));
-			offset = offset.addY(this.itemSize.getY());
+			menuItem.renderItem(f);
 		}
 	}
+
+	/**
+	 * Calculate the new Position of each Item
+	 */
+	protected abstract void calcItemPos();
 
 }
