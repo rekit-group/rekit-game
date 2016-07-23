@@ -7,12 +7,14 @@ import edu.kit.informatik.ragnarok.logic.gameelements.gui.menu.MenuItem;
 import edu.kit.informatik.ragnarok.logic.scene.MenuScene;
 import edu.kit.informatik.ragnarok.logic.scene.NullScene;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
+import edu.kit.informatik.ragnarok.primitives.image.Filter;
 import edu.kit.informatik.ragnarok.util.ThreadUtils;
 
 /**
  * Main class of the Model. Manages the logic
  *
  * @author Angelo Aracri
+ * @author Dominik Fuchß
  *
  * @version 1.1
  */
@@ -22,6 +24,9 @@ public class GameModel implements CameraTarget, Model {
 	private Scene curScene;
 	private boolean endGame;
 	private GameState state;
+
+	private Filter filter;
+	private boolean filterChange;
 
 	public GameModel() {
 		this.endGame = false;
@@ -72,7 +77,7 @@ public class GameModel implements CameraTarget, Model {
 
 	/**
 	 * {@link #switchScene(Scenes, String[])} with null as options
-	 * 
+	 *
 	 * @param s
 	 */
 	public void switchScene(Scenes s) {
@@ -138,6 +143,42 @@ public class GameModel implements CameraTarget, Model {
 
 	public long getTime() {
 		return this.lastTime;
+	}
+
+	/**
+	 * Synchronize filters
+	 */
+	private static final Object FILTER_SYNC = new Object();
+
+	@Override
+	public void setFilter(Filter f) {
+		synchronized (GameModel.FILTER_SYNC) {
+			this.filter = f;
+			this.filterChange = true;
+		}
+	}
+
+	@Override
+	public void removeFilter() {
+		synchronized (GameModel.FILTER_SYNC) {
+			this.filter = null;
+			this.filterChange = true;
+		}
+	}
+
+	@Override
+	public boolean filterChanged() {
+		synchronized (GameModel.FILTER_SYNC) {
+			return this.filterChange;
+		}
+	}
+
+	@Override
+	public Filter getFilter() {
+		synchronized (GameModel.FILTER_SYNC) {
+			this.filterChange = false;
+			return this.filter;
+		}
 	}
 
 }

@@ -1,6 +1,5 @@
 package edu.kit.informatik.ragnarok.gui;
 
-import edu.kit.informatik.ragnarok.gui.filters.Filter;
 import edu.kit.informatik.ragnarok.logic.Model;
 import edu.kit.informatik.ragnarok.util.InputHelper;
 
@@ -35,16 +34,4 @@ public interface View {
 	 */
 	void attachMe(InputHelper inputHelper);
 
-	/**
-	 * Inject a filter
-	 * 
-	 * @param f
-	 *            the filter
-	 */
-	void injectFilter(Filter f);
-
-	/**
-	 * Remove all filters
-	 */
-	void removeFilter();
 }

@@ -6,6 +6,30 @@
 		<artifactId>ragnarok</artifactId>
 		<version>0.3-ALPHA</version>
 	</parent>
+	<properties>
+		<main.class>edu.kit.informatik.ragnarok.Main</main.class>
+
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+							<mainClass>${main.class}</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 	<artifactId>ragnarok.game</artifactId>
 	<dependencies>
 		<dependency>

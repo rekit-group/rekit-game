@@ -3,6 +3,7 @@ package edu.kit.informatik.ragnarok.logic;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.menu.MenuItem;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
+import edu.kit.informatik.ragnarok.primitives.image.Filter;
 
 /**
  * This Interface defines the Model for the MVC
@@ -49,9 +50,35 @@ public interface Model {
 
 	/**
 	 * Get the current state
-	 * 
+	 *
 	 * @return the state
 	 */
 	GameState getState();
 
+	/**
+	 * Set a filter
+	 *
+	 * @param f
+	 *            the filter
+	 */
+	void setFilter(Filter f);
+
+	/**
+	 * Remove all filters
+	 */
+	void removeFilter();
+
+	/**
+	 * Get the current filter & reset {@link #filterChanged()}
+	 *
+	 * @return the filter or {@code null} if none set
+	 */
+	Filter getFilter();
+
+	/**
+	 * Indicates whether the filter has been changed
+	 *
+	 * @return {@code true} if changed, {@code false} otherwise
+	 */
+	boolean filterChanged();
 }

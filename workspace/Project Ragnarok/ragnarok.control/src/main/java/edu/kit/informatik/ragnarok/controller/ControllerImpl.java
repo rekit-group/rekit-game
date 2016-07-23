@@ -12,11 +12,11 @@ import edu.kit.informatik.ragnarok.controller.commands.JumpCommand;
 import edu.kit.informatik.ragnarok.controller.commands.MenuCommand;
 import edu.kit.informatik.ragnarok.controller.commands.WalkCommand;
 import edu.kit.informatik.ragnarok.gui.View;
-import edu.kit.informatik.ragnarok.gui.filters.GrayScaleMode;
-import edu.kit.informatik.ragnarok.gui.filters.InvertedMode;
-import edu.kit.informatik.ragnarok.gui.filters.RandomMode;
 import edu.kit.informatik.ragnarok.logic.GameState;
 import edu.kit.informatik.ragnarok.logic.Model;
+import edu.kit.informatik.ragnarok.logic.filters.GrayScaleMode;
+import edu.kit.informatik.ragnarok.logic.filters.InvertedMode;
+import edu.kit.informatik.ragnarok.logic.filters.RandomMode;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.menu.MenuItem;
 import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
@@ -85,10 +85,10 @@ class ControllerImpl implements Observer, Controller, CommandSupervisor {
 		this.mpCmd.put(Tuple.create(GameState.INGAME, InputHelper.ARROW_RIGHT), new WalkCommand(this, Direction.RIGHT));
 
 		// Filter Commands ... a test ('u', 'i', 'o' and 'p' key)
-		this.mpCmd.put(Tuple.create(null, 117), new FilterCommand(true, this.view, new RandomMode()));
-		this.mpCmd.put(Tuple.create(null, 105), new FilterCommand(true, this.view, new InvertedMode()));
-		this.mpCmd.put(Tuple.create(null, 111), new FilterCommand(true, this.view, new GrayScaleMode()));
-		this.mpCmd.put(Tuple.create(null, 112), new FilterCommand(false, this.view, null));
+		this.mpCmd.put(Tuple.create(null, 117), new FilterCommand(true, this.model, new RandomMode()));
+		this.mpCmd.put(Tuple.create(null, 105), new FilterCommand(true, this.model, new InvertedMode()));
+		this.mpCmd.put(Tuple.create(null, 111), new FilterCommand(true, this.model, new GrayScaleMode()));
+		this.mpCmd.put(Tuple.create(null, 112), new FilterCommand(false, this.model, null));
 
 	}
 

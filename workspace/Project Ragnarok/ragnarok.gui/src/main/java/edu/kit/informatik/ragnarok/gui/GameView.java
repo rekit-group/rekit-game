@@ -19,13 +19,13 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
-import edu.kit.informatik.ragnarok.gui.filters.Filter;
 import edu.kit.informatik.ragnarok.logic.Model;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.gui.GuiElement;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.AbstractImage;
+import edu.kit.informatik.ragnarok.primitives.image.Filter;
 import edu.kit.informatik.ragnarok.util.InputHelper;
 import edu.kit.informatik.ragnarok.util.SwtUtils;
 import edu.kit.informatik.ragnarok.util.ThreadUtils;
@@ -73,13 +73,9 @@ class GameView implements View {
 	 */
 	private GC gc;
 	/**
-	 * A filter
+	 * The filter from the model
 	 */
 	private Filter filter;
-	/**
-	 * Indicates a change of a filter
-	 */
-	private boolean filterChange = false;
 
 	/**
 	 * Constructor that creates a new window with a canvas and prepares all
@@ -93,7 +89,7 @@ class GameView implements View {
 		// Create window
 
 		this.shell = new Shell(Display.getDefault(), SWT.DIALOG_TRIM | SWT.MIN | SWT.PRIMARY_MODAL | SWT.NO_BACKGROUND);
-		this.shell.setText(GameConf.NAME);
+		this.shell.setText(GameConf.NAME + " (" + GameConf.VERSION + ")");
 
 		// Create and position a canvas
 		this.canvas = new Canvas(this.shell, SWT.NONE);
@@ -165,9 +161,9 @@ class GameView implements View {
 		// Double buffering reduces flickering
 		Image image = new Image(this.shell.getDisplay(), this.canvas.getBounds());
 		GC tempGC = new GC(image);
-		if (this.filterChange) {
+		if (this.model.filterChanged()) {
+			this.filter = this.model.getFilter();
 			this.field.setFilter(this.filter);
-			this.filterChange = false;
 		}
 		this.field.setGC(tempGC);
 
@@ -307,19 +303,6 @@ class GameView implements View {
 		};
 		this.canvas.addKeyListener(adapter);
 
-	}
-
-	@Override
-	public void injectFilter(Filter f) {
-		this.filter = f;
-		this.filterChange = true;
-
-	}
-
-	@Override
-	public void removeFilter() {
-		this.filter = null;
-		this.filterChange = true;
 	}
 
 }
