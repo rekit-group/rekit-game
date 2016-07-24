@@ -106,6 +106,10 @@ public final class GameConf implements Visitable {
 	 */
 	public static float PLAYER_JUMP_BOOST;
 	/**
+	 * The player's boost upon jumping on an enemy
+	 */
+	public static float PLAYER_KILL_BOOST;
+	/**
 	 * The player's maximum jump time
 	 */
 	public static float PLAYER_JUMP_TIME;
