@@ -10,6 +10,7 @@ import edu.kit.informatik.ragnarok.controller.commands.FilterCommand;
 import edu.kit.informatik.ragnarok.controller.commands.InputMethod;
 import edu.kit.informatik.ragnarok.controller.commands.JumpCommand;
 import edu.kit.informatik.ragnarok.controller.commands.MenuCommand;
+import edu.kit.informatik.ragnarok.controller.commands.PlayPauseCommand;
 import edu.kit.informatik.ragnarok.controller.commands.WalkCommand;
 import edu.kit.informatik.ragnarok.gui.View;
 import edu.kit.informatik.ragnarok.logic.GameState;
@@ -19,6 +20,7 @@ import edu.kit.informatik.ragnarok.logic.filters.InvertedMode;
 import edu.kit.informatik.ragnarok.logic.filters.RandomMode;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gui.menu.MenuItem;
+import edu.kit.informatik.ragnarok.logic.scene.LevelScene;
 import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
 import edu.kit.informatik.ragnarok.util.InputHelper;
 import edu.kit.informatik.ragnarok.util.Tuple;
@@ -83,6 +85,7 @@ class ControllerImpl implements Observer, Controller, CommandSupervisor {
 		this.mpCmd.put(Tuple.create(GameState.INGAME, InputHelper.ARROW_UP), new JumpCommand(this));
 		this.mpCmd.put(Tuple.create(GameState.INGAME, InputHelper.ARROW_LEFT), new WalkCommand(this, Direction.LEFT));
 		this.mpCmd.put(Tuple.create(GameState.INGAME, InputHelper.ARROW_RIGHT), new WalkCommand(this, Direction.RIGHT));
+		this.mpCmd.put(Tuple.create(GameState.INGAME, InputHelper.ESCAPE), new PlayPauseCommand(this));
 
 		// Filter Commands ... a test ('u', 'i', 'o' and 'p' key)
 		this.mpCmd.put(Tuple.create(null, 117), new FilterCommand(true, this.model, new RandomMode()));
@@ -141,5 +144,10 @@ class ControllerImpl implements Observer, Controller, CommandSupervisor {
 	@Override
 	public MenuItem getMenu(Command command) {
 		return this.model.getMenu();
+	}
+
+	@Override
+	public LevelScene getLevelScene() {
+		return this.model.getState() == GameState.INGAME ? (LevelScene) this.model.getScene() : null;
 	}
 }

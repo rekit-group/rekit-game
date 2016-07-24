@@ -55,6 +55,8 @@ public abstract class Scene implements CameraTarget {
 
 	private Map<Class<?>, Long> gameElementDurations = new HashMap<>();
 
+	private boolean paused = false;
+
 	public Scene(GameModel model) {
 		this.model = model;
 	}
@@ -76,6 +78,14 @@ public abstract class Scene implements CameraTarget {
 	public void start() {
 	}
 
+	public void togglePause() {
+		this.paused = !this.paused;
+	}
+
+	public boolean isPaused() {
+		return this.paused;
+	}
+
 	public void end(boolean won) {
 		this.model.switchScene(Scenes.MENU);
 	}
@@ -95,12 +105,14 @@ public abstract class Scene implements CameraTarget {
 		// add GameElements that have been added
 		this.addGameElements();
 
-		// iterate all GameElements to invoke logicLoop
-		synchronized (this.synchronize()) {
-			Iterator<GameElement> it = this.getGameElementIterator();
+		if (!this.paused) {
+			// iterate all GameElements to invoke logicLoop
+			synchronized (this.synchronize()) {
+				Iterator<GameElement> it = this.getGameElementIterator();
 
-			while (it.hasNext()) {
-				this.logicLoopGameElement(timeDelta, it);
+				while (it.hasNext()) {
+					this.logicLoopGameElement(timeDelta, it);
+				}
 			}
 		}
 

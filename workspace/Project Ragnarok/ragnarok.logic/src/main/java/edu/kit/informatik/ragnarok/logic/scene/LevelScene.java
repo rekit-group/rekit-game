@@ -128,6 +128,9 @@ public abstract class LevelScene extends Scene {
 
 	@Override
 	protected void logicLoopAfter() {
+		if (this.isPaused()) {
+			return;
+		}
 		synchronized (this.synchronize()) {
 			// iterate all GameElements to detect collision
 			Iterator<GameElement> it1 = this.getGameElementIterator();
