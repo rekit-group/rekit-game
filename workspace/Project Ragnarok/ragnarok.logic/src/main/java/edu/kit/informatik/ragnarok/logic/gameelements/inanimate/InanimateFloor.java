@@ -29,7 +29,7 @@ public class InanimateFloor extends Inanimate {
 	/**
 	 * The amount of GrassStraws the InanimateFloor shall have.
 	 */
-	private static int STRAW_NUM = 10;
+	private static int STRAW_NUM = 20;
 
 	/**
 	 * Holds the colors for each layer the {@link InanimateFloor} is composed
@@ -179,7 +179,7 @@ public class InanimateFloor extends Inanimate {
 		 *            the position of the parenting {@link InanimateFloor}.
 		 */
 		public GrassStraw(Vec parentPos) {
-			this.pos = parentPos.add(new Vec(GameConf.PRNG.nextFloat() * 0.8f - 0.4f, -0.3f - GameConf.PRNG.nextFloat() * 0.4f));
+			this.pos = parentPos.add(new Vec(GameConf.PRNG.nextFloat() * 0.9f - 0.45f, -0.3f - GameConf.PRNG.nextFloat() * 0.4f));
 			this.size = new Vec(0.06f, 0.3f + GameConf.PRNG.nextFloat() * 0.4f);
 			this.col = layerCols[GameConf.PRNG.nextInt(layerCols.length)];
 		}

@@ -34,7 +34,7 @@ import edu.kit.informatik.ragnarok.util.ThreadUtils;
  */
 public abstract class LevelScene extends Scene {
 
-	private Player player = new Player(new Vec(3, 5));
+	private Player player = new Player(new Vec(6, 5));
 
 	private Level level;
 

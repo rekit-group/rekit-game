@@ -338,7 +338,7 @@ public class StructureManager extends Configurable implements Iterator<Structure
 		// Flat floor
 		String floor = "edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate";
 		List<String[]> lines = new ArrayList<>();
-		lines.add(new String[] { floor, floor, floor, floor, floor, floor, floor, floor });
+		lines.add(new String[] { floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor });
 		Structure structure = new Structure(lines, new HashMap<>());
 
 		// keep track of how far we built (only works because we know structure
