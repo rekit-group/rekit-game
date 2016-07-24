@@ -95,9 +95,8 @@ public class RektKiller extends Enemy {
 	 */
 	public void prepare() {
 		// calculate size dependent Polygon for spikes
-		this.spikePolygon = new Polygon(new Vec(),
-				new Vec[] { //
-						new Vec(0.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
+		this.spikePolygon = new Polygon(new Vec(), new Vec[] { //
+				new Vec(0.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
 						new Vec(1.0f * ((this.getSize().getX() * 0.8f) / 3f), 0),
 						new Vec(1.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
 						new Vec(2.0f * ((this.getSize().getX() * 0.8f) / 3f), 0),
@@ -212,7 +211,7 @@ public class RektKiller extends Enemy {
 				element.addPoints(20);
 				// Let the player jump if he landed on top
 				if (dir == Direction.UP) {
-					element.setVel(element.getVel().setY(GameConf.PLAYER_JUMP_BOOST));
+					element.setVel(element.getVel().setY(GameConf.PLAYER_KILL_BOOST));
 				}
 				// kill the enemy
 				this.addDamage(1);
