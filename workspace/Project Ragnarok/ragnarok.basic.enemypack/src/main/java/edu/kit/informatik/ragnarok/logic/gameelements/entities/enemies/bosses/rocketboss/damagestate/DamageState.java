@@ -1,0 +1,71 @@
+package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.bosses.rocketboss.damagestate;
+
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.bosses.rocketboss.RocketBoss;
+import edu.kit.informatik.ragnarok.logic.state.State;
+
+public abstract class DamageState extends State {
+
+	/**
+	 * Reference to the parenting {@link RocketBoss}.
+	 */
+	protected RocketBoss parentBoss;
+
+	public void enter(RocketBoss parent) {
+		super.enter(parent.getMachine());
+		this.parentBoss = parent;
+	}
+
+	public void addDamage(int points) {
+		this.parent.nextState();
+	}
+
+	@Override
+	public void logicLoop(float deltaTime) {
+		// Do nothing to remove time-dependent functionality
+	}
+
+	@Override
+	public abstract DamageState getNextState();
+
+	/**
+	 * Getter for a multiplier that will be used to increase the
+	 * {@link RocketBoss RocketBosses} movement speed.
+	 * 
+	 * @return the factor for the {@link RocketBoss RocketBosses} speed
+	 */
+	public abstract float getSpeedFactor();
+
+	/**
+	 * Getter for the amount of arms the {@link RocketBoss} shall have.
+	 * 
+	 * @return
+	 */
+	public abstract float getArmNum();
+
+	/**
+	 * Getter for a random time between one sequence of arm-actions and the
+	 * next.
+	 * 
+	 * @return the time in seconds to wait between the arm-actions
+	 */
+	public abstract float getRandomArmDelta();
+
+	/**
+	 * Getter for the source path of the brains image to take.
+	 * 
+	 * @return the source path of the {@link RocketBoss RocketBosses} brain.
+	 */
+	public abstract String getBrainImgSrc();
+
+	/**
+	 * Getter for the source path of the eye image to take.
+	 * 
+	 * @return the source path of the {@link RocketBoss RocketBosses} eye.
+	 */
+	public abstract String getEyeImgSrc();
+
+	public abstract float getMouthMovement();
+
+	public abstract float getMouthPhaseFactor();
+
+}

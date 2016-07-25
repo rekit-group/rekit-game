@@ -80,6 +80,8 @@ public class StructureManager extends Configurable implements Iterator<Structure
 	 */
 	private int lastUnitsBuilt = 0;
 
+	private Map<String, String> alias = new HashMap<>();
+
 	/**
 	 * Private constructor to prevent instantiation from outside.
 	 */
@@ -352,7 +354,8 @@ public class StructureManager extends Configurable implements Iterator<Structure
 	 * <p>
 	 * Used to hold and get the last {@link Structure} that will be the last
 	 * {@link Structure} to be returned by <i>next()</i> before <i>hasNext()</i>
-	 * indicates that there are no more {@link Structure}s to be returned. <br>
+	 * indicates that there are no more {@link Structure Structures} to be
+	 * returned. <br>
 	 * Since this never happens on levels that have the setting <i>infinite</i>
 	 * set (to anything other then 0), this method will never be called in these
 	 * levels.
@@ -389,8 +392,6 @@ public class StructureManager extends Configurable implements Iterator<Structure
 	public boolean hasNext() {
 		return this.isSettingSet("infinite") || this.currentStructureId < this.structures.size();
 	}
-
-	private Map<String, String> alias = new HashMap<>();
 
 	public void setAlias(String toReplace, String replaceWith) {
 		this.alias.put(toReplace, replaceWith);
