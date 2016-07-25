@@ -1,9 +1,5 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.bosses.rocketboss;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
@@ -16,7 +12,6 @@ import edu.kit.informatik.ragnarok.logic.level.bossstructure.BossStructure;
 import edu.kit.informatik.ragnarok.logic.state.TimeStateMachine;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
-import edu.kit.informatik.ragnarok.primitives.time.Timer;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 
 @LoadMe
@@ -27,6 +22,8 @@ public class RocketBoss extends Boss {
 	private Vec startPos;
 
 	private float calcX;
+
+	private Mouth mouth;
 
 	private static Vec MOVEMENT_PERIOD = new Vec(1.6f, 0.9f);
 	private static Vec MOVEMENT_RANGE = new Vec(0.3f, 0.7f);
@@ -43,10 +40,6 @@ public class RocketBoss extends Boss {
 	private static Vec MOUTH_POS = (MOUTH_SIZE.scalar(-0.5f).sub(HEAD_PADDING).add(HEAD_SIZE.scalar(0.5f))).setX(0);
 	private static RGBColor MOUTH_BG_COL = new RGBColor(200, 200, 200);
 
-	private Timer mouthCurveTimer = new Timer(0.05f);
-	private Vec mouthCurvePos;
-	private List<Vec> mouthCurve = new LinkedList<>();
-
 	/**
 	 * Standard constructor
 	 */
@@ -58,12 +51,14 @@ public class RocketBoss extends Boss {
 		super(startPos, new Vec(), HEAD_SIZE);
 		this.startPos = startPos;
 		this.machine = new TimeStateMachine(new State3());
+		this.mouth = new Mouth(this, MOUTH_POS, MOUTH_SIZE, MOUTH_BG_COL);
 	}
 
 	public DamageState getState() {
 		return (DamageState) this.getMachine().getState();
 	}
 
+	@Override
 	public void logicLoop(float deltaTime) {
 		// add deltaTime with factor to local x
 		float deltaX = deltaTime * getState().getTimeFactor();
@@ -74,26 +69,7 @@ public class RocketBoss extends Boss {
 		Vec scaledUnit = MOVEMENT_RANGE.multiply(scaleVec);
 		this.setPos(startPos.add(scaledUnit));
 
-		this.mouthCurvePos = this.getPos().add(MOUTH_POS).addX(0.5f * MOUTH_SIZE.getX()).addX(-calcX);
-		mouthCurveTimer.removeTime(deltaX);
-		float maxDelta = MOUTH_SIZE.getY() * 0.5f;
-		while (mouthCurveTimer.timeUp()) {
-			mouthCurveTimer.reset();
-			Vec newVec = new Vec(calcX, (float) (Math.tan(calcX * 10) * Math.sin(calcX * 4) * Math.cos(calcX * 0.5f) * maxDelta));
-			if (newVec.getY() > maxDelta) {
-				newVec = newVec.setY(maxDelta);
-			}
-			if (newVec.getY() < -maxDelta) {
-				newVec = newVec.setY(-maxDelta);
-			}
-			mouthCurve.add(newVec);
-		}
-		Iterator<Vec> it = mouthCurve.iterator();
-		while (it.hasNext()) {
-			if (it.next().getX() <= calcX - MOUTH_SIZE.getX()) {
-				it.remove();
-			}
-		}
+		mouth.logicLoop(calcX, deltaX);
 	}
 
 	public void internalRender(Field f) {
@@ -104,9 +80,7 @@ public class RocketBoss extends Boss {
 		f.drawImage(this.getPos().add(EYE_RIGHT_POS), EYE_SIZE, this.getState().getEyeImgSrc());
 
 		// Render mouth
-		f.drawRectangle(this.getPos().add(MOUTH_POS), MOUTH_SIZE, MOUTH_BG_COL);
-		f.drawPath(mouthCurvePos, mouthCurve, new RGBColor(0, 0, 0));
-
+		mouth.internalRender(f);
 	}
 
 	/**
