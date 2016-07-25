@@ -28,8 +28,7 @@ public class State3 extends DamageState {
 
 	@Override
 	public String getEyeImgSrc() {
-		// TODO Auto-generated method stub
-		return null;
+		return "rocketBoss/eye.png";
 	}
 
 	@Override

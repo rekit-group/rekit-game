@@ -1,5 +1,6 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.bosses.rocketboss;
 
+import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.RektKiller;
@@ -22,8 +23,20 @@ public class RocketBoss extends Boss {
 
 	private float calcX;
 
-	private static Vec MOVEMENT_PERIOD = new Vec(1.2f, 0.9f);
+	private static Vec MOVEMENT_PERIOD = new Vec(1.6f, 0.9f);
 	private static Vec MOVEMENT_RANGE = new Vec(0.3f, 0.7f);
+
+	private static Vec HEAD_SIZE = new Vec(2, 1.6f);
+	private static Vec HEAD_PADDING = new Vec(0.2f, 0.2f);
+	private static RGBColor HEAD_COL = new RGBColor(100, 100, 100);
+
+	private static Vec EYE_SIZE = new Vec(0.4f, 0.4f);
+	private static Vec EYE_LEFT_POS = EYE_SIZE.scalar(0.5f).add(HEAD_PADDING).sub(HEAD_SIZE.scalar(0.5f));
+	private static Vec EYE_RIGHT_POS = EYE_LEFT_POS.scalar(-1, 1);
+
+	private static Vec MOUTH_SIZE = new Vec(1.6f, 0.4f);
+	private static Vec MOUTH_POS = (MOUTH_SIZE.scalar(-0.5f).sub(HEAD_PADDING).add(HEAD_SIZE.scalar(0.5f))).setX(0);
+	private static RGBColor MOUTH_BG_COL = new RGBColor(200, 200, 200);
 
 	/**
 	 * Standard constructor
@@ -33,7 +46,7 @@ public class RocketBoss extends Boss {
 	}
 
 	public RocketBoss(Vec startPos) {
-		super(startPos, new Vec(), new Vec(2, 1.6f));
+		super(startPos, new Vec(), HEAD_SIZE);
 		this.startPos = startPos;
 		this.machine = new TimeStateMachine(new State3());
 	}
@@ -54,7 +67,15 @@ public class RocketBoss extends Boss {
 	}
 
 	public void internalRender(Field f) {
-		f.drawRectangle(this.getPos(), this.getSize(), new RGBColor(100, 100, 100));
+		f.drawRectangle(this.getPos(), this.getSize(), HEAD_COL);
+
+		// Render eyes
+		f.drawImage(this.getPos().add(EYE_LEFT_POS), EYE_SIZE, this.getState().getEyeImgSrc());
+		f.drawImage(this.getPos().add(EYE_RIGHT_POS), EYE_SIZE, this.getState().getEyeImgSrc());
+
+		// Render mouth
+		f.drawRectangle(this.getPos().add(MOUTH_POS), MOUTH_SIZE, MOUTH_BG_COL);
+
 	}
 
 	/**
@@ -105,6 +126,11 @@ public class RocketBoss extends Boss {
 		BossStructure structure = new BossStructure(struct, this);
 		this.setBossStructure(structure);
 		return structure;
+	}
+
+	@Override
+	public Vec getStartPos() {
+		return new Vec(25, GameConf.GRID_H / 2);
 	}
 
 	@Override

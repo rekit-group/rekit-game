@@ -210,6 +210,11 @@ public class RektSmasher extends Boss {
 	}
 
 	@Override
+	public Vec getStartPos() {
+		return new Vec(16, GameConf.GRID_H / 2 + 1);
+	}
+
+	@Override
 	public Entity create(Vec startPos, String[] options) {
 		RektSmasher clone = new RektSmasher(startPos);
 		clone.setTarget(this.target);

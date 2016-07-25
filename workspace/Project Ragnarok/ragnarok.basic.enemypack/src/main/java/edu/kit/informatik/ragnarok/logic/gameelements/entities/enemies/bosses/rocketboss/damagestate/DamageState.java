@@ -29,6 +29,7 @@ public abstract class DamageState extends State {
 
 	@Override
 	public float getTimerTime() {
+		// Not required, since time-functionality disabled
 		return 0;
 	}
 

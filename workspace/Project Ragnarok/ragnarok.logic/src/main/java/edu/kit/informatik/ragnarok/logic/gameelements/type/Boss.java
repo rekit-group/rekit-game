@@ -2,6 +2,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.type;
 
 import java.util.Set;
 
+import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
@@ -48,6 +49,16 @@ public abstract class Boss extends Entity {
 		System.err.println("Error while spawning Boss: " + this.getClass().getName() + " did not specify getBossStructure()");
 		this.setBossStructure(structure);
 		return structure;
+	}
+
+	/**
+	 * Get initial position of the {@link Boss} relative to the
+	 * {@link BossStructure BossStructures} top left corner.
+	 * 
+	 * @return the relative start position of the {@link Boss}.
+	 */
+	public Vec getStartPos() {
+		return new Vec(0, GameConf.GRID_H / 2 + 1);
 	}
 
 	@Override
