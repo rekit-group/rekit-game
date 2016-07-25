@@ -9,21 +9,15 @@ public class State3 extends DamageState {
 	}
 
 	@Override
-	public float getSpeedFactor() {
+	public float getTimeFactor() {
 		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 
 	@Override
 	public float getArmNum() {
 		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public float getRandomArmDelta() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 
 	@Override
@@ -49,11 +43,4 @@ public class State3 extends DamageState {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
-	@Override
-	public float getTimerTime() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 }

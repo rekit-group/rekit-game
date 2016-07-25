@@ -27,13 +27,19 @@ public abstract class DamageState extends State {
 	@Override
 	public abstract DamageState getNextState();
 
+	@Override
+	public float getTimerTime() {
+		return 0;
+	}
+
 	/**
 	 * Getter for a multiplier that will be used to increase the
-	 * {@link RocketBoss RocketBosses} movement speed.
+	 * {@link RocketBoss RocketBosses} movement speed, the mouth movement, and
+	 * the delta between arm-actions.
 	 * 
-	 * @return the factor for the {@link RocketBoss RocketBosses} speed
+	 * @return the factor for the {@link RocketBoss RocketBosses} time
 	 */
-	public abstract float getSpeedFactor();
+	public abstract float getTimeFactor();
 
 	/**
 	 * Getter for the amount of arms the {@link RocketBoss} shall have.
@@ -41,14 +47,6 @@ public abstract class DamageState extends State {
 	 * @return
 	 */
 	public abstract float getArmNum();
-
-	/**
-	 * Getter for a random time between one sequence of arm-actions and the
-	 * next.
-	 * 
-	 * @return the time in seconds to wait between the arm-actions
-	 */
-	public abstract float getRandomArmDelta();
 
 	/**
 	 * Getter for the source path of the brains image to take.
