@@ -1,5 +1,8 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.bosses.rocketboss;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
@@ -75,6 +78,10 @@ public class RocketBoss extends Boss {
 
 		// Render mouth
 		f.drawRectangle(this.getPos().add(MOUTH_POS), MOUTH_SIZE, MOUTH_BG_COL);
+		List<Vec> mouthVec = new LinkedList<>();
+		mouthVec.add(MOUTH_SIZE.scalar(-0.5f));
+		mouthVec.add(MOUTH_SIZE.scalar(0.5f));
+		f.drawPath(this.getPos().add(MOUTH_POS), mouthVec, new RGBColor(0, 0, 0));
 
 	}
 

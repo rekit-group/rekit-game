@@ -1,5 +1,8 @@
 package edu.kit.informatik.ragnarok.gui;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
@@ -219,6 +222,31 @@ public class FieldImpl extends Field {
 			Vec newSize = CalcUtil.units2pixel(size);
 
 			this.drawRectangleImpl(newPos, newSize, SwtUtils.calcRGBA(col));
+		}
+	}
+
+	@Override
+	public void drawPath(Vec startPos, List<Vec> pts, RGBColor in) {
+		if (pts.size() == 0) {
+			return;
+		}
+
+		RGBColor col = this.filter == null ? in : this.filter.apply(in);
+
+		Vec newPos = this.translate2D(startPos);
+		newPos = CalcUtil.units2pixel(newPos);
+		newPos = newPos.addX(this.cameraOffset);
+
+		Iterator<Vec> it = pts.iterator();
+
+		Vec lastPt = newPos.add(CalcUtil.units2pixel(it.next()));
+
+		this.gc.setLineWidth(1);
+		this.gc.setForeground(new Color(Display.getCurrent(), SwtUtils.calcRGB(col)));
+		while (it.hasNext()) {
+			Vec pt = newPos.add(CalcUtil.units2pixel(it.next()));
+			this.gc.drawLine((int) lastPt.getX(), (int) lastPt.getY(), (int) pt.getX(), (int) pt.getY());
+			lastPt = pt;
 		}
 	}
 

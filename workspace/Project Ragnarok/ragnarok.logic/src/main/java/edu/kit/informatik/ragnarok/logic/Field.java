@@ -1,5 +1,7 @@
 package edu.kit.informatik.ragnarok.logic;
 
+import java.util.List;
+
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gui.GuiElement;
 import edu.kit.informatik.ragnarok.primitives.geometry.Polygon;
@@ -335,5 +337,8 @@ public abstract class Field {
 	 */
 	public final void drawRoundRectangle(Vec pos, Vec size, RGBColor rgbColor, float arcWidth, float arcHeight) {
 		this.drawRoundRectangle(pos, size, rgbColor, arcWidth, arcHeight, true);
+	}
+
+	public void drawPath(Vec startPos, List<Vec> pts, RGBColor in) {
 	}
 }
