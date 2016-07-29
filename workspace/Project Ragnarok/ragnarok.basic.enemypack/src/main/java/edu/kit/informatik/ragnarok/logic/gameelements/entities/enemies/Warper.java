@@ -4,7 +4,6 @@ import edu.kit.informatik.ragnarok.logic.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawner;
-import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawnerOption;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Enemy;
 import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
 import edu.kit.informatik.ragnarok.primitives.geometry.Frame;
@@ -38,19 +37,7 @@ public class Warper extends Enemy implements Visitable {
 	/**
 	 * The particles of the warper
 	 */
-	@NoVisit
-	private static ParticleSpawner warpParticles = null;
-
-	static {
-		Warper.warpParticles = new ParticleSpawner();
-		Warper.warpParticles.angle = new ParticleSpawnerOption(0, (float) (2 * Math.PI), (float) (2 * Math.PI), (float) (4 * Math.PI));
-		Warper.warpParticles.colorR = new ParticleSpawnerOption(250, 0);
-		Warper.warpParticles.colorG = new ParticleSpawnerOption(250, -250);
-		Warper.warpParticles.colorB = new ParticleSpawnerOption(150);
-		Warper.warpParticles.colorA = new ParticleSpawnerOption(220, -220);
-		Warper.warpParticles.timeMin = 1f;
-		Warper.warpParticles.speed = new ParticleSpawnerOption(2, 3, -1, 1);
-	}
+	private static ParticleSpawner warpParticles;
 
 	/**
 	 * Prototype Constructor

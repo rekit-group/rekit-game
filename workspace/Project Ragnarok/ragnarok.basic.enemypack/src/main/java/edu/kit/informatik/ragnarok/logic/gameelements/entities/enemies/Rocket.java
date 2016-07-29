@@ -40,7 +40,6 @@ public class Rocket extends Enemy implements Visitable {
 	 * The color of the front
 	 */
 	private static RGBColor FRONT_COLOR;
-
 	/**
 	 * The outer color of the rocket
 	 */
@@ -49,18 +48,6 @@ public class Rocket extends Enemy implements Visitable {
 	 * The Particles's spawn time
 	 */
 	private static float PARTICLE_SPAWN_TIME;
-
-	// Explosion particles
-	// private static ParticleSpawnerOption angleExp;
-	// private static ParticleSpawnerOption colorRExp;
-	// private static ParticleSpawnerOption colorGExp;
-	// private static ParticleSpawnerOption colorBExp;
-	// private static ParticleSpawnerOption colorAExp;
-	// private static float timeMinExp;
-	// private static float timeMaxExp;
-	// private static int amountMinExp;
-	// private static int amountMaxExp;
-	// private static ParticleSpawnerOption speedExp;
 
 	/**
 	 * The particle spawner for the rocket's flight
@@ -158,24 +145,5 @@ public class Rocket extends Enemy implements Visitable {
 	public Entity create(Vec startPos, String[] options) {
 		return new Rocket(startPos);
 	}
-
-	// @AfterVisit
-	// private static void afterVisit() {
-	//
-	// Rocket.explosionParticles = new ParticleSpawner();
-	//
-	// // Explosion
-	// Rocket.explosionParticles.angle = Rocket.angleExp;
-	// Rocket.explosionParticles.colorR = Rocket.colorRExp;
-	// Rocket.explosionParticles.colorG = Rocket.colorGExp;
-	// Rocket.explosionParticles.colorB = Rocket.colorBExp;
-	// Rocket.explosionParticles.colorA = Rocket.colorAExp;
-	// Rocket.explosionParticles.timeMin = Rocket.timeMinExp;
-	// Rocket.explosionParticles.timeMax = Rocket.timeMaxExp;
-	// Rocket.explosionParticles.amountMin = Rocket.amountMinExp;
-	// Rocket.explosionParticles.amountMax = Rocket.amountMaxExp;
-	// Rocket.explosionParticles.speed = Rocket.speedExp;
-	//
-	// }
 
 }

@@ -21,7 +21,6 @@ public final class TwoLevelParser implements Parser {
 
 	private Map<String, String> mapping = new HashMap<>();
 	private final Map<Class<?>, Parser> additionalParsers;
-	private static final String REGEX = "((\\w|\\d|_)+::(\\w|\\d|\\+|-|\\.|,)+;)*(\\w|\\d|_)+::(\\w|\\d|\\+|-|\\.|,)+";
 
 	public TwoLevelParser(Map<Class<?>, Parser> additionalParsers) {
 		this.additionalParsers = additionalParsers == null ? new HashMap<>() : additionalParsers;
@@ -34,11 +33,17 @@ public final class TwoLevelParser implements Parser {
 		if (!Parser.super.parse(obj, field, definition)) {
 			return false;
 		}
-		if (!definition.matches(TwoLevelParser.REGEX)) {
-			return false;
+
+		String[] parts = definition.split(";");
+		Pattern pat = Pattern.compile("(\\w|\\d|_)+::(\\w|\\d|\\+|-|\\.|,)+");
+		for (String def : parts) {
+			if (!pat.matcher(def).matches()) {
+				System.err.println(def + " does not match!");
+				return false;
+			}
 		}
 		Pattern p = Pattern.compile("::");
-		for (String kv : definition.split(";")) {
+		for (String kv : parts) {
 			String[] split = p.split(kv);
 			if (this.mapping.put(split[0], split[1]) != null) {
 				System.err.println("WARING: Double definition for " + split[0]);
