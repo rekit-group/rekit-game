@@ -1,13 +1,17 @@
 package edu.kit.informatik.ragnarok;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import edu.kit.informatik.ragnarok.controller.Controller;
 import edu.kit.informatik.ragnarok.gui.View;
 import edu.kit.informatik.ragnarok.logic.Model;
 import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawner;
 import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawnerOption;
 import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawnerOptionParser;
-import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawnerParser;
 import edu.kit.informatik.ragnarok.visitor.Visitor;
+import edu.kit.informatik.ragnarok.visitor.parser.Parser;
+import edu.kit.informatik.ragnarok.visitor.parser.TwoLevelParser;
 
 /**
  * Game class that instantiates all necessary classes that are required for a
@@ -50,7 +54,9 @@ public class Main {
 	private static void loadConfigs() {
 		Visitor visitor = Visitor.getNewVisitor();
 		visitor.setParser(ParticleSpawnerOption.class, new ParticleSpawnerOptionParser());
-		visitor.setParser(ParticleSpawner.class, new ParticleSpawnerParser());
+		Map<Class<?>, Parser> additionals = new HashMap<>();
+		additionals.put(ParticleSpawnerOption.class, new ParticleSpawnerOptionParser());
+		visitor.setParser(ParticleSpawner.class, new TwoLevelParser(additionals));
 		Visitor.visitAllStatic(visitor);
 	}
 }

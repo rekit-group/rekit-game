@@ -9,7 +9,7 @@ import edu.kit.informatik.ragnarok.visitor.Visitor;
 /**
  * This class realizes the default {@link Visitor} which will use a
  * {@link ResourceBundle} as configured by {@link VisitInfo}
- * 
+ *
  * @author Dominik Fuchß
  *
  */
@@ -23,7 +23,7 @@ public final class ResourceBundleVisitor extends Visitor {
 	protected boolean createSource(Visitable v) {
 		VisitInfo info = v.getClass().getAnnotation(VisitInfo.class);
 		if (info == null || !info.visit()) {
-			System.err.println("WARNING: No info defined or disabled for " + v.getClass().getSimpleName());
+			System.out.println("INFO: No info defined or disabled for Object of Class " + v.getClass().getSimpleName());
 			return false;
 		}
 		this.bundle = ResourceBundle.getBundle(info.res());
@@ -35,7 +35,7 @@ public final class ResourceBundleVisitor extends Visitor {
 	protected boolean createSource(Class<? extends Visitable> v) {
 		VisitInfo info = v.getAnnotation(VisitInfo.class);
 		if (info == null || !info.visit()) {
-			System.err.println("WARNING: No info defined or disabled for " + v.getSimpleName());
+			System.out.println("INFO: No info defined or disabled for Class " + v.getSimpleName());
 			return false;
 		}
 		this.bundle = ResourceBundle.getBundle(info.res());

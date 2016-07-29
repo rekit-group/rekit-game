@@ -36,4 +36,11 @@ public interface Parser {
 		}
 		return true;
 	}
+
+	/**
+	 * Create a new Parser of this type
+	 * 
+	 * @return the new parser
+	 */
+	Parser create();
 }

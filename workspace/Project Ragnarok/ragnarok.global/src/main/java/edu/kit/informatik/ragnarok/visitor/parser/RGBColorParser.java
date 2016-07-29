@@ -33,4 +33,9 @@ public final class RGBColorParser implements Parser {
 		field.set(obj, new RGBColor(r, g, b));
 		return true;
 	}
+
+	@Override
+	public Parser create() {
+		return new RGBColorParser();
+	}
 }

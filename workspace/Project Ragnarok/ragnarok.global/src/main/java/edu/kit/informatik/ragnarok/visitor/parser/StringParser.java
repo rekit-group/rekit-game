@@ -19,4 +19,9 @@ public final class StringParser implements Parser {
 		field.set(obj, definition);
 		return true;
 	}
+
+	@Override
+	public Parser create() {
+		return new StringParser();
+	}
 }

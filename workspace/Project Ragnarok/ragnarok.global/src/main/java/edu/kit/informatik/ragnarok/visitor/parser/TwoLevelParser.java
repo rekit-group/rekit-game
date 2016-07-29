@@ -3,9 +3,12 @@ package edu.kit.informatik.ragnarok.visitor.parser;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 import edu.kit.informatik.ragnarok.visitor.Visitable;
+import edu.kit.informatik.ragnarok.visitor.Visitor;
+import edu.kit.informatik.ragnarok.visitor.visitors.MapVisitor;
 
 /**
  * This {@link Parser} is able to parse options from a config<br>
@@ -14,10 +17,15 @@ import edu.kit.informatik.ragnarok.visitor.Visitable;
  * @author Dominik Fuchß
  *
  */
-public abstract class OptionParser implements Parser {
+public final class TwoLevelParser implements Parser {
 
-	protected Map<String, String> mapping = new HashMap<>();
+	private Map<String, String> mapping = new HashMap<>();
+	private final Map<Class<?>, Parser> additionalParsers;
 	private static final String REGEX = "((\\w|\\d|_)+::(\\w|\\d|\\+|-|\\.|,)+;)*(\\w|\\d|_)+::(\\w|\\d|\\+|-|\\.|,)+";
+
+	public TwoLevelParser(Map<Class<?>, Parser> additionalParsers) {
+		this.additionalParsers = additionalParsers == null ? new HashMap<>() : additionalParsers;
+	}
 
 	@Override
 	public final boolean parse(Visitable obj, Field field, String definition) throws Exception {
@@ -26,7 +34,7 @@ public abstract class OptionParser implements Parser {
 		if (!Parser.super.parse(obj, field, definition)) {
 			return false;
 		}
-		if (!definition.matches(OptionParser.REGEX)) {
+		if (!definition.matches(TwoLevelParser.REGEX)) {
 			return false;
 		}
 		Pattern p = Pattern.compile("::");
@@ -53,6 +61,26 @@ public abstract class OptionParser implements Parser {
 	 *             will thrown by Reflect stuff
 	 *
 	 */
-	protected abstract void apply(Visitable obj, Field field) throws Exception;
+	private final void apply(Visitable obj, Field field) throws Exception {
+		Object instance = field.getType().getDeclaredConstructor().newInstance();
+		if (!(instance instanceof Visitable)) {
+			return;
+		}
+		Visitor v = new MapVisitor(this.mapping);
+		for (Entry<Class<?>, Parser> parser : this.additionalParsers.entrySet()) {
+			v.setParser(parser.getKey(), parser.getValue());
+		}
+		v.visitMe((Visitable) instance);
+		field.set(obj, instance);
+	}
+
+	@Override
+	public Parser create() {
+		Map<Class<?>, Parser> additionals = new HashMap<>();
+		for (Entry<Class<?>, Parser> parser : this.additionalParsers.entrySet()) {
+			additionals.put(parser.getKey(), parser.getValue().create());
+		}
+		return new TwoLevelParser(additionals);
+	}
 
 }

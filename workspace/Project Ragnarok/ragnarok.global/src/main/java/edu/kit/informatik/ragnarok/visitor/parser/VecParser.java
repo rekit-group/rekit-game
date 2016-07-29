@@ -33,4 +33,9 @@ public final class VecParser implements Parser {
 		field.set(obj, new Vec(x, y));
 		return true;
 	}
+
+	@Override
+	public Parser create() {
+		return new VecParser();
+	}
 }
