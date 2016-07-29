@@ -19,15 +19,15 @@ public class ParticleSpawnerOptionParser implements Parser {
 			return false;
 		}
 		ParticleSpawnerOption opt = null;
-		if (definition.matches("(" + ParticleSpawnerOptionParser.FLOAT_REGEX + ",){3}" + ParticleSpawnerOptionParser.FLOAT_REGEX)) {
+		if (definition.matches("(" + ParticleSpawnerOptionParser.FLOAT_REGEX + ";){3}" + ParticleSpawnerOptionParser.FLOAT_REGEX)) {
 			// 4 Params
-			String[] floats = definition.split(",");
+			String[] floats = definition.split(";");
 			opt = new ParticleSpawnerOption( //
 					Float.parseFloat(floats[0]), Float.parseFloat(floats[1]), //
 					Float.parseFloat(floats[2]), Float.parseFloat(floats[3]));
-		} else if (definition.matches(ParticleSpawnerOptionParser.FLOAT_REGEX + "," + ParticleSpawnerOptionParser.FLOAT_REGEX)) {
+		} else if (definition.matches(ParticleSpawnerOptionParser.FLOAT_REGEX + ";" + ParticleSpawnerOptionParser.FLOAT_REGEX)) {
 			// 2 Params
-			String[] floats = definition.split(",");
+			String[] floats = definition.split(";");
 			opt = new ParticleSpawnerOption(Float.parseFloat(floats[0]), Float.parseFloat(floats[1]));
 		} else if (definition.matches(ParticleSpawnerOptionParser.FLOAT_REGEX)) {
 			// 1 Param
