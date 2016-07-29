@@ -13,9 +13,11 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
 import edu.kit.informatik.ragnarok.primitives.time.Timer;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
-import edu.kit.informatik.ragnarok.visitor.NoVisit;
-import edu.kit.informatik.ragnarok.visitor.VisitInfo;
 import edu.kit.informatik.ragnarok.visitor.Visitable;
+import edu.kit.informatik.ragnarok.visitor.annotations.AdditionalParsers;
+import edu.kit.informatik.ragnarok.visitor.annotations.NoVisit;
+import edu.kit.informatik.ragnarok.visitor.annotations.VisitInfo;
+import edu.kit.informatik.ragnarok.visitor.parser.TwoLevelParser;
 
 /**
  *
@@ -24,6 +26,7 @@ import edu.kit.informatik.ragnarok.visitor.Visitable;
  */
 @LoadMe
 @VisitInfo(res = "conf/rocket", visit = true)
+@AdditionalParsers(parsers = { TwoLevelParser.class }, types = { ParticleSpawner.class })
 public class Rocket extends Enemy implements Visitable {
 	/**
 	 * Prototype Constructor

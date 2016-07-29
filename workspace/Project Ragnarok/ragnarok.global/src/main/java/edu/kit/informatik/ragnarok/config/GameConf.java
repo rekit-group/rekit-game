@@ -5,10 +5,10 @@ import java.util.Random;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
 import edu.kit.informatik.ragnarok.util.TextOptions;
-import edu.kit.informatik.ragnarok.visitor.AfterVisit;
-import edu.kit.informatik.ragnarok.visitor.NoVisit;
-import edu.kit.informatik.ragnarok.visitor.VisitInfo;
 import edu.kit.informatik.ragnarok.visitor.Visitable;
+import edu.kit.informatik.ragnarok.visitor.annotations.AfterVisit;
+import edu.kit.informatik.ragnarok.visitor.annotations.NoVisit;
+import edu.kit.informatik.ragnarok.visitor.annotations.VisitInfo;
 import edu.kit.informatik.ragnarok.visitor.parser.Parser;
 
 /**

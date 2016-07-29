@@ -13,10 +13,10 @@ import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
 import edu.kit.informatik.ragnarok.primitives.operable.OpProgress;
 import edu.kit.informatik.ragnarok.primitives.time.Timer;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
-import edu.kit.informatik.ragnarok.visitor.AfterVisit;
-import edu.kit.informatik.ragnarok.visitor.NoVisit;
-import edu.kit.informatik.ragnarok.visitor.VisitInfo;
 import edu.kit.informatik.ragnarok.visitor.Visitable;
+import edu.kit.informatik.ragnarok.visitor.annotations.AfterVisit;
+import edu.kit.informatik.ragnarok.visitor.annotations.NoVisit;
+import edu.kit.informatik.ragnarok.visitor.annotations.VisitInfo;
 
 @LoadMe
 @VisitInfo(res = "conf/stacker", visit = true)
@@ -55,28 +55,29 @@ public class Stacker extends Enemy implements Visitable {
 		super(startPos, new Vec(), new Vec());
 
 		// Initialize list for inner elements
-		elements = new LinkedList<>();
+		this.elements = new LinkedList<>();
 
 		// This will be used to calculate positions recursively
 		Vec rel = new Vec(0, 0.5f - new StackerElement(new Vec(), 0).getSize().getY() / 2);
 
 		// creation loop
-		for (int i = 0; i < ITERATIONS; i++) {
+		for (int i = 0; i < Stacker.ITERATIONS; i++) {
 			StackerElement elem = new StackerElement(rel, i);
 			rel = rel.addY(-elem.getSize().getY() - 0.02f);
-			elements.add(elem);
+			this.elements.add(elem);
 		}
 
-		highestOffset = ITERATIONS - 1;
+		this.highestOffset = Stacker.ITERATIONS - 1;
 	}
 
 	@AfterVisit
 	private static void afterVisit() {
-		dimensions = new OpProgress<>(SIZE_REGULAR, SIZE_DYING);
+		Stacker.dimensions = new OpProgress<>(Stacker.SIZE_REGULAR, Stacker.SIZE_DYING);
 	}
 
+	@Override
 	public void logicLoop(float deltaTime) {
-		if (!init) {
+		if (!this.init) {
 			for (StackerElement elem : this.elements) {
 				this.getScene().addGameElement(elem);
 			}
@@ -100,11 +101,11 @@ public class Stacker extends Enemy implements Visitable {
 		private Timer timeToDie;
 
 		StackerElement(Vec relPos, int offset) {
-			super(Stacker.this.getPos().add(relPos), new Vec(), dimensions.getNow(0));
+			super(Stacker.this.getPos().add(relPos), new Vec(), Stacker.dimensions.getNow(0));
 			this.relPos = relPos;
 			this.offset = offset;
 
-			this.faceId = GameConf.PRNG.nextInt(FACES) + 1;
+			this.faceId = GameConf.PRNG.nextInt(Stacker.FACES) + 1;
 		}
 
 		@Override
@@ -115,13 +116,13 @@ public class Stacker extends Enemy implements Visitable {
 
 		@Override
 		public void logicLoop(float deltaTime) {
-			this.setPos(Stacker.this.getPos().add(relPos).addX((float) (0.1 * Math.sin(0.1 * this.getScene().getTime() / 30 + offset))));
+			this.setPos(Stacker.this.getPos().add(this.relPos).addX((float) (0.1 * Math.sin(0.1 * this.getScene().getTime() / 30 + this.offset))));
 
-			if (timeToDie != null) {
-				timeToDie.removeTime(deltaTime);
-				this.setSize(dimensions.getNow(timeToDie.getProgress()));
-				this.setPos(this.getPos().addY((-this.getSize().getY() + dimensions.getNow(0).getY()) / 2f));
-				if (timeToDie.timeUp()) {
+			if (this.timeToDie != null) {
+				this.timeToDie.removeTime(deltaTime);
+				this.setSize(Stacker.dimensions.getNow(this.timeToDie.getProgress()));
+				this.setPos(this.getPos().addY((-this.getSize().getY() + Stacker.dimensions.getNow(0).getY()) / 2f));
+				if (this.timeToDie.timeUp()) {
 					this.addDamage(1);
 				}
 			}
@@ -129,10 +130,10 @@ public class Stacker extends Enemy implements Visitable {
 
 		@Override
 		public void internalRender(Field f) {
-			if (timeToDie != null) {
-				f.drawCircle(getPos(), getSize(), COLOR);
+			if (this.timeToDie != null) {
+				f.drawCircle(this.getPos(), this.getSize(), Stacker.COLOR);
 			} else {
-				f.drawCircle(this.getPos(), this.getSize(), COLOR);
+				f.drawCircle(this.getPos(), this.getSize(), Stacker.COLOR);
 				f.drawImage(this.getPos(), this.getSize(), "stacker/stackerFaces_0" + this.faceId + ".png");
 			}
 		}
@@ -157,7 +158,7 @@ public class Stacker extends Enemy implements Visitable {
 
 		public void customDie() {
 			if (this.offset == Stacker.this.highestOffset) {
-				this.timeToDie = new Timer(DIE_ANIMATION_TIME);
+				this.timeToDie = new Timer(Stacker.DIE_ANIMATION_TIME);
 				Stacker.this.highestOffset--;
 			}
 		}

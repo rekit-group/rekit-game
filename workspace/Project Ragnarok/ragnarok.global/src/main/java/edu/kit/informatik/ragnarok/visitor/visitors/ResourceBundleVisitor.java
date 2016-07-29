@@ -2,9 +2,9 @@ package edu.kit.informatik.ragnarok.visitor.visitors;
 
 import java.util.ResourceBundle;
 
-import edu.kit.informatik.ragnarok.visitor.VisitInfo;
 import edu.kit.informatik.ragnarok.visitor.Visitable;
 import edu.kit.informatik.ragnarok.visitor.Visitor;
+import edu.kit.informatik.ragnarok.visitor.annotations.VisitInfo;
 
 /**
  * This class realizes the default {@link Visitor} which will use a

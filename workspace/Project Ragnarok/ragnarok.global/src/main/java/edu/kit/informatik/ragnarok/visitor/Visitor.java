@@ -5,11 +5,13 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
-import edu.kit.informatik.ragnarok.util.ReflectUtils;
+import edu.kit.informatik.ragnarok.visitor.annotations.AdditionalParsers;
+import edu.kit.informatik.ragnarok.visitor.annotations.AfterVisit;
+import edu.kit.informatik.ragnarok.visitor.annotations.NoVisit;
+import edu.kit.informatik.ragnarok.visitor.annotations.VisitInfo;
 import edu.kit.informatik.ragnarok.visitor.parser.FloatParser;
 import edu.kit.informatik.ragnarok.visitor.parser.IntParser;
 import edu.kit.informatik.ragnarok.visitor.parser.Parser;
@@ -30,70 +32,14 @@ import edu.kit.informatik.ragnarok.visitor.visitors.ResourceBundleVisitor;
 public abstract class Visitor {
 
 	/**
-	 * Visit all Classes which shall be visited
-	 */
-	public static final void visitAllStatic() {
-		Visitor.visitAllStatic(Visitor.getNewVisitor());
-	}
-
-	/**
-	 * Visit all Classes which shall be visited
-	 *
-	 * @param visitor
-	 *            the visitor
-	 */
-	public static final void visitAllStatic(Visitor visitor) {
-		Set<Class<? extends Visitable>> toVisit = ReflectUtils.getClasses("edu.kit.informatik", Visitable.class);
-		for (Class<? extends Visitable> v : toVisit) {
-			visitor.visitMeStatic(v);
-		}
-	}
-
-	/**
-	 * Set values / attributes of classes (only static)
-	 *
-	 * @param clazz
-	 *            the class
-	 */
-	public static final void visitStatic(Class<? extends Visitable> clazz) {
-		Visitor.getNewVisitor().visitMeStatic(clazz);
-	}
-
-	/**
-	 * Set values / attributes of objects (only non-static)
-	 *
-	 * @param v
-	 *            the object
-	 */
-	public static final void visit(Visitable v) {
-		Visitor.getNewVisitor().visitMe(v);
-	}
-
-	/**
-	 * Get a new modifiable visitor
+	 * Get a new modifiable visitor (default visitor:
+	 * {@link ResourceBundleVisitor})
 	 *
 	 * @return the new visior
 	 * @see #setParser(Class, Parser)
 	 */
 	public static final Visitor getNewVisitor() {
 		return new ResourceBundleVisitor();
-	}
-
-	/**
-	 * Set a parser for a target type to be visited later on <br>
-	 * {@code parser} == {@code null} indicates that you want to delete a parser
-	 * for the target type
-	 *
-	 * @param target
-	 *            the target type
-	 * @param parser
-	 *            the parser
-	 */
-	public synchronized void setParser(Class<?> target, Parser parser) {
-		if (parser == null) {
-			this.parsers.remove(target);
-		}
-		this.parsers.put(target, parser);
 	}
 
 	/**
@@ -158,12 +104,12 @@ public abstract class Visitor {
 	 * @param v
 	 *            the visitable
 	 */
-	public final synchronized void visitMe(Visitable v) {
+	public final synchronized void visit(Visitable v) {
 		System.out.println("INFO: Visit object of class " + v.getClass().getSimpleName());
 		if (!this.createSource(v)) {
 			return;
 		}
-
+		this.addParsers(v.getClass());
 		for (Field field : v.getClass().getDeclaredFields()) {
 			this.applyObject(v, field);
 		}
@@ -178,18 +124,52 @@ public abstract class Visitor {
 	 * @param v
 	 *            the visitable
 	 */
-	public final synchronized void visitMeStatic(Class<? extends Visitable> v) {
+	public final synchronized void visit(Class<? extends Visitable> v) {
 		System.out.println("INFO: Visit class " + v.getSimpleName());
 		if (!this.createSource(v)) {
 			return;
 		}
-
+		this.addParsers(v);
 		for (Field field : v.getDeclaredFields()) {
 			this.applyStatic(field);
 		}
 		for (Method m : v.getDeclaredMethods()) {
 			this.afterStatic(m);
 		}
+	}
+
+	/**
+	 * This method will add more parsers if necessary
+	 *
+	 * @param clazz
+	 *            the class (of the object) which shall be visited
+	 */
+	private void addParsers(Class<? extends Visitable> clazz) {
+		AdditionalParsers additionalParsers = null;
+		if ((additionalParsers = clazz.getAnnotation(AdditionalParsers.class)) == null) {
+			return;
+		}
+
+		Class<? extends Parser>[] aParser = additionalParsers.parsers();
+		Class<?>[] types = additionalParsers.types();
+		if (types.length != aParser.length) {
+			System.err.println("Error in conf for additional parsers for " + clazz.getSimpleName());
+			return;
+		}
+		try {
+			for (int i = 0; i < aParser.length; i++) {
+				if (this.parsers.containsKey(types[i]) && this.parsers.get(types[i]).getClass() != aParser[i]) {
+					System.err.println("WARNING: Multiple parsers defined for class " + types[i]
+							+ "no parsers can be added for security reasons. Please check your config!");
+					continue;
+				}
+				this.parsers.put(types[i], aParser[i].getDeclaredConstructor().newInstance());
+			}
+		} catch (Exception e) {
+			System.err.println("Error while loading additional parsers for " + clazz.getSimpleName());
+			return;
+		}
+		System.out.println("INFO: Successfully loaded parsers for " + clazz.getSimpleName());
 	}
 
 	/**
@@ -210,7 +190,7 @@ public abstract class Visitor {
 			m.setAccessible(true);
 			m.invoke(null);
 		} catch (Exception e) {
-			System.err.println("Cannot apply to field: " + m.getName());
+			System.err.println("Cannot apply to field: " + m.getName() + " because " + e.getMessage());
 		}
 
 	}
@@ -242,7 +222,7 @@ public abstract class Visitor {
 			}
 
 		} catch (Exception e) {
-			System.err.println("Cannot apply to field: " + field.getName());
+			System.err.println("Cannot apply to field: " + field.getName() + " because " + e.getMessage());
 		}
 	}
 
@@ -266,7 +246,7 @@ public abstract class Visitor {
 			m.setAccessible(true);
 			m.invoke(v);
 		} catch (Exception e) {
-			System.err.println("Cannot apply to field: " + m.getName());
+			System.err.println("Cannot apply to field: " + m.getName() + " because " + e.getMessage());
 		}
 
 	}

@@ -1,5 +1,8 @@
 package edu.kit.informatik.ragnarok.visitor;
 
+import edu.kit.informatik.ragnarok.visitor.annotations.AfterVisit;
+import edu.kit.informatik.ragnarok.visitor.annotations.NoVisit;
+import edu.kit.informatik.ragnarok.visitor.annotations.VisitInfo;
 import edu.kit.informatik.ragnarok.visitor.visitors.MapVisitor;
 import edu.kit.informatik.ragnarok.visitor.visitors.ResourceBundleVisitor;
 

@@ -5,6 +5,7 @@ import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.geometry.Polygon;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.visitor.Visitable;
+import edu.kit.informatik.ragnarok.visitor.annotations.AdditionalParsers;
 
 /**
  *
@@ -13,6 +14,7 @@ import edu.kit.informatik.ragnarok.visitor.Visitable;
  * your ParticleSpawner Object</b>
  *
  */
+@AdditionalParsers(parsers = { ParticleSpawnerOptionParser.class }, types = { ParticleSpawnerOption.class })
 public class ParticleSpawner implements Visitable {
 
 	private Particle particlePrototype = new Particle();

@@ -3,7 +3,6 @@ package edu.kit.informatik.ragnarok.visitor.parser;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 import edu.kit.informatik.ragnarok.visitor.Visitable;
@@ -20,11 +19,6 @@ import edu.kit.informatik.ragnarok.visitor.visitors.MapVisitor;
 public final class TwoLevelParser implements Parser {
 
 	private Map<String, String> mapping = new HashMap<>();
-	private final Map<Class<?>, Parser> additionalParsers;
-
-	public TwoLevelParser(Map<Class<?>, Parser> additionalParsers) {
-		this.additionalParsers = additionalParsers == null ? new HashMap<>() : additionalParsers;
-	}
 
 	@Override
 	public final boolean parse(Visitable obj, Field field, String definition) throws Exception {
@@ -72,20 +66,13 @@ public final class TwoLevelParser implements Parser {
 			return;
 		}
 		Visitor v = new MapVisitor(this.mapping);
-		for (Entry<Class<?>, Parser> parser : this.additionalParsers.entrySet()) {
-			v.setParser(parser.getKey(), parser.getValue());
-		}
-		v.visitMe((Visitable) instance);
+		v.visit((Visitable) instance);
 		field.set(obj, instance);
 	}
 
 	@Override
 	public Parser create() {
-		Map<Class<?>, Parser> additionals = new HashMap<>();
-		for (Entry<Class<?>, Parser> parser : this.additionalParsers.entrySet()) {
-			additionals.put(parser.getKey(), parser.getValue().create());
-		}
-		return new TwoLevelParser(additionals);
+		return new TwoLevelParser();
 	}
 
 }

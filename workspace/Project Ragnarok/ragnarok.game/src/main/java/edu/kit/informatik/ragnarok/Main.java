@@ -1,17 +1,13 @@
 package edu.kit.informatik.ragnarok;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Set;
 
 import edu.kit.informatik.ragnarok.controller.Controller;
 import edu.kit.informatik.ragnarok.gui.View;
 import edu.kit.informatik.ragnarok.logic.Model;
-import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawner;
-import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawnerOption;
-import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawnerOptionParser;
+import edu.kit.informatik.ragnarok.util.ReflectUtils;
+import edu.kit.informatik.ragnarok.visitor.Visitable;
 import edu.kit.informatik.ragnarok.visitor.Visitor;
-import edu.kit.informatik.ragnarok.visitor.parser.Parser;
-import edu.kit.informatik.ragnarok.visitor.parser.TwoLevelParser;
 
 /**
  * Game class that instantiates all necessary classes that are required for a
@@ -21,7 +17,12 @@ import edu.kit.informatik.ragnarok.visitor.parser.TwoLevelParser;
  * @author Dominik Fuchß
  * @version 1.0
  */
-public class Main {
+public final class Main {
+	/**
+	 * Prevent instantiation
+	 */
+	private Main() {
+	}
 
 	/**
 	 * Launches the application by starting the game
@@ -31,7 +32,7 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		// Load All Configs
-		Main.loadConfigs();
+		Main.visitAllStatic();
 		// Create MVC
 		// Set References:
 		// V----> M <----C
@@ -49,14 +50,22 @@ public class Main {
 	}
 
 	/**
-	 * Load all configs
+	 * Visit all Classes which shall be visited
 	 */
-	private static void loadConfigs() {
-		Visitor visitor = Visitor.getNewVisitor();
-		visitor.setParser(ParticleSpawnerOption.class, new ParticleSpawnerOptionParser());
-		Map<Class<?>, Parser> additionals = new HashMap<>();
-		additionals.put(ParticleSpawnerOption.class, new ParticleSpawnerOptionParser());
-		visitor.setParser(ParticleSpawner.class, new TwoLevelParser(additionals));
-		Visitor.visitAllStatic(visitor);
+	private static final void visitAllStatic() {
+		Main.visitAllStatic(Visitor.getNewVisitor());
+	}
+
+	/**
+	 * Visit all Classes which shall be visited
+	 *
+	 * @param visitor
+	 *            the visitor
+	 */
+	private static final void visitAllStatic(Visitor visitor) {
+		Set<Class<? extends Visitable>> toVisit = ReflectUtils.getClasses("edu.kit.informatik", Visitable.class);
+		for (Class<? extends Visitable> v : toVisit) {
+			visitor.visit(v);
+		}
 	}
 }

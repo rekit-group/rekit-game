@@ -1,4 +1,4 @@
-package edu.kit.informatik.ragnarok.visitor;
+package edu.kit.informatik.ragnarok.visitor.annotations;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
