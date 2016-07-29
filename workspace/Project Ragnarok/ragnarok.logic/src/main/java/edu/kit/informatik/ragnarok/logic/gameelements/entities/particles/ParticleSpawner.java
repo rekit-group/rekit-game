@@ -4,6 +4,7 @@ import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.geometry.Polygon;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
+import edu.kit.informatik.ragnarok.visitor.Visitable;
 
 /**
  *
@@ -12,10 +13,10 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
  * your ParticleSpawner Object</b>
  *
  */
-public class ParticleSpawner {
-	
+public class ParticleSpawner implements Visitable {
+
 	private Particle particlePrototype = new Particle();
-	
+
 	/**
 	 * The current polygon
 	 */
@@ -44,7 +45,7 @@ public class ParticleSpawner {
 	 * The angle of the particle
 	 */
 	public ParticleSpawnerOption angle;
-	
+
 	/**
 	 * The rotation of the particle
 	 */
@@ -70,11 +71,12 @@ public class ParticleSpawner {
 	 * The maximum lifetime
 	 */
 	public float timeMax;
-	
+
 	public ParticleSpawner(Particle prototype) {
 		this();
 		this.particlePrototype = prototype;
 	}
+
 	/**
 	 * Create a new particle spawner with its default values
 	 */
@@ -95,7 +97,7 @@ public class ParticleSpawner {
 		this.speed = new ParticleSpawnerOption(4, 5, -1, 1);
 		// default angle is between 0 and 2PI
 		this.angle = new ParticleSpawnerOption(0, (float) Math.PI * 2, 0, 0);
-		
+
 		this.rotation = new ParticleSpawnerOption(0);
 
 		// some spawns between 8 and 12
@@ -125,9 +127,8 @@ public class ParticleSpawner {
 			this.polygon.moveTo(pos);
 
 			Particle p = this.particlePrototype.clone();
-			p.setProperties(this.polygon, pos, randomTime, this.size.randomize(),
-					this.speed.randomize(), this.rotation.randomize(), this.angle.randomize(), this.colorR.randomize(),
-					this.colorG.randomize(), this.colorB.randomize(), this.colorA.randomize());
+			p.setProperties(this.polygon, pos, randomTime, this.size.randomize(), this.speed.randomize(), this.rotation.randomize(),
+					this.angle.randomize(), this.colorR.randomize(), this.colorG.randomize(), this.colorB.randomize(), this.colorA.randomize());
 
 			scene.addGameElement(p);
 		}

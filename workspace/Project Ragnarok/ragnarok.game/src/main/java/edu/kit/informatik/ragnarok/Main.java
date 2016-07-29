@@ -3,8 +3,10 @@ package edu.kit.informatik.ragnarok;
 import edu.kit.informatik.ragnarok.controller.Controller;
 import edu.kit.informatik.ragnarok.gui.View;
 import edu.kit.informatik.ragnarok.logic.Model;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawner;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOptionParser;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerParser;
 import edu.kit.informatik.ragnarok.visitor.Visitor;
 
 /**
@@ -48,6 +50,7 @@ public class Main {
 	private static void loadConfigs() {
 		Visitor visitor = Visitor.getNewVisitor();
 		visitor.setParser(ParticleSpawnerOption.class, new ParticleSpawnerOptionParser());
+		visitor.setParser(ParticleSpawner.class, new ParticleSpawnerParser());
 		Visitor.visitAllStatic(visitor);
 	}
 }

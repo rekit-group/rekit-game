@@ -5,7 +5,6 @@ import edu.kit.informatik.ragnarok.logic.Field;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawner;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Enemy;
 import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
 import edu.kit.informatik.ragnarok.primitives.geometry.Frame;
@@ -14,7 +13,6 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
 import edu.kit.informatik.ragnarok.primitives.time.Timer;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
-import edu.kit.informatik.ragnarok.visitor.AfterVisit;
 import edu.kit.informatik.ragnarok.visitor.NoVisit;
 import edu.kit.informatik.ragnarok.visitor.VisitInfo;
 import edu.kit.informatik.ragnarok.visitor.Visitable;
@@ -52,38 +50,25 @@ public class Rocket extends Enemy implements Visitable {
 	 */
 	private static float PARTICLE_SPAWN_TIME;
 
-	// Sparkling particles
-	private static ParticleSpawnerOption colorRSpark;
-	private static ParticleSpawnerOption colorGSpark;
-	private static ParticleSpawnerOption colorBSpark;
-	private static ParticleSpawnerOption colorASpark;
-	private static ParticleSpawnerOption angleSpark;
-	private static float timeMinSpark;
-	private static int amountMinSpark;
-	private static int amountMaxSpark;
-	private static ParticleSpawnerOption speedSpark;
-
 	// Explosion particles
-	private static ParticleSpawnerOption angleExp;
-	private static ParticleSpawnerOption colorRExp;
-	private static ParticleSpawnerOption colorGExp;
-	private static ParticleSpawnerOption colorBExp;
-	private static ParticleSpawnerOption colorAExp;
-	private static float timeMinExp;
-	private static float timeMaxExp;
-	private static int amountMinExp;
-	private static int amountMaxExp;
-	private static ParticleSpawnerOption speedExp;
+	// private static ParticleSpawnerOption angleExp;
+	// private static ParticleSpawnerOption colorRExp;
+	// private static ParticleSpawnerOption colorGExp;
+	// private static ParticleSpawnerOption colorBExp;
+	// private static ParticleSpawnerOption colorAExp;
+	// private static float timeMinExp;
+	// private static float timeMaxExp;
+	// private static int amountMinExp;
+	// private static int amountMaxExp;
+	// private static ParticleSpawnerOption speedExp;
 
 	/**
 	 * The particle spawner for the rocket's flight
 	 */
-	@NoVisit
 	private static ParticleSpawner sparkParticles = null;
 	/**
 	 * The particle spawner for the rocket's explosion
 	 */
-	@NoVisit
 	private static ParticleSpawner explosionParticles = null;
 
 	/**
@@ -110,7 +95,7 @@ public class Rocket extends Enemy implements Visitable {
 		// draw spike at front
 		Vec startPt = this.getPos().addX(-this.getSize().scalar(0.5f).getX());
 		Vec[] relPts = new Vec[] { //
-		new Vec(this.getSize().scalar(0.1f).getX(), -this.getSize().scalar(0.5f).getY()),
+				new Vec(this.getSize().scalar(0.1f).getX(), -this.getSize().scalar(0.5f).getY()),
 				new Vec(this.getSize().scalar(0.1f).getX(), this.getSize().scalar(0.5f).getY()), //
 				new Vec() //
 		};
@@ -125,7 +110,7 @@ public class Rocket extends Enemy implements Visitable {
 		// draw drive at back
 		startPt = this.getPos().addX(this.getSize().scalar(0.5f).getX()).addY(-this.getSize().scalar(0.5f).getY());
 		relPts = new Vec[] { //
-		new Vec(0, this.getSize().getY()), new Vec(-this.getSize().getX() * 0.1f, this.getSize().getY() * 0.8f),
+				new Vec(0, this.getSize().getY()), new Vec(-this.getSize().getX() * 0.1f, this.getSize().getY() * 0.8f),
 				new Vec(-this.getSize().getX() * 0.1f, this.getSize().getY() * 0.2f), //
 				new Vec() //
 		};
@@ -174,34 +159,23 @@ public class Rocket extends Enemy implements Visitable {
 		return new Rocket(startPos);
 	}
 
-	@AfterVisit
-	private static void afterVisit() {
-		Rocket.sparkParticles = new ParticleSpawner();
-		Rocket.explosionParticles = new ParticleSpawner();
-
-		// Sparkling
-		Rocket.sparkParticles.angle = Rocket.angleSpark;
-		Rocket.sparkParticles.colorR = Rocket.colorRSpark;
-		Rocket.sparkParticles.colorG = Rocket.colorGSpark;
-		Rocket.sparkParticles.colorB = Rocket.colorBSpark;
-		Rocket.sparkParticles.colorA = Rocket.colorASpark;
-		Rocket.sparkParticles.timeMin = Rocket.timeMinSpark;
-		Rocket.sparkParticles.amountMin = Rocket.amountMinSpark;
-		Rocket.sparkParticles.amountMax = Rocket.amountMaxSpark;
-		Rocket.sparkParticles.speed = Rocket.speedSpark;
-
-		// Explosion
-		Rocket.explosionParticles.angle = Rocket.angleExp;
-		Rocket.explosionParticles.colorR = Rocket.colorRExp;
-		Rocket.explosionParticles.colorG = Rocket.colorGExp;
-		Rocket.explosionParticles.colorB = Rocket.colorBExp;
-		Rocket.explosionParticles.colorA = Rocket.colorAExp;
-		Rocket.explosionParticles.timeMin = Rocket.timeMinExp;
-		Rocket.explosionParticles.timeMax = Rocket.timeMaxExp;
-		Rocket.explosionParticles.amountMin = Rocket.amountMinExp;
-		Rocket.explosionParticles.amountMax = Rocket.amountMaxExp;
-		Rocket.explosionParticles.speed = Rocket.speedExp;
-
-	}
+	// @AfterVisit
+	// private static void afterVisit() {
+	//
+	// Rocket.explosionParticles = new ParticleSpawner();
+	//
+	// // Explosion
+	// Rocket.explosionParticles.angle = Rocket.angleExp;
+	// Rocket.explosionParticles.colorR = Rocket.colorRExp;
+	// Rocket.explosionParticles.colorG = Rocket.colorGExp;
+	// Rocket.explosionParticles.colorB = Rocket.colorBExp;
+	// Rocket.explosionParticles.colorA = Rocket.colorAExp;
+	// Rocket.explosionParticles.timeMin = Rocket.timeMinExp;
+	// Rocket.explosionParticles.timeMax = Rocket.timeMaxExp;
+	// Rocket.explosionParticles.amountMin = Rocket.amountMinExp;
+	// Rocket.explosionParticles.amountMax = Rocket.amountMaxExp;
+	// Rocket.explosionParticles.speed = Rocket.speedExp;
+	//
+	// }
 
 }

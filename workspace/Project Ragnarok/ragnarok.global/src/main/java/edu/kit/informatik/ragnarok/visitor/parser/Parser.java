@@ -17,9 +17,10 @@ import edu.kit.informatik.ragnarok.visitor.Visitor;
 public interface Parser {
 	/**
 	 * Parse the definition to the specific class
-	 * 
+	 *
 	 * @param obj
-	 *            the Visitable Object
+	 *            the Visitable Object or {@code null} if static visit (class
+	 *            visit)
 	 * @param field
 	 *            the current field
 	 * @param definition

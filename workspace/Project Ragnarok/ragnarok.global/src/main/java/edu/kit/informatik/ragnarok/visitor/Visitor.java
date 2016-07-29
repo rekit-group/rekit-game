@@ -5,7 +5,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
@@ -17,6 +16,7 @@ import edu.kit.informatik.ragnarok.visitor.parser.Parser;
 import edu.kit.informatik.ragnarok.visitor.parser.RGBColorParser;
 import edu.kit.informatik.ragnarok.visitor.parser.StringParser;
 import edu.kit.informatik.ragnarok.visitor.parser.VecParser;
+import edu.kit.informatik.ragnarok.visitor.visitors.ResourceBundleVisitor;
 
 /**
  * This class supports the setting of Values and/or Attributes to Classes and
@@ -27,7 +27,7 @@ import edu.kit.informatik.ragnarok.visitor.parser.VecParser;
  * @see AfterVisit
  *
  */
-public final class Visitor {
+public abstract class Visitor {
 
 	/**
 	 * Visit all Classes which shall be visited
@@ -56,7 +56,7 @@ public final class Visitor {
 	 *            the class
 	 */
 	public static final void visitStatic(Class<? extends Visitable> clazz) {
-		new Visitor().visitMeStatic(clazz);
+		new ResourceBundleVisitor().visitMeStatic(clazz);
 	}
 
 	/**
@@ -66,7 +66,7 @@ public final class Visitor {
 	 *            the object
 	 */
 	public static final void visit(Visitable v) {
-		new Visitor().visitMe(v);
+		new ResourceBundleVisitor().visitMe(v);
 	}
 
 	/**
@@ -76,7 +76,7 @@ public final class Visitor {
 	 * @see #setParser(Class, Parser)
 	 */
 	public static final Visitor getNewVisitor() {
-		return new Visitor();
+		return new ResourceBundleVisitor();
 	}
 
 	/**
@@ -99,7 +99,7 @@ public final class Visitor {
 	/**
 	 * Prevent illegal instantiation
 	 */
-	private Visitor() {
+	protected Visitor() {
 	}
 
 	/**
@@ -123,20 +123,47 @@ public final class Visitor {
 	};
 
 	/**
+	 * This method will be invoked before visiting by {@link #visit(Visitable)}
+	 *
+	 * @param v
+	 *            the visitable
+	 * @return {@code true} if the source for KV-Mapping established,
+	 *         {@code false} if failed
+	 */
+	protected abstract boolean createSource(Visitable v);
+
+	/**
+	 * This method will be invoked before visiting by
+	 * {@link #visitStatic(Class)}
+	 *
+	 * @param v
+	 *            the visitable
+	 * @return {@code true} if the source for KV-Mapping established,
+	 *         {@code false} if failed
+	 */
+	protected abstract boolean createSource(Class<? extends Visitable> v);
+
+	/**
+	 * Get value by key
+	 *
+	 * @param key
+	 *            the key ({@link Field#getName()})
+	 * @return {@code null} if no value found, the value otherwise
+	 */
+	protected abstract String getValue(String key);
+
+	/**
 	 * Visit a visitable (only non-static)
 	 *
 	 * @param v
 	 *            the visitable
 	 */
-	private synchronized void visitMe(Visitable v) {
-		VisitInfo info = v.getClass().getAnnotation(VisitInfo.class);
-		if (info == null || !info.visit()) {
-			System.err.println("WARNING: No info defined or disabled for " + v.getClass().getSimpleName());
+	public final synchronized void visitMe(Visitable v) {
+		if (!this.createSource(v)) {
 			return;
 		}
-		ResourceBundle bundle = ResourceBundle.getBundle(info.res());
 		for (Field field : v.getClass().getDeclaredFields()) {
-			this.applyObject(v, field, bundle);
+			this.applyObject(v, field);
 		}
 		for (Method m : v.getClass().getDeclaredMethods()) {
 			this.afterObject(v, m);
@@ -149,15 +176,12 @@ public final class Visitor {
 	 * @param v
 	 *            the visitable
 	 */
-	private synchronized void visitMeStatic(Class<? extends Visitable> v) {
-		VisitInfo info = v.getAnnotation(VisitInfo.class);
-		if (info == null || !info.visit()) {
-			System.err.println("WARNING: No info defined or disabled for " + v.getSimpleName());
+	public final synchronized void visitMeStatic(Class<? extends Visitable> v) {
+		if (!this.createSource(v)) {
 			return;
 		}
-		ResourceBundle bundle = ResourceBundle.getBundle(info.res());
 		for (Field field : v.getDeclaredFields()) {
-			this.applyStatic(field, bundle);
+			this.applyStatic(field);
 		}
 		for (Method m : v.getDeclaredMethods()) {
 			this.afterStatic(m);
@@ -192,15 +216,15 @@ public final class Visitor {
 	 *
 	 * @param field
 	 *            the field
-	 * @param bundle
-	 *            the bundle
 	 */
-	private void applyStatic(Field field, ResourceBundle bundle) {
+	private void applyStatic(Field field) {
 		try {
 			if (field.getAnnotation(NoVisit.class) != null) {
 				return;
 			}
-			if (!Modifier.isStatic(field.getModifiers()) || Modifier.isFinal(field.getModifiers()) || !bundle.containsKey(field.getName())) {
+			String val = null;
+			int mod = field.getModifiers();
+			if (!Modifier.isStatic(mod) || Modifier.isFinal(mod) || (val = this.getValue(field.getName())) == null) {
 				System.err.println("WARNING: Field " + field.getName() + " is not static or final or has no definition");
 				return;
 			}
@@ -209,7 +233,7 @@ public final class Visitor {
 			if (parser == null) {
 				return;
 			}
-			if (!parser.parse(null, field, bundle.getString(field.getName()))) {
+			if (!parser.parse(null, field, val)) {
 				System.err.println("Syntax-Error: Parser rejected content for " + field.getName());
 			}
 
@@ -250,15 +274,16 @@ public final class Visitor {
 	 *            the visitable
 	 * @param field
 	 *            the field
-	 * @param bundle
-	 *            the bundle
+	 *
 	 */
-	private void applyObject(Visitable v, Field field, ResourceBundle bundle) {
+	private void applyObject(Visitable v, Field field) {
 		try {
 			if (field.getAnnotation(NoVisit.class) != null) {
 				return;
 			}
-			if (Modifier.isStatic(field.getModifiers()) || Modifier.isFinal(field.getModifiers()) || !bundle.containsKey(field.getName())) {
+			String val = null;
+			int mod = field.getModifiers();
+			if (Modifier.isStatic(mod) || Modifier.isFinal(mod) || (val = this.getValue(field.getName())) == null) {
 				System.err.println("WARNING: Field " + field.getName() + " is static or final or has no definition");
 				return;
 			}
@@ -267,7 +292,7 @@ public final class Visitor {
 			if (parser == null) {
 				return;
 			}
-			if (!parser.parse(v, field, bundle.getString(field.getName()))) {
+			if (!parser.parse(v, field, val)) {
 				System.err.println("Syntax-Error: Parser rejected content for " + field.getName());
 			}
 
