@@ -56,7 +56,7 @@ public abstract class Visitor {
 	 *            the class
 	 */
 	public static final void visitStatic(Class<? extends Visitable> clazz) {
-		new ResourceBundleVisitor().visitMeStatic(clazz);
+		Visitor.getNewVisitor().visitMeStatic(clazz);
 	}
 
 	/**
@@ -66,7 +66,7 @@ public abstract class Visitor {
 	 *            the object
 	 */
 	public static final void visit(Visitable v) {
-		new ResourceBundleVisitor().visitMe(v);
+		Visitor.getNewVisitor().visitMe(v);
 	}
 
 	/**
@@ -301,7 +301,7 @@ public abstract class Visitor {
 			}
 
 		} catch (Exception e) {
-			System.err.println("Cannot apply to field: " + field.getName());
+			System.err.println("Cannot apply to field: " + field.getName() + " because " + e.getMessage());
 		}
 
 	}

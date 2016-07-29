@@ -8,9 +8,9 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.st
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.state.ChargingState;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.state.IdleState;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.state.ShootingState;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.Particle;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
+import edu.kit.informatik.ragnarok.logic.gameelements.particles.Particle;
+import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawnerOption;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Enemy;
 import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
 import edu.kit.informatik.ragnarok.primitives.geometry.Polygon;

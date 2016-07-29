@@ -3,6 +3,7 @@ package edu.kit.informatik.ragnarok.visitor.parser;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import edu.kit.informatik.ragnarok.visitor.Visitable;
 
@@ -28,9 +29,9 @@ public abstract class OptionParser implements Parser {
 		if (!definition.matches(OptionParser.REGEX)) {
 			return false;
 		}
-
+		Pattern p = Pattern.compile("::");
 		for (String kv : definition.split(";")) {
-			String[] split = kv.split("::");
+			String[] split = p.split(kv);
 			if (this.mapping.put(split[0], split[1]) != null) {
 				System.err.println("WARING: Double definition for " + split[0]);
 			}

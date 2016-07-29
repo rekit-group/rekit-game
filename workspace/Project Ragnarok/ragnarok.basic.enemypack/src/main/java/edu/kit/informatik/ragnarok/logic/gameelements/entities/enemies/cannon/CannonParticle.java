@@ -1,9 +1,9 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon;
 
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.DamageParticle;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.Particle;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
+import edu.kit.informatik.ragnarok.logic.gameelements.particles.DamageParticle;
+import edu.kit.informatik.ragnarok.logic.gameelements.particles.Particle;
 import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
 import edu.kit.informatik.ragnarok.primitives.geometry.Frame;
 

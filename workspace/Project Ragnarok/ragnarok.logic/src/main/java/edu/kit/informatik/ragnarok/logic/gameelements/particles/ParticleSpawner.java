@@ -1,4 +1,4 @@
-package edu.kit.informatik.ragnarok.logic.gameelements.entities.particles;
+package edu.kit.informatik.ragnarok.logic.gameelements.particles;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;

@@ -1,5 +1,6 @@
 package edu.kit.informatik.ragnarok.logic;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import edu.kit.informatik.ragnarok.logic.scene.ArcadeLevelScene;
@@ -40,7 +41,7 @@ public enum Scenes {
 		try {
 			Method test = this.sceneClass.getDeclaredMethod("create", GameModel.class, String[].class);
 			return (Scene) test.invoke(null, model, options);
-		} catch (Exception e) {
+		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			throw new UnsupportedOperationException("Cant create a " + this.sceneClass.getName());
 		}
 

@@ -3,10 +3,10 @@ package edu.kit.informatik.ragnarok;
 import edu.kit.informatik.ragnarok.controller.Controller;
 import edu.kit.informatik.ragnarok.gui.View;
 import edu.kit.informatik.ragnarok.logic.Model;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawner;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOptionParser;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerParser;
+import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawner;
+import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawnerOption;
+import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawnerOptionParser;
+import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawnerParser;
 import edu.kit.informatik.ragnarok.visitor.Visitor;
 
 /**
