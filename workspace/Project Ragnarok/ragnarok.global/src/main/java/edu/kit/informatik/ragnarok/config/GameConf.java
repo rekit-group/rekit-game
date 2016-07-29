@@ -4,6 +4,7 @@ import java.util.Random;
 
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
+import edu.kit.informatik.ragnarok.util.ReflectUtils;
 import edu.kit.informatik.ragnarok.util.TextOptions;
 import edu.kit.informatik.ragnarok.visitor.Visitable;
 import edu.kit.informatik.ragnarok.visitor.annotations.AfterVisit;
@@ -26,6 +27,14 @@ public final class GameConf implements Visitable {
 	private GameConf() {
 	}
 
+	/**
+	 * The search path for dynamically loaded classes; see {@link ReflectUtils}
+	 */
+	@NoVisit
+	public static final String SEARCH_PATH = "edu.kit.informatik";
+	/**
+	 * The GameWide randomness source
+	 */
 	@NoVisit
 	public static final Random PRNG = new Random();
 

@@ -74,7 +74,7 @@ public class GameElementFactory {
 		protos.put(EndTrigger.getPrototype().getClass().getName(), EndTrigger.getPrototype());
 
 		// Put all Inanimates in collection
-		Set<DynamicInanimate> inanimatePrototypes = Inanimate.getInanimatePrototypes();
+		Set<DynamicInanimate> inanimatePrototypes = DynamicInanimate.getInanimatePrototypes();
 		for (DynamicInanimate e : inanimatePrototypes) {
 			protos.put(e.getClass().getName(), e);
 		}

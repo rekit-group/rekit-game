@@ -2,6 +2,7 @@ package edu.kit.informatik.ragnarok;
 
 import java.util.Set;
 
+import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.controller.Controller;
 import edu.kit.informatik.ragnarok.gui.View;
 import edu.kit.informatik.ragnarok.logic.Model;
@@ -63,7 +64,7 @@ public final class Main {
 	 *            the visitor
 	 */
 	private static final void visitAllStatic(Visitor visitor) {
-		Set<Class<? extends Visitable>> toVisit = ReflectUtils.getClasses("edu.kit.informatik", Visitable.class);
+		Set<Class<? extends Visitable>> toVisit = ReflectUtils.getClasses(GameConf.SEARCH_PATH, Visitable.class);
 		for (Class<? extends Visitable> v : toVisit) {
 			visitor.visit(v);
 		}

@@ -18,7 +18,7 @@ public abstract class Boss extends Entity {
 	protected boolean isHarmless = false;
 
 	public static final Set<Boss> getBossPrototypes() {
-		return ReflectUtils.loadInstances("edu.kit.informatik", Boss.class);
+		return ReflectUtils.loadInstances(GameConf.SEARCH_PATH, Boss.class);
 	}
 
 	protected Boss() {
