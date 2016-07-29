@@ -162,6 +162,8 @@ public abstract class Visitor {
 		if (!this.createSource(v)) {
 			return;
 		}
+		System.out.println("INFO: Visit object of class " + v.getClass().getSimpleName());
+
 		for (Field field : v.getClass().getDeclaredFields()) {
 			this.applyObject(v, field);
 		}
@@ -180,6 +182,8 @@ public abstract class Visitor {
 		if (!this.createSource(v)) {
 			return;
 		}
+		System.out.println("INFO: Visit class " + v.getSimpleName());
+
 		for (Field field : v.getDeclaredFields()) {
 			this.applyStatic(field);
 		}

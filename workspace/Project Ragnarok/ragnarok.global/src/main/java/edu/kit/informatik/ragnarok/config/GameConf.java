@@ -199,6 +199,5 @@ public final class GameConf implements Visitable {
 		GameConf.MENU_TEXT = new TextOptions(new Vec(-0.5f), GameConf.MENU_TEXT_SIZE, GameConf.MENU_TEXT_COLOR, GameConf.GAME_TEXT_FONT, 1);
 		GameConf.DEBUG_TEXT_COLOR = new RGBColor(255, 255, 255);
 		GameConf.HINT_TEXT = GameConf.DEFAULT_TEXT.clone().setHeight(GameConf.GAME_TEXT_SIZE - 8).setColor(GameConf.DEBUG_TEXT_COLOR);
-		System.out.println(GameConf.VERSION);
 	}
 }

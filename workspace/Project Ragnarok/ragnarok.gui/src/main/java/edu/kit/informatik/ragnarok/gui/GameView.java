@@ -211,7 +211,7 @@ class GameView implements View {
 		this.field.drawText(new Vec(GameConf.PIXEL_W - 10, GameConf.PIXEL_H - 60), debugInfo, GameConf.HINT_TEXT, false);
 
 		if (GameConf.DEBUG) {
-			drawDebug();
+			this.drawDebug();
 		}
 
 	}
@@ -251,10 +251,10 @@ class GameView implements View {
 			resultName.append("\n");
 			resultNum.append(e.getValue());
 			resultNum.append("\n");
-			resultDur.append(durations.get(e.getKey()));
+			Long dur = durations.get(e.getKey());
+			resultDur.append(dur == null ? "-" : dur);
 			resultDur.append("\n");
 		}
-
 		this.field.drawText(new Vec(GameConf.PIXEL_W - 55, GameConf.PIXEL_H / 2f), resultName.toString(), GameConf.HINT_TEXT, false);
 		this.field.drawText(new Vec(GameConf.PIXEL_W - 30, GameConf.PIXEL_H / 2f), resultNum.toString(), GameConf.HINT_TEXT, false);
 		this.field.drawText(new Vec(GameConf.PIXEL_W - 5, GameConf.PIXEL_H / 2f), resultDur.toString(), GameConf.HINT_TEXT, false);
