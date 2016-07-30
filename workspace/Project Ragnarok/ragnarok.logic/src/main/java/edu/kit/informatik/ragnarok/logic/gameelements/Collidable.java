@@ -16,7 +16,7 @@ public interface Collidable {
 	 * @param points
 	 *            the Points to add
 	 */
-	default public void addPoints(int points) {
+	default void addPoints(int points) {
 	};
 
 	/**
@@ -24,7 +24,7 @@ public interface Collidable {
 	 *
 	 * @return the points of the GameElement
 	 */
-	default public int getPoints() {
+	default int getPoints() {
 		return 0;
 	};
 
@@ -34,7 +34,7 @@ public interface Collidable {
 	 * @param damage
 	 *            the amount of lifes to remove
 	 */
-	default public void addDamage(int damage) {
+	default void addDamage(int damage) {
 	};
 
 	/**
@@ -42,7 +42,7 @@ public interface Collidable {
 	 *
 	 * @return the amount of lifes of the GameElement
 	 */
-	default public int getLives() {
+	default int getLives() {
 		return 0;
 	};
 
@@ -59,7 +59,7 @@ public interface Collidable {
 	 *            the direction of this GameElement where the collision took
 	 *            place
 	 */
-	default public void collidedWith(Frame collision, Direction dir) {
+	default void collidedWith(Frame collision, Direction dir) {
 	};
 
 	/**
@@ -77,6 +77,6 @@ public interface Collidable {
 	 * @param dir
 	 *            the Direction this GameElement has been collided from.
 	 */
-	default public void reactToCollision(GameElement element, Direction dir) {
+	default void reactToCollision(GameElement element, Direction dir) {
 	};
 }

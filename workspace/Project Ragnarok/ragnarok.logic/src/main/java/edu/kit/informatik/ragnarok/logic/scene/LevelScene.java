@@ -61,7 +61,7 @@ public abstract class LevelScene extends Scene {
 		this.addGameElement(this.player);
 
 		// Init EnemyFactory with model
-		GameElementFactory.init(this);
+		GameElementFactory.setScene(this);
 
 		this.level.init();
 
