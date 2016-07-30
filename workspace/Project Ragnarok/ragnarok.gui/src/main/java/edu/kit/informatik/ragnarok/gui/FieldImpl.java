@@ -30,7 +30,7 @@ import edu.kit.informatik.ragnarok.util.TextOptions;
  * @author Dominik Fuchß
  *
  */
-public class FieldImpl extends Field {
+class FieldImpl extends Field {
 	/**
 	 * The GC
 	 */

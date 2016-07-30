@@ -19,7 +19,7 @@ public final class VecParser implements Parser {
 		if (!Parser.super.parse(obj, field, definition)) {
 			return false;
 		}
-		Pattern pattern = Pattern.compile("[-|\\+]?([0-9]+\\.[0-9]+[f|F]);[-|\\+]?([0-9]+\\.[0-9]+[f|F])");
+		Pattern pattern = Pattern.compile("[-|\\+]?([0-9]+\\.[0-9]+[f|F]),[-|\\+]?([0-9]+\\.[0-9]+[f|F])");
 		Matcher matcher = pattern.matcher(definition);
 		if (!matcher.find()) {
 			System.err.println("BundleHelper: " + definition + " is no Vec");
