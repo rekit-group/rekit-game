@@ -13,11 +13,11 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.bosses.ro
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Boss;
 import edu.kit.informatik.ragnarok.logic.level.bossstructure.BossStructure;
-import edu.kit.informatik.ragnarok.logic.state.TimeStateMachine;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
 import edu.kit.informatik.ragnarok.primitives.time.Timer;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
+import edu.kit.informatik.ragnarok.util.state.TimeStateMachine;
 
 @LoadMe
 public class RocketBoss extends Boss {

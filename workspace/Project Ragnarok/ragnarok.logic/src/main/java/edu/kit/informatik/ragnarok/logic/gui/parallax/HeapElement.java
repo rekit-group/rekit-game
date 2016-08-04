@@ -1,4 +1,4 @@
-package edu.kit.informatik.ragnarok.logic.parallax;
+package edu.kit.informatik.ragnarok.logic.gui.parallax;
 
 import edu.kit.informatik.ragnarok.logic.Field;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;

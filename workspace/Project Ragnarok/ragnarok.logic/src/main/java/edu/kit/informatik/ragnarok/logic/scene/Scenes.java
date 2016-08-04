@@ -1,13 +1,9 @@
-package edu.kit.informatik.ragnarok.logic;
+package edu.kit.informatik.ragnarok.logic.scene;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import edu.kit.informatik.ragnarok.logic.scene.ArcadeLevelScene;
-import edu.kit.informatik.ragnarok.logic.scene.InfiniteLevelScene;
-import edu.kit.informatik.ragnarok.logic.scene.LevelOfTheDayScene;
-import edu.kit.informatik.ragnarok.logic.scene.MenuScene;
-import edu.kit.informatik.ragnarok.logic.scene.Scene;
+import edu.kit.informatik.ragnarok.logic.GameModel;
 
 public enum Scenes {
 	MENU(0, MenuScene.class), INFINIT(1, InfiniteLevelScene.class), LOD(2, LevelOfTheDayScene.class), ARCADE(3, ArcadeLevelScene.class);

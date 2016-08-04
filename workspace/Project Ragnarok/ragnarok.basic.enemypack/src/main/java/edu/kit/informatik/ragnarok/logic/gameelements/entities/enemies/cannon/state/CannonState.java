@@ -3,7 +3,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.s
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.Cannon;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.CannonParticle;
-import edu.kit.informatik.ragnarok.logic.state.State;
+import edu.kit.informatik.ragnarok.util.state.State;
 
 /**
  * Abstract extension of {@link State} that adds functionality specific to the

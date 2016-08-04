@@ -1,4 +1,4 @@
-package edu.kit.informatik.ragnarok.logic.parallax;
+package edu.kit.informatik.ragnarok.logic.gui.parallax;
 
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.Team;

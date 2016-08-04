@@ -7,6 +7,7 @@ import edu.kit.informatik.ragnarok.logic.gui.menu.MenuItem;
 import edu.kit.informatik.ragnarok.logic.scene.MenuScene;
 import edu.kit.informatik.ragnarok.logic.scene.NullScene;
 import edu.kit.informatik.ragnarok.logic.scene.Scene;
+import edu.kit.informatik.ragnarok.logic.scene.Scenes;
 import edu.kit.informatik.ragnarok.primitives.image.Filter;
 import edu.kit.informatik.ragnarok.util.ThreadUtils;
 

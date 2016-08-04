@@ -1,4 +1,4 @@
-package edu.kit.informatik.ragnarok.logic.state;
+package edu.kit.informatik.ragnarok.util.state;
 
 /**
  * <p>

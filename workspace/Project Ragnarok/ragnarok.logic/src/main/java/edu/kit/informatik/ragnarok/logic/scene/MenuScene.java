@@ -2,7 +2,6 @@ package edu.kit.informatik.ragnarok.logic.scene;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.GameModel;
-import edu.kit.informatik.ragnarok.logic.Scenes;
 import edu.kit.informatik.ragnarok.logic.gui.menu.MenuActionItem;
 import edu.kit.informatik.ragnarok.logic.gui.menu.MenuGrid;
 import edu.kit.informatik.ragnarok.logic.gui.menu.MenuItem;

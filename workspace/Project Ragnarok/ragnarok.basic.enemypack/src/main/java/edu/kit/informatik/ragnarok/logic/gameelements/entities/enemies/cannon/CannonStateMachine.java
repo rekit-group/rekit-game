@@ -1,7 +1,7 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon;
 
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.state.CannonState;
-import edu.kit.informatik.ragnarok.logic.state.TimeStateMachine;
+import edu.kit.informatik.ragnarok.util.state.TimeStateMachine;
 
 /**
  * <p>
@@ -23,7 +23,7 @@ public class CannonStateMachine extends TimeStateMachine {
 
 	/**
 	 * Constructor that extends the {@link TimeStateMachines}
-	 * {@link TimeStateMachine#TimeStateMachine(edu.kit.informatik.ragnarok.logic.state.State)
+	 * {@link TimeStateMachine#TimeStateMachine(edu.kit.informatik.ragnarok.util.state.State)
 	 * constructor} by also saving the reference to a given parenting
 	 * {@link Cannon}.
 	 * 

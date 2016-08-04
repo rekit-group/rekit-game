@@ -1,4 +1,4 @@
-package edu.kit.informatik.ragnarok.logic.parallax;
+package edu.kit.informatik.ragnarok.logic.gui.parallax;
 
 import java.util.LinkedList;
 import java.util.List;

@@ -7,9 +7,9 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.Ca
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawner;
 import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawnerOption;
-import edu.kit.informatik.ragnarok.logic.state.TimeStateMachine;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.util.CalcUtil;
+import edu.kit.informatik.ragnarok.util.state.TimeStateMachine;
 
 /**
  * <p>

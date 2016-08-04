@@ -8,8 +8,6 @@ import java.util.PriorityQueue;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.GameModel;
-import edu.kit.informatik.ragnarok.logic.PriorityQueueIterator;
-import edu.kit.informatik.ragnarok.logic.Scenes;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.CameraTarget;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
@@ -232,7 +230,11 @@ public abstract class Scene implements CameraTarget {
 	}
 
 	public Iterator<GameElement> getOrderedGameElementIterator() {
-		return new PriorityQueueIterator<>(this.gameElements);
+		PriorityQueue<GameElement> queue = new PriorityQueue<>();
+		for (GameElement e : this.gameElements) {
+			queue.add(e);
+		}
+		return queue.iterator();
 	}
 
 	public Iterator<GameElement> getGameElementIterator() {
