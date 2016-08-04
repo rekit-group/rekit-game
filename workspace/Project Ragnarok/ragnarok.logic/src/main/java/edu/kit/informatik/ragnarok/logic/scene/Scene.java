@@ -230,11 +230,7 @@ public abstract class Scene implements CameraTarget {
 	}
 
 	public Iterator<GameElement> getOrderedGameElementIterator() {
-		PriorityQueue<GameElement> queue = new PriorityQueue<>();
-		for (GameElement e : this.gameElements) {
-			queue.add(e);
-		}
-		return queue.iterator();
+		return new PriorityQueueIterator<>(this.gameElements);
 	}
 
 	public Iterator<GameElement> getGameElementIterator() {
