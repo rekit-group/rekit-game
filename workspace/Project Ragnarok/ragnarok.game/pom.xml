@@ -42,7 +42,7 @@
 		</dependency>
 		<dependency>
 			<groupId>edu.kit.informatik</groupId>
-			<artifactId>ragnarok.logic</artifactId>
+			<artifactId>ragnarok.logic.core</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>edu.kit.informatik</groupId>
