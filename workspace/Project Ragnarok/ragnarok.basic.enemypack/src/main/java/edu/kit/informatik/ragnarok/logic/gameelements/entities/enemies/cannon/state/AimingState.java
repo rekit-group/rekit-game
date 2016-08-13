@@ -1,5 +1,6 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.state;
 
+import edu.kit.informatik.ragnarok.core.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.Cannon;
 
@@ -7,7 +8,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.Ca
  * Second {@link CannonState} of the {@link State} that represents the phase
  * where the {@link Cannon} aims at the {@link Player} and follows his
  * movements.
- * 
+ *
  * @author Angelo Aracri
  */
 public class AimingState extends CannonState {
@@ -15,16 +16,16 @@ public class AimingState extends CannonState {
 	/**
 	 * The {@link Player} to aim at.
 	 */
-	private Player target;
+	private GameElement target;
 
 	/**
 	 * Specialized constructor that stores the reference to the {@link Player}
 	 * to aim at.
-	 * 
+	 *
 	 * @param target
 	 *            the {@link Player} to aim at.
 	 */
-	public AimingState(Player target) {
+	public AimingState(GameElement target) {
 		this.target = target;
 	}
 

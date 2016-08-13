@@ -1,7 +1,7 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities.pickups;
 
-import edu.kit.informatik.ragnarok.logic.Field;
-import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.core.Field;
+import edu.kit.informatik.ragnarok.core.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Pickup;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;

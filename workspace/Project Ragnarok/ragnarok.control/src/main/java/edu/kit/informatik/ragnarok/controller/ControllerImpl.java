@@ -138,7 +138,7 @@ class ControllerImpl implements Observer, Controller, CommandSupervisor {
 
 	@Override
 	public Entity getEntity(Command command) {
-		return this.model.getPlayer();
+		return (Entity) this.model.getPlayer();
 	}
 
 	@Override

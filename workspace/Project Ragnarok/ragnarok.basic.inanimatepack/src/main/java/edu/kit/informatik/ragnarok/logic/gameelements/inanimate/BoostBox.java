@@ -1,9 +1,9 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.inanimate;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
-import edu.kit.informatik.ragnarok.logic.Field;
-import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
-import edu.kit.informatik.ragnarok.logic.gameelements.Team;
+import edu.kit.informatik.ragnarok.core.Field;
+import edu.kit.informatik.ragnarok.core.GameElement;
+import edu.kit.informatik.ragnarok.core.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawner;
 import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawnerOption;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.DynamicInanimate;

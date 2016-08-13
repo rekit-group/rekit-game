@@ -13,4 +13,37 @@
 			<artifactId>ragnarok.global</artifactId>
 		</dependency>
 	</dependencies>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>edu.kit.informatik</groupId>
+				<artifactId>ragnarok.logic.status</artifactId>
+				<version>${ragnarok.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>edu.kit.informatik</groupId>
+				<artifactId>ragnarok.logic.core</artifactId>
+				<version>${ragnarok.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>edu.kit.informatik</groupId>
+				<artifactId>ragnarok.logic.menu</artifactId>
+				<version>${ragnarok.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>edu.kit.informatik</groupId>
+				<artifactId>ragnarok.logic.background</artifactId>
+				<version>${ragnarok.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	<packaging>pom</packaging>
+	<modules>
+		<module>ragnarok.logic.filters</module>
+		<module>ragnarok.logic.status</module>
+		<module>ragnarok.logic.game</module>
+		<module>ragnarok.logic.core</module>
+		<module>ragnarok.logic.menu</module>
+		<module>ragnarok.logic.background</module>
+	</modules>
 </project>

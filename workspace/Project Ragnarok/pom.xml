@@ -75,6 +75,21 @@
 			</dependency>
 			<dependency>
 				<groupId>edu.kit.informatik</groupId>
+				<artifactId>ragnarok.logic.core</artifactId>
+				<version>${ragnarok.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>edu.kit.informatik</groupId>
+				<artifactId>ragnarok.logic.status</artifactId>
+				<version>${ragnarok.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>edu.kit.informatik</groupId>
+				<artifactId>ragnarok.logic.filters</artifactId>
+				<version>${ragnarok.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>edu.kit.informatik</groupId>
 				<artifactId>ragnarok.control</artifactId>
 				<version>${ragnarok.version}</version>
 			</dependency>

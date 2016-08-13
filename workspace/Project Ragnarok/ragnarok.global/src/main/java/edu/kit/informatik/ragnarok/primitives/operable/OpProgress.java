@@ -41,9 +41,8 @@ public final class OpProgress<T extends Operable<T>> {
 	 * @return the calculated value between <i>start</i> and <i>end</i>
 	 *         (inclusive)
 	 */
-	@SuppressWarnings("unchecked")
 	public T getNow(float progress) {
 		// if no change required then there must be no calculation
-		return this.isStatic ? (T) this.start : this.start.add(this.delta.scalar(progress));
+		return this.isStatic ? this.start.get() : this.start.add(this.delta.scalar(progress));
 	}
 }

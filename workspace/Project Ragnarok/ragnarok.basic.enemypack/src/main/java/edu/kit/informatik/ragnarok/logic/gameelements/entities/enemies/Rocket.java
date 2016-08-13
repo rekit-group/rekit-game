@@ -1,8 +1,8 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
-import edu.kit.informatik.ragnarok.logic.Field;
-import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.core.Field;
+import edu.kit.informatik.ragnarok.core.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawner;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Enemy;

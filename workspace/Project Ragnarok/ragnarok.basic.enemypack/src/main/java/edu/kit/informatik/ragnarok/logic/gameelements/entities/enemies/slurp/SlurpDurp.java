@@ -1,8 +1,8 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.slurp;
 
-import edu.kit.informatik.ragnarok.logic.Field;
-import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
-import edu.kit.informatik.ragnarok.logic.gameelements.Team;
+import edu.kit.informatik.ragnarok.core.Field;
+import edu.kit.informatik.ragnarok.core.GameElement;
+import edu.kit.informatik.ragnarok.core.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
@@ -45,24 +45,24 @@ public class SlurpDurp extends Entity {
 	 * The current X position
 	 */
 	private float currentX = 0;
-	
+
 	private static final int ITERATIONS = 7;
-	
+
 	private static SlurpDurpVisComp[] circles;
-	
+
 	static {
 		OpProgress<RGBColor> col = new OpProgress<>(new RGBColor(94, 233, 101), new RGBColor(184, 255, 201));
 		OpProgress<Vec> relPos = new OpProgress<>(new Vec(0), new Vec(-0.45f));
-		OpProgress<Vec> relSize = new OpProgress<>(new Vec(1), new Vec(0.1f)); 
-		
-		circles = new SlurpDurpVisComp[ITERATIONS];
-		
-		for (int i = 0; i < ITERATIONS; ++i) {
-			float progress = i / (float)ITERATIONS;
+		OpProgress<Vec> relSize = new OpProgress<>(new Vec(1), new Vec(0.1f));
+
+		SlurpDurp.circles = new SlurpDurpVisComp[SlurpDurp.ITERATIONS];
+
+		for (int i = 0; i < SlurpDurp.ITERATIONS; ++i) {
+			float progress = i / (float) SlurpDurp.ITERATIONS;
 			SlurpDurp.circles[i] = new SlurpDurpVisComp(relPos.getNow(progress), relSize.getNow(progress), col.getNow(progress));
 		}
 	}
-	
+
 	/**
 	 * Prototype Constructor
 	 */
@@ -125,7 +125,8 @@ public class SlurpDurp extends Entity {
 		for (SlurpDurpVisComp vis : SlurpDurp.circles) {
 			vis.render(f, this.parentPos.add(this.innerPos), this.getSize());
 		}
-		//f.drawCircle(this.parentPos.add(this.innerPos), this.getSize(), new RGBColor(94, 233, 101));
+		// f.drawCircle(this.parentPos.add(this.innerPos), this.getSize(), new
+		// RGBColor(94, 233, 101));
 	}
 
 }
