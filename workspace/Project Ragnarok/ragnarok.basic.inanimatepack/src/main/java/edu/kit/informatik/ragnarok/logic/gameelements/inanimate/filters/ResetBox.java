@@ -10,7 +10,7 @@ import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 
 @LoadMe
-public class NormalBox extends DynamicInanimate {
+public class ResetBox extends DynamicInanimate {
 	/**
 	 * The inner inanimate box
 	 */
@@ -23,7 +23,7 @@ public class NormalBox extends DynamicInanimate {
 	/**
 	 * Prototype Constructor
 	 */
-	public NormalBox() {
+	public ResetBox() {
 		super();
 	}
 
@@ -37,7 +37,7 @@ public class NormalBox extends DynamicInanimate {
 	 * @param color
 	 *            the color
 	 */
-	protected NormalBox(Vec pos, Vec size, RGBAColor color) {
+	protected ResetBox(Vec pos, Vec size, RGBAColor color) {
 		super(pos, size, color);
 		// create inner InanimateBox with given position
 		this.innerBox = (InanimateBox) InanimateBox.staticCreate(pos);
@@ -55,7 +55,7 @@ public class NormalBox extends DynamicInanimate {
 	}
 
 	@Override
-	public NormalBox create(Vec startPos, String[] options) {
-		return new NormalBox(startPos, new Vec(1), new RGBAColor(80, 80, 255, 255));
+	public ResetBox create(Vec startPos, String[] options) {
+		return new ResetBox(startPos, new Vec(1), new RGBAColor(80, 80, 255, 255));
 	}
 }

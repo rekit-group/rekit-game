@@ -5,7 +5,7 @@
 
 #ALIAS::1->edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate
 #ALIAS::2->edu.kit.informatik.ragnarok.logic.gameelements.inanimate.filters.GrayBox
-#ALIAS::3->edu.kit.informatik.ragnarok.logic.gameelements.inanimate.filters.NormalBox
+#ALIAS::3->edu.kit.informatik.ragnarok.logic.gameelements.inanimate.filters.ResetBox
 
 #ALIAS::10->edu.kit.informatik.ragnarok.logic.gameelements.entities.pickups.Coin
 #ALIAS::11->edu.kit.informatik.ragnarok.logic.gameelements.entities.pickups.Life
