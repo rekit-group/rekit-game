@@ -14,7 +14,7 @@
 		</dependency>
 		<dependency>
 			<groupId>edu.kit.informatik</groupId>
-			<artifactId>ragnarok.logic.filters</artifactId>
+			<artifactId>ragnarok.filters</artifactId>
 		</dependency>
 	</dependencies>
 </project>

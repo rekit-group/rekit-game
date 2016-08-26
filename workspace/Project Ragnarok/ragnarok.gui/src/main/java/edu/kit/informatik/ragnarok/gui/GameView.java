@@ -21,7 +21,7 @@ import org.eclipse.swt.widgets.Shell;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.core.GameElement;
 import edu.kit.informatik.ragnarok.core.GuiElement;
-import edu.kit.informatik.ragnarok.core.Scene;
+import edu.kit.informatik.ragnarok.core.IScene;
 import edu.kit.informatik.ragnarok.logic.Model;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.AbstractImage;
@@ -155,7 +155,7 @@ class GameView implements View {
 			return;
 		}
 
-		Scene scene = this.model.getScene();
+		IScene scene = this.model.getScene();
 
 		// Create temporary GC on new Image and let field draw on that
 		// Double buffering reduces flickering

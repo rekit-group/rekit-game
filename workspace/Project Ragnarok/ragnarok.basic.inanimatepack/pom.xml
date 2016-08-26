@@ -10,7 +10,11 @@
 	<dependencies>
 		<dependency>
 			<groupId>edu.kit.informatik</groupId>
-			<artifactId>ragnarok.logic.core</artifactId>
+			<artifactId>ragnarok.logic</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>edu.kit.informatik</groupId>
+			<artifactId>ragnarok.filters</artifactId>
 		</dependency>
 	</dependencies>
 	<name>Basic - InanimatePack</name>

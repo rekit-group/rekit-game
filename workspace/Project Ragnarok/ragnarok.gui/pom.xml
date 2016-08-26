@@ -10,7 +10,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>edu.kit.informatik</groupId>
-			<artifactId>ragnarok.logic.core</artifactId>
+			<artifactId>ragnarok.logic</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.swt</groupId>

@@ -75,17 +75,7 @@
 			</dependency>
 			<dependency>
 				<groupId>edu.kit.informatik</groupId>
-				<artifactId>ragnarok.logic.core</artifactId>
-				<version>${ragnarok.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>edu.kit.informatik</groupId>
-				<artifactId>ragnarok.logic.status</artifactId>
-				<version>${ragnarok.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>edu.kit.informatik</groupId>
-				<artifactId>ragnarok.logic.filters</artifactId>
+				<artifactId>ragnarok.filters</artifactId>
 				<version>${ragnarok.version}</version>
 			</dependency>
 			<dependency>
@@ -157,5 +147,6 @@
 		<module>ragnarok.basic.enemypack</module>
 		<module>ragnarok.basic.pickuppack</module>
 		<module>ragnarok.basic.inanimatepack</module>
+		<module>ragnarok.filters</module>
 	</modules>
 </project>
