@@ -1,8 +1,10 @@
 package edu.kit.informatik.ragnarok.core;
 
 import java.util.Iterator;
+import java.util.Map;
 
 import edu.kit.informatik.ragnarok.logic.Model;
+import edu.kit.informatik.ragnarok.logic.gui.menu.MenuItem;
 
 public interface IScene {
 
@@ -35,5 +37,21 @@ public interface IScene {
 	void end(boolean end);
 
 	Model getModel();
+
+	void logicLoop(float f);
+
+	void init();
+
+	void start();
+
+	void stop();
+
+	Iterator<GameElement> getGameElementIterator();
+
+	Map<Class<?>, Long> getGameElementDurations();
+
+	int getGameElementCount();
+
+	MenuItem getMenu();
 
 }

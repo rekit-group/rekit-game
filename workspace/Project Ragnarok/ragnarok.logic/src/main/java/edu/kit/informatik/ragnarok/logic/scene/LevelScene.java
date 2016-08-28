@@ -14,6 +14,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.GameElementFactory;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gui.LifeGui;
 import edu.kit.informatik.ragnarok.logic.gui.ScoreGui;
+import edu.kit.informatik.ragnarok.logic.gui.menu.MenuItem;
 import edu.kit.informatik.ragnarok.logic.gui.parallax.HeapElementCloud;
 import edu.kit.informatik.ragnarok.logic.gui.parallax.HeapElementMountain;
 import edu.kit.informatik.ragnarok.logic.gui.parallax.HeapLayer;
@@ -255,4 +256,8 @@ public abstract class LevelScene extends Scene {
 		return this.model.getTime();
 	}
 
+	@Override
+	public MenuItem getMenu() {
+		throw new UnsupportedOperationException("Menu not supported in LevelScene");
+	}
 }

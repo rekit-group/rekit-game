@@ -1,8 +1,8 @@
 package edu.kit.informatik.ragnarok.logic;
 
 import edu.kit.informatik.ragnarok.core.GameElement;
+import edu.kit.informatik.ragnarok.core.IScene;
 import edu.kit.informatik.ragnarok.logic.gui.menu.MenuItem;
-import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.image.Filter;
 
 /**
@@ -46,7 +46,7 @@ public interface Model {
 	 *
 	 * @return the currently active scene
 	 */
-	Scene getScene();
+	IScene getScene();
 
 	/**
 	 * Get the current state

@@ -11,7 +11,7 @@ import edu.kit.informatik.ragnarok.logic.gui.menu.SubMenu;
 import edu.kit.informatik.ragnarok.logic.level.LevelManager;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 
-public class MenuScene extends Scene {
+class MenuScene extends Scene {
 
 	private SubMenu menu;
 

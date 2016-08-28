@@ -10,6 +10,7 @@ import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.core.CameraTarget;
 import edu.kit.informatik.ragnarok.core.GameElement;
 import edu.kit.informatik.ragnarok.core.GuiElement;
+import edu.kit.informatik.ragnarok.core.IScene;
 import edu.kit.informatik.ragnarok.logic.GameModel;
 
 /**
@@ -32,7 +33,7 @@ import edu.kit.informatik.ragnarok.logic.GameModel;
  *
  * @version 1.0
  */
-public abstract class Scene implements CameraTarget, edu.kit.informatik.ragnarok.core.IScene {
+abstract class Scene implements CameraTarget, IScene {
 
 	/**
 	 * Synchronization Object that is used as a lock variable for blocking
@@ -62,6 +63,7 @@ public abstract class Scene implements CameraTarget, edu.kit.informatik.ragnarok
 	 * Initialize the scene. e.g. build Level/GUI so Scene is ready to be drawn
 	 * Must be called on restart.
 	 */
+	@Override
 	public void init() {
 		this.guiElements = new PriorityQueue<>();
 		this.gameElements = new PriorityQueue<>();
@@ -72,6 +74,7 @@ public abstract class Scene implements CameraTarget, edu.kit.informatik.ragnarok
 	/**
 	 * Start the scene. Begin drawing and Player/Enemies will begin to move.
 	 */
+	@Override
 	public void start() {
 	}
 
@@ -88,6 +91,7 @@ public abstract class Scene implements CameraTarget, edu.kit.informatik.ragnarok
 		this.model.switchScene(Scenes.MENU);
 	}
 
+	@Override
 	public void stop() {
 	}
 
@@ -96,6 +100,7 @@ public abstract class Scene implements CameraTarget, edu.kit.informatik.ragnarok
 		this.start();
 	}
 
+	@Override
 	public void logicLoop(float timeDelta) {
 
 		this.logicLoopPre(timeDelta);
@@ -236,6 +241,7 @@ public abstract class Scene implements CameraTarget, edu.kit.informatik.ragnarok
 		return new PriorityQueueIterator<>(this.gameElements);
 	}
 
+	@Override
 	public Iterator<GameElement> getGameElementIterator() {
 		return this.gameElements.iterator();
 	}
@@ -271,6 +277,7 @@ public abstract class Scene implements CameraTarget, edu.kit.informatik.ragnarok
 
 	}
 
+	@Override
 	public int getGameElementCount() {
 		return this.gameElements.size();
 	}
@@ -290,6 +297,7 @@ public abstract class Scene implements CameraTarget, edu.kit.informatik.ragnarok
 		return 0;
 	}
 
+	@Override
 	public Map<Class<?>, Long> getGameElementDurations() {
 		// Reset debug info
 		Map<Class<?>, Long> ret = this.gameElementDurations;

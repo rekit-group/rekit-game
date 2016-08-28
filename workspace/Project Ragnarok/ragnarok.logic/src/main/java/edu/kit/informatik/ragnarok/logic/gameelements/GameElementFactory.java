@@ -5,6 +5,7 @@ import java.util.Set;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.core.GameElement;
+import edu.kit.informatik.ragnarok.core.IScene;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.EndTrigger;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateBox;
@@ -12,7 +13,6 @@ import edu.kit.informatik.ragnarok.logic.gameelements.type.Boss;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.DynamicInanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Enemy;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Pickup;
-import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 
 public final class GameElementFactory {
@@ -23,10 +23,10 @@ public final class GameElementFactory {
 	}
 
 	// Create connection to scene
-	private static Scene scene;
+	private static IScene scene;
 	private static boolean loaded = false;
 
-	public static void setScene(Scene scene) {
+	public static void setScene(IScene scene) {
 		GameElementFactory.scene = scene;
 		if (!GameElementFactory.loaded) {
 			GameElementFactory.load();

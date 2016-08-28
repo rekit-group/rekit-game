@@ -3,10 +3,8 @@ package edu.kit.informatik.ragnarok.logic;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.core.CameraTarget;
 import edu.kit.informatik.ragnarok.core.GameElement;
+import edu.kit.informatik.ragnarok.core.IScene;
 import edu.kit.informatik.ragnarok.logic.gui.menu.MenuItem;
-import edu.kit.informatik.ragnarok.logic.scene.MenuScene;
-import edu.kit.informatik.ragnarok.logic.scene.NullScene;
-import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.logic.scene.Scenes;
 import edu.kit.informatik.ragnarok.primitives.image.Filter;
 import edu.kit.informatik.ragnarok.util.ThreadUtils;
@@ -22,7 +20,7 @@ import edu.kit.informatik.ragnarok.util.ThreadUtils;
 public class GameModel implements CameraTarget, Model {
 
 	private long lastTime;
-	private Scene curScene;
+	private IScene curScene;
 	private boolean endGame;
 	private GameState state;
 
@@ -31,7 +29,7 @@ public class GameModel implements CameraTarget, Model {
 
 	public GameModel() {
 		this.endGame = false;
-		this.curScene = new NullScene(this);
+		this.curScene = Scenes.NULL.getNewScene(this, null);
 	}
 
 	private void init() {
@@ -97,7 +95,7 @@ public class GameModel implements CameraTarget, Model {
 	 *            pass options to the scene (e.g. the arcade level id)
 	 */
 	public void switchScene(Scenes s, String[] options) {
-		Scene nextScene = s.getNewScene(this, options);
+		IScene nextScene = s.getNewScene(this, options);
 		nextScene.init();
 		nextScene.start();
 		this.curScene.stop();
@@ -107,7 +105,7 @@ public class GameModel implements CameraTarget, Model {
 	}
 
 	@Override
-	public Scene getScene() {
+	public IScene getScene() {
 		return this.curScene;
 	}
 
@@ -129,7 +127,7 @@ public class GameModel implements CameraTarget, Model {
 		if (this.state != GameState.MENU) {
 			return null;
 		}
-		return ((MenuScene) this.curScene).getMenu();
+		return this.curScene.getMenu();
 	}
 
 	@Override

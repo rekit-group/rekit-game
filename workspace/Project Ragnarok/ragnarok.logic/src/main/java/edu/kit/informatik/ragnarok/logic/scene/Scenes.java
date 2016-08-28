@@ -3,21 +3,22 @@ package edu.kit.informatik.ragnarok.logic.scene;
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.ConcurrentHashMap;
 
+import edu.kit.informatik.ragnarok.core.IScene;
 import edu.kit.informatik.ragnarok.logic.GameModel;
 
 public enum Scenes {
-	MENU(MenuScene.class), INFINIT(InfiniteLevelScene.class), LOD(LevelOfTheDayScene.class), ARCADE(ArcadeLevelScene.class);
+	NULL(NullScene.class), MENU(MenuScene.class), INFINIT(InfiniteLevelScene.class), LOD(LevelOfTheDayScene.class), ARCADE(ArcadeLevelScene.class);
 
-	private final Class<? extends Scene> sceneClass;
+	private final Class<? extends IScene> sceneClass;
 
-	private Scenes(Class<? extends Scene> sceneClass) {
+	private Scenes(Class<? extends IScene> sceneClass) {
 		this.sceneClass = sceneClass;
 		if (ConcurrentHelper.INSTANCES.put(this.sceneClass, this) != null) {
 			System.err.println("Warning: Multiple Scenes for class " + this.sceneClass);
 		}
 	}
 
-	public static Scenes getByInstance(Scene scene) {
+	public static Scenes getByInstance(IScene scene) {
 		return ConcurrentHelper.INSTANCES.get(scene.getClass());
 	}
 
@@ -42,6 +43,6 @@ public enum Scenes {
 	 *
 	 */
 	private static class ConcurrentHelper {
-		private static final ConcurrentHashMap<Class<? extends Scene>, Scenes> INSTANCES = new ConcurrentHashMap<>();
+		private static final ConcurrentHashMap<Class<? extends IScene>, Scenes> INSTANCES = new ConcurrentHashMap<>();
 	}
 }

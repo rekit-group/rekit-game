@@ -3,7 +3,7 @@ package edu.kit.informatik.ragnarok.logic.scene;
 import edu.kit.informatik.ragnarok.logic.GameModel;
 import edu.kit.informatik.ragnarok.logic.level.LevelManager;
 
-public class ArcadeLevelScene extends LevelScene {
+class ArcadeLevelScene extends LevelScene {
 
 	private final int arcadeLevelId;
 

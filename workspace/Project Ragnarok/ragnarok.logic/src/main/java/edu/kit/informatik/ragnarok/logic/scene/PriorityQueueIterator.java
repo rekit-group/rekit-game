@@ -1,6 +1,5 @@
 package edu.kit.informatik.ragnarok.logic.scene;
 
-
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.PriorityQueue;
@@ -17,7 +16,7 @@ import java.util.PriorityQueue;
  * @author Angelo Aracri
  * @version 1.0
  */
-public class PriorityQueueIterator<T> implements Iterator<T> {
+class PriorityQueueIterator<T> implements Iterator<T> {
 
 	private PriorityQueue<T> queue;
 
