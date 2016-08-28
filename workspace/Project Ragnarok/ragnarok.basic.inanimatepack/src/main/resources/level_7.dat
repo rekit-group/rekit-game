@@ -1,4 +1,4 @@
-#SETTING::shuffle->false
+#SETTING::shuffle->true
 #SETTING::doGaps->false
 #SETTING::infinite->true
 #SETTING::autoCoinSpawn->false
@@ -6,10 +6,33 @@
 #ALIAS::1->edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate
 #ALIAS::2->edu.kit.informatik.ragnarok.logic.gameelements.inanimate.filters.GrayBox
 #ALIAS::3->edu.kit.informatik.ragnarok.logic.gameelements.inanimate.filters.ResetBox
+#ALIAS::4->edu.kit.informatik.ragnarok.logic.gameelements.inanimate.filters.InvertBox
 
 #ALIAS::10->edu.kit.informatik.ragnarok.logic.gameelements.entities.pickups.Coin
 #ALIAS::11->edu.kit.informatik.ragnarok.logic.gameelements.entities.pickups.Life
 
+{ 
+{0	0	0	0	0	0	0}
+{0	0	0	0	0	0	0}
+{0	0	0	0	0	0	0}
+{0	0	0	0	0	0	0}
+{0	0	0	0	0	0	0}
+{0	0	0	0	0	0	0}
+{0	0	0	0	0	0	0}
+{0	0	0	0	0	0	0}
+{1	2	1	1	4	1	1}
+}
+{ 
+{0	0	0	0	0	0	0}
+{0	0	0	0	0	0	0}
+{0	0	0	0	0	0	0}
+{0	0	0	0	0	0	0}
+{0	0	0	0	0	0	0}
+{0	0	0	0	0	0	0}
+{0	0	0	0	0	0	0}
+{0	0	0	0	0	0	0}
+{1	2	1	1	4	1	1}
+}
 { 
 {0	0	0	0	0	0	0}
 {0	0	0	0	0	0	0}

@@ -209,7 +209,7 @@ public abstract class Visitor {
 			String val = null;
 			int mod = field.getModifiers();
 			if (!Modifier.isStatic(mod) || Modifier.isFinal(mod) || (val = this.getValue(field.getName())) == null) {
-				System.err.println("WARNING: Field " + field.getName() + " is not static or final or has no definition");
+				System.out.println("WARNING: Field " + field.getName() + " is not static or final or has no definition");
 				return;
 			}
 			field.setAccessible(true);
@@ -268,7 +268,7 @@ public abstract class Visitor {
 			String val = null;
 			int mod = field.getModifiers();
 			if (Modifier.isStatic(mod) || Modifier.isFinal(mod) || (val = this.getValue(field.getName())) == null) {
-				System.err.println("WARNING: Field " + field.getName() + " is static or final or has no definition");
+				System.out.println("WARNING: Field " + field.getName() + " is static or final or has no definition");
 				return;
 			}
 			field.setAccessible(true);

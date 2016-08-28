@@ -1,45 +1,47 @@
 package edu.kit.informatik.ragnarok.logic.scene;
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.util.concurrent.ConcurrentHashMap;
 
 import edu.kit.informatik.ragnarok.logic.GameModel;
 
 public enum Scenes {
-	MENU(0, MenuScene.class), INFINIT(1, InfiniteLevelScene.class), LOD(2, LevelOfTheDayScene.class), ARCADE(3, ArcadeLevelScene.class);
+	MENU(MenuScene.class), INFINIT(InfiniteLevelScene.class), LOD(LevelOfTheDayScene.class), ARCADE(ArcadeLevelScene.class);
 
-	private final int id;
 	private final Class<? extends Scene> sceneClass;
 
-	private Scenes(int id, Class<? extends Scene> sceneClass) {
-		this.id = id;
+	private Scenes(Class<? extends Scene> sceneClass) {
 		this.sceneClass = sceneClass;
+		if (ConcurrentHelper.INSTANCES.put(this.sceneClass, this) != null) {
+			System.err.println("Warning: Multiple Scenes for class " + this.sceneClass);
+		}
 	}
 
 	public static Scenes getByInstance(Scene scene) {
-		for (Scenes it : Scenes.values()) {
-			if (it.sceneClass == scene.getClass()) {
-				return it;
-			}
-		}
-		return null;
+		return ConcurrentHelper.INSTANCES.get(scene.getClass());
 	}
 
 	public boolean isMenu() {
 		return this.sceneClass.isAssignableFrom(MenuScene.class);
 	}
 
-	public int getId() {
-		return this.id;
-	}
-
 	public Scene getNewScene(GameModel model, String[] options) {
 		try {
-			Method test = this.sceneClass.getDeclaredMethod("create", GameModel.class, String[].class);
-			return (Scene) test.invoke(null, model, options);
+			return (Scene) this.sceneClass.getDeclaredMethod("create", GameModel.class, String[].class).invoke(null, model, options);
 		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			throw new UnsupportedOperationException("Cant create a " + this.sceneClass.getName());
 		}
 
+	}
+
+	/**
+	 * Static context in constructor of enums is quite difficult so we use a
+	 * helper class
+	 *
+	 * @author Dominik Fuchß
+	 *
+	 */
+	private static class ConcurrentHelper {
+		private static final ConcurrentHashMap<Class<? extends Scene>, Scenes> INSTANCES = new ConcurrentHashMap<>();
 	}
 }

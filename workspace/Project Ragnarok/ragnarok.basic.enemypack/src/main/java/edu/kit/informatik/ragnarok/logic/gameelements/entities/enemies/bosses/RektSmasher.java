@@ -23,7 +23,7 @@ import edu.kit.informatik.ragnarok.util.ThreadUtils;
  *
  */
 @LoadMe
-public class RektSmasher extends Boss {
+public final class RektSmasher extends Boss {
 	/**
 	 * The internal {@link RektKiller}
 	 */
@@ -169,41 +169,21 @@ public class RektSmasher extends Boss {
 
 	@Override
 	public BossStructure getBossStructure() {
-		// TODO Refactor to new Layout
+		String i = Inanimate.class.getName();
+		String n = null;
+		String r = RektKiller.class.getName();
+		String[][] struct = new String[][] { //
+				{ i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i },
+				{ i, r, n, n, n, r, i, n, n, n, n, n, i, n, n, n, i, i, n, n, n, i, n, n, n, n, n, n },
+				{ i, n, r, n, r, n, i, n, n, n, n, n, i, n, n, n, n, n, n, n, n, i, n, n, n, n, n, n },
+				{ i, n, n, r, n, n, i, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, i, n },
+				{ i, n, r, n, r, n, i, i, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, i, i, n },
+				{ i, r, n, n, n, r, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n },
+				{ i, i, i, i, i, i, i, n, n, n, n, n, n, i, n, i, i, i, i, n, i, n, n, n, n, n, n, n },
+				{ n, n, n, n, n, n, n, n, n, n, n, n, n, i, n, i, i, i, i, n, i, n, n, n, n, n, n, n },
+				{ i, i, i, i, i, i, i, i, i, i, i, i, i, i, n, i, i, i, i, n, i, i, i, i, i, i, i, i } //
+		};
 
-		int[][][] oldStruct = new int[][][] {
-				{ { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 },
-						{ 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 } },
-				{ { 1 }, { 2, 0 }, { 0 }, { 0 }, { 0 }, { 2, 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 1 }, { 1 },
-						{ 0 }, { 0 }, { 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 } },
-				{ { 1 }, { 0 }, { 2, 0 }, { 0 }, { 2, 0 }, { 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 },
-						{ 0 }, { 0 }, { 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 } },
-				{ { 1 }, { 0 }, { 0 }, { 2, 0 }, { 0 }, { 0 }, { 1 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 },
-						{ 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 1 }, { 0 } },
-				{ { 1 }, { 0 }, { 2, 0 }, { 0 }, { 2, 0 }, { 0 }, { 1 }, { 1 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 },
-						{ 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 1 }, { 1 }, { 0 } },
-				{ { 1 }, { 2, 0 }, { 0 }, { 0 }, { 0 }, { 2, 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 },
-						{ 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 } },
-				{ { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 1 }, { 0 }, { 1 }, { 1 }, { 1 },
-						{ 1 }, { 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 } },
-				{ { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 1 }, { 0 }, { 1 }, { 1 }, { 1 },
-						{ 1 }, { 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 } },
-				{ { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 0 }, { 1 }, { 1 }, { 1 },
-						{ 1 }, { 0 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 } } };
-		String[][] struct = new String[oldStruct.length][];
-		for (int i = 0; i < oldStruct.length; i++) {
-			String[] l = new String[oldStruct[i].length];
-			for (int j = 0; j < oldStruct[i].length; j++) {
-				if (oldStruct[i][j][0] == 0) {
-					l[j] = null;
-				} else if (oldStruct[i][j][0] == 1) {
-					l[j] = Inanimate.class.getName();
-				} else if (oldStruct[i][j][0] == 2) {
-					l[j] = RektKiller.class.getName();
-				}
-			}
-			struct[i] = l;
-		}
 		BossStructure structure = new BossStructure(struct, this);
 		this.setBossStructure(structure);
 		return structure;

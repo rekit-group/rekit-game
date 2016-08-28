@@ -27,7 +27,7 @@ import edu.kit.informatik.ragnarok.visitor.parser.TwoLevelParser;
 @LoadMe
 @VisitInfo(res = "conf/rocket", visit = true)
 @AdditionalParsers(parsers = { TwoLevelParser.class }, types = { ParticleSpawner.class })
-public class Rocket extends Enemy implements Visitable {
+public final class Rocket extends Enemy implements Visitable {
 	/**
 	 * Prototype Constructor
 	 */

@@ -6,6 +6,7 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Polygon;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.visitor.Visitable;
 import edu.kit.informatik.ragnarok.visitor.annotations.AdditionalParsers;
+import edu.kit.informatik.ragnarok.visitor.annotations.NoVisit;
 
 /**
  *
@@ -16,7 +17,7 @@ import edu.kit.informatik.ragnarok.visitor.annotations.AdditionalParsers;
  */
 @AdditionalParsers(parsers = { ParticleSpawnerOptionParser.class }, types = { ParticleSpawnerOption.class })
 public class ParticleSpawner implements Visitable {
-
+	@NoVisit
 	private Particle particlePrototype = new Particle();
 
 	/**

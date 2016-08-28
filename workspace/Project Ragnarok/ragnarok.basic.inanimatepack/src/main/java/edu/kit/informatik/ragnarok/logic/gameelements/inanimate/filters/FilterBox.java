@@ -2,7 +2,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.inanimate.filters;
 
 import edu.kit.informatik.ragnarok.core.Field;
 import edu.kit.informatik.ragnarok.core.GameElement;
-import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateBox;
+import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.DynamicInanimate;
 import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
@@ -13,7 +13,8 @@ class FilterBox extends DynamicInanimate {
 	/**
 	 * The inner inanimate box
 	 */
-	private InanimateBox innerBox;
+	private Inanimate innerBox;
+
 	/**
 	 * The gray-filter
 	 */
@@ -45,13 +46,18 @@ class FilterBox extends DynamicInanimate {
 	private FilterBox(Vec pos, Vec size, RGBAColor color, Filter filter) {
 		super(pos, size, color);
 		// create inner InanimateBox with given position
-		this.innerBox = (InanimateBox) InanimateBox.staticCreate(pos);
+		this.innerBox = Inanimate.getPrototype().create(pos, null);
 		this.filter = filter;
 	}
 
 	@Override
 	public final void reactToCollision(GameElement element, Direction dir) {
-		this.getScene().getModel().setFilter(this.filter);
+		if (this.filter != null) {
+			this.getScene().getModel().setFilter(this.filter);
+		} else {
+			this.getScene().getModel().removeFilter();
+		}
+		this.innerBox.setScene(this.getScene());
 		this.innerBox.reactToCollision(element, dir);
 	}
 
