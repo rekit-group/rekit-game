@@ -9,7 +9,7 @@ import edu.kit.informatik.ragnarok.logic.gui.menu.MenuItem;
  * @author Matthias Schmitt
  *
  */
-public class MenuCommand implements Command {
+public class MenuCommand extends InputCommand {
 	/**
 	 * The enum defines the different directions of KeyPress in a Menu Context
 	 *
@@ -20,10 +20,6 @@ public class MenuCommand implements Command {
 		UP, DOWN, LEFT, RIGHT, BACK, SELECT
 	}
 
-	/**
-	 * The command's supervisor
-	 */
-	private CommandSupervisor supervisor;
 	/**
 	 * The direction for the command
 	 */
@@ -38,7 +34,7 @@ public class MenuCommand implements Command {
 	 *            the direction
 	 */
 	public MenuCommand(CommandSupervisor supervisor, Dir dir) {
-		this.supervisor = supervisor;
+		super(supervisor);
 		this.dir = dir;
 	}
 

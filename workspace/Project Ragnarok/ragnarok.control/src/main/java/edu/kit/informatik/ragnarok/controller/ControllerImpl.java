@@ -7,7 +7,7 @@ import java.util.Map;
 import edu.kit.informatik.ragnarok.controller.commands.Command;
 import edu.kit.informatik.ragnarok.controller.commands.CommandSupervisor;
 import edu.kit.informatik.ragnarok.controller.commands.FilterCommand;
-import edu.kit.informatik.ragnarok.controller.commands.InputMethod;
+import edu.kit.informatik.ragnarok.controller.commands.InputCommand.InputMethod;
 import edu.kit.informatik.ragnarok.controller.commands.JumpCommand;
 import edu.kit.informatik.ragnarok.controller.commands.MenuCommand;
 import edu.kit.informatik.ragnarok.controller.commands.PlayPauseCommand;
@@ -147,7 +147,7 @@ class ControllerImpl implements Observer, Controller, CommandSupervisor {
 	}
 
 	@Override
-	public LevelScene getLevelScene() {
+	public LevelScene getScene() {
 		return this.model.getState() == GameState.INGAME ? (LevelScene) this.model.getScene() : null;
 	}
 }

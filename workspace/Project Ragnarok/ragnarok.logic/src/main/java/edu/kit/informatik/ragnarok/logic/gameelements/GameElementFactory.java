@@ -53,11 +53,7 @@ public final class GameElementFactory {
 		return GameElementFactory.elements.get(InanimateBox.class.getName());
 	}
 
-	public static void generate(String id, int x, int y) {
-		GameElementFactory.generate(id, x, y, new String[0]);
-	}
-
-	public static void generate(String id, int x, int y, String[] modifiers) {
+	public static void generate(String id, int x, int y, String... modifiers) {
 		GameElement prototype = GameElementFactory.getPrototype(id);
 		if (prototype != null) {
 			// Add enemy to model

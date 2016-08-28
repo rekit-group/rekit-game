@@ -11,7 +11,7 @@ import edu.kit.informatik.ragnarok.primitives.image.Filter;
  * @author Dominik Fuchß
  *
  */
-public class FilterCommand implements Command {
+public final class FilterCommand implements Command {
 	/**
 	 * Indicates whether this command will enable a filter
 	 */
@@ -42,7 +42,7 @@ public class FilterCommand implements Command {
 	}
 
 	@Override
-	public void execute(InputMethod inputMethod) {
+	public void execute(Object... params) {
 		if (this.enable) {
 			this.model.setFilter(this.filter);
 		} else {

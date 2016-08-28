@@ -54,4 +54,6 @@ public interface IScene {
 
 	MenuItem getMenu();
 
+	void togglePause();
+
 }
