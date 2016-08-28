@@ -1,5 +1,5 @@
 #SETTING::shuffle->true
-#SETTING::doGaps->false
+#SETTING::doGaps->true
 #SETTING::infinite->true
 #SETTING::autoCoinSpawn->false
 
