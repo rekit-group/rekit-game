@@ -2,8 +2,8 @@ package edu.kit.informatik.ragnarok.logic;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.core.CameraTarget;
-import edu.kit.informatik.ragnarok.core.GameElement;
 import edu.kit.informatik.ragnarok.core.IScene;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gui.menu.MenuItem;
 import edu.kit.informatik.ragnarok.logic.scene.Scenes;
 import edu.kit.informatik.ragnarok.primitives.image.Filter;
@@ -115,7 +115,7 @@ public class GameModel implements CameraTarget, Model {
 	 * @return the player
 	 */
 	@Override
-	public GameElement getPlayer() {
+	public Entity getPlayer() {
 		if (this.state != GameState.INGAME) {
 			return null;
 		}

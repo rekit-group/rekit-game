@@ -4,11 +4,12 @@ import java.util.Iterator;
 import java.util.Map;
 
 import edu.kit.informatik.ragnarok.logic.Model;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gui.menu.MenuItem;
 
 public interface IScene {
 
-	GameElement getPlayer();
+	Entity getPlayer();
 
 	int getScore();
 

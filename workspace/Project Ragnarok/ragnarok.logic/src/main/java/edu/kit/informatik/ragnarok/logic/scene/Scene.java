@@ -12,6 +12,7 @@ import edu.kit.informatik.ragnarok.core.GameElement;
 import edu.kit.informatik.ragnarok.core.GuiElement;
 import edu.kit.informatik.ragnarok.core.IScene;
 import edu.kit.informatik.ragnarok.logic.GameModel;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 
 /**
  * Based on the concept of scenes in Unity. </br>
@@ -78,6 +79,7 @@ abstract class Scene implements CameraTarget, IScene {
 	public void start() {
 	}
 
+	@Override
 	public void togglePause() {
 		this.paused = !this.paused;
 	}
@@ -288,7 +290,7 @@ abstract class Scene implements CameraTarget, IScene {
 	}
 
 	@Override
-	public GameElement getPlayer() {
+	public Entity getPlayer() {
 		return null;
 	}
 

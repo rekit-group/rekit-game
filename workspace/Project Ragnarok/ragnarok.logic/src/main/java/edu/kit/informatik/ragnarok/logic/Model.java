@@ -1,7 +1,7 @@
 package edu.kit.informatik.ragnarok.logic;
 
-import edu.kit.informatik.ragnarok.core.GameElement;
 import edu.kit.informatik.ragnarok.core.IScene;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gui.menu.MenuItem;
 import edu.kit.informatik.ragnarok.primitives.image.Filter;
 
@@ -26,7 +26,7 @@ public interface Model {
 	 *
 	 * @return the player or {@code null} when not in GAME
 	 */
-	GameElement getPlayer();
+	Entity getPlayer();
 
 	/**
 	 * Get the Menu
