@@ -3,7 +3,15 @@ package edu.kit.informatik.ragnarok.logic.filters;
 import edu.kit.informatik.ragnarok.primitives.image.Filter;
 import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
 import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
+import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 
+/**
+ * This filter realizes a filter which will convert all colors to grayscale
+ *
+ * @author Dominik Fuchß
+ *
+ */
+@LoadMe
 public class GrayScaleMode implements Filter {
 
 	// protected int numThreads;

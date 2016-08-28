@@ -4,8 +4,19 @@ import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.primitives.image.Filter;
 import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
 import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
+import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 
-public class RandomMode implements Filter {
+/**
+ * This filter realizes a filter which will map a color to a random color
+ * 
+ * @author Dominik Fuchß
+ *
+ */
+@LoadMe
+public final class RandomMode implements Filter {
+	/**
+	 * The mapping for all colors
+	 */
 	private Integer[] map = new Integer[256 << 16];
 
 	/**
@@ -16,7 +27,7 @@ public class RandomMode implements Filter {
 	 *            the extrinsic, original color
 	 * @return the intrinsic, random color
 	 */
-	protected RGBAColor getMapping(RGBAColor color) {
+	private RGBAColor getMapping(RGBAColor color) {
 		if (this.map[color.red + (color.green << 8) + (color.blue << 16)] == null) {
 			synchronized (this) {
 				if (this.map[color.red + (color.green << 8) + (color.blue << 16)] == null) {
@@ -30,7 +41,14 @@ public class RandomMode implements Filter {
 		return new RGBAColor(this.map[color.red + (color.green << 8) + (color.blue << 16)] | (color.alpha << 24));
 	}
 
-	protected RGBAColor getMapping(RGBColor color) {
+	/**
+	 * Get the mapping of an RGBColor to RGBAColor
+	 * 
+	 * @param color
+	 *            the RGBColor
+	 * @return the corresponding RGBAColor
+	 */
+	private RGBAColor getMapping(RGBColor color) {
 		return this.getMapping(color.toRGBA());
 	}
 
