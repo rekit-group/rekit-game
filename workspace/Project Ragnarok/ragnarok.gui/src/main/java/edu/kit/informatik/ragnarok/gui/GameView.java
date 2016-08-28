@@ -96,6 +96,7 @@ class GameView implements View {
 		this.canvas.setSize(GameConf.PIXEL_W, GameConf.PIXEL_H);
 		this.canvas.setLocation(0, 0);
 
+		// TODO This depends on the window manager. This issue should be solved
 		// Open Shell (5,28) seems to be the additional size of my window
 		// decoration (boder, title, close button etc)
 		this.shell.setSize(GameConf.PIXEL_W + 5, GameConf.PIXEL_H + 28);

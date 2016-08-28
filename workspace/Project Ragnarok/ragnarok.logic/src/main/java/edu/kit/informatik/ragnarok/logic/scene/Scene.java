@@ -11,6 +11,7 @@ import edu.kit.informatik.ragnarok.core.CameraTarget;
 import edu.kit.informatik.ragnarok.core.GameElement;
 import edu.kit.informatik.ragnarok.core.GuiElement;
 import edu.kit.informatik.ragnarok.core.IScene;
+import edu.kit.informatik.ragnarok.core.Team;
 import edu.kit.informatik.ragnarok.logic.GameModel;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 
@@ -97,6 +98,7 @@ abstract class Scene implements CameraTarget, IScene {
 	public void stop() {
 	}
 
+	@Override
 	public void restart() {
 		this.init();
 		this.start();
@@ -147,7 +149,8 @@ abstract class Scene implements CameraTarget, IScene {
 		GameElement e = it.next();
 
 		// if this GameElement is marked for destruction
-		if (e.getDeleteMe()) {
+		// TODO This is a bugfix for inanimates which wont be deleted upon time
+		if (e.getDeleteMe() || (e.getTeam() == Team.INANIMATE && this.getModel().getCameraOffset() - 20 > e.getPos().getX())) {
 			it.remove();
 		}
 

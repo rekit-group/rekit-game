@@ -109,12 +109,12 @@ public final class Player extends Entity implements CameraTarget {
 	/**
 	 * Reset current camera offset
 	 */
-	public void resetCameraOffset() {
+	public final void resetCameraOffset() {
 		this.currentCameraOffset = 0;
 	}
 
 	@Override
-	public float getCameraOffset() {
+	public final float getCameraOffset() {
 		// get maximum player x and adjust level offset
 		float offsetNow = this.getPos().getX() - GameConf.PLAYER_CAMERA_OFFSET;
 		if (offsetNow > this.currentCameraOffset) {

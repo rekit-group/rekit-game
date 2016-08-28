@@ -168,7 +168,7 @@ class FieldImpl extends Field {
 	 * @param gc
 	 *            the gc
 	 */
-	public void setGC(GC gc) {
+	void setGC(GC gc) {
 		this.gc = gc;
 	}
 
@@ -186,7 +186,7 @@ class FieldImpl extends Field {
 		return vec3D;
 	}
 
-	public void setFilter(Filter filter) {
+	void setFilter(Filter filter) {
 		if (filter == null || !filter.isApplyPixel()) {
 			this.filter = null;
 		} else {

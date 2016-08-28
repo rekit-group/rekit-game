@@ -15,10 +15,34 @@ public interface IScene {
 
 	int getHighScore();
 
+	/**
+	 * Adds a GameElement to the Model. The elements will not directly be added
+	 * to the internal data structure to prevent concurrency errors. Instead
+	 * there is an internal list to hold all waiting GameElements that will be
+	 * added in the next call of logicLoop
+	 *
+	 * @param e
+	 *            the GameElement to add
+	 */
 	void addGameElement(GameElement e);
 
+	/**
+	 * Removes a GameElement from the Model The elements will not directly be
+	 * removed from the internal data structure to prevent concurrency errors.
+	 * Instead there is an internal list to hold all waiting GameElements that
+	 * will be removed in the next call of logicLoop
+	 *
+	 * @param e
+	 *            the GameElement to remove
+	 */
 	void removeGameElement(GameElement e);
 
+	/**
+	 * Adds a GuiElement to the GameModel.
+	 *
+	 * @param e
+	 *            the GuiElement to add
+	 */
 	void addGuiElement(GuiElement e);
 
 	void removeGuiElement(GuiElement e);
@@ -29,25 +53,37 @@ public interface IScene {
 
 	Object synchronize();
 
-	Iterator<GameElement> getOrderedGameElementIterator();
+	Iterator<GameElement> getGameElementIterator();
 
 	Iterator<GuiElement> getGuiElementIterator();
 
 	long getTime();
 
-	void end(boolean end);
+	void end(boolean won);
 
 	Model getModel();
 
 	void logicLoop(float f);
 
+	/**
+	 * Initialize the scene. e.g. build Level/GUI so Scene is ready to be drawn
+	 * Must be called on restart.
+	 */
 	void init();
 
-	void start();
+	/**
+	 * Start the scene. Begin drawing and Player/Enemies will begin to move.
+	 */
+	default void start() {
+	}
 
-	void stop();
+	default void stop() {
+	}
 
-	Iterator<GameElement> getGameElementIterator();
+	default void restart() {
+		this.init();
+		this.start();
+	}
 
 	Map<Class<?>, Long> getGameElementDurations();
 
@@ -57,4 +93,5 @@ public interface IScene {
 
 	void togglePause();
 
+	Iterator<GameElement> getOrderedGameElementIterator();
 }
