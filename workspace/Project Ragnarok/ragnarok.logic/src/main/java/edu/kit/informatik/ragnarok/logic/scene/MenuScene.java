@@ -32,18 +32,17 @@ class MenuScene extends Scene {
 
 		MenuList play = new MenuList(this, "Play");
 
-		MenuActionItem inf = new MenuActionItem(this, "Infinite Fun", () -> MenuScene.this.model.switchScene(Scenes.INFINIT));
+		MenuActionItem inf = new MenuActionItem(this, "Infinite Fun", () -> this.getModel().switchScene(Scenes.INFINIT));
 
-		MenuActionItem lod = new MenuActionItem(this, "Level of the Day", () -> MenuScene.this.model.switchScene(Scenes.LOD));
+		MenuActionItem lod = new MenuActionItem(this, "Level of the Day", () -> this.getModel().switchScene(Scenes.LOD));
 
 		MenuGrid arcade = new MenuGrid(this, "Arcade Mode", 6);
 		arcade.setItemSize(new Vec(100, 100));
 
 		for (int i = 0; i < LevelManager.getNumberOfArcadeLevels(); i++) {
 			final int id = i;
-			MenuActionItem button = new MenuActionItem(this, new Vec(80, 80), String.valueOf(id + 1), () -> {
-				this.model.switchScene(Scenes.ARCADE, new String[] { "" + id });
-			});
+			MenuActionItem button = new MenuActionItem(this, new Vec(80, 80), String.valueOf(id + 1),
+					() -> this.getModel().switchScene(Scenes.ARCADE, new String[] { "" + id }));
 			arcade.addItem(button);
 		}
 
@@ -74,6 +73,7 @@ class MenuScene extends Scene {
 		this.menu.select();
 	}
 
+	@Override
 	public MenuItem getMenu() {
 		return this.menu;
 	}

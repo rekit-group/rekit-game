@@ -77,6 +77,9 @@ public interface IScene {
 	default void start() {
 	}
 
+	/**
+	 * Stop the scene. End drawing and Player/Enemies will end to move.
+	 */
 	default void stop() {
 	}
 

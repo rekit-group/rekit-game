@@ -28,8 +28,12 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
  * {@code public static Scene create(GameModel, String[])}, for the GameModel to
  * be able to start that Scene.</br>
  * For Scene switching take a look at
- * {@link GameModel#switchScene(Scenes, String[])}
- *
+ * {@link GameModel#switchScene(Scenes, String[])} <br>
+ * <br>
+ * <b>IMPORTANT:</b> all {@link Scene Scenes} must provide a static method <br>
+ * <b><em>public static Scene create(GameModel model, String[]
+ * options)</em></b><br>
+ * so that {@link Scenes#getNewScene(GameModel, String[])} can work
  *
  * @author Matthias Schmitt
  *
@@ -43,7 +47,7 @@ abstract class Scene implements CameraTarget, IScene {
 	 */
 	private final Object sync = new Object();
 
-	protected GameModel model;
+	private GameModel model;
 
 	private PriorityQueue<GuiElement> guiElements;
 
@@ -61,23 +65,12 @@ abstract class Scene implements CameraTarget, IScene {
 		this.model = model;
 	}
 
-	/**
-	 * Initialize the scene. e.g. build Level/GUI so Scene is ready to be drawn
-	 * Must be called on restart.
-	 */
 	@Override
 	public void init() {
 		this.guiElements = new PriorityQueue<>();
 		this.gameElements = new PriorityQueue<>();
 		this.gameElementAddQueue = new ArrayList<>();
 		this.gameElementRemoveQueue = new ArrayList<>();
-	}
-
-	/**
-	 * Start the scene. Begin drawing and Player/Enemies will begin to move.
-	 */
-	@Override
-	public void start() {
 	}
 
 	@Override
@@ -92,16 +85,6 @@ abstract class Scene implements CameraTarget, IScene {
 	@Override
 	public void end(boolean won) {
 		this.model.switchScene(Scenes.MENU);
-	}
-
-	@Override
-	public void stop() {
-	}
-
-	@Override
-	public void restart() {
-		this.init();
-		this.start();
 	}
 
 	@Override
