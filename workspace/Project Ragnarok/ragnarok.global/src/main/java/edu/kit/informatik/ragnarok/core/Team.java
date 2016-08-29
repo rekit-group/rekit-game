@@ -13,4 +13,7 @@ public enum Team {
 		return false;
 	}
 
+	public boolean isNeutral() {
+		return this == Team.NEUTRAL;
+	}
 }

@@ -94,4 +94,5 @@ public interface IScene {
 	void togglePause();
 
 	Iterator<GameElement> getOrderedGameElementIterator();
+
 }

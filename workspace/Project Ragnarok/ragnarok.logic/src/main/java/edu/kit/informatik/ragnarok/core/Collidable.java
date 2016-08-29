@@ -79,4 +79,5 @@ public interface Collidable {
 	 */
 	default void reactToCollision(GameElement element, Direction dir) {
 	};
+
 }

@@ -420,4 +420,77 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 		return this.deleteMe;
 	}
 
+	public final void checkCollision(GameElement e2) {
+		this.checkCollision(this, e2, this.getLastPos(), e2.getLastPos());
+	}
+
+	private final void checkCollision(GameElement e1, GameElement e2, Vec e1lastPos, Vec e2lastPos) {
+		// Return if one of the elements is about to be deleted.
+		if (e1.getDeleteMe() || e2.getDeleteMe()) {
+			return;
+		}
+
+		// Return if there is no collision
+		if (!e1.getCollisionFrame().collidesWith(e2.getCollisionFrame())) {
+			return;
+		}
+
+		// Simulate CollisionFrame with last Y position
+		Vec e1lastYVec = new Vec(e1.getPos().getX(), e1lastPos.getY());
+		Frame e1lastYFrame = new Frame(e1lastYVec.add(e1.getSize().scalar(-0.5f)), e1lastYVec.add(e1.getSize().scalar(0.5f)));
+
+		// Simulate CollisionFrame with last X position
+		Vec e1lastXVec = new Vec(e1lastPos.getX(), e1.getPos().getY());
+		Frame e1lastXFrame = new Frame(e1lastXVec.add(e1.getSize().scalar(-0.5f)), e1lastXVec.add(e1.getSize().scalar(0.5f)));
+
+		// Simulate CollisionFrame with last Y position
+		Vec e2lastYVec = new Vec(e2.getPos().getX(), e2lastPos.getY());
+		Frame e2lastYFrame = new Frame(e2lastYVec.add(e2.getSize().scalar(-0.5f)), e2lastYVec.add(e2.getSize().scalar(0.5f)));
+
+		// Simulate CollisionFrame with last X position
+		Vec e2lastXVec = new Vec(e2lastPos.getX(), e2.getPos().getY());
+		Frame e2lastXFrame = new Frame(e2lastXVec.add(e2.getSize().scalar(-0.5f)), e2lastXVec.add(e2.getSize().scalar(0.5f)));
+
+		this.simulateCollision(e1lastXFrame, e2lastXFrame, e1, e2, e1lastPos, e2lastPos, e1lastYFrame, e2lastYFrame);
+	}
+
+	private final void simulateCollision(Frame e1lastXFrame, Frame e2lastXFrame, GameElement e1, GameElement e2, Vec e1lastPos, Vec e2lastPos,
+			Frame e1lastYFrame, Frame e2lastYFrame) {
+		// If they still collide with the old x positions:
+		// it must be because of the y position
+		if (e1lastXFrame.collidesWith(e2lastXFrame)) {
+			// If relative movement is in positive y direction (down)
+			float relMovement = (e2.getPos().getY() - e2lastPos.getY()) - (e1.getPos().getY() - e1lastPos.getY());
+			if (relMovement > 0) {
+				e1.reactToCollision(e2, Direction.UP);
+			} else
+			// If relative movement is in negative y direction (up)
+			if (relMovement < 0) {
+				e1.reactToCollision(e2, Direction.DOWN);
+			} else {
+				return;
+			}
+			// check if he is still colliding even with last x position
+			this.checkCollision(e1, e2, new Vec(e1lastPos.getX(), e1.getPos().getY()), new Vec(e2lastPos.getX(), e2.getPos().getY()));
+		} else
+		// If they still collide with the old y positions:
+		// it must be because of the x position
+		if (e1lastYFrame.collidesWith(e2lastYFrame)) {
+			// If he moved in positive x direction (right)
+			float relMovement = (e2.getPos().getX() - e2lastPos.getX()) - (e1.getPos().getX() - e1lastPos.getX());
+			if (relMovement > 0) {
+				e1.reactToCollision(e2, Direction.LEFT);
+			} else
+			// If he moved in negative x direction (left)
+			if (relMovement < 0) {
+				e1.reactToCollision(e2, Direction.RIGHT);
+			} else {
+				return;
+			}
+			// check if he is still colliding even with last x position
+			this.checkCollision(e1, e2, new Vec(e1.getPos().getX(), e1lastPos.getY()), new Vec(e2.getPos().getX(), e2lastPos.getY()));
+		}
+
+	}
+
 }
