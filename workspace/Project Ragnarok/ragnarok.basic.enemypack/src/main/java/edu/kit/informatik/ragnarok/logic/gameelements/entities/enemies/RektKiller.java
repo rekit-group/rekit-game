@@ -27,7 +27,7 @@ import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
  * @version 1.0
  */
 @LoadMe
-public class RektKiller extends Enemy {
+public final class RektKiller extends Enemy {
 
 	/**
 	 * Number whose first 4 bits are used as booleans for the spike at each

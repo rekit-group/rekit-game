@@ -20,7 +20,7 @@ import edu.kit.informatik.ragnarok.visitor.annotations.VisitInfo;
 
 @LoadMe
 @VisitInfo(res = "conf/stacker", visit = true)
-public class Stacker extends Enemy implements Visitable {
+public final class Stacker extends Enemy implements Visitable {
 
 	@NoVisit
 	private List<StackerElement> elements;

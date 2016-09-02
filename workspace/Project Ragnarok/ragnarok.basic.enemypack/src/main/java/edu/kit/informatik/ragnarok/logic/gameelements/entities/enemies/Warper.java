@@ -25,9 +25,9 @@ import edu.kit.informatik.ragnarok.visitor.parser.TwoLevelParser;
  *
  */
 @LoadMe
-@VisitInfo(res = "conf/basic_enemypack", visit = true)
+@VisitInfo(res = "conf/warper", visit = true)
 @AdditionalParsers(parsers = { TwoLevelParser.class }, types = { ParticleSpawner.class })
-public class Warper extends Enemy implements Visitable {
+public final class Warper extends Enemy implements Visitable {
 
 	private static float WARPER_WARP_DELTA;
 

@@ -16,7 +16,7 @@ import edu.kit.informatik.ragnarok.primitives.operable.OpProgress;
  * These bubbles are part of {@link Slurp Slurps}
  *
  */
-public class SlurpDurp extends Entity {
+public final class SlurpDurp extends Entity {
 	/**
 	 * The position of the parent {@link Slurp}
 	 */

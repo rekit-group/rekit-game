@@ -14,6 +14,9 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Frame;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 import edu.kit.informatik.ragnarok.util.ThreadUtils;
+import edu.kit.informatik.ragnarok.visitor.Visitable;
+import edu.kit.informatik.ragnarok.visitor.annotations.NoVisit;
+import edu.kit.informatik.ragnarok.visitor.annotations.VisitInfo;
 
 /**
  *
@@ -23,15 +26,17 @@ import edu.kit.informatik.ragnarok.util.ThreadUtils;
  *
  */
 @LoadMe
-public final class RektSmasher extends Boss {
+@VisitInfo(res = "conf/rektsmasher", visit = true)
+public final class RektSmasher extends Boss implements Visitable {
 	/**
 	 * The internal {@link RektKiller}
 	 */
+	@NoVisit
 	private RektKiller innerRektKiller;
 	/**
 	 * The current movement speed
 	 */
-	private float speed = 0.5f;
+	private static float BASE_SPEED;
 
 	/**
 	 * Prototype Constructor
@@ -59,7 +64,6 @@ public final class RektSmasher extends Boss {
 	@Override
 	public void addDamage(int damage) {
 		super.addDamage(damage);
-		this.speed = 0.5f + (3 - this.getLives()) * 0.25f;
 	}
 
 	@Override
@@ -157,8 +161,8 @@ public final class RektSmasher extends Boss {
 		if (this.getLives() <= 0) {
 			this.isHarmless = true;
 		}
-
-		this.setVel(this.innerRektKiller.getCurrentDirection().getVector().scalar(this.speed * GameConf.PLAYER_WALK_MAX_SPEED));
+		float speed = RektSmasher.BASE_SPEED + (3 - this.getLives()) * 0.25f;
+		this.setVel(this.innerRektKiller.getCurrentDirection().getVector().scalar(speed * GameConf.PLAYER_WALK_MAX_SPEED));
 		super.logicLoop(deltaTime);
 	}
 
@@ -199,6 +203,7 @@ public final class RektSmasher extends Boss {
 		RektSmasher clone = new RektSmasher(startPos);
 		clone.setTarget(this.target);
 		clone.setBossStructure(this.bossStructure);
+
 		return clone;
 	}
 

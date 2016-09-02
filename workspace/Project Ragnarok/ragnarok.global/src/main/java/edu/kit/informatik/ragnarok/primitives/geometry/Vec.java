@@ -67,6 +67,20 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	}
 
 	/**
+	 * Constructor that takes the initial coordinates an saves them
+	 *
+	 * @param x
+	 *            the initial x-component of the vector
+	 * @param y
+	 *            the initial y-component of the vector
+	 */
+	public Vec(int x, int y) {
+		this.x = x;
+		this.y = y;
+		this.z = 1;
+	}
+
+	/**
 	 * Constructor that takes one initial coordinate an saves them as x and y
 	 *
 	 * @param x
@@ -218,9 +232,9 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	public Vec sin() {
 		return new Vec((float) Math.sin(this.getX()), (float) Math.sin(this.getY()));
 	}
-	
+
 	public float getAngleTo(Vec other) {
-		return (float)Math.atan2(other.x - this.x, other.y - this.y);
+		return (float) Math.atan2(other.x - this.x, other.y - this.y);
 	}
 
 	public Vec rotate(double angle, Vec relative) {

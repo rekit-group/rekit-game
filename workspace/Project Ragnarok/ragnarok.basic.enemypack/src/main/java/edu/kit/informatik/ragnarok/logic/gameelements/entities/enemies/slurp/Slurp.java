@@ -26,8 +26,8 @@ import edu.kit.informatik.ragnarok.visitor.annotations.VisitInfo;
  *
  */
 @LoadMe
-@VisitInfo(res = "conf/basic_enemypack", visit = true)
-public class Slurp extends Enemy implements Visitable {
+@VisitInfo(res = "conf/slurp", visit = true)
+public final class Slurp extends Enemy implements Visitable {
 	/**
 	 * The Slurp's SlurpDurps
 	 */
