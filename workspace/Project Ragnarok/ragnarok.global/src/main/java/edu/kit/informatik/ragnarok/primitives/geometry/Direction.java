@@ -13,19 +13,19 @@ public enum Direction {
 	 * Represents the Direction left with the Vector (-1|0)
 	 */
 
-	LEFT(Vec.create(-1, 0), 1.5 * Math.PI),
+	LEFT(new Vec(-1, 0), 1.5 * Math.PI),
 	/**
 	 * Represents the Direction right with the Vector (1|0)
 	 */
-	RIGHT(Vec.create(1, 0), 0.5 * Math.PI),
+	RIGHT(new Vec(1, 0), 0.5 * Math.PI),
 	/**
 	 * Represents the Direction up with the Vector (0|-1)
 	 */
-	UP(Vec.create(0, -1), 0),
+	UP(new Vec(0, -1), 0),
 	/**
 	 * Represents the Direction down with the Vector (0|1)
 	 */
-	DOWN(Vec.create(0, 1), 1 * Math.PI);
+	DOWN(new Vec(0, 1), 1 * Math.PI);
 	/**
 	 * The representing vector
 	 */

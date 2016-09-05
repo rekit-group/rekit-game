@@ -10,18 +10,6 @@ import edu.kit.informatik.ragnarok.primitives.operable.Operable;
  */
 
 public final class Vec implements Cloneable, Operable<Vec> {
-	/**
-	 * Create a new Vector
-	 *
-	 * @param x
-	 *            posX
-	 * @param y
-	 *            posY
-	 * @return the vector
-	 */
-	public static Vec create(float x, float y) {
-		return new Vec(x, y);
-	}
 
 	/**
 	 * The x-component of the vector
