@@ -88,9 +88,9 @@ abstract class Scene implements CameraTarget, IScene {
 	}
 
 	@Override
-	public void logicLoop(float timeDelta) {
+	public void logicLoop(long lastTime) {
 
-		this.logicLoopPre(timeDelta);
+		this.logicLoopPre((System.currentTimeMillis() - lastTime) / 1000.f);
 
 		// add GameElements that have been added
 		this.addGameElements();
@@ -101,7 +101,7 @@ abstract class Scene implements CameraTarget, IScene {
 				Iterator<GameElement> it = this.getGameElementIterator();
 
 				while (it.hasNext()) {
-					this.logicLoopGameElement(timeDelta, it);
+					this.logicLoopGameElement((System.currentTimeMillis() - lastTime) / 1000.f, it);
 				}
 			}
 		}
@@ -116,7 +116,7 @@ abstract class Scene implements CameraTarget, IScene {
 			Iterator<GuiElement> it = this.getGuiElementIterator();
 			while (it.hasNext()) {
 				GuiElement e = it.next();
-				e.logicLoop(timeDelta);
+				e.logicLoop((System.currentTimeMillis() - lastTime) / 1000.f);
 			}
 		}
 

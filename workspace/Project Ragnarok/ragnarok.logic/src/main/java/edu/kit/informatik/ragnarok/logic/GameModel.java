@@ -59,18 +59,14 @@ public class GameModel implements CameraTarget, Model {
 	 *
 	 */
 	public void logicLoop() {
-
-		// calculate time difference since last physics loop
-		long timeNow = System.currentTimeMillis();
 		if (this.lastTime == 0) {
 			this.lastTime = System.currentTimeMillis();
 		}
-		long timeDelta = timeNow - this.lastTime;
 
-		this.curScene.logicLoop(timeDelta / 1000.f);
+		this.curScene.logicLoop(this.lastTime);
 
 		// update time
-		this.lastTime = timeNow;
+		this.lastTime = System.currentTimeMillis();
 
 	}
 
@@ -141,7 +137,7 @@ public class GameModel implements CameraTarget, Model {
 	}
 
 	public long getTime() {
-		return this.lastTime;
+		return this.lastTime / 1000;
 	}
 
 	/**

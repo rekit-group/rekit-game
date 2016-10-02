@@ -63,7 +63,14 @@ public interface IScene {
 
 	Model getModel();
 
-	void logicLoop(float f);
+	/**
+	 * Invoke logic
+	 *
+	 * @param lastTime
+	 *            the last time in millis
+	 */
+	// TODO Time
+	void logicLoop(long lastTime);
 
 	/**
 	 * Initialize the scene. e.g. build Level/GUI so Scene is ready to be drawn
