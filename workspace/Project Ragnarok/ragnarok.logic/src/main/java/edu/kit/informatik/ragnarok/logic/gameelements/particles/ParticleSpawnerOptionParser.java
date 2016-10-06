@@ -6,11 +6,15 @@ import edu.kit.informatik.ragnarok.visitor.Visitable;
 import edu.kit.informatik.ragnarok.visitor.parser.Parser;
 
 /**
+ * This class realize a parser for a {@link ParticleSpawnerOption}.
  *
  * @author Dominik Fuchß
  *
  */
 public final class ParticleSpawnerOptionParser implements Parser {
+	/**
+	 * The Float-Regex which will be used.
+	 */
 	private static final String FLOAT_REGEX = "(-|\\+)?[0-9]+\\.[0-9]+(f|F)";
 
 	@Override

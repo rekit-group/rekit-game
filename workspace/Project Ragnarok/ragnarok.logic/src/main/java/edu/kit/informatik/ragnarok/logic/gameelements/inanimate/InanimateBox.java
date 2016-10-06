@@ -5,7 +5,22 @@ import edu.kit.informatik.ragnarok.core.Field;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
 
+/**
+ *
+ * This is the default implementation of an inanimate in the game (no ground).
+ *
+ */
 public class InanimateBox extends Inanimate {
+	/**
+	 * Create an InanimateBox.
+	 *
+	 * @param pos
+	 *            the position
+	 * @param size
+	 *            the size
+	 * @param color
+	 *            the color
+	 */
 	protected InanimateBox(Vec pos, Vec size, RGBAColor color) {
 		super(pos, size, color);
 	}
@@ -29,6 +44,13 @@ public class InanimateBox extends Inanimate {
 		f.drawRectangle(this.getPos(), this.getSize().scalar(0.5f), darkColor);
 	}
 
+	/**
+	 * Create a new InanimateBox.
+	 *
+	 * @param pos
+	 *            the position
+	 * @return the new Inanimate
+	 */
 	public static Inanimate staticCreate(Vec pos) {
 		int randCol = (int) (GameConf.PRNG.nextDouble() * 60 + 50);
 		return new InanimateBox(pos, new Vec(1, 1), new RGBAColor(randCol, randCol, randCol, 255));

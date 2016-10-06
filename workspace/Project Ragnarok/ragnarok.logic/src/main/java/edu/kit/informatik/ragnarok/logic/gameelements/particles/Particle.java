@@ -24,72 +24,75 @@ import edu.kit.informatik.ragnarok.primitives.time.Timer;
  */
 public class Particle extends GameElement implements Cloneable {
 	/**
-	 * The initial polygon
+	 * The initial polygon.
 	 */
 	private Polygon initialPolygon;
 	/**
-	 * The current polygon
+	 * The current polygon.
 	 */
 	private Polygon polygon;
 	/**
-	 * Red Channel
+	 * Red Channel.
 	 */
 	private Progress colorR;
 	/**
-	 * Green Channel
+	 * Green Channel.
 	 */
 	private Progress colorG;
 	/**
-	 * Blue Channel
+	 * Blue Channel.
 	 */
 	private Progress colorB;
 	/**
-	 * Alpha Channel
+	 * Alpha Channel.
 	 */
 	private Progress colorA;
 	/**
-	 * The speed of the particle
+	 * The speed of the particle.
 	 */
 	private Progress speed;
 	/**
-	 * The angle of the particle
+	 * The angle of the particle.
 	 */
 	private Progress angle;
 	/**
-	 * The rotation of the particle
+	 * The rotation of the particle.
 	 */
 	private Progress rotation;
 	/**
-	 * The scale of the particle
+	 * The scale of the particle.
 	 */
 	private Progress scale;
 	/**
-	 * The lifetime timer of the particle
+	 * The lifetime timer of the particle.
 	 */
 	private Timer timer;
 	/**
-	 * The current color
+	 * The current color.
 	 */
 	private RGBAColor currentCol = new RGBAColor(0, 0, 0, 0);
 	/**
-	 * The current movement vector
+	 * The current movement vector.
 	 */
 	private Vec movementVec = null;
 
+	/**
+	 * Create a particle.
+	 */
 	public Particle() {
 		super(new Vec(), new Vec(), new Vec(1), Team.NEUTRAL);
 	}
 
 	/**
-	 * saves all ProgressDependencies required for the Particle behavior
+	 * Saves all ProgressDependencies required for the Particle behavior.
 	 *
 	 * @param polygon
 	 *            the shape that the particle should be drawn with
 	 * @param pos
 	 *            the initial position of the particle
-	 * @param time
+	 * @param lifeTime
 	 *            the time in seconds for how the particle will be rendered
-	 * @param size
+	 * @param scale
 	 *            the <i>ProgressDendency</i> for the polygons size
 	 * @param speed
 	 *            the <i>ProgressDendency</i> for the polygons movement speed
@@ -106,6 +109,8 @@ public class Particle extends GameElement implements Cloneable {
 	 * @param colorA
 	 *            the <i>ProgressDendency</i> for the polygons alpha color
 	 *            channel
+	 * @param rotation
+	 *            the <i>ProgressDendency</i> for the polygons rotation
 	 */
 	public void setProperties(Polygon polygon, Vec pos, float lifeTime, Progress scale, Progress speed, Progress rotation, Progress angle,
 			Progress colorR, Progress colorG, Progress colorB, Progress colorA) {
@@ -198,7 +203,7 @@ public class Particle extends GameElement implements Cloneable {
 	}
 
 	/**
-	 * Caps a color to make sure it is never smaller than 0 or greater than 255
+	 * Caps a color to make sure it is never smaller than 0 or greater than 255.
 	 *
 	 * @param col
 	 *            the color value to cap

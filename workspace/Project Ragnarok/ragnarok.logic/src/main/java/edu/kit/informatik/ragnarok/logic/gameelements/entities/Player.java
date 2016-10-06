@@ -13,7 +13,7 @@ import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
 
 /**
  * The (maybe) most important {@link Entity} of the Game:<br>
- * The Player (most likely you)
+ * The Player (most likely you).
  *
  * @author Dominik Fuchß
  * @author Angelo Aracri
@@ -21,24 +21,24 @@ import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
  */
 public final class Player extends Entity implements CameraTarget {
 	/**
-	 * The start position
+	 * The start position.
 	 */
 	private Vec startPos;
 	/**
-	 * The particle spawner for taking damage
+	 * The particle spawner for taking damage.
 	 */
 	private ParticleSpawner damageParticles;
 	/**
-	 * The current walk direction
+	 * The current walk direction.
 	 */
 	private Direction currentDirection;
 	/**
-	 * The player's camera offset
+	 * The player's camera offset.
 	 */
 	private float currentCameraOffset;
 
 	/**
-	 * Create a player by start position
+	 * Create a player by start position.
 	 *
 	 * @param startPos
 	 *            the start position
@@ -50,7 +50,7 @@ public final class Player extends Entity implements CameraTarget {
 	}
 
 	/**
-	 * Initialize the player
+	 * Initialize the player.
 	 */
 	public void init() {
 		this.setPos(this.startPos);
@@ -107,7 +107,7 @@ public final class Player extends Entity implements CameraTarget {
 	}
 
 	/**
-	 * Reset current camera offset
+	 * Reset current camera offset.
 	 */
 	public final void resetCameraOffset() {
 		this.currentCameraOffset = 0;

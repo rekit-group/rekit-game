@@ -25,27 +25,27 @@ import edu.kit.informatik.ragnarok.primitives.time.Timer;
 public abstract class Entity extends GameElement {
 
 	/**
-	 * The amount of lifes the Entity has. Upon reaching 0 lifes, he dies
+	 * The amount of lifes the Entity has. Upon reaching 0 lifes, he dies.
 	 */
 	protected int lives = 1;
 
 	/**
-	 * The amount of points the Entity has scored
+	 * The amount of points the Entity has scored.
 	 */
 	protected int points = 0;
 
 	/**
-	 * The current State the Entity is in and determines the jump behavior
+	 * The current State the Entity is in and determines the jump behavior.
 	 */
 	protected EntityState entityState;
 	/**
-	 * This {@link Timer} defines invincibility of an {@link Entity}
+	 * This {@link Timer} defines invincibility of an {@link Entity}.
 	 * ({@code null} --> not invincible)
 	 */
 	protected Timer invincibility = null;
 
 	/**
-	 * Minimal Constructor by {@link Team} used for prototype constructors The
+	 * Minimal Constructor by {@link Team} used for prototype constructors. The
 	 * element will not be initialized
 	 *
 	 * @param team
@@ -60,7 +60,7 @@ public abstract class Entity extends GameElement {
 	}
 
 	/**
-	 * Constructor that initializes attributes and takes a start position
+	 * Constructor that initializes attributes and takes a start position.
 	 *
 	 * @param startPos
 	 *            the position this entity shall be in
@@ -78,7 +78,7 @@ public abstract class Entity extends GameElement {
 	}
 
 	/**
-	 * Set the Entities <i>EntitiyState</i> that determines its jump behavior
+	 * Set the Entities <i>EntitiyState</i> that determines its jump behavior.
 	 *
 	 * @param value
 	 *            the new EntityState
@@ -114,7 +114,7 @@ public abstract class Entity extends GameElement {
 	}
 
 	/**
-	 * Set current lives
+	 * Set current lives.
 	 *
 	 * @param lives
 	 *            the lives
@@ -140,7 +140,7 @@ public abstract class Entity extends GameElement {
 
 	/**
 	 * This method will calculate the next position of the Entity depending on
-	 * the velocity
+	 * the velocity.
 	 */
 	@Override
 	public void logicLoop(float deltaTime) {
@@ -181,7 +181,7 @@ public abstract class Entity extends GameElement {
 
 	/**
 	 * This implementation will ensure that no entity is able to fall through
-	 * the ground or into another Object
+	 * the ground or into another Object.
 	 */
 	@Override
 	public void collidedWith(Frame collision, Direction dir) {
@@ -216,7 +216,7 @@ public abstract class Entity extends GameElement {
 	}
 
 	/**
-	 * By default this will return {@code 1}
+	 * By default this will return {@code 1}.
 	 */
 	@Override
 	public int getOrderZ() {

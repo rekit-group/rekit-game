@@ -11,8 +11,8 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
  */
 public class DefaultState extends EntityState {
 	/**
-	 * Create State
-	 * 
+	 * Create State.
+	 *
 	 * @param entitiy
 	 *            the entity
 	 */

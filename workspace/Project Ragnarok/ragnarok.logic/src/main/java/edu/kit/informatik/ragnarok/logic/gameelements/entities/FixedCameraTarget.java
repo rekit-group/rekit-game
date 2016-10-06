@@ -9,12 +9,12 @@ import edu.kit.informatik.ragnarok.core.CameraTarget;
  */
 public final class FixedCameraTarget implements CameraTarget {
 	/**
-	 * The camera offset
+	 * The camera offset.
 	 */
 	private float cameraOffset;
 
 	/**
-	 * Create by fixed camera offset
+	 * Create by fixed camera offset.
 	 *
 	 * @param cameraOffset
 	 *            the camera offset
@@ -24,7 +24,7 @@ public final class FixedCameraTarget implements CameraTarget {
 	}
 
 	/**
-	 * Get the camera offset
+	 * Get the camera offset.
 	 */
 	@Override
 	public float getCameraOffset() {

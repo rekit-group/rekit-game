@@ -5,8 +5,18 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
 import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
 
+/**
+ *
+ * This is the default implementation of an inanimate door in the game.
+ *
+ */
 public class InanimateDoor extends InanimateBox {
-
+	/**
+	 * Create a new door.
+	 * 
+	 * @param pos
+	 *            the position
+	 */
 	public InanimateDoor(Vec pos) {
 		super(pos, new Vec(1, 7), new RGBAColor(130, 130, 130, 255));
 	}

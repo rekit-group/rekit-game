@@ -11,14 +11,14 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
  */
 public abstract class EntityState {
 	/**
-	 * The entity
+	 * The entity.
 	 */
 	protected final Entity entity;
 
 	/**
-	 * Create State
+	 * Create State.
 	 *
-	 * @param entitiy
+	 * @param entity
 	 *            the entity
 	 */
 	public EntityState(Entity entity) {
@@ -26,7 +26,7 @@ public abstract class EntityState {
 	}
 
 	/**
-	 * Indicates whether the entity can jump
+	 * Indicates whether the entity can jump.
 	 *
 	 * @return {@code true} if jumping is allowed, {@code false} otherwise
 	 */
@@ -35,7 +35,7 @@ public abstract class EntityState {
 	}
 
 	/**
-	 * Logic loop of state
+	 * Logic loop of state.
 	 *
 	 * @param deltaTime
 	 *            the delta time
@@ -46,7 +46,7 @@ public abstract class EntityState {
 	}
 
 	/**
-	 * This method will be invoked when this entity collides with the floor
+	 * This method will be invoked when this entity collides with the floor.
 	 */
 	public void floorCollision() {
 		// Do nothing

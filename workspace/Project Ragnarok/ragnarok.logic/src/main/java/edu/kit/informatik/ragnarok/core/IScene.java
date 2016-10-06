@@ -6,13 +6,34 @@ import java.util.Map;
 import edu.kit.informatik.ragnarok.logic.Model;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gui.menu.MenuItem;
+import edu.kit.informatik.ragnarok.logic.scene.Scenes;
 
+/**
+ * This is the public interface of all Scenes.
+ *
+ * @author Dominik Fuchß
+ *
+ */
 public interface IScene {
-
+	/**
+	 * Get the current player of {@code null} if none set.
+	 *
+	 * @return the current player of {@code null}
+	 */
 	Entity getPlayer();
 
+	/**
+	 * Get the current score of the player.
+	 *
+	 * @return the current score or 0 if none available
+	 */
 	int getScore();
 
+	/**
+	 * Get the current high score for the current level.
+	 *
+	 * @return the current high score or 0 if none available
+	 */
 	int getHighScore();
 
 	/**
@@ -45,31 +66,80 @@ public interface IScene {
 	 */
 	void addGuiElement(GuiElement e);
 
+	/**
+	 * Removes a GuiElement to the GameModel.
+	 *
+	 * @param e
+	 *            the GuiElement to remove
+	 */
 	void removeGuiElement(GuiElement e);
 
+	/**
+	 * Set the camera target.
+	 *
+	 * @param cameraTarget
+	 *            the camera target
+	 */
 	void setCameraTarget(CameraTarget cameraTarget);
 
+	/**
+	 * Get the current camera offset.
+	 *
+	 * @return the current camera offset
+	 */
 	float getCameraOffset();
 
+	/**
+	 * The Object to synchronize with the scene (threading).
+	 *
+	 * @return the sync-object
+	 */
 	Object synchronize();
 
+	/**
+	 * Get a game-element iterator.
+	 *
+	 * @return a game-element iterator
+	 */
 	Iterator<GameElement> getGameElementIterator();
 
+	/**
+	 * Get a gui-element iterator.
+	 *
+	 * @return a gui-element iterator
+	 */
 	Iterator<GuiElement> getGuiElementIterator();
 
+	/**
+	 * Get the current time in millis.
+	 *
+	 * @return the current time in millis
+	 */
+	// TODO Check millis
 	long getTime();
 
+	/**
+	 * End a Game/Scene.
+	 *
+	 * @param won
+	 *            indicates whether successfull or died
+	 */
 	void end(boolean won);
 
+	/**
+	 * Get the model of the MVC.
+	 *
+	 * @return the model
+	 */
 	Model getModel();
 
 	/**
-	 * Invoke logic
+	 * Invoke logic.
 	 *
 	 * @param lastTime
 	 *            the last time in millis
 	 */
-	// TODO Time
+	// TODO Check whether millis
 	void logicLoop(long lastTime);
 
 	/**
@@ -90,19 +160,45 @@ public interface IScene {
 	default void stop() {
 	}
 
+	/**
+	 * Restart the scene.
+	 */
 	default void restart() {
 		this.init();
 		this.start();
 	}
 
+	/**
+	 * Get a map of duration-time of elements.
+	 *
+	 * @return the duration-time of elements by class
+	 */
 	Map<Class<?>, Long> getGameElementDurations();
 
+	/**
+	 * Get the amount of elements in the scene.
+	 *
+	 * @return the amount of elements
+	 */
 	int getGameElementCount();
 
+	/**
+	 * Get the associated Root-MenuItem.
+	 *
+	 * @return the root-menuItem or {@code null} if no {@link Scenes#MENU}
+	 */
 	MenuItem getMenu();
 
+	/**
+	 * Toggle pause.
+	 */
 	void togglePause();
 
+	/**
+	 * Get an iterator of ordered GameElements (Z-Idx).
+	 *
+	 * @return the ordered GameElement-iterator
+	 */
 	Iterator<GameElement> getOrderedGameElementIterator();
 
 }

@@ -9,17 +9,48 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Frame;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
 
+/**
+ *
+ * This is the default implementation of an inanimate in the game.
+ *
+ */
 public class Inanimate extends GameElement {
-
+	/**
+	 * The prototype.
+	 */
 	private static Inanimate instance;
-
+	/**
+	 * The color.
+	 */
 	protected RGBAColor color;
 
+	/**
+	 * Create an inanimate.
+	 *
+	 * @param pos
+	 *            the position
+	 * @param size
+	 *            the size
+	 * @param color
+	 *            the color
+	 * @param team
+	 *            the team
+	 */
 	protected Inanimate(Vec pos, Vec size, RGBAColor color, Team team) {
 		super(pos, new Vec(), size, team);
 		this.color = color;
 	}
 
+	/**
+	 * Create an inanimate.
+	 *
+	 * @param pos
+	 *            the position
+	 * @param size
+	 *            the size
+	 * @param color
+	 *            the color
+	 */
 	protected Inanimate(Vec pos, Vec size, RGBAColor color) {
 		this(pos, size, color, Team.INANIMATE);
 	}
@@ -58,6 +89,11 @@ public class Inanimate extends GameElement {
 		}
 	}
 
+	/**
+	 * Get the inanimate-prototype.
+	 *
+	 * @return the prototype
+	 */
 	public synchronized static Inanimate getPrototype() {
 		if (Inanimate.instance == null) {
 			Inanimate.instance = new Inanimate(new Vec(), new Vec(1, 1), new RGBAColor(0, 0, 0, 0));

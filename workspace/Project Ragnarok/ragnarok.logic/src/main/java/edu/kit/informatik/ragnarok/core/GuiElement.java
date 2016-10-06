@@ -12,24 +12,24 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
  */
 public abstract class GuiElement implements Comparable<GuiElement> {
 	/**
-	 * Indicates whether the Element is visible
+	 * Indicates whether the Element is visible.
 	 */
 	protected boolean visible = true;
 	/**
-	 * The current position
+	 * The current position.
 	 */
 	protected Vec pos;
 	/**
-	 * The current size
+	 * The current size.
 	 */
 	protected Vec size;
 	/**
-	 * The corresponding scene
+	 * The corresponding scene.
 	 */
 	protected final IScene scene;
 
 	/**
-	 * Create by scene
+	 * Create by scene.
 	 *
 	 * @param scene
 	 *            the scene
@@ -41,7 +41,7 @@ public abstract class GuiElement implements Comparable<GuiElement> {
 	}
 
 	/**
-	 * Create by scene and size
+	 * Create by scene and size.
 	 *
 	 * @param scene
 	 *            the scene
@@ -54,7 +54,7 @@ public abstract class GuiElement implements Comparable<GuiElement> {
 	}
 
 	/**
-	 * Set the position
+	 * Set the position.
 	 *
 	 * @param value
 	 *            the new position
@@ -64,7 +64,7 @@ public abstract class GuiElement implements Comparable<GuiElement> {
 	}
 
 	/**
-	 * Get the current position
+	 * Get the current position.
 	 *
 	 * @return the current position
 	 */
@@ -73,7 +73,7 @@ public abstract class GuiElement implements Comparable<GuiElement> {
 	}
 
 	/**
-	 * Get the current size
+	 * Get the current size.
 	 *
 	 * @return the current size
 	 */
@@ -82,7 +82,7 @@ public abstract class GuiElement implements Comparable<GuiElement> {
 	}
 
 	/**
-	 * Get the corresponding scene
+	 * Get the corresponding scene.
 	 *
 	 * @return the scene
 	 */

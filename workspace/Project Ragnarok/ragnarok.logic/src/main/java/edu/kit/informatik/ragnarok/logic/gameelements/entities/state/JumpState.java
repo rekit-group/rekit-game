@@ -13,14 +13,14 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
  */
 public class JumpState extends EntityState {
 	/**
-	 * The time left for the jump
+	 * The time left for the jump.
 	 */
 	private float timeLeft = 0;
 
 	/**
-	 * Create State
-	 * 
-	 * @param entitiy
+	 * Create State.
+	 *
+	 * @param entity
 	 *            the entity
 	 */
 	public JumpState(Entity entity) {

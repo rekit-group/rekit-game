@@ -9,9 +9,9 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
  */
 public class FallState extends EntityState {
 	/**
-	 * Create State
+	 * Create State.
 	 *
-	 * @param entitiy
+	 * @param entity
 	 *            the entity
 	 */
 	public FallState(Entity entity) {

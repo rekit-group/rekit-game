@@ -9,14 +9,27 @@ import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawnerO
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
 
-public class EndTrigger extends InanimateTrigger {
-
+/**
+ *
+ * This class represents an EndPortal.
+ *
+ */
+public final class EndTrigger extends InanimateTrigger {
+	/**
+	 * The prototype-instance.
+	 */
 	private static EndTrigger instance;
-
+	/**
+	 * The number of portal-rings.
+	 */
 	private static final int PORTAL_NUM = 20;
-
+	/**
+	 * The inner portals.
+	 */
 	private Portal[] innerPortals;
-
+	/**
+	 * The particle spawner.
+	 */
 	private static ParticleSpawner portalParticles = null;
 
 	static {
@@ -30,12 +43,22 @@ public class EndTrigger extends InanimateTrigger {
 		EndTrigger.portalParticles.size = new ParticleSpawnerOption(1, -0.8f);
 	}
 
-	public EndTrigger(Vec pos, Vec size) {
+	/**
+	 * Create an EndTrigger.
+	 *
+	 * @param pos
+	 *            the position
+	 * @param size
+	 *            the size
+	 */
+	private EndTrigger(Vec pos, Vec size) {
 		super(pos, size);
-
 		this.preparePortals();
 	}
 
+	/**
+	 * Prepare the portalrings.
+	 */
 	private void preparePortals() {
 		this.innerPortals = new Portal[EndTrigger.PORTAL_NUM];
 
@@ -68,15 +91,52 @@ public class EndTrigger extends InanimateTrigger {
 		}
 	}
 
+	/**
+	 * This inner class represents the different portal-rings.
+	 *
+	 */
 	private class Portal extends GameElement {
+		/**
+		 * The amplitude.
+		 */
 		private Vec amplitude;
+		/**
+		 * The frequency.
+		 */
 		private Vec frequency;
+		/**
+		 * The phase.
+		 */
 		private Vec phase;
+		/**
+		 * The x-position.
+		 */
 		private float x;
+		/**
+		 * The color.
+		 */
 		private RGBAColor color;
-
+		/**
+		 * The current size of the portal-ring.
+		 */
 		private Vec currentSize;
 
+		/**
+		 * Create a portal-ring.
+		 *
+		 * @param pos
+		 *            the position
+		 * @param size
+		 *            the size
+		 * @param amplitude
+		 *            the amplitude
+		 * @param frequency
+		 *            the frequency
+		 * @param phase
+		 *            the phase
+		 * @param color
+		 *            the color
+		 */
 		public Portal(Vec pos, Vec size, Vec amplitude, Vec frequency, Vec phase, RGBAColor color) {
 			super(pos, new Vec(), size, Team.TRIGGER);
 			this.amplitude = amplitude;
@@ -132,6 +192,11 @@ public class EndTrigger extends InanimateTrigger {
 		return new EndTrigger(startPos, this.getSize());
 	}
 
+	/**
+	 * Get the prototype of the EndTrigger.
+	 *
+	 * @return the prototype
+	 */
 	public synchronized static Inanimate getPrototype() {
 		if (EndTrigger.instance == null) {
 			EndTrigger.instance = new EndTrigger(new Vec(), new Vec(1.5f, GameConf.GRID_H));

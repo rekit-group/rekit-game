@@ -4,7 +4,7 @@ import edu.kit.informatik.ragnarok.core.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 
 /**
- * This state is used for all prototypes of {@link Entity}<br>
+ * This state is used for all prototypes of {@link Entity}.<br>
  * This state will print to the syserr that the wrong constructor
  * {@link Entity#Entity(Team team)} was used to create this element
  *
@@ -13,7 +13,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
  */
 public class NotInitializedState extends EntityState {
 	/**
-	 * Create the State
+	 * Create the State.
 	 *
 	 * @param entity
 	 *            the entity
@@ -23,7 +23,7 @@ public class NotInitializedState extends EntityState {
 	}
 
 	/**
-	 * Indicates whether message was written
+	 * Indicates whether message was written.
 	 */
 	private boolean done = false;
 

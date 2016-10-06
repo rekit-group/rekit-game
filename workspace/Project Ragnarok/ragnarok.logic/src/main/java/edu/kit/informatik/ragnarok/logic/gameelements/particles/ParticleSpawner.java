@@ -10,78 +10,87 @@ import edu.kit.informatik.ragnarok.visitor.annotations.NoVisit;
 
 /**
  *
- * This class will be used to manage the spawning of particles<br>
+ * This class will be used to manage the spawning of particles.<br>
  * <b>You have to set the parameters of the particles by the public Fields of
  * your ParticleSpawner Object</b>
  *
  */
 @AdditionalParsers(parsers = { ParticleSpawnerOptionParser.class }, types = { ParticleSpawnerOption.class })
 public class ParticleSpawner implements Visitable {
+	/**
+	 * The particle prototype.
+	 */
 	@NoVisit
 	private Particle particlePrototype = new Particle();
 
 	/**
-	 * The current polygon
+	 * The current polygon.
 	 */
 	public Polygon polygon;
 	/**
-	 * Red Channel
+	 * Red Channel.
 	 */
 	public ParticleSpawnerOption colorR;
 	/**
-	 * Green Channel
+	 * Green Channel.
 	 */
 	public ParticleSpawnerOption colorG;
 	/**
-	 * Blue Channel
+	 * Blue Channel.
 	 */
 	public ParticleSpawnerOption colorB;
 	/**
-	 * Alpha Channel
+	 * Alpha Channel.
 	 */
 	public ParticleSpawnerOption colorA;
 	/**
-	 * The speed of the particle
+	 * The speed of the particle.
 	 */
 	public ParticleSpawnerOption speed;
 	/**
-	 * The angle of the particle
+	 * The angle of the particle.
 	 */
 	public ParticleSpawnerOption angle;
 
 	/**
-	 * The rotation of the particle
+	 * The rotation of the particle.
 	 */
 	public ParticleSpawnerOption rotation;
 
 	/**
-	 * The size of the particle
+	 * The size of the particle.
 	 */
 	public ParticleSpawnerOption size;
 	/**
-	 * The minimum amount of particles
+	 * The minimum amount of particles.
 	 */
 	public int amountMin;
 	/**
-	 * The maximum amount of particles
+	 * The maximum amount of particles.
 	 */
 	public int amountMax;
 	/**
-	 * The minimum lifetime
+	 * The minimum lifetime.
 	 */
 	public float timeMin;
 	/**
-	 * The maximum lifetime
+	 * The maximum lifetime.
 	 */
 	public float timeMax;
 
+	/**
+	 * Create a new ParticleSpawner by prototype.
+	 *
+	 * @param prototype
+	 *            the prototype
+	 */
 	public ParticleSpawner(Particle prototype) {
 		this();
 		this.particlePrototype = prototype;
 	}
 
 	/**
-	 * Create a new particle spawner with its default values
+	 * Create a new particle spawner with its default values.
 	 */
 	public ParticleSpawner() {
 
@@ -113,7 +122,7 @@ public class ParticleSpawner implements Visitable {
 	}
 
 	/**
-	 * Spawn particles in a {@link IScene} at a position
+	 * Spawn particles in a {@link IScene} at a position.
 	 *
 	 * @param scene
 	 *            the scene

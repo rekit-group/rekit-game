@@ -22,7 +22,7 @@ public class InanimateFloor extends Inanimate {
 
 	/**
 	 * The amount of layers that the {@link InanimateFloor} should be composed
-	 * of
+	 * of.
 	 */
 	private static int LAYERS = 5;
 
@@ -166,7 +166,7 @@ public class InanimateFloor extends Inanimate {
 		private RGBColor col;
 
 		/**
-		 * The size of the {@link GrassStraw}
+		 * The size of the {@link GrassStraw}.
 		 */
 		private Vec size;
 
@@ -244,9 +244,10 @@ public class InanimateFloor extends Inanimate {
 		return new InanimateFloor(pos, new Vec(1, 1));
 	}
 
-	@Override
-	protected int getOrderZ() {
-		return 10;
-	}
+	// TODO I think no 10 here.
+	// @Override
+	// protected int getOrderZ() {
+	// return 10;
+	// }
 
 }

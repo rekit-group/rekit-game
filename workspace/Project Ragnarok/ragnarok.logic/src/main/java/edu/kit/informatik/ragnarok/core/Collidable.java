@@ -20,7 +20,7 @@ public interface Collidable {
 	};
 
 	/**
-	 * Getter for the collected Points of the GameElement
+	 * Getter for the collected Points of the GameElement.
 	 *
 	 * @return the points of the GameElement
 	 */

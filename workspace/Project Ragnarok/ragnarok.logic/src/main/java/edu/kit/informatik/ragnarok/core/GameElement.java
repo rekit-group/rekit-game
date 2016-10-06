@@ -52,7 +52,7 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 
 	/**
 	 * The {@link GameElement GameElements} velocity that can be used to alter
-	 * its position in the <i>logicLoop</i>
+	 * its position in the <i>logicLoop</i>.
 	 */
 	private Vec vel;
 
@@ -87,7 +87,7 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 	protected Team team;
 
 	/**
-	 * The {@link} Scene the {@link GameElement} is in and manages this and all
+	 * The {@link IScene} the {@link GameElement} is in and manages this and all
 	 * other {@link GameElement GameElements}.
 	 */
 	private IScene scene;
@@ -248,7 +248,7 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 	}
 
 	/**
-	 * Set the last valid position
+	 * Set the last valid position.
 	 *
 	 * @param lastPos
 	 *            the last valid position
@@ -292,7 +292,7 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 	}
 
 	/**
-	 * Set the size of the GameElement
+	 * Set the size of the GameElement.
 	 *
 	 * @param size
 	 *            the size
@@ -330,7 +330,7 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 	}
 
 	/**
-	 * Get the current scene
+	 * Get the current scene.
 	 *
 	 * @return the current scene
 	 */
@@ -420,10 +420,28 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 		return this.deleteMe;
 	}
 
+	/**
+	 * Check for collision with another element and invoke necessary methods.
+	 *
+	 * @param e2
+	 *            the other element
+	 */
 	public final void checkCollision(GameElement e2) {
 		this.checkCollision(this, e2, this.getLastPos(), e2.getLastPos());
 	}
 
+	/**
+	 * Check for collision between two elements and invoke necessary methods.
+	 *
+	 * @param e1
+	 *            the first element
+	 * @param e2
+	 *            the second element
+	 * @param e1lastPos
+	 *            the last pos of e1
+	 * @param e2lastPos
+	 *            the last pos of e2
+	 */
 	private final void checkCollision(GameElement e1, GameElement e2, Vec e1lastPos, Vec e2lastPos) {
 		// Return if one of the elements is about to be deleted.
 		if (e1.getDeleteMe() || e2.getDeleteMe()) {
@@ -454,6 +472,26 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 		this.simulateCollision(e1lastXFrame, e2lastXFrame, e1, e2, e1lastPos, e2lastPos, e1lastYFrame, e2lastYFrame);
 	}
 
+	/**
+	 * Simulate collision between e1 and e2.
+	 *
+	 * @param e1lastXFrame
+	 *            e1 last x-frame
+	 * @param e2lastXFrame
+	 *            e2 last x-frame
+	 * @param e1
+	 *            the object e1
+	 * @param e2
+	 *            the object e2
+	 * @param e1lastPos
+	 *            the last pos of e1
+	 * @param e2lastPos
+	 *            the last pos of e2
+	 * @param e1lastYFrame
+	 *            e1 last y-frame
+	 * @param e2lastYFrame
+	 *            e2 last y-frame
+	 */
 	private final void simulateCollision(Frame e1lastXFrame, Frame e2lastXFrame, GameElement e1, GameElement e2, Vec e1lastPos, Vec e2lastPos,
 			Frame e1lastYFrame, Frame e2lastYFrame) {
 		// If they still collide with the old x positions:

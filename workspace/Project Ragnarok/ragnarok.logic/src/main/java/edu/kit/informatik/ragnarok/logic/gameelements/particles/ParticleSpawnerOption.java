@@ -18,25 +18,25 @@ import edu.kit.informatik.ragnarok.primitives.time.Progress;
  */
 public class ParticleSpawnerOption {
 	/**
-	 * The minimum of the start-value
+	 * The minimum of the start-value.
 	 */
 	private float startMin;
 	/**
-	 * The maximum of the start-value
+	 * The maximum of the start-value.
 	 */
 	private float startMax;
 	/**
-	 * The minimum of the delta-value
+	 * The minimum of the delta-value.
 	 */
 	private float deltaMin;
 	/**
-	 * The maximum of the delta-value
+	 * The maximum of the delta-value.
 	 */
 	private float deltaMax;
 
 	/**
 	 * Constructor that takes arguments for lower and upper start and delta
-	 * values for full randomized variation
+	 * values for full randomized variation.
 	 *
 	 * @param startMin
 	 *            the minimal value for the ProgressDependencies start value
@@ -58,7 +58,7 @@ public class ParticleSpawnerOption {
 
 	/**
 	 * Short-hand constructor that takes arguments start and delta values for no
-	 * randomized variation
+	 * randomized variation.
 	 *
 	 * @param start
 	 *            the value for the ProgressDependencies start value
@@ -78,7 +78,7 @@ public class ParticleSpawnerOption {
 	 * value and sets delta to 0 for no randomized variation and no change of
 	 * the ProgressDependencies value.
 	 *
-	 * @param start
+	 * @param value
 	 *            the value for the ProgressDependencies start value
 	 */
 	public ParticleSpawnerOption(float value) {
@@ -91,7 +91,7 @@ public class ParticleSpawnerOption {
 	/**
 	 * Returns a randomized ProgressDependency with start and end values
 	 * randomly generated according to specified options (startMin, startMax,
-	 * deltaMin, deltaMax)
+	 * deltaMin, deltaMax).
 	 *
 	 * @return the randomized ProgressDependency
 	 */
