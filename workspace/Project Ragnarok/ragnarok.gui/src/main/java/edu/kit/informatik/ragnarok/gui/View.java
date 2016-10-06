@@ -4,14 +4,14 @@ import edu.kit.informatik.ragnarok.logic.Model;
 import edu.kit.informatik.ragnarok.util.InputHelper;
 
 /**
- * This Interface defines the View for the MVC
+ * This Interface defines the View for the MVC.
  *
  * @author Dominik Fuchß
  *
  */
 public interface View {
 	/**
-	 * Get the view
+	 * Get the view.
 	 *
 	 * @param model
 	 *            the model
@@ -22,12 +22,12 @@ public interface View {
 	}
 
 	/**
-	 * Start the view
+	 * Start the view.
 	 */
 	void start();
 
 	/**
-	 * Attach a {@link InputHelper}
+	 * Attach a {@link InputHelper}.
 	 *
 	 * @param inputHelper
 	 *            the inputHelper

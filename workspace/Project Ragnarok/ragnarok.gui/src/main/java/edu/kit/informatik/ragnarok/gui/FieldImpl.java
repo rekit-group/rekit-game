@@ -24,7 +24,7 @@ import edu.kit.informatik.ragnarok.util.SwtUtils;
 import edu.kit.informatik.ragnarok.util.TextOptions;
 
 /**
- * This class represents a {@link Field} of the {@link GameView}
+ * This class represents a {@link Field} of the {@link GameView}.
  *
  * @author Angelo Aracri
  * @author Dominik Fuchß
@@ -32,18 +32,20 @@ import edu.kit.informatik.ragnarok.util.TextOptions;
  */
 class FieldImpl extends Field {
 	/**
-	 * The GC
+	 * The GC.
 	 */
 	private GC gc;
 	/**
-	 * The current camera offset
+	 * The current camera offset.
 	 */
 	private int cameraOffset = 0;
 	/**
-	 * The current camera offset in units
+	 * The current camera offset in units.
 	 */
 	private float cameraOffsetUnits = 0;
-
+	/**
+	 * The current filter.
+	 */
 	private Filter filter;
 
 	@Override
@@ -52,6 +54,16 @@ class FieldImpl extends Field {
 		this.cameraOffset = -CalcUtil.units2pixel(cameraOffset);
 	}
 
+	/**
+	 * The implementation of {@link #drawCircle(Vec, Vec, RGBAColor)}.
+	 *
+	 * @param pos
+	 *            same as in base method
+	 * @param size
+	 *            same as in base method
+	 * @param col
+	 *            same as in base method
+	 */
 	private void drawCircleImpl(Vec pos, Vec size, RGBA col) {
 		// set color
 		this.gc.setAlpha(col.alpha);
@@ -64,6 +76,16 @@ class FieldImpl extends Field {
 		this.gc.setAlpha(255);
 	}
 
+	/**
+	 * The implementation of {@link #drawRectangle(Vec, Vec, RGBAColor)}.
+	 *
+	 * @param pos
+	 *            same as in base method
+	 * @param size
+	 *            same as in base method
+	 * @param col
+	 *            same as in base method
+	 */
 	private void drawRectangleImpl(Vec pos, Vec size, RGBA col) {
 		// set color
 		this.gc.setAlpha(col.alpha);
@@ -77,6 +99,21 @@ class FieldImpl extends Field {
 		this.gc.setAlpha(255);
 	}
 
+	/**
+	 * The implementation of
+	 * {@link #drawRoundRectangle(Vec, Vec, RGBAColor, float, float)}.
+	 *
+	 * @param pos
+	 *            same as in base method
+	 * @param size
+	 *            same as in base method
+	 * @param col
+	 *            same as in base method
+	 * @param arcWidth
+	 *            same as in base method
+	 * @param arcHeight
+	 *            same as in base method
+	 */
 	private void drawRoundRectangleImpl(Vec pos, Vec size, RGBA col, int arcWidth, int arcHeight) {
 		// set color
 		this.gc.setAlpha(col.alpha);
@@ -93,6 +130,16 @@ class FieldImpl extends Field {
 
 	}
 
+	/**
+	 * The implementation of {@link #drawPolygon(Polygon, RGBAColor, boolean)}.
+	 *
+	 * @param pixelArray
+	 *            same as in base method
+	 * @param col
+	 *            same as in base method
+	 * @param fill
+	 *            same as in base method
+	 */
 	private void drawPolygonImpl(int[] pixelArray, RGBA col, boolean fill) {
 		// set color
 		this.gc.setAlpha(col.alpha);
@@ -114,14 +161,14 @@ class FieldImpl extends Field {
 	}
 
 	/**
-	 * Draw an image
+	 * The implementation of {@link #drawImage(Vec, Vec, String)}.
 	 *
 	 * @param pos
-	 *            the position
+	 *            same as in base method
 	 * @param size
-	 *            the size
+	 *            same as in base method
 	 * @param imagePath
-	 *            the image path
+	 *            same as in base method
 	 */
 	private void drawImageImpl(Vec pos, Vec size, String imagePath) {
 		Image image = ImageLoader.get(imagePath);
@@ -133,14 +180,15 @@ class FieldImpl extends Field {
 	}
 
 	/**
-	 * Draw an text
+	 * The implementation of
+	 * {@link #drawText(Vec, String, TextOptions, boolean)}.
 	 *
 	 * @param pos
-	 *            the position
+	 *            same as in base method
 	 * @param text
-	 *            the text
+	 *            same as in base method
 	 * @param options
-	 *            the options
+	 *            same as in base method
 	 */
 	private void drawTextImpl(Vec pos, String text, TextOptions options) {
 		// Set color to red and set font
@@ -163,7 +211,7 @@ class FieldImpl extends Field {
 	}
 
 	/**
-	 * Set the current GC
+	 * Set the current GC.
 	 *
 	 * @param gc
 	 *            the gc
@@ -173,7 +221,7 @@ class FieldImpl extends Field {
 	}
 
 	/**
-	 * Translate a vec3D to a vec2D
+	 * Translate a vec3D to a vec2D.
 	 *
 	 * @param vec3D
 	 *            the vec3D
@@ -186,6 +234,12 @@ class FieldImpl extends Field {
 		return vec3D;
 	}
 
+	/**
+	 * Set the current filter.
+	 *
+	 * @param filter
+	 *            the filter or {@code null} for deleting current filters
+	 */
 	void setFilter(Filter filter) {
 		if (filter == null || !filter.isApplyPixel()) {
 			this.filter = null;
@@ -195,9 +249,9 @@ class FieldImpl extends Field {
 	}
 
 	/**
-	 * Set the background of the field
+	 * Set the background of the field.
 	 *
-	 * @param col
+	 * @param in
 	 *            the color
 	 */
 	public void setBackground(RGBColor in) {

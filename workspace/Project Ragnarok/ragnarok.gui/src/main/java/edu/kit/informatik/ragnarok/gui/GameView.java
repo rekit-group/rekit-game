@@ -42,44 +42,44 @@ import edu.kit.informatik.ragnarok.util.ThreadUtils;
 class GameView implements View {
 	/**
 	 * Reference to the model, that holds all information that are required for
-	 * rendering
+	 * rendering.
 	 */
 	private Model model;
 
 	/**
-	 * Represents a graphic window
+	 * Represents a graphic window.
 	 */
 	private Shell shell;
 	/**
-	 * The last render time
+	 * The last render time.
 	 */
 	private long lastRenderTime;
 	/**
-	 * The queue used for fps calculation
+	 * The queue used for fps calculation.
 	 */
 	private Queue<Float> fpsQueue = new ArrayDeque<>();
 
 	/**
-	 * The canvas that is drawn upon
+	 * The canvas that is drawn upon.
 	 */
 	private Canvas canvas;
 
 	/**
-	 * The Field that manages the graphic context
+	 * The Field that manages the graphic context.
 	 */
 	private FieldImpl field;
 	/**
-	 * The GC of the {@link Canvas}
+	 * The GC of the {@link Canvas}.
 	 */
 	private GC gc;
 	/**
-	 * The filter from the model
+	 * The filter from the model.
 	 */
 	private Filter filter;
 
 	/**
 	 * Constructor that creates a new window with a canvas and prepares all
-	 * required attributes
+	 * required attributes.
 	 *
 	 * @param model
 	 *            the model
@@ -109,7 +109,7 @@ class GameView implements View {
 	}
 
 	/**
-	 * Starts the View by periodically invoking renderLoop()
+	 * Starts the View by periodically invoking renderLoop().
 	 */
 	@Override
 	public void start() {
@@ -127,7 +127,7 @@ class GameView implements View {
 	}
 
 	/**
-	 * "Update-Thread" content
+	 * "Update-Thread" content.
 	 */
 	private void update() {
 		Display disp = Display.getDefault();
@@ -138,7 +138,7 @@ class GameView implements View {
 	}
 
 	/**
-	 * Getter for the GameModel
+	 * Getter for the GameModel.
 	 *
 	 * @return the reference to the GameModel
 	 */
@@ -217,6 +217,10 @@ class GameView implements View {
 
 	}
 
+	/**
+	 * If {@link GameConf#DEBUG} is set this method will be used for drawing
+	 * stats.
+	 */
 	private void drawDebug() {
 		HashMap<Class<?>, Integer> classCounter = new HashMap<>();
 
@@ -262,7 +266,7 @@ class GameView implements View {
 	}
 
 	/**
-	 * Get the latest FPS
+	 * Get the latest FPS.
 	 *
 	 * @return the FPS
 	 */

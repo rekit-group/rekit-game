@@ -8,7 +8,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 
 /**
- * This class helps to load images from the resources
+ * This class helps to load images from the resources.
  *
  * @author Dominik Fuchß
  *
@@ -16,30 +16,30 @@ import org.eclipse.swt.widgets.Display;
  */
 public final class ImageLoader {
 	/**
-	 * Prevent instantiation
+	 * Prevent instantiation.
 	 */
 	private ImageLoader() {
 	}
 
 	/**
-	 * The cache
+	 * The cache.
 	 */
 	private final static ConcurrentHashMap<String, Image> CACHE = new ConcurrentHashMap<>();
 	/**
-	 * The Device needed for creation of {@link Image Images}
+	 * The Device needed for creation of {@link Image Images}.
 	 */
 	private static final Device DEVICE = Display.getDefault();
 	/**
-	 * The loader Object for the Resource loading
+	 * The loader Object for the Resource loading.
 	 */
 	private static final Object LOADER = new Object();
 
 	/**
-	 * Get the {@link Image} from the resources by name<br>
+	 * Get the {@link Image} from the resources by name.<br>
 	 * <b>IMPORTANT: Do NOT dispose the images</b>
 	 *
 	 * @param src
-	 *            the path relative to /images/
+	 *            the path relative to "/images/"
 	 *
 	 * @return the Image
 	 */

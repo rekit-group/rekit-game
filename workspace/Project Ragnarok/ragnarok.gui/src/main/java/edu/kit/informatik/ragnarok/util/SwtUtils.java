@@ -11,17 +11,20 @@ import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
 import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
 
 /**
- * This class contains several tools for working with SWT
+ * This class contains several tools for working with SWT.
  *
  * @author Dominik Fuchß
  *
  */
 public final class SwtUtils {
+	/**
+	 * Prevent instantiation.
+	 */
 	private SwtUtils() {
 	}
 
 	/**
-	 * Calculate the position for a {@link Shell} relative to its parent
+	 * Calculate the position for a {@link Shell} relative to its parent.
 	 *
 	 * @param size_parent
 	 *            the size of the parent
@@ -39,7 +42,7 @@ public final class SwtUtils {
 	}
 
 	/**
-	 * Calculate the position for a {@link Shell} relative to the first screen
+	 * Calculate the position for a {@link Shell} relative to the first screen.
 	 *
 	 * @param me
 	 *            the {@link Shell} itself
@@ -54,8 +57,8 @@ public final class SwtUtils {
 	}
 
 	/**
-	 * Convert a {@link RGBColor} to a {@link RGB}
-	 * 
+	 * Convert a {@link RGBColor} to a {@link RGB}.
+	 *
 	 * @param color
 	 *            the color
 	 * @return the converted color
@@ -65,8 +68,8 @@ public final class SwtUtils {
 	}
 
 	/**
-	 * Convert a {@link RGBAColor} to a {@link RGBA}
-	 * 
+	 * Convert a {@link RGBAColor} to a {@link RGBA}.
+	 *
 	 * @param color
 	 *            the color
 	 * @return the converted color
