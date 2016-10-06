@@ -20,13 +20,13 @@ import edu.kit.informatik.ragnarok.visitor.Visitor;
  */
 public final class Main {
 	/**
-	 * Prevent instantiation
+	 * Prevent instantiation.
 	 */
 	private Main() {
 	}
 
 	/**
-	 * Launches the application by starting the game
+	 * Launches the application by starting the game.
 	 *
 	 * @param args
 	 *            not used
@@ -51,14 +51,14 @@ public final class Main {
 	}
 
 	/**
-	 * Visit all Classes which shall be visited
+	 * Visit all Classes which shall be visited.
 	 */
 	private static final void visitAllStatic() {
 		Main.visitAllStatic(Visitor.getNewVisitor());
 	}
 
 	/**
-	 * Visit all Classes which shall be visited
+	 * Visit all Classes which shall be visited.
 	 *
 	 * @param visitor
 	 *            the visitor
