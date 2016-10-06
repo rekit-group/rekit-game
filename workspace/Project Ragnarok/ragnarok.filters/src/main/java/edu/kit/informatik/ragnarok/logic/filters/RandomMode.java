@@ -7,15 +7,15 @@ import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 
 /**
- * This filter realizes a filter which will map a color to a random color
- * 
+ * This filter realizes a filter which will map a color to a random color.
+ *
  * @author Dominik Fuchß
  *
  */
 @LoadMe
 public final class RandomMode implements Filter {
 	/**
-	 * The mapping for all colors
+	 * The mapping for all colors.
 	 */
 	private Integer[] map = new Integer[256 << 16];
 
@@ -23,7 +23,7 @@ public final class RandomMode implements Filter {
 	 * Flyweight getter method for getting a random value between 1 and 255 for
 	 * every value between 0 and 255.
 	 *
-	 * @param index
+	 * @param color
 	 *            the extrinsic, original color
 	 * @return the intrinsic, random color
 	 */
@@ -42,8 +42,8 @@ public final class RandomMode implements Filter {
 	}
 
 	/**
-	 * Get the mapping of an RGBColor to RGBAColor
-	 * 
+	 * Get the mapping of an RGBColor to RGBAColor.
+	 *
 	 * @param color
 	 *            the RGBColor
 	 * @return the corresponding RGBAColor

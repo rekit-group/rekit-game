@@ -6,7 +6,7 @@ import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 
 /**
- * This filter realizes a filter which will convert all colors to grayscale
+ * This filter realizes a filter which will convert all colors to grayscale.
  *
  * @author Dominik Fuchß
  *
