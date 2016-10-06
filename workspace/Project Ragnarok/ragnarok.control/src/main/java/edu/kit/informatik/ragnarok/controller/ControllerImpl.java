@@ -6,7 +6,6 @@ import java.util.Map;
 
 import edu.kit.informatik.ragnarok.controller.commands.Command;
 import edu.kit.informatik.ragnarok.controller.commands.CommandSupervisor;
-import edu.kit.informatik.ragnarok.controller.commands.FilterCommand;
 import edu.kit.informatik.ragnarok.controller.commands.InputCommand.InputMethod;
 import edu.kit.informatik.ragnarok.controller.commands.JumpCommand;
 import edu.kit.informatik.ragnarok.controller.commands.MenuCommand;
@@ -16,9 +15,6 @@ import edu.kit.informatik.ragnarok.core.IScene;
 import edu.kit.informatik.ragnarok.gui.View;
 import edu.kit.informatik.ragnarok.logic.GameState;
 import edu.kit.informatik.ragnarok.logic.Model;
-import edu.kit.informatik.ragnarok.logic.filters.GrayScaleMode;
-import edu.kit.informatik.ragnarok.logic.filters.InvertedMode;
-import edu.kit.informatik.ragnarok.logic.filters.RandomMode;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gui.menu.MenuItem;
 import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
@@ -27,31 +23,31 @@ import edu.kit.informatik.ragnarok.util.Tuple;
 
 /**
  * This is an implementation of an {@link Controller} of the MVC <br>
- * It handles all input Events
+ * It handles all input Events.
  *
  * @author Dominik Fuchß
  *
  */
-class ControllerImpl implements Observer, Controller, CommandSupervisor {
+final class ControllerImpl implements Observer, Controller, CommandSupervisor {
 	/**
-	 * Map State, Key-ID --> Command
+	 * Map State, Key-ID --> Command.
 	 */
 	private Map<Tuple<GameState, Integer>, Command> mpCmd;
 	/**
-	 * The input helper
+	 * The input helper.
 	 */
 	private final InputHelperImpl helper;
 	/**
-	 * The model
+	 * The model.
 	 */
 	private final Model model;
 	/**
-	 * The view
+	 * The view.
 	 */
 	private final View view;
 
 	/**
-	 * Instantiate the Controller
+	 * Instantiate the Controller.
 	 *
 	 * @param model
 	 *            the model
@@ -67,10 +63,7 @@ class ControllerImpl implements Observer, Controller, CommandSupervisor {
 	}
 
 	/**
-	 * Initialize all commands
-	 *
-	 * @param view
-	 *            the view
+	 * Initialize all commands.
 	 */
 	private void init() {
 		// Menu
@@ -88,18 +81,25 @@ class ControllerImpl implements Observer, Controller, CommandSupervisor {
 		this.mpCmd.put(Tuple.create(GameState.INGAME, InputHelper.ESCAPE), new PlayPauseCommand(this));
 
 		// Filter Commands ... a test ('u', 'i', 'o' and 'p' key)
-		this.mpCmd.put(Tuple.create(null, 117), new FilterCommand(true, this.model, new RandomMode()));
-		this.mpCmd.put(Tuple.create(null, 105), new FilterCommand(true, this.model, new InvertedMode()));
-		this.mpCmd.put(Tuple.create(null, 111), new FilterCommand(true, this.model, new GrayScaleMode()));
-		this.mpCmd.put(Tuple.create(null, 112), new FilterCommand(false, this.model, null));
+		// this.mpCmd.put(Tuple.create(null, 117), new FilterCommand(true,
+		// this.model, new RandomMode()));
+		// this.mpCmd.put(Tuple.create(null, 105), new FilterCommand(true,
+		// this.model, new InvertedMode()));
+		// this.mpCmd.put(Tuple.create(null, 111), new FilterCommand(true,
+		// this.model, new GrayScaleMode()));
+		// this.mpCmd.put(Tuple.create(null, 112), new FilterCommand(false,
+		// this.model, null));
 
 	}
 
 	/**
-	 * Handle one key input event
+	 * Handle one key input event.
 	 *
 	 * @param id
 	 *            the key's id
+	 * @param inputMethod
+	 *            {@link InputMethod#RELEASE} or {@link InputMethod#PRESS} or
+	 *            {@code null}
 	 */
 	public void handleEvent(int id, InputMethod inputMethod) {
 		Tuple<GameState, Integer> key = Tuple.create(this.model.getState(), id);

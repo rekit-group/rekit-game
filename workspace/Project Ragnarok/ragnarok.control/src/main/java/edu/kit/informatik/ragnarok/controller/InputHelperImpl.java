@@ -11,7 +11,7 @@ import edu.kit.informatik.ragnarok.util.ThreadUtils;
 
 /**
  * This class establishes a Listener to Components of the Shell<br>
- * Also {@link Observer Observers} can register to receive events
+ * Also {@link Observer Observers} can register to receive events.
  *
  * @author Dominik Fuchß
  *
@@ -19,7 +19,7 @@ import edu.kit.informatik.ragnarok.util.ThreadUtils;
 final class InputHelperImpl implements InputHelper {
 
 	/**
-	 * Instantiate the InputHelper
+	 * Instantiate the InputHelper.
 	 */
 	public InputHelperImpl() {
 		ThreadUtils.runDaemon(() -> {
@@ -31,22 +31,22 @@ final class InputHelperImpl implements InputHelper {
 	}
 
 	/**
-	 * List of all observers that registered to key changes
+	 * List of all observers that registered to key changes.
 	 */
 	private List<Observer> observers = new ArrayList<>();
 
 	/**
-	 * List of all keyCodes that are currently pressed
+	 * List of all keyCodes that are currently pressed.
 	 */
 	private ConcurrentSkipListSet<Integer> pressedKeys = new ConcurrentSkipListSet<>();
 
 	/**
-	 * List of all keyCodes that have just been released
+	 * List of all keyCodes that have just been released.
 	 */
 	private ConcurrentSkipListSet<Integer> releasedKeys = new ConcurrentSkipListSet<>();
 
 	/**
-	 * Adds a pressed keys keyCode to the List and notifies observers
+	 * Adds a pressed keys keyCode to the List and notifies observers.
 	 *
 	 * @param code
 	 *            the keyCode of the just pressed key
@@ -70,7 +70,7 @@ final class InputHelperImpl implements InputHelper {
 	}
 
 	/**
-	 * Get an Iterator to iterate over all pressed keys keyCodes
+	 * Get an Iterator to iterate over all pressed keys keyCodes.
 	 *
 	 * @return the Iterator for all pressed keyCodes
 	 */
@@ -79,7 +79,7 @@ final class InputHelperImpl implements InputHelper {
 	}
 
 	/**
-	 * Get an Iterator to iterate over all pressed keys keyCodes
+	 * Get an Iterator to iterate over all pressed keys keyCodes.
 	 *
 	 * @return the Iterator for all pressed keyCodes
 	 */
@@ -89,13 +89,13 @@ final class InputHelperImpl implements InputHelper {
 
 	/**
 	 * Synchronization Object that is used as a lock variable for blocking
-	 * operations
+	 * operations.
 	 */
 	private final Object observerSync = new Object();
 
 	/**
 	 * Used to tell all Observers that something important changed Iterates all
-	 * Observers and invokes every update();
+	 * Observers and invokes every {@link Observer#update()}.
 	 */
 	private void notifyObservers() {
 
@@ -115,7 +115,7 @@ final class InputHelperImpl implements InputHelper {
 
 	/**
 	 * Adds an Observer to the List that will be notified every time something
-	 * important changes
+	 * important changes.
 	 *
 	 * @param observer
 	 *            The Observer that wants to listen
@@ -128,7 +128,7 @@ final class InputHelperImpl implements InputHelper {
 
 	/**
 	 * Removes an Observer from the List to prevent further notification of
-	 * changes
+	 * changes.
 	 *
 	 * @param observer
 	 *            The Observer that does not want to listen anymore

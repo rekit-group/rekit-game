@@ -6,32 +6,33 @@ import edu.kit.informatik.ragnarok.primitives.image.Filter;
 
 /**
  * This Command Type is used for attaching and/or detaching {@link Filter
- * Filters} to a {@link View}
+ * Filters} to a {@link View}. <br>
+ * <b>Only for testing purposes</b>
  *
  * @author Dominik Fuchß
  *
  */
 public final class FilterCommand implements Command {
 	/**
-	 * Indicates whether this command will enable a filter
+	 * Indicates whether this command will enable a filter.
 	 */
 	private final boolean enable;
 	/**
-	 * The model
+	 * The model.
 	 */
 	private final Model model;
 	/**
-	 * The filter
+	 * The filter.
 	 */
 	private final Filter filter;
 
 	/**
-	 * Create a new FilterCommand
+	 * Create a new FilterCommand.
 	 *
 	 * @param enable
 	 *            indicates whether this command will enable a filter
-	 * @param view
-	 *            the view
+	 * @param model
+	 *            the model
 	 * @param filter
 	 *            the filter or ignored if {@code enable == false}
 	 */

@@ -6,7 +6,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 
 /**
  * This class defines an Command which will be executed by a {@link Controller}
- * and is linked to an {@link Entity}
+ * and is linked to an {@link Entity}.
  *
  * @author Dominik Fuchß
  * @see JumpCommand
@@ -15,29 +15,29 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 public abstract class InputCommand implements Command {
 
 	/**
-	 * This enum is used to indicate a press or release state of a key
+	 * This enum is used to indicate a press or release state of a key.
 	 *
 	 * @author Dominik Fuchß
 	 *
 	 */
 	public enum InputMethod {
 		/**
-		 * Key Pressed
+		 * Key Pressed.
 		 */
 		PRESS,
 		/**
-		 * Key Released
+		 * Key Released.
 		 */
 		RELEASE
 	}
 
 	/**
-	 * The corresponding supervisor
+	 * The corresponding supervisor.
 	 */
 	protected final CommandSupervisor supervisor;
 
 	/**
-	 * Instantiate the Command
+	 * Instantiate the Command.
 	 *
 	 * @param supervisor
 	 *            the supervisor
@@ -58,7 +58,7 @@ public abstract class InputCommand implements Command {
 	}
 
 	/**
-	 * Execute the command
+	 * Execute the command.
 	 *
 	 * @param inputMethod
 	 *            the key state

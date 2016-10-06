@@ -4,29 +4,52 @@ import edu.kit.informatik.ragnarok.logic.GameState;
 import edu.kit.informatik.ragnarok.logic.gui.menu.MenuItem;
 
 /**
- * This class is used for the {@link GameState#MENU MenuGameState}
+ * This class is used for the {@link GameState#MENU MenuGameState}.
  *
  * @author Matthias Schmitt
  *
  */
 public class MenuCommand extends InputCommand {
 	/**
-	 * The enum defines the different directions of KeyPress in a Menu Context
+	 * The enum defines the different directions of KeyPress in a Menu Context.
 	 *
 	 * @author Matthias Schmitt
 	 *
 	 */
 	public enum Dir {
-		UP, DOWN, LEFT, RIGHT, BACK, SELECT
+		/**
+		 * Up.
+		 */
+		UP,
+		/**
+		 * Down.
+		 */
+		DOWN,
+		/**
+		 * Left.
+		 */
+		LEFT,
+		/**
+		 * Right.
+		 */
+		RIGHT,
+		/**
+		 * Back.
+		 */
+		BACK,
+		/**
+		 * Select.
+		 */
+		SELECT
 	}
 
 	/**
-	 * The direction for the command
+	 * The direction for the command.
 	 */
 	private Dir dir;
 
 	/**
-	 * Instantiate the MenuCommand
+	 * Instantiate the MenuCommand.
 	 *
 	 * @param supervisor
 	 *            the supervisor

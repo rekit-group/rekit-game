@@ -9,3 +9,4 @@ workspace/ragnarok/src/**/*.class
 *.project
 sh.exe.stackdump
 stat.html
+*.checkstyle
