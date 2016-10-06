@@ -8,14 +8,14 @@ import edu.kit.informatik.ragnarok.visitor.annotations.VisitInfo;
 
 /**
  * This class realizes the default {@link Visitor} which will use a
- * {@link ResourceBundle} as configured by {@link VisitInfo}
+ * {@link ResourceBundle} as configured by {@link VisitInfo}.
  *
  * @author Dominik Fuchß
  *
  */
 public final class ResourceBundleVisitor extends Visitor {
 	/**
-	 * The bundle
+	 * The bundle.
 	 */
 	private ResourceBundle bundle;
 

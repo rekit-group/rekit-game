@@ -10,7 +10,7 @@ import edu.kit.informatik.ragnarok.visitor.Visitor;
 
 /**
  * This annotation has to be applied to Methods which shall be executed after a
- * visit of a {@link Visitor} to a {@link Visitable}
+ * visit of a {@link Visitor} to a {@link Visitable}.
  *
  * @author Dominik Fuchß
  *

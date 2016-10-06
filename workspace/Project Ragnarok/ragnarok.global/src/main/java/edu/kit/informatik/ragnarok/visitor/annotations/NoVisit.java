@@ -10,7 +10,7 @@ import edu.kit.informatik.ragnarok.visitor.Visitor;
 
 /**
  * This annotation has to be applied to Fields of a {@link Visitable} which
- * shall not be visited by a {@link Visitor}
+ * shall not be visited by a {@link Visitor}.
  *
  * @author Dominik Fuchß
  *

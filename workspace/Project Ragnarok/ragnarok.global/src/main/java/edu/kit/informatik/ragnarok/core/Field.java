@@ -26,7 +26,7 @@ public abstract class Field {
 	public abstract void setCurrentOffset(float cameraOffset);
 
 	/**
-	 * Draw a rectangle
+	 * Draw a rectangle.
 	 *
 	 * @param pos
 	 *            the position
@@ -40,7 +40,7 @@ public abstract class Field {
 	}
 
 	/**
-	 * Draw a rectangle
+	 * Draw a rectangle.
 	 *
 	 * @param pos
 	 *            the position
@@ -59,7 +59,7 @@ public abstract class Field {
 	}
 
 	/**
-	 * Draw a rectangle
+	 * Draw a rectangle.
 	 *
 	 * @param pos
 	 *            the position
@@ -73,7 +73,7 @@ public abstract class Field {
 	}
 
 	/**
-	 * Draw a rectangle
+	 * Draw a rectangle.
 	 *
 	 * @param pos
 	 *            the position
@@ -89,7 +89,7 @@ public abstract class Field {
 	public abstract void drawRectangle(Vec pos, Vec size, RGBAColor rgbaColor, boolean inGame);
 
 	/**
-	 * Draw a circle
+	 * Draw a circle.
 	 *
 	 * @param pos
 	 *            the position
@@ -103,7 +103,7 @@ public abstract class Field {
 	}
 
 	/**
-	 * Draw a circle
+	 * Draw a circle.
 	 *
 	 * @param pos
 	 *            the position
@@ -121,7 +121,7 @@ public abstract class Field {
 	}
 
 	/**
-	 * Draw a circle
+	 * Draw a circle.
 	 *
 	 * @param pos
 	 *            the position
@@ -135,7 +135,7 @@ public abstract class Field {
 	}
 
 	/**
-	 * Draw a circle
+	 * Draw a circle.
 	 *
 	 * @param pos
 	 *            the position
@@ -151,7 +151,7 @@ public abstract class Field {
 	public abstract void drawCircle(Vec pos, Vec size, RGBAColor color, boolean inGame);
 
 	/**
-	 * Draw an image
+	 * Draw an image.
 	 *
 	 * @param pos
 	 *            the position
@@ -165,7 +165,7 @@ public abstract class Field {
 	}
 
 	/**
-	 * Draw an image
+	 * Draw an image.
 	 *
 	 * @param pos
 	 *            the position
@@ -181,7 +181,7 @@ public abstract class Field {
 	public abstract void drawImage(Vec pos, Vec size, String imagePath, boolean inGame);
 
 	/**
-	 * Draw a polygon
+	 * Draw a polygon.
 	 *
 	 * @param polygon
 	 *            the polygon
@@ -195,7 +195,7 @@ public abstract class Field {
 	}
 
 	/**
-	 * Draw a polygon
+	 * Draw a polygon.
 	 *
 	 * @param polygon
 	 *            the polygon
@@ -213,7 +213,7 @@ public abstract class Field {
 	}
 
 	/**
-	 * Draw a polygon
+	 * Draw a polygon.
 	 *
 	 * @param polygon
 	 *            the polygon
@@ -227,7 +227,7 @@ public abstract class Field {
 	}
 
 	/**
-	 * Draw a polygon
+	 * Draw a polygon.
 	 *
 	 * @param polygon
 	 *            the polygon
@@ -243,7 +243,7 @@ public abstract class Field {
 	public abstract void drawPolygon(Polygon polygon, RGBAColor color, boolean fill, boolean inGame);
 
 	/**
-	 * Draw a text
+	 * Draw a text.
 	 *
 	 * @param pos
 	 *            the position
@@ -259,7 +259,7 @@ public abstract class Field {
 	public abstract void drawText(Vec pos, String text, TextOptions options, boolean inGame);
 
 	/**
-	 * Draw a rectangle with round edges
+	 * Draw a rectangle with round edges.
 	 *
 	 * @param pos
 	 *            the position
@@ -280,7 +280,7 @@ public abstract class Field {
 	public abstract void drawRoundRectangle(Vec pos, Vec size, RGBAColor rgbaColor, float arcWidth, float arcHeight, boolean inGame);
 
 	/**
-	 * Draw a rectangle with round edges
+	 * Draw a rectangle with round edges.
 	 *
 	 * @param pos
 	 *            the position
@@ -302,7 +302,7 @@ public abstract class Field {
 	}
 
 	/**
-	 * Draw a rectangle with round edges
+	 * Draw a rectangle with round edges.
 	 *
 	 * @param pos
 	 *            the position
@@ -320,7 +320,7 @@ public abstract class Field {
 	}
 
 	/**
-	 * Draw a rectangle with round edges
+	 * Draw a rectangle with round edges.
 	 *
 	 * @param pos
 	 *            the position
@@ -337,6 +337,17 @@ public abstract class Field {
 		this.drawRoundRectangle(pos, size, rgbColor, arcWidth, arcHeight, true);
 	}
 
+	/**
+	 * Draw a path.
+	 * 
+	 * @param startPos
+	 *            the start point
+	 * @param pts
+	 *            the next points (relative to startPos ?!)
+	 * @param in
+	 *            the color
+	 */
+	// TODO Check JDoc
 	public void drawPath(Vec startPos, List<Vec> pts, RGBColor in) {
 	}
 }

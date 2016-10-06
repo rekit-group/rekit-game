@@ -1,11 +1,46 @@
 package edu.kit.informatik.ragnarok.core;
 
+/**
+ * This enum defines all different teams and their relationships.
+ *
+ * @author Dominik Fuchß
+ *
+ */
 public enum Team {
-	PLAYER, ENEMY, INANIMATE, PICKUP, NEUTRAL, TRIGGER;
-
-	public boolean isHostile(Team t) {
+	/**
+	 * The player itself.
+	 */
+	PLAYER,
+	/**
+	 * An enemy of the player.
+	 */
+	ENEMY,
+	/**
+	 * An inanimate.
+	 */
+	INANIMATE,
+	/**
+	 * A pickup.
+	 */
+	PICKUP,
+	/**
+	 * A neutral object.
+	 */
+	NEUTRAL,
+	/**
+	 * A trigger.
+	 */
+	TRIGGER;
+	/**
+	 * Check whether team t is a hostile of this team.
+	 *
+	 * @param t
+	 *            the other team
+	 * @return {@code true}, if hostile {@code false} otherwise
+	 */
+	public final boolean isHostile(Team t) {
 		if (this == PLAYER) {
-			return t == ENEMY || t == PICKUP;
+			return t == ENEMY || t == PICKUP || this == TRIGGER;
 		}
 		if (this == ENEMY || this == PICKUP || this == TRIGGER) {
 			return t == PLAYER;
@@ -13,7 +48,12 @@ public enum Team {
 		return false;
 	}
 
-	public boolean isNeutral() {
+	/**
+	 * Is this the {@link Team#NEUTRAL Neutral-Team}.
+	 *
+	 * @return {@code true} if neutral, {@code false} otherwise
+	 */
+	public final boolean isNeutral() {
 		return this == Team.NEUTRAL;
 	}
 }

@@ -11,12 +11,12 @@ package edu.kit.informatik.ragnarok.primitives.time;
 public final class Progress {
 
 	/**
-	 * Saved version of the start value
+	 * Saved version of the start value.
 	 */
 	private float start;
 
 	/**
-	 * Saved version of the delta value, calculated by end-initial
+	 * Saved version of the delta value, calculated by end-initial.
 	 */
 	private float delta;
 

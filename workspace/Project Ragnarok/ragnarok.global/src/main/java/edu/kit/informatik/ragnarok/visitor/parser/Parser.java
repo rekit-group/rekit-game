@@ -8,7 +8,7 @@ import edu.kit.informatik.ragnarok.visitor.annotations.VisitInfo;
 
 /**
  * This interface defines a parser which will be used for parsing a String to a
- * specific Class for a {@link Visitor}
+ * specific Class for a {@link Visitor}.
  *
  * @author Dominik Fuchß
  * @see VisitInfo
@@ -16,7 +16,7 @@ import edu.kit.informatik.ragnarok.visitor.annotations.VisitInfo;
  */
 public interface Parser {
 	/**
-	 * Parse the definition to the specific class
+	 * Parse the definition to the specific class.
 	 *
 	 * @param obj
 	 *            the Visitable Object or {@code null} if static visit (class
@@ -38,8 +38,8 @@ public interface Parser {
 	}
 
 	/**
-	 * Create a new Parser of this type
-	 * 
+	 * Create a new Parser of this type.
+	 *
 	 * @return the new parser
 	 */
 	Parser create();

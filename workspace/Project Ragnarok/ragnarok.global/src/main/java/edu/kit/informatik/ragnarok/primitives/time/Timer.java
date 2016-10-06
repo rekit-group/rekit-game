@@ -1,7 +1,7 @@
 package edu.kit.informatik.ragnarok.primitives.time;
 
 /**
- * Data class that holds an duration time
+ * Data class that holds an duration time.
  *
  * @author Angelo Aracri
  * @version 1.0
@@ -9,16 +9,16 @@ package edu.kit.informatik.ragnarok.primitives.time;
 public final class Timer {
 
 	/**
-	 * The duration
+	 * The duration.
 	 */
 	private float duration;
 	/**
-	 * The time left
+	 * The time left.
 	 */
 	private float timeLeft;
 
 	/**
-	 * Create a TimeDependency by duration time
+	 * Create a TimeDependency by duration time.
 	 *
 	 * @param duration
 	 *            the duration time
@@ -29,7 +29,7 @@ public final class Timer {
 	}
 
 	/**
-	 * Remove some time
+	 * Remove some time.
 	 *
 	 * @param deltaTime
 	 *            the time
@@ -39,7 +39,7 @@ public final class Timer {
 	}
 
 	/**
-	 * Indicates whether the time is up
+	 * Indicates whether the time is up.
 	 *
 	 * @return {@code true} if time is up; {@code false} otherwise
 	 */
@@ -48,14 +48,14 @@ public final class Timer {
 	}
 
 	/**
-	 * Reset the time
+	 * Reset the time.
 	 */
 	public void reset() {
 		this.timeLeft = this.timeUp() ? this.duration + this.timeLeft : this.duration;
 	}
 
 	/**
-	 * Get current progress
+	 * Get current progress.
 	 *
 	 * @return percentage as float in [0,1]
 	 */

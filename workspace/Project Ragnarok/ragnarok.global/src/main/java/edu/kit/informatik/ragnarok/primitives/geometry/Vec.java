@@ -3,7 +3,7 @@ package edu.kit.informatik.ragnarok.primitives.geometry;
 import edu.kit.informatik.ragnarok.primitives.operable.Operable;
 
 /**
- * A two dimensional Vector with operations
+ * A three dimensional Vector with operations.
  *
  * @author Angelo Aracri
  * @version 1.0
@@ -12,20 +12,20 @@ import edu.kit.informatik.ragnarok.primitives.operable.Operable;
 public final class Vec implements Cloneable, Operable<Vec> {
 
 	/**
-	 * The x-component of the vector
+	 * The x-component of the vector.
 	 */
 	private float x;
 	/**
-	 * The y-component of the vector
+	 * The y-component of the vector.
 	 */
 	private float y;
 	/**
-	 * The optional z-component of the vector
+	 * The optional z-component of the vector.
 	 */
 	private float z;
 
 	/**
-	 * Constructor that takes the initial coordinates an saves them
+	 * Constructor that takes the initial coordinates an saves them.
 	 *
 	 * @param x
 	 *            the initial x-component of the vector
@@ -41,7 +41,7 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	}
 
 	/**
-	 * Constructor that takes the initial coordinates an saves them
+	 * Constructor that takes the initial coordinates an saves them.
 	 *
 	 * @param x
 	 *            the initial x-component of the vector
@@ -55,7 +55,7 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	}
 
 	/**
-	 * Constructor that takes the initial coordinates an saves them
+	 * Constructor that takes the initial coordinates an saves them.
 	 *
 	 * @param x
 	 *            the initial x-component of the vector
@@ -69,9 +69,9 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	}
 
 	/**
-	 * Constructor that takes one initial coordinate an saves them as x and y
+	 * Constructor that takes one initial coordinate an saves them as x and y.
 	 *
-	 * @param x
+	 * @param xy
 	 *            the initial x- and y-component of the vector
 	 */
 	public Vec(float xy) {
@@ -81,7 +81,7 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	}
 
 	/**
-	 * Short-hand constructor that takes the default value (0|0)
+	 * Short-hand constructor that takes the default value (0|0).
 	 */
 	public Vec() {
 		this.x = 0;
@@ -90,7 +90,7 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	}
 
 	/**
-	 * Sets number to the x-component and <b>returns a new Vector</b>
+	 * Sets number to the x-component and <b>returns a new Vector</b>.
 	 *
 	 * @param x
 	 *            the new x-component of the vector
@@ -101,7 +101,7 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	}
 
 	/**
-	 * Adds a given number to the x-component and <b>returns a new Vector</b>
+	 * Adds a given number to the x-component and <b>returns a new Vector</b>.
 	 *
 	 * @param deltaX
 	 *            the number to add to the original x-component of the vector
@@ -112,7 +112,7 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	}
 
 	/**
-	 * Getter for the x-component of the vector
+	 * Getter for the x-component of the vector.
 	 *
 	 * @return the x-component
 	 */
@@ -121,7 +121,7 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	}
 
 	/**
-	 * Sets number to the y-component and <b>returns a new Vector</b>
+	 * Sets number to the y-component and <b>returns a new Vector</b>.
 	 *
 	 * @param y
 	 *            the new y-component of the vector
@@ -132,7 +132,7 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	}
 
 	/**
-	 * Adds a given number to the y-component and <b>returns a new Vector</b>
+	 * Adds a given number to the y-component and <b>returns a new Vector</b>.
 	 *
 	 * @param deltaY
 	 *            the number to add to the original y-component of the vector
@@ -143,7 +143,7 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	}
 
 	/**
-	 * Getter for the y-component of the vector
+	 * Getter for the y-component of the vector.
 	 *
 	 * @return the y-component
 	 */
@@ -152,7 +152,7 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	}
 
 	/**
-	 * Getter for the z-component of the vector
+	 * Getter for the z-component of the vector.
 	 *
 	 * @return the z-component
 	 */
@@ -161,7 +161,7 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	}
 
 	/**
-	 * Adds another vector to this vector and <b>returns a new Vector</b>
+	 * Adds another vector to this vector and <b>returns a new Vector</b>.
 	 *
 	 * @param vec
 	 *            the other vector to add
@@ -178,7 +178,17 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	}
 
 	/**
-	 * Multiplies the vector with a scalar and <b>returns a new Vector</b>
+	 * Calculate the sin of x and y.
+	 *
+	 * @return a new vector (sinx, siny)
+	 */
+	public Vec sin() {
+		return new Vec((float) Math.sin(this.getX()), (float) Math.sin(this.getY()));
+
+	}
+
+	/**
+	 * Multiplies the vector with a scalar and <b>returns a new Vector</b>.
 	 *
 	 * @param scalar
 	 *            the scalar to multiply the vector with
@@ -191,7 +201,7 @@ public final class Vec implements Cloneable, Operable<Vec> {
 
 	/**
 	 * Multiplies the vectors x-component and its y-component with separate
-	 * scalars and <b>returns a new Vector</b>
+	 * scalars and <b>returns a new Vector</b>.
 	 *
 	 * @param scalarX
 	 *            the scalar to multiply the vectors x-component with
@@ -217,14 +227,26 @@ public final class Vec implements Cloneable, Operable<Vec> {
 		return new Vec(this.getX() * vec.getX(), this.getY() * vec.getY(), this.z);
 	}
 
-	public Vec sin() {
-		return new Vec((float) Math.sin(this.getX()), (float) Math.sin(this.getY()));
-	}
-
+	/**
+	 * Get the angle to another vector.
+	 *
+	 * @param other
+	 *            the other vector
+	 * @return the angle (rad)
+	 */
 	public float getAngleTo(Vec other) {
 		return (float) Math.atan2(other.x - this.x, other.y - this.y);
 	}
 
+	/**
+	 * Rotate this vector relative to a vector.
+	 *
+	 * @param angle
+	 *            the angle
+	 * @param relative
+	 *            the relative vector for rotation
+	 * @return the new vector
+	 */
 	public Vec rotate(double angle, Vec relative) {
 		// translate toTurn to (0, 0) relative to relative
 		Vec shifted = this.add(relative.scalar(-1));
@@ -238,6 +260,13 @@ public final class Vec implements Cloneable, Operable<Vec> {
 		return rotated.add(relative);
 	}
 
+	/**
+	 * Rotate this vector relative to (0|0).
+	 *
+	 * @param angle
+	 *            the angle
+	 * @return the new vector
+	 */
 	public Vec rotate(double angle) {
 		return this.rotate(angle, new Vec());
 	}
@@ -252,10 +281,24 @@ public final class Vec implements Cloneable, Operable<Vec> {
 		return "(" + this.getX() + "|" + this.getY() + (this.getZ() != 0 ? "|" + this.getZ() : "") + ")";
 	}
 
+	/**
+	 * Create a new vector with this x,y values but a new z value.
+	 *
+	 * @param z
+	 *            the new z value
+	 * @return a new vector (x,y,z)
+	 */
 	public Vec setZ(float z) {
 		return new Vec(this.x, this.y, z);
 	}
 
+	/**
+	 * Translate a 3D-Vector to 2D.
+	 *
+	 * @param offset
+	 *            the offset (3D)
+	 * @return the new vector
+	 */
 	public Vec translate2D(float offset) {
 		if (this.getZ() != 1) {
 			return new Vec(this.getX() + offset / this.getZ(), this.getY());

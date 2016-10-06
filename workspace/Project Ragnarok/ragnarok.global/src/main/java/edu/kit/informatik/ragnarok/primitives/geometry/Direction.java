@@ -3,40 +3,40 @@ package edu.kit.informatik.ragnarok.primitives.geometry;
 import edu.kit.informatik.ragnarok.config.GameConf;
 
 /**
- * Representation of the 4 directions there are
+ * Representation of the 4 directions there are.
  *
  * @author Angelo Aracri
  * @version 1.0
  */
 public enum Direction {
 	/**
-	 * Represents the Direction left with the Vector (-1|0)
+	 * Represents the Direction left with the Vector (-1|0).
 	 */
 
 	LEFT(new Vec(-1, 0), 1.5 * Math.PI),
 	/**
-	 * Represents the Direction right with the Vector (1|0)
+	 * Represents the Direction right with the Vector (1|0).
 	 */
 	RIGHT(new Vec(1, 0), 0.5 * Math.PI),
 	/**
-	 * Represents the Direction up with the Vector (0|-1)
+	 * Represents the Direction up with the Vector (0|-1).
 	 */
 	UP(new Vec(0, -1), 0),
 	/**
-	 * Represents the Direction down with the Vector (0|1)
+	 * Represents the Direction down with the Vector (0|1).
 	 */
 	DOWN(new Vec(0, 1), 1 * Math.PI);
 	/**
-	 * The representing vector
+	 * The representing vector.
 	 */
 	private Vec vec;
 	/**
-	 * The representing angle
+	 * The representing angle.
 	 */
 	private double angle;
 
 	/**
-	 * Create a Direction
+	 * Create a Direction.
 	 *
 	 * @param vec
 	 *            the vector
@@ -49,7 +49,7 @@ public enum Direction {
 	}
 
 	/**
-	 * Get the vector to a corresponding direction
+	 * Get the vector to a corresponding direction.
 	 *
 	 * @return the vector
 	 */
@@ -58,7 +58,7 @@ public enum Direction {
 	}
 
 	/**
-	 * Get the angle to a corresponding direction relative to direction up
+	 * Get the angle to a corresponding direction relative to direction up.
 	 *
 	 * @return the angle
 	 */
@@ -67,7 +67,7 @@ public enum Direction {
 	}
 
 	/**
-	 * Get the opposite direction to a direction
+	 * Get the opposite direction to a direction.
 	 *
 	 * @param dir
 	 *            the direction
@@ -90,7 +90,7 @@ public enum Direction {
 	}
 
 	/**
-	 * Get the next direction to a direction (clockwise)
+	 * Get the next direction to a direction (clockwise).
 	 *
 	 * @return the direction or {@code null} if none defined
 	 */
@@ -110,7 +110,7 @@ public enum Direction {
 	}
 
 	/**
-	 * Get the next direction to a direction (anticlockwise)
+	 * Get the next direction to a direction (anticlockwise).
 	 *
 	 * @return the direction or {@code null} if none defined
 	 */
@@ -130,7 +130,7 @@ public enum Direction {
 	}
 
 	/**
-	 * Get a random Direction
+	 * Get a random Direction.
 	 *
 	 * @return the direction or {@code null} if none defined
 	 */

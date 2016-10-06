@@ -13,7 +13,7 @@ import edu.kit.informatik.ragnarok.visitor.annotations.VisitInfo;
 import edu.kit.informatik.ragnarok.visitor.parser.Parser;
 
 /**
- * Configuration class that holds static options
+ * Configuration class that holds static options.
  *
  * @author Angelo Aracri
  * @author Dominik Fuchß
@@ -22,32 +22,34 @@ import edu.kit.informatik.ragnarok.visitor.parser.Parser;
 @VisitInfo(res = "conf/game", visit = true)
 public final class GameConf implements Visitable {
 	/**
-	 * Prevent instantiation
+	 * Prevent instantiation.
 	 */
 	private GameConf() {
 	}
 
 	/**
-	 * The search path for dynamically loaded classes; see {@link ReflectUtils}
+	 * The search path for dynamically loaded classes; see {@link ReflectUtils}.
 	 */
 	@NoVisit
 	public static final String SEARCH_PATH = "edu.kit.informatik";
 	/**
-	 * The GameWide randomness source
+	 * The GameWide randomness source.
 	 */
 	@NoVisit
 	public static final Random PRNG = new Random();
-
+	/**
+	 * This boolean indicates whether the game is in debug mode.
+	 */
 	@NoVisit
 	public static boolean DEBUG = true;
 
 	/**
-	 * The Name of the Game
+	 * The Name of the Game.
 	 */
 	public static String NAME;
 
 	/**
-	 * The version of the Game
+	 * The version of the Game.
 	 */
 	public static String VERSION;
 
@@ -80,7 +82,7 @@ public final class GameConf implements Visitable {
 
 	/**
 	 * Time in milliseconds to wait after each renderLoop, that refreshes all
-	 * graphical elements
+	 * graphical elements.
 	 */
 	public static int RENDER_DELTA;
 	/**
@@ -95,109 +97,109 @@ public final class GameConf implements Visitable {
 	 */
 	public static float G;
 	/**
-	 * The default camera offset for a player
+	 * The default camera offset for a player.
 	 */
 	public static float PLAYER_CAMERA_OFFSET;
 	/**
-	 * The player's walk acceleration
+	 * The player's walk acceleration.
 	 */
 	public static float PLAYER_WALK_ACCEL;
 	/**
-	 * The player's stop acceleration
+	 * The player's stop acceleration.
 	 */
 	public static float PLAYER_STOP_ACCEL;
 	/**
-	 * The player's walk max speed
+	 * The player's walk max speed.
 	 */
 	public static float PLAYER_WALK_MAX_SPEED;
 	/**
-	 * The player's jump boost
+	 * The player's jump boost.
 	 */
 	public static float PLAYER_JUMP_BOOST;
 	/**
-	 * The player's boost upon jumping on an enemy
+	 * The player's boost upon jumping on an enemy.
 	 */
 	public static float PLAYER_KILL_BOOST;
 	/**
-	 * The player's maximum jump time
+	 * The player's maximum jump time.
 	 */
 	public static float PLAYER_JUMP_TIME;
 	/**
-	 * The player's bottom boost (used when colliding from bottom)
+	 * The player's bottom boost (used when colliding from bottom).
 	 */
 	public static float PLAYER_BOTTOM_BOOST;
 	/**
-	 * The player's default amount of lives
+	 * The player's default amount of lives.
 	 */
 	public static int PLAYER_LIVES;
 
 	/**
-	 * The menu's background color
+	 * The menu's background color.
 	 */
 	public static RGBColor MENU_BACKGROUND_COLOR;
 	/**
-	 * The menu's box color (default)
+	 * The menu's box color (default).
 	 */
 	public static RGBColor MENU_BOX_COLOR;
 	/**
-	 * The menu's box color (selected)
+	 * The menu's box color (selected).
 	 */
 	public static RGBColor MENU_BOX_SELECT_COLOR;
 	/**
-	 * The menu's box color (option)
+	 * The menu's box color (option).
 	 */
 	public static RGBColor MENU_BOX_OPTION_COLOR;
 	/**
-	 * The menu's text color
+	 * The menu's text color.
 	 */
 	public static RGBColor MENU_TEXT_COLOR;
 	/**
-	 * The menu's text font
+	 * The menu's text font.
 	 */
 	public static String MENU_TEXT_FONT;
 	/**
-	 * The menu's text size
+	 * The menu's text size.
 	 */
 	public static int MENU_TEXT_SIZE;
 	/**
-	 * The game's background color
+	 * The game's background color.
 	 */
 	public static RGBColor GAME_BACKGROUD_COLOR;
 	/**
-	 * The game's text color
+	 * The game's text color.
 	 */
 	public static RGBColor GAME_TEXT_COLOR;
 	/**
-	 * The game's text font
+	 * The game's text font.
 	 */
 	public static String GAME_TEXT_FONT;
 	/**
-	 * The game's text size
+	 * The game's text size.
 	 */
 	public static int GAME_TEXT_SIZE;
 	/**
-	 * The game's debug text color
+	 * The game's debug text color.
 	 */
 	@NoVisit
 	public static RGBColor DEBUG_TEXT_COLOR;
 	/**
-	 * The game's text options
+	 * The game's text options.
 	 */
 	@NoVisit
 	public static TextOptions DEFAULT_TEXT;
 	/**
-	 * The game's text options (menu)
+	 * The game's text options (menu).
 	 */
 	@NoVisit
 	public static TextOptions MENU_TEXT;
 	/**
-	 * The game's text options (hints)
+	 * The game's text options (hints).
 	 */
 	@NoVisit
 	public static TextOptions HINT_TEXT;
 
 	/**
-	 * Set values which cannot be loaded by {@link Parser Parsers}
+	 * Set values which cannot be loaded by {@link Parser Parsers}.
 	 */
 	@AfterVisit
 	public static void afterVisit() {

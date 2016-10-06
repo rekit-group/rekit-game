@@ -3,7 +3,7 @@ package edu.kit.informatik.ragnarok.primitives.image;
 import edu.kit.informatik.ragnarok.primitives.operable.Operable;
 
 /**
- * This class defines a Color with RGB channels
+ * This class defines a Color with RGB channels.
  *
  * @author Dominik Fuchß
  * @author Angelo Aracri
@@ -11,20 +11,20 @@ import edu.kit.informatik.ragnarok.primitives.operable.Operable;
  */
 public final class RGBColor implements Cloneable, Operable<RGBColor> {
 	/**
-	 * The red channel
+	 * The red channel.
 	 */
 	public final int red;
 	/**
-	 * The green channel
+	 * The green channel.
 	 */
 	public final int green;
 	/**
-	 * The blue channel
+	 * The blue channel.
 	 */
 	public final int blue;
 
 	/**
-	 * Create a new RGBA Color
+	 * Create a new RGBA Color.
 	 *
 	 * @param r
 	 *            the red channel
@@ -67,7 +67,7 @@ public final class RGBColor implements Cloneable, Operable<RGBColor> {
 	}
 
 	/**
-	 * Convert to {@link RGBAColor}
+	 * Convert to {@link RGBAColor}.
 	 *
 	 * @return the RGBAColor
 	 */

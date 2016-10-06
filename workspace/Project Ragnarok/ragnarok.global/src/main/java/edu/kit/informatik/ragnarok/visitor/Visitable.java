@@ -8,7 +8,7 @@ import edu.kit.informatik.ragnarok.visitor.visitors.ResourceBundleVisitor;
 
 /**
  * This interface has to be implemented by classes which shall be visited by a
- * {@link Visitor}
+ * {@link Visitor}.
  *
  * @author Dominik Fuchß
  * @see VisitInfo

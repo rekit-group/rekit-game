@@ -8,7 +8,7 @@ import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
 import edu.kit.informatik.ragnarok.visitor.Visitable;
 
 /**
- * This {@link Parser} is used for parsing {@link RGBColor RGBColors}
+ * This {@link Parser} is used for parsing {@link RGBColor RGBColors}.
  *
  * @author Dominik Fuchß
  *

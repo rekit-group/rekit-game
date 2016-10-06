@@ -6,17 +6,20 @@ import edu.kit.informatik.ragnarok.visitor.Visitable;
 import edu.kit.informatik.ragnarok.visitor.Visitor;
 
 /**
- * This class realizes a {@link Visitor} which will use a {@link Map}
+ * This class realizes a {@link Visitor} which will use a {@link Map}.
  *
  * @author Dominik Fuchß
  *
  */
 public final class MapVisitor extends Visitor {
+	/**
+	 * The KV-Store.
+	 */
 	private final Map<String, String> kv;
 
 	/**
-	 * Create Visitor by Map
-	 * 
+	 * Create Visitor by Map.
+	 *
 	 * @param kv
 	 *            the map
 	 */

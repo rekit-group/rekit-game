@@ -8,7 +8,7 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.visitor.Visitable;
 
 /**
- * This {@link Parser} is used for parsing {@link Vec Vectors}
+ * This {@link Parser} is used for parsing {@link Vec Vectors}.
  *
  * @author Angelo Aracri
  *

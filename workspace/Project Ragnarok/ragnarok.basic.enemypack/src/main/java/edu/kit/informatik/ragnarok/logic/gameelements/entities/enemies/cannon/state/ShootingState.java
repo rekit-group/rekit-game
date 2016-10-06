@@ -28,7 +28,7 @@ import edu.kit.informatik.ragnarok.util.state.TimeStateMachine;
  * <p>
  * It extends the {@link ChargingState} to enable the shaking effect.
  * </p>
- * 
+ *
  * @author Angelo Aracri
  */
 public class ShootingState extends ChargingState {
@@ -53,7 +53,7 @@ public class ShootingState extends ChargingState {
 
 	/**
 	 * Specialized constructor that saves the angle in radians to shoot at.
-	 * 
+	 *
 	 * @param angle
 	 */
 	public ShootingState(float angle) {
@@ -64,17 +64,17 @@ public class ShootingState extends ChargingState {
 	public void enter(TimeStateMachine parent) {
 		super.enter(parent);
 
-		spawner = new ParticleSpawner(new CannonParticle(this.parentCannon));
+		this.spawner = new ParticleSpawner(new CannonParticle(this.parentCannon));
 
-		spawner.amountMin = Cannon.PARTICLE_AMOUNT_MIN;
-		spawner.amountMax = Cannon.PARTICLE_AMOUNT_MAX;
-		spawner.colorR = Cannon.PARTICLE_COLOR_R;
-		spawner.colorG = Cannon.PARTICLE_COLOR_G;
-		spawner.colorB = Cannon.PARTICLE_COLOR_B;
-		spawner.colorA = Cannon.PARTICLE_COLOR_A;
-		spawner.speed = Cannon.PARTICLE_SPEED;
-		spawner.timeMin = Cannon.PARTICLE_TIME_MIN;
-		spawner.timeMax = Cannon.PARTICLE_TIME_MAX;
+		this.spawner.amountMin = Cannon.PARTICLE_AMOUNT_MIN;
+		this.spawner.amountMax = Cannon.PARTICLE_AMOUNT_MAX;
+		this.spawner.colorR = Cannon.PARTICLE_COLOR_R;
+		this.spawner.colorG = Cannon.PARTICLE_COLOR_G;
+		this.spawner.colorB = Cannon.PARTICLE_COLOR_B;
+		this.spawner.colorA = Cannon.PARTICLE_COLOR_A;
+		this.spawner.speed = Cannon.PARTICLE_SPEED;
+		this.spawner.timeMin = Cannon.PARTICLE_TIME_MIN;
+		this.spawner.timeMax = Cannon.PARTICLE_TIME_MAX;
 	}
 
 	@Override
@@ -82,17 +82,17 @@ public class ShootingState extends ChargingState {
 		super.logicLoop(deltaTime);
 
 		if (this.keepShooting) {
-			currentDistance += CalcUtil.randomize(Cannon.PARTICLE_DISTANCE_MU, Cannon.PARTICLE_DISTANCE_SIGMA);
+			this.currentDistance += CalcUtil.randomize(Cannon.PARTICLE_DISTANCE_MU, Cannon.PARTICLE_DISTANCE_SIGMA);
 
 			// move cannon position down and rotate it around cannon.
-			Vec pos = this.parentCannon.getPos().addY(currentDistance).rotate(-this.angle, this.parentCannon.getPos());
-			spawner.rotation = new ParticleSpawnerOption(-this.angle, CalcUtil.randomize(Math.PI / 4, Math.PI / 8));
+			Vec pos = this.parentCannon.getPos().addY(this.currentDistance).rotate(-this.angle, this.parentCannon.getPos());
+			this.spawner.rotation = new ParticleSpawnerOption(-this.angle, CalcUtil.randomize((float) Math.PI / 4, (float) Math.PI / 8));
 
 			// set angle to move either right or left at 90 degree angle
-			spawner.angle = new ParticleSpawnerOption((float) (-this.angle + ((GameConf.PRNG.nextBoolean()) ? 1 : -1) * Math.PI / 2));
+			this.spawner.angle = new ParticleSpawnerOption((float) (-this.angle + ((GameConf.PRNG.nextBoolean()) ? 1 : -1) * Math.PI / 2));
 
 			// Spawn the killer particle at pos
-			spawner.spawn(this.parentCannon.getScene(), pos);
+			this.spawner.spawn(this.parentCannon.getScene(), pos);
 		}
 	}
 

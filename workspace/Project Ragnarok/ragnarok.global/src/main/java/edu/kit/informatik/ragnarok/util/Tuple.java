@@ -1,7 +1,7 @@
 package edu.kit.informatik.ragnarok.util;
 
 /**
- * This class defines a tuple
+ * This class defines a tuple.
  *
  * @author Dominik Fuchß
  *
@@ -12,17 +12,21 @@ package edu.kit.informatik.ragnarok.util;
  */
 public final class Tuple<T, U> {
 	/**
-	 * First entry
+	 * First entry.
 	 */
 	private final T t;
 	/**
-	 * Second entry
+	 * Second entry.
 	 */
 	private final U u;
 
 	/**
-	 * Create a new Tuple
+	 * Create a new Tuple.
 	 *
+	 * @param <V>
+	 *            the type of the first parameter
+	 * @param <W>
+	 *            the type of the second parameter
 	 * @param v
 	 *            the first parameter
 	 * @param w
@@ -34,7 +38,7 @@ public final class Tuple<T, U> {
 	}
 
 	/**
-	 * Instantiate a new Tuple
+	 * Instantiate a new Tuple.
 	 *
 	 * @param t
 	 *            the first entry
@@ -47,7 +51,7 @@ public final class Tuple<T, U> {
 	}
 
 	/**
-	 * Get the first entry
+	 * Get the first entry.
 	 *
 	 * @return the first entry
 	 */
@@ -56,7 +60,7 @@ public final class Tuple<T, U> {
 	}
 
 	/**
-	 * Get the second entry
+	 * Get the second entry.
 	 *
 	 * @return the second entry
 	 */

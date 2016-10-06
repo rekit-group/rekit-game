@@ -22,7 +22,7 @@ import edu.kit.informatik.ragnarok.visitor.visitors.ResourceBundleVisitor;
 
 /**
  * This class supports the setting of Values and/or Attributes to Classes and
- * Objects which implements the {@link Visitable} interface
+ * Objects which implements the {@link Visitable} interface.
  *
  * @author Dominik Fuchß
  * @see VisitInfo
@@ -33,7 +33,7 @@ public abstract class Visitor {
 
 	/**
 	 * Get a new modifiable visitor (default visitor:
-	 * {@link ResourceBundleVisitor})
+	 * {@link ResourceBundleVisitor}).
 	 *
 	 * @return the new visior
 	 * @see #setParser(Class, Parser)
@@ -43,13 +43,13 @@ public abstract class Visitor {
 	}
 
 	/**
-	 * Prevent illegal instantiation
+	 * Prevent illegal instantiation.
 	 */
 	protected Visitor() {
 	}
 
 	/**
-	 * A map of parsers for the visit
+	 * A map of parsers for the visit.
 	 */
 	private final Map<Class<?>, Parser> parsers = new HashMap<Class<?>, Parser>() {
 		/**
@@ -69,7 +69,7 @@ public abstract class Visitor {
 	};
 
 	/**
-	 * This method will be invoked before visiting by {@link #visit(Visitable)}
+	 * This method will be invoked before visiting by {@link #visit(Visitable)}.
 	 *
 	 * @param v
 	 *            the visitable
@@ -80,7 +80,7 @@ public abstract class Visitor {
 
 	/**
 	 * This method will be invoked before visiting by
-	 * {@link #visitStatic(Class)}
+	 * {@link #visitStatic(Class)}.
 	 *
 	 * @param v
 	 *            the visitable
@@ -90,7 +90,7 @@ public abstract class Visitor {
 	protected abstract boolean createSource(Class<? extends Visitable> v);
 
 	/**
-	 * Get value by key
+	 * Get value by key.
 	 *
 	 * @param key
 	 *            the key ({@link Field#getName()})
@@ -99,7 +99,7 @@ public abstract class Visitor {
 	protected abstract String getValue(String key);
 
 	/**
-	 * Visit a visitable (only non-static)
+	 * Visit a visitable (only non-static).
 	 *
 	 * @param v
 	 *            the visitable
@@ -119,7 +119,7 @@ public abstract class Visitor {
 	}
 
 	/**
-	 * Visit a visitable (only static)
+	 * Visit a visitable (only static).
 	 *
 	 * @param v
 	 *            the visitable
@@ -139,7 +139,7 @@ public abstract class Visitor {
 	}
 
 	/**
-	 * This method will add more parsers if necessary
+	 * This method will add more parsers if necessary.
 	 *
 	 * @param clazz
 	 *            the class (of the object) which shall be visited
@@ -173,7 +173,7 @@ public abstract class Visitor {
 	}
 
 	/**
-	 * Invoke method of a visitable (only static)
+	 * Invoke method of a visitable (only static).
 	 *
 	 * @param m
 	 *            the method
@@ -196,7 +196,7 @@ public abstract class Visitor {
 	}
 
 	/**
-	 * Apply a value to a field (only static)
+	 * Apply a value to a field (only static).
 	 *
 	 * @param field
 	 *            the field
@@ -227,7 +227,7 @@ public abstract class Visitor {
 	}
 
 	/**
-	 * Invoke method of a visitable (only non-static)
+	 * Invoke method of a visitable (only non-static).
 	 *
 	 * @param v
 	 *            the visitable
@@ -252,7 +252,7 @@ public abstract class Visitor {
 	}
 
 	/**
-	 * Apply a value to a field (only non-static)
+	 * Apply a value to a field (only non-static).
 	 *
 	 * @param v
 	 *            the visitable

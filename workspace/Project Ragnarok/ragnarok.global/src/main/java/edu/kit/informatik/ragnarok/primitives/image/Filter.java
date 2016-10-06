@@ -5,10 +5,16 @@ import java.util.Set;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.util.ReflectUtils;
 
+/**
+ * This interface defines all kind of image filters for the game.
+ *
+ * @author Dominik Fuchß
+ *
+ */
 public interface Filter {
 
 	/**
-	 * Get all dynamic filters
+	 * Get all dynamic filters.
 	 *
 	 * @return the set of all filters
 	 */
@@ -18,7 +24,7 @@ public interface Filter {
 
 	/**
 	 * This boolean indicates whether this filter can be applied pixel per pixel
-	 * (fast) or only on the final image (slow)
+	 * (fast) or only on the final image (slow).
 	 *
 	 * @return {@code true} if {@link #apply(RGBAColor)} and
 	 *         {@link #apply(RGBColor)} shall be used,<br>
@@ -27,7 +33,7 @@ public interface Filter {
 	boolean isApplyPixel();
 
 	/**
-	 * Apply Filter
+	 * Apply Filter.
 	 *
 	 * @param color
 	 *            the original color
@@ -38,7 +44,7 @@ public interface Filter {
 	}
 
 	/**
-	 * Apply Filter
+	 * Apply Filter.
 	 *
 	 * @param color
 	 *            the original color
@@ -49,7 +55,7 @@ public interface Filter {
 	}
 
 	/**
-	 * Apply Filter
+	 * Apply Filter.
 	 *
 	 * @param imageData
 	 *            the original data

@@ -5,7 +5,7 @@ import java.lang.reflect.Field;
 import edu.kit.informatik.ragnarok.visitor.Visitable;
 
 /**
- * This {@link Parser} is used for parsing {@link Float Floats}
+ * This {@link Parser} is used for parsing {@link Float Floats}.
  *
  * @author Dominik Fuchß
  *

@@ -2,21 +2,21 @@ package edu.kit.informatik.ragnarok.primitives.geometry;
 
 /**
  *
- * This class defines a Frame which will be used to check collisions
+ * This class defines a Frame which will be used to check collisions.
  *
  */
 public final class Frame {
 	/**
-	 * The first anchor of the frame
+	 * The first anchor of the frame.
 	 */
 	private Vec upperLeftAnchor;
 	/**
-	 * The second anchor of the frame
+	 * The second anchor of the frame.
 	 */
 	private Vec bottomRightAnchor;
 
 	/**
-	 * Create a frame by two anchors
+	 * Create a frame by two anchors.
 	 *
 	 * @param v1
 	 *            the upperLeft anchor
@@ -29,7 +29,7 @@ public final class Frame {
 	}
 
 	/**
-	 * Check whether this frame collides with another
+	 * Check whether this frame collides with another.
 	 *
 	 * @param otherFrame
 	 *            the other frame
@@ -42,7 +42,7 @@ public final class Frame {
 	}
 
 	/**
-	 * Check whether this frame collides with another object
+	 * Check whether this frame collides with another object.
 	 *
 	 * @param position
 	 *            of the object
@@ -54,7 +54,7 @@ public final class Frame {
 	}
 
 	/**
-	 * Gets the component of the frames border at given direction
+	 * Gets the component of the frames border at given direction.
 	 *
 	 * @param dir
 	 *            The direction of border

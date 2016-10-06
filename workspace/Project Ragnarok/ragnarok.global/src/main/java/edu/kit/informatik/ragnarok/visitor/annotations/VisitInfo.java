@@ -8,7 +8,7 @@ import edu.kit.informatik.ragnarok.visitor.visitors.ResourceBundleVisitor;
 
 /**
  * This annotation must be applied to a Class which shall be visited by a
- * {@link ResourceBundleVisitor}
+ * {@link ResourceBundleVisitor}.
  *
  * @author Dominik Fuchß
  *
@@ -16,14 +16,14 @@ import edu.kit.informatik.ragnarok.visitor.visitors.ResourceBundleVisitor;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface VisitInfo {
 	/**
-	 * Indicates whether you want a visit
+	 * Indicates whether you want a visit.
 	 *
 	 * @return {@code true} if visit is allowed, {@code false} otherwise
 	 */
 	public boolean visit();
 
 	/**
-	 * Get the path to the corresponding property file
+	 * Get the path to the corresponding property file.
 	 *
 	 * @return the path to the property file
 	 * @see ResourceBundle

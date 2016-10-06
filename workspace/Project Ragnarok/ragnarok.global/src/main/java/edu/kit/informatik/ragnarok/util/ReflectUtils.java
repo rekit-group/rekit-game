@@ -12,21 +12,21 @@ import org.reflections.Reflections;
 
 /**
  * This class contains several methods for using Java Reflections in a proper
- * way
+ * way.
  *
  * @author Dominik Fuchß
  *
  */
 public final class ReflectUtils {
 	/**
-	 * Prevent instantiation
+	 * Prevent instantiation.
 	 */
 	private ReflectUtils() {
 	}
 
 	/**
 	 * Load all implementations that shall be loaded (see {@link LoadMe}) of a
-	 * class by search path (-> classpath) <br>
+	 * class by search path (-> classpath). <br>
 	 * If a class wants to be loaded, the class needs a <b>default
 	 * constructor</b>
 	 *
@@ -34,6 +34,8 @@ public final class ReflectUtils {
 	 *            the search path (e.g. java.lang)
 	 * @param type
 	 *            the class
+	 * @param <T>
+	 *            the class-type
 	 * @return a set of instances of the found classes
 	 */
 	@SuppressWarnings("unchecked")
@@ -56,12 +58,14 @@ public final class ReflectUtils {
 	}
 
 	/**
-	 * Get all implementations of a class by search path (-> classpath) <br>
+	 * Get all implementations of a class by search path (-> classpath) .<br>
 	 *
 	 * @param searchPath
 	 *            the search path (e.g. java.lang)
 	 * @param type
 	 *            the class
+	 * @param <T>
+	 *            the class-type
 	 * @return a set of the found classes
 	 */
 	public static final <T> Set<Class<? extends T>> getClasses(String searchPath, Class<T> type) {
@@ -70,7 +74,7 @@ public final class ReflectUtils {
 
 	/**
 	 * This annotation has to be applied to Classes which shall be loaded as
-	 * implementation of a specific class and shall be instantiated
+	 * implementation of a specific class and shall be instantiated.
 	 *
 	 * @author Dominik Fuchß
 	 * @see ReflectUtils#loadInstances(String, Class)

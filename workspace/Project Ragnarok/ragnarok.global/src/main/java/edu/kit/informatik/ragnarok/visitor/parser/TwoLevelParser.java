@@ -10,14 +10,16 @@ import edu.kit.informatik.ragnarok.visitor.Visitor;
 import edu.kit.informatik.ragnarok.visitor.visitors.MapVisitor;
 
 /**
- * This {@link Parser} is able to parse options from a config<br>
+ * This {@link Parser} is able to parse options from a config.<br>
  * Syntax: name1::optionValue1;name2::optionValue2
  *
  * @author Dominik Fuchß
  *
  */
 public final class TwoLevelParser implements Parser {
-
+	/**
+	 * The mapping from stage-2-key to value.
+	 */
 	private Map<String, String> mapping = new HashMap<>();
 
 	@Override
@@ -49,7 +51,7 @@ public final class TwoLevelParser implements Parser {
 
 	/**
 	 * This method will be invoked by {@link #parse(Visitable, Field, String)}
-	 * and shall set the field
+	 * and shall set the field.
 	 *
 	 * @param obj
 	 *            the Visitable Object or {@code null} if static visit (class

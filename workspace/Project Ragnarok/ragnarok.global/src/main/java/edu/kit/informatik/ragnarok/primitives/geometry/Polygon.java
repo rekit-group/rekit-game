@@ -6,21 +6,22 @@ import java.util.List;
 
 /**
  *
- * This class defines a polygon
+ * This class defines a polygon.
  *
  */
 public final class Polygon implements Cloneable {
 	/**
-	 * The first point's position
+	 * The first point's position.
 	 */
 	private Vec startPoint;
 	/**
-	 * The relative positions of the next points relative to {@link #startPoint}
+	 * The relative positions of the next points relative to
+	 * {@link #startPoint}.
 	 */
 	private List<Vec> relPts;
 
 	/**
-	 * Create the polygon by start position and other points
+	 * Create the polygon by start position and other points.
 	 *
 	 * @param startPoint
 	 *            the first point's position
@@ -37,7 +38,7 @@ public final class Polygon implements Cloneable {
 	}
 
 	/**
-	 * Create the polygon by start position and other points (used for cloning)
+	 * Create the polygon by start position and other points (used for cloning).
 	 *
 	 * @param startPoint
 	 *            the first point's position
@@ -55,7 +56,7 @@ public final class Polygon implements Cloneable {
 
 	/**
 	 * Create the polygon by start position and other points
-	 * {@link #rotate(float)} or {@link #rotate(float, Vec)}
+	 * {@link #rotate(float)} or {@link #rotate(float, Vec)}.
 	 *
 	 * @param startPoint
 	 *            the first point's position
@@ -66,7 +67,7 @@ public final class Polygon implements Cloneable {
 	}
 
 	/**
-	 * Get the start point of the polygon
+	 * Get the start point of the polygon.
 	 *
 	 * @return the start point
 	 */
@@ -80,7 +81,7 @@ public final class Polygon implements Cloneable {
 	}
 
 	/**
-	 * Move a polygon to target location
+	 * Move a polygon to target location.
 	 *
 	 * @param targetLocation
 	 *            the target location
@@ -90,7 +91,7 @@ public final class Polygon implements Cloneable {
 	}
 
 	/**
-	 * Add a new relative point
+	 * Add a new relative point.
 	 *
 	 * @param relPt
 	 *            the point
@@ -100,7 +101,7 @@ public final class Polygon implements Cloneable {
 	}
 
 	/**
-	 * Rotate the polygon by angle
+	 * Rotate the polygon by angle.
 	 *
 	 * @param angle
 	 *            the angle
@@ -111,7 +112,7 @@ public final class Polygon implements Cloneable {
 	}
 
 	/**
-	 * Rotate the polygon by angle and anchor
+	 * Rotate the polygon by angle and anchor.
 	 *
 	 * @param angle
 	 *            the angle
@@ -135,7 +136,7 @@ public final class Polygon implements Cloneable {
 	}
 
 	/**
-	 * Get the absolute positions of all points
+	 * Get the absolute positions of all points.
 	 *
 	 * @return the points
 	 */
@@ -158,6 +159,13 @@ public final class Polygon implements Cloneable {
 		return actualArray;
 	}
 
+	/**
+	 * Scale this polygon.
+	 * 
+	 * @param scale
+	 *            the factor
+	 * @return the result polygon
+	 */
 	public Polygon scale(float scale) {
 		List<Vec> newRelPts = new LinkedList<>();
 		for (Vec relPt2scale : this.relPts) {

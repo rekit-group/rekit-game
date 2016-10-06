@@ -1,16 +1,24 @@
 package edu.kit.informatik.ragnarok.primitives.operable;
 
+// TODO JDoc
+/**
+ *
+ * @param <T>
+ *            the class / the {@link Operable}
+ */
 public final class OpProgress<T extends Operable<T>> {
-
+	/**
+	 * Indicates whether the element is static.
+	 */
 	private boolean isStatic = false;
 
 	/**
-	 * Saved version of the start value
+	 * Saved version of the start value.
 	 */
 	private Operable<T> start;
 
 	/**
-	 * Saved version of the delta value, calculated by end-initial
+	 * Saved version of the delta value, calculated by end-initial.
 	 */
 	private Operable<T> delta;
 

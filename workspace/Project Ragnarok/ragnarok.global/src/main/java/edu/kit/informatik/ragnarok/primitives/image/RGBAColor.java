@@ -1,31 +1,31 @@
 package edu.kit.informatik.ragnarok.primitives.image;
 
 /**
- * This class defines a Color with RGBA channels
+ * This class defines a Color with RGBA channels.
  *
  * @author Dominik Fuchß
  *
  */
 public final class RGBAColor {
 	/**
-	 * The red channel
+	 * The red channel.
 	 */
 	public final int red;
 	/**
-	 * The green channel
+	 * The green channel.
 	 */
 	public final int green;
 	/**
-	 * The blue channel
+	 * The blue channel.
 	 */
 	public final int blue;
 	/**
-	 * The alpha channel
+	 * The alpha channel.
 	 */
 	public final int alpha;
 
 	/**
-	 * Create a new RGBA Color
+	 * Create a new RGBA Color.
 	 *
 	 * @param r
 	 *            the red channel
@@ -44,7 +44,7 @@ public final class RGBAColor {
 	}
 
 	/**
-	 * Create a color by an int coded ARGB color
+	 * Create a color by an int coded ARGB color.
 	 *
 	 * @param color
 	 *            the ARGB color
@@ -57,7 +57,7 @@ public final class RGBAColor {
 	}
 
 	/**
-	 * Darken the color
+	 * Darken the color.
 	 *
 	 * @param p
 	 *            the percentage
