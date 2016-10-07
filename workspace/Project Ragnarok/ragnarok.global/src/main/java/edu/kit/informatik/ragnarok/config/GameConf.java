@@ -37,6 +37,11 @@ public final class GameConf implements Visitable {
 	 */
 	@NoVisit
 	public static final Random PRNG = new Random();
+
+	/**
+	 * The file location of the level manager file.
+	 */
+	public static String LVL_MGMT_FILE;
 	/**
 	 * This boolean indicates whether the game is in debug mode.
 	 */

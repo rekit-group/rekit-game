@@ -32,7 +32,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.GameElementFactory;
  * </p>
  *
  * @author Angelo Aracri
- * @author Dominik Fuch�
+ * @author Dominik Fuchß
  * @version 1.1
  */
 public class Structure extends Configurable {
@@ -50,7 +50,9 @@ public class Structure extends Configurable {
 	 * being build in the exact way as the <i>structureArray</i> specifies.
 	 */
 	private int gapWidth;
-
+	/**
+	 * A mapping of all aliases.
+	 */
 	private Map<String, String> alias;
 
 	/**
@@ -62,6 +64,9 @@ public class Structure extends Configurable {
 	 * @param lines
 	 *            the two dimensional template of the GameElements of this
 	 *            Structure.
+	 *
+	 * @param alias
+	 *            the aliases
 	 */
 	public Structure(List<String[]> lines, Map<String, String> alias) {
 		this.structure = new String[lines.size()][];
@@ -82,6 +87,8 @@ public class Structure extends Configurable {
 	 * @param lines
 	 *            the two dimensional template of the GameElements of this
 	 *            Structure.
+	 * @param alias
+	 *            the aliases
 	 */
 	public Structure(String[][] lines, Map<String, String> alias) {
 		this.structure = new String[lines.length][];
@@ -162,6 +169,13 @@ public class Structure extends Configurable {
 		return this.getWidth() + this.gapWidth;
 	}
 
+	/**
+	 * Get alias.
+	 *
+	 * @param string
+	 *            the source string
+	 * @return the alias or {@code null} if none found
+	 */
 	private String alias(String string) {
 		String alias = this.alias.get(string);
 		if (alias == null && !"0".equals(string)) {
@@ -199,6 +213,7 @@ public class Structure extends Configurable {
 	 * autoCoinSpawn)</i>.
 	 *
 	 * @param gapWidth
+	 *            the gap's width
 	 */
 	public void setGap(int gapWidth) {
 		this.gapWidth = gapWidth;

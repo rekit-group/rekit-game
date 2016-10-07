@@ -8,21 +8,21 @@ import edu.kit.informatik.ragnarok.primitives.time.Timer;
 /**
  *
  * This class can decorate all {@link GuiElement GuiElements} so that they will
- * be deleted after a specific time
+ * be deleted after a specific time.
  *
  */
-public class TimeDecorator extends GuiElement {
+public final class TimeDecorator extends GuiElement {
 	/**
-	 * The decorated GuiElement
+	 * The decorated GuiElement.
 	 */
 	private GuiElement element;
 	/**
-	 * The timer
+	 * The timer.
 	 */
 	private Timer timer;
 
 	/**
-	 * Create a TimeDecorator
+	 * Create a TimeDecorator.
 	 *
 	 * @param scene
 	 *            the scene

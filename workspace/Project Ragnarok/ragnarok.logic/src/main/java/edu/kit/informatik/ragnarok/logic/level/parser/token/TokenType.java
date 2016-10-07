@@ -1,46 +1,46 @@
 package edu.kit.informatik.ragnarok.logic.level.parser.token;
 
 /**
- * This class defines the different TokenTypes which exist in the LevelLanguage
+ * This class defines the different TokenTypes which exist in the LevelLanguage.
  *
  * @author Dominik Fuchß
  *
  */
 public enum TokenType {
 	/**
-	 * A normal setting for the level
+	 * A normal setting for the level.
 	 */
 	SETTING,
 	/**
-	 * A setting which belongs to a boss
+	 * A setting which belongs to a boss.
 	 */
 	BOSS_SETTING,
 	/**
-	 * An Alias
+	 * An Alias.
 	 */
 	ALIAS,
 	/**
-	 * Mapping
+	 * Mapping.
 	 */
 	MAPPING,
 	/**
-	 * Begin of an Level or an LevelLine (equals "{")
+	 * Begin of an Level or an LevelLine (equals "{").
 	 */
 	BEGIN,
 	/**
-	 * End of an Level or an LevelLine (equals "}")
+	 * End of an Level or an LevelLine (equals "}").
 	 */
 	END,
 	/**
-	 * End of String Token
+	 * End of String Token.
 	 */
 	EOS,
 	/**
-	 * Token for RAW content
+	 * Token for RAW content.
 	 */
 	RAW,
 	/**
-	 * Token for an delimiter of an Setting or Alias (equals "::")
+	 * Token for an delimiter of an Setting or Alias (equals "::").
 	 */
 	DELIMITER
 }

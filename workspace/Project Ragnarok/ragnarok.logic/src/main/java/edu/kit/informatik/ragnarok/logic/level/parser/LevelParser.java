@@ -5,14 +5,14 @@ import edu.kit.informatik.ragnarok.logic.level.StructureManager;
 
 /**
  * This class shall be implemented from all classes which want to parse a
- * {@link Level} to a {@link StructureManager}
+ * {@link Level} to a {@link StructureManager}.
  *
  * @author Dominik Fuchß
  *
  */
 public abstract class LevelParser {
 	/**
-	 * Get the default parser ({@link StringParser})
+	 * Get the default parser ({@link StringParser}).
 	 *
 	 * @param input
 	 *            the input string
@@ -23,12 +23,12 @@ public abstract class LevelParser {
 	}
 
 	/**
-	 * The original string
+	 * The original string.
 	 */
 	protected final String input;
 
 	/**
-	 * Set all necessary fields
+	 * Set all necessary fields.
 	 *
 	 * @param input
 	 *            the original string
@@ -41,7 +41,7 @@ public abstract class LevelParser {
 	}
 
 	/**
-	 * Parse the level to the {@link StructureManager}
+	 * Parse the level to the {@link StructureManager}.
 	 *
 	 * @param manager
 	 *            the structure manager

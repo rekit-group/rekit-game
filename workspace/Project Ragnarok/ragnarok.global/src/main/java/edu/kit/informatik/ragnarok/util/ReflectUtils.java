@@ -74,7 +74,9 @@ public final class ReflectUtils {
 
 	/**
 	 * This annotation has to be applied to Classes which shall be loaded as
-	 * implementation of a specific class and shall be instantiated.
+	 * implementation of a specific class and shall be instantiated.<br>
+	 * If a class wants to be loaded, the class needs a <b>default
+	 * constructor</b>
 	 *
 	 * @author Dominik Fuchß
 	 * @see ReflectUtils#loadInstances(String, Class)

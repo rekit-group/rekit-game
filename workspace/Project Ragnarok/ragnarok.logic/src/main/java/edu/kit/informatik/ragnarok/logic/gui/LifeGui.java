@@ -3,30 +3,31 @@ package edu.kit.informatik.ragnarok.logic.gui;
 import edu.kit.informatik.ragnarok.core.Field;
 import edu.kit.informatik.ragnarok.core.GuiElement;
 import edu.kit.informatik.ragnarok.core.IScene;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 
 /**
  *
  * This {@link GuiElement} realizes a status view of the {@link Player Player's}
- * Lives
+ * Lives.
  *
  */
 public class LifeGui extends GuiElement {
 	/**
-	 * The image name
+	 * The image name.
 	 */
 	private String image = "mrRekt_glasses_right.png";
 	/**
-	 * The image size
+	 * The image size.
 	 */
 	private Vec imageSize = new Vec(10);
 	/**
-	 * The amount of the player's lives
+	 * The amount of the player's lives.
 	 */
 	private int playerLives;
 
 	/**
-	 * Create the status view for lives
+	 * Create the status view for lives.
 	 *
 	 * @param scene
 	 *            the scene

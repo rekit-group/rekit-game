@@ -14,6 +14,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 
+import edu.kit.informatik.ragnarok.config.GameConf;
+
 /**
  *
  * This class manages all Level depended stuff as highscores etc.
@@ -21,16 +23,16 @@ import java.util.Scanner;
  */
 public final class LevelManager {
 	/**
-	 * All known levels (ID -> Level)
+	 * All known levels (ID -> Level).
 	 */
 	private final static Map<String, Level> levelMap = new HashMap<>();
 	/**
-	 * The global data file for the {@link LevelManager}
+	 * The global data file for the {@link LevelManager}.
 	 */
-	private final static File FILE = new File("levelManager.dat");
+	private final static File FILE = new File(GameConf.LVL_MGMT_FILE);
 
 	/**
-	 * Prevent instantiation
+	 * Prevent instantiation.
 	 */
 	private LevelManager() {
 	}
@@ -41,7 +43,7 @@ public final class LevelManager {
 	}
 
 	/**
-	 * Get the infinite level
+	 * Get the infinite level.
 	 *
 	 * @return the infinite level
 	 */
@@ -50,7 +52,7 @@ public final class LevelManager {
 	}
 
 	/**
-	 * Get the level of the day
+	 * Get the level of the day.
 	 *
 	 * @return the level of the day
 	 */
@@ -63,7 +65,7 @@ public final class LevelManager {
 	}
 
 	/**
-	 * Get an arcade level by id
+	 * Get an arcade level by id.
 	 *
 	 * @param arcadeId
 	 *            the id
@@ -74,7 +76,7 @@ public final class LevelManager {
 	}
 
 	/**
-	 * Load a level by id
+	 * Load a level by id.
 	 *
 	 * @param id
 	 *            the level
@@ -89,7 +91,7 @@ public final class LevelManager {
 	}
 
 	/**
-	 * Add a level to the manager
+	 * Add a level to the manager.
 	 *
 	 * @param level
 	 *            the level
@@ -102,7 +104,7 @@ public final class LevelManager {
 	}
 
 	/**
-	 * Get the last unlocked arcade level
+	 * Get the last unlocked arcade level.
 	 *
 	 * @return the number of the last unlocked arcade level or {@code -1} if
 	 *         none unlocked
@@ -117,7 +119,7 @@ public final class LevelManager {
 	}
 
 	/**
-	 * Get the number of arcade levels
+	 * Get the number of arcade levels.
 	 *
 	 * @return the number of arcade levels
 	 */
@@ -130,14 +132,14 @@ public final class LevelManager {
 	}
 
 	/**
-	 * This method shall be invoked to signalize a content change in a level
+	 * This method shall be invoked to signalize a content change in a level.
 	 */
 	public static void contentChanged() {
 		LevelManager.saveToFile();
 	}
 
 	/**
-	 * Load Highscores / Infos from file
+	 * Load Highscores / Infos from file.
 	 */
 	private static void loadFromFile() {
 		try {
@@ -159,7 +161,7 @@ public final class LevelManager {
 	}
 
 	/**
-	 * Convert current state of LevelManager to a representing string
+	 * Convert current state of LevelManager to a representing string.
 	 *
 	 * @return the representing string
 	 */
@@ -175,7 +177,7 @@ public final class LevelManager {
 	}
 
 	/**
-	 * Save state to {@link #FILE}
+	 * Save state to {@link #FILE}.
 	 */
 	private static void saveToFile() {
 		// create OutputStream

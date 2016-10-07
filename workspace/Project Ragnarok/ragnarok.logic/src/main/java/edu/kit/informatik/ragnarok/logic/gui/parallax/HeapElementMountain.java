@@ -125,7 +125,7 @@ public class HeapElementMountain extends HeapElement {
 	}
 
 	@Override
-	public HeapElement clone(HeapLayer parent, Vec pos, Vec size, RGBAColor col) {
+	public HeapElement create(HeapLayer parent, Vec pos, Vec size, RGBAColor col) {
 		return new HeapElementMountain(parent, pos, size, col);
 	}
 

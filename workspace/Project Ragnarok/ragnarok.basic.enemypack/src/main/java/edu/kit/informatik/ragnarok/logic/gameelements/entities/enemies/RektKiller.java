@@ -37,7 +37,7 @@ public final class RektKiller extends Enemy {
 
 	/**
 	 * Cache the Polygon of the visualization of spikes that will later on be
-	 * rotated and rendered
+	 * rotated and rendered.
 	 */
 	private Polygon spikePolygon;
 
@@ -78,7 +78,7 @@ public final class RektKiller extends Enemy {
 	}
 
 	/**
-	 * Alternative Constructor that uses the default size of (0.6, 0.6)
+	 * Alternative Constructor that uses the default size of (0.6, 0.6).
 	 *
 	 * @param startPos
 	 *            the initial position of the Enemy
@@ -91,7 +91,7 @@ public final class RektKiller extends Enemy {
 
 	/**
 	 * Calculates the Polygon for the size-dependent spikes and saves them in
-	 * the attribute <i>spikePolygon</i>
+	 * the attribute <i>spikePolygon</i>.
 	 */
 	public void prepare() {
 		// calculate size dependent Polygon for spikes

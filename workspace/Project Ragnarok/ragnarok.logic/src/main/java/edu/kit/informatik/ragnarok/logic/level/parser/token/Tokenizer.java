@@ -5,7 +5,7 @@ import java.util.StringTokenizer;
 import edu.kit.informatik.ragnarok.visitor.parser.StringParser;
 
 /**
- * This class realizes a tokenizer for the LevelLanguage
+ * This class realizes a tokenizer for the LevelLanguage.
  *
  * @author Dominik Fuchß
  * @see StringParser
@@ -14,16 +14,16 @@ import edu.kit.informatik.ragnarok.visitor.parser.StringParser;
  */
 public class Tokenizer {
 	/**
-	 * The original input string
+	 * The original input string.
 	 */
 	private final String input;
 	/**
-	 * The inner tokenizer
+	 * The inner tokenizer.
 	 */
 	private final StringTokenizer scanner;
 
 	/**
-	 * Instantiate a new Tokenizer by input string
+	 * Instantiate a new Tokenizer by input string.
 	 *
 	 * @param input
 	 *            the input string
@@ -37,7 +37,7 @@ public class Tokenizer {
 	}
 
 	/**
-	 * Get the next token
+	 * Get the next token.
 	 *
 	 * @return the token
 	 */

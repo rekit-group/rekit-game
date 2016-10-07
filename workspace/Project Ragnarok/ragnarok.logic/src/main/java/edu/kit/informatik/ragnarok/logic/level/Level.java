@@ -2,6 +2,11 @@ package edu.kit.informatik.ragnarok.logic.level;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 
+/**
+ *
+ * This class holds all necessary information about a level.
+ *
+ */
 public class Level {
 
 	/**
@@ -9,11 +14,27 @@ public class Level {
 	 * structure template.
 	 */
 	public String stringIdentifier;
+	/**
+	 * The level's seed.
+	 */
 	private int levelSeed;
+	/**
+	 * The level's highscore.
+	 */
 	private int highScore = 0;
-
+	/**
+	 * The level's assebler.
+	 */
 	private LevelAssembler levelAssembler;
 
+	/**
+	 * Create a new Level.
+	 *
+	 * @param stringIdentifier
+	 *            the id
+	 * @param highScore
+	 *            the highscore
+	 */
 	public Level(String stringIdentifier, int highScore) {
 		this.stringIdentifier = stringIdentifier;
 		this.levelSeed = GameConf.PRNG.nextInt();
@@ -25,6 +46,7 @@ public class Level {
 	 * the level generation.
 	 *
 	 * @param seed
+	 *            the seed
 	 */
 	public void setSeed(int seed) {
 		this.levelSeed = seed;
@@ -76,6 +98,9 @@ public class Level {
 		return this.levelAssembler;
 	}
 
+	/**
+	 * Initialize level & generate level.
+	 */
 	public void init() {
 		this.getLevelAssember().init();
 		this.getLevelAssember().generate(GameConf.GRID_W);
@@ -86,6 +111,13 @@ public class Level {
 		return this.stringIdentifier + ":{score:" + this.highScore + "}";
 	}
 
+	/**
+	 * Load level by string (definition).
+	 *
+	 * @param in
+	 *            the input string
+	 * @return the level or {@code null} if fails.
+	 */
 	public static Level fromString(String in) {
 		String stringIdentifier = "";
 		int highScore = 0;

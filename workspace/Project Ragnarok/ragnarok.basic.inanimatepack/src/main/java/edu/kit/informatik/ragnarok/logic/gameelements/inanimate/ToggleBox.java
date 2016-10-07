@@ -13,41 +13,41 @@ import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 
 /**
  * This class realizes a box which toggles between solid an not-solid state from
- * time to time
+ * time to time.
  *
  */
 @LoadMe
-public class ToggleBox extends DynamicInanimate {
+public final class ToggleBox extends DynamicInanimate {
 	/**
-	 * The inner {@link InanimateBox}
+	 * The inner {@link InanimateBox}.
 	 */
 	protected InanimateBox innerBox;
 	/**
-	 * The period between toggling
+	 * The period between toggling.
 	 */
 	protected static final long PERIOD = 4000;
 	/**
-	 * The current time offset
+	 * The current time offset.
 	 */
 	protected long offset = 0;
 	/**
-	 * The different strategies
+	 * The different strategies.
 	 */
 	private Map<Boolean, ToggleBoxStrategy> strategies;
 	/**
-	 * The currently activated strategy
+	 * The currently activated strategy.
 	 */
 	private ToggleBoxStrategy currentStrategy;
 
 	/**
-	 * Prototype Constructor
+	 * Prototype Constructor.
 	 */
 	public ToggleBox() {
 		super();
 	}
 
 	/**
-	 * Create a ToggleBox
+	 * Create a ToggleBox.
 	 *
 	 * @param pos
 	 *            the position
@@ -100,18 +100,18 @@ public class ToggleBox extends DynamicInanimate {
 
 	/**
 	 * This class is the base class for all different behaviors of a
-	 * {@link ToggleBox}
+	 * {@link ToggleBox}.
 	 *
 	 *
 	 */
 	private abstract class ToggleBoxStrategy {
 		/**
-		 * The parent
+		 * The parent.
 		 */
 		protected ToggleBox parent;
 
 		/**
-		 * Create strategy by parent
+		 * Create strategy by parent.
 		 *
 		 * @param parent
 		 *            the parent
@@ -121,7 +121,7 @@ public class ToggleBox extends DynamicInanimate {
 		}
 
 		/**
-		 * Same as {@link ToggleBox#reactToCollision(GameElement, Direction)}
+		 * Same as {@link ToggleBox#reactToCollision(GameElement, Direction)}.
 		 *
 		 * @param element
 		 *            the element
@@ -133,14 +133,14 @@ public class ToggleBox extends DynamicInanimate {
 		}
 
 		/**
-		 * Get the current alpha value of the color
+		 * Get the current alpha value of the color.
 		 *
 		 * @return the alpha value [0;255]
 		 */
 		public abstract int getAlpha();
 
 		/**
-		 * Same as {@link ToggleBox#internalRender(Field)}
+		 * Same as {@link ToggleBox#internalRender(Field)}.
 		 *
 		 * @param f
 		 *            the field
@@ -158,11 +158,11 @@ public class ToggleBox extends DynamicInanimate {
 	/**
 	 *
 	 * This is the strategy for the visible time of the {@link ToggleBox} While
-	 * this is the strategy of the ToggleBox it's a solid block
+	 * this is the strategy of the ToggleBox it's a solid block.
 	 */
 	private class ToggleBoxStrategyVisible extends ToggleBoxStrategy {
 		/**
-		 * Create strategy by parent
+		 * Create strategy by parent.
 		 *
 		 * @param parent
 		 *            the parent
@@ -186,11 +186,11 @@ public class ToggleBox extends DynamicInanimate {
 	/**
 	 *
 	 * This is the strategy for the invisible time of the {@link ToggleBox}
-	 * While this is the strategy of the ToggleBox it isn't a solid block
+	 * While this is the strategy of the ToggleBox it isn't a solid block.
 	 */
 	private class ToggleBoxStrategyInvisible extends ToggleBoxStrategy {
 		/**
-		 * Create strategy by parent
+		 * Create strategy by parent.
 		 *
 		 * @param parent
 		 *            the parent

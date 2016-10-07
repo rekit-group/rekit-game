@@ -55,6 +55,7 @@ public class ShootingState extends ChargingState {
 	 * Specialized constructor that saves the angle in radians to shoot at.
 	 *
 	 * @param angle
+	 *            the angle
 	 */
 	public ShootingState(float angle) {
 		super(angle);

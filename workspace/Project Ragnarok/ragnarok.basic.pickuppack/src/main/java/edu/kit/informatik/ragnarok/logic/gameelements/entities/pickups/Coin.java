@@ -10,38 +10,38 @@ import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 
 /**
  * This class defines a simple {@link Pickup}; a <b>Coin</b> which will give the
- * player points
+ * player points.
  *
  *
  */
 @LoadMe
-public class Coin extends Pickup {
+public final class Coin extends Pickup {
 	/**
-	 * Prototype Constructor
+	 * Prototype Constructor.
 	 */
 	public Coin() {
 		super();
 	}
 
 	/**
-	 * The default color of the coin
+	 * The default color of the coin.
 	 */
 	private static RGBColor color = new RGBColor(232, 214, 16);
 	/**
-	 * The shadow color of the coin
+	 * The shadow color of the coin.
 	 */
 	private static RGBColor darkColor = new RGBColor(192, 174, 6);
 	/**
-	 * The X-Coordinate
+	 * The X-Coordinate.
 	 */
 	private float x = 0;
 	/**
-	 * Sin(X) for spinning coin
+	 * Sin(X) for spinning coin.
 	 */
 	private double sin = 0;
 
 	/**
-	 * Instantiate a Coin by position
+	 * Instantiate a Coin by position.
 	 *
 	 * @param startPos
 	 *            the start position

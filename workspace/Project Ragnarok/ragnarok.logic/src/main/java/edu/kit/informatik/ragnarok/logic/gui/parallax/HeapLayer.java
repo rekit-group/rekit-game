@@ -52,7 +52,7 @@ public class HeapLayer extends ParallaxLayer {
 				RGBAColor col = new RGBAColor(randR, randG, randB, randA);
 
 				// Create actual HeapElem object and add it
-				HeapElement elem = this.getPrototype().clone(this, pos, size, col);
+				HeapElement elem = this.getPrototype().create(this, pos, size, col);
 				elem.backgroundZ -= i;
 				this.scene.addGameElement(elem);
 			}

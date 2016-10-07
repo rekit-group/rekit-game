@@ -22,31 +22,31 @@ import edu.kit.informatik.ragnarok.visitor.annotations.VisitInfo;
  *
  * This class realizes a simple {@link Boss}:<br>
  * This boss is a square with <i>sharp</i> triangles at each side, which can
- * hurt a {@link Player}; these will disappear from time to time
+ * hurt a {@link Player}; these will disappear from time to time.
  *
  */
 @LoadMe
 @VisitInfo(res = "conf/rektsmasher", visit = true)
 public final class RektSmasher extends Boss implements Visitable {
 	/**
-	 * The internal {@link RektKiller}
+	 * The internal {@link RektKiller}.
 	 */
 	@NoVisit
 	private RektKiller innerRektKiller;
 	/**
-	 * The current movement speed
+	 * The current movement speed.
 	 */
 	private static float BASE_SPEED;
 
 	/**
-	 * Prototype Constructor
+	 * Prototype Constructor.
 	 */
 	public RektSmasher() {
 		super();
 	}
 
 	/**
-	 * Create a RektSmasher by start position
+	 * Create a RektSmasher by start position.
 	 *
 	 * @param startPos
 	 *            the start position

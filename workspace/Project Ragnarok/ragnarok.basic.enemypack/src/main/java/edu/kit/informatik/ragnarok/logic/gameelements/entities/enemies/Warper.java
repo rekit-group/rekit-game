@@ -19,7 +19,7 @@ import edu.kit.informatik.ragnarok.visitor.parser.TwoLevelParser;
 
 /**
  *
- * This class realizes on of the most dangerous {@link Enemy Enemies}<br>
+ * This class realizes on of the most dangerous {@link Enemy Enemies}.<br>
  * No Player can destroy that circle of colors, the only chance to destroy: "Run
  * away"
  *
@@ -28,29 +28,31 @@ import edu.kit.informatik.ragnarok.visitor.parser.TwoLevelParser;
 @VisitInfo(res = "conf/warper", visit = true)
 @AdditionalParsers(parsers = { TwoLevelParser.class }, types = { ParticleSpawner.class })
 public final class Warper extends Enemy implements Visitable {
-
+	/**
+	 * The delta time between position changes.
+	 */
 	private static float WARPER_WARP_DELTA;
 
 	/**
-	 * The time between the next jump (to next position)
+	 * The time between the next jump (to next position).
 	 */
 	@NoVisit
 	private final Timer warpAction = new Timer(Warper.WARPER_WARP_DELTA);
 
 	/**
-	 * The particles of the warper
+	 * The particles of the warper.
 	 */
 	private static ParticleSpawner warpParticles;
 
 	/**
-	 * Prototype Constructor
+	 * Prototype Constructor.
 	 */
 	public Warper() {
 		super();
 	}
 
 	/**
-	 * Create a warper by start position
+	 * Create a warper by start position.
 	 *
 	 * @param startPos
 	 *            the start position

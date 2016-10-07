@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This class represents a token for the LevelLanguage
+ * This class represents a token for the LevelLanguage.
  *
  * @author Dominik Fuchß
  * @see TokenType
@@ -26,10 +26,10 @@ public class Token {
 		}
 	};
 
-	/** The type of the Token */
+	/** The type of the Token. */
 	private TokenType type;
 
-	/** The value of the Token */
+	/** The value of the Token. */
 	private String value;
 
 	/**
@@ -52,7 +52,7 @@ public class Token {
 	}
 
 	/**
-	 * Calculate type
+	 * Calculate type.
 	 *
 	 * @param input
 	 *            the input
@@ -67,7 +67,7 @@ public class Token {
 	}
 
 	/**
-	 * Find value from content
+	 * Find value from content.
 	 *
 	 * @param input
 	 *            the input
@@ -90,7 +90,7 @@ public class Token {
 	}
 
 	/**
-	 * Get the TokenType
+	 * Get the TokenType.
 	 *
 	 * @return the Type
 	 */
@@ -99,7 +99,7 @@ public class Token {
 	}
 
 	/**
-	 * Get the Token Value
+	 * Get the Token Value.
 	 *
 	 * @return the Value
 	 */

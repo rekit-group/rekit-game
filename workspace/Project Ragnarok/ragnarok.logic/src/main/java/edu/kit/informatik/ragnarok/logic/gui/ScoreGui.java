@@ -4,31 +4,32 @@ import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.core.Field;
 import edu.kit.informatik.ragnarok.core.GuiElement;
 import edu.kit.informatik.ragnarok.core.IScene;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.util.TextOptions;
 
 /**
  *
  * This {@link GuiElement} realizes a status view of the {@link Player Player's}
- * Score
+ * Score.
  *
  */
 public class ScoreGui extends GuiElement {
 	/**
-	 * The points of the {@link Player}
+	 * The points of the {@link Player}.
 	 */
 	private Text points;
 	/**
-	 * The Highscore of the current Level
+	 * The Highscore of the current Level.
 	 */
 	private Text highscore;
 	/**
-	 * The text options
+	 * The text options.
 	 */
 	private TextOptions op;
 
 	/**
-	 * Create the status view
+	 * Create the status view.
 	 *
 	 * @param scene
 	 *            the scene

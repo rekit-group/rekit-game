@@ -4,6 +4,11 @@ import edu.kit.informatik.ragnarok.core.Field;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
 
+/**
+ *
+ * This class shall be extended by each heap element.
+ *
+ */
 public abstract class HeapElement extends BackgroundElement {
 
 	protected float heapDistanceMu() {
@@ -97,5 +102,5 @@ public abstract class HeapElement extends BackgroundElement {
 	@Override
 	public abstract void internalRender(Field f);
 
-	public abstract HeapElement clone(HeapLayer parent, Vec pos, Vec size, RGBAColor col);
+	public abstract HeapElement create(HeapLayer parent, Vec pos, Vec size, RGBAColor col);
 }

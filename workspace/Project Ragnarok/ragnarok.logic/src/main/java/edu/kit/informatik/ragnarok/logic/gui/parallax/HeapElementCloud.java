@@ -20,7 +20,7 @@ public class HeapElementCloud extends HeapElement {
 	}
 
 	@Override
-	public HeapElement clone(HeapLayer parent, Vec pos, Vec size, RGBAColor col) {
+	public HeapElement create(HeapLayer parent, Vec pos, Vec size, RGBAColor col) {
 		return new HeapElementCloud(parent, pos, size, col);
 	}
 

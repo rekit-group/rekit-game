@@ -5,11 +5,18 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 
 /**
  *
- * This class realizes a Menu displaying a list of MenuItems
+ * This class realizes a Menu displaying a list of MenuItems.
  *
  */
 public class MenuList extends SubMenu {
-
+	/**
+	 * Create a MenuList.
+	 * 
+	 * @param scene
+	 *            the scene
+	 * @param text
+	 *            the text
+	 */
 	public MenuList(IScene scene, String text) {
 		super(scene, text);
 		this.setItemSize(new Vec(400, 100));

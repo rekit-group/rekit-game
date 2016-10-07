@@ -2,25 +2,47 @@ package edu.kit.informatik.ragnarok.logic.scene;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.GameModel;
+import edu.kit.informatik.ragnarok.logic.gui.menu.BoolSettingToggle;
 import edu.kit.informatik.ragnarok.logic.gui.menu.MenuActionItem;
 import edu.kit.informatik.ragnarok.logic.gui.menu.MenuGrid;
 import edu.kit.informatik.ragnarok.logic.gui.menu.MenuItem;
 import edu.kit.informatik.ragnarok.logic.gui.menu.MenuList;
-import edu.kit.informatik.ragnarok.logic.gui.menu.SettingToggle;
 import edu.kit.informatik.ragnarok.logic.gui.menu.SubMenu;
 import edu.kit.informatik.ragnarok.logic.level.LevelManager;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 
-class MenuScene extends Scene {
-
+/**
+ *
+ * This class realizes the static part of the main menu of the game.
+ *
+ */
+final class MainMenu extends Scene {
+	/**
+	 * The menu.
+	 */
 	private SubMenu menu;
 
-	public MenuScene(GameModel model) {
+	/**
+	 * Create the main menu.
+	 *
+	 * @param model
+	 *            the model
+	 */
+	public MainMenu(GameModel model) {
 		super(model);
 	}
 
+	/**
+	 * Create method of the scene.
+	 *
+	 * @param model
+	 *            the model
+	 * @param options
+	 *            the options
+	 * @return a new arcade scene.
+	 */
 	public static Scene create(GameModel model, String[] options) {
-		return new MenuScene(model);
+		return new MainMenu(model);
 	}
 
 	@Override
@@ -58,7 +80,7 @@ class MenuScene extends Scene {
 
 		MenuList settings = new MenuList(this, "Settings");
 
-		settings.addItem(new SettingToggle(this, "Debug Mode", "DEBUG"));
+		settings.addItem(new BoolSettingToggle(this, "Debug Mode", "DEBUG"));
 
 		MenuList about = new MenuList(this, "About");
 

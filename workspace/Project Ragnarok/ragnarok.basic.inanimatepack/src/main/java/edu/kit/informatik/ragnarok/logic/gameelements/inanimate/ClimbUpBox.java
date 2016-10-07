@@ -15,51 +15,51 @@ import edu.kit.informatik.ragnarok.primitives.time.Timer;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 
 /**
- * This Box realizes an {@link Inanimate} which the Player can climb up
+ * This Box realizes an {@link Inanimate} which the Player can climb up.
  *
  * @author Dominik Fuchß
  *
  */
 @LoadMe
-public class ClimbUpBox extends DynamicInanimate {
+public final class ClimbUpBox extends DynamicInanimate {
 	/**
-	 * The inner inanimate box
+	 * The inner inanimate box.
 	 */
 	protected InanimateBox innerBox;
 	/**
-	 * The time between strategy changes
+	 * The time between strategy changes.
 	 */
 	protected static final long PERIOD = 4000;
 	/**
-	 * The current time offset
+	 * The current time offset.
 	 */
 	protected long offset = 0;
 	/**
-	 * All strategies
+	 * All strategies.
 	 */
 	private ClimbBoxStrategy[] strategies;
 	/**
-	 * The current strategy
+	 * The current strategy.
 	 */
 	private int current = 0;
 	/**
-	 * The outer color
+	 * The outer color.
 	 */
 	private static final RGBAColor outerCol = new RGBAColor(110, 110, 110, 255);
 	/**
-	 * A dark color
+	 * A dark color.
 	 */
 	private static final RGBAColor darkCol = new RGBAColor(90, 90, 90, 255);
 	/**
-	 * The energy's color
+	 * The energy's color.
 	 */
 	private static final RGBColor energyCol = new RGBColor(255, 100, 0);
 	/**
-	 * The timer (how long climb enables?)
+	 * The timer (how long climb enables?).
 	 */
 	private Timer timer;
 	/**
-	 * The particles of the ClimbUpBox
+	 * The particles of the ClimbUpBox.
 	 */
 	private static ParticleSpawner particles = null;
 
@@ -78,14 +78,14 @@ public class ClimbUpBox extends DynamicInanimate {
 	}
 
 	/**
-	 * Prototype Constructor
+	 * Prototype Constructor.
 	 */
 	public ClimbUpBox() {
 		super();
 	}
 
 	/**
-	 * Create a ClimbUpBox
+	 * Create a ClimbUpBox.
 	 *
 	 * @param pos
 	 *            the position
@@ -107,7 +107,7 @@ public class ClimbUpBox extends DynamicInanimate {
 
 	/**
 	 * The last time {@link #logicLoop(float)} was invoked or {@code -1}
-	 * (initial)
+	 * (initial).
 	 */
 	private long lastTime = -1;
 
@@ -153,7 +153,7 @@ public class ClimbUpBox extends DynamicInanimate {
 	}
 
 	/**
-	 * Render the energy
+	 * Render the energy.
 	 *
 	 * @param f
 	 *            the field
@@ -184,19 +184,19 @@ public class ClimbUpBox extends DynamicInanimate {
 
 	/**
 	 * This class is the base class for all different behaviors of a
-	 * {@link ClimbUpBox}
+	 * {@link ClimbUpBox}.
 	 *
 	 * @author Dominik Fuchß
 	 *
 	 */
 	private abstract class ClimbBoxStrategy {
 		/**
-		 * The parent
+		 * The parent.
 		 */
 		protected ClimbUpBox parent;
 
 		/**
-		 * Create strategy by parent
+		 * Create strategy by parent.
 		 *
 		 * @param parent
 		 *            the parent
@@ -206,7 +206,7 @@ public class ClimbUpBox extends DynamicInanimate {
 		}
 
 		/**
-		 * Same as {@link ClimbUpBox#reactToCollision(GameElement, Direction)}
+		 * Same as {@link ClimbUpBox#reactToCollision(GameElement, Direction)}.
 		 *
 		 * @param element
 		 *            the element
@@ -218,7 +218,7 @@ public class ClimbUpBox extends DynamicInanimate {
 		}
 
 		/**
-		 * Same as {@link ClimbUpBox#internalRender(Field)}
+		 * Same as {@link ClimbUpBox#internalRender(Field)}.
 		 *
 		 * @param f
 		 *            the field
@@ -228,7 +228,7 @@ public class ClimbUpBox extends DynamicInanimate {
 		}
 
 		/**
-		 * Get the energy's start level
+		 * Get the energy's start level.
 		 *
 		 * @param progress
 		 *            the progress
@@ -237,7 +237,7 @@ public class ClimbUpBox extends DynamicInanimate {
 		public abstract float getEnergyStart(float progress);
 
 		/**
-		 * Get the energy's end level
+		 * Get the energy's end level.
 		 *
 		 * @param progress
 		 *            the progress
@@ -247,14 +247,14 @@ public class ClimbUpBox extends DynamicInanimate {
 	}
 
 	/**
-	 * The default strategy: A normal {@link InanimateBox}
+	 * The default strategy: A normal {@link InanimateBox}.
 	 *
 	 * @author Dominik Fuchß
 	 *
 	 */
 	private class NoClimb extends ClimbBoxStrategy {
 		/**
-		 * Create strategy by parent
+		 * Create strategy by parent.
 		 *
 		 * @param parent
 		 *            the parent
@@ -275,14 +275,14 @@ public class ClimbUpBox extends DynamicInanimate {
 	}
 
 	/**
-	 * The boost strategy: A Climbing is possible
+	 * The boost strategy: A Climbing is possible.
 	 *
 	 * @author Dominik Fuchß
 	 *
 	 */
 	private class BoostClimb extends ClimbBoxStrategy {
 		/**
-		 * Create strategy by parent
+		 * Create strategy by parent.
 		 *
 		 * @param parent
 		 *            the parent

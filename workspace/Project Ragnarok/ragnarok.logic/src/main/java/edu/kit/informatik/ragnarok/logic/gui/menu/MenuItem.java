@@ -7,29 +7,29 @@ import edu.kit.informatik.ragnarok.core.IScene;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 
 /**
- * This class realizes an Item of a menu
+ * This class realizes an Item of a menu.
  *
  */
 public abstract class MenuItem extends GuiElement {
 	/**
-	 * Indicates whether the item is selected
+	 * Indicates whether the item is selected.
 	 */
 	protected boolean selected = false;
 	/**
-	 * The text (name) of the item
+	 * The text (name) of the item.
 	 */
 	private String text;
 	/**
-	 * The parent of the Item or {@code null} if none exist
+	 * The parent of the Item or {@code null} if none exist.
 	 */
 	protected MenuItem parent;
 	/**
-	 * Indicates a hover (over the item)
+	 * Indicates a hover (over the item).
 	 */
 	private boolean hover;
 
 	/**
-	 * Create an Item
+	 * Create an Item.
 	 *
 	 * @param scene
 	 *            the scene
@@ -42,7 +42,7 @@ public abstract class MenuItem extends GuiElement {
 	}
 
 	/**
-	 * Create an Item
+	 * Create an Item.
 	 *
 	 * @param scene
 	 *            the scene
@@ -56,6 +56,11 @@ public abstract class MenuItem extends GuiElement {
 		this.text = text;
 	}
 
+	/**
+	 * Get the text of the item.
+	 *
+	 * @return the text
+	 */
 	protected String getText() {
 		return this.text;
 	}
@@ -71,14 +76,14 @@ public abstract class MenuItem extends GuiElement {
 	}
 
 	/**
-	 * Select the Item
+	 * Select the Item.
 	 */
 	public void select() {
 		this.selected = true;
 	}
 
 	/**
-	 * Deselect the Item
+	 * Deselect the Item.
 	 */
 	public void unselect() {
 		this.selected = false;
@@ -88,21 +93,21 @@ public abstract class MenuItem extends GuiElement {
 	}
 
 	/**
-	 * This method will be invoked to indicate an UP request
+	 * This method will be invoked to indicate an UP request.
 	 */
 	public void up() {
 
 	}
 
 	/**
-	 * This method will be invoked to indicate an DOWN request
+	 * This method will be invoked to indicate an DOWN request.
 	 */
 	public void down() {
 
 	}
 
 	/**
-	 * This method will be invoked to indicate an LEFT request
+	 * This method will be invoked to indicate an LEFT request.
 	 */
 
 	public void left() {
@@ -110,21 +115,21 @@ public abstract class MenuItem extends GuiElement {
 	}
 
 	/**
-	 * This method will be invoked to indicate an RIGHT request
+	 * This method will be invoked to indicate an RIGHT request.
 	 */
 	public void right() {
 
 	}
 
 	/**
-	 * This method will be invoked to indicate an focus request
+	 * This method will be invoked to indicate an focus request.
 	 */
 	protected void focus() {
 
 	}
 
 	/**
-	 * Set the parent of the MenuItem
+	 * Set the parent of the MenuItem.
 	 *
 	 * @param i
 	 *            the parent
@@ -139,7 +144,7 @@ public abstract class MenuItem extends GuiElement {
 	}
 
 	/**
-	 * Render the Item itself
+	 * Render the Item itself.
 	 *
 	 * @param f
 	 *            the field

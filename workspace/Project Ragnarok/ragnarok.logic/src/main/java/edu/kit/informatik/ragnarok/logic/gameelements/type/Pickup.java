@@ -9,16 +9,39 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.util.ReflectUtils;
+import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 
+/**
+ * This class is the parent class of all Pickups in the game.
+ */
 public abstract class Pickup extends Entity {
+	/**
+	 * Load all Pickups.
+	 *
+	 * @return a set of pickups
+	 * @see LoadMe
+	 */
 	public static final Set<Pickup> getPickupPrototypes() {
 		return ReflectUtils.loadInstances(GameConf.SEARCH_PATH, Pickup.class);
 	}
 
+	/**
+	 * Prototype constructor.
+	 */
 	protected Pickup() {
 		super(Team.PICKUP);
 	}
 
+	/**
+	 * Create a pickup.
+	 *
+	 * @param startPos
+	 *            the start pos
+	 * @param vel
+	 *            the start velocity
+	 * @param size
+	 *            the size
+	 */
 	protected Pickup(Vec startPos, Vec vel, Vec size) {
 		super(startPos, vel, size, Team.PICKUP);
 	}
@@ -32,6 +55,7 @@ public abstract class Pickup extends Entity {
 	 * Player.
 	 *
 	 * @param collector
+	 *            the GameElement which collects this Pickup
 	 */
 	public abstract void perform(GameElement collector);
 

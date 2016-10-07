@@ -18,24 +18,51 @@ import edu.kit.informatik.ragnarok.util.ThreadUtils;
  * @version 1.1
  */
 public class GameModel implements CameraTarget, Model {
-
+	/**
+	 * Last time logic was invoked in millis.
+	 *
+	 * @see System#currentTimeMillis()
+	 */
 	private long lastTime;
+	/**
+	 * The current scene.
+	 */
 	private IScene curScene;
+	/**
+	 * Indicates the end of a game.
+	 */
 	private boolean endGame;
+	/**
+	 * The current state of the game.
+	 */
 	private GameState state;
-
+	/**
+	 * The current filter in the game.
+	 */
 	private Filter filter;
+	/**
+	 * Indicates a filter change.
+	 */
 	private boolean filterChange;
 
+	/**
+	 * Get a new model.
+	 */
 	public GameModel() {
 		this.endGame = false;
-		this.curScene = Scenes.NULL.getNewScene(this, null);
+		this.curScene = Scenes.NULL.getNewScene(this);
 	}
 
+	/**
+	 * Init game.
+	 */
 	private void init() {
 		this.switchScene(Scenes.MENU);
 	}
 
+	/**
+	 * End game.
+	 */
 	private void end() {
 
 	}
@@ -71,17 +98,18 @@ public class GameModel implements CameraTarget, Model {
 	}
 
 	/**
-	 * {@link #switchScene(Scenes, String[])} with null as options
+	 * Switch to scene with default parameters.
 	 *
 	 * @param s
+	 *            the new scene.
 	 */
 	public void switchScene(Scenes s) {
 		this.switchScene(s, null);
 	}
 
 	/**
-	 * Switch to a different {@link Scene}. The new Scene will be initialized an
-	 * started immediately. </br>
+	 * Switch to a different {@link Scenes}.# The new Scene will be initialized
+	 * an started immediately. <br>
 	 * Before you can switch to a newly created Scene you must create an entry
 	 * in the {@link Scenes} enum.
 	 *
@@ -106,7 +134,7 @@ public class GameModel implements CameraTarget, Model {
 	}
 
 	/**
-	 * Return player
+	 * Return player.
 	 *
 	 * @return the player
 	 */
@@ -136,12 +164,18 @@ public class GameModel implements CameraTarget, Model {
 		return this.state;
 	}
 
+	/**
+	 * Get time in seconds ({@link #lastTime}).
+	 *
+	 * @return the last time in seconds
+	 */
+	// TODO Time format.
 	public long getTime() {
 		return this.lastTime / 1000;
 	}
 
 	/**
-	 * Synchronize filters
+	 * Synchronize objects for filters.
 	 */
 	private static final Object FILTER_SYNC = new Object();
 

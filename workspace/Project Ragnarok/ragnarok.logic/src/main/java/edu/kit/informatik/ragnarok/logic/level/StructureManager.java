@@ -80,11 +80,16 @@ public class StructureManager extends Configurable implements Iterator<Structure
 	 * {@link Boss}es.
 	 */
 	private int lastUnitsBuilt = 0;
-
+	/**
+	 * All aliases.
+	 */
 	private Map<String, String> alias = new HashMap<>();
 
 	/**
 	 * Private constructor to prevent instantiation from outside.
+	 *
+	 * @param randomSeed
+	 *            the random seed
 	 */
 	private StructureManager(int randomSeed) {
 		super();
@@ -263,6 +268,7 @@ public class StructureManager extends Configurable implements Iterator<Structure
 	 * <i>structures</i>.
 	 *
 	 * @param structure
+	 *            the structure
 	 */
 	public void addStructure(Structure structure) {
 		this.structures.put(this.structures.size(), structure);
@@ -394,6 +400,14 @@ public class StructureManager extends Configurable implements Iterator<Structure
 		return this.isSettingSet("infinite") || this.currentStructureId < this.structures.size();
 	}
 
+	/**
+	 * Set an alias.
+	 * 
+	 * @param toReplace
+	 *            the source
+	 * @param replaceWith
+	 *            the target
+	 */
 	public void setAlias(String toReplace, String replaceWith) {
 		if (this.alias.put(toReplace, replaceWith) != null) {
 			System.err.println("WARNING: Multiple definitions (alias) for " + toReplace);
@@ -401,6 +415,11 @@ public class StructureManager extends Configurable implements Iterator<Structure
 
 	}
 
+	/**
+	 * Get the alias map.
+	 * 
+	 * @return the aloas map
+	 */
 	public Map<String, String> getAlias() {
 		return this.alias;
 	}

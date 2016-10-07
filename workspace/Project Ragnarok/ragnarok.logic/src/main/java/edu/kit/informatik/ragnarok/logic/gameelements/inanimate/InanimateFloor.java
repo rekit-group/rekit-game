@@ -244,10 +244,9 @@ public class InanimateFloor extends Inanimate {
 		return new InanimateFloor(pos, new Vec(1, 1));
 	}
 
-	// TODO I think no 10 here.
-	// @Override
-	// protected int getOrderZ() {
-	// return 10;
-	// }
+	@Override
+	protected int getOrderZ() {
+		return 2;
+	}
 
 }

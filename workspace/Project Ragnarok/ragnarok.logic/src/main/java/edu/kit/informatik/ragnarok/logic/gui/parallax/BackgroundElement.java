@@ -6,12 +6,29 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
 import edu.kit.informatik.ragnarok.primitives.geometry.Frame;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 
+/**
+ *
+ * This is the parent class which all background elements shall extend.
+ *
+ */
 public abstract class BackgroundElement extends GameElement {
-
+	/**
+	 * The parent parallax.
+	 */
 	protected ParallaxLayer parent;
-
+	/**
+	 * The z-pos of this element.
+	 */
 	protected int backgroundZ;
 
+	/**
+	 * Create a BG-Element by parent and pos.
+	 *
+	 * @param parent
+	 *            the parent
+	 * @param pos
+	 *            the positon
+	 */
 	public BackgroundElement(ParallaxLayer parent, Vec pos) {
 		super(pos.setZ(parent == null ? 1 : parent.perspectiveZ), new Vec(), new Vec(1), Team.NEUTRAL);
 		this.parent = parent;

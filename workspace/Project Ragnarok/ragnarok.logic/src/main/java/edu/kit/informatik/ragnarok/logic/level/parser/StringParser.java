@@ -14,25 +14,26 @@ import edu.kit.informatik.ragnarok.logic.level.parser.token.UnexpectedTokenExcep
 
 /**
  * This class directly parses an {@link Level} from an {@link String} to a
- * {@link StructureManager}
+ * {@link StructureManager}.
  *
  * @author Dominik Fuchß
  *
  */
 class StringParser extends LevelParser {
 	/**
-	 * The tokenizer
+	 * The tokenizer.
 	 */
 	private Tokenizer tokenizer;
 	/**
-	 * The look ahead Token
+	 * The look ahead Token.
 	 */
 	private Token lookAhead;
 
 	/**
-	 * Instantiate the parser by the input string
+	 * Instantiate the parser by the input string.
 	 *
 	 * @param input
+	 *            the input string
 	 */
 	StringParser(String input) {
 		super(input);
@@ -50,6 +51,12 @@ class StringParser extends LevelParser {
 		this.reset();
 	}
 
+	/**
+	 * Parse a {@link Structure}.
+	 *
+	 * @param manager
+	 *            the manager
+	 */
 	private void parseStructure(StructureManager manager) {
 		if (this.isToken(TokenType.ALIAS)) {
 			this.parseAlias(manager);
@@ -68,6 +75,12 @@ class StringParser extends LevelParser {
 		}
 	}
 
+	/**
+	 * Parse a {@link Level}.
+	 *
+	 * @param manager
+	 *            the manager
+	 */
 	private void parseLevel(StructureManager manager) {
 		this.readToken(TokenType.BEGIN);
 		List<String[]> lines = new LinkedList<>();
@@ -79,6 +92,12 @@ class StringParser extends LevelParser {
 		manager.addStructure(s);
 	}
 
+	/**
+	 * Read / Parse level lines.
+	 *
+	 * @param lines
+	 *            the lines
+	 */
 	private void readLevelLine(List<String[]> lines) {
 		this.readToken(TokenType.BEGIN);
 
@@ -93,6 +112,12 @@ class StringParser extends LevelParser {
 		lines.add(res);
 	}
 
+	/**
+	 * Parse an alias.
+	 *
+	 * @param manager
+	 *            the manager
+	 */
 	private void parseAlias(StructureManager manager) {
 		this.readToken(TokenType.ALIAS);
 		this.readToken(TokenType.DELIMITER);
@@ -100,6 +125,12 @@ class StringParser extends LevelParser {
 		manager.setAlias(mapping[0], mapping[1]);
 	}
 
+	/**
+	 * Parse a setting.
+	 *
+	 * @param manager
+	 *            the manager
+	 */
 	private void parseSetting(StructureManager manager) {
 		this.readToken(TokenType.SETTING);
 		this.readToken(TokenType.DELIMITER);
@@ -107,6 +138,12 @@ class StringParser extends LevelParser {
 		manager.setSetting(mapping[0], mapping[1]);
 	}
 
+	/**
+	 * Parse an boss setting.
+	 *
+	 * @param manager
+	 *            the manager
+	 */
 	private void parseBossSetting(StructureManager manager) {
 		this.readToken(TokenType.BOSS_SETTING);
 		this.readToken(TokenType.DELIMITER);
@@ -114,10 +151,18 @@ class StringParser extends LevelParser {
 		manager.bossSettings.setSetting(mapping[0], mapping[1]);
 	}
 
+	/**
+	 * Parse a mapping.
+	 *
+	 * @return String[0] --> String[1]
+	 */
 	private String[] parseMapping() {
 		return this.readToken(TokenType.MAPPING).getValue().split("->");
 	}
 
+	/**
+	 * Reset parser.
+	 */
 	private void reset() {
 		this.tokenizer = new Tokenizer(this.input);
 		this.lookAhead = null;

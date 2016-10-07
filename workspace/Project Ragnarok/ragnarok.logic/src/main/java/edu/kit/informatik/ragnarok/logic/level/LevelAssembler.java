@@ -19,8 +19,13 @@ import edu.kit.informatik.ragnarok.core.GameElement;
  * @version 1.0
  */
 public class LevelAssembler {
-
+	/**
+	 * Position of the current end of the level (x pos).
+	 */
 	private int generatedUntil;
+	/**
+	 * The structure manager.
+	 */
 	private StructureManager manager;
 
 	/**

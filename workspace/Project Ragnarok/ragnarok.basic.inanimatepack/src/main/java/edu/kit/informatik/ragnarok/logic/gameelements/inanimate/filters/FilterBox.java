@@ -9,19 +9,26 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.Filter;
 import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
 
+/**
+ * This class realizes a box which applies {@link Filter Filters} to the game by
+ * colliding with it.
+ *
+ * @author Dominik Fuchß
+ *
+ */
 class FilterBox extends DynamicInanimate {
 	/**
-	 * The inner inanimate box
+	 * The inner inanimate box.
 	 */
 	private Inanimate innerBox;
 
 	/**
-	 * The gray-filter
+	 * The filter.
 	 */
 	private final Filter filter;
 
 	/**
-	 * Prototype Constructor
+	 * Prototype Constructor.
 	 *
 	 * @param filter
 	 *            the filter
@@ -32,7 +39,7 @@ class FilterBox extends DynamicInanimate {
 	}
 
 	/**
-	 * Create a FilterBox
+	 * Create a FilterBox.
 	 *
 	 * @param pos
 	 *            the position

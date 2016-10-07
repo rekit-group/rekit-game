@@ -18,36 +18,40 @@ import edu.kit.informatik.ragnarok.primitives.operable.OpProgress;
  */
 public final class SlurpDurp extends Entity {
 	/**
-	 * The position of the parent {@link Slurp}
+	 * The position of the parent {@link Slurp}.
 	 */
 	private Vec parentPos;
 	/**
-	 * The inner position of this SlurpDurp
+	 * The inner position of this SlurpDurp.
 	 */
 	private Vec innerPos;
 	/**
-	 * The frequency (pulsar)
+	 * The frequency (pulsar).
 	 */
 	private float frequency;
 	/**
-	 * The base size of this SlurpDurp
+	 * The base size of this SlurpDurp.
 	 */
 	private float baseSize;
 	/**
-	 * The amplitude (pulsar)
+	 * The amplitude (pulsar).
 	 */
 	private float amplitude;
 	/**
-	 * The phase (pulsar)
+	 * The phase (pulsar).
 	 */
 	private float phase;
 	/**
-	 * The current X position
+	 * The current X position.
 	 */
 	private float currentX = 0;
-
+	/**
+	 * The resolution factor of the slups.
+	 */
 	private static final int ITERATIONS = 7;
-
+	/**
+	 * The components of a slurp ({@link #ITERATIONS}).
+	 */
 	private static SlurpDurpVisComp[] circles;
 
 	static {
@@ -64,14 +68,14 @@ public final class SlurpDurp extends Entity {
 	}
 
 	/**
-	 * Prototype Constructor
+	 * Prototype Constructor.
 	 */
 	public SlurpDurp() {
 		super(Team.ENEMY);
 	}
 
 	/**
-	 * Create a slurp durp
+	 * Create a slurp durp.
 	 *
 	 * @param parentPos
 	 *            the parent Position
@@ -104,7 +108,7 @@ public final class SlurpDurp extends Entity {
 	}
 
 	/**
-	 * Set the position of the parent {@link Slurp}
+	 * Set the position of the parent {@link Slurp}.
 	 *
 	 * @param parentPos
 	 *            the parent position

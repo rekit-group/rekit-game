@@ -49,7 +49,7 @@ public abstract class Configurable {
 
 	/**
 	 * Determines if a setting of a given <i>settingName</i> is defined and not
-	 * <i>0</i>
+	 * <i>0</i>.
 	 *
 	 * @param settingName
 	 *            the name of the setting to check.

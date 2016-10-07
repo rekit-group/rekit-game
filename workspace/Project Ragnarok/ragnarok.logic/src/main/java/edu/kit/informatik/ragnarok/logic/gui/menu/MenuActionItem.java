@@ -5,17 +5,17 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 
 /**
  *
- * This class realizes a {@link MenuItem} with an attached Action
+ * This class realizes a {@link MenuItem} with an attached Action.
  *
  */
 public class MenuActionItem extends MenuItem {
 	/**
-	 * The action
+	 * The action.
 	 */
 	private Runnable selectAction;
 
 	/**
-	 * Create MenuActionItem
+	 * Create MenuActionItem.
 	 *
 	 * @param scene
 	 *            the scene
@@ -30,7 +30,7 @@ public class MenuActionItem extends MenuItem {
 	}
 
 	/**
-	 * Create MenuActionItem
+	 * Create MenuActionItem.
 	 *
 	 * @param scene
 	 *            the scene

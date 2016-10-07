@@ -14,21 +14,21 @@ import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 
 /**
- * This class realizes a Box which will "reflect" your {@link Player}
+ * This class realizes a Box which will "reflect" your {@link Player}.
  *
  */
 @LoadMe
-public class ReflectionBox extends DynamicInanimate {
+public final class ReflectionBox extends DynamicInanimate {
 	/**
-	 * The outer color
+	 * The outer color.
 	 */
 	private static RGBAColor outerCol = new RGBAColor(100, 100, 100, 255);
 	/**
-	 * The inner color
+	 * The inner color.
 	 */
 	private static RGBAColor innerCol = new RGBAColor(80, 140, 80, 255);
 	/**
-	 * The particles of this box
+	 * The particles of this box.
 	 */
 	private static ParticleSpawner particles = null;
 
@@ -47,14 +47,14 @@ public class ReflectionBox extends DynamicInanimate {
 	}
 
 	/**
-	 * Prototype Constructor
+	 * Prototype Constructor.
 	 */
 	public ReflectionBox() {
 		super();
 	}
 
 	/**
-	 * Create a ReflectionBox
+	 * Create a ReflectionBox.
 	 *
 	 * @param pos
 	 *            the position

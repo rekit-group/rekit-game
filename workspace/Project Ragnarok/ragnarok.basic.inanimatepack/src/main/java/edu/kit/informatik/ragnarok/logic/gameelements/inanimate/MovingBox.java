@@ -21,45 +21,45 @@ import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
  *
  */
 @LoadMe
-public class MovingBox extends DynamicInanimate {
+public final class MovingBox extends DynamicInanimate {
 	/**
-	 * The movement speed
+	 * The movement speed.
 	 */
 	private final static float SPEED = 0.3f;
 	/**
-	 * The first movement anchor
+	 * The first movement anchor.
 	 */
 	private Vec a;
 	/**
-	 * The second movement anchor
+	 * The second movement anchor.
 	 */
 	private Vec b;
 	/**
-	 * A timer for the direction change of the platform
+	 * A timer for the direction change of the platform.
 	 */
 	private Timer timer;
 	/**
-	 * The current start of the platform
+	 * The current start of the platform.
 	 */
 	private Vec currentStart;
 	/**
-	 * The target of the box
+	 * The target of the box.
 	 */
 	private Vec relativeTarget;
 	/**
-	 * A dark color
+	 * A dark color.
 	 */
 	private RGBAColor darkCol;
 	/**
-	 * The relative points for the rocket (the engine of the platform)
+	 * The relative points for the rocket (the engine of the platform).
 	 */
 	private Vec[] rocketPolygonRelPts;
 	/**
-	 * The X size divided by 16
+	 * The X size divided by 16.
 	 */
 	private float sizeX16;
 	/**
-	 * The particle spawner
+	 * The particle spawner.
 	 */
 	private static ParticleSpawner sparkParticles = null;
 	static {
@@ -76,14 +76,14 @@ public class MovingBox extends DynamicInanimate {
 	}
 
 	/**
-	 * Prototype Constructor
+	 * Prototype Constructor.
 	 */
 	public MovingBox() {
 		super();
 	}
 
 	/**
-	 * Create a moving box
+	 * Create a moving box.
 	 *
 	 * @param pos
 	 *            the position

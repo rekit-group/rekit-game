@@ -28,19 +28,39 @@ import edu.kit.informatik.ragnarok.util.ThreadUtils;
  *
  */
 public abstract class LevelScene extends Scene {
-
+	/**
+	 * The player in the scene.
+	 */
 	private Player player = new Player(new Vec(6, 5));
-
+	/**
+	 * The level in the scene.
+	 */
 	private Level level;
-
+	/**
+	 * The current camera target.
+	 */
 	private CameraTarget cameraTarget;
-
+	/**
+	 * The score gui element.
+	 */
 	private ScoreGui scoreGui;
-
+	/**
+	 * The life gui element.
+	 */
 	private LifeGui lifeGui;
-
+	/**
+	 * The ParallaxContainer for the background.
+	 */
 	protected ParallaxContainer parallax;
 
+	/**
+	 * Create a new LevelScene.
+	 *
+	 * @param model
+	 *            the model
+	 * @param level
+	 *            the level
+	 */
 	public LevelScene(GameModel model, Level level) {
 		super(model);
 		this.level = level;
@@ -107,7 +127,7 @@ public abstract class LevelScene extends Scene {
 	}
 
 	@Override
-	protected void logicLoopPre(float timeDelta) {
+	protected void logicLoopPre(long lastTime) {
 
 		this.level.getLevelAssember().generate((int) (this.getCameraOffset() + GameConf.GRID_W + 1));
 
@@ -171,6 +191,12 @@ public abstract class LevelScene extends Scene {
 		return this.level.getHighScore();
 	}
 
+	/**
+	 * Set the highscore of the level.
+	 *
+	 * @param highScore
+	 *            the highscore
+	 */
 	public void setHighScore(int highScore) {
 		this.level.setHighScore(highScore);
 	}

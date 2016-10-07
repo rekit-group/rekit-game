@@ -3,8 +3,16 @@ package edu.kit.informatik.ragnarok.logic.scene;
 import edu.kit.informatik.ragnarok.logic.GameModel;
 import edu.kit.informatik.ragnarok.logic.gui.menu.MenuItem;
 
+/**
+ * This class realizes a Scene as a placeholder.
+ */
 final class NullScene extends Scene {
-
+	/**
+	 * Create a new NullScene.
+	 * 
+	 * @param model
+	 *            the model
+	 */
 	public NullScene(GameModel model) {
 		super(model);
 	}
@@ -24,6 +32,15 @@ final class NullScene extends Scene {
 		return null;
 	}
 
+	/**
+	 * Create method of the scene.
+	 *
+	 * @param model
+	 *            the model
+	 * @param options
+	 *            the options
+	 * @return a new arcade scene.
+	 */
 	public static Scene create(GameModel model, String[] options) {
 		return new NullScene(model);
 	}

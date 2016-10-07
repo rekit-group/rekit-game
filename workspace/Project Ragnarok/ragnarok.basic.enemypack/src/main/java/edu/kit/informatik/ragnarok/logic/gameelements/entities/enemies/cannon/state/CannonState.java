@@ -9,7 +9,7 @@ import edu.kit.informatik.ragnarok.util.state.State;
  * Abstract extension of {@link State} that adds functionality specific to the
  * {@link Cannon}. Each state is supposed to represent a phase of the
  * {@link Cannon Cannons} cycle.
- * 
+ *
  * @author Angelo Aracri.
  */
 public abstract class CannonState extends State {
@@ -21,7 +21,7 @@ public abstract class CannonState extends State {
 
 	/**
 	 * Setter for the stored reference to the parenting {@link Cannon}.
-	 * 
+	 *
 	 * @param parentCannon
 	 *            the parenting {@link Cannon} to set.
 	 */
@@ -32,7 +32,7 @@ public abstract class CannonState extends State {
 	/**
 	 * Template method that can be filled by concrete implementations to return
 	 * a custom angle in radians, the {@link Cannon} will aim at.
-	 * 
+	 *
 	 * @return the angle in radians, the {@link Cannon} will aim to.
 	 */
 	public float getTargetAngle() {
@@ -44,7 +44,7 @@ public abstract class CannonState extends State {
 	 * Template method that can be filled by concrete implementations to return
 	 * a custom delta in x-direction, that will be applied to the {@link Cannon
 	 * Cannons} position to simulate a shaking effect.
-	 * 
+	 *
 	 * @return the x-delta for the {@link Cannon} shaking effect.
 	 */
 	public float getCannonShake() {
@@ -55,8 +55,8 @@ public abstract class CannonState extends State {
 	/**
 	 * <p>
 	 * Template method that can be filled by concrete implementations to perform
-	 * custom actions when a {@link CannonParticle} collided with an {@ink
-	 * Inanimate} or a {@link Player}.
+	 * custom actions when a {@link CannonParticle} collided with an
+	 * {@ink Inanimate} or a {@link Player}.
 	 * </p>
 	 * <p>
 	 * Is only used by {@link ShootingState}.

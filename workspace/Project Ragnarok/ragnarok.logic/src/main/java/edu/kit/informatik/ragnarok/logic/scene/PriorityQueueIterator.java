@@ -11,13 +11,16 @@ import java.util.PriorityQueue;
  * priority. <b>Note:</b> Since it clones a PriorityQueue it is not as
  * efficient!
  *
- * @param <T>
- *            the type of the aggregates
  * @author Angelo Aracri
  * @version 1.0
+ * @param <T>
+ *            the type of the aggregates
+ *
  */
-class PriorityQueueIterator<T> implements Iterator<T> {
-
+final class PriorityQueueIterator<T> implements Iterator<T> {
+	/**
+	 * The inner iterator.
+	 */
 	private PriorityQueue<T> queue;
 
 	/**

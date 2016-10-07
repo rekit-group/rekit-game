@@ -29,23 +29,28 @@ import edu.kit.informatik.ragnarok.visitor.annotations.VisitInfo;
 @VisitInfo(res = "conf/slurp", visit = true)
 public final class Slurp extends Enemy implements Visitable {
 	/**
-	 * The Slurp's SlurpDurps
+	 * The Slurp's SlurpDurps.
 	 */
 	@NoVisit
 	private List<SlurpDurp> slurpDurps;
-
+	/**
+	 * The speed of the slurps.
+	 */
 	private static float SLURP_SPEED;
+	/**
+	 * The popoffs of slupr per second.
+	 */
 	private static float SLURP_POPOFFS_PER_SEC;
 
 	/**
-	 * Prototype Constructor
+	 * Prototype Constructor.
 	 */
 	public Slurp() {
 		super();
 	}
 
 	/**
-	 * Create a slurp by start position
+	 * Create a slurp by start position.
 	 *
 	 * @param startPos
 	 *            the start position
@@ -71,13 +76,13 @@ public final class Slurp extends Enemy implements Visitable {
 	}
 
 	/**
-	 * The current direction of the Slurp
+	 * The current direction of the Slurp.
 	 */
 	@NoVisit
 	private Direction currentDirection = Direction.LEFT;
 
 	/**
-	 * This bool indicates whether the Slurp has contact to a wall
+	 * This bool indicates whether the Slurp has contact to a wall.
 	 */
 	@NoVisit
 	private boolean hasWallContact = true;

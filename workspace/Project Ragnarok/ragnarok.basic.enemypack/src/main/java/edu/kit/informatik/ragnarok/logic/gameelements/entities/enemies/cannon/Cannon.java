@@ -131,6 +131,7 @@ public class Cannon extends Enemy implements Visitable {
 	 */
 	public static float MAX_SHAKING;
 
+	// TODO write parser for damage particle!
 	public static int PARTICLE_AMOUNT_MIN;
 	public static int PARTICLE_AMOUNT_MAX;
 	public static ParticleSpawnerOption PARTICLE_COLOR_R;
@@ -152,31 +153,31 @@ public class Cannon extends Enemy implements Visitable {
 	 */
 	public static float PARTICLE_DISTANCE_SIGMA;
 
-	@NoVisit
 	/**
 	 * The inner, decorated {@link CannonStateMachine} that implements the
 	 * phase-like behavior.
 	 */
+	@NoVisit
 	private CannonStateMachine innerStateMachine;
 
-	@NoVisit
 	/**
 	 * The angle in radians the {@link Cannon Cannons} pipe currently aims at,
 	 * where 0 is down.
 	 */
+	@NoVisit
 	private float currentAngle;
 
-	@NoVisit
 	/**
 	 * The {@link Polygon} that will be used for rendering the {@link Cannon
 	 * Cannons} pipe.
 	 */
+	@NoVisit
 	private Polygon pipePolygon;
 
-	@NoVisit
 	/**
 	 * The {@link Direction} this Cannon will be (graphically) attached to.
 	 */
+	@NoVisit
 	private Direction attachedSide;
 
 	/**
@@ -192,6 +193,8 @@ public class Cannon extends Enemy implements Visitable {
 	 *
 	 * @param pos
 	 *            the position of the {@link Cannon}.
+	 * @param attachedSide
+	 *            the attached side
 	 */
 	public Cannon(Vec pos, Direction attachedSide) {
 		super(pos.addY(-0.5f + Cannon.SIZE.getY() / 2f), new Vec(), Cannon.SIZE);

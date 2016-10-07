@@ -16,17 +16,17 @@ import edu.kit.informatik.ragnarok.logic.GameModel;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 
 /**
- * Based on the concept of scenes in Unity. </br>
+ * Based on the concept of scenes in Unity. <br>
  * "Scenes contain the objects of your game. They can be used to create a main
  * menu, individual levels, and anything else. Think of each unique Scene file
  * as a unique level. In each Scene, you will place your environments,
  * obstacles, and decorations, essentially designing and building your game in
  * pieces." <a href=" https://docs.unity3d.com/Manual/CreatingScenes.html">Unity
  * Manual</a>
- * </p>
+ * <p>
  * A new Scene needs an entry in {@link Scenes} and a method with the Signature:
  * {@code public static Scene create(GameModel, String[])}, for the GameModel to
- * be able to start that Scene.</br>
+ * be able to start that Scene.<br>
  * For Scene switching take a look at
  * {@link GameModel#switchScene(Scenes, String[])} <br>
  * <br>
@@ -43,24 +43,44 @@ abstract class Scene implements CameraTarget, IScene {
 
 	/**
 	 * Synchronization Object that is used as a lock variable for blocking
-	 * operations
+	 * operations.
 	 */
 	private final Object sync = new Object();
-
+	/**
+	 * The model.
+	 */
 	private GameModel model;
-
+	/**
+	 * All gui elements.
+	 */
 	private PriorityQueue<GuiElement> guiElements;
-
+	/**
+	 * All game elements.
+	 */
 	private PriorityQueue<GameElement> gameElements;
-
+	/**
+	 * GameElements which shall be added.
+	 */
 	private ArrayList<GameElement> gameElementAddQueue;
-
+	/**
+	 * GameElements which shall be removed.
+	 */
 	private ArrayList<GameElement> gameElementRemoveQueue;
-
+	/**
+	 * Stats of the gameElements for debugging.
+	 */
 	private Map<Class<?>, Long> gameElementDurations = new HashMap<>();
-
+	/**
+	 * Indicates whether the scene is paused.
+	 */
 	private boolean paused = false;
 
+	/**
+	 * Create the scene.
+	 *
+	 * @param model
+	 *            the model
+	 */
 	public Scene(GameModel model) {
 		this.model = model;
 	}
@@ -78,6 +98,11 @@ abstract class Scene implements CameraTarget, IScene {
 		this.paused = !this.paused;
 	}
 
+	/**
+	 * Indicates whether the scene is paused.
+	 *
+	 * @return {@code true} if paused, otherwise {@code false}
+	 */
 	public boolean isPaused() {
 		return this.paused;
 	}
@@ -90,7 +115,7 @@ abstract class Scene implements CameraTarget, IScene {
 	@Override
 	public void logicLoop(long lastTime) {
 
-		this.logicLoopPre((System.currentTimeMillis() - lastTime) / 1000.f);
+		this.logicLoopPre(lastTime);
 
 		// add GameElements that have been added
 		this.addGameElements();
@@ -101,7 +126,7 @@ abstract class Scene implements CameraTarget, IScene {
 				Iterator<GameElement> it = this.getGameElementIterator();
 
 				while (it.hasNext()) {
-					this.logicLoopGameElement((System.currentTimeMillis() - lastTime) / 1000.f, it);
+					this.logicLoopGameElement(lastTime, it);
 				}
 			}
 		}
@@ -122,13 +147,30 @@ abstract class Scene implements CameraTarget, IScene {
 
 	}
 
+	/**
+	 * Will be invoked after all {@link GameElement#logicLoop(float)}.
+	 */
 	protected void logicLoopAfter() {
 	}
 
-	protected void logicLoopPre(float timeDelta) {
+	/**
+	 * Will be invoked before all {@link GameElement#logicLoop(float)}.
+	 *
+	 * @param lastTime
+	 *            the last invoke of {@link #logicLoop(long)}
+	 */
+	protected void logicLoopPre(long lastTime) {
 	}
 
-	protected void logicLoopGameElement(float timeDelta, Iterator<GameElement> it) {
+	/**
+	 * Invoke {@link GameElement#logicLoop(float)} for all game elements.
+	 * 
+	 * @param lastTime
+	 *            the last time logic loop was invoked
+	 * @param it
+	 *            the iterator with all elements
+	 */
+	protected void logicLoopGameElement(long lastTime, Iterator<GameElement> it) {
 		GameElement e = it.next();
 
 		// if this GameElement is marked for destruction
@@ -143,7 +185,7 @@ abstract class Scene implements CameraTarget, IScene {
 			timeBefore = System.currentTimeMillis();
 		}
 
-		e.logicLoop(timeDelta);
+		e.logicLoop((System.currentTimeMillis() - lastTime) / 1000.f);
 
 		// Debug: Compare and save logicLoop Duration
 		if (GameConf.DEBUG) {

@@ -12,16 +12,16 @@ import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
  * player lives.
  */
 @LoadMe
-public class Life extends Pickup {
+public final class Life extends Pickup {
 	/**
-	 * Prototype Constructor
+	 * Prototype Constructor.
 	 */
 	public Life() {
 		super();
 	}
 
 	/**
-	 * Instantiate a Life by start position
+	 * Instantiate a Life by start position.
 	 *
 	 * @param startPos
 	 *            the start position

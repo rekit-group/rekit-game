@@ -4,12 +4,32 @@ import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.core.Field;
 import edu.kit.informatik.ragnarok.core.IScene;
 
-public class SettingToggle extends MenuItem {
-
+/**
+ *
+ * This class defines a menu to modify setting (boolean) of {@link GameConf}.
+ *
+ */
+public final class BoolSettingToggle extends MenuItem {
+	/**
+	 * The {@link java.lang.reflect.Field Field} which shall be modified.
+	 */
 	private java.lang.reflect.Field setting;
+	/**
+	 * The current value.
+	 */
 	private boolean curVal;
 
-	public SettingToggle(IScene scene, String text, String gameConfVal) {
+	/**
+	 * Create entry.
+	 *
+	 * @param scene
+	 *            the scene (menu)
+	 * @param text
+	 *            the text
+	 * @param gameConfVal
+	 *            the name of the value in {@link GameConf}
+	 */
+	public BoolSettingToggle(IScene scene, String text, String gameConfVal) {
 		super(scene, text);
 		try {
 			this.setting = GameConf.class.getDeclaredField(gameConfVal);
@@ -30,6 +50,9 @@ public class SettingToggle extends MenuItem {
 		this.toggleSetting();
 	}
 
+	/**
+	 * Toggle the setting.
+	 */
 	private void toggleSetting() {
 		try {
 			this.setting.setBoolean(null, !this.curVal);

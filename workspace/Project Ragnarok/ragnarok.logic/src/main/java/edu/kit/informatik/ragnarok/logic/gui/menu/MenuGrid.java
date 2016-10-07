@@ -11,16 +11,16 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
  */
 public class MenuGrid extends SubMenu {
 	/**
-	 * Number of columns
+	 * Number of columns.
 	 */
 	private int colCount;
 	/**
-	 * Number of rows
+	 * Number of rows.
 	 */
 	private int rowCount;
 
 	/**
-	 * Create a MenuGrid
+	 * Create a MenuGrid.
 	 *
 	 * @param scene
 	 *            the scene

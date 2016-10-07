@@ -6,14 +6,14 @@ import edu.kit.informatik.ragnarok.logic.gui.menu.MenuItem;
 import edu.kit.informatik.ragnarok.primitives.image.Filter;
 
 /**
- * This Interface defines the Model for the MVC
+ * This Interface defines the Model for the MVC.
  *
  * @author Dominik Fuchß
  *
  */
 public interface Model {
 	/**
-	 * Get the model
+	 * Get the model.
 	 *
 	 * @return the model
 	 */
@@ -22,14 +22,14 @@ public interface Model {
 	}
 
 	/**
-	 * Get the Player
+	 * Get the Player.
 	 *
 	 * @return the player or {@code null} when not in GAME
 	 */
 	Entity getPlayer();
 
 	/**
-	 * Get the Menu
+	 * Get the Menu.
 	 *
 	 * @return the menu or {@code null} when not in MENU
 	 */
@@ -37,7 +37,7 @@ public interface Model {
 	MenuItem getMenu();
 
 	/**
-	 * Start the model
+	 * Start the model.
 	 */
 	void start();
 
@@ -49,14 +49,14 @@ public interface Model {
 	IScene getScene();
 
 	/**
-	 * Get the current state
+	 * Get the current state.
 	 *
 	 * @return the state
 	 */
 	GameState getState();
 
 	/**
-	 * Set a filter
+	 * Set a filter.
 	 *
 	 * @param f
 	 *            the filter
@@ -64,19 +64,19 @@ public interface Model {
 	void setFilter(Filter f);
 
 	/**
-	 * Remove all filters
+	 * Remove all filters.
 	 */
 	void removeFilter();
 
 	/**
-	 * Get the current filter & reset {@link #filterChanged()}
+	 * Get the current filter & reset {@link #filterChanged()}.
 	 *
 	 * @return the filter or {@code null} if none set
 	 */
 	Filter getFilter();
 
 	/**
-	 * Indicates whether the filter has been changed
+	 * Indicates whether the filter has been changed.
 	 *
 	 * @return {@code true} if changed, {@code false} otherwise
 	 */

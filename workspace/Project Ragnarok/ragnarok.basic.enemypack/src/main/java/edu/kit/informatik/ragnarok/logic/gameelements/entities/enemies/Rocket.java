@@ -21,7 +21,7 @@ import edu.kit.informatik.ragnarok.visitor.parser.TwoLevelParser;
 
 /**
  *
- * As its name says, this Enemy is a rocket
+ * As its name says, this Enemy is a rocket.
  *
  */
 @LoadMe
@@ -29,46 +29,46 @@ import edu.kit.informatik.ragnarok.visitor.parser.TwoLevelParser;
 @AdditionalParsers(parsers = { TwoLevelParser.class }, types = { ParticleSpawner.class })
 public final class Rocket extends Enemy implements Visitable {
 	/**
-	 * Prototype Constructor
+	 * Prototype Constructor.
 	 */
 	public Rocket() {
 		super();
 	}
 
 	/**
-	 * The inner color of the rocket
+	 * The inner color of the rocket.
 	 */
 	private static RGBColor INNER_COLOR;
 	/**
-	 * The color of the front
+	 * The color of the front.
 	 */
 	private static RGBColor FRONT_COLOR;
 	/**
-	 * The outer color of the rocket
+	 * The outer color of the rocket.
 	 */
 	private static RGBColor OUTER_COLOR;
 	/**
-	 * The Particles's spawn time
+	 * The Particles's spawn time.
 	 */
 	private static float PARTICLE_SPAWN_TIME;
 
 	/**
-	 * The particle spawner for the rocket's flight
+	 * The particle spawner for the rocket's flight.
 	 */
 	private static ParticleSpawner sparkParticles = null;
 	/**
-	 * The particle spawner for the rocket's explosion
+	 * The particle spawner for the rocket's explosion.
 	 */
 	private static ParticleSpawner explosionParticles = null;
 
 	/**
-	 * The timer of the particles
+	 * The timer of the particles.
 	 */
 	@NoVisit
 	private Timer paricleTimer;
 
 	/**
-	 * Create a rocket by start position
+	 * Create a rocket by start position.
 	 *
 	 * @param startPos
 	 *            the start position

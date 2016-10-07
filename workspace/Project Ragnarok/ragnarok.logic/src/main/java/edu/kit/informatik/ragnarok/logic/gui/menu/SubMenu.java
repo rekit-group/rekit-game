@@ -9,30 +9,32 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 
 /**
  *
- * This class realizes a Menu displaying a list of MenuItems
+ * This class realizes a Menu displaying a list of MenuItems.
  *
  */
 public abstract class SubMenu extends MenuItem {
 	/**
 	 * This bool indicates whether this Menu (false) or its Items (true) shall
-	 * be rendered
+	 * be rendered.
 	 */
 	protected boolean inMenu = false;
 
 	/**
-	 * The current index
+	 * The current index.
 	 */
 	protected int index = 0;
 
 	/**
-	 * The contained Items
+	 * The contained Items.
 	 */
 	protected List<MenuItem> menuItems;
-
+	/**
+	 * The size of the items.
+	 */
 	protected Vec itemSize;
 
 	/**
-	 * Create the submenu
+	 * Create the submenu.
 	 *
 	 * @param scene
 	 *            the scene
@@ -45,7 +47,7 @@ public abstract class SubMenu extends MenuItem {
 	}
 
 	/**
-	 * Add an Item
+	 * Add an Item.
 	 *
 	 * @param i
 	 *            the item
@@ -57,7 +59,7 @@ public abstract class SubMenu extends MenuItem {
 	}
 
 	/**
-	 * Remove an Item
+	 * Remove an Item.
 	 *
 	 * @param i
 	 *            the item
@@ -70,7 +72,7 @@ public abstract class SubMenu extends MenuItem {
 	}
 
 	/**
-	 * Set the size of Items
+	 * Set the size of Items.
 	 *
 	 * @param value
 	 *            the new size
@@ -202,6 +204,7 @@ public abstract class SubMenu extends MenuItem {
 	 * (displaying its children).
 	 *
 	 * @param f
+	 *            the field for rendering
 	 */
 	protected void renderMenu(Field f) {
 		for (final MenuItem menuItem : this.menuItems) {
@@ -210,7 +213,7 @@ public abstract class SubMenu extends MenuItem {
 	}
 
 	/**
-	 * Calculate the new Position of each Item
+	 * Calculate the new Position of each Item.
 	 */
 	protected abstract void calcItemPos();
 

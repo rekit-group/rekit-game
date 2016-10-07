@@ -14,35 +14,35 @@ import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 
 /**
  * This Box realizes an {@link Inanimate} which boosts the Player from time to
- * time
+ * time.
  *
  * @author Dominik Fuchß
  *
  */
 @LoadMe
-public class BoostBox extends DynamicInanimate {
+public final class BoostBox extends DynamicInanimate {
 	/**
-	 * The inner inanimate box
+	 * The inner inanimate box.
 	 */
 	protected InanimateBox innerBox;
 	/**
-	 * The time between strategy changes
+	 * The time between strategy changes.
 	 */
 	protected static final long PERIOD = 4500;
 	/**
-	 * The current time offset
+	 * The current time offset.
 	 */
 	protected long offset = 0;
 	/**
-	 * All strategies
+	 * All strategies.
 	 */
 	private BoostBoxStrategy[] strategies;
 	/**
-	 * The current stategy id
+	 * The current strategy id.
 	 */
 	private int current = 0;
 	/**
-	 * The particle spawner
+	 * The particle spawner.
 	 */
 	private static ParticleSpawner particles = null;
 
@@ -60,19 +60,19 @@ public class BoostBox extends DynamicInanimate {
 		BoostBox.particles.speed = new ParticleSpawnerOption(2, 3, -1, 1);
 	}
 	/**
-	 * This bool indicates whether particles shall spawn
+	 * This bool indicates whether particles shall spawn.
 	 */
 	private boolean sparkling;
 
 	/**
-	 * Prototype Constructor
+	 * Prototype Constructor.
 	 */
 	public BoostBox() {
 		super();
 	}
 
 	/**
-	 * Creaze a BoostBox
+	 * Create a BoostBox.
 	 *
 	 * @param pos
 	 *            the position
@@ -94,7 +94,7 @@ public class BoostBox extends DynamicInanimate {
 	}
 
 	/**
-	 * The last time when {@link #logicLoop(float)} was invoked
+	 * The last time when {@link #logicLoop(float)} was invoked.
 	 */
 	private long lastTime = 0;
 
@@ -137,19 +137,19 @@ public class BoostBox extends DynamicInanimate {
 
 	/**
 	 * This class is the base class for all different behaviors of a
-	 * {@link BoostBox}
+	 * {@link BoostBox}.
 	 *
 	 * @author Dominik Fuchß
 	 *
 	 */
 	private abstract class BoostBoxStrategy {
 		/**
-		 * The parent
+		 * The parent.
 		 */
 		protected BoostBox parent;
 
 		/**
-		 * Create strategy by parent
+		 * Create strategy by parent.
 		 *
 		 * @param parent
 		 *            the parent
@@ -159,7 +159,7 @@ public class BoostBox extends DynamicInanimate {
 		}
 
 		/**
-		 * Same as {@link BoostBox#reactToCollision(GameElement, Direction)}
+		 * Same as {@link BoostBox#reactToCollision(GameElement, Direction)}.
 		 *
 		 * @param element
 		 *            the element
@@ -171,14 +171,14 @@ public class BoostBox extends DynamicInanimate {
 		}
 
 		/**
-		 * Get the current color of the box
+		 * Get the current color of the box.
 		 *
 		 * @return the color
 		 */
 		public abstract RGBAColor getColor();
 
 		/**
-		 * Same as {@link BoostBox#internalRender(Field)}
+		 * Same as {@link BoostBox#internalRender(Field)}.
 		 *
 		 * @param f
 		 *            the field
@@ -191,14 +191,14 @@ public class BoostBox extends DynamicInanimate {
 	}
 
 	/**
-	 * The default strategy: A normal {@link InanimateBox}
+	 * The default strategy: A normal {@link InanimateBox}.
 	 *
 	 * @author Dominik Fuchß
 	 *
 	 */
 	private class NoBoost extends BoostBoxStrategy {
 		/**
-		 * Create strategy by parent
+		 * Create strategy by parent.
 		 *
 		 * @param parent
 		 *            the parent
@@ -220,14 +220,14 @@ public class BoostBox extends DynamicInanimate {
 	}
 
 	/**
-	 * The first level strategy: A small boost upwards
+	 * The first level strategy: A small boost upwards.
 	 *
 	 * @author Dominik Fuchß
 	 *
 	 */
 	private class BoostFirstState extends BoostBoxStrategy {
 		/**
-		 * Create strategy by parent
+		 * Create strategy by parent.
 		 *
 		 * @param parent
 		 *            the parent
@@ -253,14 +253,14 @@ public class BoostBox extends DynamicInanimate {
 	}
 
 	/**
-	 * The max level strategy: A huge boost upwards
+	 * The max level strategy: A huge boost upwards.
 	 *
 	 * @author Dominik Fuchß
 	 *
 	 */
 	private class BoostMaxState extends BoostBoxStrategy {
 		/**
-		 * Create strategy by parent
+		 * Create strategy by parent.
 		 *
 		 * @param parent
 		 *            the parent
