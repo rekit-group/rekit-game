@@ -167,11 +167,10 @@ public class GameModel implements CameraTarget, Model {
 	/**
 	 * Get time in seconds ({@link #lastTime}).
 	 *
-	 * @return the last time in seconds
+	 * @return the last time in millis
 	 */
-	// TODO Time format.
 	public long getTime() {
-		return this.lastTime / 1000;
+		return this.lastTime;
 	}
 
 	/**

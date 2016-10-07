@@ -164,7 +164,7 @@ abstract class Scene implements CameraTarget, IScene {
 
 	/**
 	 * Invoke {@link GameElement#logicLoop(float)} for all game elements.
-	 * 
+	 *
 	 * @param lastTime
 	 *            the last time logic loop was invoked
 	 * @param it
