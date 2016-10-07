@@ -40,6 +40,12 @@ import edu.kit.informatik.ragnarok.util.ThreadUtils;
  * @version 1.1
  */
 class GameView implements View {
+
+	/**
+	 * The location of the icon of the game.
+	 */
+	private static final String ICON_LOCATION = "/images/icon.png";
+
 	/**
 	 * Reference to the model, that holds all information that are required for
 	 * rendering.
@@ -90,7 +96,7 @@ class GameView implements View {
 
 		this.shell = new Shell(Display.getDefault(), SWT.DIALOG_TRIM | SWT.MIN | SWT.PRIMARY_MODAL | SWT.NO_BACKGROUND);
 		this.shell.setText(GameConf.NAME + " (" + GameConf.VERSION + ")");
-
+		this.shell.setImage(new Image(Display.getDefault(), this.getClass().getResourceAsStream(GameView.ICON_LOCATION)));
 		// Create and position a canvas
 		this.canvas = new Canvas(this.shell, SWT.NONE);
 		this.canvas.setSize(GameConf.PIXEL_W, GameConf.PIXEL_H);
