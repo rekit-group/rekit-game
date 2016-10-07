@@ -165,7 +165,7 @@ public class GameModel implements CameraTarget, Model {
 	}
 
 	/**
-	 * Get time in seconds ({@link #lastTime}).
+	 * Get time in millis ({@link #lastTime}).
 	 *
 	 * @return the last time in millis
 	 */
