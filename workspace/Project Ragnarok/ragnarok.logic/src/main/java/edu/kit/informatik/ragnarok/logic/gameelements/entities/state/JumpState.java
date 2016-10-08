@@ -16,7 +16,7 @@ public class JumpState extends EntityState {
 	/**
 	 * The time left for the jump.
 	 */
-	private float timeLeft = 0;
+	private long timeLeft = 0;
 	/**
 	 * Last time of invoking {@link #logicLoop()}.
 	 */
@@ -30,7 +30,7 @@ public class JumpState extends EntityState {
 	 */
 	public JumpState(Entity entity) {
 		super(entity);
-		this.timeLeft = 1000 * GameConf.PLAYER_JUMP_TIME;
+		this.timeLeft = GameConf.PLAYER_JUMP_TIME;
 	}
 
 	@Override

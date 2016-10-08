@@ -14,6 +14,7 @@ import edu.kit.informatik.ragnarok.visitor.annotations.NoVisit;
 import edu.kit.informatik.ragnarok.visitor.annotations.VisitInfo;
 import edu.kit.informatik.ragnarok.visitor.parser.FloatParser;
 import edu.kit.informatik.ragnarok.visitor.parser.IntParser;
+import edu.kit.informatik.ragnarok.visitor.parser.LongParser;
 import edu.kit.informatik.ragnarok.visitor.parser.Parser;
 import edu.kit.informatik.ragnarok.visitor.parser.RGBColorParser;
 import edu.kit.informatik.ragnarok.visitor.parser.StringParser;
@@ -62,6 +63,9 @@ public abstract class Visitor {
 			this.put(Integer.TYPE, new IntParser());
 			this.put(Float.class, new FloatParser());
 			this.put(Float.TYPE, new FloatParser());
+			this.put(Long.class, new LongParser());
+			this.put(Long.TYPE, new LongParser());
+
 			this.put(RGBColor.class, new RGBColorParser());
 			this.put(Vec.class, new VecParser());
 			this.put(String.class, new StringParser());

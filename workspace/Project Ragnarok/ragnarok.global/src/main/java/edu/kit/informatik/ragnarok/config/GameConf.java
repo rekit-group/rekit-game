@@ -126,9 +126,9 @@ public final class GameConf implements Visitable {
 	 */
 	public static float PLAYER_KILL_BOOST;
 	/**
-	 * The player's maximum jump time.
+	 * The player's maximum jump time in millis.
 	 */
-	public static float PLAYER_JUMP_TIME;
+	public static long PLAYER_JUMP_TIME;
 	/**
 	 * The player's bottom boost (used when colliding from bottom).
 	 */
