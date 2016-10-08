@@ -80,12 +80,12 @@ public final class GameElementFactory {
 
 		System.err.println("Error in GameElementFactory: Tried to get Prototype of GameElement with unknown ID " + id);
 		// if none found --> inanimate
-		return GameElementFactory.elements.get(InanimateBox.class.getName());
+		return Inanimate.getPrototype();
 	}
 
 	/**
 	 * Generate a new GameElement at position.
-	 * 
+	 *
 	 * @param id
 	 *            the id
 	 * @param x
@@ -103,7 +103,7 @@ public final class GameElementFactory {
 
 	/**
 	 * Generate a new GameElement.
-	 * 
+	 *
 	 * @param element
 	 *            the element
 	 */
@@ -176,7 +176,7 @@ public final class GameElementFactory {
 
 	/**
 	 * Generate coin at position.
-	 * 
+	 *
 	 * @param x
 	 *            the x pos
 	 * @param y
@@ -189,7 +189,7 @@ public final class GameElementFactory {
 
 	/**
 	 * Generate inanimate at position.
-	 * 
+	 *
 	 * @param x
 	 *            the x pos
 	 * @param y

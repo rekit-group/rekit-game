@@ -143,7 +143,6 @@ abstract class Scene implements CameraTarget, IScene {
 			// iterate all GameElements to invoke logicLoop
 			synchronized (this.synchronize()) {
 				Iterator<GameElement> it = this.getGameElementIterator();
-
 				while (it.hasNext()) {
 					this.logicLoopGameElement(it);
 				}
@@ -152,16 +151,10 @@ abstract class Scene implements CameraTarget, IScene {
 
 		// remove GameElements that must be removed
 		this.removeGameElements();
-
 		this.logicLoopAfter();
-
 		// after all game related logic update GuiElements
 		synchronized (this.synchronize()) {
-			Iterator<GuiElement> it = this.getGuiElementIterator();
-			while (it.hasNext()) {
-				GuiElement e = it.next();
-				e.logicLoop();
-			}
+			this.getGuiElementIterator().forEachRemaining((e) -> e.logicLoop());
 		}
 
 	}
