@@ -185,7 +185,7 @@ public class Particle extends GameElement implements Cloneable {
 				this.movementVec = Direction.UP.getVector();
 
 				// set Amount in units/time
-				this.movementVec = this.movementVec.scalar(speed * deltaTime);
+				this.movementVec = this.movementVec.scalar(speed * deltaTime / 1000F);
 
 				// set Angle
 				this.movementVec = this.movementVec.rotate(angle);

@@ -130,7 +130,6 @@ public class ParticleSpawner implements Visitable {
 	 *            the position
 	 */
 	public void spawn(IScene scene, Vec pos) {
-
 		int randomAmount = (int) (this.amountMin + GameConf.PRNG.nextDouble() * (this.amountMax - this.amountMin));
 
 		for (int i = 0; i < randomAmount; i++) {
