@@ -5,6 +5,7 @@ import java.util.Map;
 
 import edu.kit.informatik.ragnarok.core.Field;
 import edu.kit.informatik.ragnarok.core.GameElement;
+import edu.kit.informatik.ragnarok.core.GameTime;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.DynamicInanimate;
 import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
@@ -72,9 +73,9 @@ public final class ToggleBox extends DynamicInanimate {
 	}
 
 	@Override
-	public void logicLoop(float deltaTime) {
+	public void logicLoop() {
 		// Get new strategy from strategy map
-		this.currentStrategy = this.strategies.get((this.getScene().getTime() + this.offset) % ToggleBox.PERIOD < ToggleBox.PERIOD / 2);
+		this.currentStrategy = this.strategies.get((GameTime.getTime() + this.offset) % ToggleBox.PERIOD < ToggleBox.PERIOD / 2);
 	}
 
 	@Override

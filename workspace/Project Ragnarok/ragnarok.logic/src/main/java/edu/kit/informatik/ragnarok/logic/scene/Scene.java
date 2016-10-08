@@ -9,6 +9,7 @@ import java.util.PriorityQueue;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.core.CameraTarget;
 import edu.kit.informatik.ragnarok.core.GameElement;
+import edu.kit.informatik.ragnarok.core.GameTime;
 import edu.kit.informatik.ragnarok.core.GuiElement;
 import edu.kit.informatik.ragnarok.core.IScene;
 import edu.kit.informatik.ragnarok.core.Team;
@@ -74,6 +75,14 @@ abstract class Scene implements CameraTarget, IScene {
 	 * Indicates whether the scene is paused.
 	 */
 	private boolean paused = false;
+	/**
+	 * Last time of invoking {@link #logicLoop()}.
+	 */
+	private long lastTime = GameTime.getTime();
+	/**
+	 * The latest deltaTime in {@link #logicLoop()}.
+	 */
+	protected long deltaTime;
 
 	/**
 	 * Create the scene.
@@ -95,6 +104,11 @@ abstract class Scene implements CameraTarget, IScene {
 
 	@Override
 	public void togglePause() {
+		if (this.paused) {
+			GameTime.resume();
+		} else {
+			GameTime.pause();
+		}
 		this.paused = !this.paused;
 	}
 
@@ -113,9 +127,18 @@ abstract class Scene implements CameraTarget, IScene {
 	}
 
 	@Override
-	public void logicLoop(long lastTime) {
+	public final void logicLoop() {
+		this.deltaTime = GameTime.getTime() - this.lastTime;
+		this.lastTime += this.deltaTime;
+		this.innerLogicLoop();
+	}
 
-		this.logicLoopPre(lastTime);
+	/**
+	 * This method will be invoked in {@link #logicLoop()}.
+	 */
+	protected void innerLogicLoop() {
+
+		this.logicLoopPre(this.lastTime);
 
 		// add GameElements that have been added
 		this.addGameElements();
@@ -126,7 +149,7 @@ abstract class Scene implements CameraTarget, IScene {
 				Iterator<GameElement> it = this.getGameElementIterator();
 
 				while (it.hasNext()) {
-					this.logicLoopGameElement(lastTime, it);
+					this.logicLoopGameElement(it);
 				}
 			}
 		}
@@ -141,7 +164,7 @@ abstract class Scene implements CameraTarget, IScene {
 			Iterator<GuiElement> it = this.getGuiElementIterator();
 			while (it.hasNext()) {
 				GuiElement e = it.next();
-				e.logicLoop((System.currentTimeMillis() - lastTime) / 1000.f);
+				e.logicLoop();
 			}
 		}
 
@@ -165,12 +188,10 @@ abstract class Scene implements CameraTarget, IScene {
 	/**
 	 * Invoke {@link GameElement#logicLoop(float)} for all game elements.
 	 *
-	 * @param lastTime
-	 *            the last time logic loop was invoked
 	 * @param it
 	 *            the iterator with all elements
 	 */
-	protected void logicLoopGameElement(long lastTime, Iterator<GameElement> it) {
+	protected void logicLoopGameElement(Iterator<GameElement> it) {
 		GameElement e = it.next();
 
 		// if this GameElement is marked for destruction
@@ -182,14 +203,14 @@ abstract class Scene implements CameraTarget, IScene {
 		// Debug: Save time before logicLoop
 		long timeBefore = 0;
 		if (GameConf.DEBUG) {
-			timeBefore = System.currentTimeMillis();
+			timeBefore = GameTime.getTime();
 		}
 
-		e.logicLoop((System.currentTimeMillis() - lastTime) / 1000.f);
+		e.logicLoop();
 
 		// Debug: Compare and save logicLoop Duration
 		if (GameConf.DEBUG) {
-			long timeAfter = System.currentTimeMillis();
+			long timeAfter = GameTime.getTime();
 			Class<?> clazz = e.getClass();
 			long dur = (timeAfter - timeBefore);
 			if (this.gameElementDurations.containsKey(clazz)) {
@@ -320,11 +341,6 @@ abstract class Scene implements CameraTarget, IScene {
 	@Override
 	public Entity getPlayer() {
 		return null;
-	}
-
-	@Override
-	public long getTime() {
-		return 0;
 	}
 
 	@Override

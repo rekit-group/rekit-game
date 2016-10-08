@@ -134,7 +134,8 @@ public class ParticleSpawner implements Visitable {
 		int randomAmount = (int) (this.amountMin + GameConf.PRNG.nextDouble() * (this.amountMax - this.amountMin));
 
 		for (int i = 0; i < randomAmount; i++) {
-			float randomTime = (float) (this.timeMin + GameConf.PRNG.nextDouble() * (this.timeMax - this.timeMin));
+			// TODO All changed to millis
+			long randomTime = (long) (1000 * (this.timeMin + GameConf.PRNG.nextDouble() * (this.timeMax - this.timeMin)));
 
 			this.polygon.moveTo(pos);
 

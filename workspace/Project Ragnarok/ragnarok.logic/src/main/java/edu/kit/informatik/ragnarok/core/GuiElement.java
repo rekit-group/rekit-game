@@ -115,10 +115,8 @@ public abstract class GuiElement implements Comparable<GuiElement> {
 	 * physics emulation, time-based actions, ...
 	 * </p>
 	 *
-	 * @param deltaTime
-	 *            the time past since the last invoke of this method in seconds
 	 */
-	public void logicLoop(float deltaTime) {
+	public void logicLoop() {
 		// Do nothing
 	}
 

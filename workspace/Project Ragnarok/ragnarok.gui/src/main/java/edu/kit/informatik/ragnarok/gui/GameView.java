@@ -20,6 +20,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.core.GameElement;
+import edu.kit.informatik.ragnarok.core.GameTime;
 import edu.kit.informatik.ragnarok.core.GuiElement;
 import edu.kit.informatik.ragnarok.core.IScene;
 import edu.kit.informatik.ragnarok.logic.Model;
@@ -277,9 +278,9 @@ class GameView implements View {
 	 * @return the FPS
 	 */
 	private int getFPS() {
-		long thisTime = System.currentTimeMillis();
+		long thisTime = GameTime.getTime();
 		long deltaTime = thisTime - this.lastRenderTime;
-		this.lastRenderTime = System.currentTimeMillis();
+		this.lastRenderTime = GameTime.getTime();
 
 		float fps = deltaTime;
 		this.fpsQueue.add(fps);

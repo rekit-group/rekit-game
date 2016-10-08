@@ -3,6 +3,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.inanimate;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.core.Field;
 import edu.kit.informatik.ragnarok.core.GameElement;
+import edu.kit.informatik.ragnarok.core.GameTime;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawner;
 import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawnerOption;
@@ -59,6 +60,10 @@ public final class MovingBox extends DynamicInanimate {
 	 */
 	private float sizeX16;
 	/**
+	 * The last time of invoking {@link #logicLoop()}.
+	 */
+	private long lastTime = GameTime.getTime();
+	/**
 	 * The particle spawner.
 	 */
 	private static ParticleSpawner sparkParticles = null;
@@ -113,9 +118,9 @@ public final class MovingBox extends DynamicInanimate {
 		this.darkCol = this.color.darken(0.8f);
 
 		// initialize movement timer
-		float period = dist / (2 * MovingBox.SPEED);
+		long period = (long) (dist / (2 * MovingBox.SPEED) * 1000);
 		this.timer = new Timer(period);
-		this.timer.removeTime(offset ? period / 2f : 0);
+		this.timer.removeTime(offset ? 1000 * period / 2 : 0);
 	}
 
 	@Override
@@ -126,7 +131,9 @@ public final class MovingBox extends DynamicInanimate {
 	}
 
 	@Override
-	public void logicLoop(float deltaTime) {
+	public void logicLoop() {
+		long deltaTime = GameTime.getTime() - this.lastTime;
+		this.lastTime += deltaTime;
 		this.timer.removeTime(deltaTime);
 		this.setPos(this.currentStart.add(this.relativeTarget.scalar(this.timer.getProgress())));
 

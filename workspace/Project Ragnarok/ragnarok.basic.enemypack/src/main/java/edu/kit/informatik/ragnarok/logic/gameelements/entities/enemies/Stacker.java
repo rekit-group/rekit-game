@@ -6,6 +6,7 @@ import java.util.List;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.core.Field;
 import edu.kit.informatik.ragnarok.core.GameElement;
+import edu.kit.informatik.ragnarok.core.GameTime;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Enemy;
 import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
@@ -76,7 +77,7 @@ public final class Stacker extends Enemy implements Visitable {
 	}
 
 	@Override
-	public void logicLoop(float deltaTime) {
+	protected void innerLogicLoop() {
 		if (!this.init) {
 			for (StackerElement elem : this.elements) {
 				this.getScene().addGameElement(elem);
@@ -115,11 +116,11 @@ public final class Stacker extends Enemy implements Visitable {
 		}
 
 		@Override
-		public void logicLoop(float deltaTime) {
-			this.setPos(Stacker.this.getPos().add(this.relPos).addX((float) (0.1 * Math.sin(0.1 * this.getScene().getTime() / 30 + this.offset))));
+		protected void innerLogicLoop() {
+			this.setPos(Stacker.this.getPos().add(this.relPos).addX((float) (0.1 * Math.sin(0.1 * GameTime.getTime() / 30 + this.offset))));
 
 			if (this.timeToDie != null) {
-				this.timeToDie.removeTime(deltaTime);
+				this.timeToDie.removeTime(this.deltaTime);
 				this.setSize(Stacker.dimensions.getNow(this.timeToDie.getProgress()));
 				this.setPos(this.getPos().addY((-this.getSize().getY() + Stacker.dimensions.getNow(0).getY()) / 2f));
 				if (this.timeToDie.timeUp()) {
@@ -158,7 +159,7 @@ public final class Stacker extends Enemy implements Visitable {
 
 		public void customDie() {
 			if (this.offset == Stacker.this.highestOffset) {
-				this.timeToDie = new Timer(Stacker.DIE_ANIMATION_TIME);
+				this.timeToDie = new Timer((long) (1000 * Stacker.DIE_ANIMATION_TIME));
 				Stacker.this.highestOffset--;
 			}
 		}

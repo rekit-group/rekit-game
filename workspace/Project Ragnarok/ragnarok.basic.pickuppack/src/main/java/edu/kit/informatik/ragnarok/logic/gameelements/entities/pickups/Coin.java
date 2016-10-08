@@ -57,8 +57,8 @@ public final class Coin extends Pickup {
 	}
 
 	@Override
-	public void logicLoop(float renderDelta) {
-		this.x += renderDelta;
+	protected void innerLogicLoop() {
+		this.x += this.deltaTime / 1000F;
 		this.sin = Math.sin(this.x * 3);
 		this.setSize(new Vec((float) (0.7f * this.sin), 0.7f));
 	}

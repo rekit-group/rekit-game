@@ -3,6 +3,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.inanimate;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.core.Field;
 import edu.kit.informatik.ragnarok.core.GameElement;
+import edu.kit.informatik.ragnarok.core.GameTime;
 import edu.kit.informatik.ragnarok.core.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawner;
 import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawnerOption;
@@ -112,10 +113,10 @@ public final class ClimbUpBox extends DynamicInanimate {
 	private long lastTime = -1;
 
 	@Override
-	public void logicLoop(float deltaTime) {
+	public void logicLoop() {
 
 		// get time
-		long nowTime = this.getScene().getTime();
+		long nowTime = GameTime.getTime();
 		// init lastTime in first run
 		if (this.lastTime == -1) {
 			this.lastTime = nowTime - this.offset - ((nowTime) % ClimbUpBox.PERIOD);

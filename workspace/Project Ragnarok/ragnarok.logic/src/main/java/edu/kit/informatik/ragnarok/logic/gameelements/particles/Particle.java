@@ -2,6 +2,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.particles;
 
 import edu.kit.informatik.ragnarok.core.Field;
 import edu.kit.informatik.ragnarok.core.GameElement;
+import edu.kit.informatik.ragnarok.core.GameTime;
 import edu.kit.informatik.ragnarok.core.Team;
 import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
 import edu.kit.informatik.ragnarok.primitives.geometry.Polygon;
@@ -75,6 +76,10 @@ public class Particle extends GameElement implements Cloneable {
 	 * The current movement vector.
 	 */
 	private Vec movementVec = null;
+	/**
+	 * The last time of invoking {@link #logicLoop()}.
+	 */
+	private long lastTime = GameTime.getTime();
 
 	/**
 	 * Create a particle.
@@ -91,7 +96,7 @@ public class Particle extends GameElement implements Cloneable {
 	 * @param pos
 	 *            the initial position of the particle
 	 * @param lifeTime
-	 *            the time in seconds for how the particle will be rendered
+	 *            the time in millis for how the particle will be rendered
 	 * @param scale
 	 *            the <i>ProgressDendency</i> for the polygons size
 	 * @param speed
@@ -112,7 +117,7 @@ public class Particle extends GameElement implements Cloneable {
 	 * @param rotation
 	 *            the <i>ProgressDendency</i> for the polygons rotation
 	 */
-	public void setProperties(Polygon polygon, Vec pos, float lifeTime, Progress scale, Progress speed, Progress rotation, Progress angle,
+	public void setProperties(Polygon polygon, Vec pos, long lifeTime, Progress scale, Progress speed, Progress rotation, Progress angle,
 			Progress colorR, Progress colorG, Progress colorB, Progress colorA) {
 		// clone polygon so we can work with it
 		this.polygon = this.initialPolygon = polygon.clone();
@@ -130,7 +135,6 @@ public class Particle extends GameElement implements Cloneable {
 		this.colorG = colorG;
 		this.colorB = colorB;
 		this.colorA = colorA;
-
 		// create timer to get progress between 0 and 1 relative to time
 		this.timer = new Timer(lifeTime);
 
@@ -144,7 +148,9 @@ public class Particle extends GameElement implements Cloneable {
 	}
 
 	@Override
-	public void logicLoop(float deltaTime) {
+	public void logicLoop() {
+		long deltaTime = GameTime.getTime() - this.lastTime;
+		this.lastTime += deltaTime;
 		// tell timer passed time
 		this.timer.removeTime(deltaTime);
 

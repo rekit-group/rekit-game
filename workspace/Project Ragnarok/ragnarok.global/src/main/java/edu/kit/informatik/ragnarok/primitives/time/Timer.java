@@ -9,21 +9,21 @@ package edu.kit.informatik.ragnarok.primitives.time;
 public final class Timer {
 
 	/**
-	 * The duration.
+	 * The duration in millis.
 	 */
-	private float duration;
+	private long duration;
 	/**
-	 * The time left.
+	 * The time left millis.
 	 */
-	private float timeLeft;
+	private long timeLeft;
 
 	/**
 	 * Create a TimeDependency by duration time.
 	 *
 	 * @param duration
-	 *            the duration time
+	 *            the duration time in millis
 	 */
-	public Timer(float duration) {
+	public Timer(long duration) {
 		this.duration = duration;
 		this.timeLeft = duration;
 	}
@@ -32,9 +32,9 @@ public final class Timer {
 	 * Remove some time.
 	 *
 	 * @param deltaTime
-	 *            the time
+	 *            the time millis
 	 */
-	public void removeTime(float deltaTime) {
+	public void removeTime(long deltaTime) {
 		this.timeLeft -= deltaTime;
 	}
 
@@ -60,7 +60,7 @@ public final class Timer {
 	 * @return percentage as float in [0,1]
 	 */
 	public float getProgress() {
-		return this.timeUp() ? 1 : 1 - this.timeLeft / this.duration;
+		return this.timeUp() ? 1 : 1 - ((1F * this.timeLeft) / this.duration);
 	}
 
 }

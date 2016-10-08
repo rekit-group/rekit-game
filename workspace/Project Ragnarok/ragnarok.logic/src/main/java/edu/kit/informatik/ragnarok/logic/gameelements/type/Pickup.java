@@ -67,7 +67,7 @@ public abstract class Pickup extends Entity {
 	}
 
 	@Override
-	public void logicLoop(float deltaTime) {
+	protected void innerLogicLoop() {
 		// no logic
 	}
 }

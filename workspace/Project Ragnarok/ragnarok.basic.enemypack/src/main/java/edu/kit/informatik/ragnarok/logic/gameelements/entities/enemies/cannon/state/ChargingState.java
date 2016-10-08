@@ -62,14 +62,14 @@ public class ChargingState extends CannonState {
 	}
 
 	@Override
-	public void logicLoop(float deltaTime) {
-		super.logicLoop(deltaTime);
+	public void logicLoop() {
+		super.logicLoop();
 		this.currentShake = Cannon.MAX_SHAKING * (2 * GameConf.PRNG.nextFloat() - 1) * this.shakeStrength();
 
 	}
 
 	@Override
-	public float getTimerTime() {
-		return Cannon.STATE_CHARGING_DURATION;
+	public long getTimerTime() {
+		return (long) (1000 * Cannon.STATE_CHARGING_DURATION);
 	}
 }

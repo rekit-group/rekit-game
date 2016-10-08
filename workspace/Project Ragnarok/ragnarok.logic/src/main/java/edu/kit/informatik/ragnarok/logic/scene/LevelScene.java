@@ -202,11 +202,6 @@ public abstract class LevelScene extends Scene {
 	}
 
 	@Override
-	public long getTime() {
-		return this.getModel().getTime();
-	}
-
-	@Override
 	public final MenuItem getMenu() {
 		throw new UnsupportedOperationException("Menu not supported in LevelScene");
 	}

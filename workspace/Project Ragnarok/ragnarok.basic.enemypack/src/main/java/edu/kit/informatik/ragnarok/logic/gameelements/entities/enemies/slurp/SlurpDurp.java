@@ -118,8 +118,8 @@ public final class SlurpDurp extends Entity {
 	}
 
 	@Override
-	public void logicLoop(float deltaTime) {
-		this.currentX += deltaTime;
+	protected void innerLogicLoop() {
+		this.currentX += this.deltaTime / 1000F;
 		this.setSize(new Vec(this.baseSize + (float) (this.amplitude * Math.sin(this.currentX * this.frequency + this.phase))));
 
 	}

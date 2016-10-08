@@ -44,7 +44,7 @@ public class ScoreGui extends GuiElement {
 	}
 
 	@Override
-	public void logicLoop(float deltaTime) {
+	public void logicLoop() {
 		this.points.setText(this.scene.getScore() + " Points");
 		this.highscore.setText(this.scene.getHighScore() + " Highscore");
 	}

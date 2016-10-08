@@ -169,14 +169,14 @@ public final class BossStructure extends Structure {
 
 	/**
 	 * End the battle.
-	 * 
+	 *
 	 * @param scene
 	 *            the scene
 	 */
 	public void endBattle(IScene scene) {
 		final Player player = (Player) scene.getPlayer();
 
-		final Timer timer = new Timer(7f);
+		final Timer timer = new Timer(7000);
 
 		// Needed for animating camera movement
 		Progress cameraMover = new Progress(this.cameraTarget - GameConf.PLAYER_CAMERA_OFFSET,
@@ -238,7 +238,7 @@ public final class BossStructure extends Structure {
 					scene.setCameraTarget(new FixedCameraTarget(cameraMover.getNow(prog)));
 				}
 
-				timer.removeTime(GameConf.LOGIC_DELTA / 1000f);
+				timer.removeTime(GameConf.LOGIC_DELTA);
 			}
 
 			// re-apply velocity to Player

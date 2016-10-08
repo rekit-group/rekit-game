@@ -40,8 +40,8 @@ public class AimingState extends CannonState {
 	}
 
 	@Override
-	public float getTimerTime() {
-		return Cannon.STATE_AIMING_DURATION;
+	public long getTimerTime() {
+		return (long) (1000 * Cannon.STATE_AIMING_DURATION);
 	}
 
 }

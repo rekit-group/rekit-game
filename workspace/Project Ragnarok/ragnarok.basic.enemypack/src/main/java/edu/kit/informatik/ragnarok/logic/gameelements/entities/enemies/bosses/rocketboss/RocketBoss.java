@@ -36,14 +36,14 @@ public class RocketBoss extends Boss {
 	private static RGBColor HEAD_COL = new RGBColor(100, 100, 100);
 
 	private static Vec EYE_SIZE = new Vec(0.4f, 0.4f);
-	private static Vec EYE_LEFT_POS = EYE_SIZE.scalar(0.5f).add(HEAD_PADDING).sub(HEAD_SIZE.scalar(0.5f));
-	private static Vec EYE_RIGHT_POS = EYE_LEFT_POS.scalar(-1, 1);
+	private static Vec EYE_LEFT_POS = RocketBoss.EYE_SIZE.scalar(0.5f).add(RocketBoss.HEAD_PADDING).sub(RocketBoss.HEAD_SIZE.scalar(0.5f));
+	private static Vec EYE_RIGHT_POS = RocketBoss.EYE_LEFT_POS.scalar(-1, 1);
 
 	private static Vec MOUTH_SIZE = new Vec(1.6f, 0.4f);
-	private static Vec MOUTH_POS = (MOUTH_SIZE.scalar(-0.5f).sub(HEAD_PADDING).add(HEAD_SIZE.scalar(0.5f))).setX(0);
+	private static Vec MOUTH_POS = (RocketBoss.MOUTH_SIZE.scalar(-0.5f).sub(RocketBoss.HEAD_PADDING).add(RocketBoss.HEAD_SIZE.scalar(0.5f))).setX(0);
 	private static RGBColor MOUTH_BG_COL = new RGBColor(200, 200, 200);
 
-	private Timer mouthCurveTimer = new Timer(0.05f);
+	private Timer mouthCurveTimer = new Timer((long) (0.05 * 1000));
 	private Vec mouthCurvePos;
 	private List<Vec> mouthCurve = new LinkedList<>();
 
@@ -55,7 +55,7 @@ public class RocketBoss extends Boss {
 	}
 
 	public RocketBoss(Vec startPos) {
-		super(startPos, new Vec(), HEAD_SIZE);
+		super(startPos, new Vec(), RocketBoss.HEAD_SIZE);
 		this.startPos = startPos;
 		this.machine = new TimeStateMachine(new State3());
 	}
@@ -64,48 +64,53 @@ public class RocketBoss extends Boss {
 		return (DamageState) this.getMachine().getState();
 	}
 
-	public void logicLoop(float deltaTime) {
+	@Override
+	protected void innerLogicLoop() {
+
 		// add deltaTime with factor to local x
-		float deltaX = deltaTime * getState().getTimeFactor();
-		calcX += deltaX;
+		float deltaX = this.deltaTime * this.getState().getTimeFactor();
+		this.calcX += deltaX;
 
 		// calculate and update position
-		Vec scaleVec = new Vec((float) Math.sin(MOVEMENT_PERIOD.getX() * calcX), (float) Math.cos(MOVEMENT_PERIOD.getY() * calcX));
-		Vec scaledUnit = MOVEMENT_RANGE.multiply(scaleVec);
-		this.setPos(startPos.add(scaledUnit));
+		Vec scaleVec = new Vec((float) Math.sin(RocketBoss.MOVEMENT_PERIOD.getX() * this.calcX),
+				(float) Math.cos(RocketBoss.MOVEMENT_PERIOD.getY() * this.calcX));
+		Vec scaledUnit = RocketBoss.MOVEMENT_RANGE.multiply(scaleVec);
+		this.setPos(this.startPos.add(scaledUnit));
 
-		this.mouthCurvePos = this.getPos().add(MOUTH_POS).addX(0.5f * MOUTH_SIZE.getX()).addX(-calcX);
-		mouthCurveTimer.removeTime(deltaX);
-		float maxDelta = MOUTH_SIZE.getY() * 0.5f;
-		while (mouthCurveTimer.timeUp()) {
-			mouthCurveTimer.reset();
-			Vec newVec = new Vec(calcX, (float) (Math.tan(calcX * 10) * Math.sin(calcX * 4) * Math.cos(calcX * 0.5f) * maxDelta));
+		this.mouthCurvePos = this.getPos().add(RocketBoss.MOUTH_POS).addX(0.5f * RocketBoss.MOUTH_SIZE.getX()).addX(-this.calcX);
+		// TODO Check *1000
+		this.mouthCurveTimer.removeTime((long) (1000 * deltaX));
+		float maxDelta = RocketBoss.MOUTH_SIZE.getY() * 0.5f;
+		while (this.mouthCurveTimer.timeUp()) {
+			this.mouthCurveTimer.reset();
+			Vec newVec = new Vec(this.calcX, (float) (Math.tan(this.calcX * 10) * Math.sin(this.calcX * 4) * Math.cos(this.calcX * 0.5f) * maxDelta));
 			if (newVec.getY() > maxDelta) {
 				newVec = newVec.setY(maxDelta);
 			}
 			if (newVec.getY() < -maxDelta) {
 				newVec = newVec.setY(-maxDelta);
 			}
-			mouthCurve.add(newVec);
+			this.mouthCurve.add(newVec);
 		}
-		Iterator<Vec> it = mouthCurve.iterator();
+		Iterator<Vec> it = this.mouthCurve.iterator();
 		while (it.hasNext()) {
-			if (it.next().getX() <= calcX - MOUTH_SIZE.getX()) {
+			if (it.next().getX() <= this.calcX - RocketBoss.MOUTH_SIZE.getX()) {
 				it.remove();
 			}
 		}
 	}
 
+	@Override
 	public void internalRender(Field f) {
-		f.drawRectangle(this.getPos(), this.getSize(), HEAD_COL);
+		f.drawRectangle(this.getPos(), this.getSize(), RocketBoss.HEAD_COL);
 
 		// Render eyes
-		f.drawImage(this.getPos().add(EYE_LEFT_POS), EYE_SIZE, this.getState().getEyeImgSrc());
-		f.drawImage(this.getPos().add(EYE_RIGHT_POS), EYE_SIZE, this.getState().getEyeImgSrc());
+		f.drawImage(this.getPos().add(RocketBoss.EYE_LEFT_POS), RocketBoss.EYE_SIZE, this.getState().getEyeImgSrc());
+		f.drawImage(this.getPos().add(RocketBoss.EYE_RIGHT_POS), RocketBoss.EYE_SIZE, this.getState().getEyeImgSrc());
 
 		// Render mouth
-		f.drawRectangle(this.getPos().add(MOUTH_POS), MOUTH_SIZE, MOUTH_BG_COL);
-		f.drawPath(mouthCurvePos, mouthCurve, new RGBColor(0, 0, 0));
+		f.drawRectangle(this.getPos().add(RocketBoss.MOUTH_POS), RocketBoss.MOUTH_SIZE, RocketBoss.MOUTH_BG_COL);
+		f.drawPath(this.mouthCurvePos, this.mouthCurve, new RGBColor(0, 0, 0));
 
 	}
 
@@ -113,7 +118,7 @@ public class RocketBoss extends Boss {
 	 * @return the machine
 	 */
 	public TimeStateMachine getMachine() {
-		return machine;
+		return this.machine;
 	}
 
 	@Override
@@ -121,24 +126,24 @@ public class RocketBoss extends Boss {
 		// TODO Refactor to new Layout
 
 		int[][][] oldStruct = new int[][][] {
-				{ { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 },
-						{ 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 } },
-				{ { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 },
-						{ 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 } },
-				{ { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 },
-						{ 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 } },
-				{ { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 },
-						{ 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 } },
-				{ { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 },
-						{ 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 } },
-				{ { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 },
-						{ 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 } },
-				{ { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 },
-						{ 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 } },
-				{ { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 },
-						{ 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 } },
-				{ { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 },
-						{ 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 } } };
+				{ { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 },
+						{ 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 } },
+				{ { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 },
+						{ 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 } },
+				{ { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 },
+						{ 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 } },
+				{ { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 },
+						{ 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 } },
+				{ { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 },
+						{ 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 } },
+				{ { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 },
+						{ 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 } },
+				{ { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 },
+						{ 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 } },
+				{ { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 },
+						{ 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 } },
+				{ { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 },
+						{ 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 } } };
 
 		String[][] struct = new String[oldStruct.length][];
 		for (int i = 0; i < oldStruct.length; i++) {

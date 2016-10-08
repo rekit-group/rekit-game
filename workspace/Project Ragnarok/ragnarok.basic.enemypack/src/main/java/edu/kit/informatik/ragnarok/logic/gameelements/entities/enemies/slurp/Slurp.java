@@ -38,7 +38,7 @@ public final class Slurp extends Enemy implements Visitable {
 	 */
 	private static float SLURP_SPEED;
 	/**
-	 * The popoffs of slupr per second.
+	 * The popoffs of slurp per second.
 	 */
 	private static float SLURP_POPOFFS_PER_SEC;
 
@@ -88,7 +88,7 @@ public final class Slurp extends Enemy implements Visitable {
 	private boolean hasWallContact = true;
 
 	@Override
-	public void logicLoop(float deltaTime) {
+	protected void innerLogicLoop() {
 
 		// prevent Slurp from flying upwards to infinity and beyond
 		if (!this.hasWallContact) {
@@ -104,7 +104,7 @@ public final class Slurp extends Enemy implements Visitable {
 					this.currentDirection.getVector().getY() * Slurp.SLURP_SPEED));
 		}
 
-		super.logicLoop(deltaTime);
+		super.innerLogicLoop();
 
 		// Iterate all contained SlurpDurps
 		for (SlurpDurp slurpDurp : this.slurpDurps) {
@@ -112,11 +112,11 @@ public final class Slurp extends Enemy implements Visitable {
 			slurpDurp.setParentPos(this.getPos());
 
 			// everyone need some logic
-			slurpDurp.logicLoop(deltaTime);
+			slurpDurp.logicLoop();
 		}
 
 		// Randomly determine if SlurpDurp should pop off
-		if (GameConf.PRNG.nextDouble() >= (1.0 - Slurp.SLURP_POPOFFS_PER_SEC * deltaTime)) {
+		if (GameConf.PRNG.nextDouble() >= (1.0 - Slurp.SLURP_POPOFFS_PER_SEC * this.deltaTime / 1000.0)) {
 			// get and remove one SlurpDurp from list
 			SlurpDurp poppedOf = this.slurpDurps.remove(0);
 

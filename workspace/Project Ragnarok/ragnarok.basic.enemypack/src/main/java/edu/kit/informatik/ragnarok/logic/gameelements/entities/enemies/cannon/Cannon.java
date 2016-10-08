@@ -258,11 +258,12 @@ public class Cannon extends Enemy implements Visitable {
 	}
 
 	@Override
-	public void logicLoop(float deltaTime) {
-		this.innerStateMachine.logicLoop(deltaTime);
+	protected void innerLogicLoop() {
+		this.innerStateMachine.logicLoop();
 
 		// move angle in right direction
-		this.currentAngle += Math.signum(this.innerStateMachine.getState().getTargetAngle() - this.currentAngle) * deltaTime * Cannon.ANGLE_SPEED;
+		this.currentAngle += Math.signum(this.innerStateMachine.getState().getTargetAngle() - this.currentAngle) * this.deltaTime
+				* Cannon.ANGLE_SPEED;
 
 		if (Math.abs(this.innerStateMachine.getState().getTargetAngle() - this.currentAngle) < Cannon.ANGLE_SPEED / 20) {
 			this.currentAngle = this.innerStateMachine.getState().getTargetAngle();

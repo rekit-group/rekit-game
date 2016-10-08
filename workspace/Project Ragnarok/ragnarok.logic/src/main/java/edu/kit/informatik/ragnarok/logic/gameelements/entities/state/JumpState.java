@@ -1,6 +1,7 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities.state;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
+import edu.kit.informatik.ragnarok.core.GameTime;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 
@@ -16,6 +17,10 @@ public class JumpState extends EntityState {
 	 * The time left for the jump.
 	 */
 	private float timeLeft = 0;
+	/**
+	 * Last time of invoking {@link #logicLoop()}.
+	 */
+	private long lastTime = GameTime.getTime();
 
 	/**
 	 * Create State.
@@ -25,7 +30,7 @@ public class JumpState extends EntityState {
 	 */
 	public JumpState(Entity entity) {
 		super(entity);
-		this.timeLeft = GameConf.PLAYER_JUMP_TIME;
+		this.timeLeft = 1000 * GameConf.PLAYER_JUMP_TIME;
 	}
 
 	@Override
@@ -39,7 +44,9 @@ public class JumpState extends EntityState {
 	}
 
 	@Override
-	public void logicLoop(float deltaTime) {
+	public void logicLoop() {
+		long deltaTime = GameTime.getTime() - this.lastTime;
+		this.lastTime += deltaTime;
 		this.timeLeft -= deltaTime;
 
 		if (this.timeLeft > 0 && this.entity.getVel().getY() > GameConf.PLAYER_JUMP_BOOST) {

@@ -1,5 +1,6 @@
 package edu.kit.informatik.ragnarok.util.state;
 
+import edu.kit.informatik.ragnarok.core.GameTime;
 import edu.kit.informatik.ragnarok.primitives.time.Timer;
 
 /**
@@ -11,7 +12,7 @@ import edu.kit.informatik.ragnarok.primitives.time.Timer;
  * Concrete classes may add functionality to
  * {@link #enter(TimeStateMachine parent)} (that is called upon entering this
  * state), {@link #leave()} (that is called upon leaving this state) and
- * {@link #logicLoop(float deltaTime)} (that is called periodically by the
+ * {@link #logicLoop()} (that is called periodically by the
  * {@link TimeStateMachine}).
  * </p>
  * <p>
@@ -20,7 +21,7 @@ import edu.kit.informatik.ragnarok.primitives.time.Timer;
  * {@link TimeStateMachine} is supposed to be in this state as well as a
  * {@link #getNextState()} that returns the next state to enter after that time.
  * </p>
- * 
+ *
  * @author Angelo Aracri
  */
 public abstract class State {
@@ -36,6 +37,10 @@ public abstract class State {
 	 * {@link State} is remaining before it switches to the next {@link State}.
 	 */
 	protected Timer timer;
+	/**
+	 * The time of the last invoke of {@link #logicLoop()}.
+	 */
+	private long lastTime = GameTime.getTime();
 
 	/**
 	 * Constructor that initializes the {@link #timer} using
@@ -48,7 +53,7 @@ public abstract class State {
 	/**
 	 * Method that is called by the {@link TimeStateMachine} upon entering this
 	 * {@link State}.
-	 * 
+	 *
 	 * @param parent
 	 *            the parenting {@link TimeStateMachine} that handles this (and
 	 *            probably other) {@link State States}.
@@ -67,14 +72,16 @@ public abstract class State {
 
 	/**
 	 * Method that is periodically called by the {@link TimeStateMachine}.
-	 * 
-	 * @param deltaTime
-	 *            The time in seconds since the last call.
+	 *
 	 */
-	public void logicLoop(float deltaTime) {
-		timer.removeTime(deltaTime);
-		if (timer.timeUp()) {
-			parent.nextState();
+	public void logicLoop() {
+
+		long deltaTime = GameTime.getTime() - this.lastTime;
+		this.lastTime += deltaTime;
+
+		this.timer.removeTime(deltaTime);
+		if (this.timer.timeUp()) {
+			this.parent.nextState();
 		}
 	}
 
@@ -82,7 +89,7 @@ public abstract class State {
 	 * Must supply a fully instantiated {@link State} that the parenting
 	 * {@link TimeStateMachine} will enter after this {@link State} is out of
 	 * time as specified in {@link #getTimerTime()}.
-	 * 
+	 *
 	 * @return the next {@link State} to enter.
 	 */
 	public abstract State getNextState();
@@ -91,8 +98,8 @@ public abstract class State {
 	 * Must supply the time in seconds how long the {@link TimeStateMachine} is
 	 * supposed to be in this {@link State} before switching to the next as
 	 * specified in {@link #getNextState()}.
-	 * 
-	 * @return the time in seconds to stay in this {@link State}.
+	 *
+	 * @return the time in millis to stay in this {@link State}.
 	 */
-	public abstract float getTimerTime();
+	public abstract long getTimerTime();
 }

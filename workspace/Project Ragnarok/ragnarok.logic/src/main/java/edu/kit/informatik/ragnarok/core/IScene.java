@@ -111,14 +111,6 @@ public interface IScene {
 	Iterator<GuiElement> getGuiElementIterator();
 
 	/**
-	 * Get the current time in millis.
-	 *
-	 * @return the current time in millis
-	 */
-	// TODO Check millis
-	long getTime();
-
-	/**
 	 * End a Game/Scene.
 	 *
 	 * @param won
@@ -136,11 +128,8 @@ public interface IScene {
 	/**
 	 * Invoke logic.
 	 *
-	 * @param lastTime
-	 *            the last time in millis
 	 */
-	// TODO Check whether millis
-	void logicLoop(long lastTime);
+	void logicLoop();
 
 	/**
 	 * Initialize the scene. e.g. build Level/GUI so Scene is ready to be drawn

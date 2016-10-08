@@ -16,8 +16,8 @@ public class IdleState extends CannonState {
 	}
 
 	@Override
-	public float getTimerTime() {
-		return Cannon.STATE_IDLE_DURATION;
+	public long getTimerTime() {
+		return (long) (1000 * Cannon.STATE_IDLE_DURATION);
 	}
 
 }

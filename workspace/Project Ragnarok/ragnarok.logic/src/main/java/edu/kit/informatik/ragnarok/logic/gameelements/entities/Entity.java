@@ -2,6 +2,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.core.GameElement;
+import edu.kit.informatik.ragnarok.core.GameTime;
 import edu.kit.informatik.ragnarok.core.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.state.DefaultState;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.state.EntityState;
@@ -43,6 +44,14 @@ public abstract class Entity extends GameElement {
 	 * ({@code null} --> not invincible)
 	 */
 	protected Timer invincibility = null;
+	/**
+	 * Last time of invoking {@link #logicLoop()}.
+	 */
+	private long lastTime = GameTime.getTime();
+	/**
+	 * The latest deltaTime in {@link #logicLoop()}.
+	 */
+	protected long deltaTime;
 
 	/**
 	 * Minimal Constructor by {@link Team} used for prototype constructors. The
@@ -105,7 +114,7 @@ public abstract class Entity extends GameElement {
 		}
 		this.lives -= damage;
 		if (damage > 0) {
-			this.invincibility = new Timer(2);
+			this.invincibility = new Timer(2000);
 		}
 		if (this.lives <= 0) {
 			this.lives = 0;
@@ -138,29 +147,35 @@ public abstract class Entity extends GameElement {
 		return this.points;
 	}
 
+	@Override
+	public final void logicLoop() {
+		this.deltaTime = GameTime.getTime() - this.lastTime;
+		this.lastTime += this.deltaTime;
+		this.innerLogicLoop();
+	}
+
 	/**
 	 * This method will calculate the next position of the Entity depending on
 	 * the velocity.
 	 */
-	@Override
-	public void logicLoop(float deltaTime) {
+	protected void innerLogicLoop() {
 		// if delta is too big, clipping likely to appear...
-		if (deltaTime > GameConf.LOGIC_DELTA) {
-			// ..so recursively split work up into smaller parts
-			this.logicLoop(deltaTime / 2);
-			this.logicLoop(deltaTime / 2);
-			return;
-		}
+		// if (deltaTime > GameConf.LOGIC_DELTA) {
+		// // ..so recursively split work up into smaller parts
+		// this.logicLoop(deltaTime / 2);
+		// this.logicLoop(deltaTime / 2);
+		// return;
+		// }
 
 		if (this.invincibility != null) {
-			this.invincibility.removeTime(deltaTime);
+			this.invincibility.removeTime(this.deltaTime);
 		}
 
-		this.getEntityState().logicLoop(deltaTime);
+		this.getEntityState().logicLoop();
 
 		// calculate new position
 		// s1 = s0 + v*t because physics, thats why!
-		this.setPos(this.getPos().add(this.getVel().scalar(deltaTime)));
+		this.setPos(this.getPos().add(this.getVel().scalar(this.deltaTime / 1000F)));
 
 		Vec newVel = this.getVel();
 		// apply gravity

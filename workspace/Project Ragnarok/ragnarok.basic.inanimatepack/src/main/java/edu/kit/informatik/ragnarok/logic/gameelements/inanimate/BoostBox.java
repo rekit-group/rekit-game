@@ -3,6 +3,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.inanimate;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.core.Field;
 import edu.kit.informatik.ragnarok.core.GameElement;
+import edu.kit.informatik.ragnarok.core.GameTime;
 import edu.kit.informatik.ragnarok.core.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawner;
 import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawnerOption;
@@ -96,14 +97,15 @@ public final class BoostBox extends DynamicInanimate {
 	/**
 	 * The last time when {@link #logicLoop(float)} was invoked.
 	 */
-	private long lastTime = 0;
+	private long lastTime = GameTime.getTime();
 
 	@Override
-	public void logicLoop(float deltaTime) {
+	public void logicLoop() {
 		// Get new strategy from strategy map
+		long deltaTime = GameTime.getTime() - this.lastTime;
+		this.lastTime += deltaTime;
+		this.offset += deltaTime;
 
-		this.offset += (this.getScene().getTime() - this.lastTime);
-		this.lastTime = this.getScene().getTime();
 		if (this.offset > BoostBox.PERIOD - 750) {
 			this.sparkling = true;
 		} else {

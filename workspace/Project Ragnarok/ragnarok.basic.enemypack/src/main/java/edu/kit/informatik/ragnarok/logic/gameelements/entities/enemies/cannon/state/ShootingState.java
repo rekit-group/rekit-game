@@ -79,8 +79,8 @@ public class ShootingState extends ChargingState {
 	}
 
 	@Override
-	public void logicLoop(float deltaTime) {
-		super.logicLoop(deltaTime);
+	public void logicLoop() {
+		super.logicLoop();
 
 		if (this.keepShooting) {
 			this.currentDistance += CalcUtil.randomize(Cannon.PARTICLE_DISTANCE_MU, Cannon.PARTICLE_DISTANCE_SIGMA);
@@ -108,8 +108,8 @@ public class ShootingState extends ChargingState {
 	}
 
 	@Override
-	public float getTimerTime() {
-		return Cannon.STATE_SHOOTING_DURATION;
+	public long getTimerTime() {
+		return (long) (1000 * Cannon.STATE_SHOOTING_DURATION);
 	}
 
 	@Override

@@ -75,7 +75,7 @@ public final class Rocket extends Enemy implements Visitable {
 	 */
 	public Rocket(Vec startPos) {
 		super(startPos, new Vec(), new Vec(1.8f, 0.5f));
-		this.paricleTimer = new Timer(Rocket.PARTICLE_SPAWN_TIME);
+		this.paricleTimer = new Timer((long) (1000 * Rocket.PARTICLE_SPAWN_TIME));
 	}
 
 	@Override
@@ -108,12 +108,12 @@ public final class Rocket extends Enemy implements Visitable {
 	}
 
 	@Override
-	public void logicLoop(float deltaTime) {
+	protected void innerLogicLoop() {
 		// move ahead with player max speed
-		this.setPos(this.getPos().addX(-GameConf.PLAYER_WALK_MAX_SPEED * deltaTime));
+		this.setPos(this.getPos().addX(-GameConf.PLAYER_WALK_MAX_SPEED * this.deltaTime));
 
 		// spawn particles
-		this.paricleTimer.removeTime(deltaTime);
+		this.paricleTimer.removeTime(this.deltaTime);
 		if (this.paricleTimer.timeUp()) {
 			this.paricleTimer.reset();
 			Rocket.sparkParticles.spawn(this.getScene(), this.getPos().addX(this.getSize().getX() / 2));

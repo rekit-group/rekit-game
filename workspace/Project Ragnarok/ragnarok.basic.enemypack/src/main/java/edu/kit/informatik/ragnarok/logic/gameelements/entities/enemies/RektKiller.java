@@ -188,9 +188,9 @@ public final class RektKiller extends Enemy {
 	}
 
 	@Override
-	public void logicLoop(float deltaTime) {
+	protected void innerLogicLoop() {
 		// Do usual entity logic
-		super.logicLoop(deltaTime);
+		super.innerLogicLoop();
 
 		if (this.getPos().getY() <= 0) {
 			this.collidedWith(new Frame(new Vec(0, 0), new Vec(0, 0)), Direction.DOWN);

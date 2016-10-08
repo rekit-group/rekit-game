@@ -20,8 +20,7 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
  * Team team)</i></li>
  * <li>Implement factory method <i>create(Vec startPos, String[] modifiers)</i>
  * for dynamic creation</li>
- * <li>Implement template method <i>logicLoop(float deltaTime)</i> to add custom
- * logic.</li>
+ * <li>Implement template method <i>logicLoop()</i> to add custom logic.</li>
  * <li>Implement template method <i>internalRender(Field field)</i> to add
  * custom visualization.</li>
  * </ul>
@@ -136,10 +135,8 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 	 * physics emulation, time-based actions, ...
 	 * </p>
 	 *
-	 * @param deltaTime
-	 *            the time past since the last invoke of this method in seconds
 	 */
-	public void logicLoop(float deltaTime) {
+	public void logicLoop() {
 		// Do nothing
 	}
 

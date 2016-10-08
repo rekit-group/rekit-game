@@ -3,6 +3,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.inanimate;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.core.Field;
 import edu.kit.informatik.ragnarok.core.GameElement;
+import edu.kit.informatik.ragnarok.core.GameTime;
 import edu.kit.informatik.ragnarok.core.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawner;
 import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawnerOption;
@@ -85,9 +86,9 @@ public final class EndTrigger extends InanimateTrigger {
 	}
 
 	@Override
-	public void logicLoop(float deltaTime) {
+	public void logicLoop() {
 		for (Portal portal : this.innerPortals) {
-			portal.logicLoop(deltaTime);
+			portal.logicLoop();
 		}
 	}
 
@@ -122,6 +123,11 @@ public final class EndTrigger extends InanimateTrigger {
 		private Vec currentSize;
 
 		/**
+		 * The last time of invoking {@link #logicLoop()}.
+		 */
+		private long lastTime = GameTime.getTime();
+
+		/**
 		 * Create a portal-ring.
 		 *
 		 * @param pos
@@ -146,7 +152,10 @@ public final class EndTrigger extends InanimateTrigger {
 		}
 
 		@Override
-		public void logicLoop(float deltaTime) {
+		public void logicLoop() {
+			long deltaTime = GameTime.getTime() - this.lastTime;
+			this.lastTime += deltaTime;
+
 			this.x += deltaTime;
 
 			// some weird "amplitude * sin(phase + frequency * x)" action

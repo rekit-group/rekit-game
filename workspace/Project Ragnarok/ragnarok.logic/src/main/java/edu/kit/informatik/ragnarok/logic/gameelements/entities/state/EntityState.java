@@ -37,11 +37,8 @@ public abstract class EntityState {
 	/**
 	 * Logic loop of state.
 	 *
-	 * @param deltaTime
-	 *            the delta time
-	 * @see Entity#logicLoop(float)
 	 */
-	public void logicLoop(float deltaTime) {
+	public void logicLoop() {
 		// Do nothing
 	}
 

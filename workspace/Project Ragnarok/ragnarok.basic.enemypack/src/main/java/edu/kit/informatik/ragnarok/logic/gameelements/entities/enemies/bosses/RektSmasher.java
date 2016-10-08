@@ -148,7 +148,7 @@ public final class RektSmasher extends Boss implements Visitable {
 	}
 
 	@Override
-	public void logicLoop(float deltaTime) {
+	protected void innerLogicLoop() {
 		// if no invincibility or invincibility time is up
 		if (this.invincibility == null || this.invincibility.timeUp()) {
 			this.isHarmless = false;
@@ -163,7 +163,7 @@ public final class RektSmasher extends Boss implements Visitable {
 		}
 		float speed = RektSmasher.BASE_SPEED + (3 - this.getLives()) * 0.25f;
 		this.setVel(this.innerRektKiller.getCurrentDirection().getVector().scalar(speed * GameConf.PLAYER_WALK_MAX_SPEED));
-		super.logicLoop(deltaTime);
+		super.logicLoop();
 	}
 
 	@Override

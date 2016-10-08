@@ -28,7 +28,7 @@ public class NotInitializedState extends EntityState {
 	private boolean done = false;
 
 	@Override
-	public void logicLoop(float deltaTime) {
+	public void logicLoop() {
 		if (this.done) {
 			return;
 		}

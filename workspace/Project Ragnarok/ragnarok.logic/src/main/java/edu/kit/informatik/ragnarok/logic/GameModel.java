@@ -18,12 +18,7 @@ import edu.kit.informatik.ragnarok.util.ThreadUtils;
  * @version 1.1
  */
 public class GameModel implements CameraTarget, Model {
-	/**
-	 * Last time logic was invoked in millis.
-	 *
-	 * @see System#currentTimeMillis()
-	 */
-	private long lastTime;
+
 	/**
 	 * The current scene.
 	 */
@@ -86,15 +81,7 @@ public class GameModel implements CameraTarget, Model {
 	 *
 	 */
 	public void logicLoop() {
-		if (this.lastTime == 0) {
-			this.lastTime = System.currentTimeMillis();
-		}
-
-		this.curScene.logicLoop(this.lastTime);
-
-		// update time
-		this.lastTime = System.currentTimeMillis();
-
+		this.curScene.logicLoop();
 	}
 
 	/**
@@ -123,7 +110,6 @@ public class GameModel implements CameraTarget, Model {
 		nextScene.init();
 		nextScene.start();
 		this.curScene.stop();
-		this.lastTime = 0;
 		this.curScene = nextScene;
 		this.state = Scenes.getByInstance(this.curScene).isMenu() ? GameState.MENU : GameState.INGAME;
 	}
@@ -162,15 +148,6 @@ public class GameModel implements CameraTarget, Model {
 	@Override
 	public GameState getState() {
 		return this.state;
-	}
-
-	/**
-	 * Get time in millis ({@link #lastTime}).
-	 *
-	 * @return the last time in millis
-	 */
-	public long getTime() {
-		return this.lastTime;
 	}
 
 	/**

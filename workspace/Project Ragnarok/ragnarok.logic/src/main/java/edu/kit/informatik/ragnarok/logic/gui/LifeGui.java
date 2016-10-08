@@ -37,7 +37,7 @@ public class LifeGui extends GuiElement {
 	}
 
 	@Override
-	public void logicLoop(float deltaTime) {
+	public void logicLoop() {
 		this.playerLives = this.getScene().getPlayer().getLives();
 	}
 

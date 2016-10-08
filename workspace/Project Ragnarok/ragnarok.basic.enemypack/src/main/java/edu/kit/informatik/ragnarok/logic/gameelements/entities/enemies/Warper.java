@@ -37,7 +37,7 @@ public final class Warper extends Enemy implements Visitable {
 	 * The time between the next jump (to next position).
 	 */
 	@NoVisit
-	private final Timer warpAction = new Timer(Warper.WARPER_WARP_DELTA);
+	private final Timer warpAction = new Timer((long) (1000 * Warper.WARPER_WARP_DELTA));
 
 	/**
 	 * The particles of the warper.
@@ -73,9 +73,9 @@ public final class Warper extends Enemy implements Visitable {
 	}
 
 	@Override
-	public void logicLoop(float deltaTime) {
+	protected void innerLogicLoop() {
 		// decrease time left
-		this.warpAction.removeTime(deltaTime);
+		this.warpAction.removeTime(this.deltaTime);
 
 		// animate particles
 		Warper.warpParticles.amountMin = -5;
@@ -130,6 +130,11 @@ public final class Warper extends Enemy implements Visitable {
 	@Override
 	public Entity create(Vec startPos, String[] options) {
 		return new Warper(startPos);
+	}
+
+	@Override
+	public int getOrderZ() {
+		return 20;
 	}
 
 }
