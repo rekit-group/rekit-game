@@ -9,15 +9,15 @@ import edu.kit.informatik.ragnarok.logic.GameState;
  * @author Matthias Schmitt
  *
  */
-public class PlayPauseCommand extends InputCommand {
+public class PlayPauseCommand extends MenuCommand {
 	/**
 	 * Create the command.
-	 * 
+	 *
 	 * @param supervisor
 	 *            the {@link CommandSupervisor}
 	 */
 	public PlayPauseCommand(CommandSupervisor supervisor) {
-		super(supervisor);
+		super(supervisor, null);
 
 	}
 

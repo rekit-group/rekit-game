@@ -6,13 +6,13 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 
 /**
- * This {@link InputCommand} will cause a Walk of an {@link Entity}.
+ * This {@link EntityCommand} will cause a Walk of an {@link Entity}.
  *
  * @author Dominik Fuchß
  * @author Angelo Aracri
  *
  */
-public class WalkCommand extends InputCommand {
+public class WalkCommand extends EntityCommand {
 	/**
 	 * The {@link Direction} of the walk.
 	 */

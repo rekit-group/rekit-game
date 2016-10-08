@@ -6,7 +6,7 @@ import java.util.Map;
 
 import edu.kit.informatik.ragnarok.controller.commands.Command;
 import edu.kit.informatik.ragnarok.controller.commands.CommandSupervisor;
-import edu.kit.informatik.ragnarok.controller.commands.InputCommand.InputMethod;
+import edu.kit.informatik.ragnarok.controller.commands.InputMethod;
 import edu.kit.informatik.ragnarok.controller.commands.JumpCommand;
 import edu.kit.informatik.ragnarok.controller.commands.MenuCommand;
 import edu.kit.informatik.ragnarok.controller.commands.PlayPauseCommand;
@@ -149,5 +149,10 @@ final class ControllerImpl implements Observer, Controller, CommandSupervisor {
 	@Override
 	public IScene getScene() {
 		return this.model.getState() == GameState.INGAME ? this.model.getScene() : null;
+	}
+
+	@Override
+	public boolean entityCommandAllowed() {
+		return !this.model.getScene().isPaused();
 	}
 }

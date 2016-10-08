@@ -12,24 +12,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
  * @see JumpCommand
  * @see WalkCommand
  */
-public abstract class InputCommand implements Command {
-
-	/**
-	 * This enum is used to indicate a press or release state of a key.
-	 *
-	 * @author Dominik Fuchß
-	 *
-	 */
-	public enum InputMethod {
-		/**
-		 * Key Pressed.
-		 */
-		PRESS,
-		/**
-		 * Key Released.
-		 */
-		RELEASE
-	}
+public abstract class EntityCommand implements Command {
 
 	/**
 	 * The corresponding supervisor.
@@ -42,7 +25,7 @@ public abstract class InputCommand implements Command {
 	 * @param supervisor
 	 *            the supervisor
 	 */
-	public InputCommand(CommandSupervisor supervisor) {
+	public EntityCommand(CommandSupervisor supervisor) {
 		if (supervisor == null) {
 			throw new IllegalArgumentException("Supervisor cannot be null");
 		}
@@ -54,7 +37,9 @@ public abstract class InputCommand implements Command {
 		if (params.length != 1 || params[0].getClass() != InputMethod.class) {
 			throw new IllegalArgumentException("Arguments not valid for input command");
 		}
-		this.execute((InputMethod) params[0]);
+		if (this.supervisor.entityCommandAllowed()) {
+			this.execute((InputMethod) params[0]);
+		}
 	}
 
 	/**

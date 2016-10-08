@@ -9,7 +9,7 @@ import edu.kit.informatik.ragnarok.logic.gui.menu.MenuItem;
  * @author Matthias Schmitt
  *
  */
-public class MenuCommand extends InputCommand {
+public class MenuCommand implements Command {
 	/**
 	 * The enum defines the different directions of KeyPress in a Menu Context.
 	 *
@@ -47,6 +47,10 @@ public class MenuCommand extends InputCommand {
 	 * The direction for the command.
 	 */
 	private Dir dir;
+	/**
+	 * The supervisor.
+	 */
+	protected final CommandSupervisor supervisor;
 
 	/**
 	 * Instantiate the MenuCommand.
@@ -57,11 +61,24 @@ public class MenuCommand extends InputCommand {
 	 *            the direction
 	 */
 	public MenuCommand(CommandSupervisor supervisor, Dir dir) {
-		super(supervisor);
+		this.supervisor = supervisor;
 		this.dir = dir;
 	}
 
 	@Override
+	public final void execute(Object... params) {
+		if (params.length != 1 || params[0].getClass() != InputMethod.class) {
+			throw new IllegalArgumentException("Arguments not valid for input command");
+		}
+		this.execute((InputMethod) params[0]);
+	}
+
+	/**
+	 * Execute the command.
+	 *
+	 * @param inputMethod
+	 *            the key state
+	 */
 	public void execute(InputMethod inputMethod) {
 		if (inputMethod != InputMethod.RELEASE) {
 			return;

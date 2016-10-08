@@ -5,13 +5,13 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.state.FallState;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.state.JumpState;
 
 /**
- * This {@link InputCommand} will cause a Jump of an {@link Entity}.
+ * This {@link EntityCommand} will cause a Jump of an {@link Entity}.
  *
  * @author Dominik Fuchß
  * @author Angelo Aracri
  *
  */
-public class JumpCommand extends InputCommand {
+public class JumpCommand extends EntityCommand {
 	/**
 	 * Create the Command.
 	 *

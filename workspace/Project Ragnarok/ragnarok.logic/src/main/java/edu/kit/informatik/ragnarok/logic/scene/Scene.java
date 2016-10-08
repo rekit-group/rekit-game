@@ -112,11 +112,7 @@ abstract class Scene implements CameraTarget, IScene {
 		this.paused = !this.paused;
 	}
 
-	/**
-	 * Indicates whether the scene is paused.
-	 *
-	 * @return {@code true} if paused, otherwise {@code false}
-	 */
+	@Override
 	public boolean isPaused() {
 		return this.paused;
 	}

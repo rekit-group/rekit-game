@@ -56,7 +56,7 @@ public final class RektSmasher extends Boss implements Visitable {
 		super(startPos, new Vec(), new Vec(2f, 2f));
 		// Configure innerRektKiller
 		this.innerRektKiller = new RektKiller(startPos, this.getSize(), 15);
-		this.innerRektKiller.setCurrentDirection(Direction.DOWN);
+		this.innerRektKiller.setCurrentDirection(Direction.RIGHT);
 		this.innerRektKiller.prepare();
 		this.setLives(3);
 	}
@@ -163,7 +163,7 @@ public final class RektSmasher extends Boss implements Visitable {
 		}
 		float speed = RektSmasher.BASE_SPEED + (3 - this.getLives()) * 0.25f;
 		this.setVel(this.innerRektKiller.getCurrentDirection().getVector().scalar(speed * GameConf.PLAYER_WALK_MAX_SPEED));
-		super.logicLoop();
+		super.innerLogicLoop();
 	}
 
 	@Override

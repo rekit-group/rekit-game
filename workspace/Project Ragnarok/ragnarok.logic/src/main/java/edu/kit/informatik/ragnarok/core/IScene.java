@@ -190,4 +190,11 @@ public interface IScene {
 	 */
 	Iterator<GameElement> getOrderedGameElementIterator();
 
+	/**
+	 * Indicates whether game is paused.
+	 * 
+	 * @return {@code true} if paused, {@code false} otherwise
+	 */
+	boolean isPaused();
+
 }
