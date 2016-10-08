@@ -70,10 +70,10 @@ public final class Player extends Entity implements CameraTarget {
 
 	@Override
 	public void internalRender(Field f) {
-		// determine if direction needs to be changed
-		if (this.getVel().getX() > 0) {
+		// determine if direction needs to be changed +- delta: 0.15
+		if (this.getVel().getX() > 0.15) {
 			this.currentDirection = Direction.RIGHT;
-		} else if (this.getVel().getX() < 0) {
+		} else if (this.getVel().getX() < -0.15) {
 			this.currentDirection = Direction.LEFT;
 		}
 
