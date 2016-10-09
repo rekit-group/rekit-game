@@ -12,8 +12,8 @@ import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
 import edu.kit.informatik.ragnarok.primitives.time.Timer;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 import edu.kit.informatik.ragnarok.visitor.Visitable;
-import edu.kit.informatik.ragnarok.visitor.annotations.AdditionalParsers;
 import edu.kit.informatik.ragnarok.visitor.annotations.NoVisit;
+import edu.kit.informatik.ragnarok.visitor.annotations.SetParser;
 import edu.kit.informatik.ragnarok.visitor.annotations.VisitInfo;
 import edu.kit.informatik.ragnarok.visitor.parser.TwoLevelParser;
 
@@ -26,7 +26,6 @@ import edu.kit.informatik.ragnarok.visitor.parser.TwoLevelParser;
  */
 @LoadMe
 @VisitInfo(res = "conf/warper", visit = true)
-@AdditionalParsers(parsers = { TwoLevelParser.class }, types = { ParticleSpawner.class })
 public final class Warper extends Enemy implements Visitable {
 	/**
 	 * The delta time between position changes.
@@ -42,6 +41,7 @@ public final class Warper extends Enemy implements Visitable {
 	/**
 	 * The particles of the warper.
 	 */
+	@SetParser(TwoLevelParser.class)
 	private static ParticleSpawner warpParticles;
 
 	/**

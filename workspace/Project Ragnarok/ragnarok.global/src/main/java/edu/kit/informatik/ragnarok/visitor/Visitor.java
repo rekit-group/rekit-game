@@ -1,6 +1,7 @@
 package edu.kit.informatik.ragnarok.visitor;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
@@ -8,9 +9,9 @@ import java.util.Map;
 
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
-import edu.kit.informatik.ragnarok.visitor.annotations.AdditionalParsers;
 import edu.kit.informatik.ragnarok.visitor.annotations.AfterVisit;
 import edu.kit.informatik.ragnarok.visitor.annotations.NoVisit;
+import edu.kit.informatik.ragnarok.visitor.annotations.SetParser;
 import edu.kit.informatik.ragnarok.visitor.annotations.VisitInfo;
 import edu.kit.informatik.ragnarok.visitor.parser.FloatParser;
 import edu.kit.informatik.ragnarok.visitor.parser.IntParser;
@@ -113,7 +114,6 @@ public abstract class Visitor {
 		if (!this.createSource(v)) {
 			return;
 		}
-		this.addParsers(v.getClass());
 		for (Field field : v.getClass().getDeclaredFields()) {
 			this.applyObject(v, field);
 		}
@@ -133,47 +133,12 @@ public abstract class Visitor {
 		if (!this.createSource(v)) {
 			return;
 		}
-		this.addParsers(v);
 		for (Field field : v.getDeclaredFields()) {
 			this.applyStatic(field);
 		}
 		for (Method m : v.getDeclaredMethods()) {
 			this.afterStatic(m);
 		}
-	}
-
-	/**
-	 * This method will add more parsers if necessary.
-	 *
-	 * @param clazz
-	 *            the class (of the object) which shall be visited
-	 */
-	private void addParsers(Class<? extends Visitable> clazz) {
-		AdditionalParsers additionalParsers = null;
-		if ((additionalParsers = clazz.getAnnotation(AdditionalParsers.class)) == null) {
-			return;
-		}
-
-		Class<? extends Parser>[] aParser = additionalParsers.parsers();
-		Class<?>[] types = additionalParsers.types();
-		if (types.length != aParser.length) {
-			System.err.println("Error in conf for additional parsers for " + clazz.getSimpleName());
-			return;
-		}
-		try {
-			for (int i = 0; i < aParser.length; i++) {
-				if (this.parsers.containsKey(types[i]) && this.parsers.get(types[i]).getClass() != aParser[i]) {
-					System.err.println("WARNING: Multiple parsers defined for class " + types[i]
-							+ "no parsers can be added for security reasons. Please check your config!");
-					continue;
-				}
-				this.parsers.put(types[i], aParser[i].getDeclaredConstructor().newInstance());
-			}
-		} catch (Exception e) {
-			System.err.println("Error while loading additional parsers for " + clazz.getSimpleName());
-			return;
-		}
-		System.out.println("INFO: Successfully loaded parsers for " + clazz.getSimpleName());
 	}
 
 	/**
@@ -217,7 +182,7 @@ public abstract class Visitor {
 				return;
 			}
 			field.setAccessible(true);
-			Parser parser = this.parsers.get(field.getType());
+			Parser parser = this.getParser(field);
 			if (parser == null) {
 				return;
 			}
@@ -228,6 +193,34 @@ public abstract class Visitor {
 		} catch (Exception e) {
 			System.err.println("Cannot apply to field: " + field.getName() + " because " + e.getMessage());
 		}
+	}
+
+	/**
+	 * Get the specified parser for a field.
+	 *
+	 * @param field
+	 *            the field
+	 * @return the parser or {@code null} if none suitable found
+	 * @throws SecurityException
+	 *             reflect stuff
+	 * @throws NoSuchMethodException
+	 *             reflect stuff
+	 * @throws InvocationTargetException
+	 *             reflect stuff
+	 * @throws IllegalArgumentException
+	 *             reflect stuff
+	 * @throws IllegalAccessException
+	 *             reflect stuff
+	 * @throws InstantiationException
+	 *             reflect stuff
+	 */
+	private Parser getParser(Field field) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
+			NoSuchMethodException, SecurityException {
+		SetParser manual = field.getDeclaredAnnotation(SetParser.class);
+		if (manual != null) {
+			return manual.value().getDeclaredConstructor().newInstance();
+		}
+		return this.parsers.get(field.getType());
 	}
 
 	/**
@@ -276,7 +269,7 @@ public abstract class Visitor {
 				return;
 			}
 			field.setAccessible(true);
-			Parser parser = this.parsers.get(field.getType());
+			Parser parser = this.getParser(field);
 			if (parser == null) {
 				return;
 			}

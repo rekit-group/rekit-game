@@ -41,6 +41,10 @@ public final class Slurp extends Enemy implements Visitable {
 	 * The popoffs of slurp per second.
 	 */
 	private static float SLURP_POPOFFS_PER_SEC;
+	/**
+	 * The amount of {@link SlurpDurp}.
+	 */
+	private static int SLURP_DURP_AMOUNT;
 
 	/**
 	 * Prototype Constructor.
@@ -62,7 +66,7 @@ public final class Slurp extends Enemy implements Visitable {
 		float sizeY = this.getSize().getX();
 
 		this.slurpDurps = new ArrayList<>();
-		for (int i = 0; i < 15; i++) {
+		for (int i = 0; i < Slurp.SLURP_DURP_AMOUNT; i++) {
 			// randomize position, and pulsing options
 			float randX = GameConf.PRNG.nextFloat() * (sizeX) - (sizeX / 2.0f);
 			float randY = GameConf.PRNG.nextFloat() * (sizeY) - (sizeY / 2.0f);

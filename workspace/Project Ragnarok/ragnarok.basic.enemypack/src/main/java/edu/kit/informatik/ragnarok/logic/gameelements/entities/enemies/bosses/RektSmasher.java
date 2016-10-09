@@ -34,9 +34,27 @@ public final class RektSmasher extends Boss implements Visitable {
 	@NoVisit
 	private RektKiller innerRektKiller;
 	/**
-	 * The current movement speed.
+	 * The base movement speed.
 	 */
 	private static float BASE_SPEED;
+	/**
+	 * The size of the boss.
+	 */
+	private static Vec SIZE;
+	/**
+	 * The bosses default lives.
+	 */
+	private static int LIVES;
+
+	/**
+	 * The time until spikes return.
+	 */
+	private static int SPIKE_TIME;
+
+	/**
+	 * The name of the boss.
+	 */
+	private static String NAME;
 
 	/**
 	 * Prototype Constructor.
@@ -53,12 +71,12 @@ public final class RektSmasher extends Boss implements Visitable {
 	 */
 	public RektSmasher(Vec startPos) {
 		// Configure own attributes
-		super(startPos, new Vec(), new Vec(2f, 2f));
+		super(startPos, new Vec(), RektSmasher.SIZE);
 		// Configure innerRektKiller
 		this.innerRektKiller = new RektKiller(startPos, this.getSize(), 15);
 		this.innerRektKiller.setCurrentDirection(Direction.RIGHT);
 		this.innerRektKiller.prepare();
-		this.setLives(3);
+		this.setLives(RektSmasher.LIVES);
 	}
 
 	@Override
@@ -73,7 +91,7 @@ public final class RektSmasher extends Boss implements Visitable {
 		// Render innerRektKiller
 		this.innerRektKiller.internalRender(f);
 		// Add face image above regular innerRektKiller visualization
-		int lifes = this.getLives() > 3 ? 3 : this.getLives();
+		int lifes = this.getLives() > RektSmasher.LIVES ? RektSmasher.LIVES : this.getLives();
 		f.drawImage(this.getPos(), this.getSize().scalar(0.8f), "rektSmasher_" + lifes + ".png");
 	}
 
@@ -116,7 +134,7 @@ public final class RektSmasher extends Boss implements Visitable {
 
 			// start thread to re-add spikes after time
 			ThreadUtils.runThread(() -> {
-				ThreadUtils.sleep(5000);
+				ThreadUtils.sleep(RektSmasher.SPIKE_TIME);
 				this.innerRektKiller.setSide(Direction.getOpposite(dir), true);
 			});
 
@@ -161,14 +179,14 @@ public final class RektSmasher extends Boss implements Visitable {
 		if (this.getLives() <= 0) {
 			this.isHarmless = true;
 		}
-		float speed = RektSmasher.BASE_SPEED + (3 - this.getLives()) * 0.25f;
+		float speed = RektSmasher.BASE_SPEED + (RektSmasher.LIVES - this.getLives()) * 0.25f;
 		this.setVel(this.innerRektKiller.getCurrentDirection().getVector().scalar(speed * GameConf.PLAYER_WALK_MAX_SPEED));
 		super.innerLogicLoop();
 	}
 
 	@Override
 	public String getName() {
-		return "RektSmasher";
+		return RektSmasher.NAME;
 	}
 
 	@Override
