@@ -20,8 +20,4 @@ public final class StringParser implements Parser {
 		return true;
 	}
 
-	@Override
-	public Parser create() {
-		return new StringParser();
-	}
 }

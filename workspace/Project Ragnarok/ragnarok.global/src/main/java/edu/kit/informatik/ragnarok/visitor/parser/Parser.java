@@ -8,7 +8,8 @@ import edu.kit.informatik.ragnarok.visitor.annotations.VisitInfo;
 
 /**
  * This interface defines a parser which will be used for parsing a String to a
- * specific Class for a {@link Visitor}.
+ * specific Class for a {@link Visitor}.<br>
+ * <b>It must be possible to create a parser via a default constructor</b>
  *
  * @author Dominik Fuchß
  * @see VisitInfo
@@ -37,10 +38,4 @@ public interface Parser {
 		return true;
 	}
 
-	/**
-	 * Create a new Parser of this type.
-	 *
-	 * @return the new parser
-	 */
-	Parser create();
 }

@@ -44,8 +44,4 @@ public final class ParticleSpawnerOptionParser implements Parser {
 		return opt != null;
 	}
 
-	@Override
-	public Parser create() {
-		return new ParticleSpawnerOptionParser();
-	}
 }

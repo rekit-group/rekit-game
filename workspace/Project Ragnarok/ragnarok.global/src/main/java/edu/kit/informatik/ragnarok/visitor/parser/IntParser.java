@@ -22,9 +22,4 @@ public final class IntParser implements Parser {
 		field.set(obj, Integer.parseInt(definition));
 		return true;
 	}
-
-	@Override
-	public Parser create() {
-		return new IntParser();
-	}
 }

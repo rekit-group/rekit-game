@@ -7,7 +7,13 @@ package edu.kit.informatik.ragnarok.core;
  * @author Dominik Fuchß
  *
  */
-public class GameTime {
+public final class GameTime {
+	/**
+	 * Prevent instantiation.
+	 */
+	private GameTime() {
+	}
+
 	/**
 	 * Time the game is paused.
 	 */
@@ -53,7 +59,6 @@ public class GameTime {
 		}
 		GameTime.pause = false;
 		GameTime.paused += System.currentTimeMillis() - GameTime.started;
-		GameTime.started = 0;
 
 	}
 }

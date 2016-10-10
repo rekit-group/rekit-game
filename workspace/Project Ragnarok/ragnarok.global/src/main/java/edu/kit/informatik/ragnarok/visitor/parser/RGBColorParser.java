@@ -22,7 +22,7 @@ public final class RGBColorParser implements Parser {
 		Pattern pattern = Pattern.compile("([0-9]+),([0-9]+),([0-9]+)");
 		Matcher matcher = pattern.matcher(definition);
 		if (!matcher.find()) {
-			System.err.println("BundleHelper: " + definition + " is no RBG");
+			System.err.println("RGBColorParser: " + definition + " is no RBG");
 			return false;
 		}
 
@@ -32,10 +32,5 @@ public final class RGBColorParser implements Parser {
 
 		field.set(obj, new RGBColor(r, g, b));
 		return true;
-	}
-
-	@Override
-	public Parser create() {
-		return new RGBColorParser();
 	}
 }

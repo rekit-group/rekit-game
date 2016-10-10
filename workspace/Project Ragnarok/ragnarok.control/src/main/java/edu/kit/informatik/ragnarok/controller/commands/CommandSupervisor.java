@@ -6,8 +6,8 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gui.menu.MenuItem;
 
 /**
- * This interface defines methods to get infos from a {@link Model} and will be
- * used by {@link EntityCommand InputCommands}.
+ * This interface defines methods to get info from a {@link Model} and will be
+ * used by {@link EntityCommand EntityCommands}.
  *
  * @author Dominik Fuchß
  *
@@ -41,7 +41,7 @@ public interface CommandSupervisor {
 	/**
 	 * Indicates whether commands like moving a player (no menu / basic
 	 * commands) allowed.
-	 * 
+	 *
 	 * @return {@code true} if allowed, {@code false} otherwise
 	 */
 	boolean entityCommandAllowed();

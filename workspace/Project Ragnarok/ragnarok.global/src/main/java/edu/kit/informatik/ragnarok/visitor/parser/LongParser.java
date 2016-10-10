@@ -22,9 +22,4 @@ public final class LongParser implements Parser {
 		field.set(obj, Long.parseLong(definition));
 		return true;
 	}
-
-	@Override
-	public Parser create() {
-		return new LongParser();
-	}
 }

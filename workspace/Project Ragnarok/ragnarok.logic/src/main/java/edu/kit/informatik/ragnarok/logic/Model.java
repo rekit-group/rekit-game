@@ -24,14 +24,14 @@ public interface Model {
 	/**
 	 * Get the Player.
 	 *
-	 * @return the player or {@code null} when not in GAME
+	 * @return the player or {@code null} when not in {@link GameState#INGAME}
 	 */
 	Entity getPlayer();
 
 	/**
 	 * Get the Menu.
 	 *
-	 * @return the menu or {@code null} when not in MENU
+	 * @return the menu or {@code null} when not in {@link GameState#MENU}
 	 */
 
 	MenuItem getMenu();

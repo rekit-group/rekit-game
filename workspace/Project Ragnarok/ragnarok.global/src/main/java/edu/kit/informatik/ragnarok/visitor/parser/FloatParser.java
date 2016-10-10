@@ -22,9 +22,4 @@ public final class FloatParser implements Parser {
 		field.set(obj, Float.parseFloat(definition));
 		return true;
 	}
-
-	@Override
-	public Parser create() {
-		return new FloatParser();
-	}
 }
