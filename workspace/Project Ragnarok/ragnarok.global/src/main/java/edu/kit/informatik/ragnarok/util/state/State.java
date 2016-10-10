@@ -17,7 +17,7 @@ import edu.kit.informatik.ragnarok.primitives.time.Timer;
  * </p>
  * <p>
  * For automatic switching states, the implementations must supply a
- * {@link #getTimerTime()} that specifies how (in seconds) the
+ * {@link #getTimerTime()} that specifies how (in millis) the
  * {@link TimeStateMachine} is supposed to be in this state as well as a
  * {@link #getNextState()} that returns the next state to enter after that time.
  * </p>
@@ -95,7 +95,7 @@ public abstract class State {
 	public abstract State getNextState();
 
 	/**
-	 * Must supply the time in seconds how long the {@link TimeStateMachine} is
+	 * Must supply the time in millis how long the {@link TimeStateMachine} is
 	 * supposed to be in this {@link State} before switching to the next as
 	 * specified in {@link #getNextState()}.
 	 *
