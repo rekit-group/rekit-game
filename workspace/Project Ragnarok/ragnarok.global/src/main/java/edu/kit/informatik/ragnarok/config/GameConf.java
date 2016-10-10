@@ -59,6 +59,11 @@ public final class GameConf implements Visitable {
 	public static String VERSION;
 
 	/**
+	 * The used version of the StandardWidgetToolkit.
+	 */
+	public static String SWT_VERSION;
+
+	/**
 	 * Size of one in-game unit in pixels. So a Vec2D(1, 0) will be projected to
 	 * (pxPerUnit, 0)
 	 */
@@ -74,13 +79,13 @@ public final class GameConf implements Visitable {
 
 	/**
 	 * Width of the window.<br>
-	 * Calculated by {@link GameConf.GRID_W} * {@link GameConf.PX_PER_UNIT}.
+	 * Calculated by {@link GameConf#GRID_W} * {@link GameConf#PX_PER_UNIT}.
 	 */
 	@NoVisit
 	public static int PIXEL_W;
 	/**
 	 * Height of the window.<br>
-	 * Calculated by {@link GameConf.GRID_H} * {@link GameConf.PX_PER_UNIT}.
+	 * Calculated by {@link GameConf#GRID_H} * {@link GameConf#PX_PER_UNIT}.
 	 */
 	@NoVisit
 	public static int PIXEL_H;
