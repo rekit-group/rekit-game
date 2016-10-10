@@ -156,7 +156,7 @@ public final class EndTrigger extends InanimateTrigger {
 			long deltaTime = GameTime.getTime() - this.lastTime;
 			this.lastTime += deltaTime;
 
-			this.x += deltaTime;
+			this.x += deltaTime / 1000F;
 
 			// some weird "amplitude * sin(phase + frequency * x)" action
 			this.currentSize = this.getSize().add(this.amplitude.multiply(this.phase.add(this.frequency.scalar(this.x)).sin()));

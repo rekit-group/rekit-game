@@ -107,7 +107,7 @@ public final class Rocket extends Enemy implements Visitable {
 	@Override
 	protected void innerLogicLoop() {
 		// move ahead with player max speed
-		this.setPos(this.getPos().addX(-GameConf.PLAYER_WALK_MAX_SPEED * this.deltaTime));
+		this.setPos(this.getPos().addX(-GameConf.PLAYER_WALK_MAX_SPEED * this.deltaTime / 1000F));
 
 		// spawn particles
 		this.paricleTimer.removeTime(this.deltaTime);
