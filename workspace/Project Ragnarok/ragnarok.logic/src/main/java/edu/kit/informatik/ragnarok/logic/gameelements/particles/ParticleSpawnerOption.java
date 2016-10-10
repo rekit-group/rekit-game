@@ -2,6 +2,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.particles;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.primitives.time.Progress;
+import edu.kit.informatik.ragnarok.visitor.annotations.ClassParser;
 
 /**
  * Represents an option for a <i>ProgressDependency</i>. A ProgressDependency
@@ -16,6 +17,7 @@ import edu.kit.informatik.ragnarok.primitives.time.Progress;
  * @author Angelo Aracri
  * @version 1.0
  */
+@ClassParser(ParticleSpawnerOptionParser.class)
 public class ParticleSpawnerOption {
 	/**
 	 * The minimum of the start-value.

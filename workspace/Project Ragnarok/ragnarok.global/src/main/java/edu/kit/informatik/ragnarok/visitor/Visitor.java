@@ -10,6 +10,7 @@ import java.util.Map;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
 import edu.kit.informatik.ragnarok.visitor.annotations.AfterVisit;
+import edu.kit.informatik.ragnarok.visitor.annotations.ClassParser;
 import edu.kit.informatik.ragnarok.visitor.annotations.NoVisit;
 import edu.kit.informatik.ragnarok.visitor.annotations.SetParser;
 import edu.kit.informatik.ragnarok.visitor.annotations.VisitInfo;
@@ -216,10 +217,17 @@ public abstract class Visitor {
 	 */
 	private Parser getParser(Field field) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
 			NoSuchMethodException, SecurityException {
+		// First the field specific.
 		SetParser manual = field.getDeclaredAnnotation(SetParser.class);
 		if (manual != null) {
 			return manual.value().getDeclaredConstructor().newInstance();
 		}
+		// Then the class specific.
+		ClassParser clazzParser = field.getType().getDeclaredAnnotation(ClassParser.class);
+		if (clazzParser != null) {
+			return clazzParser.value().getDeclaredConstructor().newInstance();
+		}
+		// Then the default.
 		return this.parsers.get(field.getType());
 	}
 

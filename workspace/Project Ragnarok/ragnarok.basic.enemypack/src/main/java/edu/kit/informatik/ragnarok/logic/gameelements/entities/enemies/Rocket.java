@@ -15,9 +15,7 @@ import edu.kit.informatik.ragnarok.primitives.time.Timer;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 import edu.kit.informatik.ragnarok.visitor.Visitable;
 import edu.kit.informatik.ragnarok.visitor.annotations.NoVisit;
-import edu.kit.informatik.ragnarok.visitor.annotations.SetParser;
 import edu.kit.informatik.ragnarok.visitor.annotations.VisitInfo;
-import edu.kit.informatik.ragnarok.visitor.parser.TwoLevelParser;
 
 /**
  *
@@ -54,12 +52,10 @@ public final class Rocket extends Enemy implements Visitable {
 	/**
 	 * The particle spawner for the rocket's flight.
 	 */
-	@SetParser(TwoLevelParser.class)
 	private static ParticleSpawner sparkParticles;
 	/**
 	 * The particle spawner for the rocket's explosion.
 	 */
-	@SetParser(TwoLevelParser.class)
 	private static ParticleSpawner explosionParticles;
 
 	/**

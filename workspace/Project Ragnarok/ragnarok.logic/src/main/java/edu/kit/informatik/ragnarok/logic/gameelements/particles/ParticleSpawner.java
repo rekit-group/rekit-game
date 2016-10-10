@@ -5,8 +5,9 @@ import edu.kit.informatik.ragnarok.core.IScene;
 import edu.kit.informatik.ragnarok.primitives.geometry.Polygon;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.visitor.Visitable;
+import edu.kit.informatik.ragnarok.visitor.annotations.ClassParser;
 import edu.kit.informatik.ragnarok.visitor.annotations.NoVisit;
-import edu.kit.informatik.ragnarok.visitor.annotations.SetParser;
+import edu.kit.informatik.ragnarok.visitor.parser.TwoLevelParser;
 
 /**
  *
@@ -15,6 +16,7 @@ import edu.kit.informatik.ragnarok.visitor.annotations.SetParser;
  * your ParticleSpawner Object</b>
  *
  */
+@ClassParser(TwoLevelParser.class)
 public class ParticleSpawner implements Visitable {
 	/**
 	 * The particle prototype.
@@ -29,44 +31,36 @@ public class ParticleSpawner implements Visitable {
 	/**
 	 * Red Channel.
 	 */
-	@SetParser(ParticleSpawnerOptionParser.class)
 	public ParticleSpawnerOption colorR;
 	/**
 	 * Green Channel.
 	 */
-	@SetParser(ParticleSpawnerOptionParser.class)
 	public ParticleSpawnerOption colorG;
 	/**
 	 * Blue Channel.
 	 */
-	@SetParser(ParticleSpawnerOptionParser.class)
 	public ParticleSpawnerOption colorB;
 	/**
 	 * Alpha Channel.
 	 */
-	@SetParser(ParticleSpawnerOptionParser.class)
 	public ParticleSpawnerOption colorA;
 	/**
 	 * The speed of the particle.
 	 */
-	@SetParser(ParticleSpawnerOptionParser.class)
 	public ParticleSpawnerOption speed;
 	/**
 	 * The angle of the particle.
 	 */
-	@SetParser(ParticleSpawnerOptionParser.class)
 	public ParticleSpawnerOption angle;
 
 	/**
 	 * The rotation of the particle.
 	 */
-	@SetParser(ParticleSpawnerOptionParser.class)
 	public ParticleSpawnerOption rotation;
 
 	/**
 	 * The size of the particle.
 	 */
-	@SetParser(ParticleSpawnerOptionParser.class)
 	public ParticleSpawnerOption size;
 	/**
 	 * The minimum amount of particles.

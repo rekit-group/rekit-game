@@ -1,9 +1,7 @@
 package edu.kit.informatik.ragnarok.visitor.annotations;
 
-import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
 
 import edu.kit.informatik.ragnarok.visitor.Visitable;
 import edu.kit.informatik.ragnarok.visitor.parser.Parser;
@@ -11,14 +9,13 @@ import edu.kit.informatik.ragnarok.visitor.parser.Parser;
 /**
  * This annotation has to be applied to Fields of a {@link Visitable} which
  * shall be visited by a specified {@link Parser}. This will override the
- * default and the {@link ClassParser}
+ * default parser.
  *
  * @author Dominik Fuchß
  *
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
-public @interface SetParser {
+public @interface ClassParser {
 	/**
 	 * Get the parser-type.
 	 *

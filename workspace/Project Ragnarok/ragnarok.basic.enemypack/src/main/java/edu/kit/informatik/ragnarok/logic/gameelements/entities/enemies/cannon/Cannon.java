@@ -11,7 +11,6 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.st
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.particles.Particle;
 import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawnerOption;
-import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawnerOptionParser;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Enemy;
 import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
 import edu.kit.informatik.ragnarok.primitives.geometry.Polygon;
@@ -20,7 +19,6 @@ import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 import edu.kit.informatik.ragnarok.visitor.Visitable;
 import edu.kit.informatik.ragnarok.visitor.annotations.NoVisit;
-import edu.kit.informatik.ragnarok.visitor.annotations.SetParser;
 import edu.kit.informatik.ragnarok.visitor.annotations.VisitInfo;
 
 /**
@@ -133,15 +131,10 @@ public class Cannon extends Enemy implements Visitable {
 	// TODO write parser for damage particle!
 	public static int PARTICLE_AMOUNT_MIN;
 	public static int PARTICLE_AMOUNT_MAX;
-	@SetParser(ParticleSpawnerOptionParser.class)
 	public static ParticleSpawnerOption PARTICLE_COLOR_R;
-	@SetParser(ParticleSpawnerOptionParser.class)
 	public static ParticleSpawnerOption PARTICLE_COLOR_G;
-	@SetParser(ParticleSpawnerOptionParser.class)
 	public static ParticleSpawnerOption PARTICLE_COLOR_B;
-	@SetParser(ParticleSpawnerOptionParser.class)
 	public static ParticleSpawnerOption PARTICLE_COLOR_A;
-	@SetParser(ParticleSpawnerOptionParser.class)
 	public static ParticleSpawnerOption PARTICLE_SPEED;
 	public static float PARTICLE_TIME_MIN;
 	public static float PARTICLE_TIME_MAX;
