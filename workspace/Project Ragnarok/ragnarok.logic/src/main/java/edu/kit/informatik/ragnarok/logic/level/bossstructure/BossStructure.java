@@ -6,6 +6,7 @@ import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.core.GameElement;
 import edu.kit.informatik.ragnarok.core.IScene;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElementFactory;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.FixedCameraTarget;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateDoor;
@@ -161,7 +162,7 @@ public final class BossStructure extends Structure {
 			Text bossText = new Text(scene, op);
 			bossText.setText(BossStructure.this.boss.getName());
 			bossText.setPos(CalcUtil.units2pixel(new Vec(GameConf.GRID_W / 2f, GameConf.GRID_H / 2f)));
-			TimeDecorator bossTextGui = new TimeDecorator(scene, bossText, new Timer(3));
+			TimeDecorator bossTextGui = new TimeDecorator(scene, bossText, new Timer(3000));
 			scene.addGuiElement(bossTextGui);
 		});
 
@@ -174,7 +175,7 @@ public final class BossStructure extends Structure {
 	 *            the scene
 	 */
 	public void endBattle(IScene scene) {
-		final Player player = (Player) scene.getPlayer();
+		final Entity player = scene.getPlayer();
 
 		final Timer timer = new Timer(7000);
 
@@ -248,8 +249,8 @@ public final class BossStructure extends Structure {
 				player.setLives(GameConf.PLAYER_LIVES);
 			}
 			// set camera back to player
-			player.resetCameraOffset();
-			scene.setCameraTarget(player);
+			((Player) player).resetCameraOffset();
+			scene.setCameraTarget((Player) player);
 		});
 
 	}

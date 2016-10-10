@@ -57,7 +57,6 @@ public final class TimeDecorator extends GuiElement {
 
 	@Override
 	public void internalRender(Field f) {
-		// TODO Internal render not accessible
 		this.element.render(f);
 	}
 
