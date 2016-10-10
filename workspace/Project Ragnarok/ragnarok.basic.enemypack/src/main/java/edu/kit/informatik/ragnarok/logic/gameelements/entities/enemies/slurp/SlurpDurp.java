@@ -103,6 +103,7 @@ public final class SlurpDurp extends Entity {
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
 		if (this.getTeam().isHostile(element.getTeam())) {
+			System.out.println("Slow!!");
 			element.setVel(element.getVel().scalar(0.9f));
 		}
 	}
@@ -121,7 +122,7 @@ public final class SlurpDurp extends Entity {
 	protected void innerLogicLoop() {
 		this.currentX += this.deltaTime / 1000F;
 		this.setSize(new Vec(this.baseSize + (float) (this.amplitude * Math.sin(this.currentX * this.frequency + this.phase))));
-
+		this.setPos(this.parentPos.add(this.innerPos));
 	}
 
 	@Override

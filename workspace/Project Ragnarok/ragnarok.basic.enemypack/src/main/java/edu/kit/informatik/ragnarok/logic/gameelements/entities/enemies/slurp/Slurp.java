@@ -123,7 +123,6 @@ public final class Slurp extends Enemy implements Visitable {
 		if (GameConf.PRNG.nextDouble() >= (1.0 - Slurp.SLURP_POPOFFS_PER_SEC * this.deltaTime / 1000.0)) {
 			// get and remove one SlurpDurp from list
 			SlurpDurp poppedOf = this.slurpDurps.remove(0);
-
 			// add this SlurpDurp as regular Entity to GameModel
 			this.getScene().addGameElement(poppedOf);
 		}
