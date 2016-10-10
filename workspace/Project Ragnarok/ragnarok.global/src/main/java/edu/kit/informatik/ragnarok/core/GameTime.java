@@ -61,4 +61,8 @@ public final class GameTime {
 		GameTime.paused += System.currentTimeMillis() - GameTime.started;
 
 	}
+
+	public static boolean isPaused() {
+		return GameTime.pause;
+	}
 }
