@@ -2,12 +2,13 @@ package edu.kit.informatik.ragnarok.logic.scene;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.logic.GameModel;
-import edu.kit.informatik.ragnarok.logic.gui.menu.BoolSettingToggle;
+import edu.kit.informatik.ragnarok.logic.gui.menu.BoolSetting;
 import edu.kit.informatik.ragnarok.logic.gui.menu.MenuActionItem;
 import edu.kit.informatik.ragnarok.logic.gui.menu.MenuGrid;
 import edu.kit.informatik.ragnarok.logic.gui.menu.MenuItem;
 import edu.kit.informatik.ragnarok.logic.gui.menu.MenuList;
 import edu.kit.informatik.ragnarok.logic.gui.menu.SubMenu;
+import edu.kit.informatik.ragnarok.logic.gui.menu.TextMenu;
 import edu.kit.informatik.ragnarok.logic.level.LevelManager;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 
@@ -80,13 +81,11 @@ final class MainMenu extends Scene {
 
 		MenuList settings = new MenuList(this, "Settings");
 
-		settings.addItem(new BoolSettingToggle(this, "Debug Mode", "DEBUG"));
+		settings.addItem(new BoolSetting(this, "Debug Mode", "DEBUG"));
 
 		MenuList about = new MenuList(this, "About");
 
-		about.addItem(new MenuActionItem(this, "under construction", () -> {
-		}));
-
+		about.addItem(new TextMenu(this, GameConf.ABOUT));
 		this.menu.addItem(play);
 		this.menu.addItem(settings);
 		this.menu.addItem(about);

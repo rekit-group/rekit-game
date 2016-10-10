@@ -9,7 +9,7 @@ import edu.kit.informatik.ragnarok.core.IScene;
  * This class defines a menu to modify setting (boolean) of {@link GameConf}.
  *
  */
-public final class BoolSettingToggle extends MenuItem {
+public final class BoolSetting extends MenuItem {
 	/**
 	 * The {@link java.lang.reflect.Field Field} which shall be modified.
 	 */
@@ -29,7 +29,7 @@ public final class BoolSettingToggle extends MenuItem {
 	 * @param gameConfVal
 	 *            the name of the value in {@link GameConf}
 	 */
-	public BoolSettingToggle(IScene scene, String text, String gameConfVal) {
+	public BoolSetting(IScene scene, String text, String gameConfVal) {
 		super(scene, text);
 		try {
 			this.setting = GameConf.class.getDeclaredField(gameConfVal);

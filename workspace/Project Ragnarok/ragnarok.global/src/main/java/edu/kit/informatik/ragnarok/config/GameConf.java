@@ -39,6 +39,15 @@ public final class GameConf implements Visitable {
 	public static final Random PRNG = new Random();
 
 	/**
+	 * The about text.
+	 */
+	public static String ABOUT;
+	/**
+	 * The text options for {@link #ABOUT}.
+	 */
+	@NoVisit
+	public static TextOptions ABOUT_TEXT;
+	/**
 	 * The file location of the level manager file.
 	 */
 	public static String LVL_MGMT_FILE;
@@ -220,5 +229,6 @@ public final class GameConf implements Visitable {
 		GameConf.MENU_TEXT = new TextOptions(new Vec(-0.5f), GameConf.MENU_TEXT_SIZE, GameConf.MENU_TEXT_COLOR, GameConf.MENU_TEXT_FONT, 1);
 		GameConf.DEBUG_TEXT_COLOR = new RGBColor(255, 255, 255);
 		GameConf.HINT_TEXT = GameConf.DEFAULT_TEXT.clone().setHeight(GameConf.GAME_TEXT_SIZE - 8).setColor(GameConf.DEBUG_TEXT_COLOR);
+		GameConf.ABOUT_TEXT = GameConf.HINT_TEXT.clone().setAlignmentLeft(new Vec(-1.2F, -0.55F));
 	}
 }
