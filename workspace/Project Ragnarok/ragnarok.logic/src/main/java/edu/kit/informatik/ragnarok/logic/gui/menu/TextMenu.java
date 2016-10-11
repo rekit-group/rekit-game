@@ -14,6 +14,11 @@ import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
  */
 public class TextMenu extends MenuItem {
 	/**
+	 * Vector for spacing.
+	 */
+	private final Vec space = new Vec(GameConf.PIXEL_W * 0.95F, GameConf.PIXEL_H * 0.9F).scalar(0.05F, 0.1F);
+
+	/**
 	 * Create the MenuItem.
 	 *
 	 * @param scene
@@ -34,6 +39,6 @@ public class TextMenu extends MenuItem {
 	@Override
 	protected void renderItem(Field f) {
 		f.drawRectangle(this.getPos(), this.getSize(), new RGBAColor(0, 0, 0, 200), false);
-		f.drawText(this.getPos(), this.getText(), GameConf.ABOUT_TEXT, false);
+		f.drawText(this.getPos().sub(this.getSize().scalar(0.5F)).add(this.space), this.getText(), GameConf.ABOUT_TEXT, false);
 	}
 }
