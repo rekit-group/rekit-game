@@ -168,7 +168,8 @@ public abstract class Entity extends GameElement {
 		// }
 
 		if (this.invincibility != null) {
-			this.invincibility.removeTime(this.deltaTime);
+			this.invincibility.logicLoop();
+			// this.invincibility.removeTime(this.deltaTime);
 		}
 
 		this.getEntityState().logicLoop();

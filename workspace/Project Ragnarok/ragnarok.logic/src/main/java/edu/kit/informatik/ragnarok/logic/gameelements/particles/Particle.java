@@ -152,7 +152,8 @@ public class Particle extends GameElement implements Cloneable {
 		long deltaTime = GameTime.getTime() - this.lastTime;
 		this.lastTime += deltaTime;
 		// tell timer passed time
-		this.timer.removeTime(deltaTime);
+		this.timer.logicLoop();
+		// this.timer.removeTime(deltaTime);
 
 		// If time is up: kill yourself
 		if (this.timer.timeUp()) {

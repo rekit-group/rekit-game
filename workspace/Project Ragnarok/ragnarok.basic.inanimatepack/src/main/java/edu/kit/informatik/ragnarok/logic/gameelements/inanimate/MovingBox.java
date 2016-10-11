@@ -119,8 +119,8 @@ public final class MovingBox extends DynamicInanimate {
 
 		// initialize movement timer
 		long period = (long) (dist / (2 * MovingBox.SPEED) * 1000);
-		this.timer = new Timer(period);
-		this.timer.removeTime(offset ? 1000 * period / 2 : 0);
+		this.timer = new Timer(period - (offset ? 1000 * period / 2 : 0));
+		// this.timer.removeTime();
 	}
 
 	@Override
@@ -134,7 +134,8 @@ public final class MovingBox extends DynamicInanimate {
 	public void logicLoop() {
 		long deltaTime = GameTime.getTime() - this.lastTime;
 		this.lastTime += deltaTime;
-		this.timer.removeTime(deltaTime);
+		this.timer.logicLoop();
+		// this.timer.removeTime(deltaTime);
 		this.setPos(this.currentStart.add(this.relativeTarget.scalar(this.timer.getProgress())));
 
 		if (GameConf.PRNG.nextFloat() > 0.6f) {

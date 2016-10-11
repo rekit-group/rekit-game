@@ -79,7 +79,8 @@ public class RocketBoss extends Boss {
 
 		this.mouthCurvePos = this.getPos().add(RocketBoss.MOUTH_POS).addX(0.5f * RocketBoss.MOUTH_SIZE.getX()).addX(-this.calcX);
 		// TODO Check *1000
-		this.mouthCurveTimer.removeTime((long) (1000 * deltaX));
+		this.mouthCurveTimer.logicLoop();
+		// this.mouthCurveTimer.removeTime((long) (1000 * deltaX));
 		float maxDelta = RocketBoss.MOUTH_SIZE.getY() * 0.5f;
 		while (this.mouthCurveTimer.timeUp()) {
 			this.mouthCurveTimer.reset();

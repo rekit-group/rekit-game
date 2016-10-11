@@ -120,7 +120,8 @@ public final class Stacker extends Enemy implements Visitable {
 			this.setPos(Stacker.this.getPos().add(this.relPos).addX((float) (0.1 * Math.sin(0.1 * GameTime.getTime() / 30 + this.offset))));
 
 			if (this.timeToDie != null) {
-				this.timeToDie.removeTime(this.deltaTime);
+				this.timeToDie.logicLoop();
+				// this.timeToDie.removeTime(this.deltaTime);
 				this.setSize(Stacker.dimensions.getNow(this.timeToDie.getProgress()));
 				this.setPos(this.getPos().addY((-this.getSize().getY() + Stacker.dimensions.getNow(0).getY()) / 2f));
 				if (this.timeToDie.timeUp()) {

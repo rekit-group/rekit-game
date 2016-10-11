@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.core.GameElement;
-import edu.kit.informatik.ragnarok.core.GameTime;
 import edu.kit.informatik.ragnarok.core.IScene;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElementFactory;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
@@ -239,10 +238,10 @@ public final class BossStructure extends Structure {
 					float prog = (timer.getProgress() - 0.9f) * 10f;
 					scene.setCameraTarget(new FixedCameraTarget(cameraMover.getNow(prog)));
 				}
-
-				if (!GameTime.isPaused()) {
-					timer.removeTime(GameConf.LOGIC_DELTA);
-				}
+				timer.logicLoop();
+				// if (!GameTime.isPaused()) {
+				// timer.removeTime(GameConf.LOGIC_DELTA);
+				// }
 			}
 
 			// re-apply velocity to Player

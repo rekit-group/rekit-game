@@ -72,7 +72,8 @@ public final class Warper extends Enemy implements Visitable {
 	@Override
 	protected void innerLogicLoop() {
 		// decrease time left
-		this.warpAction.removeTime(this.deltaTime);
+		this.warpAction.logicLoop();
+		// this.warpAction.removeTime(this.deltaTime);
 
 		// animate particles
 		Warper.warpParticles.amountMin = -5;

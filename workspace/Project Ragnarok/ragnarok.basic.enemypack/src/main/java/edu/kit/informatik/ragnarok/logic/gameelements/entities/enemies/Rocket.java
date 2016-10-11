@@ -110,7 +110,8 @@ public final class Rocket extends Enemy implements Visitable {
 		this.setPos(this.getPos().addX(-GameConf.PLAYER_WALK_MAX_SPEED * this.deltaTime / 1000F));
 
 		// spawn particles
-		this.paricleTimer.removeTime(this.deltaTime);
+		this.paricleTimer.logicLoop();
+		// this.paricleTimer.removeTime(this.deltaTime);
 		if (this.paricleTimer.timeUp()) {
 			this.paricleTimer.reset();
 			Rocket.sparkParticles.spawn(this.getScene(), this.getPos().addX(this.getSize().getX() / 2));

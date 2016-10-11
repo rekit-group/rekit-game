@@ -125,7 +125,8 @@ public final class ClimbUpBox extends DynamicInanimate {
 			}
 		}
 		// update timer
-		this.timer.removeTime(nowTime - this.lastTime);
+		this.timer.logicLoop();
+		// this.timer.removeTime(nowTime - this.lastTime);
 		// save current time for next iteration
 		this.lastTime = nowTime;
 

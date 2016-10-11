@@ -1,5 +1,8 @@
 package edu.kit.informatik.ragnarok.primitives.time;
 
+import edu.kit.informatik.ragnarok.config.GameConf;
+import edu.kit.informatik.ragnarok.core.GameTime;
+
 /**
  * Data class that holds an duration time.
  *
@@ -16,6 +19,10 @@ public final class Timer {
 	 * The time left millis.
 	 */
 	private long timeLeft;
+	/**
+	 * The last time {@link #logicLoop()} was invoked.
+	 */
+	private long lastTime = GameTime.getTime();
 
 	/**
 	 * Create a TimeDependency by duration time.
@@ -29,12 +36,22 @@ public final class Timer {
 	}
 
 	/**
+	 * This method shall be invoked by the logic every
+	 * {@link GameConf#LOGIC_DELTA} ms.
+	 */
+	public void logicLoop() {
+		long now = GameTime.getTime();
+		this.removeTime(now - this.lastTime);
+		this.lastTime = now;
+	}
+
+	/**
 	 * Remove some time.
 	 *
 	 * @param deltaTime
 	 *            the time millis
 	 */
-	public void removeTime(long deltaTime) {
+	private void removeTime(long deltaTime) {
 		this.timeLeft -= deltaTime;
 	}
 

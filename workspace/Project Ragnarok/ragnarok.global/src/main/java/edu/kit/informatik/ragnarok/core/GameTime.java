@@ -62,6 +62,11 @@ public final class GameTime {
 
 	}
 
+	/**
+	 * Indicates whether the time has been stopped.
+	 * 
+	 * @return {@code true} if stopped, {@code false} otherwise
+	 */
 	public static boolean isPaused() {
 		return GameTime.pause;
 	}

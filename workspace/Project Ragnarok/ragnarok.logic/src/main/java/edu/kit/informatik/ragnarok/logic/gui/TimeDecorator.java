@@ -1,7 +1,6 @@
 package edu.kit.informatik.ragnarok.logic.gui;
 
 import edu.kit.informatik.ragnarok.core.Field;
-import edu.kit.informatik.ragnarok.core.GameTime;
 import edu.kit.informatik.ragnarok.core.GuiElement;
 import edu.kit.informatik.ragnarok.core.IScene;
 import edu.kit.informatik.ragnarok.primitives.time.Timer;
@@ -21,10 +20,10 @@ public final class TimeDecorator extends GuiElement {
 	 * The timer.
 	 */
 	private Timer timer;
-	/**
+	/*
 	 * The last time of invoking {@link #logicLoop()}.
 	 */
-	private long lastTime = GameTime.getTime();
+	// private long lastTime = GameTime.getTime();
 
 	/**
 	 * Create a TimeDecorator.
@@ -44,9 +43,10 @@ public final class TimeDecorator extends GuiElement {
 
 	@Override
 	public void logicLoop() {
-		long deltaTime = GameTime.getTime() - this.lastTime;
-		this.lastTime += deltaTime;
-		this.timer.removeTime(deltaTime);
+		// long deltaTime = GameTime.getTime() - this.lastTime;
+		// this.lastTime += deltaTime;
+		this.timer.logicLoop();
+		// this.timer.removeTime(deltaTime);
 		if (this.timer.timeUp()) {
 			this.visible = false;
 			this.getScene().removeGuiElement(this);

@@ -78,8 +78,8 @@ public abstract class State {
 
 		long deltaTime = GameTime.getTime() - this.lastTime;
 		this.lastTime += deltaTime;
-
-		this.timer.removeTime(deltaTime);
+		this.timer.logicLoop();
+		// this.timer.removeTime(deltaTime);
 		if (this.timer.timeUp()) {
 			this.parent.nextState();
 		}
