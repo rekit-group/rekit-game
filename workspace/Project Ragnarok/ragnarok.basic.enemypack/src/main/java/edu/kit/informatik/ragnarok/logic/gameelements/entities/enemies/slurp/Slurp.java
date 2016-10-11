@@ -133,7 +133,7 @@ public final class Slurp extends Enemy implements Visitable {
 
 		// If every SlurpDurp has popped off
 		if (this.slurpDurps.size() == 0) {
-			this.getScene().removeGameElement(this);
+			this.getScene().markForRemove(this);
 		}
 
 		this.hasWallContact = false;

@@ -1,10 +1,10 @@
 package edu.kit.informatik.ragnarok.logic.scene;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.core.CameraTarget;
@@ -62,11 +62,11 @@ abstract class Scene implements CameraTarget, IScene {
 	/**
 	 * GameElements which shall be added.
 	 */
-	private ArrayList<GameElement> gameElementAddQueue;
+	private ConcurrentLinkedQueue<GameElement> gameElementAddQueue;
 	/**
 	 * GameElements which shall be removed.
 	 */
-	private ArrayList<GameElement> gameElementRemoveQueue;
+	private ConcurrentLinkedQueue<GameElement> gameElementRemoveQueue;
 	/**
 	 * Stats of the gameElements for debugging.
 	 */
@@ -98,8 +98,8 @@ abstract class Scene implements CameraTarget, IScene {
 	public void init() {
 		this.guiElements = new PriorityQueue<>();
 		this.gameElements = new PriorityQueue<>();
-		this.gameElementAddQueue = new ArrayList<>();
-		this.gameElementRemoveQueue = new ArrayList<>();
+		this.gameElementAddQueue = new ConcurrentLinkedQueue<>();
+		this.gameElementRemoveQueue = new ConcurrentLinkedQueue<>();
 	}
 
 	@Override
@@ -133,22 +133,13 @@ abstract class Scene implements CameraTarget, IScene {
 	 * This method will be invoked in {@link #logicLoop()}.
 	 */
 	protected void innerLogicLoop() {
-
-		this.logicLoopPre(this.lastTime);
-
+		this.logicLoopPre();
 		// add GameElements that have been added
 		this.addGameElements();
-
 		if (!this.paused) {
 			// iterate all GameElements to invoke logicLoop
-			synchronized (this.synchronize()) {
-				Iterator<GameElement> it = this.getGameElementIterator();
-				while (it.hasNext()) {
-					this.logicLoopGameElement(it);
-				}
-			}
+			this.gameElements.parallelStream().forEach(e -> this.logicLoopGameElement(e));
 		}
-
 		// remove GameElements that must be removed
 		this.removeGameElements();
 		this.logicLoopAfter();
@@ -168,25 +159,22 @@ abstract class Scene implements CameraTarget, IScene {
 	/**
 	 * Will be invoked before all {@link GameElement#logicLoop(float)}.
 	 *
-	 * @param lastTime
-	 *            the last invoke of {@link #logicLoop(long)}
 	 */
-	protected void logicLoopPre(long lastTime) {
+	protected void logicLoopPre() {
 	}
 
 	/**
 	 * Invoke {@link GameElement#logicLoop(float)} for all game elements.
 	 *
-	 * @param it
-	 *            the iterator with all elements
+	 * @param e
+	 *            the elements
 	 */
-	protected void logicLoopGameElement(Iterator<GameElement> it) {
-		GameElement e = it.next();
+	protected void logicLoopGameElement(GameElement e) {
 
 		// if this GameElement is marked for destruction
 		// TODO This is a bugfix for inanimates which wont be deleted upon time
 		if (e.getDeleteMe() || (e.getTeam() == Team.INANIMATE && this.getModel().getCameraOffset() - 20 > e.getPos().getX())) {
-			it.remove();
+			this.markForRemove(e);
 		}
 
 		// Debug: Save time before logicLoop
@@ -223,9 +211,7 @@ abstract class Scene implements CameraTarget, IScene {
 	@Override
 	public void addGameElement(GameElement element) {
 		// Put GameElement in waiting list
-		synchronized (this.synchronize()) {
-			this.gameElementAddQueue.add(element);
-		}
+		this.gameElementAddQueue.add(element);
 	}
 
 	/**
@@ -239,7 +225,6 @@ abstract class Scene implements CameraTarget, IScene {
 				GameElement element = it.next();
 				this.gameElements.add(element);
 				element.setScene(this);
-
 				it.remove();
 			}
 		}
@@ -255,7 +240,7 @@ abstract class Scene implements CameraTarget, IScene {
 	 *            the GameElement to remove
 	 */
 	@Override
-	public void removeGameElement(GameElement element) {
+	public void markForRemove(GameElement element) {
 		synchronized (this.synchronize()) {
 			this.gameElementRemoveQueue.add(element);
 		}
@@ -267,12 +252,8 @@ abstract class Scene implements CameraTarget, IScene {
 	 */
 	private void removeGameElements() {
 		synchronized (this.synchronize()) {
-			Iterator<GameElement> it = this.gameElementRemoveQueue.iterator();
-			while (it.hasNext()) {
-				GameElement element = it.next();
-				it.remove();
-				this.gameElements.remove(element);
-			}
+			this.gameElementRemoveQueue.forEach((e) -> this.gameElements.remove(e));
+			this.gameElementRemoveQueue.clear();
 		}
 	}
 

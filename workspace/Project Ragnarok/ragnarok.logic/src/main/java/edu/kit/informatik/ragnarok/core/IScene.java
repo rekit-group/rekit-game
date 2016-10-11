@@ -56,7 +56,7 @@ public interface IScene {
 	 * @param e
 	 *            the GameElement to remove
 	 */
-	void removeGameElement(GameElement e);
+	void markForRemove(GameElement e);
 
 	/**
 	 * Adds a GuiElement to the GameModel.

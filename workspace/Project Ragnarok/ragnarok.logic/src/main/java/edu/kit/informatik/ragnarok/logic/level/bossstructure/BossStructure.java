@@ -212,7 +212,7 @@ public final class BossStructure extends Structure {
 				// phase two: show fireworks
 				else if (timer.getProgress() < 0.9) {
 					// remove boss of last phase
-					scene.removeGameElement(BossStructure.this.boss);
+					scene.markForRemove(BossStructure.this.boss);
 
 					// show fireworks
 					if (GameConf.PRNG.nextDouble() > 0.9) {

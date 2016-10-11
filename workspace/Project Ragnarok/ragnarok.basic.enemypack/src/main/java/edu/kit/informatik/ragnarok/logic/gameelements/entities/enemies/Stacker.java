@@ -83,7 +83,7 @@ public final class Stacker extends Enemy implements Visitable {
 				this.getScene().addGameElement(elem);
 			}
 			// We dont need this actual GameElement anymore
-			this.getScene().removeGameElement(this);
+			this.getScene().markForRemove(this);
 		}
 	}
 

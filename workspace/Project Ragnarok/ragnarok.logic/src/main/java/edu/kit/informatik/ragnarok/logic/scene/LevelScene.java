@@ -127,7 +127,7 @@ public abstract class LevelScene extends Scene {
 	}
 
 	@Override
-	protected void logicLoopPre(long lastTime) {
+	protected void logicLoopPre() {
 
 		this.level.getLevelAssember().generate((int) (this.getCameraOffset() + GameConf.GRID_W + 1));
 

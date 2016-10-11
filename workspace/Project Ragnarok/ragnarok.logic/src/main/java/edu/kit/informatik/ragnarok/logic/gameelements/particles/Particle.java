@@ -157,7 +157,7 @@ public class Particle extends GameElement implements Cloneable {
 
 		// If time is up: kill yourself
 		if (this.timer.timeUp()) {
-			this.getScene().removeGameElement(this);
+			this.getScene().markForRemove(this);
 		} else {
 			// get current progress of Particle
 			float progress = this.timer.getProgress();
