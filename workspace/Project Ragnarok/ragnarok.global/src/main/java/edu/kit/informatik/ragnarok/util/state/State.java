@@ -1,6 +1,5 @@
 package edu.kit.informatik.ragnarok.util.state;
 
-import edu.kit.informatik.ragnarok.core.GameTime;
 import edu.kit.informatik.ragnarok.primitives.time.Timer;
 
 /**
@@ -37,10 +36,10 @@ public abstract class State {
 	 * {@link State} is remaining before it switches to the next {@link State}.
 	 */
 	protected Timer timer;
-	/**
+	/*
 	 * The time of the last invoke of {@link #logicLoop()}.
 	 */
-	private long lastTime = GameTime.getTime();
+	// private long lastTime = GameTime.getTime();
 
 	/**
 	 * Constructor that initializes the {@link #timer} using
@@ -76,8 +75,8 @@ public abstract class State {
 	 */
 	public void logicLoop() {
 
-		long deltaTime = GameTime.getTime() - this.lastTime;
-		this.lastTime += deltaTime;
+		// long deltaTime = GameTime.getTime() - this.lastTime;
+		// this.lastTime += deltaTime;
 		this.timer.logicLoop();
 		// this.timer.removeTime(deltaTime);
 		if (this.timer.timeUp()) {

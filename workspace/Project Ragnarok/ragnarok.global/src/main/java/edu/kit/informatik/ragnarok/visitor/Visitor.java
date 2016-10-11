@@ -143,60 +143,6 @@ public abstract class Visitor {
 	}
 
 	/**
-	 * Invoke method of a visitable (only static).
-	 *
-	 * @param m
-	 *            the method
-	 */
-	private void afterStatic(Method m) {
-		try {
-			if (!Modifier.isStatic(m.getModifiers())) {
-				return;
-			}
-			AfterVisit afterVisit = m.getAnnotation(AfterVisit.class);
-			if (afterVisit == null) {
-				return;
-			}
-			m.setAccessible(true);
-			m.invoke(null);
-		} catch (Exception e) {
-			System.err.println("Cannot apply to field: " + m.getName() + " because " + e.getMessage());
-		}
-
-	}
-
-	/**
-	 * Apply a value to a field (only static).
-	 *
-	 * @param field
-	 *            the field
-	 */
-	private void applyStatic(Field field) {
-		try {
-			if (field.getAnnotation(NoVisit.class) != null) {
-				return;
-			}
-			String val = null;
-			int mod = field.getModifiers();
-			if (!Modifier.isStatic(mod) || Modifier.isFinal(mod) || (val = this.getValue(field.getName())) == null) {
-				System.out.println("WARNING: Field " + field.getName() + " is not static or final or has no definition");
-				return;
-			}
-			field.setAccessible(true);
-			Parser parser = this.getParser(field);
-			if (parser == null) {
-				return;
-			}
-			if (!parser.parse(null, field, val)) {
-				System.err.println("Syntax-Error: Parser rejected content for " + field.getName());
-			}
-
-		} catch (Exception e) {
-			System.err.println("Cannot apply to field: " + field.getName() + " because " + e.getMessage());
-		}
-	}
-
-	/**
 	 * Get the specified parser for a field.
 	 *
 	 * @param field
@@ -232,6 +178,29 @@ public abstract class Visitor {
 	}
 
 	/**
+	 * Invoke method of a visitable (only static).
+	 *
+	 * @param m
+	 *            the method
+	 */
+	private void afterStatic(Method m) {
+		try {
+			if (!Modifier.isStatic(m.getModifiers())) {
+				return;
+			}
+			AfterVisit afterVisit = m.getAnnotation(AfterVisit.class);
+			if (afterVisit == null) {
+				return;
+			}
+			m.setAccessible(true);
+			m.invoke(null);
+		} catch (Exception e) {
+			System.err.println("Cannot apply to field: " + m.getName() + " because " + e.getMessage());
+		}
+
+	}
+
+	/**
 	 * Invoke method of a visitable (only non-static).
 	 *
 	 * @param v
@@ -254,6 +223,37 @@ public abstract class Visitor {
 			System.err.println("Cannot apply to field: " + m.getName() + " because " + e.getMessage());
 		}
 
+	}
+
+	/**
+	 * Apply a value to a field (only static).
+	 *
+	 * @param field
+	 *            the field
+	 */
+	private void applyStatic(Field field) {
+		try {
+			if (field.getAnnotation(NoVisit.class) != null) {
+				return;
+			}
+			String val = null;
+			int mod = field.getModifiers();
+			if (!Modifier.isStatic(mod) || Modifier.isFinal(mod) || (val = this.getValue(field.getName())) == null) {
+				System.out.println("WARNING: Field " + field.getName() + " is not static or final or has no definition");
+				return;
+			}
+			field.setAccessible(true);
+			Parser parser = this.getParser(field);
+			if (parser == null) {
+				return;
+			}
+			if (!parser.parse(null, field, val)) {
+				System.err.println("Syntax-Error: Parser rejected content for " + field.getName());
+			}
+
+		} catch (Exception e) {
+			System.err.println("Cannot apply to field: " + field.getName() + " because " + e.getMessage());
+		}
 	}
 
 	/**
