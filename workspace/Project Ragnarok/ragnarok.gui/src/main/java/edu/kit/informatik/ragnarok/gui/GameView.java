@@ -19,10 +19,10 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
+import edu.kit.informatik.ragnarok.core.GameElement;
+import edu.kit.informatik.ragnarok.core.GuiElement;
+import edu.kit.informatik.ragnarok.core.IScene;
 import edu.kit.informatik.ragnarok.logic.Model;
-import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
-import edu.kit.informatik.ragnarok.logic.gui.GuiElement;
-import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.AbstractImage;
 import edu.kit.informatik.ragnarok.primitives.image.Filter;
@@ -96,6 +96,7 @@ class GameView implements View {
 		this.canvas.setSize(GameConf.PIXEL_W, GameConf.PIXEL_H);
 		this.canvas.setLocation(0, 0);
 
+		// TODO This depends on the window manager. This issue should be solved
 		// Open Shell (5,28) seems to be the additional size of my window
 		// decoration (boder, title, close button etc)
 		this.shell.setSize(GameConf.PIXEL_W + 5, GameConf.PIXEL_H + 28);
@@ -155,7 +156,7 @@ class GameView implements View {
 			return;
 		}
 
-		Scene scene = this.model.getScene();
+		IScene scene = this.model.getScene();
 
 		// Create temporary GC on new Image and let field draw on that
 		// Double buffering reduces flickering
@@ -211,7 +212,7 @@ class GameView implements View {
 		this.field.drawText(new Vec(GameConf.PIXEL_W - 10, GameConf.PIXEL_H - 60), debugInfo, GameConf.HINT_TEXT, false);
 
 		if (GameConf.DEBUG) {
-			drawDebug();
+			this.drawDebug();
 		}
 
 	}
@@ -251,10 +252,10 @@ class GameView implements View {
 			resultName.append("\n");
 			resultNum.append(e.getValue());
 			resultNum.append("\n");
-			resultDur.append(durations.get(e.getKey()));
+			Long dur = durations.get(e.getKey());
+			resultDur.append(dur == null ? "-" : dur);
 			resultDur.append("\n");
 		}
-
 		this.field.drawText(new Vec(GameConf.PIXEL_W - 55, GameConf.PIXEL_H / 2f), resultName.toString(), GameConf.HINT_TEXT, false);
 		this.field.drawText(new Vec(GameConf.PIXEL_W - 30, GameConf.PIXEL_H / 2f), resultNum.toString(), GameConf.HINT_TEXT, false);
 		this.field.drawText(new Vec(GameConf.PIXEL_W - 5, GameConf.PIXEL_H / 2f), resultDur.toString(), GameConf.HINT_TEXT, false);

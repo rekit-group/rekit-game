@@ -1,8 +1,8 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
-import edu.kit.informatik.ragnarok.logic.Field;
-import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.core.Field;
+import edu.kit.informatik.ragnarok.core.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Enemy;
 import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
@@ -27,7 +27,7 @@ import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
  * @version 1.0
  */
 @LoadMe
-public class RektKiller extends Enemy {
+public final class RektKiller extends Enemy {
 
 	/**
 	 * Number whose first 4 bits are used as booleans for the spike at each
@@ -95,8 +95,9 @@ public class RektKiller extends Enemy {
 	 */
 	public void prepare() {
 		// calculate size dependent Polygon for spikes
-		this.spikePolygon = new Polygon(new Vec(), new Vec[] { //
-				new Vec(0.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
+		this.spikePolygon = new Polygon(new Vec(),
+				new Vec[] { //
+						new Vec(0.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
 						new Vec(1.0f * ((this.getSize().getX() * 0.8f) / 3f), 0),
 						new Vec(1.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
 						new Vec(2.0f * ((this.getSize().getX() * 0.8f) / 3f), 0),

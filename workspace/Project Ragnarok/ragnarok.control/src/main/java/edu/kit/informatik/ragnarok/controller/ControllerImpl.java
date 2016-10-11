@@ -7,11 +7,12 @@ import java.util.Map;
 import edu.kit.informatik.ragnarok.controller.commands.Command;
 import edu.kit.informatik.ragnarok.controller.commands.CommandSupervisor;
 import edu.kit.informatik.ragnarok.controller.commands.FilterCommand;
-import edu.kit.informatik.ragnarok.controller.commands.InputMethod;
+import edu.kit.informatik.ragnarok.controller.commands.InputCommand.InputMethod;
 import edu.kit.informatik.ragnarok.controller.commands.JumpCommand;
 import edu.kit.informatik.ragnarok.controller.commands.MenuCommand;
 import edu.kit.informatik.ragnarok.controller.commands.PlayPauseCommand;
 import edu.kit.informatik.ragnarok.controller.commands.WalkCommand;
+import edu.kit.informatik.ragnarok.core.IScene;
 import edu.kit.informatik.ragnarok.gui.View;
 import edu.kit.informatik.ragnarok.logic.GameState;
 import edu.kit.informatik.ragnarok.logic.Model;
@@ -20,7 +21,6 @@ import edu.kit.informatik.ragnarok.logic.filters.InvertedMode;
 import edu.kit.informatik.ragnarok.logic.filters.RandomMode;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gui.menu.MenuItem;
-import edu.kit.informatik.ragnarok.logic.scene.LevelScene;
 import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
 import edu.kit.informatik.ragnarok.util.InputHelper;
 import edu.kit.informatik.ragnarok.util.Tuple;
@@ -147,7 +147,7 @@ class ControllerImpl implements Observer, Controller, CommandSupervisor {
 	}
 
 	@Override
-	public LevelScene getLevelScene() {
-		return this.model.getState() == GameState.INGAME ? (LevelScene) this.model.getScene() : null;
+	public IScene getScene() {
+		return this.model.getState() == GameState.INGAME ? this.model.getScene() : null;
 	}
 }

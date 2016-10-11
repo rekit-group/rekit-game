@@ -10,18 +10,6 @@ import edu.kit.informatik.ragnarok.primitives.operable.Operable;
  */
 
 public final class Vec implements Cloneable, Operable<Vec> {
-	/**
-	 * Create a new Vector
-	 *
-	 * @param x
-	 *            posX
-	 * @param y
-	 *            posY
-	 * @return the vector
-	 */
-	public static Vec create(float x, float y) {
-		return new Vec(x, y);
-	}
 
 	/**
 	 * The x-component of the vector
@@ -61,6 +49,20 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	 *            the initial y-component of the vector
 	 */
 	public Vec(float x, float y) {
+		this.x = x;
+		this.y = y;
+		this.z = 1;
+	}
+
+	/**
+	 * Constructor that takes the initial coordinates an saves them
+	 *
+	 * @param x
+	 *            the initial x-component of the vector
+	 * @param y
+	 *            the initial y-component of the vector
+	 */
+	public Vec(int x, int y) {
 		this.x = x;
 		this.y = y;
 		this.z = 1;
@@ -218,9 +220,9 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	public Vec sin() {
 		return new Vec((float) Math.sin(this.getX()), (float) Math.sin(this.getY()));
 	}
-	
+
 	public float getAngleTo(Vec other) {
-		return (float)Math.atan2(other.x - this.x, other.y - this.y);
+		return (float) Math.atan2(other.x - this.x, other.y - this.y);
 	}
 
 	public Vec rotate(double angle, Vec relative) {

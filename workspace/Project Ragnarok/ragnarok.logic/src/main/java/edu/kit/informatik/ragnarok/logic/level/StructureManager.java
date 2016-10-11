@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
-import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.core.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElementFactory;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
@@ -37,7 +37,8 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
  * </p>
  *
  * @author Angelo Aracri
- * @version 1.0
+ * @author Dominik Fuchß
+ * @version 1.1
  */
 public class StructureManager extends Configurable implements Iterator<Structure> {
 
@@ -394,7 +395,9 @@ public class StructureManager extends Configurable implements Iterator<Structure
 	}
 
 	public void setAlias(String toReplace, String replaceWith) {
-		this.alias.put(toReplace, replaceWith);
+		if (this.alias.put(toReplace, replaceWith) != null) {
+			System.err.println("WARNING: Multiple definitions (alias) for " + toReplace);
+		}
 
 	}
 

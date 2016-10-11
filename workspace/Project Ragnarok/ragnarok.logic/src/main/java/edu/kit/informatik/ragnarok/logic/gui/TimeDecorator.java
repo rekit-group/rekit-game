@@ -1,7 +1,8 @@
 package edu.kit.informatik.ragnarok.logic.gui;
 
-import edu.kit.informatik.ragnarok.logic.Field;
-import edu.kit.informatik.ragnarok.logic.scene.Scene;
+import edu.kit.informatik.ragnarok.core.Field;
+import edu.kit.informatik.ragnarok.core.GuiElement;
+import edu.kit.informatik.ragnarok.core.IScene;
 import edu.kit.informatik.ragnarok.primitives.time.Timer;
 
 /**
@@ -22,7 +23,7 @@ public class TimeDecorator extends GuiElement {
 
 	/**
 	 * Create a TimeDecorator
-	 * 
+	 *
 	 * @param scene
 	 *            the scene
 	 * @param element
@@ -30,7 +31,7 @@ public class TimeDecorator extends GuiElement {
 	 * @param timer
 	 *            the timer
 	 */
-	public TimeDecorator(Scene scene, GuiElement element, Timer timer) {
+	public TimeDecorator(IScene scene, GuiElement element, Timer timer) {
 		super(scene);
 		this.element = element;
 		this.timer = timer;
@@ -49,7 +50,8 @@ public class TimeDecorator extends GuiElement {
 
 	@Override
 	public void internalRender(Field f) {
-		this.element.internalRender(f);
+		// TODO Internal render not accessible
+		this.element.render(f);
 	}
 
 }

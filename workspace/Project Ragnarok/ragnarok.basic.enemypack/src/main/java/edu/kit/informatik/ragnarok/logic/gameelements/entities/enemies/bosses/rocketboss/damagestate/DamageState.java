@@ -1,7 +1,7 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.bosses.rocketboss.damagestate;
 
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.bosses.rocketboss.RocketBoss;
-import edu.kit.informatik.ragnarok.logic.state.State;
+import edu.kit.informatik.ragnarok.util.state.State;
 
 public abstract class DamageState extends State {
 

@@ -1,6 +1,6 @@
 package edu.kit.informatik.ragnarok.logic.gui.menu;
 
-import edu.kit.informatik.ragnarok.logic.scene.Scene;
+import edu.kit.informatik.ragnarok.core.IScene;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 
 /**
@@ -10,7 +10,7 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
  */
 public class MenuList extends SubMenu {
 
-	public MenuList(Scene scene, String text) {
+	public MenuList(IScene scene, String text) {
 		super(scene, text);
 		this.setItemSize(new Vec(400, 100));
 	}

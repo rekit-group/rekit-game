@@ -7,13 +7,13 @@ import java.util.Map;
 import java.util.PriorityQueue;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
+import edu.kit.informatik.ragnarok.core.CameraTarget;
+import edu.kit.informatik.ragnarok.core.GameElement;
+import edu.kit.informatik.ragnarok.core.GuiElement;
+import edu.kit.informatik.ragnarok.core.IScene;
+import edu.kit.informatik.ragnarok.core.Team;
 import edu.kit.informatik.ragnarok.logic.GameModel;
-import edu.kit.informatik.ragnarok.logic.PriorityQueueIterator;
-import edu.kit.informatik.ragnarok.logic.Scenes;
-import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.CameraTarget;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
-import edu.kit.informatik.ragnarok.logic.gui.GuiElement;
+import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 
 /**
  * Based on the concept of scenes in Unity. </br>
@@ -28,14 +28,18 @@ import edu.kit.informatik.ragnarok.logic.gui.GuiElement;
  * {@code public static Scene create(GameModel, String[])}, for the GameModel to
  * be able to start that Scene.</br>
  * For Scene switching take a look at
- * {@link GameModel#switchScene(Scenes, String[])}
- *
+ * {@link GameModel#switchScene(Scenes, String[])} <br>
+ * <br>
+ * <b>IMPORTANT:</b> all {@link Scene Scenes} must provide a static method <br>
+ * <b><em>public static Scene create(GameModel model, String[]
+ * options)</em></b><br>
+ * so that {@link Scenes#getNewScene(GameModel, String[])} can work
  *
  * @author Matthias Schmitt
  *
  * @version 1.0
  */
-public abstract class Scene implements CameraTarget {
+abstract class Scene implements CameraTarget, IScene {
 
 	/**
 	 * Synchronization Object that is used as a lock variable for blocking
@@ -43,7 +47,7 @@ public abstract class Scene implements CameraTarget {
 	 */
 	private final Object sync = new Object();
 
-	protected GameModel model;
+	private GameModel model;
 
 	private PriorityQueue<GuiElement> guiElements;
 
@@ -61,10 +65,7 @@ public abstract class Scene implements CameraTarget {
 		this.model = model;
 	}
 
-	/**
-	 * Initialize the scene. e.g. build Level/GUI so Scene is ready to be drawn
-	 * Must be called on restart.
-	 */
+	@Override
 	public void init() {
 		this.guiElements = new PriorityQueue<>();
 		this.gameElements = new PriorityQueue<>();
@@ -72,12 +73,7 @@ public abstract class Scene implements CameraTarget {
 		this.gameElementRemoveQueue = new ArrayList<>();
 	}
 
-	/**
-	 * Start the scene. Begin drawing and Player/Enemies will begin to move.
-	 */
-	public void start() {
-	}
-
+	@Override
 	public void togglePause() {
 		this.paused = !this.paused;
 	}
@@ -86,18 +82,12 @@ public abstract class Scene implements CameraTarget {
 		return this.paused;
 	}
 
+	@Override
 	public void end(boolean won) {
 		this.model.switchScene(Scenes.MENU);
 	}
 
-	public void stop() {
-	}
-
-	public void restart() {
-		this.init();
-		this.start();
-	}
-
+	@Override
 	public void logicLoop(float timeDelta) {
 
 		this.logicLoopPre(timeDelta);
@@ -142,7 +132,8 @@ public abstract class Scene implements CameraTarget {
 		GameElement e = it.next();
 
 		// if this GameElement is marked for destruction
-		if (e.getDeleteMe()) {
+		// TODO This is a bugfix for inanimates which wont be deleted upon time
+		if (e.getDeleteMe() || (e.getTeam() == Team.INANIMATE && this.getModel().getCameraOffset() - 20 > e.getPos().getX())) {
 			it.remove();
 		}
 
@@ -177,6 +168,7 @@ public abstract class Scene implements CameraTarget {
 	 * @param element
 	 *            the GameElement to add
 	 */
+	@Override
 	public void addGameElement(GameElement element) {
 		// Put GameElement in waiting list
 		synchronized (this.synchronize()) {
@@ -210,6 +202,7 @@ public abstract class Scene implements CameraTarget {
 	 * @param element
 	 *            the GameElement to remove
 	 */
+	@Override
 	public void removeGameElement(GameElement element) {
 		synchronized (this.synchronize()) {
 			this.gameElementRemoveQueue.add(element);
@@ -231,10 +224,12 @@ public abstract class Scene implements CameraTarget {
 		}
 	}
 
+	@Override
 	public Iterator<GameElement> getOrderedGameElementIterator() {
 		return new PriorityQueueIterator<>(this.gameElements);
 	}
 
+	@Override
 	public Iterator<GameElement> getGameElementIterator() {
 		return this.gameElements.iterator();
 	}
@@ -245,14 +240,17 @@ public abstract class Scene implements CameraTarget {
 	 * @param e
 	 *            the GuiElement to add
 	 */
+	@Override
 	public void addGuiElement(GuiElement e) {
 		this.guiElements.add(e);
 	}
 
+	@Override
 	public void removeGuiElement(GuiElement e) {
 		this.guiElements.remove(e);
 	}
 
+	@Override
 	public Iterator<GuiElement> getGuiElementIterator() {
 		return this.guiElements.iterator();
 	}
@@ -262,26 +260,32 @@ public abstract class Scene implements CameraTarget {
 		return 0;
 	}
 
+	@Override
 	public void setCameraTarget(CameraTarget cameraTarget) {
 
 	}
 
+	@Override
 	public int getGameElementCount() {
 		return this.gameElements.size();
 	}
 
+	@Override
 	public Object synchronize() {
 		return this.sync;
 	}
 
-	public Player getPlayer() {
+	@Override
+	public Entity getPlayer() {
 		return null;
 	}
 
+	@Override
 	public long getTime() {
 		return 0;
 	}
 
+	@Override
 	public Map<Class<?>, Long> getGameElementDurations() {
 		// Reset debug info
 		Map<Class<?>, Long> ret = this.gameElementDurations;
@@ -289,4 +293,8 @@ public abstract class Scene implements CameraTarget {
 		return ret;
 	}
 
+	@Override
+	public final GameModel getModel() {
+		return this.model;
+	}
 }

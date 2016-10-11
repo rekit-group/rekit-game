@@ -2,9 +2,7 @@ package edu.kit.informatik.ragnarok.primitives.image;
 
 import java.util.Set;
 
-import edu.kit.informatik.ragnarok.primitives.image.AbstractImage;
-import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
-import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
+import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.util.ReflectUtils;
 
 public interface Filter {
@@ -15,7 +13,7 @@ public interface Filter {
 	 * @return the set of all filters
 	 */
 	static Set<Filter> getAllFilters() {
-		return ReflectUtils.loadInstances("edu.kit.informatik", Filter.class);
+		return ReflectUtils.loadInstances(GameConf.SEARCH_PATH, Filter.class);
 	}
 
 	/**
@@ -24,7 +22,7 @@ public interface Filter {
 	 *
 	 * @return {@code true} if {@link #apply(RGBAColor)} and
 	 *         {@link #apply(RGBColor)} shall be used,<br>
-	 * 		{@code false} otherwise ({@link #apply(AbstractImage)})
+	 *         {@code false} otherwise ({@link #apply(AbstractImage)})
 	 */
 	boolean isApplyPixel();
 

@@ -1,10 +1,11 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
-import edu.kit.informatik.ragnarok.logic.Field;
-import edu.kit.informatik.ragnarok.logic.gameelements.Team;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawner;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
+import edu.kit.informatik.ragnarok.core.CameraTarget;
+import edu.kit.informatik.ragnarok.core.Field;
+import edu.kit.informatik.ragnarok.core.Team;
+import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawner;
+import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawnerOption;
 import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
 import edu.kit.informatik.ragnarok.primitives.geometry.Frame;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
@@ -108,12 +109,12 @@ public final class Player extends Entity implements CameraTarget {
 	/**
 	 * Reset current camera offset
 	 */
-	public void resetCameraOffset() {
+	public final void resetCameraOffset() {
 		this.currentCameraOffset = 0;
 	}
 
 	@Override
-	public float getCameraOffset() {
+	public final float getCameraOffset() {
 		// get maximum player x and adjust level offset
 		float offsetNow = this.getPos().getX() - GameConf.PLAYER_CAMERA_OFFSET;
 		if (offsetNow > this.currentCameraOffset) {

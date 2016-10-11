@@ -63,7 +63,7 @@ class StringParser extends LevelParser {
 		if (this.isToken(TokenType.BEGIN)) {
 			this.parseLevel(manager);
 		}
-		if (!this.isToken(TokenType.EOS)) {
+		if (this.isToken(TokenType.ALIAS, TokenType.SETTING, TokenType.BOSS_SETTING, TokenType.BEGIN)) {
 			this.parseStructure(manager);
 		}
 	}
@@ -124,14 +124,20 @@ class StringParser extends LevelParser {
 	}
 
 	/**
-	 * Checks if is token.
+	 * Checks if is token of one of the types.
 	 *
-	 * @param type
-	 *            the type
+	 * @param types
+	 *            the types
 	 * @return true, if is token
 	 */
-	private boolean isToken(TokenType type) {
-		return this.lookAhead.getType() == type;
+	private boolean isToken(TokenType... types) {
+		TokenType type = this.lookAhead.getType();
+		for (TokenType t : types) {
+			if (type == t) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**

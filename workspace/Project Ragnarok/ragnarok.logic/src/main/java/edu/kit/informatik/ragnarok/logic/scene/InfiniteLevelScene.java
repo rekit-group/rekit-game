@@ -3,7 +3,7 @@ package edu.kit.informatik.ragnarok.logic.scene;
 import edu.kit.informatik.ragnarok.logic.GameModel;
 import edu.kit.informatik.ragnarok.logic.level.LevelManager;
 
-public class InfiniteLevelScene extends LevelScene {
+class InfiniteLevelScene extends LevelScene {
 
 	public InfiniteLevelScene(GameModel model) {
 		super(model, LevelManager.getInfiniteLevel());

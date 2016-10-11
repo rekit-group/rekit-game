@@ -3,8 +3,8 @@ package edu.kit.informatik.ragnarok.logic.gameelements.type;
 import java.util.Set;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
-import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
-import edu.kit.informatik.ragnarok.logic.gameelements.Team;
+import edu.kit.informatik.ragnarok.core.GameElement;
+import edu.kit.informatik.ragnarok.core.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
 import edu.kit.informatik.ragnarok.logic.level.bossstructure.BossStructure;
@@ -18,7 +18,7 @@ public abstract class Boss extends Entity {
 	protected boolean isHarmless = false;
 
 	public static final Set<Boss> getBossPrototypes() {
-		return ReflectUtils.loadInstances("edu.kit.informatik", Boss.class);
+		return ReflectUtils.loadInstances(GameConf.SEARCH_PATH, Boss.class);
 	}
 
 	protected Boss() {
@@ -54,7 +54,7 @@ public abstract class Boss extends Entity {
 	/**
 	 * Get initial position of the {@link Boss} relative to the
 	 * {@link BossStructure BossStructures} top left corner.
-	 * 
+	 *
 	 * @return the relative start position of the {@link Boss}.
 	 */
 	public Vec getStartPos() {

@@ -1,6 +1,6 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities.state;
 
-import edu.kit.informatik.ragnarok.logic.gameelements.Team;
+import edu.kit.informatik.ragnarok.core.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 
 /**
@@ -14,7 +14,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 public class NotInitializedState extends EntityState {
 	/**
 	 * Create the State
-	 * 
+	 *
 	 * @param entity
 	 *            the entity
 	 */

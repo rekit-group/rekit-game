@@ -1,7 +1,7 @@
 package edu.kit.informatik.ragnarok.logic.level;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
-import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.core.GameElement;
 
 /**
  * <p>

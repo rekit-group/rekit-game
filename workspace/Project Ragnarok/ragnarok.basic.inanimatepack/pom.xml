@@ -12,6 +12,10 @@
 			<groupId>edu.kit.informatik</groupId>
 			<artifactId>ragnarok.logic</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>edu.kit.informatik</groupId>
+			<artifactId>ragnarok.filters</artifactId>
+		</dependency>
 	</dependencies>
 	<name>Basic - InanimatePack</name>
 	<description>This pack includes a set of Inanimates</description>

@@ -1,6 +1,6 @@
 package edu.kit.informatik.ragnarok.logic.gui.menu;
 
-import edu.kit.informatik.ragnarok.logic.scene.Scene;
+import edu.kit.informatik.ragnarok.core.IScene;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 
 /**
@@ -29,7 +29,7 @@ public class MenuGrid extends SubMenu {
 	 * @param colCount
 	 *            the column count
 	 */
-	public MenuGrid(Scene scene, String text, int colCount) {
+	public MenuGrid(IScene scene, String text, int colCount) {
 		super(scene, text);
 		this.colCount = colCount;
 		this.setItemSize(new Vec(100));

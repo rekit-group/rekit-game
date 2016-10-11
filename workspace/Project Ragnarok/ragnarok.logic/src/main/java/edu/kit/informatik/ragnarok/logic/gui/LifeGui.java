@@ -1,8 +1,8 @@
 package edu.kit.informatik.ragnarok.logic.gui;
 
-import edu.kit.informatik.ragnarok.logic.Field;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
-import edu.kit.informatik.ragnarok.logic.scene.Scene;
+import edu.kit.informatik.ragnarok.core.Field;
+import edu.kit.informatik.ragnarok.core.GuiElement;
+import edu.kit.informatik.ragnarok.core.IScene;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 
 /**
@@ -27,11 +27,11 @@ public class LifeGui extends GuiElement {
 
 	/**
 	 * Create the status view for lives
-	 * 
+	 *
 	 * @param scene
 	 *            the scene
 	 */
-	public LifeGui(Scene scene) {
+	public LifeGui(IScene scene) {
 		super(scene);
 	}
 

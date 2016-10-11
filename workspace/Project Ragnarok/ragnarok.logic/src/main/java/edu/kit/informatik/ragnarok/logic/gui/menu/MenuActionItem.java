@@ -1,6 +1,6 @@
 package edu.kit.informatik.ragnarok.logic.gui.menu;
 
-import edu.kit.informatik.ragnarok.logic.scene.Scene;
+import edu.kit.informatik.ragnarok.core.IScene;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 
 /**
@@ -24,7 +24,7 @@ public class MenuActionItem extends MenuItem {
 	 * @param selectAction
 	 *            the action
 	 */
-	public MenuActionItem(Scene scene, String text, Runnable selectAction) {
+	public MenuActionItem(IScene scene, String text, Runnable selectAction) {
 		super(scene, text);
 		this.selectAction = selectAction;
 	}
@@ -41,7 +41,7 @@ public class MenuActionItem extends MenuItem {
 	 * @param selectAction
 	 *            the action
 	 */
-	public MenuActionItem(Scene scene, Vec size, String text, Runnable selectAction) {
+	public MenuActionItem(IScene scene, Vec size, String text, Runnable selectAction) {
 		this(scene, text, selectAction);
 		this.size = size;
 	}

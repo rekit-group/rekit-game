@@ -13,7 +13,7 @@ import org.eclipse.swt.graphics.RGBA;
 import org.eclipse.swt.widgets.Display;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
-import edu.kit.informatik.ragnarok.logic.Field;
+import edu.kit.informatik.ragnarok.core.Field;
 import edu.kit.informatik.ragnarok.primitives.geometry.Polygon;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.Filter;
@@ -30,7 +30,7 @@ import edu.kit.informatik.ragnarok.util.TextOptions;
  * @author Dominik Fuchß
  *
  */
-public class FieldImpl extends Field {
+class FieldImpl extends Field {
 	/**
 	 * The GC
 	 */
@@ -168,7 +168,7 @@ public class FieldImpl extends Field {
 	 * @param gc
 	 *            the gc
 	 */
-	public void setGC(GC gc) {
+	void setGC(GC gc) {
 		this.gc = gc;
 	}
 
@@ -186,7 +186,7 @@ public class FieldImpl extends Field {
 		return vec3D;
 	}
 
-	public void setFilter(Filter filter) {
+	void setFilter(Filter filter) {
 		if (filter == null || !filter.isApplyPixel()) {
 			this.filter = null;
 		} else {

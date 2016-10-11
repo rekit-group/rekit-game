@@ -12,9 +12,9 @@ public interface Command {
 	/**
 	 * Execute the command
 	 *
-	 * @param inputMethod
-	 *            the key state
+	 * @param params
+	 *            the parameters
 	 */
-	void execute(InputMethod inputMethod);
+	void execute(Object... params);
 
 }

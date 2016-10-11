@@ -41,7 +41,7 @@ public final class Tuple<T, U> {
 	 * @param u
 	 *            the second entry
 	 */
-	public Tuple(T t, U u) {
+	private Tuple(T t, U u) {
 		this.t = t;
 		this.u = u;
 	}

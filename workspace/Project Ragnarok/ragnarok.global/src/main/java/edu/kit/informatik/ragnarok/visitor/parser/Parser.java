@@ -2,9 +2,9 @@ package edu.kit.informatik.ragnarok.visitor.parser;
 
 import java.lang.reflect.Field;
 
-import edu.kit.informatik.ragnarok.visitor.VisitInfo;
 import edu.kit.informatik.ragnarok.visitor.Visitable;
 import edu.kit.informatik.ragnarok.visitor.Visitor;
+import edu.kit.informatik.ragnarok.visitor.annotations.VisitInfo;
 
 /**
  * This interface defines a parser which will be used for parsing a String to a
@@ -17,9 +17,10 @@ import edu.kit.informatik.ragnarok.visitor.Visitor;
 public interface Parser {
 	/**
 	 * Parse the definition to the specific class
-	 * 
+	 *
 	 * @param obj
-	 *            the Visitable Object
+	 *            the Visitable Object or {@code null} if static visit (class
+	 *            visit)
 	 * @param field
 	 *            the current field
 	 * @param definition
@@ -35,4 +36,11 @@ public interface Parser {
 		}
 		return true;
 	}
+
+	/**
+	 * Create a new Parser of this type
+	 * 
+	 * @return the new parser
+	 */
+	Parser create();
 }

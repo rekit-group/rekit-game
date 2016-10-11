@@ -1,10 +1,13 @@
 package edu.kit.informatik.ragnarok;
 
+import java.util.Set;
+
+import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.controller.Controller;
 import edu.kit.informatik.ragnarok.gui.View;
 import edu.kit.informatik.ragnarok.logic.Model;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOptionParser;
+import edu.kit.informatik.ragnarok.util.ReflectUtils;
+import edu.kit.informatik.ragnarok.visitor.Visitable;
 import edu.kit.informatik.ragnarok.visitor.Visitor;
 
 /**
@@ -15,7 +18,12 @@ import edu.kit.informatik.ragnarok.visitor.Visitor;
  * @author Dominik Fuchß
  * @version 1.0
  */
-public class Main {
+public final class Main {
+	/**
+	 * Prevent instantiation
+	 */
+	private Main() {
+	}
 
 	/**
 	 * Launches the application by starting the game
@@ -25,7 +33,7 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		// Load All Configs
-		Main.loadConfigs();
+		Main.visitAllStatic();
 		// Create MVC
 		// Set References:
 		// V----> M <----C
@@ -43,11 +51,22 @@ public class Main {
 	}
 
 	/**
-	 * Load all configs
+	 * Visit all Classes which shall be visited
 	 */
-	private static void loadConfigs() {
-		Visitor visitor = Visitor.getNewVisitor();
-		visitor.setParser(ParticleSpawnerOption.class, new ParticleSpawnerOptionParser());
-		Visitor.visitAllStatic(visitor);
+	private static final void visitAllStatic() {
+		Main.visitAllStatic(Visitor.getNewVisitor());
+	}
+
+	/**
+	 * Visit all Classes which shall be visited
+	 *
+	 * @param visitor
+	 *            the visitor
+	 */
+	private static final void visitAllStatic(Visitor visitor) {
+		Set<Class<? extends Visitable>> toVisit = ReflectUtils.getClasses(GameConf.SEARCH_PATH, Visitable.class);
+		for (Class<? extends Visitable> v : toVisit) {
+			visitor.visit(v);
+		}
 	}
 }

@@ -1,14 +1,13 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
-import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
-import edu.kit.informatik.ragnarok.logic.gameelements.Team;
+import edu.kit.informatik.ragnarok.core.GameElement;
+import edu.kit.informatik.ragnarok.core.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.state.DefaultState;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.state.EntityState;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.state.NotInitializedState;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Enemy;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Pickup;
-import edu.kit.informatik.ragnarok.logic.scene.LevelScene;
 import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
 import edu.kit.informatik.ragnarok.primitives.geometry.Frame;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
@@ -230,16 +229,6 @@ public abstract class Entity extends GameElement {
 			return (int) (this.invincibility.getProgress() * 20) % 2 == 0;
 		}
 		return super.isVisible();
-	}
-
-	/**
-	 * Set the Entity's LevelScene
-	 *
-	 * @param value
-	 *            the levelscene
-	 */
-	public void setLevelScene(LevelScene value) {
-		super.setScene(value);
 	}
 
 }

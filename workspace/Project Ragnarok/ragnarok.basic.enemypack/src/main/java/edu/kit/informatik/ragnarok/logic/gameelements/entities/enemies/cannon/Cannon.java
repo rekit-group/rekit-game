@@ -1,25 +1,27 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon;
 
-import edu.kit.informatik.ragnarok.logic.Field;
-import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
+import edu.kit.informatik.ragnarok.core.Field;
+import edu.kit.informatik.ragnarok.core.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.state.AimingState;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.state.CannonState;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.state.ChargingState;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.state.IdleState;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.state.ShootingState;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.Particle;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
+import edu.kit.informatik.ragnarok.logic.gameelements.particles.Particle;
+import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawnerOption;
+import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawnerOptionParser;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Enemy;
 import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
 import edu.kit.informatik.ragnarok.primitives.geometry.Polygon;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
-import edu.kit.informatik.ragnarok.visitor.NoVisit;
-import edu.kit.informatik.ragnarok.visitor.VisitInfo;
 import edu.kit.informatik.ragnarok.visitor.Visitable;
+import edu.kit.informatik.ragnarok.visitor.annotations.AdditionalParsers;
+import edu.kit.informatik.ragnarok.visitor.annotations.NoVisit;
+import edu.kit.informatik.ragnarok.visitor.annotations.VisitInfo;
 
 /**
  * <p>
@@ -45,11 +47,12 @@ import edu.kit.informatik.ragnarok.visitor.Visitable;
  * {@link CannonState CannonStates} to implement the phase-like behavior as
  * described above.
  * </p>
- * 
+ *
  * @author Angelo Aracri
  */
 @LoadMe
 @VisitInfo(res = "conf/cannon", visit = true)
+@AdditionalParsers(parsers = { ParticleSpawnerOptionParser.class }, types = { ParticleSpawnerOption.class })
 public class Cannon extends Enemy implements Visitable {
 
 	/**
@@ -151,19 +154,22 @@ public class Cannon extends Enemy implements Visitable {
 
 	@NoVisit
 	/**
-	 * The inner, decorated {@link CannonStateMachine} that implements the phase-like behavior.
+	 * The inner, decorated {@link CannonStateMachine} that implements the
+	 * phase-like behavior.
 	 */
 	private CannonStateMachine innerStateMachine;
 
 	@NoVisit
 	/**
-	 * The angle in radians the {@link Cannon Cannons} pipe currently aims at, where 0 is down.
+	 * The angle in radians the {@link Cannon Cannons} pipe currently aims at,
+	 * where 0 is down.
 	 */
 	private float currentAngle;
 
 	@NoVisit
 	/**
-	 * The {@link Polygon} that will be used for rendering the {@link Cannon Cannons} pipe.
+	 * The {@link Polygon} that will be used for rendering the {@link Cannon
+	 * Cannons} pipe.
 	 */
 	private Polygon pipePolygon;
 
@@ -183,21 +189,21 @@ public class Cannon extends Enemy implements Visitable {
 	/**
 	 * Main constructor that instantiates the inner {@link CannonStateMachine}
 	 * and the {@link Polygon}.
-	 * 
+	 *
 	 * @param pos
 	 *            the position of the {@link Cannon}.
 	 */
 	public Cannon(Vec pos, Direction attachedSide) {
-		super(pos.addY(-0.5f + SIZE.getY() / 2f), new Vec(), SIZE);
+		super(pos.addY(-0.5f + Cannon.SIZE.getY() / 2f), new Vec(), Cannon.SIZE);
 
 		this.innerStateMachine = new CannonStateMachine(this, new IdleState());
 
-		this.currentAngle = innerStateMachine.getState().getTargetAngle();
+		this.currentAngle = this.innerStateMachine.getState().getTargetAngle();
 
 		this.attachedSide = attachedSide;
 
-		this.pipePolygon = new Polygon(new Vec(), new Vec[] { new Vec(PIPE_W / 2, 0), new Vec(PIPE_W / 2, PIPE_H), new Vec(-PIPE_W / 2, PIPE_H),
-				new Vec(-PIPE_W / 2, 0), new Vec(0, 0) });
+		this.pipePolygon = new Polygon(new Vec(), new Vec[] { new Vec(Cannon.PIPE_W / 2, 0), new Vec(Cannon.PIPE_W / 2, Cannon.PIPE_H),
+				new Vec(-Cannon.PIPE_W / 2, Cannon.PIPE_H), new Vec(-Cannon.PIPE_W / 2, 0), new Vec(0, 0) });
 	}
 
 	@Override
@@ -214,11 +220,11 @@ public class Cannon extends Enemy implements Visitable {
 	public void internalRender(Field f) {
 
 		// draw cannon base
-		f.drawCircle(this.getPos(), this.getSize(), COLOR_BASE);
+		f.drawCircle(this.getPos(), this.getSize(), Cannon.COLOR_BASE);
 
 		Vec size;
 		Vec pos;
-		switch (attachedSide) {
+		switch (this.attachedSide) {
 		case UP:
 			pos = this.getPos().addY(-this.getSize().getY() / 4f);
 			size = this.getSize().scalar(1, 0.5f);
@@ -239,13 +245,13 @@ public class Cannon extends Enemy implements Visitable {
 			pos = new Vec();
 			size = new Vec();
 		}
-		f.drawRectangle(pos, size, COLOR_BASE);
+		f.drawRectangle(pos, size, Cannon.COLOR_BASE);
 
 		// draw rotated cannon with (optional) shaking
 		Vec cannonPos = this.getPos().addX(this.innerStateMachine.getState().getCannonShake());
-		f.drawCircle(cannonPos, this.getSize().scalar(JOINT_RATIO), COLOR_CANNON);
+		f.drawCircle(cannonPos, this.getSize().scalar(Cannon.JOINT_RATIO), Cannon.COLOR_CANNON);
 		this.pipePolygon.moveTo(cannonPos);
-		f.drawPolygon(this.pipePolygon.rotate(-this.currentAngle, this.getPos()), COLOR_CANNON, true);
+		f.drawPolygon(this.pipePolygon.rotate(-this.currentAngle, this.getPos()), Cannon.COLOR_CANNON, true);
 	}
 
 	@Override
@@ -253,16 +259,16 @@ public class Cannon extends Enemy implements Visitable {
 		this.innerStateMachine.logicLoop(deltaTime);
 
 		// move angle in right direction
-		this.currentAngle += Math.signum(this.innerStateMachine.getState().getTargetAngle() - this.currentAngle) * deltaTime * ANGLE_SPEED;
+		this.currentAngle += Math.signum(this.innerStateMachine.getState().getTargetAngle() - this.currentAngle) * deltaTime * Cannon.ANGLE_SPEED;
 
-		if (Math.abs(this.innerStateMachine.getState().getTargetAngle() - this.currentAngle) < ANGLE_SPEED / 20) {
+		if (Math.abs(this.innerStateMachine.getState().getTargetAngle() - this.currentAngle) < Cannon.ANGLE_SPEED / 20) {
 			this.currentAngle = this.innerStateMachine.getState().getTargetAngle();
 		}
 	}
 
 	/**
 	 * Getter for the inner, decorated {@link CannonStateMachine}.
-	 * 
+	 *
 	 * @return the inner {@link CannonStateMachine}.
 	 */
 	public CannonStateMachine getInnerStateMachine() {
@@ -272,9 +278,9 @@ public class Cannon extends Enemy implements Visitable {
 	/**
 	 * Signal that one of the {@link Particle Particles} collided with something
 	 * and the laser should stop. Is only used while in the {@ShootingState
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
 	 * }.
 	 */
 	public void hitSomething() {

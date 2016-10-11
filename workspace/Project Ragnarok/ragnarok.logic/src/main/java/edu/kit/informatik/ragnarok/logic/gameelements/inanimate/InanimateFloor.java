@@ -1,11 +1,11 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.inanimate;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
-import edu.kit.informatik.ragnarok.logic.Field;
-import edu.kit.informatik.ragnarok.logic.gameelements.GameElement;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.Particle;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawner;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.particles.ParticleSpawnerOption;
+import edu.kit.informatik.ragnarok.core.Field;
+import edu.kit.informatik.ragnarok.core.GameElement;
+import edu.kit.informatik.ragnarok.logic.gameelements.particles.Particle;
+import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawner;
+import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawnerOption;
 import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
@@ -15,7 +15,7 @@ import edu.kit.informatik.ragnarok.primitives.operable.OpProgress;
  * The standard Inanimate that will be used for the lowest height in the level.
  * By mechanics, it does not differ from the {@link InanimateBox} but is instead
  * designed to resemble grass.
- * 
+ *
  * @author Angelo Aracri
  */
 public class InanimateFloor extends Inanimate {
@@ -81,37 +81,37 @@ public class InanimateFloor extends Inanimate {
 
 		// define position range for blocks layers
 		float size = 1;
-		Vec startVec = new Vec(0, -size / 2 + (size / 2) / LAYERS);
-		Vec endVec = new Vec(0, size / 2 - (size / 2) / LAYERS);
+		Vec startVec = new Vec(0, -size / 2 + (size / 2) / InanimateFloor.LAYERS);
+		Vec endVec = new Vec(0, size / 2 - (size / 2) / InanimateFloor.LAYERS);
 
 		// create Progresses from ranges.
 		OpProgress<RGBColor> progCols = new OpProgress<>(startCol, endCol);
 		OpProgress<Vec> progVecs = new OpProgress<>(startVec, endVec);
 
 		// fill arrays for each layer
-		layerCols = new RGBColor[LAYERS];
-		layerVecs = new Vec[LAYERS];
-		for (int i = 0; i < LAYERS; i++) {
-			float prog = i / (float) (LAYERS - 1);
-			layerCols[i] = progCols.getNow(prog);
-			layerVecs[i] = progVecs.getNow(prog);
+		InanimateFloor.layerCols = new RGBColor[InanimateFloor.LAYERS];
+		InanimateFloor.layerVecs = new Vec[InanimateFloor.LAYERS];
+		for (int i = 0; i < InanimateFloor.LAYERS; i++) {
+			float prog = i / (float) (InanimateFloor.LAYERS - 1);
+			InanimateFloor.layerCols[i] = progCols.getNow(prog);
+			InanimateFloor.layerVecs[i] = progVecs.getNow(prog);
 		}
 
 		// prepare particles
-		dustParticles = new ParticleSpawner();
-		dustParticles.colorR = new ParticleSpawnerOption(layerCols[0].red);
-		dustParticles.colorG = new ParticleSpawnerOption(layerCols[0].green);
-		dustParticles.colorB = new ParticleSpawnerOption(layerCols[0].blue);
-		dustParticles.colorA = new ParticleSpawnerOption(255);
+		InanimateFloor.dustParticles = new ParticleSpawner();
+		InanimateFloor.dustParticles.colorR = new ParticleSpawnerOption(InanimateFloor.layerCols[0].red);
+		InanimateFloor.dustParticles.colorG = new ParticleSpawnerOption(InanimateFloor.layerCols[0].green);
+		InanimateFloor.dustParticles.colorB = new ParticleSpawnerOption(InanimateFloor.layerCols[0].blue);
+		InanimateFloor.dustParticles.colorA = new ParticleSpawnerOption(255);
 		dustParticleAngleLeft = new ParticleSpawnerOption((float) ((7 / 4f) * Math.PI), (float) ((5 / 4f) * Math.PI), -(float) ((1 / 4f) * Math.PI),
 				0);
 		dustParticleAngleRight = new ParticleSpawnerOption((float) ((1 / 4f) * Math.PI), (float) ((3 / 4f) * Math.PI), 0,
 				(float) ((1 / 4f) * Math.PI));
 		dustParticleAngleTop = new ParticleSpawnerOption((float) (-(1 / 2f) * Math.PI), (float) ((1 / 2f) * Math.PI), 0, 0);
-		dustParticles.amountMin = 8;
-		dustParticles.amountMax = 15;
+		InanimateFloor.dustParticles.amountMin = 8;
+		InanimateFloor.dustParticles.amountMax = 15;
 
-		dustParticles.speed = new ParticleSpawnerOption(2, 3, -1, 1);
+		InanimateFloor.dustParticles.speed = new ParticleSpawnerOption(2, 3, -1, 1);
 	}
 
 	/**
@@ -123,17 +123,17 @@ public class InanimateFloor extends Inanimate {
 	 * Also, it creates the {@link GrassStraw GrassStraws} that will be rendered
 	 * on top of the {@link InanimateFloor}.
 	 * </p>
-	 * 
+	 *
 	 * @param pos
 	 *            the position of the {@link InanimateFloor}.
 	 * @param size
 	 *            the size of the {@link InanimateFloor}.
 	 */
 	protected InanimateFloor(Vec pos, Vec size) {
-		super(pos, size, layerCols[0].toRGBA());
+		super(pos, size, InanimateFloor.layerCols[0].toRGBA());
 
-		this.straws = new GrassStraw[STRAW_NUM];
-		for (int i = 0; i < STRAW_NUM; i++) {
+		this.straws = new GrassStraw[InanimateFloor.STRAW_NUM];
+		for (int i = 0; i < InanimateFloor.STRAW_NUM; i++) {
 			this.straws[i] = new GrassStraw(pos);
 		}
 	}
@@ -151,7 +151,7 @@ public class InanimateFloor extends Inanimate {
 	 * In order to show the {@link GrassStraw} one must call
 	 * {@link #internalRender(Field f)}.
 	 * </p>
-	 * 
+	 *
 	 * @author Angelo Aracri
 	 */
 	public class GrassStraw {
@@ -174,19 +174,19 @@ public class InanimateFloor extends Inanimate {
 		 * Standard constructor that must be supplied with the position of the
 		 * parenting {@link InanimateFloor} and performs all random calculations
 		 * (positioning, size, color).
-		 * 
+		 *
 		 * @param parentPos
 		 *            the position of the parenting {@link InanimateFloor}.
 		 */
 		public GrassStraw(Vec parentPos) {
 			this.pos = parentPos.add(new Vec(GameConf.PRNG.nextFloat() * 0.9f - 0.45f, -0.3f - GameConf.PRNG.nextFloat() * 0.4f));
 			this.size = new Vec(0.06f, 0.3f + GameConf.PRNG.nextFloat() * 0.4f);
-			this.col = layerCols[GameConf.PRNG.nextInt(layerCols.length)];
+			this.col = InanimateFloor.layerCols[GameConf.PRNG.nextInt(InanimateFloor.layerCols.length)];
 		}
 
 		/**
 		 * Render method to display the {@link GrassStraw}.
-		 * 
+		 *
 		 * @param f
 		 *            the {@link Field} to render upon.
 		 */
@@ -198,8 +198,9 @@ public class InanimateFloor extends Inanimate {
 	@Override
 	public void internalRender(Field f) {
 		// Draw rectangles that this Floor is composed of
-		for (int i = 0; i < LAYERS; i++) {
-			f.drawRectangle(this.getPos().add(layerVecs[i]), this.getSize().setY(1 / (float) LAYERS), layerCols[i]);
+		for (int i = 0; i < InanimateFloor.LAYERS; i++) {
+			f.drawRectangle(this.getPos().add(InanimateFloor.layerVecs[i]), this.getSize().setY(1 / (float) InanimateFloor.LAYERS),
+					InanimateFloor.layerCols[i]);
 		}
 		// Draw GrassStraws
 		for (GrassStraw straw : this.straws) {
@@ -211,21 +212,21 @@ public class InanimateFloor extends Inanimate {
 	public void reactToCollision(GameElement element, Direction dir) {
 
 		if (Math.abs(element.getVel().getY()) > 6) {
-			dustParticles.angle = InanimateFloor.dustParticleAngleTop;
-			dustParticles.spawn(this.getScene(), this.getPos().addY(-this.getSize().getY() / 2));
+			InanimateFloor.dustParticles.angle = InanimateFloor.dustParticleAngleTop;
+			InanimateFloor.dustParticles.spawn(this.getScene(), this.getPos().addY(-this.getSize().getY() / 2));
 		}
 		// if strong velocity in x direction
 		else if (Math.abs(element.getVel().getX()) > 5) {
 			// if moving right
 			if (element.getVel().getX() > 0) {
-				dustParticles.angle = InanimateFloor.dustParticleAngleLeft;
+				InanimateFloor.dustParticles.angle = InanimateFloor.dustParticleAngleLeft;
 			} else {
-				dustParticles.angle = InanimateFloor.dustParticleAngleRight;
+				InanimateFloor.dustParticles.angle = InanimateFloor.dustParticleAngleRight;
 			}
 
 			Vec pos = this.getPos().addY(-this.getSize().getY() / 2).setX(element.getPos().getX());
 
-			dustParticles.spawn(this.getScene(), pos);
+			InanimateFloor.dustParticles.spawn(this.getScene(), pos);
 		}
 
 		super.reactToCollision(element, dir);
@@ -234,7 +235,7 @@ public class InanimateFloor extends Inanimate {
 	/**
 	 * Static create method that will be used by {@link Inanimate} for it in
 	 * order to decide between {@link InanimateFloor} and {@link InanimateBox}.
-	 * 
+	 *
 	 * @param pos
 	 *            the position to create the {@link InanimateFloor} to.
 	 * @return the newly created {@link InanimateFloor}.

@@ -1,9 +1,9 @@
 package edu.kit.informatik.ragnarok.logic.gui.menu;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
-import edu.kit.informatik.ragnarok.logic.Field;
-import edu.kit.informatik.ragnarok.logic.gui.GuiElement;
-import edu.kit.informatik.ragnarok.logic.scene.Scene;
+import edu.kit.informatik.ragnarok.core.Field;
+import edu.kit.informatik.ragnarok.core.GuiElement;
+import edu.kit.informatik.ragnarok.core.IScene;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 
 /**
@@ -36,7 +36,7 @@ public abstract class MenuItem extends GuiElement {
 	 * @param text
 	 *            the text (name)
 	 */
-	protected MenuItem(Scene scene, String text) {
+	protected MenuItem(IScene scene, String text) {
 		this(scene, text, new Vec(400, 80));
 		this.setPos(new Vec(GameConf.PIXEL_W / 2f, GameConf.PIXEL_H / 2f));
 	}
@@ -51,7 +51,7 @@ public abstract class MenuItem extends GuiElement {
 	 * @param size
 	 *            the size
 	 */
-	protected MenuItem(Scene scene, String text, Vec size) {
+	protected MenuItem(IScene scene, String text, Vec size) {
 		super(scene, size);
 		this.text = text;
 	}

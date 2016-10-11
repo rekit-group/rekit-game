@@ -1,15 +1,15 @@
 package edu.kit.informatik.ragnarok.logic.gui.menu;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
-import edu.kit.informatik.ragnarok.logic.Field;
-import edu.kit.informatik.ragnarok.logic.scene.Scene;
+import edu.kit.informatik.ragnarok.core.Field;
+import edu.kit.informatik.ragnarok.core.IScene;
 
 public class SettingToggle extends MenuItem {
 
 	private java.lang.reflect.Field setting;
 	private boolean curVal;
 
-	public SettingToggle(Scene scene, String text, String gameConfVal) {
+	public SettingToggle(IScene scene, String text, String gameConfVal) {
 		super(scene, text);
 		try {
 			this.setting = GameConf.class.getDeclaredField(gameConfVal);

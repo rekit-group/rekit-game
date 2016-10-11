@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Set;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
+import edu.kit.informatik.ragnarok.core.GameElement;
+import edu.kit.informatik.ragnarok.core.IScene;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.EndTrigger;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateBox;
@@ -11,42 +13,47 @@ import edu.kit.informatik.ragnarok.logic.gameelements.type.Boss;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.DynamicInanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Enemy;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Pickup;
-import edu.kit.informatik.ragnarok.logic.scene.Scene;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 
-public class GameElementFactory {
-
-	private static Scene scene;
-
-	public static void init(Scene scene) {
-		GameElementFactory.scene = scene;
-		GameElementFactory.load();
+public final class GameElementFactory {
+	/**
+	 * Prevent instantiation
+	 */
+	private GameElementFactory() {
 	}
 
-	private static HashMap<String, GameElement[]> prototypeTypes;
+	// Create connection to scene
+	private static IScene scene;
+	private static boolean loaded = false;
 
-	private static HashMap<String, GameElement> prototypes;
+	public static void setScene(IScene scene) {
+		GameElementFactory.scene = scene;
+		if (!GameElementFactory.loaded) {
+			GameElementFactory.load();
+		}
+	}
+
+	private static HashMap<String, GameElement[]> groups;
+	private static HashMap<String, GameElement> elements;
 
 	public static GameElement getPrototype(String id) {
-		GameElement element = GameElementFactory.prototypes.get(id);
+		// Element
+		GameElement element = GameElementFactory.elements.get(id);
 		if (element != null) {
 			return element;
 		}
-
-		GameElement[] elemArray = GameElementFactory.prototypeTypes.get(id);
-		if (elemArray != null && elemArray.length != 0) {
-			return elemArray[GameConf.PRNG.nextInt(elemArray.length)];
+		// Group
+		GameElement[] group = GameElementFactory.groups.get(id);
+		if (group != null && group.length != 0) {
+			return group[GameConf.PRNG.nextInt(group.length)];
 		}
+
 		System.err.println("Error in GameElementFactory: Tried to get Prototype of GameElement with unknown ID " + id);
-		element = GameElementFactory.prototypes.get(InanimateBox.class.getName());
-		return element;
+		// if none found --> inanimate
+		return GameElementFactory.elements.get(InanimateBox.class.getName());
 	}
 
-	public static void generate(String id, int x, int y) {
-		GameElementFactory.generate(id, x, y, new String[] {});
-	}
-
-	public static void generate(String id, int x, int y, String[] modifiers) {
+	public static void generate(String id, int x, int y, String... modifiers) {
 		GameElement prototype = GameElementFactory.getPrototype(id);
 		if (prototype != null) {
 			// Add enemy to model
@@ -63,51 +70,53 @@ public class GameElementFactory {
 	}
 
 	private final synchronized static void load() {
-		if (GameElementFactory.prototypes != null) {
+		if (GameElementFactory.loaded) {
 			return;
 		}
-		HashMap<String, GameElement> protos = new HashMap<>();
-		HashMap<String, GameElement[]> protoTypes = new HashMap<>();
+		GameElementFactory.loaded = true;
 
+		GameElementFactory.elements = new HashMap<>();
+		GameElementFactory.groups = new HashMap<>();
+
+		GameElementFactory.loadElements();
+		GameElementFactory.loadGroups();
+
+	}
+
+	private static void loadElements() {
 		// Put Blocks in collection
-		protos.put(Inanimate.getPrototype().getClass().getName(), Inanimate.getPrototype());
-		protos.put(EndTrigger.getPrototype().getClass().getName(), EndTrigger.getPrototype());
+		GameElementFactory.elements.put(Inanimate.getPrototype().getClass().getName(), Inanimate.getPrototype());
 
-		// Put all Inanimates in collection
-		Set<DynamicInanimate> inanimatePrototypes = Inanimate.getInanimatePrototypes();
-		for (DynamicInanimate e : inanimatePrototypes) {
-			protos.put(e.getClass().getName(), e);
+		GameElementFactory.elements.put(EndTrigger.getPrototype().getClass().getName(), EndTrigger.getPrototype());
+		for (DynamicInanimate e : DynamicInanimate.getInanimatePrototypes()) {
+			GameElementFactory.elements.put(e.getClass().getName(), e);
 		}
-
-		// Put all Bosses in collection
-		Set<Boss> bossPrototypes = Boss.getBossPrototypes();
-		for (Boss e : bossPrototypes) {
-			protos.put(e.getClass().getName(), e);
+		for (Boss e : Boss.getBossPrototypes()) {
+			GameElementFactory.elements.put(e.getClass().getName(), e);
 		}
+	}
 
+	private static void loadGroups() {
 		// Put Enemies in collection and in separate array
 		Set<Enemy> enemyPrototypes = Enemy.getEnemyPrototypes();
 		Enemy[] enemyCollection = new Enemy[enemyPrototypes.size()];
 		int i = 0;
 		for (Enemy e : enemyPrototypes) {
-			protos.put(e.getClass().getName(), e);
+			GameElementFactory.elements.put(e.getClass().getName(), e);
 			enemyCollection[i++] = e;
 		}
-		protoTypes.put(Enemy.class.getName(), enemyCollection);
+		GameElementFactory.groups.put(Enemy.class.getName(), enemyCollection);
 
 		// Put Pickups in collection and in separate array
 		Set<Pickup> pickupPrototypes = Pickup.getPickupPrototypes();
 		Pickup[] pickupCollection = new Pickup[pickupPrototypes.size()];
 		i = 0;
 		for (Pickup e : pickupPrototypes) {
-			protos.put(e.getClass().getName(), e);
+			GameElementFactory.elements.put(e.getClass().getName(), e);
 			pickupCollection[i++] = e;
 		}
-		protoTypes.put(Pickup.class.getName(), pickupCollection);
+		GameElementFactory.groups.put(Pickup.class.getName(), pickupCollection);
 
-		// Save local data structures in static attributes
-		GameElementFactory.prototypes = protos;
-		GameElementFactory.prototypeTypes = protoTypes;
 	}
 
 	public static void generateCoin(int x, int y) {
@@ -116,6 +125,6 @@ public class GameElementFactory {
 	}
 
 	public static void generateInanimate(int x, int y) {
-		GameElementFactory.generate("edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate", x, y);
+		GameElementFactory.generate(Inanimate.class.getName(), x, y);
 	}
 }

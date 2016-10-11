@@ -3,8 +3,8 @@ package edu.kit.informatik.ragnarok.logic.gui.menu;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.kit.informatik.ragnarok.logic.Field;
-import edu.kit.informatik.ragnarok.logic.scene.Scene;
+import edu.kit.informatik.ragnarok.core.Field;
+import edu.kit.informatik.ragnarok.core.IScene;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 
 /**
@@ -39,7 +39,7 @@ public abstract class SubMenu extends MenuItem {
 	 * @param text
 	 *            the text (name)
 	 */
-	public SubMenu(Scene scene, String text) {
+	public SubMenu(IScene scene, String text) {
 		super(scene, text);
 		this.menuItems = new ArrayList<>();
 	}

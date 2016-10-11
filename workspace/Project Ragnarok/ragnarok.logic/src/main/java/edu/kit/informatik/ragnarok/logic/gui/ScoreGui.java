@@ -1,9 +1,9 @@
 package edu.kit.informatik.ragnarok.logic.gui;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
-import edu.kit.informatik.ragnarok.logic.Field;
-import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
-import edu.kit.informatik.ragnarok.logic.scene.LevelScene;
+import edu.kit.informatik.ragnarok.core.Field;
+import edu.kit.informatik.ragnarok.core.GuiElement;
+import edu.kit.informatik.ragnarok.core.IScene;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.util.TextOptions;
 
@@ -29,11 +29,11 @@ public class ScoreGui extends GuiElement {
 
 	/**
 	 * Create the status view
-	 * 
+	 *
 	 * @param scene
 	 *            the scene
 	 */
-	public ScoreGui(LevelScene scene) {
+	public ScoreGui(IScene scene) {
 		super(scene);
 		this.op = new TextOptions(new Vec(-1, 0), GameConf.GAME_TEXT_SIZE, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, 1);
 		this.points = new Text(scene, this.op);
@@ -44,9 +44,8 @@ public class ScoreGui extends GuiElement {
 
 	@Override
 	public void logicLoop(float deltaTime) {
-		LevelScene lvlScene = (LevelScene) this.getScene();
-		this.points.setText(lvlScene.getScore() + " Points");
-		this.highscore.setText(lvlScene.getHighScore() + " Highscore");
+		this.points.setText(this.scene.getScore() + " Points");
+		this.highscore.setText(this.scene.getHighScore() + " Highscore");
 	}
 
 	@Override
