@@ -95,6 +95,7 @@ public final class RektKiller extends Enemy {
 	 */
 	public void prepare() {
 		// calculate size dependent Polygon for spikes
+		// TODO Define via configuration &| parsers
 		this.spikePolygon = new Polygon(new Vec(),
 				new Vec[] { //
 						new Vec(0.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),

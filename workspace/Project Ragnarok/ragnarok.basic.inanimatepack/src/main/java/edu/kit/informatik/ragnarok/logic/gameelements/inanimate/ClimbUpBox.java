@@ -6,7 +6,6 @@ import edu.kit.informatik.ragnarok.core.GameElement;
 import edu.kit.informatik.ragnarok.core.GameTime;
 import edu.kit.informatik.ragnarok.core.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawner;
-import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawnerOption;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.DynamicInanimate;
 import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
@@ -14,6 +13,8 @@ import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
 import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
 import edu.kit.informatik.ragnarok.primitives.time.Timer;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
+import edu.kit.informatik.ragnarok.visitor.annotations.NoVisit;
+import edu.kit.informatik.ragnarok.visitor.annotations.VisitInfo;
 
 /**
  * This Box realizes an {@link Inanimate} which the Player can climb up.
@@ -22,61 +23,53 @@ import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
  *
  */
 @LoadMe
+@VisitInfo(res = "conf/climbup", visit = true)
 public final class ClimbUpBox extends DynamicInanimate {
 	/**
 	 * The inner inanimate box.
 	 */
+	@NoVisit
 	protected InanimateBox innerBox;
 	/**
 	 * The time between strategy changes.
 	 */
-	protected static final long PERIOD = 4000;
+	protected static long PERIOD;
 	/**
 	 * The current time offset.
 	 */
+	@NoVisit
 	protected long offset = 0;
 	/**
 	 * All strategies.
 	 */
+	@NoVisit
 	private ClimbBoxStrategy[] strategies;
 	/**
 	 * The current strategy.
 	 */
+	@NoVisit
 	private int current = 0;
 	/**
 	 * The outer color.
 	 */
-	private static final RGBAColor outerCol = new RGBAColor(110, 110, 110, 255);
+	private static RGBAColor OUTER_COLOR;
 	/**
 	 * A dark color.
 	 */
-	private static final RGBAColor darkCol = new RGBAColor(90, 90, 90, 255);
+	private static RGBAColor DARK_COLOR;
 	/**
 	 * The energy's color.
 	 */
-	private static final RGBColor energyCol = new RGBColor(255, 100, 0);
+	private static RGBColor ENERGY_COLOR;
 	/**
 	 * The timer (how long climb enables?).
 	 */
+	@NoVisit
 	private Timer timer;
 	/**
 	 * The particles of the ClimbUpBox.
 	 */
-	private static ParticleSpawner particles = null;
-
-	static {
-		ClimbUpBox.particles = new ParticleSpawner();
-		ClimbUpBox.particles.angle = new ParticleSpawnerOption(0);
-		ClimbUpBox.particles.colorR = new ParticleSpawnerOption(ClimbUpBox.energyCol.red);
-		ClimbUpBox.particles.colorG = new ParticleSpawnerOption(ClimbUpBox.energyCol.green);
-		ClimbUpBox.particles.colorB = new ParticleSpawnerOption(ClimbUpBox.energyCol.blue);
-		ClimbUpBox.particles.colorA = new ParticleSpawnerOption(0, 220);
-		ClimbUpBox.particles.timeMin = 0.2f;
-		ClimbUpBox.particles.timeMax = 0.4F;
-		ClimbUpBox.particles.amountMax = 1;
-		ClimbUpBox.particles.size = new ParticleSpawnerOption(0.3f, 0.5f, 0, 0);
-		ClimbUpBox.particles.speed = new ParticleSpawnerOption(2, 3, -1, 1);
-	}
+	private static ParticleSpawner PARTICLES;
 
 	/**
 	 * Prototype Constructor.
@@ -94,7 +87,7 @@ public final class ClimbUpBox extends DynamicInanimate {
 	 *            the initial time offset
 	 */
 	protected ClimbUpBox(Vec pos, long offset) {
-		super(pos, new Vec(1), ClimbUpBox.outerCol);
+		super(pos, new Vec(1), ClimbUpBox.OUTER_COLOR);
 
 		// create inner InanimateBox with given position
 		this.innerBox = (InanimateBox) InanimateBox.staticCreate(pos);
@@ -145,8 +138,8 @@ public final class ClimbUpBox extends DynamicInanimate {
 	@Override
 	public void internalRender(Field f) {
 		f.drawRectangle(this.getPos(), this.getSize(), this.color);
-		f.drawRectangle(this.getPos().addY(-0.1f), this.getSize().scalar(0.2f, 0.8f), ClimbUpBox.darkCol);
-		f.drawRectangle(this.getPos().addY(0.4f), this.getSize().scalar(1, 0.2f), ClimbUpBox.darkCol);
+		f.drawRectangle(this.getPos().addY(-0.1f), this.getSize().scalar(0.2f, 0.8f), ClimbUpBox.DARK_COLOR);
+		f.drawRectangle(this.getPos().addY(0.4f), this.getSize().scalar(1, 0.2f), ClimbUpBox.DARK_COLOR);
 
 		this.renderEnergy(f, //
 				this.strategies[this.current].getEnergyStart(this.timer.getProgress()),
@@ -167,10 +160,10 @@ public final class ClimbUpBox extends DynamicInanimate {
 	public void renderEnergy(Field f, float start, float end) {
 
 		float h = end - start;
-		f.drawRectangle(this.getPos().addY(h / 2f - this.getSize().getY() / 2f + start), this.getSize().scalar(0.2f, h), ClimbUpBox.energyCol);
+		f.drawRectangle(this.getPos().addY(h / 2f - this.getSize().getY() / 2f + start), this.getSize().scalar(0.2f, h), ClimbUpBox.ENERGY_COLOR);
 
 		if (end == 1) {
-			f.drawRectangle(this.getPos().addY(0.4f), this.getSize().scalar(1, 0.2f), ClimbUpBox.energyCol);
+			f.drawRectangle(this.getPos().addY(0.4f), this.getSize().scalar(1, 0.2f), ClimbUpBox.ENERGY_COLOR);
 		}
 
 	}
@@ -295,12 +288,12 @@ public final class ClimbUpBox extends DynamicInanimate {
 
 		@Override
 		public void internalRender(Field f) {
-			f.drawRectangle(ClimbUpBox.this.getPos().addY(0.4f), ClimbUpBox.this.getSize().scalar(1, 0.2f), ClimbUpBox.energyCol);
+			f.drawRectangle(ClimbUpBox.this.getPos().addY(0.4f), ClimbUpBox.this.getSize().scalar(1, 0.2f), ClimbUpBox.ENERGY_COLOR);
 
 			Vec pos = this.parent.getPos().addY(this.parent.getSize().getY() / 2f + 1).addX(-0.5f);
 			pos = pos.addX(this.parent.getSize().getX() * GameConf.PRNG.nextFloat());
 
-			ClimbUpBox.particles.spawn(this.parent.getScene(), pos);
+			ClimbUpBox.PARTICLES.spawn(this.parent.getScene(), pos);
 		}
 
 		@Override

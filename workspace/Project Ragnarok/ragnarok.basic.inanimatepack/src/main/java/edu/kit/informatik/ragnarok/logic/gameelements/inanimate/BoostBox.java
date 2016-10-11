@@ -6,12 +6,14 @@ import edu.kit.informatik.ragnarok.core.GameElement;
 import edu.kit.informatik.ragnarok.core.GameTime;
 import edu.kit.informatik.ragnarok.core.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawner;
-import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawnerOption;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.DynamicInanimate;
 import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
+import edu.kit.informatik.ragnarok.visitor.Visitable;
+import edu.kit.informatik.ragnarok.visitor.annotations.NoVisit;
+import edu.kit.informatik.ragnarok.visitor.annotations.VisitInfo;
 
 /**
  * This Box realizes an {@link Inanimate} which boosts the Player from time to
@@ -21,48 +23,41 @@ import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
  *
  */
 @LoadMe
-public final class BoostBox extends DynamicInanimate {
+@VisitInfo(res = "conf/boost", visit = true)
+public final class BoostBox extends DynamicInanimate implements Visitable {
 	/**
 	 * The inner inanimate box.
 	 */
+	@NoVisit
 	protected InanimateBox innerBox;
 	/**
 	 * The time between strategy changes.
 	 */
-	protected static final long PERIOD = 4500;
+	protected static long PERIOD;
 	/**
 	 * The current time offset.
 	 */
+	@NoVisit
 	protected long offset = 0;
 	/**
 	 * All strategies.
 	 */
+	@NoVisit
 	private BoostBoxStrategy[] strategies;
 	/**
 	 * The current strategy id.
 	 */
+	@NoVisit
 	private int current = 0;
 	/**
 	 * The particle spawner.
 	 */
-	private static ParticleSpawner particles = null;
+	private static ParticleSpawner PARTICLES;
 
-	static {
-		BoostBox.particles = new ParticleSpawner();
-		BoostBox.particles.angle = new ParticleSpawnerOption(0, (float) (2 * Math.PI), (float) (2 * Math.PI), (float) (4 * Math.PI));
-		BoostBox.particles.colorR = new ParticleSpawnerOption(250, 0);
-		BoostBox.particles.colorG = new ParticleSpawnerOption(250, -250);
-		BoostBox.particles.colorB = new ParticleSpawnerOption(150);
-		BoostBox.particles.colorA = new ParticleSpawnerOption(220, -220);
-		BoostBox.particles.timeMin = 0.2f;
-		BoostBox.particles.timeMax = 0.4F;
-		BoostBox.particles.amountMax = 1;
-
-		BoostBox.particles.speed = new ParticleSpawnerOption(2, 3, -1, 1);
-	}
 	/**
 	 * This bool indicates whether particles shall spawn.
 	 */
+	@NoVisit
 	private boolean sparkling;
 
 	/**
@@ -128,7 +123,7 @@ public final class BoostBox extends DynamicInanimate {
 	public void internalRender(Field f) {
 		this.strategies[this.current].internalRender(f);
 		if (this.sparkling) {
-			BoostBox.particles.spawn(this.getScene(), this.getPos());
+			BoostBox.PARTICLES.spawn(this.getScene(), this.getPos());
 		}
 	}
 

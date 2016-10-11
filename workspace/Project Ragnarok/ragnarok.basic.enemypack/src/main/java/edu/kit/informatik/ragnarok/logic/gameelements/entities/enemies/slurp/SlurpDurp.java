@@ -103,7 +103,6 @@ public final class SlurpDurp extends Entity {
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
 		if (this.getTeam().isHostile(element.getTeam())) {
-			System.out.println("Slow!!");
 			element.setVel(element.getVel().scalar(0.9f));
 		}
 	}

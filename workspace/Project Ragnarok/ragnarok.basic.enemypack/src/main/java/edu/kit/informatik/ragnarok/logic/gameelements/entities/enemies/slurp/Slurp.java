@@ -45,6 +45,10 @@ public final class Slurp extends Enemy implements Visitable {
 	 * The amount of {@link SlurpDurp}.
 	 */
 	private static int SLURP_DURP_AMOUNT;
+	/**
+	 * The factor one Slurp slows an enemy.
+	 */
+	private static float SLOWING_FACTOR;
 
 	/**
 	 * Prototype Constructor.
@@ -153,7 +157,7 @@ public final class Slurp extends Enemy implements Visitable {
 
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
-		element.setVel(element.getVel().scalar(0.6f));
+		element.setVel(element.getVel().scalar(Slurp.SLOWING_FACTOR));
 	}
 
 	@Override

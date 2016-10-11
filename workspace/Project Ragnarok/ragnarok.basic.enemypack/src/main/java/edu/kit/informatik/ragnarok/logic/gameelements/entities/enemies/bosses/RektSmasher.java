@@ -73,7 +73,7 @@ public final class RektSmasher extends Boss implements Visitable {
 		// Configure own attributes
 		super(startPos, new Vec(), RektSmasher.SIZE);
 		// Configure innerRektKiller
-		this.innerRektKiller = new RektKiller(startPos, this.getSize(), 15);
+		this.innerRektKiller = new RektKiller(startPos, this.getSize(), 0b1111);
 		this.innerRektKiller.setCurrentDirection(Direction.RIGHT);
 		this.innerRektKiller.prepare();
 		this.setLives(RektSmasher.LIVES);
@@ -134,6 +134,7 @@ public final class RektSmasher extends Boss implements Visitable {
 
 			// start thread to re-add spikes after time
 			ThreadUtils.runThread(() -> {
+				// TODO Incompatible with pause
 				ThreadUtils.sleep(RektSmasher.SPIKE_TIME);
 				this.innerRektKiller.setSide(Direction.getOpposite(dir), true);
 			});

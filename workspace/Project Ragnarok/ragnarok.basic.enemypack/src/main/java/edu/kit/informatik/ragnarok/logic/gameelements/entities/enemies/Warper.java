@@ -39,7 +39,12 @@ public final class Warper extends Enemy implements Visitable {
 	/**
 	 * The particles of the warper.
 	 */
-	private static ParticleSpawner warpParticles;
+	private static ParticleSpawner WARP_PARTICLES;
+
+	/**
+	 * The default size.
+	 */
+	private static Vec SIZE;
 
 	/**
 	 * Prototype Constructor.
@@ -55,7 +60,7 @@ public final class Warper extends Enemy implements Visitable {
 	 *            the start position
 	 */
 	public Warper(Vec startPos) {
-		super(startPos, new Vec(), new Vec(0.6f, 0.6f));
+		super(startPos, new Vec(), Warper.SIZE);
 	}
 
 	@Override
@@ -76,9 +81,9 @@ public final class Warper extends Enemy implements Visitable {
 		// this.warpAction.removeTime(this.deltaTime);
 
 		// animate particles
-		Warper.warpParticles.amountMin = -5;
-		Warper.warpParticles.amountMax = 2;
-		Warper.warpParticles.spawn(this.getScene(), this.getPos());
+		Warper.WARP_PARTICLES.amountMin = -5;
+		Warper.WARP_PARTICLES.amountMax = 2;
+		Warper.WARP_PARTICLES.spawn(this.getScene(), this.getPos());
 
 		// if time is up
 		if (this.warpAction.timeUp()) {
@@ -89,9 +94,9 @@ public final class Warper extends Enemy implements Visitable {
 			Vec target = this.getScene().getPlayer().getPos();
 
 			// animate particles
-			Warper.warpParticles.amountMin = 5;
-			Warper.warpParticles.amountMax = 8;
-			Warper.warpParticles.spawn(this.getScene(), this.getPos());
+			Warper.WARP_PARTICLES.amountMin = 5;
+			Warper.WARP_PARTICLES.amountMax = 8;
+			Warper.WARP_PARTICLES.spawn(this.getScene(), this.getPos());
 
 			// determine if x or y is greater in distance
 			Vec dif = this.getPos().add(target.scalar(-1));
