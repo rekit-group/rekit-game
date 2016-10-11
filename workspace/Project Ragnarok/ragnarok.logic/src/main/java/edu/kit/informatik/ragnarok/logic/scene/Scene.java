@@ -1,9 +1,9 @@
 package edu.kit.informatik.ragnarok.logic.scene;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
@@ -70,7 +70,7 @@ abstract class Scene implements CameraTarget, IScene {
 	/**
 	 * Stats of the gameElements for debugging.
 	 */
-	private Map<Class<?>, Long> gameElementDurations = new HashMap<>();
+	private ConcurrentHashMap<Class<?>, Long> gameElementDurations = new ConcurrentHashMap<>();
 	/**
 	 * Indicates whether the scene is paused.
 	 */
@@ -186,15 +186,17 @@ abstract class Scene implements CameraTarget, IScene {
 		e.logicLoop();
 
 		// Debug: Compare and save logicLoop Duration
-		if (GameConf.DEBUG) {
-			long timeAfter = GameTime.getTime();
-			Class<?> clazz = e.getClass();
-			long dur = (timeAfter - timeBefore);
-			if (this.gameElementDurations.containsKey(clazz)) {
-				long newTime = this.gameElementDurations.get(clazz) + dur;
-				this.gameElementDurations.put(clazz, newTime);
-			} else {
-				this.gameElementDurations.put(clazz, dur);
+		synchronized (this.synchronize()) {
+			if (GameConf.DEBUG) {
+				long timeAfter = GameTime.getTime();
+				Class<?> clazz = e.getClass();
+				long dur = (timeAfter - timeBefore);
+				if (this.gameElementDurations.containsKey(clazz)) {
+					long newTime = this.gameElementDurations.get(clazz) + dur;
+					this.gameElementDurations.put(clazz, newTime);
+				} else {
+					this.gameElementDurations.put(clazz, dur);
+				}
 			}
 		}
 	}
@@ -315,10 +317,12 @@ abstract class Scene implements CameraTarget, IScene {
 
 	@Override
 	public Map<Class<?>, Long> getGameElementDurations() {
-		// Reset debug info
-		Map<Class<?>, Long> ret = this.gameElementDurations;
-		this.gameElementDurations = new HashMap<>();
-		return ret;
+		synchronized (this.synchronize()) {
+			// Reset debug info
+			Map<Class<?>, Long> ret = this.gameElementDurations;
+			this.gameElementDurations = new ConcurrentHashMap<>();
+			return ret;
+		}
 	}
 
 	@Override
