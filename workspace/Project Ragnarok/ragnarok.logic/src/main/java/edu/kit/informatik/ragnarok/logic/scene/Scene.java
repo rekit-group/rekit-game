@@ -133,21 +133,24 @@ abstract class Scene implements CameraTarget, IScene {
 	 * This method will be invoked in {@link #logicLoop()}.
 	 */
 	protected void innerLogicLoop() {
-		this.logicLoopPre();
-		// add GameElements that have been added
-		this.addGameElements();
-		if (!this.paused) {
-			// iterate all GameElements to invoke logicLoop
-			this.gameElements.parallelStream().forEach(e -> this.logicLoopGameElement(e));
-		}
-		// remove GameElements that must be removed
-		this.removeGameElements();
-		this.logicLoopAfter();
-		// after all game related logic update GuiElements
 		synchronized (this.synchronize()) {
+			this.logicLoopPre();
+			// add GameElements that have been added
+			this.addGameElements();
+			if (!this.paused) {
+				// iterate all GameElements to invoke logicLoop
+
+				// Disabled parallelStream as it is faster to use it not.
+				// this.gameElements.parallelStream().forEach(e ->
+				// this.logicLoopGameElement(e));
+				this.gameElements.forEach(e -> this.logicLoopGameElement(e));
+			}
+			// remove GameElements that must be removed
+			this.removeGameElements();
+			this.logicLoopAfter();
+			// after all game related logic update GuiElements
 			this.getGuiElementIterator().forEachRemaining((e) -> e.logicLoop());
 		}
-
 	}
 
 	/**
@@ -186,8 +189,8 @@ abstract class Scene implements CameraTarget, IScene {
 		e.logicLoop();
 
 		// Debug: Compare and save logicLoop Duration
-		synchronized (this.synchronize()) {
-			if (GameConf.DEBUG) {
+		if (GameConf.DEBUG) {
+			synchronized (this.gameElementDurations) {
 				long timeAfter = GameTime.getTime();
 				Class<?> clazz = e.getClass();
 				long dur = (timeAfter - timeBefore);
@@ -212,8 +215,10 @@ abstract class Scene implements CameraTarget, IScene {
 	 */
 	@Override
 	public void addGameElement(GameElement element) {
-		// Put GameElement in waiting list
-		this.gameElementAddQueue.add(element);
+		synchronized (this.synchronize()) {
+			// Put GameElement in waiting list
+			this.gameElementAddQueue.add(element);
+		}
 	}
 
 	/**
@@ -243,7 +248,7 @@ abstract class Scene implements CameraTarget, IScene {
 	 */
 	@Override
 	public void markForRemove(GameElement element) {
-		synchronized (this.synchronize()) {
+		synchronized (this.gameElementRemoveQueue) {
 			this.gameElementRemoveQueue.add(element);
 		}
 	}
@@ -253,7 +258,7 @@ abstract class Scene implements CameraTarget, IScene {
 	 * for more info.
 	 */
 	private void removeGameElements() {
-		synchronized (this.synchronize()) {
+		synchronized (this.gameElementRemoveQueue) {
 			this.gameElementRemoveQueue.forEach((e) -> this.gameElements.remove(e));
 			this.gameElementRemoveQueue.clear();
 		}
@@ -317,7 +322,7 @@ abstract class Scene implements CameraTarget, IScene {
 
 	@Override
 	public Map<Class<?>, Long> getGameElementDurations() {
-		synchronized (this.synchronize()) {
+		synchronized (this.gameElementDurations) {
 			// Reset debug info
 			Map<Class<?>, Long> ret = this.gameElementDurations;
 			this.gameElementDurations = new ConcurrentHashMap<>();
