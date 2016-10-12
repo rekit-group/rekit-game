@@ -103,6 +103,7 @@ public final class ClimbUpBox extends DynamicInanimate {
 	 * The last time {@link #logicLoop(float)} was invoked or {@code -1}
 	 * (initial).
 	 */
+	@NoVisit
 	private long lastTime = -1;
 
 	@Override

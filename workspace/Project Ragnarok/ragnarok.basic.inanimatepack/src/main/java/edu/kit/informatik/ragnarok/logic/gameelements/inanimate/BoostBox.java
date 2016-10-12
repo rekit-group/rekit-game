@@ -92,6 +92,7 @@ public final class BoostBox extends DynamicInanimate implements Visitable {
 	/**
 	 * The last time when {@link #logicLoop(float)} was invoked.
 	 */
+	@NoVisit
 	private long lastTime = GameTime.getTime();
 
 	@Override
