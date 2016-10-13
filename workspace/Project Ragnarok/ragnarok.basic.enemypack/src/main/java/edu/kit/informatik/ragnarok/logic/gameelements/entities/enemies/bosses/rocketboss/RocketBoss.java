@@ -62,7 +62,7 @@ public class RocketBoss extends Boss {
 	protected void innerLogicLoop() {
 
 		// add deltaTime with factor to local x
-		float deltaX = this.deltaTime * this.getState().getTimeFactor() * 1000;
+		float deltaX = this.deltaTime * this.getState().getTimeFactor() / 1000;
 		this.calcX += deltaX;
 
 		// calculate and update position
