@@ -12,6 +12,7 @@ import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
 import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
 import edu.kit.informatik.ragnarok.primitives.time.Timer;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
+import edu.kit.informatik.ragnarok.visitor.Visitable;
 import edu.kit.informatik.ragnarok.visitor.annotations.NoVisit;
 import edu.kit.informatik.ragnarok.visitor.annotations.VisitInfo;
 
@@ -23,7 +24,7 @@ import edu.kit.informatik.ragnarok.visitor.annotations.VisitInfo;
  */
 @LoadMe
 @VisitInfo(res = "conf/climbup", visit = true)
-public final class ClimbUpBox extends DynamicInanimate {
+public final class ClimbUpBox extends DynamicInanimate implements Visitable {
 	/**
 	 * The inner inanimate box.
 	 */
