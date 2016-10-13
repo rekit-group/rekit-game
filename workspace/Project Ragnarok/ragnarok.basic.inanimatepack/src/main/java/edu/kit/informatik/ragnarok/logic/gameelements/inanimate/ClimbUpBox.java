@@ -35,11 +35,6 @@ public final class ClimbUpBox extends DynamicInanimate implements Visitable {
 	 */
 	protected static long PERIOD;
 	/**
-	 * The current time offset.
-	 */
-	@NoVisit
-	protected long offset = 0;
-	/**
 	 * All strategies.
 	 */
 	@NoVisit
@@ -95,9 +90,8 @@ public final class ClimbUpBox extends DynamicInanimate implements Visitable {
 		// instantiate the two strategies
 		this.strategies = new ClimbBoxStrategy[] { new NoClimb(this), new BoostClimb(this) };
 
-		this.offset = offset;
 		this.timer = new Timer(ClimbUpBox.PERIOD);
-		this.timer.offset(this.offset);
+		this.timer.offset(offset);
 
 	}
 
@@ -159,7 +153,7 @@ public final class ClimbUpBox extends DynamicInanimate implements Visitable {
 		long offset = 0;
 		if (options.length >= 1 && options[0] != null && options[0].matches("(\\+|-)?[0-9]+")) {
 			// TODO Check offset
-			offset = (Long.parseLong(options[0]) * ClimbUpBox.PERIOD) / 2;
+			offset = (Long.parseLong(options[0]) * ClimbUpBox.PERIOD) / 2000;
 		}
 		return new ClimbUpBox(startPos, offset);
 	}
