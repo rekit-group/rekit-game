@@ -119,6 +119,7 @@ public abstract class LevelScene extends Scene {
 	@Override
 	public void restart() {
 		// wait 2 seconds
+		// TODO Incompatible with pause
 		ThreadUtils.sleep(2000);
 		// reset all data structures
 		this.init();

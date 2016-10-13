@@ -134,9 +134,11 @@ public final class RektSmasher extends Boss implements Visitable {
 
 			// start thread to re-add spikes after time
 			ThreadUtils.runThread(() -> {
+
 				// TODO Incompatible with pause
 				ThreadUtils.sleep(RektSmasher.SPIKE_TIME);
 				this.innerRektKiller.setSide(Direction.getOpposite(dir), true);
+
 			});
 
 		}
