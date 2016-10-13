@@ -80,4 +80,14 @@ public final class Timer {
 		return this.timeUp() ? 1 : 1 - ((1F * this.timeLeft) / this.duration);
 	}
 
+	/**
+	 * Subtract an offset at beginning.
+	 * 
+	 * @param offset
+	 *            the offset
+	 */
+	public void offset(long offset) {
+		this.removeTime(offset);
+	}
+
 }

@@ -8,13 +8,14 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
 import edu.kit.informatik.ragnarok.util.ReflectUtils;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
+import edu.kit.informatik.ragnarok.visitor.Visitable;
 
 /**
  *
  * This class is the parent class of all dynamically loaded Inanimate.
  *
  */
-public abstract class DynamicInanimate extends Inanimate {
+public abstract class DynamicInanimate extends Inanimate implements Visitable {
 
 	/**
 	 * Prototype Constructor.

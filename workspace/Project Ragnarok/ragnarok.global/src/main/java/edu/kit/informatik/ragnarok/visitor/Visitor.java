@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
+import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
 import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
 import edu.kit.informatik.ragnarok.visitor.annotations.AfterVisit;
 import edu.kit.informatik.ragnarok.visitor.annotations.ClassParser;
@@ -18,6 +19,7 @@ import edu.kit.informatik.ragnarok.visitor.parser.FloatParser;
 import edu.kit.informatik.ragnarok.visitor.parser.IntParser;
 import edu.kit.informatik.ragnarok.visitor.parser.LongParser;
 import edu.kit.informatik.ragnarok.visitor.parser.Parser;
+import edu.kit.informatik.ragnarok.visitor.parser.RGBAColorParser;
 import edu.kit.informatik.ragnarok.visitor.parser.RGBColorParser;
 import edu.kit.informatik.ragnarok.visitor.parser.StringParser;
 import edu.kit.informatik.ragnarok.visitor.parser.VecParser;
@@ -69,6 +71,7 @@ public abstract class Visitor {
 			this.put(Long.TYPE, new LongParser());
 
 			this.put(RGBColor.class, new RGBColorParser());
+			this.put(RGBAColor.class, new RGBAColorParser());
 			this.put(Vec.class, new VecParser());
 			this.put(String.class, new StringParser());
 		}

@@ -119,8 +119,11 @@ public final class MovingBox extends DynamicInanimate {
 
 		// initialize movement timer
 		long period = (long) (dist / (2 * MovingBox.SPEED) * 1000);
-		this.timer = new Timer(period - (offset ? 1000 * period / 2 : 0));
-		// this.timer.removeTime();
+		this.timer = new Timer(period);
+		if (offset) {
+			this.timer.offset(period / 2);
+			// this.timer.removeTime();
+		}
 	}
 
 	@Override

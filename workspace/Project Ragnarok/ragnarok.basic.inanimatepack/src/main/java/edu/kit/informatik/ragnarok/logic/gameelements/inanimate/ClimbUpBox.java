@@ -3,7 +3,6 @@ package edu.kit.informatik.ragnarok.logic.gameelements.inanimate;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.core.Field;
 import edu.kit.informatik.ragnarok.core.GameElement;
-import edu.kit.informatik.ragnarok.core.GameTime;
 import edu.kit.informatik.ragnarok.core.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawner;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.DynamicInanimate;
@@ -84,7 +83,7 @@ public final class ClimbUpBox extends DynamicInanimate {
 	 * @param pos
 	 *            the position
 	 * @param offset
-	 *            the initial time offset
+	 *            the initial time offset in millis
 	 */
 	protected ClimbUpBox(Vec pos, long offset) {
 		super(pos, new Vec(1), ClimbUpBox.OUTER_COLOR);
@@ -97,32 +96,17 @@ public final class ClimbUpBox extends DynamicInanimate {
 
 		this.offset = offset;
 		this.timer = new Timer(ClimbUpBox.PERIOD);
-	}
+		this.timer.offset(this.offset);
 
-	/**
-	 * The last time {@link #logicLoop(float)} was invoked or {@code -1}
-	 * (initial).
-	 */
-	@NoVisit
-	private long lastTime = -1;
+	}
 
 	@Override
 	public void logicLoop() {
 
-		// get time
-		long nowTime = GameTime.getTime();
-		// init lastTime in first run
-		if (this.lastTime == -1) {
-			this.lastTime = nowTime - this.offset - ((nowTime) % ClimbUpBox.PERIOD);
-			if ((nowTime / ClimbUpBox.PERIOD) % 2 == 0) {
-				this.current = (this.current + 1) % this.strategies.length;
-			}
-		}
 		// update timer
 		this.timer.logicLoop();
 		// this.timer.removeTime(nowTime - this.lastTime);
 		// save current time for next iteration
-		this.lastTime = nowTime;
 
 		// Get new strategy from strategy map
 		if (this.timer.timeUp()) {
@@ -172,8 +156,9 @@ public final class ClimbUpBox extends DynamicInanimate {
 	@Override
 	public ClimbUpBox create(Vec startPos, String[] options) {
 		long offset = 0;
-		if (options.length >= 1 && options[0] != null && options[0].matches("(\\+|-)?[0-9]")) {
-			offset = Integer.parseInt(options[0]) * ClimbUpBox.PERIOD / 2;
+		if (options.length >= 1 && options[0] != null && options[0].matches("(\\+|-)?[0-9]+")) {
+			// TODO Check offset
+			offset = (Long.parseLong(options[0]) * ClimbUpBox.PERIOD) / 2;
 		}
 		return new ClimbUpBox(startPos, offset);
 	}

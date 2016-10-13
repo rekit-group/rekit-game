@@ -103,7 +103,10 @@ public class Level {
 	 */
 	public void init() {
 		this.getLevelAssember().init();
-		this.getLevelAssember().generate(GameConf.GRID_W);
+		// TODO this value has to be changed to generate structures in a block
+		// See Lv. 4 as example that periods are not synchronized if *2 not
+		// written
+		this.getLevelAssember().generate(GameConf.GRID_W * 2);
 	}
 
 	@Override
