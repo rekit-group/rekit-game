@@ -55,17 +55,14 @@ final class MainMenu extends Scene {
 
 		MenuList play = new MenuList(this, "Play");
 
-		MenuActionItem inf = new MenuActionItem(this, "Infinite Fun", () -> this.getModel().switchScene(Scenes.INFINIT));
-
+		MenuActionItem inf = new MenuActionItem(this, "Infinite Fun", () -> this.getModel().switchScene(Scenes.INFINITE));
 		MenuActionItem lod = new MenuActionItem(this, "Level of the Day", () -> this.getModel().switchScene(Scenes.LOD));
-
-		MenuGrid arcade = new MenuGrid(this, "Arcade Mode", 6);
-		arcade.setItemSize(new Vec(100, 100));
+		MenuGrid arcade = new MenuGrid(this, "Arcade Mode", 6, 100, 100);
 
 		for (int i = 0; i < LevelManager.getNumberOfArcadeLevels(); i++) {
 			final int id = i;
 			MenuActionItem button = new MenuActionItem(this, new Vec(80, 80), String.valueOf(id + 1),
-					() -> this.getModel().switchScene(Scenes.ARCADE, new String[] { "" + id }));
+					() -> this.getModel().switchScene(Scenes.ARCADE, String.valueOf(id)));
 			arcade.addItem(button);
 		}
 
@@ -74,21 +71,15 @@ final class MainMenu extends Scene {
 		modPlay.addItem(new MenuActionItem(this, "no Mod Scenes :(", () -> {
 		}));
 
-		play.addItem(inf);
-		play.addItem(lod);
-		play.addItem(arcade);
-		play.addItem(modPlay);
+		play.addItem(inf, lod, arcade, modPlay);
 
 		MenuList settings = new MenuList(this, "Settings");
-
 		settings.addItem(new BoolSetting(this, "Debug Mode", "DEBUG"));
 
 		MenuList about = new MenuList(this, "About");
-
 		about.addItem(new TextMenu(this, GameConf.ABOUT));
-		this.menu.addItem(play);
-		this.menu.addItem(settings);
-		this.menu.addItem(about);
+
+		this.menu.addItem(play, settings, about);
 
 		this.addGuiElement(this.menu);
 		this.menu.select();

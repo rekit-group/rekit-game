@@ -51,8 +51,23 @@ public abstract class SubMenu extends MenuItem {
 	 *
 	 * @param i
 	 *            the item
+	 * @param itms
+	 *            more items
 	 */
-	public void addItem(MenuItem i) {
+	public void addItem(MenuItem i, MenuItem... itms) {
+		this.addItem(i);
+		for (MenuItem it : itms) {
+			this.addItem(it);
+		}
+	}
+
+	/**
+	 * Add an Item.
+	 *
+	 * @param i
+	 *            the item
+	 */
+	private void addItem(MenuItem i) {
 		i.setParent(this);
 		this.menuItems.add(i);
 		this.calcItemPos();

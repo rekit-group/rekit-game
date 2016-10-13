@@ -91,7 +91,7 @@ public class GameModel implements CameraTarget, Model {
 	 *            the new scene.
 	 */
 	public void switchScene(Scenes s) {
-		this.switchScene(s, null);
+		this.switchScene(s, new String[] {});
 	}
 
 	/**
@@ -105,7 +105,7 @@ public class GameModel implements CameraTarget, Model {
 	 * @param options
 	 *            pass options to the scene (e.g. the arcade level id)
 	 */
-	public void switchScene(Scenes s, String[] options) {
+	public void switchScene(Scenes s, String... options) {
 		IScene nextScene = s.getNewScene(this, options);
 		nextScene.init();
 		nextScene.start();

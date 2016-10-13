@@ -23,7 +23,7 @@ public enum Scenes {
 	/**
 	 * An infinite level.
 	 */
-	INFINIT(InfiniteLevelScene.class),
+	INFINITE(InfiniteLevelScene.class),
 	/**
 	 * A level of the day.
 	 */

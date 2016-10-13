@@ -281,12 +281,16 @@ abstract class Scene implements CameraTarget, IScene {
 	 */
 	@Override
 	public void addGuiElement(GuiElement e) {
-		this.guiElements.add(e);
+		synchronized (this.synchronize()) {
+			this.guiElements.add(e);
+		}
 	}
 
 	@Override
 	public void removeGuiElement(GuiElement e) {
-		this.guiElements.remove(e);
+		synchronized (this.synchronize()) {
+			this.guiElements.remove(e);
+		}
 	}
 
 	@Override

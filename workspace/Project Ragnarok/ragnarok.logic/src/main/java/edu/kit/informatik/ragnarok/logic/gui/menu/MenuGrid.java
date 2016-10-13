@@ -35,6 +35,25 @@ public class MenuGrid extends SubMenu {
 		this.setItemSize(new Vec(100));
 	}
 
+	/**
+	 * Create a MenuGrid.
+	 *
+	 * @param scene
+	 *            the scene
+	 * @param text
+	 *            the text (name)
+	 * @param colCount
+	 *            the column count
+	 * @param sizeX
+	 *            the itemSize X
+	 * @param sizeY
+	 *            the itemSize Y
+	 */
+	public MenuGrid(IScene scene, String text, int colCount, int sizeX, int sizeY) {
+		this(scene, text, colCount);
+		this.setItemSize(new Vec(sizeX, sizeY));
+	}
+
 	@Override
 	public void menuUp() {
 		this.menuItems.get(this.index).setHover(false);
