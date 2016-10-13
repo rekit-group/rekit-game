@@ -90,7 +90,8 @@ public interface IScene {
 	float getCameraOffset();
 
 	/**
-	 * The Object to synchronize with the scene (threading).
+	 * The Object to synchronize with the scene (threading).<br>
+	 * You shall synchronize all access to iterators!
 	 *
 	 * @return the sync-object
 	 */
@@ -192,7 +193,7 @@ public interface IScene {
 
 	/**
 	 * Indicates whether game is paused.
-	 * 
+	 *
 	 * @return {@code true} if paused, {@code false} otherwise
 	 */
 	boolean isPaused();

@@ -140,10 +140,8 @@ abstract class Scene implements CameraTarget, IScene {
 			if (!this.paused) {
 				// iterate all GameElements to invoke logicLoop
 
-				// Disabled parallelStream as it is faster to use it not.
-				// this.gameElements.parallelStream().forEach(e ->
-				// this.logicLoopGameElement(e));
-				this.gameElements.forEach(e -> this.logicLoopGameElement(e));
+				this.gameElements.parallelStream().forEach(e -> this.logicLoopGameElement(e));
+				// this.gameElements.forEach(e -> this.logicLoopGameElement(e));
 			}
 			// remove GameElements that must be removed
 			this.removeGameElements();
@@ -215,7 +213,7 @@ abstract class Scene implements CameraTarget, IScene {
 	 */
 	@Override
 	public void addGameElement(GameElement element) {
-		synchronized (this.synchronize()) {
+		synchronized (this.gameElementAddQueue) {
 			// Put GameElement in waiting list
 			this.gameElementAddQueue.add(element);
 		}
@@ -226,15 +224,16 @@ abstract class Scene implements CameraTarget, IScene {
 	 * more info.
 	 */
 	private void addGameElements() {
-		synchronized (this.synchronize()) {
+		synchronized (this.gameElementAddQueue) {
 			Iterator<GameElement> it = this.gameElementAddQueue.iterator();
 			while (it.hasNext()) {
 				GameElement element = it.next();
 				this.gameElements.add(element);
 				element.setScene(this);
-				it.remove();
 			}
+			this.gameElementAddQueue.clear();
 		}
+
 	}
 
 	/**

@@ -21,7 +21,6 @@ import org.eclipse.swt.widgets.Shell;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.core.GameElement;
 import edu.kit.informatik.ragnarok.core.GameTime;
-import edu.kit.informatik.ragnarok.core.GuiElement;
 import edu.kit.informatik.ragnarok.core.IScene;
 import edu.kit.informatik.ragnarok.logic.Model;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
@@ -180,20 +179,8 @@ class GameView implements View {
 		this.field.setBackground(GameConf.GAME_BACKGROUD_COLOR);
 
 		synchronized (scene.synchronize()) {
-			// Get a z-index-ordered iterator
-			Iterator<GameElement> it1 = scene.getOrderedGameElementIterator();
-			// Iterate all GameElements
-			while (it1.hasNext()) {
-				// Render next element
-				it1.next().render(this.field);
-			}
-
-			// Iterate all GuiElements (life, score, boss)
-			Iterator<GuiElement> it2 = scene.getGuiElementIterator();
-			while (it2.hasNext()) {
-				// Render next element
-				it2.next().render(this.field);
-			}
+			scene.getOrderedGameElementIterator().forEachRemaining((e) -> e.render(this.field));
+			scene.getGuiElementIterator().forEachRemaining((e) -> e.render(this.field));
 		}
 
 		// draw temporary image on actual cavans
