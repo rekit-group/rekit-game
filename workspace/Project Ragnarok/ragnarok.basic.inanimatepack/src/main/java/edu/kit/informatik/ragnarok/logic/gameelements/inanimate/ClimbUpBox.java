@@ -12,9 +12,9 @@ import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
 import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
 import edu.kit.informatik.ragnarok.primitives.time.Timer;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
-import edu.kit.informatik.ragnarok.visitor.Visitable;
-import edu.kit.informatik.ragnarok.visitor.annotations.NoVisit;
-import edu.kit.informatik.ragnarok.visitor.annotations.VisitInfo;
+import home.fox.visitors.Visitable;
+import home.fox.visitors.annotations.NoVisit;
+import home.fox.visitors.annotations.VisitInfo;
 
 /**
  * This Box realizes an {@link Inanimate} which the Player can climb up.
@@ -100,9 +100,6 @@ public final class ClimbUpBox extends DynamicInanimate implements Visitable {
 
 		// update timer
 		this.timer.logicLoop();
-		// this.timer.removeTime(nowTime - this.lastTime);
-		// save current time for next iteration
-
 		// Get new strategy from strategy map
 		if (this.timer.timeUp()) {
 			this.current = (this.current + 1) % this.strategies.length;

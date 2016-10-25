@@ -2,7 +2,7 @@ package edu.kit.informatik.ragnarok.logic.level.parser.token;
 
 import java.util.StringTokenizer;
 
-import edu.kit.informatik.ragnarok.visitor.parser.StringParser;
+import home.fox.visitors.parser.StringParser;
 
 /**
  * This class realizes a tokenizer for the LevelLanguage.

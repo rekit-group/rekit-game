@@ -1,6 +1,8 @@
 package edu.kit.informatik.ragnarok.primitives.image;
 
+import edu.kit.informatik.ragnarok.parser.RGBColorParser;
 import edu.kit.informatik.ragnarok.primitives.operable.Operable;
+import home.fox.visitors.annotations.ClassParser;
 
 /**
  * This class defines a Color with RGB channels.
@@ -9,6 +11,7 @@ import edu.kit.informatik.ragnarok.primitives.operable.Operable;
  * @author Angelo Aracri
  *
  */
+@ClassParser(RGBColorParser.class)
 public final class RGBColor implements Cloneable, Operable<RGBColor> {
 	/**
 	 * The red channel.

@@ -6,11 +6,10 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
 import edu.kit.informatik.ragnarok.util.ReflectUtils;
 import edu.kit.informatik.ragnarok.util.TextOptions;
-import edu.kit.informatik.ragnarok.visitor.Visitable;
-import edu.kit.informatik.ragnarok.visitor.annotations.AfterVisit;
-import edu.kit.informatik.ragnarok.visitor.annotations.NoVisit;
-import edu.kit.informatik.ragnarok.visitor.annotations.VisitInfo;
-import edu.kit.informatik.ragnarok.visitor.parser.Parser;
+import home.fox.visitors.Visitable;
+import home.fox.visitors.annotations.AfterVisit;
+import home.fox.visitors.annotations.NoVisit;
+import home.fox.visitors.annotations.VisitInfo;
 
 /**
  * Configuration class that holds static options.

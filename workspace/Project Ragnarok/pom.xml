@@ -19,6 +19,10 @@
 			<id>maven-eclipse-repo</id>
 			<url>http://maven-eclipse.github.io/maven</url>
 		</repository>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
 	</repositories>
 	<build>
 		<resources>

@@ -1,6 +1,8 @@
 package edu.kit.informatik.ragnarok.primitives.geometry;
 
+import edu.kit.informatik.ragnarok.parser.VecParser;
 import edu.kit.informatik.ragnarok.primitives.operable.Operable;
+import home.fox.visitors.annotations.ClassParser;
 
 /**
  * A three dimensional Vector with operations.
@@ -8,7 +10,7 @@ import edu.kit.informatik.ragnarok.primitives.operable.Operable;
  * @author Angelo Aracri
  * @version 1.0
  */
-
+@ClassParser(VecParser.class)
 public final class Vec implements Cloneable, Operable<Vec> {
 
 	/**

@@ -1,11 +1,12 @@
-package edu.kit.informatik.ragnarok.visitor.parser;
+package edu.kit.informatik.ragnarok.parser;
 
 import java.lang.reflect.Field;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
-import edu.kit.informatik.ragnarok.visitor.Visitable;
+import home.fox.visitors.Visitable;
+import home.fox.visitors.parser.Parser;
 
 /**
  * This {@link Parser} is used for parsing {@link Vec Vectors}.

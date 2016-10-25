@@ -13,9 +13,9 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
 import edu.kit.informatik.ragnarok.primitives.time.Timer;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
-import edu.kit.informatik.ragnarok.visitor.Visitable;
-import edu.kit.informatik.ragnarok.visitor.annotations.NoVisit;
-import edu.kit.informatik.ragnarok.visitor.annotations.VisitInfo;
+import home.fox.visitors.Visitable;
+import home.fox.visitors.annotations.NoVisit;
+import home.fox.visitors.annotations.VisitInfo;
 
 /**
  *

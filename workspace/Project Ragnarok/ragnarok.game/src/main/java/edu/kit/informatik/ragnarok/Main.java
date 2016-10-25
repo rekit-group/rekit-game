@@ -7,8 +7,8 @@ import edu.kit.informatik.ragnarok.controller.Controller;
 import edu.kit.informatik.ragnarok.gui.View;
 import edu.kit.informatik.ragnarok.logic.Model;
 import edu.kit.informatik.ragnarok.util.ReflectUtils;
-import edu.kit.informatik.ragnarok.visitor.Visitable;
-import edu.kit.informatik.ragnarok.visitor.Visitor;
+import home.fox.visitors.Visitable;
+import home.fox.visitors.Visitor;
 
 /**
  * Game class that instantiates all necessary classes that are required for a

@@ -2,8 +2,8 @@ package edu.kit.informatik.ragnarok.logic.gameelements.particles;
 
 import java.lang.reflect.Field;
 
-import edu.kit.informatik.ragnarok.visitor.Visitable;
-import edu.kit.informatik.ragnarok.visitor.parser.Parser;
+import home.fox.visitors.Visitable;
+import home.fox.visitors.parser.Parser;
 
 /**
  * This class realize a parser for a {@link ParticleSpawnerOption}.

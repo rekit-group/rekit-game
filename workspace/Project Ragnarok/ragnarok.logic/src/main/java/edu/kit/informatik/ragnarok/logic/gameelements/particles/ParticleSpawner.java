@@ -4,10 +4,10 @@ import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.core.IScene;
 import edu.kit.informatik.ragnarok.primitives.geometry.Polygon;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
-import edu.kit.informatik.ragnarok.visitor.Visitable;
-import edu.kit.informatik.ragnarok.visitor.annotations.ClassParser;
-import edu.kit.informatik.ragnarok.visitor.annotations.NoVisit;
-import edu.kit.informatik.ragnarok.visitor.parser.TwoLevelParser;
+import home.fox.visitors.Visitable;
+import home.fox.visitors.annotations.ClassParser;
+import home.fox.visitors.annotations.NoVisit;
+import home.fox.visitors.parser.TwoLevelParser;
 
 /**
  *

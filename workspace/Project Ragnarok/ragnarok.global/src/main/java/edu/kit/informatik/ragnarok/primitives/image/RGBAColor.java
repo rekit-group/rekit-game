@@ -1,11 +1,15 @@
 package edu.kit.informatik.ragnarok.primitives.image;
 
+import edu.kit.informatik.ragnarok.parser.RGBAColorParser;
+import home.fox.visitors.annotations.ClassParser;
+
 /**
  * This class defines a Color with RGBA channels.
  *
  * @author Dominik Fuchß
  *
  */
+@ClassParser(RGBAColorParser.class)
 public final class RGBAColor {
 	/**
 	 * The red channel.
