@@ -16,7 +16,7 @@
 		<dependency>
 			<groupId>com.github.fuchss-dominik</groupId>
 			<artifactId>visitors</artifactId>
-			<version>latest</version>
+			<version>develop-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>
