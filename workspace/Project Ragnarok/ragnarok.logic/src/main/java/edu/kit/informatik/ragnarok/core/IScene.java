@@ -11,7 +11,7 @@ import edu.kit.informatik.ragnarok.logic.scene.Scenes;
 /**
  * This is the public interface of all Scenes.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 public interface IScene {

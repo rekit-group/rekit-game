@@ -35,7 +35,7 @@ import edu.kit.informatik.ragnarok.util.ThreadUtils;
  * renders all GameElements that GameModel.getGameElementIterator() provides
  *
  * @author Angelo Aracri
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  * @version 1.1
  */

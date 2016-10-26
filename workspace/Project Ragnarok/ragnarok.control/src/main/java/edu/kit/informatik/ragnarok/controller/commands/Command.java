@@ -5,7 +5,7 @@ import edu.kit.informatik.ragnarok.controller.Controller;
 /**
  * This interface defines a command for a {@link Controller}.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 public interface Command {

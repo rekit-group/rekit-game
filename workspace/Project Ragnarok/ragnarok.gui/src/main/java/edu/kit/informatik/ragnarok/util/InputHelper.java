@@ -7,7 +7,7 @@ import edu.kit.informatik.ragnarok.gui.View;
 /**
  * This interface establishes a Listener to Components of the View.<br>
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 public interface InputHelper {

@@ -37,7 +37,7 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
  * </p>
  *
  * @author Angelo Aracri
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  * @version 1.1
  */
 public class StructureManager extends Configurable implements Iterator<Structure> {

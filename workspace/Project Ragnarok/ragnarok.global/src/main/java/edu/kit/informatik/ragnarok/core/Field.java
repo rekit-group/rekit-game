@@ -12,7 +12,7 @@ import edu.kit.informatik.ragnarok.util.TextOptions;
  * This class defines all necessary methods for drawing {@link GameElement
  * GameElements} etc. on a game grid
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  * @author Angelo Aracri
  *
  */

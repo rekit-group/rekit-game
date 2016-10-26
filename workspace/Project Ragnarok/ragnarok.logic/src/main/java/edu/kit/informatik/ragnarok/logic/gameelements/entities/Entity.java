@@ -19,7 +19,7 @@ import edu.kit.informatik.ragnarok.primitives.time.Timer;
  * These are the moving GameElements, which can interact between each other, so
  * as the {@link Player}, {@link Enemy Enemies}, {@link Pickup Pickups}, etc.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  * @author Angelo Aracri
  *
  */

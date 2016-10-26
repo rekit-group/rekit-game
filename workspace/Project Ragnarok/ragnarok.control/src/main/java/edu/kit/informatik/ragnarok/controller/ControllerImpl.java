@@ -25,7 +25,7 @@ import edu.kit.informatik.ragnarok.util.Tuple;
  * This is an implementation of an {@link Controller} of the MVC <br>
  * It handles all input Events.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 final class ControllerImpl implements Observer, Controller, CommandSupervisor {

@@ -3,7 +3,7 @@ package edu.kit.informatik.ragnarok.util;
 /**
  * This class contains several methods for a better usability of Threads.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 public final class ThreadUtils {

@@ -16,7 +16,7 @@ import edu.kit.informatik.ragnarok.logic.level.parser.token.UnexpectedTokenExcep
  * This class directly parses an {@link Level} from an {@link String} to a
  * {@link StructureManager}.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 class StringParser extends LevelParser {

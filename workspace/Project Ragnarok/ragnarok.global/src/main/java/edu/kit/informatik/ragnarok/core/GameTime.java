@@ -4,7 +4,7 @@ package edu.kit.informatik.ragnarok.core;
  * This class manages the time of the game and replaces
  * {@link System#currentTimeMillis()}.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 public final class GameTime {

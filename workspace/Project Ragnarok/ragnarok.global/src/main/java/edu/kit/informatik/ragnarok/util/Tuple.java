@@ -3,7 +3,7 @@ package edu.kit.informatik.ragnarok.util;
 /**
  * This class defines a tuple.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  * @param <T>
  *            type1

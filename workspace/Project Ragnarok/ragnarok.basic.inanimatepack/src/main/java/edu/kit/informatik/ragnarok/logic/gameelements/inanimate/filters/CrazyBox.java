@@ -7,7 +7,7 @@ import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 /**
  * Realizes a {@link FilterBox} with {@link RandomMode} as {@link Filter}.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 @LoadMe

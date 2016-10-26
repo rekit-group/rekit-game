@@ -10,7 +10,7 @@ import org.eclipse.swt.widgets.Display;
 /**
  * This class helps to load images from the resources.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  *
  */

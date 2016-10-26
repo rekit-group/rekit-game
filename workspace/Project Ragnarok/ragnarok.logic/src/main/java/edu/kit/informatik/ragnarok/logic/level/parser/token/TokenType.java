@@ -3,7 +3,7 @@ package edu.kit.informatik.ragnarok.logic.level.parser.token;
 /**
  * This class defines the different TokenTypes which exist in the LevelLanguage.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 public enum TokenType {

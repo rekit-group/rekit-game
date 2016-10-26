@@ -15,7 +15,7 @@ import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
  * The (maybe) most important {@link Entity} of the Game:<br>
  * The Player (most likely you).
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  * @author Angelo Aracri
  *
  */

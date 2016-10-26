@@ -32,7 +32,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.GameElementFactory;
  * </p>
  *
  * @author Angelo Aracri
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  * @version 1.1
  */
 public class Structure extends Configurable {

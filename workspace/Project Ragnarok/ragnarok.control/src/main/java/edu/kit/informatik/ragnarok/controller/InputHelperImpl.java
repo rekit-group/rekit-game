@@ -13,7 +13,7 @@ import edu.kit.informatik.ragnarok.util.ThreadUtils;
  * This class establishes a Listener to Components of the Shell<br>
  * Also {@link Observer Observers} can register to receive events.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 final class InputHelperImpl implements InputHelper {

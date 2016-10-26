@@ -13,7 +13,7 @@ import edu.kit.informatik.ragnarok.util.ThreadUtils;
  * Main class of the Model. Manages the logic
  *
  * @author Angelo Aracri
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  * @version 1.1
  */

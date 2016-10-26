@@ -19,7 +19,7 @@ import home.fox.visitors.annotations.VisitInfo;
  * This Box realizes an {@link Inanimate} which boosts the Player from time to
  * time.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 @LoadMe
@@ -137,7 +137,7 @@ public final class BoostBox extends DynamicInanimate implements Visitable {
 	 * This class is the base class for all different behaviors of a
 	 * {@link BoostBox}.
 	 *
-	 * @author Dominik Fuchß
+	 * @author Dominik Fuchss
 	 *
 	 */
 	private abstract class BoostBoxStrategy {
@@ -191,7 +191,7 @@ public final class BoostBox extends DynamicInanimate implements Visitable {
 	/**
 	 * The default strategy: A normal {@link InanimateBox}.
 	 *
-	 * @author Dominik Fuchß
+	 * @author Dominik Fuchss
 	 *
 	 */
 	private class NoBoost extends BoostBoxStrategy {
@@ -220,7 +220,7 @@ public final class BoostBox extends DynamicInanimate implements Visitable {
 	/**
 	 * The first level strategy: A small boost upwards.
 	 *
-	 * @author Dominik Fuchß
+	 * @author Dominik Fuchss
 	 *
 	 */
 	private class BoostFirstState extends BoostBoxStrategy {
@@ -253,7 +253,7 @@ public final class BoostBox extends DynamicInanimate implements Visitable {
 	/**
 	 * The max level strategy: A huge boost upwards.
 	 *
-	 * @author Dominik Fuchß
+	 * @author Dominik Fuchss
 	 *
 	 */
 	private class BoostMaxState extends BoostBoxStrategy {

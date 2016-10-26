@@ -7,7 +7,7 @@ import home.fox.visitors.annotations.ClassParser;
 /**
  * This class defines a Color with RGB channels.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  * @author Angelo Aracri
  *
  */

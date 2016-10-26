@@ -27,7 +27,7 @@ import edu.kit.informatik.ragnarok.util.TextOptions;
  * This class represents a {@link Field} of the {@link GameView}.
  *
  * @author Angelo Aracri
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 class FieldImpl extends Field {

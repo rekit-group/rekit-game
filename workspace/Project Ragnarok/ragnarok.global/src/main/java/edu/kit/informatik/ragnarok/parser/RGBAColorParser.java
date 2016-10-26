@@ -11,7 +11,7 @@ import home.fox.visitors.parser.Parser;
 /**
  * This {@link Parser} is used for parsing {@link RGBAColor RGBAColors}.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 public final class RGBAColorParser implements Parser {

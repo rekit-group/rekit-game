@@ -9,7 +9,7 @@ import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
 /**
  * This class realizes a TextField for a Menu.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 public class TextMenu extends MenuItem {

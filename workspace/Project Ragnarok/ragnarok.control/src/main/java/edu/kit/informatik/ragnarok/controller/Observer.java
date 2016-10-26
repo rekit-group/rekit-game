@@ -3,7 +3,7 @@ package edu.kit.informatik.ragnarok.controller;
 /**
  * This interface represents a Observer of the Observer Pattern.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 public interface Observer {

@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * This class represents a token for the LevelLanguage.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  * @see TokenType
  */
 public class Token {

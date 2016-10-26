@@ -27,7 +27,7 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
  * </p>
  *
  * @author Angelo Aracri
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  */
 public abstract class GameElement implements Collidable, Comparable<GameElement> {
 

@@ -22,7 +22,7 @@ import home.fox.visitors.annotations.VisitInfo;
  * slows the player. This enemy consits of {@link SlurpDurp} (green bubbles)
  * which will slow down the {@link Player} at collision
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 @LoadMe

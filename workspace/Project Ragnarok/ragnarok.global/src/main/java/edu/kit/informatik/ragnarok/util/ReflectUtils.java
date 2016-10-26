@@ -14,7 +14,7 @@ import org.reflections.Reflections;
  * This class contains several methods for using Java Reflections in a proper
  * way.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 public final class ReflectUtils {
@@ -78,7 +78,7 @@ public final class ReflectUtils {
 	 * If a class wants to be loaded, the class needs a <b>default
 	 * constructor</b>
 	 *
-	 * @author Dominik Fuchß
+	 * @author Dominik Fuchss
 	 * @see ReflectUtils#loadInstances(String, Class)
 	 *
 	 */

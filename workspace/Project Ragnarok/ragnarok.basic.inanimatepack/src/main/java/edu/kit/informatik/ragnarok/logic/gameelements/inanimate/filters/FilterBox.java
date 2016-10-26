@@ -13,7 +13,7 @@ import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
  * This class realizes a box which applies {@link Filter Filters} to the game by
  * colliding with it.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 class FilterBox extends DynamicInanimate {

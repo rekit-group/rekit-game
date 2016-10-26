@@ -19,7 +19,7 @@ import home.fox.visitors.annotations.VisitInfo;
 /**
  * This Box realizes an {@link Inanimate} which the Player can climb up.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 @LoadMe
@@ -159,7 +159,7 @@ public final class ClimbUpBox extends DynamicInanimate implements Visitable {
 	 * This class is the base class for all different behaviors of a
 	 * {@link ClimbUpBox}.
 	 *
-	 * @author Dominik Fuchß
+	 * @author Dominik Fuchss
 	 *
 	 */
 	private abstract class ClimbBoxStrategy {
@@ -222,7 +222,7 @@ public final class ClimbUpBox extends DynamicInanimate implements Visitable {
 	/**
 	 * The default strategy: A normal {@link InanimateBox}.
 	 *
-	 * @author Dominik Fuchß
+	 * @author Dominik Fuchss
 	 *
 	 */
 	private class NoClimb extends ClimbBoxStrategy {
@@ -250,7 +250,7 @@ public final class ClimbUpBox extends DynamicInanimate implements Visitable {
 	/**
 	 * The boost strategy: A Climbing is possible.
 	 *
-	 * @author Dominik Fuchß
+	 * @author Dominik Fuchss
 	 *
 	 */
 	private class BoostClimb extends ClimbBoxStrategy {

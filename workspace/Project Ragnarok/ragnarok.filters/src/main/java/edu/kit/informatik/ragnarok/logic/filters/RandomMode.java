@@ -9,7 +9,7 @@ import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 /**
  * This filter realizes a filter which will map a color to a random color.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 @LoadMe

@@ -13,7 +13,7 @@ import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
 /**
  * This class contains several tools for working with SWT.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 public final class SwtUtils {

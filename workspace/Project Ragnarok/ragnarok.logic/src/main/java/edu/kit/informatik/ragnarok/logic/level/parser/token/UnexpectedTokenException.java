@@ -4,7 +4,7 @@ package edu.kit.informatik.ragnarok.logic.level.parser.token;
  * The Class UnexpectedTokenExecption.<br>
  * This exception will thrown when an Unexpected Token reached
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  * @version 1
  */
 public class UnexpectedTokenException extends RuntimeException {

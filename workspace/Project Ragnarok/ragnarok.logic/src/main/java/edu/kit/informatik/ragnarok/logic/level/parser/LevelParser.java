@@ -7,7 +7,7 @@ import edu.kit.informatik.ragnarok.logic.level.StructureManager;
  * This class shall be implemented from all classes which want to parse a
  * {@link Level} to a {@link StructureManager}.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 public abstract class LevelParser {

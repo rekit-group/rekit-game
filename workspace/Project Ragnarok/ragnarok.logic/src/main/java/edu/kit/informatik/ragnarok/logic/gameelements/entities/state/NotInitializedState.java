@@ -8,7 +8,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
  * This state will print to the syserr that the wrong constructor
  * {@link Entity#Entity(Team team)} was used to create this element
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 public class NotInitializedState extends EntityState {

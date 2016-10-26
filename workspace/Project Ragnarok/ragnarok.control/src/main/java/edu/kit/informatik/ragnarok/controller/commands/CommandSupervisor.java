@@ -9,7 +9,7 @@ import edu.kit.informatik.ragnarok.logic.gui.menu.MenuItem;
  * This interface defines methods to get info from a {@link Model} and will be
  * used by {@link EntityCommand EntityCommands}.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 public interface CommandSupervisor {

@@ -7,7 +7,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.state.JumpState;
 /**
  * This {@link EntityCommand} will cause a Jump of an {@link Entity}.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  * @author Angelo Aracri
  *
  */

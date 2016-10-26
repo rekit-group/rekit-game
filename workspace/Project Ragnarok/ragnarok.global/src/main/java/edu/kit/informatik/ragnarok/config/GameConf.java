@@ -15,7 +15,7 @@ import home.fox.visitors.annotations.VisitInfo;
  * Configuration class that holds static options.
  *
  * @author Angelo Aracri
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  * @version 1.1
  */
 @VisitInfo(res = "conf/game", visit = true)

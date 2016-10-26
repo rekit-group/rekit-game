@@ -9,7 +9,7 @@ import edu.kit.informatik.ragnarok.primitives.image.Filter;
  * Filters} to a {@link View}. <br>
  * <b>Only for testing purposes</b>
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 public final class FilterCommand implements Command {

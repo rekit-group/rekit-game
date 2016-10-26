@@ -6,7 +6,7 @@ import edu.kit.informatik.ragnarok.util.InputHelper;
 /**
  * This Interface defines the View for the MVC.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 public interface View {

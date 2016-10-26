@@ -6,7 +6,7 @@ import home.fox.visitors.annotations.ClassParser;
 /**
  * This class defines a Color with RGBA channels.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 @ClassParser(RGBAColorParser.class)

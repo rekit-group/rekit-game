@@ -8,7 +8,7 @@ import home.fox.visitors.parser.Parser;
 /**
  * This class realize a parser for a {@link ParticleSpawnerOption}.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 public final class ParticleSpawnerOptionParser implements Parser {

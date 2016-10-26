@@ -8,7 +8,7 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 /**
  * This {@link EntityCommand} will cause a Walk of an {@link Entity}.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  * @author Angelo Aracri
  *
  */

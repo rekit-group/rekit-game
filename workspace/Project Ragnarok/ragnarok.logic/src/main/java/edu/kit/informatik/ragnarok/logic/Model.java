@@ -8,7 +8,7 @@ import edu.kit.informatik.ragnarok.primitives.image.Filter;
 /**
  * This Interface defines the Model for the MVC.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 public interface Model {

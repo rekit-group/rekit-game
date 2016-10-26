@@ -12,7 +12,7 @@ import home.fox.visitors.parser.Parser;
 /**
  * This {@link Parser} is used for parsing {@link RGBColor RGBColors}.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 @ClassParser(RGBColorParser.class)

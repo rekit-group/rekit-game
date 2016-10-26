@@ -92,7 +92,7 @@ public enum Scenes {
 	 * Static context in constructor of enums is quite difficult so we use a
 	 * helper class.
 	 *
-	 * @author Dominik Fuchß
+	 * @author Dominik Fuchss
 	 *
 	 */
 	private static class ConcurrentHelper {

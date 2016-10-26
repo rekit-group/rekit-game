@@ -7,7 +7,7 @@ import home.fox.visitors.parser.StringParser;
 /**
  * This class realizes a tokenizer for the LevelLanguage.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  * @see StringParser
  * @see TokenType
  *

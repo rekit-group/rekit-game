@@ -3,7 +3,7 @@ package edu.kit.informatik.ragnarok.logic;
 /**
  * This enum defines the different states of the game.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 public enum GameState {

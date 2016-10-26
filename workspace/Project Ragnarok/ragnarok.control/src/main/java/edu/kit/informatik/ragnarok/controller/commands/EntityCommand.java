@@ -8,7 +8,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
  * This class defines an Command which will be executed by a {@link Controller}
  * and is linked to an {@link Entity}.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  * @see JumpCommand
  * @see WalkCommand
  */

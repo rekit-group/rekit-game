@@ -15,7 +15,7 @@ import home.fox.visitors.Visitor;
  * game. implements a singleton to prevent multiple instantiation.
  *
  * @author Angelo Aracri
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  * @version 1.0
  */
 public final class Main {

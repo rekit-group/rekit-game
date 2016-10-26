@@ -6,7 +6,7 @@ import edu.kit.informatik.ragnarok.logic.Model;
 /**
  * This Interface defines the Controller for the MVC.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 public interface Controller {

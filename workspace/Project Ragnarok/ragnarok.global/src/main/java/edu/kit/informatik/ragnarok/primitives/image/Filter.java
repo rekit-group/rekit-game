@@ -8,7 +8,7 @@ import edu.kit.informatik.ragnarok.util.ReflectUtils;
 /**
  * This interface defines all kind of image filters for the game.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 public interface Filter {

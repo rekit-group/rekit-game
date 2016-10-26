@@ -3,7 +3,7 @@ package edu.kit.informatik.ragnarok.core;
 /**
  * This enum defines all different teams and their relationships.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 public enum Team {

@@ -5,7 +5,7 @@ import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 /**
  * Realizes a {@link FilterBox} which resets all filters.
  *
- * @author Dominik Fuchß
+ * @author Dominik Fuchss
  *
  */
 @LoadMe
