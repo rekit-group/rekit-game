@@ -339,7 +339,7 @@ public abstract class Field {
 
 	/**
 	 * Draw a path.
-	 * 
+	 *
 	 * @param startPos
 	 *            the start point
 	 * @param pts
@@ -348,6 +348,5 @@ public abstract class Field {
 	 *            the color
 	 */
 	// TODO Check JDoc
-	public void drawPath(Vec startPos, List<Vec> pts, RGBColor in) {
-	}
+	public abstract void drawPath(Vec startPos, List<Vec> pts, RGBColor in);
 }
