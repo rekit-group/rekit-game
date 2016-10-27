@@ -2,6 +2,9 @@ package edu.kit.informatik.ragnarok;
 
 import java.util.Set;
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Level;
+
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.controller.Controller;
 import edu.kit.informatik.ragnarok.gui.View;
@@ -9,6 +12,7 @@ import edu.kit.informatik.ragnarok.logic.Model;
 import edu.kit.informatik.ragnarok.util.ReflectUtils;
 import home.fox.visitors.Visitable;
 import home.fox.visitors.Visitor;
+import home.fox.visitors.parser.Parser;
 
 /**
  * Game class that instantiates all necessary classes that are required for a
@@ -32,6 +36,7 @@ public final class Main {
 	 *            not used
 	 */
 	public static void main(String[] args) {
+		Main.setLogLevel(Level.ALL);
 		// Load All Configs
 		Main.visitAllStatic();
 		// Create MVC
@@ -47,6 +52,21 @@ public final class Main {
 		model.start();
 		controller.start();
 		view.start();
+
+	}
+
+	/**
+	 * Set log level for loggers.
+	 *
+	 * @param level
+	 *            the level
+	 */
+	private static final void setLogLevel(Level level) {
+		// Initialize Loggers ...
+		BasicConfigurator.configure();
+		GameConf.GAME_LOGGER.setLevel(level);
+		Visitor.LOGGER.setLevel(level);
+		Parser.LOGGER.setLevel(level);
 
 	}
 
