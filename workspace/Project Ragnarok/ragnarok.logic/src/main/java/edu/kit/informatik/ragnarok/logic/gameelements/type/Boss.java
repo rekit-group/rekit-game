@@ -101,7 +101,7 @@ public abstract class Boss extends Entity {
 		}
 
 		BossStructure structure = new BossStructure(struct, this);
-		System.err.println("Error while spawning Boss: " + this.getClass().getName() + " did not specify getBossStructure()");
+		GameConf.GAME_LOGGER.error("Error while spawning Boss: " + this.getClass().getName() + " did not specify getBossStructure()");
 		this.setBossStructure(structure);
 		return structure;
 	}

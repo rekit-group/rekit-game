@@ -156,7 +156,7 @@ public final class LevelManager {
 			// close scanner after use to prevent resource-wasting
 			scanner.close();
 		} catch (FileNotFoundException e) {
-			System.err.println("Error while opening " + LevelManager.FILE.getAbsolutePath() + " for scores and saves: FileNotFound");
+			GameConf.GAME_LOGGER.error("Error while opening " + LevelManager.FILE.getAbsolutePath() + " for scores and saves: FileNotFound");
 		}
 	}
 
@@ -185,7 +185,7 @@ public final class LevelManager {
 		try {
 			levelStream = new FileOutputStream(LevelManager.FILE);
 		} catch (IOException e) {
-			System.err.println("Error while opening " + LevelManager.FILE.getAbsolutePath() + " for saving scores and saves: FileNotFound");
+			GameConf.GAME_LOGGER.error("Error while opening " + LevelManager.FILE.getAbsolutePath() + " for saving scores and saves: FileNotFound");
 			return;
 		}
 		// get byte-array from String
@@ -198,7 +198,7 @@ public final class LevelManager {
 			// close FileInputStream after use to prevent resource-wasting
 			levelStream.close();
 		} catch (IOException e) {
-			System.err.println("Error while saving " + LevelManager.FILE.getAbsolutePath() + " for scores and saves: IOException");
+			GameConf.GAME_LOGGER.error("Error while saving " + LevelManager.FILE.getAbsolutePath() + " for scores and saves: IOException");
 			try {
 				levelStream.close();
 			} catch (IOException e1) {

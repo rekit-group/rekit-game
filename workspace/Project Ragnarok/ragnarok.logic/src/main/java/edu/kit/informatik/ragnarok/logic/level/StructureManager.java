@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
+import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.core.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.GameElementFactory;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Player;
@@ -322,7 +323,7 @@ public class StructureManager extends Configurable implements Iterator<Structure
 						StructureManager.this.unitsBuilt += bossStructure.getWidth();
 						return bossStructure;
 					} else {
-						System.err.println("Error while spawning Boss: " + this.getSettingValue(setting) + " is not a BossID");
+						GameConf.GAME_LOGGER.error("Error while spawning Boss: " + this.getSettingValue(setting) + " is not a BossID");
 					}
 
 				}
@@ -402,7 +403,7 @@ public class StructureManager extends Configurable implements Iterator<Structure
 
 	/**
 	 * Set an alias.
-	 * 
+	 *
 	 * @param toReplace
 	 *            the source
 	 * @param replaceWith
@@ -410,14 +411,14 @@ public class StructureManager extends Configurable implements Iterator<Structure
 	 */
 	public void setAlias(String toReplace, String replaceWith) {
 		if (this.alias.put(toReplace, replaceWith) != null) {
-			System.err.println("WARNING: Multiple definitions (alias) for " + toReplace);
+			GameConf.GAME_LOGGER.warn("Multiple definitions (alias) for " + toReplace);
 		}
 
 	}
 
 	/**
 	 * Get the alias map.
-	 * 
+	 *
 	 * @return the aloas map
 	 */
 	public Map<String, String> getAlias() {

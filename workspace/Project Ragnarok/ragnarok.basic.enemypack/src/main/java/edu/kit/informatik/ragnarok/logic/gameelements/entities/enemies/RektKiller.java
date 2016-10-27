@@ -244,7 +244,7 @@ public final class RektKiller extends Enemy {
 			if (opt >= 0 && opt < Direction.values().length) {
 				inst.setCurrentDirection(Direction.values()[opt]);
 			} else {
-				System.err.println("Error, RektKiller was supplied invalid option " + options[0] + " at index 0 for Direction");
+				GameConf.GAME_LOGGER.error("RektKiller was supplied invalid option " + options[0] + " at index 0 for Direction");
 			}
 		}
 

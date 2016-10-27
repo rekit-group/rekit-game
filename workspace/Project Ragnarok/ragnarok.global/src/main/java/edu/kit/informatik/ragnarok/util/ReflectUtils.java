@@ -10,6 +10,8 @@ import java.util.Set;
 
 import org.reflections.Reflections;
 
+import edu.kit.informatik.ragnarok.config.GameConf;
+
 /**
  * This class contains several methods for using Java Reflections in a proper
  * way.
@@ -50,7 +52,7 @@ public final class ReflectUtils {
 				c.setAccessible(true);
 				objects.add((T) c.newInstance());
 			} catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-				System.err.println(clazz.getSimpleName() + " not loaded !");
+				GameConf.GAME_LOGGER.error(clazz.getSimpleName() + " not loaded !");
 			}
 		}
 		return objects;

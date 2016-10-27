@@ -1,5 +1,6 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.entities.state;
 
+import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.core.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 
@@ -33,8 +34,8 @@ public class NotInitializedState extends EntityState {
 			return;
 		}
 		this.done = true;
-		System.err.println("Entity " + this.entity.getClass().getSimpleName() + ": State: NotInitializedState");
-		System.err.println("Entity of type " + this.entity.getClass().getSimpleName()
+		GameConf.GAME_LOGGER.error("Entity " + this.entity.getClass().getSimpleName() + ": State: NotInitializedState");
+		GameConf.GAME_LOGGER.error("Entity of type " + this.entity.getClass().getSimpleName()
 				+ " is not initialized; maybe you have used the wrong constructor of Entity!");
 	}
 
@@ -44,8 +45,8 @@ public class NotInitializedState extends EntityState {
 			return;
 		}
 		this.done = true;
-		System.err.println("Entity " + this.entity.getClass().getSimpleName() + ": State: NotInitializedState");
-		System.err.println("Entity of type " + this.entity.getClass().getSimpleName()
+		GameConf.GAME_LOGGER.error("Entity " + this.entity.getClass().getSimpleName() + ": State: NotInitializedState");
+		GameConf.GAME_LOGGER.error("Entity of type " + this.entity.getClass().getSimpleName()
 				+ " is not initialized; maybe you have used the wrong constructor of Entity!");
 
 	}

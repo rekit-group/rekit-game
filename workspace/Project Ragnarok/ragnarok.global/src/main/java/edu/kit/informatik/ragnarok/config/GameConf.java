@@ -2,6 +2,10 @@ package edu.kit.informatik.ragnarok.config;
 
 import java.util.Random;
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
 import edu.kit.informatik.ragnarok.util.ReflectUtils;
@@ -215,6 +219,11 @@ public final class GameConf implements Visitable {
 	 */
 	@NoVisit
 	public static TextOptions HINT_TEXT;
+	/**
+	 * The Global GAME_LOGGER.
+	 */
+	@NoVisit
+	public static final Logger GAME_LOGGER = Logger.getLogger(GameConf.class);
 
 	/**
 	 * Set values which cannot be loaded by {@link Parser Parsers}.
@@ -229,5 +238,7 @@ public final class GameConf implements Visitable {
 		GameConf.DEBUG_TEXT_COLOR = new RGBColor(255, 255, 255);
 		GameConf.HINT_TEXT = GameConf.DEFAULT_TEXT.clone().setHeight(GameConf.GAME_TEXT_SIZE - 8).setColor(GameConf.DEBUG_TEXT_COLOR);
 		GameConf.ABOUT_TEXT = GameConf.HINT_TEXT.clone().setAlignmentLeft(new Vec());
+		BasicConfigurator.configure();
+		GameConf.GAME_LOGGER.setLevel(Level.INFO);
 	}
 }

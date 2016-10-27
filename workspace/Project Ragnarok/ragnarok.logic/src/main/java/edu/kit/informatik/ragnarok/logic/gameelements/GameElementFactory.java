@@ -78,7 +78,7 @@ public final class GameElementFactory {
 			return group[GameConf.PRNG.nextInt(group.length)];
 		}
 
-		System.err.println("Error in GameElementFactory: Tried to get Prototype of GameElement with unknown ID " + id);
+		GameConf.GAME_LOGGER.error("Error in GameElementFactory: Tried to get Prototype of GameElement with unknown ID " + id);
 		// if none found --> inanimate
 		return Inanimate.getPrototype();
 	}

@@ -11,12 +11,18 @@
 		<dependency>
 			<groupId>org.reflections</groupId>
 			<artifactId>reflections</artifactId>
-			<version>0.9.10</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.fuchss-dominik</groupId>
 			<artifactId>visitors</artifactId>
-			<version>develop-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>apache-log4j-extras</artifactId>
 		</dependency>
 	</dependencies>
 </project>

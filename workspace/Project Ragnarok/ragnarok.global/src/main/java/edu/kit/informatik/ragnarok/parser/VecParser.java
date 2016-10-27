@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import home.fox.visitors.Visitable;
 import home.fox.visitors.parser.Parser;
@@ -23,7 +24,7 @@ public final class VecParser implements Parser {
 		Pattern pattern = Pattern.compile("[-|\\+]?([0-9]+\\.[0-9]+[f|F]),[-|\\+]?([0-9]+\\.[0-9]+[f|F])");
 		Matcher matcher = pattern.matcher(definition);
 		if (!matcher.find()) {
-			System.err.println("BundleHelper: " + definition + " is no Vec");
+			GameConf.GAME_LOGGER.error("BundleHelper: " + definition + " is no Vec");
 			return false;
 		}
 

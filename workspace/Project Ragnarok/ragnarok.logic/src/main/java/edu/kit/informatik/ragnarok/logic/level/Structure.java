@@ -179,7 +179,7 @@ public class Structure extends Configurable {
 	private String alias(String string) {
 		String alias = this.alias.get(string);
 		if (alias == null && !"0".equals(string)) {
-			System.err.println("Waring: No alias found for ID " + string);
+			GameConf.GAME_LOGGER.warn("No alias found for ID " + string);
 		}
 		return alias;
 	}

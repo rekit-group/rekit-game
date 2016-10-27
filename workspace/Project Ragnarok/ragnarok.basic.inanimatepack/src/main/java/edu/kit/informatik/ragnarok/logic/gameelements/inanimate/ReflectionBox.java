@@ -1,5 +1,7 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.inanimate;
 
+import org.apache.log4j.Level;
+
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.core.Field;
 import edu.kit.informatik.ragnarok.core.GameElement;
@@ -76,7 +78,7 @@ public final class ReflectionBox extends DynamicInanimate {
 				v = new Vec(dir.getVector().getX() * GameConf.PLAYER_WALK_MAX_SPEED, 0.8f * GameConf.PLAYER_JUMP_BOOST);
 			}
 
-			System.out.println(dir + ": " + v.toString() + " => " + element.getVel().toString());
+			GameConf.GAME_LOGGER.log(Level.DEBUG, dir + ": " + v.toString() + " => " + element.getVel().toString(), null);
 
 			// use internal collision
 			super.reactToCollision(element, dir);

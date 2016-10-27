@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.controller.commands.Command;
 import edu.kit.informatik.ragnarok.controller.commands.CommandSupervisor;
 import edu.kit.informatik.ragnarok.controller.commands.InputMethod;
@@ -113,7 +114,7 @@ final class ControllerImpl implements Observer, Controller, CommandSupervisor {
 			this.mpCmd.get(idKey).execute(inputMethod);
 			return;
 		}
-		System.err.println("Warning: No Event defined for Key-ID: " + id + " State: " + this.model.getState());
+		GameConf.GAME_LOGGER.warn("No Event defined for Key-ID: " + id + " State: " + this.model.getState());
 
 	}
 
