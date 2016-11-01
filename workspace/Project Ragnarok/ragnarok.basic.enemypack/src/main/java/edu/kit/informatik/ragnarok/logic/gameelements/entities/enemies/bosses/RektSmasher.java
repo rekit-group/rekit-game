@@ -193,9 +193,9 @@ public final class RektSmasher extends Boss implements Visitable {
 
 	@Override
 	public BossStructure getBossStructure() {
-		String i = Inanimate.class.getName();
+		String i = Inanimate.class.getSimpleName();
 		String n = null;
-		String r = RektKiller.class.getName();
+		String r = RektKiller.class.getSimpleName();
 		String[][] struct = new String[][] { //
 				{ i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i },
 				{ i, r, n, n, n, r, i, n, n, n, n, n, i, n, n, n, i, i, n, n, n, i, n, n, n, n, n, n },

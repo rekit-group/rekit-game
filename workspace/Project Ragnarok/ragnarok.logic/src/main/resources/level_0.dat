@@ -3,9 +3,9 @@
 #SETTING::infinite->false
 #SETTING::autoCoinSpawn->false
 
-#ALIAS::1->edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate
-#ALIAS::10->edu.kit.informatik.ragnarok.logic.gameelements.entities.pickups.Coin
-#ALIAS::2->edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.RektKiller
+#ALIAS::1->Inanimate
+#ALIAS::10->Coin
+#ALIAS::2->RektKiller
 
 {
 {0	0	0	0	0	0	0	0	0 }

@@ -137,14 +137,14 @@ public final class GameElementFactory {
 	 */
 	private static void loadElements() {
 		// Put Blocks in collection
-		GameElementFactory.elements.put(Inanimate.getPrototype().getClass().getName(), Inanimate.getPrototype());
+		GameElementFactory.elements.put(Inanimate.getPrototype().getClass().getSimpleName(), Inanimate.getPrototype());
 
-		GameElementFactory.elements.put(EndTrigger.getPrototype().getClass().getName(), EndTrigger.getPrototype());
+		GameElementFactory.elements.put(EndTrigger.getPrototype().getClass().getSimpleName(), EndTrigger.getPrototype());
 		for (DynamicInanimate e : DynamicInanimate.getInanimatePrototypes()) {
-			GameElementFactory.elements.put(e.getClass().getName(), e);
+			GameElementFactory.elements.put(e.getClass().getSimpleName(), e);
 		}
 		for (Boss e : Boss.getBossPrototypes()) {
-			GameElementFactory.elements.put(e.getClass().getName(), e);
+			GameElementFactory.elements.put(e.getClass().getSimpleName(), e);
 		}
 	}
 
@@ -157,20 +157,20 @@ public final class GameElementFactory {
 		Enemy[] enemyCollection = new Enemy[enemyPrototypes.size()];
 		int i = 0;
 		for (Enemy e : enemyPrototypes) {
-			GameElementFactory.elements.put(e.getClass().getName(), e);
+			GameElementFactory.elements.put(e.getClass().getSimpleName(), e);
 			enemyCollection[i++] = e;
 		}
-		GameElementFactory.groups.put(Enemy.class.getName(), enemyCollection);
+		GameElementFactory.groups.put(Enemy.class.getSimpleName(), enemyCollection);
 
 		// Put Pickups in collection and in separate array
 		Set<Pickup> pickupPrototypes = Pickup.getPickupPrototypes();
 		Pickup[] pickupCollection = new Pickup[pickupPrototypes.size()];
 		i = 0;
 		for (Pickup e : pickupPrototypes) {
-			GameElementFactory.elements.put(e.getClass().getName(), e);
+			GameElementFactory.elements.put(e.getClass().getSimpleName(), e);
 			pickupCollection[i++] = e;
 		}
-		GameElementFactory.groups.put(Pickup.class.getName(), pickupCollection);
+		GameElementFactory.groups.put(Pickup.class.getSimpleName(), pickupCollection);
 
 	}
 
@@ -183,7 +183,7 @@ public final class GameElementFactory {
 	 *            the y pos
 	 */
 	public static void generateCoin(int x, int y) {
-		GameElementFactory.generate("edu.kit.informatik.ragnarok.logic.gameelements.entities.pickups.Coin", x, y);
+		GameElementFactory.generate("Coin", x, y);
 
 	}
 
@@ -196,6 +196,6 @@ public final class GameElementFactory {
 	 *            the y pos
 	 */
 	public static void generateInanimate(int x, int y) {
-		GameElementFactory.generate(Inanimate.class.getName(), x, y);
+		GameElementFactory.generate(Inanimate.class.getSimpleName(), x, y);
 	}
 }

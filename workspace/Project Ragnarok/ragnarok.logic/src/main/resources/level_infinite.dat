@@ -5,19 +5,19 @@
 #SETTING::takeOverWorld->false
 #SETTING::autoCoinSpawn->false
 
-#BOSS_SETTING::AT25->edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.bosses.RektSmasher
-#BOSS_SETTING::AT50->edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.bosses.rocketboss.RocketBoss
+#BOSS_SETTING::AT25->RektSmasher
+#BOSS_SETTING::AT50->RocketBoss
 
-#ALIAS::-1->edu.kit.informatik.ragnarok.logic.gameelements.type.Enemy
-#ALIAS::1->edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate
-#ALIAS::5->edu.kit.informatik.ragnarok.logic.gameelements.entities.pickups.Coin
-#ALIAS::6->edu.kit.informatik.ragnarok.logic.gameelements.entities.pickups.Life
+#ALIAS::-1->Enemy
+#ALIAS::1->Inanimate
+#ALIAS::5->Coin
+#ALIAS::6->Life
 
-#ALIAS::11->edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.RektKiller
-#ALIAS::12->edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.Rocket
-#ALIAS::13->edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.Stacker
-#ALIAS::14->edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.Warper
-#ALIAS::15->edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.slurp.Slurp
+#ALIAS::11->RektKiller
+#ALIAS::12->Rocket
+#ALIAS::13->Stacker
+#ALIAS::14->Warper
+#ALIAS::15->Slurp
 
 { 
 {1}

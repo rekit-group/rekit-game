@@ -346,7 +346,7 @@ public class StructureManager extends Configurable implements Iterator<Structure
 	 */
 	private Structure getInitialStructure() {
 		// Flat floor
-		String floor = "edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate";
+		String floor = Inanimate.class.getSimpleName();
 		List<String[]> lines = new ArrayList<>();
 		lines.add(new String[] { floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor, floor });
 		Structure structure = new Structure(lines, new HashMap<>());

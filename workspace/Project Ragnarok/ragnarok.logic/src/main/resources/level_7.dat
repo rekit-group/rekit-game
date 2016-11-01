@@ -3,11 +3,11 @@
 #SETTING::infinite->true
 #SETTING::autoCoinSpawn->true
 
-#ALIAS::1->edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate
-#ALIAS::2->edu.kit.informatik.ragnarok.logic.gameelements.inanimate.filters.GrayBox
-#ALIAS::3->edu.kit.informatik.ragnarok.logic.gameelements.inanimate.filters.ResetBox
-#ALIAS::4->edu.kit.informatik.ragnarok.logic.gameelements.inanimate.filters.InvertBox
-#ALIAS::5->edu.kit.informatik.ragnarok.logic.gameelements.inanimate.filters.CrazyBox
+#ALIAS::1->Inanimate
+#ALIAS::2->GrayBox
+#ALIAS::3->ResetBox
+#ALIAS::4->InvertBox
+#ALIAS::5->CrazyBox
 
 { 
 {0	0	0	0	0	0	0}

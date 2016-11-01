@@ -3,16 +3,16 @@
 #SETTING::infinite->false
 #SETTING::autoCoinSpawn->false
 
-#ALIAS::1->edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate
-#ALIAS::10->edu.kit.informatik.ragnarok.logic.gameelements.entities.pickups.Coin
-#ALIAS::11->edu.kit.informatik.ragnarok.logic.gameelements.entities.pickups.Life
-#ALIAS::80->edu.kit.informatik.ragnarok.logic.gameelements.inanimate.ToggleBox
-#ALIAS::85->edu.kit.informatik.ragnarok.logic.gameelements.inanimate.BoostBox
-#ALIAS::86->edu.kit.informatik.ragnarok.logic.gameelements.inanimate.ClimbUpBox
+#ALIAS::1->Inanimate
+#ALIAS::10->Coin
+#ALIAS::11->Life
+#ALIAS::80->ToggleBox
+#ALIAS::85->BoostBox
+#ALIAS::86->ClimbUpBox
 
 
-#ALIAS::20->edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.cannon.Cannon
-#ALIAS::21->edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.RektKiller
+#ALIAS::20->cannon.Cannon
+#ALIAS::21->RektKiller
 
 { 
 {1	1	1	1	1	1	1}

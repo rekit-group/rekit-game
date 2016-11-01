@@ -3,11 +3,11 @@
 #SETTING::infinite->false
 #SETTING::autoCoinSpawn->false
 
-#ALIAS::1->edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate
-#ALIAS::2->edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.RektKiller
-#ALIAS::5->edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.Slurp
-#ALIAS::10->edu.kit.informatik.ragnarok.logic.gameelements.entities.pickups.Coin
-#ALIAS::80->edu.kit.informatik.ragnarok.logic.gameelements.inanimate.ToggleBox
+#ALIAS::1->Inanimate
+#ALIAS::2->RektKiller
+#ALIAS::5->Slurp
+#ALIAS::10->Coin
+#ALIAS::80->ToggleBox
 
 { 
 {0	0	0	0	0	0	0	0	0}

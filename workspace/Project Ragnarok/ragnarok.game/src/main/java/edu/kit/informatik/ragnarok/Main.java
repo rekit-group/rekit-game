@@ -4,6 +4,7 @@ import java.util.Set;
 
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.controller.Controller;
@@ -63,11 +64,14 @@ public final class Main {
 	 */
 	private static final void setLogLevel(Level level) {
 		// Initialize Loggers ...
-		BasicConfigurator.configure();
+
 		GameConf.GAME_LOGGER.setLevel(level);
 		Visitor.LOGGER.setLevel(level);
 		Parser.LOGGER.setLevel(level);
 
+		// This is needed as all loggers add an appender to the rootLogger.
+		Logger.getRootLogger().removeAllAppenders();
+		BasicConfigurator.configure();
 	}
 
 	/**

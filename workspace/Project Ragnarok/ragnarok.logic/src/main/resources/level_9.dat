@@ -3,10 +3,10 @@
 #SETTING::infinite->false
 #SETTING::autoCoinSpawn->false
 
-#ALIAS::1->edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate
-#ALIAS::2->edu.kit.informatik.ragnarok.logic.gameelements.entities.enemies.slurp.Slurp
-#ALIAS::10->edu.kit.informatik.ragnarok.logic.gameelements.entities.pickups.Coin
-#ALIAS::20->edu.kit.informatik.ragnarok.logic.gameelements.entities.pickups.Life
+#ALIAS::1->Inanimate
+#ALIAS::2->Slurp
+#ALIAS::10->Coin
+#ALIAS::20->Life
 
 {
 {0	0	0	0	0	0	0	0	0}
