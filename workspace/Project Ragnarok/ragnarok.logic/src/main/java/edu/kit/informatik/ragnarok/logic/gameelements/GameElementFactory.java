@@ -10,6 +10,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.EndTrigger;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateBox;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Boss;
+import edu.kit.informatik.ragnarok.logic.gameelements.type.Coin;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.DynamicInanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Enemy;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Pickup;
@@ -172,6 +173,16 @@ public final class GameElementFactory {
 		}
 		GameElementFactory.groups.put(Pickup.class.getSimpleName(), pickupCollection);
 
+		// Put Coins in collection and in separate array
+		Set<Coin> coinPrototypes = Coin.getCoinPrototypes();
+		Pickup[] coinCollection = new Pickup[coinPrototypes.size()];
+		i = 0;
+		for (Coin e : coinPrototypes) {
+			GameElementFactory.elements.put(e.getClass().getSimpleName(), e);
+			coinCollection[i++] = e;
+		}
+		GameElementFactory.groups.put(Coin.class.getSimpleName(), coinCollection);
+
 	}
 
 	/**
@@ -183,7 +194,7 @@ public final class GameElementFactory {
 	 *            the y pos
 	 */
 	public static void generateCoin(int x, int y) {
-		GameElementFactory.generate("Coin", x, y);
+		GameElementFactory.generate(Coin.class.getSimpleName(), x, y);
 
 	}
 
