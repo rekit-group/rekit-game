@@ -141,9 +141,11 @@ public final class GameElementFactory {
 		GameElementFactory.elements.put(Inanimate.getPrototype().getClass().getSimpleName(), Inanimate.getPrototype());
 
 		GameElementFactory.elements.put(EndTrigger.getPrototype().getClass().getSimpleName(), EndTrigger.getPrototype());
+
 		for (DynamicInanimate e : DynamicInanimate.getInanimatePrototypes()) {
 			GameElementFactory.elements.put(e.getClass().getSimpleName(), e);
 		}
+
 		for (Boss e : Boss.getBossPrototypes()) {
 			GameElementFactory.elements.put(e.getClass().getSimpleName(), e);
 		}
@@ -154,35 +156,34 @@ public final class GameElementFactory {
 	 */
 	private static void loadGroups() {
 		// Put Enemies in collection and in separate array
-		Set<Enemy> enemyPrototypes = Enemy.getEnemyPrototypes();
-		Enemy[] enemyCollection = new Enemy[enemyPrototypes.size()];
-		int i = 0;
-		for (Enemy e : enemyPrototypes) {
-			GameElementFactory.elements.put(e.getClass().getSimpleName(), e);
-			enemyCollection[i++] = e;
-		}
-		GameElementFactory.groups.put(Enemy.class.getSimpleName(), enemyCollection);
+		GameElementFactory.createGroup(Enemy.getEnemyPrototypes(), Enemy.class);
 
 		// Put Pickups in collection and in separate array
-		Set<Pickup> pickupPrototypes = Pickup.getPickupPrototypes();
-		Pickup[] pickupCollection = new Pickup[pickupPrototypes.size()];
-		i = 0;
-		for (Pickup e : pickupPrototypes) {
-			GameElementFactory.elements.put(e.getClass().getSimpleName(), e);
-			pickupCollection[i++] = e;
-		}
-		GameElementFactory.groups.put(Pickup.class.getSimpleName(), pickupCollection);
+		GameElementFactory.createGroup(Pickup.getPickupPrototypes(), Pickup.class);
 
 		// Put Coins in collection and in separate array
-		Set<Coin> coinPrototypes = Coin.getCoinPrototypes();
-		Pickup[] coinCollection = new Pickup[coinPrototypes.size()];
-		i = 0;
-		for (Coin e : coinPrototypes) {
-			GameElementFactory.elements.put(e.getClass().getSimpleName(), e);
-			coinCollection[i++] = e;
-		}
-		GameElementFactory.groups.put(Coin.class.getSimpleName(), coinCollection);
+		GameElementFactory.createGroup(Coin.getCoinPrototypes(), Coin.class);
+	}
 
+	/**
+	 * Create a new group of Elements.
+	 *
+	 * @param prototypes
+	 *            the prototypes
+	 * @param clazz
+	 *            the superclass
+	 * @param <T>
+	 *            the supertype
+	 */
+	public static final synchronized <T extends GameElement> void createGroup(Set<T> prototypes, Class<T> clazz) {
+		// Put Ts in collection and in separate array
+		GameElement[] collection = new GameElement[prototypes.size()];
+		int i = 0;
+		for (T e : prototypes) {
+			GameElementFactory.elements.put(e.getClass().getSimpleName(), e);
+			collection[i++] = e;
+		}
+		GameElementFactory.groups.put(clazz.getSimpleName(), collection);
 	}
 
 	/**
