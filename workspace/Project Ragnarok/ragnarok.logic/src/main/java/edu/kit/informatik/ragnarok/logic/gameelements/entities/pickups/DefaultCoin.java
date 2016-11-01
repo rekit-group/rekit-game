@@ -9,7 +9,6 @@ import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 /**
  * This class represents default coins.
  * 
- * @author Dominik Fuchß
  *
  */
 @LoadMe

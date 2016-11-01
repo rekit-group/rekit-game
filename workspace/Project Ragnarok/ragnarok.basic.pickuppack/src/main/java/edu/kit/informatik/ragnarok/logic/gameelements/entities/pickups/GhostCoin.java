@@ -4,31 +4,30 @@ import edu.kit.informatik.ragnarok.logic.gameelements.type.Coin;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Pickup;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
-import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 
 /**
- * This class defines a simple {@link Pickup}; a <b>EvilCoin</b> which will give
- * the player negative points.
- * 
+ * This class defines a simple {@link Pickup}; a <b>GhostCoin</b> which will
+ * give the player points and is nearly invisible.
+ *
  * @author Dominik Fuchss
  *
  */
 @LoadMe
-public final class EvilCoin extends Coin {
+public final class GhostCoin extends Coin {
 	/**
 	 * The default color of the coin.
 	 */
-	private static RGBColor color = new RGBColor(232, 50, 16);
+	private static RGBAColor color = new RGBAColor(30, 100, 216, 7);
 	/**
 	 * The shadow color of the coin.
 	 */
-	private static RGBColor darkColor = new RGBColor(192, 25, 6);
+	private static RGBAColor darkColor = new RGBAColor(50, 25, 156, 7);
 
 	/**
 	 * Prototype constructor.
 	 */
-	public EvilCoin() {
+	public GhostCoin() {
 		super();
 	}
 
@@ -38,28 +37,28 @@ public final class EvilCoin extends Coin {
 	 * @param startPos
 	 *            the position.
 	 */
-	protected EvilCoin(Vec startPos) {
+	protected GhostCoin(Vec startPos) {
 		super(startPos);
 	}
 
 	@Override
 	protected RGBAColor getColor() {
-		return EvilCoin.color.toRGBA();
+		return GhostCoin.color;
 	}
 
 	@Override
 	protected RGBAColor getDarkerColor() {
-		return EvilCoin.darkColor.toRGBA();
+		return GhostCoin.darkColor;
 	}
 
 	@Override
 	public Coin create(Vec startPos, String[] options) {
-		return new EvilCoin(startPos);
+		return new GhostCoin(startPos);
 	}
 
 	@Override
 	protected int getValue() {
-		return -25;
+		return 30;
 	}
 
 }
