@@ -12,6 +12,7 @@ import edu.kit.informatik.ragnarok.logic.level.bossstructure.BossStructure;
 import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
 import edu.kit.informatik.ragnarok.primitives.geometry.Frame;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
+import edu.kit.informatik.ragnarok.primitives.time.Timer;
 import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 import edu.kit.informatik.ragnarok.util.ThreadUtils;
 import home.fox.visitors.Visitable;
@@ -134,9 +135,7 @@ public final class RektSmasher extends Boss implements Visitable {
 
 			// start thread to re-add spikes after time
 			ThreadUtils.runThread(() -> {
-
-				// TODO Incompatible with pause
-				ThreadUtils.sleep(RektSmasher.SPIKE_TIME);
+				Timer.sleep(RektSmasher.SPIKE_TIME);
 				this.innerRektKiller.setSide(Direction.getOpposite(dir), true);
 
 			});

@@ -2,6 +2,7 @@ package edu.kit.informatik.ragnarok.primitives.time;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.core.GameTime;
+import edu.kit.informatik.ragnarok.util.ThreadUtils;
 
 /**
  * Data class that holds an duration time.
@@ -82,7 +83,7 @@ public final class Timer {
 
 	/**
 	 * Subtract an offset at beginning.
-	 * 
+	 *
 	 * @param offset
 	 *            the offset
 	 */
@@ -90,4 +91,18 @@ public final class Timer {
 		this.removeTime(offset);
 	}
 
+	/**
+	 * This method can be used instead of {@link ThreadUtils#sleep(long)} if
+	 * {@link GameTime#pause()} shall take effect.
+	 *
+	 * @param offset
+	 *            the time to wait in millis
+	 */
+	public static void sleep(long offset) {
+		Timer t = new Timer(offset);
+		while (!t.timeUp()) {
+			t.logicLoop();
+			ThreadUtils.sleep(GameConf.LOGIC_DELTA);
+		}
+	}
 }

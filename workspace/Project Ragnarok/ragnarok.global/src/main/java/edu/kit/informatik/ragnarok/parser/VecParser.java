@@ -28,7 +28,6 @@ public final class VecParser implements Parser {
 			return false;
 		}
 
-		// TODO Use actual FloatParser
 		float x = Float.parseFloat(matcher.group(1));
 		float y = Float.parseFloat(matcher.group(2));
 

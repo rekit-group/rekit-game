@@ -16,7 +16,7 @@ import home.fox.visitors.parser.Parser;
 
 /**
  * Game class that instantiates all necessary classes that are required for a
- * game. implements a singleton to prevent multiple instantiation.
+ * game.
  *
  * @author Angelo Aracri
  * @author Dominik Fuchss
@@ -36,7 +36,7 @@ public final class Main {
 	 *            not used
 	 */
 	public static void main(String[] args) {
-		Main.setLogLevel(Level.ALL);
+		Main.setLogLevel(GameConf.DEBUG ? Level.ALL : Level.INFO);
 		// Load All Configs
 		Main.visitAllStatic();
 		// Create MVC

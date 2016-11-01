@@ -157,7 +157,9 @@ public final class Slurp extends Enemy implements Visitable {
 
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
-		element.setVel(element.getVel().scalar(Slurp.SLOWING_FACTOR));
+		if (this.getTeam().isHostile(element.getTeam())) {
+			element.setVel(element.getVel().scalar(Slurp.SLOWING_FACTOR));
+		}
 	}
 
 	@Override

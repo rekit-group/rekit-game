@@ -18,7 +18,7 @@ import edu.kit.informatik.ragnarok.logic.gui.parallax.ParallaxContainer;
 import edu.kit.informatik.ragnarok.logic.gui.parallax.TriangulationLayer;
 import edu.kit.informatik.ragnarok.logic.level.Level;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
-import edu.kit.informatik.ragnarok.util.ThreadUtils;
+import edu.kit.informatik.ragnarok.primitives.time.Timer;
 
 /**
  * Scene that holds a playable Level created by a LevelCreator. Different Levels
@@ -119,8 +119,7 @@ public abstract class LevelScene extends Scene {
 	@Override
 	public void restart() {
 		// wait 2 seconds
-		// TODO Incompatible with pause
-		ThreadUtils.sleep(2000);
+		Timer.sleep(2000);
 		// reset all data structures
 		this.init();
 		// restart logic thread

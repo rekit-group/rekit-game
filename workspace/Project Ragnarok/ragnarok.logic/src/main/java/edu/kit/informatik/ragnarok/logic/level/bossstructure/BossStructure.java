@@ -148,8 +148,7 @@ public final class BossStructure extends Structure {
 			// keep walking right to the right camera position
 			while (player.getPos().getX() < BossStructure.this.cameraTarget) {
 				player.setVel(player.getVel().setX(1.8f));
-				// TODO Incompatible with pause
-				ThreadUtils.sleep(GameConf.LOGIC_DELTA);
+				Timer.sleep(GameConf.LOGIC_DELTA);
 			}
 			scene.setCameraTarget(new FixedCameraTarget(BossStructure.this.cameraTarget - GameConf.PLAYER_CAMERA_OFFSET));
 			// Spawn Boss
@@ -201,8 +200,7 @@ public final class BossStructure extends Structure {
 				this.boss.setVel(new Vec());
 				this.boss.setPos(bossPosSave);
 				// wait for time to be up
-				// TODO Incompatible with pause
-				ThreadUtils.sleep(GameConf.LOGIC_DELTA);
+				Timer.sleep(GameConf.LOGIC_DELTA);
 				// phase one: show explosions
 				if (timer.getProgress() < 0.4) {
 					if (GameConf.PRNG.nextDouble() > 0.9) {
