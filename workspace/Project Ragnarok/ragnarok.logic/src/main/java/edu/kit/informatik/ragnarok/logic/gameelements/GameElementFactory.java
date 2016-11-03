@@ -15,6 +15,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.type.DynamicInanimate;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Group;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.util.ReflectUtils;
+import edu.kit.informatik.ragnarok.util.ThreadUtils;
 
 /**
  *
@@ -46,19 +47,16 @@ public final class GameElementFactory {
 	 */
 	public static synchronized void setScene(IScene scene) {
 		GameElementFactory.scene = scene;
-		if (!GameElementFactory.loaded) {
-			GameElementFactory.load();
-		}
 	}
 
 	/**
 	 * All Groups.
 	 */
-	private static HashMap<String, GameElement[]> groups;
+	private static HashMap<String, GameElement[]> groups = new HashMap<>();
 	/**
 	 * All Elements.
 	 */
-	private static HashMap<String, GameElement> elements;
+	private static HashMap<String, GameElement> elements = new HashMap<>();
 
 	/**
 	 * Get Prototype by identifier.
@@ -117,6 +115,13 @@ public final class GameElementFactory {
 	}
 
 	/**
+	 * Initialize GameElementFactory.
+	 */
+	public static final synchronized void initialize() {
+		ThreadUtils.runDaemon(() -> GameElementFactory.load());
+	}
+
+	/**
 	 * Load the factory.
 	 */
 	private final synchronized static void load() {
@@ -124,10 +129,6 @@ public final class GameElementFactory {
 			return;
 		}
 		GameElementFactory.loaded = true;
-
-		GameElementFactory.elements = new HashMap<>();
-		GameElementFactory.groups = new HashMap<>();
-
 		GameElementFactory.loadElements();
 		GameElementFactory.loadGroups();
 
@@ -139,7 +140,6 @@ public final class GameElementFactory {
 	private static void loadElements() {
 		// Put Blocks in collection
 		GameElementFactory.elements.put(Inanimate.getPrototype().getClass().getSimpleName(), Inanimate.getPrototype());
-
 		GameElementFactory.elements.put(EndTrigger.getPrototype().getClass().getSimpleName(), EndTrigger.getPrototype());
 
 		for (GameElement e : DynamicInanimate.getPrototypes()) {

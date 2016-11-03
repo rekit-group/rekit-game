@@ -3,6 +3,7 @@ package edu.kit.informatik.ragnarok.logic;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.core.CameraTarget;
 import edu.kit.informatik.ragnarok.core.IScene;
+import edu.kit.informatik.ragnarok.logic.gameelements.GameElementFactory;
 import edu.kit.informatik.ragnarok.logic.gameelements.entities.Entity;
 import edu.kit.informatik.ragnarok.logic.gui.menu.MenuItem;
 import edu.kit.informatik.ragnarok.logic.scene.Scenes;
@@ -46,6 +47,7 @@ public class GameModel implements CameraTarget, Model {
 	public GameModel() {
 		this.endGame = false;
 		this.curScene = Scenes.NULL.getNewScene(this);
+		GameElementFactory.initialize();
 	}
 
 	/**
