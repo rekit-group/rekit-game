@@ -3,6 +3,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.type;
 import java.util.Set;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
+import edu.kit.informatik.ragnarok.core.GameElement;
 import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.Inanimate;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
@@ -19,7 +20,7 @@ public abstract class DynamicInanimate extends Inanimate {
 	/**
 	 * Prototype Constructor.
 	 */
-	public DynamicInanimate() {
+	protected DynamicInanimate() {
 		super(new Vec(), new Vec(1), new RGBAColor(0, 0, 0, 255));
 	}
 
@@ -43,7 +44,7 @@ public abstract class DynamicInanimate extends Inanimate {
 	 * @return a set of dynamic inanimate-prototypes
 	 * @see LoadMe
 	 */
-	public static final Set<DynamicInanimate> getInanimatePrototypes() {
+	public static final Set<? extends GameElement> getPrototypes() {
 		return ReflectUtils.loadInstances(GameConf.SEARCH_PATH, DynamicInanimate.class);
 	}
 

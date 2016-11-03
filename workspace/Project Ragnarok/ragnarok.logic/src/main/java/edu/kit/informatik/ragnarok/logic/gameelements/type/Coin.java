@@ -15,13 +15,14 @@ import edu.kit.informatik.ragnarok.util.ReflectUtils;
  *
  *
  */
+@Group
 public abstract class Coin extends Pickup {
 	/**
 	 * Get a set of coin prototypes.
 	 *
 	 * @return a set of prototypes
 	 */
-	public static Set<Coin> getCoinPrototypes() {
+	public static Set<? extends GameElement> getPrototypes() {
 		return ReflectUtils.loadInstances(GameConf.SEARCH_PATH, Coin.class);
 	}
 

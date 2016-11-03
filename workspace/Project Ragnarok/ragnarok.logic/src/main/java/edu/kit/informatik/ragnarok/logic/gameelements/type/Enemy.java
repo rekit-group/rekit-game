@@ -13,6 +13,7 @@ import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 /**
  * This class is the parent class of all Enemies in the game.
  */
+@Group
 public abstract class Enemy extends Entity {
 	/**
 	 * Load all Enemies.
@@ -20,7 +21,7 @@ public abstract class Enemy extends Entity {
 	 * @return a set of enemies
 	 * @see LoadMe
 	 */
-	public static final Set<Enemy> getEnemyPrototypes() {
+	public static final Set<? extends GameElement> getPrototypes() {
 		return ReflectUtils.loadInstances(GameConf.SEARCH_PATH, Enemy.class);
 	}
 
@@ -36,7 +37,7 @@ public abstract class Enemy extends Entity {
 
 	/**
 	 * Create an Enemy.
-	 * 
+	 *
 	 * @param startPos
 	 *            the start pos
 	 * @param vel

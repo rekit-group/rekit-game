@@ -14,6 +14,7 @@ import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
 /**
  * This class is the parent class of all Pickups in the game.
  */
+@Group
 public abstract class Pickup extends Entity {
 	/**
 	 * Load all Pickups.
@@ -21,7 +22,7 @@ public abstract class Pickup extends Entity {
 	 * @return a set of pickups
 	 * @see LoadMe
 	 */
-	public static final Set<Pickup> getPickupPrototypes() {
+	public static Set<? extends GameElement> getPrototypes() {
 		return ReflectUtils.loadInstances(GameConf.SEARCH_PATH, Pickup.class);
 	}
 

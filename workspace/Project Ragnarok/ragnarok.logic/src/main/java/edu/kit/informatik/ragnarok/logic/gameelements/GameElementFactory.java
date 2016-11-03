@@ -12,9 +12,9 @@ import edu.kit.informatik.ragnarok.logic.gameelements.inanimate.InanimateBox;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Boss;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.Coin;
 import edu.kit.informatik.ragnarok.logic.gameelements.type.DynamicInanimate;
-import edu.kit.informatik.ragnarok.logic.gameelements.type.Enemy;
-import edu.kit.informatik.ragnarok.logic.gameelements.type.Pickup;
+import edu.kit.informatik.ragnarok.logic.gameelements.type.Group;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
+import edu.kit.informatik.ragnarok.util.ReflectUtils;
 
 /**
  *
@@ -142,11 +142,11 @@ public final class GameElementFactory {
 
 		GameElementFactory.elements.put(EndTrigger.getPrototype().getClass().getSimpleName(), EndTrigger.getPrototype());
 
-		for (DynamicInanimate e : DynamicInanimate.getInanimatePrototypes()) {
+		for (GameElement e : DynamicInanimate.getPrototypes()) {
 			GameElementFactory.elements.put(e.getClass().getSimpleName(), e);
 		}
 
-		for (Boss e : Boss.getBossPrototypes()) {
+		for (GameElement e : Boss.getPrototypes()) {
 			GameElementFactory.elements.put(e.getClass().getSimpleName(), e);
 		}
 	}
@@ -154,15 +154,18 @@ public final class GameElementFactory {
 	/**
 	 * Load all groups.
 	 */
-	private static void loadGroups() {
-		// Put Enemies in collection and in separate array
-		GameElementFactory.createGroup(Enemy.getEnemyPrototypes(), Enemy.class);
-
-		// Put Pickups in collection and in separate array
-		GameElementFactory.createGroup(Pickup.getPickupPrototypes(), Pickup.class);
-
-		// Put Coins in collection and in separate array
-		GameElementFactory.createGroup(Coin.getCoinPrototypes(), Coin.class);
+	@SuppressWarnings("unchecked")
+	private static final void loadGroups() {
+		for (Class<?> group : ReflectUtils.getClassesAnnotated(GameConf.SEARCH_PATH, Group.class)) {
+			try {
+				Group annotation = group.getAnnotation(Group.class);
+				String name = annotation.value().isEmpty() ? group.getSimpleName() : annotation.value();
+				GameConf.GAME_LOGGER.info("Loading group " + name);
+				GameElementFactory.createGroup((Set<? extends GameElement>) group.getDeclaredMethod("getPrototypes").invoke(null), name);
+			} catch (Exception e) {
+				GameConf.GAME_LOGGER.error("Could not load prototypes of " + group.getSimpleName() + "\n" + e.getMessage());
+			}
+		}
 	}
 
 	/**
@@ -170,20 +173,18 @@ public final class GameElementFactory {
 	 *
 	 * @param prototypes
 	 *            the prototypes
-	 * @param clazz
-	 *            the superclass
-	 * @param <T>
-	 *            the supertype
+	 * @param name
+	 *            the name of the group
 	 */
-	public static final synchronized <T extends GameElement> void createGroup(Set<T> prototypes, Class<T> clazz) {
+	public static final synchronized void createGroup(Set<? extends GameElement> prototypes, String name) {
 		// Put Ts in collection and in separate array
 		GameElement[] collection = new GameElement[prototypes.size()];
 		int i = 0;
-		for (T e : prototypes) {
+		for (GameElement e : prototypes) {
 			GameElementFactory.elements.put(e.getClass().getSimpleName(), e);
 			collection[i++] = e;
 		}
-		GameElementFactory.groups.put(clazz.getSimpleName(), collection);
+		GameElementFactory.groups.put(name, collection);
 	}
 
 	/**

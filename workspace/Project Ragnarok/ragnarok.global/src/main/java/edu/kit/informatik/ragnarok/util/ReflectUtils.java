@@ -1,5 +1,6 @@
 package edu.kit.informatik.ragnarok.util;
 
+import java.lang.annotation.Annotation;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.reflect.Constructor;
@@ -72,6 +73,21 @@ public final class ReflectUtils {
 	 */
 	public static final <T> Set<Class<? extends T>> getClasses(String searchPath, Class<T> type) {
 		return new Reflections(searchPath).getSubTypesOf(type);
+	}
+
+	/**
+	 * Get all classes which are annotated with ... by search path (->
+	 * classpath).<br>
+	 * No subtypes will be returned except if they are annotated too.
+	 *
+	 * @param searchPath
+	 *            the search path (e.g. java.lang)
+	 * @param annotation
+	 *            the class annotation
+	 * @return a set of the found classes
+	 */
+	public static final Set<Class<?>> getClassesAnnotated(String searchPath, Class<? extends Annotation> annotation) {
+		return new Reflections(searchPath).getTypesAnnotatedWith(annotation, true);
 	}
 
 	/**

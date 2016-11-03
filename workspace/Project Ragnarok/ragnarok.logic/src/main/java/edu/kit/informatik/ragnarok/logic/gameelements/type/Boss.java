@@ -17,6 +17,7 @@ import edu.kit.informatik.ragnarok.util.ReflectUtils.LoadMe;
  * This class shall be extended in case of creating Bosses.
  *
  */
+@Group
 public abstract class Boss extends Entity {
 	/**
 	 * The Bosses Level-Structure (BossRoom).
@@ -37,7 +38,7 @@ public abstract class Boss extends Entity {
 	 * @return a set of BossPrototypes
 	 * @see LoadMe
 	 */
-	public static final Set<Boss> getBossPrototypes() {
+	public static final Set<? extends GameElement> getPrototypes() {
 		return ReflectUtils.loadInstances(GameConf.SEARCH_PATH, Boss.class);
 	}
 
