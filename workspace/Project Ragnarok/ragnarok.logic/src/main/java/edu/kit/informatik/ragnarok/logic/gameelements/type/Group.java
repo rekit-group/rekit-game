@@ -1,5 +1,6 @@
 package edu.kit.informatik.ragnarok.logic.gameelements.type;
 
+import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -14,6 +15,7 @@ import edu.kit.informatik.ragnarok.logic.gameelements.GameElementFactory;
  *
  */
 @Retention(RetentionPolicy.RUNTIME)
+@Documented
 public @interface Group {
 	/**
 	 * Get the name of the group. If unset {@link GameElementFactory} will use
