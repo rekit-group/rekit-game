@@ -18,8 +18,8 @@ public final class ParticleSpawnerOptionParser implements Parser {
 	private static final String FLOAT_REGEX = "(-|\\+)?[0-9]+\\.[0-9]+(f|F)";
 
 	@Override
-	public synchronized boolean parse(Visitable obj, Field field, String definition) throws Exception {
-		if (!Parser.super.parse(obj, field, definition)) {
+	public synchronized boolean parse(Visitable obj, Field field, String definition, String... path) throws Exception {
+		if (!Parser.super.parse(obj, field, definition, path)) {
 			return false;
 		}
 		ParticleSpawnerOption opt = null;

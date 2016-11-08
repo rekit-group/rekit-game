@@ -17,8 +17,8 @@ import home.fox.visitors.parser.Parser;
  */
 public final class VecParser implements Parser {
 	@Override
-	public boolean parse(Visitable obj, Field field, String definition) throws Exception {
-		if (!Parser.super.parse(obj, field, definition)) {
+	public boolean parse(Visitable obj, Field field, String definition, String... path) throws Exception {
+		if (!Parser.super.parse(obj, field, definition, path)) {
 			return false;
 		}
 		Pattern pattern = Pattern.compile("[-|\\+]?([0-9]+\\.[0-9]+[f|F]),[-|\\+]?([0-9]+\\.[0-9]+[f|F])");

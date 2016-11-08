@@ -22,7 +22,7 @@ public abstract class Coin extends Pickup {
 	 *
 	 * @return a set of prototypes
 	 */
-	public static Set<? extends GameElement> getPrototypes() {
+	public static final Set<? extends GameElement> getPrototypes() {
 		return ReflectUtils.loadInstances(GameConf.SEARCH_PATH, Coin.class);
 	}
 
