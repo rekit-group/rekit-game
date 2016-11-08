@@ -96,7 +96,10 @@ class GameView implements View {
 
 		this.shell = new Shell(Display.getDefault(), SWT.DIALOG_TRIM | SWT.MIN | SWT.PRIMARY_MODAL | SWT.NO_BACKGROUND);
 		this.shell.setText(GameConf.NAME + " (" + GameConf.VERSION + ")");
-		this.shell.setImage(new Image(Display.getDefault(), this.getClass().getResourceAsStream(GameView.ICON_LOCATION)));
+		// TODO Disabled icon, as it forces issues.
+		// this.shell.setImage(new Image(Display.getDefault(),
+		// this.getClass().getResourceAsStream(GameView.ICON_LOCATION)));
+
 		// Create and position a canvas
 		this.canvas = new Canvas(this.shell, SWT.NONE);
 		this.canvas.setSize(GameConf.PIXEL_W, GameConf.PIXEL_H);
