@@ -5,9 +5,7 @@ import edu.kit.informatik.ragnarok.core.IScene;
 import edu.kit.informatik.ragnarok.primitives.geometry.Polygon;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import home.fox.visitors.Visitable;
-import home.fox.visitors.annotations.ClassParser;
 import home.fox.visitors.annotations.NoVisit;
-import home.fox.visitors.parser.TwoLevelParser;
 
 /**
  *
@@ -16,7 +14,6 @@ import home.fox.visitors.parser.TwoLevelParser;
  * your ParticleSpawner Object</b>
  *
  */
-@ClassParser(TwoLevelParser.class)
 public class ParticleSpawner implements Visitable {
 	/**
 	 * The particle prototype.
