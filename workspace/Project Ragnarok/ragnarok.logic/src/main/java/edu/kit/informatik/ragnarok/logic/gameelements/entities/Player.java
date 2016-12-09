@@ -3,6 +3,7 @@ package edu.kit.informatik.ragnarok.logic.gameelements.entities;
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.core.CameraTarget;
 import edu.kit.informatik.ragnarok.core.Field;
+import edu.kit.informatik.ragnarok.core.Renderer;
 import edu.kit.informatik.ragnarok.core.Team;
 import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawner;
 import edu.kit.informatik.ragnarok.logic.gameelements.particles.ParticleSpawnerOption;
@@ -10,6 +11,7 @@ import edu.kit.informatik.ragnarok.primitives.geometry.Direction;
 import edu.kit.informatik.ragnarok.primitives.geometry.Frame;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
+import edu.kit.informatik.ragnarok.primitives.time.Timer;
 
 /**
  * The (maybe) most important {@link Entity} of the Game:<br>
@@ -36,6 +38,15 @@ public final class Player extends Entity implements CameraTarget {
 	 * The player's camera offset.
 	 */
 	private float currentCameraOffset;
+
+	/**
+	 * A temporary renderer.
+	 */
+	private Renderer tmpRenderer;
+	/**
+	 * The temporary renderer's time.
+	 */
+	private Timer renderTimer;
 
 	/**
 	 * Create a player by start position.
@@ -70,6 +81,11 @@ public final class Player extends Entity implements CameraTarget {
 
 	@Override
 	public void internalRender(Field f) {
+		if (this.renderTimer != null && !this.renderTimer.timeUp() && this.tmpRenderer != null) {
+			this.tmpRenderer.render(f);
+			this.renderTimer.logicLoop();
+			return;
+		}
 		// determine if direction needs to be changed +- delta: 0.15
 		if (this.getVel().getX() > 0.15) {
 			this.currentDirection = Direction.RIGHT;
@@ -101,6 +117,16 @@ public final class Player extends Entity implements CameraTarget {
 		super.addDamage(damage);
 	}
 
+	/**
+	 * Set Player invincible for a time.
+	 *
+	 * @param millis
+	 *            the millis
+	 */
+	public void setInvincible(long millis) {
+		this.invincibility = new Timer(millis);
+	}
+
 	@Override
 	public int getOrderZ() {
 		return 10;
@@ -123,4 +149,26 @@ public final class Player extends Entity implements CameraTarget {
 		return this.currentCameraOffset;
 	}
 
+	/**
+	 * Set a temporary renderer for the Player.
+	 *
+	 * @param r
+	 *            the renderer
+	 * @param millis
+	 *            the time
+	 */
+	public void setTemporaryApperance(Renderer r, long millis) {
+		this.tmpRenderer = r;
+		this.renderTimer = new Timer(millis);
+
+	}
+
+	/**
+	 * Get the current direction.
+	 * 
+	 * @return the current direction
+	 */
+	public final Direction getCurrentDirection() {
+		return this.currentDirection;
+	}
 }
