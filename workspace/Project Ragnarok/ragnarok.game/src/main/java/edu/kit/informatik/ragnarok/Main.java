@@ -11,6 +11,7 @@ import edu.kit.informatik.ragnarok.controller.Controller;
 import edu.kit.informatik.ragnarok.gui.View;
 import edu.kit.informatik.ragnarok.logic.Model;
 import edu.kit.informatik.ragnarok.util.ReflectUtils;
+import edu.kit.informatik.ragnarok.util.ThreadUtils;
 import home.fox.visitors.Visitable;
 import home.fox.visitors.Visitor;
 import home.fox.visitors.parser.Parser;
@@ -51,7 +52,9 @@ public final class Main {
 
 		// Start MVC
 		model.start();
+		ThreadUtils.sleep(100);
 		controller.start();
+		ThreadUtils.sleep(100);
 		view.start();
 
 	}

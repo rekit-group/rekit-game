@@ -24,6 +24,7 @@ public class ParticleSpawner implements Visitable {
 	/**
 	 * The current polygon.
 	 */
+	@NoVisit
 	public Polygon polygon;
 	/**
 	 * Red Channel.

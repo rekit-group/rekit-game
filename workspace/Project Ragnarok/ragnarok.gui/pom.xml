@@ -17,6 +17,11 @@
 			<artifactId>${swt.artifactId}</artifactId>
 			<version>${swt.version}</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+		</dependency>
 		<!-- <dependency> -->
 		<!-- <groupId>org.lwjgl</groupId> -->
 		<!-- <artifactId>lwjgl</artifactId> -->
