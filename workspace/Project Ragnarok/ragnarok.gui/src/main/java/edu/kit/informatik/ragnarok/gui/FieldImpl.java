@@ -1,16 +1,17 @@
 package edu.kit.informatik.ragnarok.gui;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.geom.Ellipse2D;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.GC;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.RGBA;
-import org.eclipse.swt.widgets.Display;
+import org.apache.log4j.Logger;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.core.Field;
@@ -20,8 +21,8 @@ import edu.kit.informatik.ragnarok.primitives.image.Filter;
 import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
 import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
 import edu.kit.informatik.ragnarok.util.CalcUtil;
-import edu.kit.informatik.ragnarok.util.SwtUtils;
 import edu.kit.informatik.ragnarok.util.TextOptions;
+import edu.kit.informatik.ragnarok.util.Utils;
 
 /**
  * This class represents a {@link Field} of the {@link GameView}.
@@ -31,10 +32,7 @@ import edu.kit.informatik.ragnarok.util.TextOptions;
  *
  */
 class FieldImpl extends Field {
-	/**
-	 * The GC.
-	 */
-	private GC gc;
+
 	/**
 	 * The current camera offset.
 	 */
@@ -47,6 +45,12 @@ class FieldImpl extends Field {
 	 * The current filter.
 	 */
 	private Filter filter;
+
+	private Graphics2D graphics;
+
+	void setGraphics(Graphics2D current) {
+		this.graphics = current;
+	}
 
 	@Override
 	public void setCurrentOffset(float cameraOffset) {
@@ -64,16 +68,16 @@ class FieldImpl extends Field {
 	 * @param col
 	 *            same as in base method
 	 */
-	private void drawCircleImpl(Vec pos, Vec size, RGBA col) {
+	private void drawCircleImpl(Vec pos, Vec size, Color col) {
 		// set color
-		this.gc.setAlpha(col.alpha);
-		Color color = new Color(Display.getCurrent(), col);
-		this.gc.setBackground(color);
-		color.dispose();
-		this.gc.fillOval((int) (pos.getX() - size.getX() / 2f), (int) (pos.getY() - size.getY() / 2f), (int) size.getX(), (int) size.getY());
+		Ellipse2D.Float circle = new Ellipse2D.Float(//
+				(pos.getX() - size.getX() / 2f), //
+				(pos.getY() - size.getY() / 2f), //
+				size.getX(), size.getY());
 
-		// reset alpha
-		this.gc.setAlpha(255);
+		this.graphics.setColor(col);
+		this.graphics.fill(circle);
+
 	}
 
 	/**
@@ -86,17 +90,11 @@ class FieldImpl extends Field {
 	 * @param col
 	 *            same as in base method
 	 */
-	private void drawRectangleImpl(Vec pos, Vec size, RGBA col) {
+	private void drawRectangleImpl(Vec pos, Vec size, Color col) {
 		// set color
-		this.gc.setAlpha(col.alpha);
-		Color color = new Color(Display.getCurrent(), col);
+		this.graphics.setColor(col);
+		this.graphics.fillRect((int) (pos.getX() - size.getX() / 2f), (int) (pos.getY() - size.getY() / 2f), (int) size.getX(), (int) size.getY());
 
-		this.gc.setBackground(color);
-		color.dispose();
-		this.gc.fillRectangle((int) (pos.getX() - size.getX() / 2f), (int) (pos.getY() - size.getY() / 2f), (int) size.getX(), (int) size.getY());
-
-		// reset alpha
-		this.gc.setAlpha(255);
 	}
 
 	/**
@@ -114,19 +112,14 @@ class FieldImpl extends Field {
 	 * @param arcHeight
 	 *            same as in base method
 	 */
-	private void drawRoundRectangleImpl(Vec pos, Vec size, RGBA col, int arcWidth, int arcHeight) {
-		// set color
-		this.gc.setAlpha(col.alpha);
-		Color color = new Color(Display.getCurrent(), col);
-		this.gc.setBackground(color);
-		color.dispose();
-		this.gc.fillRoundRectangle( //
+	private void drawRoundRectangleImpl(Vec pos, Vec size, Color col, int arcWidth, int arcHeight) {
+		this.graphics.setColor(col);
+
+		this.graphics.fillRoundRect(//
 				(int) (pos.getX() - size.getX() / 2f), // X
 				(int) (pos.getY() - size.getY() / 2f), // Y
 				(int) size.getX(), (int) size.getY(), // Size
 				arcWidth, arcHeight); // arc
-		// reset alpha
-		this.gc.setAlpha(255);
 
 	}
 
@@ -134,30 +127,30 @@ class FieldImpl extends Field {
 	 * The implementation of {@link #drawPolygon(Polygon, RGBAColor, boolean)}.
 	 *
 	 * @param pixelArray
-	 *            same as in base method
+	 *            px-points (x,y),(x,y),...
 	 * @param col
 	 *            same as in base method
 	 * @param fill
 	 *            same as in base method
 	 */
-	private void drawPolygonImpl(int[] pixelArray, RGBA col, boolean fill) {
-		// set color
-		this.gc.setAlpha(col.alpha);
-		Color color = new Color(Display.getCurrent(), col);
+	private void drawPolygonImpl(int[] polygon, Color col, boolean fill) {
+		this.graphics.setColor(col);
 
-		// draw actual polygon
-		if (fill) {
-			this.gc.setBackground(color);
-			this.gc.fillPolygon(pixelArray);
-		} else {
-			this.gc.setForeground(color);
-			this.gc.setLineWidth(1);
-			this.gc.drawPolygon(pixelArray);
+		int[] xpoints = new int[polygon.length / 2];
+		int[] ypoints = new int[polygon.length / 2];
+		for (int i = 0; i < polygon.length; i += 2) {
+			xpoints[i / 2] = polygon[i];
+			ypoints[i / 2] = polygon[i + 1];
 		}
 
-		color.dispose();
+		java.awt.Polygon toDraw = new java.awt.Polygon(xpoints, ypoints, polygon.length / 2);
+		// draw actual polygon
+		if (fill) {
+			this.graphics.fillPolygon(toDraw);
+		} else {
+			this.graphics.drawPolygon(toDraw);
+		}
 
-		this.gc.setAlpha(255);
 	}
 
 	/**
@@ -171,11 +164,16 @@ class FieldImpl extends Field {
 	 *            same as in base method
 	 */
 	private void drawImageImpl(Vec pos, Vec size, String imagePath) {
+
 		Image image = ImageLoader.get(imagePath);
-		this.gc.drawImage(image, // image
+		if (this.filter != null && !this.filter.isApplyPixel()) {
+			// TODO Apply to image
+			Logger.getRootLogger().error("Filter currently not implemented for pictures in FieldImpl");
+		}
+		this.graphics.drawImage(image, // image
 				(int) (pos.getX() - size.getX() / 2f), // dstX
-				(int) (pos.getY() - size.getY() / 2f) // dstY
-		);
+				(int) (pos.getY() - size.getY() / 2f), // dstY
+				null);
 
 	}
 
@@ -194,30 +192,35 @@ class FieldImpl extends Field {
 		// Set color to red and set font
 		RGBColor in = new RGBColor(options.getColor().red, options.getColor().green, options.getColor().blue);
 		RGBColor col = this.filter == null ? in : this.filter.apply(in);
-		Color color = new Color(Display.getCurrent(), SwtUtils.calcRGB(col));
-		this.gc.setForeground(color);
-		color.dispose();
+		this.graphics.setColor(Utils.calcRGB(col));
 
-		Font font = new Font(Display.getCurrent(), options.getFont(), options.getHeight(), options.getFontOptions() | SWT.BOLD);
-		this.gc.setFont(font);
+		Font font = new Font(options.getFont(), options.getFontOptions() | Font.BOLD, options.getHeight());
+		this.graphics.setFont(font);
+		FontMetrics metrics = this.graphics.getFontMetrics(font);
 
-		Point textBounds = this.gc.textExtent(text);
+		float x = pos.getX();
+		float y = pos.getY();
 
-		this.gc.drawText(text, // text
-				(int) (pos.getX() + options.getAlignment().getX() * textBounds.x), // dstX
-				(int) (pos.getY() + options.getAlignment().getY() * textBounds.y), // dstY
-				true);
-		font.dispose();
+		for (String line : text.split("\n")) {
+			Dimension offset = this.getOffset(line, metrics);
+			this.graphics.drawString(line, //
+					(x + options.getAlignment().getX() * (float) offset.getWidth()),
+					(y += metrics.getHeight()) + options.getAlignment().getY() * (float) offset.getHeight());
+		}
+
 	}
 
-	/**
-	 * Set the current GC.
-	 *
-	 * @param gc
-	 *            the gc
-	 */
-	void setGC(GC gc) {
-		this.gc = gc;
+	private Dimension getOffset(String text, FontMetrics metrics) {
+		// get the height of a line of text in this
+		// font and render context
+		int hgt = metrics.getHeight();
+		// get the advance of my text in this font
+		// and render context
+		int adv = metrics.stringWidth(text);
+		// calculate the size of a box to hold the
+		// text with some padding.
+		return new Dimension(adv + 2, hgt + 2);
+
 	}
 
 	/**
@@ -256,8 +259,8 @@ class FieldImpl extends Field {
 	 */
 	public void setBackground(RGBColor in) {
 		RGBColor col = this.filter == null ? in : this.filter.apply(in);
-		this.gc.setBackground(new Color(Display.getCurrent(), SwtUtils.calcRGB(col)));
-		this.gc.fillRectangle(0, 0, GameConf.PIXEL_W, GameConf.PIXEL_H);
+		this.graphics.setColor(Utils.calcRGB(col));
+		this.graphics.fillRect(0, 0, GameConf.PIXEL_W, GameConf.PIXEL_H);
 
 	}
 
@@ -267,7 +270,7 @@ class FieldImpl extends Field {
 	public void drawRectangle(Vec pos, Vec size, RGBAColor in, boolean inGame) {
 		RGBAColor col = this.filter == null ? in : this.filter.apply(in);
 		if (!inGame) {
-			this.drawRectangleImpl(this.translate2D(pos), size, SwtUtils.calcRGBA(col));
+			this.drawRectangleImpl(this.translate2D(pos), size, Utils.calcRGBA(col));
 		} else {
 			Vec newPos = this.translate2D(pos);
 			newPos = CalcUtil.units2pixel(newPos);
@@ -275,7 +278,7 @@ class FieldImpl extends Field {
 
 			Vec newSize = CalcUtil.units2pixel(size);
 
-			this.drawRectangleImpl(newPos, newSize, SwtUtils.calcRGBA(col));
+			this.drawRectangleImpl(newPos, newSize, Utils.calcRGBA(col));
 		}
 	}
 
@@ -295,11 +298,11 @@ class FieldImpl extends Field {
 
 		Vec lastPt = newPos.add(CalcUtil.units2pixel(it.next()));
 
-		this.gc.setLineWidth(1);
-		this.gc.setForeground(new Color(Display.getCurrent(), SwtUtils.calcRGB(col)));
+		this.graphics.setColor(Utils.calcRGB(col));
+		this.graphics.setStroke(new BasicStroke(1));
 		while (it.hasNext()) {
 			Vec pt = newPos.add(CalcUtil.units2pixel(it.next()));
-			this.gc.drawLine((int) lastPt.getX(), (int) lastPt.getY(), (int) pt.getX(), (int) pt.getY());
+			this.graphics.drawLine((int) lastPt.getX(), (int) lastPt.getY(), (int) pt.getX(), (int) pt.getY());
 			lastPt = pt;
 		}
 	}
@@ -308,7 +311,7 @@ class FieldImpl extends Field {
 	public void drawCircle(Vec pos, Vec size, RGBAColor in, boolean inGame) {
 		RGBAColor col = this.filter == null ? in : this.filter.apply(in);
 		if (!inGame) {
-			this.drawCircleImpl(this.translate2D(pos), size, SwtUtils.calcRGBA(col));
+			this.drawCircleImpl(this.translate2D(pos), size, Utils.calcRGBA(col));
 		} else {
 			Vec newPos = this.translate2D(pos);
 			newPos = CalcUtil.units2pixel(newPos);
@@ -316,7 +319,7 @@ class FieldImpl extends Field {
 
 			Vec newSize = CalcUtil.units2pixel(size);
 
-			this.drawCircleImpl(newPos, newSize, SwtUtils.calcRGBA(col));
+			this.drawCircleImpl(newPos, newSize, Utils.calcRGBA(col));
 		}
 	}
 
@@ -334,7 +337,7 @@ class FieldImpl extends Field {
 			pixelArray[i + 1] = CalcUtil.units2pixel(unitArray[i + 1]);
 		}
 
-		this.drawPolygonImpl(pixelArray, SwtUtils.calcRGBA(col), fill);
+		this.drawPolygonImpl(pixelArray, Utils.calcRGBA(col), fill);
 	}
 
 	@Override
@@ -364,7 +367,7 @@ class FieldImpl extends Field {
 	public void drawRoundRectangle(Vec pos, Vec size, RGBAColor in, float arcWidth, float arcHeight, boolean inGame) {
 		RGBAColor col = this.filter == null ? in : this.filter.apply(in);
 		if (!inGame) {
-			this.drawRoundRectangleImpl(this.translate2D(pos), size, SwtUtils.calcRGBA(col), (int) arcWidth, (int) arcHeight);
+			this.drawRoundRectangleImpl(this.translate2D(pos), size, Utils.calcRGBA(col), (int) arcWidth, (int) arcHeight);
 		} else {
 			Vec newPos = this.translate2D(pos);
 			newPos = CalcUtil.units2pixel(newPos);
@@ -372,7 +375,7 @@ class FieldImpl extends Field {
 
 			Vec newSize = CalcUtil.units2pixel(size);
 
-			this.drawRoundRectangleImpl(newPos, newSize, SwtUtils.calcRGBA(col), CalcUtil.units2pixel(arcWidth), CalcUtil.units2pixel(arcHeight));
+			this.drawRoundRectangleImpl(newPos, newSize, Utils.calcRGBA(col), CalcUtil.units2pixel(arcWidth), CalcUtil.units2pixel(arcHeight));
 		}
 
 	}

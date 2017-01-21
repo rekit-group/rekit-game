@@ -1,6 +1,15 @@
 package edu.kit.informatik.ragnarok.gui;
 
+import java.awt.BorderLayout;
+import java.awt.Canvas;
+import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -8,16 +17,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Queue;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.KeyAdapter;
-import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.graphics.GC;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.ImageData;
-import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.widgets.Canvas;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.core.GameElement;
@@ -25,11 +26,9 @@ import edu.kit.informatik.ragnarok.core.GameTime;
 import edu.kit.informatik.ragnarok.core.IScene;
 import edu.kit.informatik.ragnarok.logic.Model;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
-import edu.kit.informatik.ragnarok.primitives.image.AbstractImage;
-import edu.kit.informatik.ragnarok.primitives.image.Filter;
 import edu.kit.informatik.ragnarok.util.InputHelper;
-import edu.kit.informatik.ragnarok.util.SwtUtils;
 import edu.kit.informatik.ragnarok.util.ThreadUtils;
+import edu.kit.informatik.ragnarok.util.Utils;
 
 /**
  * Main class of the View. Manages the window and a canvas an periodically
@@ -346,10 +345,6 @@ class GameView implements View {
 	private Model model;
 
 	/**
-	 * Represents a graphic window.
-	 */
-	private Shell shell;
-	/**
 	 * The last render time.
 	 */
 	private long lastRenderTime;
@@ -359,22 +354,14 @@ class GameView implements View {
 	private Queue<Float> fpsQueue = new ArrayDeque<>();
 
 	/**
-	 * The canvas that is drawn upon.
-	 */
-	private Canvas canvas;
-
-	/**
 	 * The Field that manages the graphic context.
 	 */
 	private FieldImpl field;
-	/**
-	 * The GC of the {@link Canvas}.
-	 */
-	private GC gc;
-	/**
-	 * The filter from the model.
-	 */
-	private Filter filter;
+
+	private final JFrame frame;
+
+	private final Canvas canvas;
+	private final BufferStrategy bufferStrategy;
 
 	/**
 	 * Constructor that creates a new window with a canvas and prepares all
@@ -386,25 +373,28 @@ class GameView implements View {
 	public GameView(Model model) {
 		this.model = model;
 		// Create window
+		this.frame = new JFrame(GameConf.NAME + " (" + GameConf.VERSION + ")");
+		this.frame.setIconImage(this.getGameIcon());
+		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		this.shell = new Shell(Display.getDefault(), SWT.DIALOG_TRIM | SWT.MIN | SWT.PRIMARY_MODAL | SWT.NO_BACKGROUND);
-		this.shell.setText(GameConf.NAME + " (" + GameConf.VERSION + ")");
-		this.shell.setImage(this.getGameIcon());
+		this.frame.setResizable(false);
+		this.frame.setSize(GameConf.PIXEL_W, GameConf.PIXEL_H);
+		Utils.center(this.frame);
+		this.frame.setLayout(new BorderLayout());
 
 		// Create and position a canvas
-		this.canvas = new Canvas(this.shell, SWT.NONE);
-		this.canvas.setSize(GameConf.PIXEL_W, GameConf.PIXEL_H);
-		this.canvas.setLocation(0, 0);
+		this.canvas = new Canvas();
+		this.canvas.setPreferredSize(new Dimension(GameConf.PIXEL_W, GameConf.PIXEL_H));
+		this.canvas.setIgnoreRepaint(true);
+		this.canvas.setBackground(Utils.calcRGB(GameConf.GAME_BACKGROUD_COLOR));
+		this.frame.add(this.canvas, BorderLayout.CENTER);
+		this.frame.pack();
 
-		// TODO This depends on the window manager. This issue should be solved
-		// Open Shell (5,28) seems to be the additional size of my window
-		// decoration (boder, title, close button etc)
-		this.shell.setSize(GameConf.PIXEL_W + 5, GameConf.PIXEL_H + 28);
-		this.shell.setLocation(SwtUtils.calcCenter(this.shell));
-		this.shell.open();
+		this.canvas.createBufferStrategy(2);
+		this.bufferStrategy = this.canvas.getBufferStrategy();
+		this.frame.setVisible(true);
 
 		// Create Graphic context
-		this.gc = new GC(this.canvas);
 		this.field = new FieldImpl();
 	}
 
@@ -413,7 +403,7 @@ class GameView implements View {
 	 *
 	 * @return the game icon
 	 */
-	private Image getGameIcon() {
+	private BufferedImage getGameIcon() {
 		ByteArrayInputStream is = new ByteArrayInputStream(GameView.ICON);
 		/*
 		 * try { byte[] d =
@@ -424,7 +414,11 @@ class GameView implements View {
 
 		// return new Image(Display.getDefault(),
 		// this.getClass().getResourceAsStream(GameView.ICON_LOCATION))
-		return new Image(Display.getDefault(), is);
+		try {
+			return ImageIO.read(is);
+		} catch (IOException e) {
+			return new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+		}
 	}
 
 	/**
@@ -432,26 +426,15 @@ class GameView implements View {
 	 */
 	@Override
 	public void start() {
-		// background thread
-		ThreadUtils.runDaemon(() -> this.update());
-		// Main SWT stuff ...
-		Display display = Display.getDefault();
-		// Wait for window to be closed, holds the window open
-		while (!this.shell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
-			}
-		}
-		display.dispose();
+		ThreadUtils.runDaemon(this::update);
 	}
 
 	/**
 	 * "Update-Thread" content.
 	 */
 	private void update() {
-		Display disp = Display.getDefault();
-		while (!disp.isDisposed()) {
-			disp.syncExec(() -> this.renderLoop());
+		while (this.frame.isVisible()) {
+			this.renderLoop();
 			Thread.yield();
 		}
 	}
@@ -471,50 +454,26 @@ class GameView implements View {
 	 * supplies and invoking each render()
 	 */
 	public void renderLoop() {
-		if (this.shell.isDisposed()) {
-			return;
-		}
-
 		IScene scene = this.model.getScene();
+		if (this.model.filterChanged()) {
+			this.field.setFilter(this.model.getFilter());
+		}
 
 		// Create temporary GC on new Image and let field draw on that
 		// Double buffering reduces flickering
-		Image image = new Image(this.shell.getDisplay(), this.canvas.getBounds());
-		GC tempGC = new GC(image);
-		if (this.model.filterChanged()) {
-			this.filter = this.model.getFilter();
-			this.field.setFilter(this.filter);
-		}
-		this.field.setGC(tempGC);
+		Graphics2D graphics = (Graphics2D) this.bufferStrategy.getDrawGraphics();
+		graphics.clearRect(0, 0, this.canvas.getWidth(), this.canvas.getHeight());
 
 		// set current camera position
+		this.field.setGraphics(graphics);
 		this.field.setCurrentOffset(scene.getCameraOffset());
-		this.field.setBackground(GameConf.GAME_BACKGROUD_COLOR);
 
 		synchronized (scene.synchronize()) {
 			scene.getOrderedGameElementIterator().forEachRemaining((e) -> e.render(this.field));
 			scene.getGuiElementIterator().forEachRemaining((e) -> e.render(this.field));
 		}
 
-		// draw temporary image on actual cavans
-		if (this.filter == null || this.filter.isApplyPixel()) {
-			this.gc.drawImage(image, 0, 0);
-		} else {
-			Rectangle bounds = image.getBounds();
-			ImageData target = (ImageData) image.getImageData().clone();
-			AbstractImage res = this.filter.apply(new AbstractImage(bounds.height, bounds.width, target.data));
-			target.data = res.pixels;
-			Image toDraw = new Image(this.shell.getDisplay(), target);
-			this.gc.drawImage(toDraw, 0, 0);
-			toDraw.dispose();
-		}
-
-		// put trash outside
-		image.dispose();
-		tempGC.dispose();
-
 		// draw FPS
-		this.field.setGC(this.gc);
 		String debugInfo = "FPS: " + this.getFPS();
 		this.field.drawText(new Vec(GameConf.PIXEL_W - 10, GameConf.PIXEL_H - 60), debugInfo, GameConf.HINT_TEXT, false);
 
@@ -522,6 +481,9 @@ class GameView implements View {
 			this.drawDebug();
 		}
 
+		// draw temporary image on actual cavans
+		graphics.dispose();
+		this.bufferStrategy.show();
 	}
 
 	/**
@@ -605,15 +567,15 @@ class GameView implements View {
 		KeyAdapter adapter = new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				inputHelper.press(e.keyCode);
+				inputHelper.press(e.getKeyCode());
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				inputHelper.release(e.keyCode);
+				inputHelper.release(e.getKeyCode());
 			}
 		};
-		this.canvas.addKeyListener(adapter);
+		this.frame.addKeyListener(adapter);
 
 	}
 

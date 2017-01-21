@@ -1,11 +1,14 @@
 package edu.kit.informatik.ragnarok.gui;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.eclipse.swt.graphics.Device;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Display;
+import javax.imageio.ImageIO;
+
+import org.apache.log4j.Logger;
 
 /**
  * This class helps to load images from the resources.
@@ -24,11 +27,8 @@ public final class ImageLoader {
 	/**
 	 * The cache.
 	 */
-	private final static ConcurrentHashMap<String, Image> CACHE = new ConcurrentHashMap<>();
-	/**
-	 * The Device needed for creation of {@link Image Images}.
-	 */
-	private static final Device DEVICE = Display.getDefault();
+	private final static ConcurrentHashMap<String, BufferedImage> CACHE = new ConcurrentHashMap<>();
+
 	/**
 	 * The loader Object for the Resource loading.
 	 */
@@ -43,12 +43,16 @@ public final class ImageLoader {
 	 *
 	 * @return the Image
 	 */
-	public static final Image get(String src) {
+	public static final BufferedImage get(String src) {
 		if (!ImageLoader.CACHE.containsKey(src)) {
 			synchronized (ImageLoader.class) {
 				if (!ImageLoader.CACHE.containsKey(src)) {
 					InputStream res = ImageLoader.LOADER.getClass().getResourceAsStream("/images/" + src);
-					ImageLoader.CACHE.put(src, new Image(ImageLoader.DEVICE, res));
+					try {
+						ImageLoader.CACHE.put(src, ImageIO.read(res));
+					} catch (IOException e) {
+						Logger.getRootLogger().warn("Image " + src + " not found!");
+					}
 				}
 			}
 		}
