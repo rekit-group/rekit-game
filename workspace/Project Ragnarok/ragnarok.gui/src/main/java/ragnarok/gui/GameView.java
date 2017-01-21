@@ -11,9 +11,7 @@ import java.awt.image.BufferStrategy;
 import java.io.ByteArrayInputStream;
 import java.util.ArrayDeque;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Queue;
 
 import javax.swing.JFrame;
@@ -21,6 +19,7 @@ import javax.swing.JFrame;
 import ragnarok.config.GameConf;
 import ragnarok.core.GameElement;
 import ragnarok.core.GameTime;
+import ragnarok.core.GuiElement;
 import ragnarok.core.IScene;
 import ragnarok.logic.Model;
 import ragnarok.primitives.geometry.Vec;
@@ -349,16 +348,31 @@ class GameView implements View {
 	/**
 	 * The queue used for fps calculation.
 	 */
-	private Queue<Float> fpsQueue = new ArrayDeque<>();
+	private Queue<Long> fpsQueue = new ArrayDeque<>();
+	/**
+	 * The last calculated fps-sum value.
+	 */
+	private long lastFpsSum = -1;
+	/**
+	 * Amount of points in time to calculate FPS.
+	 */
+	private static final int FPS_COUNTER = 500;
 
 	/**
 	 * The Field that manages the graphic context.
 	 */
 	private FieldImpl field;
-
+	/**
+	 * The frame.
+	 */
 	private final JFrame frame;
-
+	/**
+	 * The canvas in the {@link #frame}.
+	 */
 	private final Canvas canvas;
+	/**
+	 * The Buffer of the {@link #canvas}.
+	 */
 	private final BufferStrategy bufferStrategy;
 
 	/**
@@ -462,18 +476,9 @@ class GameView implements View {
 		this.field.setGraphics(graphics);
 		this.field.setCurrentOffset(scene.getCameraOffset());
 
-		synchronized (scene.synchronize()) {
-			scene.getOrderedGameElementIterator().forEachRemaining(this.field::render);
-			scene.getGuiElementIterator().forEachRemaining(this.field::render);
-		}
+		this.drawElements(scene);
 
-		// draw FPS
-		String debugInfo = "FPS: " + this.getFPS();
-		this.field.drawText(new Vec(GameConf.PIXEL_W - 10, GameConf.PIXEL_H - 60), debugInfo, GameConf.HINT_TEXT, false);
-
-		if (GameConf.DEBUG) {
-			this.drawDebug();
-		}
+		this.drawDebug();
 
 		// draw temporary image on actual cavans
 		graphics.dispose();
@@ -481,40 +486,52 @@ class GameView implements View {
 	}
 
 	/**
+	 * Draw {@link GuiElement GuiElements} and {@link GameElement GameElements}.
+	 *
+	 * @param scene
+	 *            the current scene
+	 */
+	private void drawElements(IScene scene) {
+		synchronized (scene.synchronize()) {
+			scene.getOrderedGameElementIterator().forEachRemaining(this.field::render);
+			scene.getGuiElementIterator().forEachRemaining(this.field::render);
+		}
+	}
+
+	/**
 	 * If {@link GameConf#DEBUG} is set this method will be used for drawing
 	 * stats.
 	 */
 	private void drawDebug() {
+		if (!GameConf.DEBUG) {
+			return;
+		}
+		// draw FPS
+		String debugInfo = "FPS: " + this.getFPS();
+		this.field.drawText(new Vec(GameConf.PIXEL_W - 10, GameConf.PIXEL_H - 60), debugInfo, GameConf.HINT_TEXT, false);
+
 		HashMap<Class<?>, Integer> classCounter = new HashMap<>();
 
 		synchronized (this.model.getScene().synchronize()) {
-			Iterator<GameElement> it = this.model.getScene().getGameElementIterator();
-			while (it.hasNext()) {
-				GameElement e = it.next();
+			this.model.getScene().getGameElementIterator().forEachRemaining(e -> {
 				Class<?> className = e.getClass();
 				if (classCounter.containsKey(className)) {
 					classCounter.put(className, classCounter.get(className) + 1);
 				} else {
 					classCounter.put(className, 1);
 				}
-			}
+			});
+
 		}
 
-		StringBuilder resultName = new StringBuilder();
+		StringBuilder resultName = new StringBuilder().append("GameElements\n");
 		StringBuilder resultNum = new StringBuilder();
-		StringBuilder resultDur = new StringBuilder();
+		StringBuilder resultDur = new StringBuilder().append("\n");
 
-		resultName.append("GameElements");
-		resultName.append("\n");
-		resultNum.append(this.model.getScene().getGameElementCount());
-		resultNum.append("\n");
-		resultDur.append("\n");
+		resultNum.append(this.model.getScene().getGameElementCount()).append("\n");
 
 		Map<Class<?>, Long> durations = this.model.getScene().getGameElementDurations();
-
-		Iterator<Entry<Class<?>, Integer>> it2 = classCounter.entrySet().iterator();
-		while (it2.hasNext()) {
-			Entry<Class<?>, Integer> e = it2.next();
+		classCounter.entrySet().forEach((e) -> {
 			resultName.append(e.getKey().getSimpleName());
 			resultName.append("\n");
 			resultNum.append(e.getValue());
@@ -522,7 +539,8 @@ class GameView implements View {
 			Long dur = durations.get(e.getKey());
 			resultDur.append(dur == null ? "-" : dur);
 			resultDur.append("\n");
-		}
+		});
+
 		this.field.drawText(new Vec(GameConf.PIXEL_W - 55, GameConf.PIXEL_H / 2f), resultName.toString(), GameConf.HINT_TEXT, false);
 		this.field.drawText(new Vec(GameConf.PIXEL_W - 30, GameConf.PIXEL_H / 2f), resultNum.toString(), GameConf.HINT_TEXT, false);
 		this.field.drawText(new Vec(GameConf.PIXEL_W - 5, GameConf.PIXEL_H / 2f), resultDur.toString(), GameConf.HINT_TEXT, false);
@@ -533,22 +551,34 @@ class GameView implements View {
 	 *
 	 * @return the FPS
 	 */
-	private int getFPS() {
+	private long getFPS() {
+		if (GameTime.isPaused()) {
+			return 1000 * this.fpsQueue.size() / this.lastFpsSum;
+		}
+
 		long thisTime = GameTime.getTime();
 		long deltaTime = thisTime - this.lastRenderTime;
 		this.lastRenderTime = GameTime.getTime();
 
-		float fps = deltaTime;
-		this.fpsQueue.add(fps);
-		float sum = 0;
-		for (float f : this.fpsQueue) {
-			sum += f;
+		if (this.fpsQueue.size() > GameView.FPS_COUNTER && this.lastFpsSum != -1) {
+			// Queue filled & fps set --> Speedup
+			long fpsDelete = this.fpsQueue.remove();
+			this.fpsQueue.add(deltaTime);
+			this.lastFpsSum -= fpsDelete;
+			this.lastFpsSum += deltaTime;
+			return 1000 * GameView.FPS_COUNTER / this.lastFpsSum;
+
 		}
 
-		if (this.fpsQueue.size() > 200) {
-			this.fpsQueue.remove();
+		if (this.lastFpsSum == -1) {
+			// Fill Queue
+			this.fpsQueue.add(deltaTime);
 		}
-		return (int) (10000f / (sum / this.fpsQueue.size()) / 10f);
+		if (this.fpsQueue.size() > GameView.FPS_COUNTER) {
+			this.lastFpsSum = this.fpsQueue.stream().mapToLong(Long::longValue).sum();
+		}
+
+		return 1000 * this.fpsQueue.size() / this.fpsQueue.stream().mapToLong(Long::longValue).sum();
 	}
 
 	@Override

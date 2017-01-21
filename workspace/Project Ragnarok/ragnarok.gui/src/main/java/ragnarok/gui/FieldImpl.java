@@ -47,17 +47,37 @@ class FieldImpl extends Field {
 	 * The current filter.
 	 */
 	private Filter filter;
-
+	/**
+	 * The current graphics for drawing.
+	 */
 	private Graphics2D graphics;
 
+	/**
+	 * Set the current graphics.
+	 *
+	 * @param current
+	 *            the new graphics
+	 */
 	void setGraphics(Graphics2D current) {
 		this.graphics = current;
 	}
 
+	/**
+	 * Render a {@link GameElement}.
+	 *
+	 * @param e
+	 *            the element
+	 */
 	void render(GameElement e) {
 		e.render(this);
 	}
 
+	/**
+	 * Render a {@link GuiElement}.
+	 *
+	 * @param e
+	 *            the element
+	 */
 	void render(GuiElement e) {
 		e.render(this);
 	}
@@ -136,7 +156,7 @@ class FieldImpl extends Field {
 	/**
 	 * The implementation of {@link #drawPolygon(Polygon, RGBAColor, boolean)}.
 	 *
-	 * @param pixelArray
+	 * @param polygon
 	 *            px-points (x,y),(x,y),...
 	 * @param col
 	 *            same as in base method
@@ -145,7 +165,7 @@ class FieldImpl extends Field {
 	 */
 	private void drawPolygonImpl(int[] polygon, Color col, boolean fill) {
 		this.graphics.setColor(col);
-
+		// Split in x and y points.
 		int[] xpoints = new int[polygon.length / 2];
 		int[] ypoints = new int[polygon.length / 2];
 		for (int i = 0; i < polygon.length; i += 2) {
@@ -220,6 +240,15 @@ class FieldImpl extends Field {
 
 	}
 
+	/**
+	 * Get offset for {@link #drawTextImpl(Vec, String, TextOptions)}.
+	 *
+	 * @param text
+	 *            the line
+	 * @param metrics
+	 *            the metrics
+	 * @return the dimensions for the correction of positioning
+	 */
 	private Dimension getOffset(String text, FontMetrics metrics) {
 		// get the height of a line of text in this
 		// font and render context

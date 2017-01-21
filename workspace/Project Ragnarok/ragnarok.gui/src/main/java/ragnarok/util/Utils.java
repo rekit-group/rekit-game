@@ -50,7 +50,7 @@ public final class Utils {
 	}
 
 	/**
-	 * Center frame relative to monitor
+	 * Center {@link Frame} relative to monitor.
 	 *
 	 * @param frame
 	 *            the frame
@@ -65,7 +65,7 @@ public final class Utils {
 
 	/**
 	 * Get Image by {@link InputStream}.
-	 * 
+	 *
 	 * @param is
 	 *            the stream
 	 * @return the image or {@code null} if error occured

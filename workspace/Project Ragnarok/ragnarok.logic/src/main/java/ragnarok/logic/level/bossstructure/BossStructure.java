@@ -109,36 +109,22 @@ public final class BossStructure extends Structure {
 
 		// generate trigger at door entrance
 		this.triggerPos = new Vec(levelX + 6, GameConf.GRID_H - 2);
-		// add its perform-method
-		InanimateTrigger trigger = new InanimateTrigger(this.triggerPos, new Vec(1, 1)) {
-			@Override
-			public void perform() {
-				if (!this.deleteMe) {
-					BossStructure.this.startBattle(this.getScene());
-				}
-			}
-		};
-		// and add it to game
-		GameElementFactory.generate(trigger);
-
+		InanimateTrigger.createTrigger(this.triggerPos, new Vec(1), this::startBattle);
 		return width;
 	}
 
 	/**
 	 * Start the battle.
-	 *
-	 * @param scene
-	 *            the scene
 	 */
-	public void startBattle(IScene scene) {
-
+	public void startBattle() {
+		IScene scene = this.door.getScene();
 		GameElement player = scene.getPlayer();
 
 		// calculate where to put camera
 		this.cameraTarget = this.levelX + 5 + GameConf.PLAYER_CAMERA_OFFSET + player.getSize().getX() / 2;
 
 		// Prepare boss
-		this.boss = (Boss) this.boss.create(this.boss.getStartPos().addX(this.levelX), new String[] {});
+		this.boss = (Boss) this.boss.create(this.boss.getStartPos().addX(this.levelX), new String[0]);
 		this.boss.setBossStructure(this);
 		this.boss.setTarget(player);
 
@@ -156,13 +142,10 @@ public final class BossStructure extends Structure {
 			GameElementFactory.generateInanimate((int) BossStructure.this.triggerPos.getX(), (int) BossStructure.this.triggerPos.getY());
 
 			// Boss text
-
 			TextOptions op = new TextOptions(new Vec(-0.5f, -0.5f), 30, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, 1);
-			Text bossText = new Text(scene, op);
-			bossText.setText(BossStructure.this.boss.getName());
+			Text bossText = new Text(scene, op).setText(BossStructure.this.boss.getName());
 			bossText.setPos(CalcUtil.units2pixel(new Vec(GameConf.GRID_W / 2f, GameConf.GRID_H / 2f)));
-			TimeDecorator bossTextGui = new TimeDecorator(scene, bossText, new Timer(3000));
-			scene.addGuiElement(bossTextGui);
+			scene.addGuiElement(new TimeDecorator(scene, bossText, new Timer(3000)));
 		});
 
 	}

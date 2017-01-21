@@ -3,6 +3,7 @@ package ragnarok.logic.gameelements.inanimate;
 import ragnarok.core.Field;
 import ragnarok.core.GameElement;
 import ragnarok.core.Team;
+import ragnarok.logic.gameelements.GameElementFactory;
 import ragnarok.primitives.geometry.Direction;
 import ragnarok.primitives.geometry.Vec;
 import ragnarok.primitives.image.RGBAColor;
@@ -13,6 +14,25 @@ import ragnarok.primitives.image.RGBAColor;
  *
  */
 public class InanimateTrigger extends Inanimate {
+	/**
+	 * Utility function for easy use with lambdas.
+	 *
+	 * @param pos
+	 *            the position
+	 * @param size
+	 *            the size
+	 * @param onPerform
+	 *            {@link #perform()}
+	 */
+	public static void createTrigger(Vec pos, Vec size, Runnable onPerform) {
+		GameElementFactory.generate(new InanimateTrigger(pos, size) {
+			@Override
+			public void perform() {
+				onPerform.run();
+			}
+		});
+	}
+
 	/**
 	 * Create the trigger.
 	 *

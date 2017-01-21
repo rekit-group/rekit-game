@@ -313,4 +313,13 @@ public final class Vec implements Cloneable, Operable<Vec> {
 		return this;
 	}
 
+	/**
+	 * Apply abs to x and y component.
+	 *
+	 * @return the resulting vector
+	 */
+	public Vec abs() {
+		return new Vec(Math.abs(this.x), Math.abs(this.y), this.z);
+	}
+
 }

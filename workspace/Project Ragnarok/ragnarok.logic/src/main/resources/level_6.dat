@@ -11,7 +11,7 @@
 #ALIAS::86->ClimbUpBox
 
 
-#ALIAS::20->cannon.Cannon
+#ALIAS::20->Cannon
 #ALIAS::21->RektKiller
 
 { 

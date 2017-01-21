@@ -49,9 +49,11 @@ public final class Text extends GuiElement {
 	 *
 	 * @param text
 	 *            the new text
+	 * @return {@code this}
 	 */
-	public void setText(String text) {
+	public Text setText(String text) {
 		this.text = text;
+		return this;
 	}
 
 	/**

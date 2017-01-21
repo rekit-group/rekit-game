@@ -1,7 +1,5 @@
 package ragnarok.core;
 
-import ragnarok.core.Field;
-import ragnarok.core.Team;
 import ragnarok.primitives.geometry.Direction;
 import ragnarok.primitives.geometry.Frame;
 import ragnarok.primitives.geometry.Vec;
@@ -297,7 +295,7 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 	 *            the size
 	 */
 	public void setSize(Vec size) {
-		this.size = size;
+		this.size = size == null ? null : size.abs();
 	}
 
 	@Override
