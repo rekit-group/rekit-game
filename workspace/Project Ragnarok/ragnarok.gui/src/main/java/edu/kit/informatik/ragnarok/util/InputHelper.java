@@ -1,6 +1,6 @@
 package edu.kit.informatik.ragnarok.util;
 
-import org.eclipse.swt.SWT;
+import java.awt.event.KeyEvent;
 
 import edu.kit.informatik.ragnarok.gui.View;
 
@@ -14,37 +14,37 @@ public interface InputHelper {
 	/**
 	 * Key ID ArrowUp.
 	 */
-	public static final int ARROW_UP = SWT.ARROW_UP;
+	public static final int ARROW_UP = KeyEvent.VK_UP;
 
 	/**
 	 * Key ID ArrowUp.
 	 */
-	public static final int ARROW_DOWN = SWT.ARROW_DOWN;
+	public static final int ARROW_DOWN = KeyEvent.VK_DOWN;
 
 	/**
 	 * Key ID Arrow Left.
 	 */
-	public static final int ARROW_LEFT = SWT.ARROW_LEFT;
+	public static final int ARROW_LEFT = KeyEvent.VK_LEFT;
 
 	/**
 	 * Key ID Arrow Right.
 	 */
-	public static final int ARROW_RIGHT = SWT.ARROW_RIGHT;
+	public static final int ARROW_RIGHT = KeyEvent.VK_RIGHT;
 
 	/**
 	 * Key ID Space.
 	 */
-	public static final int SPACE = 32;
+	public static final int SPACE = KeyEvent.VK_SPACE;
 
 	/**
 	 * Key ID Escape.
 	 */
-	public static final int ESCAPE = SWT.ESC;
+	public static final int ESCAPE = KeyEvent.VK_ESCAPE;
 
 	/**
 	 * Key ID Enter.
 	 */
-	public static final int ENTER = 13;
+	public static final int ENTER = KeyEvent.VK_ENTER;
 
 	/**
 	 * Initialize the InputHelper.
