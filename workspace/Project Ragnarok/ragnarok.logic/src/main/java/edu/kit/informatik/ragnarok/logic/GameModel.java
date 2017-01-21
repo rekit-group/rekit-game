@@ -67,14 +67,19 @@ public class GameModel implements CameraTarget, Model {
 	@Override
 	public void start() {
 		this.init();
-		ThreadUtils.runDaemon(() -> {
-			// repeat until player is dead
-			while (!this.endGame) {
-				this.logicLoop();
-				ThreadUtils.sleep(GameConf.LOGIC_DELTA);
-			}
-			this.end();
-		});
+		ThreadUtils.runDaemon(this::playGame);
+	}
+
+	/**
+	 * This method will be invoked by the logic thread.
+	 */
+	private void playGame() {
+		// repeat until player is dead
+		while (!this.endGame) {
+			this.logicLoop();
+			ThreadUtils.sleep(GameConf.LOGIC_DELTA);
+		}
+		this.end();
 	}
 
 	/**

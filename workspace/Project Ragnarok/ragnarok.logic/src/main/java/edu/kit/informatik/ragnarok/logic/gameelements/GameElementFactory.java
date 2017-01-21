@@ -118,7 +118,7 @@ public final class GameElementFactory {
 	 * Initialize GameElementFactory.
 	 */
 	public static final synchronized void initialize() {
-		ThreadUtils.runDaemon(() -> GameElementFactory.load());
+		ThreadUtils.runDaemon(GameElementFactory::load);
 	}
 
 	/**

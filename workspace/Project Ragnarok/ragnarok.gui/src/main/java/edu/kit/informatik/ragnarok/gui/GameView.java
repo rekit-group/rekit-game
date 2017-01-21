@@ -4,12 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -17,7 +16,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Queue;
 
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
@@ -403,7 +401,7 @@ class GameView implements View {
 	 *
 	 * @return the game icon
 	 */
-	private BufferedImage getGameIcon() {
+	private Image getGameIcon() {
 		ByteArrayInputStream is = new ByteArrayInputStream(GameView.ICON);
 		/*
 		 * try { byte[] d =
@@ -414,11 +412,7 @@ class GameView implements View {
 
 		// return new Image(Display.getDefault(),
 		// this.getClass().getResourceAsStream(GameView.ICON_LOCATION))
-		try {
-			return ImageIO.read(is);
-		} catch (IOException e) {
-			return new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
-		}
+		return Utils.getImage(is);
 	}
 
 	/**
@@ -469,8 +463,8 @@ class GameView implements View {
 		this.field.setCurrentOffset(scene.getCameraOffset());
 
 		synchronized (scene.synchronize()) {
-			scene.getOrderedGameElementIterator().forEachRemaining((e) -> e.render(this.field));
-			scene.getGuiElementIterator().forEachRemaining((e) -> e.render(this.field));
+			scene.getOrderedGameElementIterator().forEachRemaining(this.field::render);
+			scene.getGuiElementIterator().forEachRemaining(this.field::render);
 		}
 
 		// draw FPS

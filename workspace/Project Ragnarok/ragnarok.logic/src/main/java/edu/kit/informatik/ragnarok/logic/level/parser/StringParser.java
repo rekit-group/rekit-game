@@ -154,7 +154,7 @@ class StringParser extends LevelParser {
 	/**
 	 * Parse a mapping.
 	 *
-	 * @return String[0] --> String[1]
+	 * @return String[0] -> String[1]
 	 */
 	private String[] parseMapping() {
 		return this.readToken(TokenType.MAPPING).getValue().split("->");

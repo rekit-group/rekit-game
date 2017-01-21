@@ -15,6 +15,8 @@ import org.apache.log4j.Logger;
 
 import edu.kit.informatik.ragnarok.config.GameConf;
 import edu.kit.informatik.ragnarok.core.Field;
+import edu.kit.informatik.ragnarok.core.GameElement;
+import edu.kit.informatik.ragnarok.core.GuiElement;
 import edu.kit.informatik.ragnarok.primitives.geometry.Polygon;
 import edu.kit.informatik.ragnarok.primitives.geometry.Vec;
 import edu.kit.informatik.ragnarok.primitives.image.Filter;
@@ -50,6 +52,14 @@ class FieldImpl extends Field {
 
 	void setGraphics(Graphics2D current) {
 		this.graphics = current;
+	}
+
+	void render(GameElement e) {
+		e.render(this);
+	}
+
+	void render(GuiElement e) {
+		e.render(this);
 	}
 
 	@Override

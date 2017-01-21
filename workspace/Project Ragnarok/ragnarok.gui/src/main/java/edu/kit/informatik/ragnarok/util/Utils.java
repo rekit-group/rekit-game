@@ -3,7 +3,12 @@ package edu.kit.informatik.ragnarok.util;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.imageio.ImageIO;
 
 import edu.kit.informatik.ragnarok.primitives.image.RGBAColor;
 import edu.kit.informatik.ragnarok.primitives.image.RGBColor;
@@ -56,5 +61,20 @@ public final class Utils {
 		int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
 		frame.setLocation(x, y);
 
+	}
+
+	/**
+	 * Get Image by {@link InputStream}.
+	 * 
+	 * @param is
+	 *            the stream
+	 * @return the image or {@code null} if error occured
+	 */
+	public static Image getImage(InputStream is) {
+		try {
+			return ImageIO.read(is);
+		} catch (IOException e) {
+			return null;
+		}
 	}
 }
