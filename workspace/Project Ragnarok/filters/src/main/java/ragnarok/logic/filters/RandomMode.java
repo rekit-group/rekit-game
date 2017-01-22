@@ -67,4 +67,9 @@ public final class RandomMode implements Filter {
 		return true;
 	}
 
+	@Override
+	public boolean isApplyImage() {
+		return false;
+	}
+
 }

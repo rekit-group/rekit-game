@@ -29,4 +29,9 @@ public class InvertedMode implements Filter {
 		return true;
 	}
 
+	@Override
+	public boolean isApplyImage() {
+		return false;
+	}
+
 }

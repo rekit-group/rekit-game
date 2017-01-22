@@ -475,6 +475,7 @@ class GameView implements View {
 		// set current camera position
 		this.field.setGraphics(graphics);
 		this.field.setCurrentOffset(scene.getCameraOffset());
+		this.field.setBackground(GameConf.GAME_BACKGROUD_COLOR);
 
 		this.drawElements(scene);
 

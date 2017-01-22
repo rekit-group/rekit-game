@@ -24,13 +24,20 @@ public interface Filter {
 
 	/**
 	 * This boolean indicates whether this filter can be applied pixel per pixel
-	 * (fast) or only on the final image (slow).
+	 * (fast).
 	 *
 	 * @return {@code true} if {@link #apply(RGBAColor)} and
-	 *         {@link #apply(RGBColor)} shall be used,<br>
-	 *         {@code false} otherwise ({@link #apply(AbstractImage)})
+	 *         {@link #apply(RGBColor)} shall be used
 	 */
 	boolean isApplyPixel();
+
+	/**
+	 * This boolean indicates whether this filter can be applied pixel per pixel
+	 * (slow).
+	 *
+	 * @return {@code true} if {@link #apply(AbstractImage))} shall be used
+	 */
+	boolean isApplyImage();
 
 	/**
 	 * Apply Filter.

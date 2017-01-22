@@ -11,8 +11,6 @@ import java.awt.geom.Ellipse2D;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
 import ragnarok.config.GameConf;
 import ragnarok.core.Field;
 import ragnarok.core.GameElement;
@@ -195,11 +193,11 @@ class FieldImpl extends Field {
 	 */
 	private void drawImageImpl(Vec pos, Vec size, String imagePath) {
 
-		Image image = ImageLoader.get(imagePath);
-		if (this.filter != null && !this.filter.isApplyPixel()) {
-			// TODO Apply to image
-			Logger.getRootLogger().error("Filter currently not implemented for pictures in FieldImpl");
+		Image image = ImageManagement.get(imagePath);
+		if (this.filter != null && this.filter.isApplyImage()) {
+			image = ImageManagement.toImage(this.filter.apply(ImageManagement.getAsAbstractImage(imagePath)));
 		}
+
 		this.graphics.drawImage(image, // image
 				(int) (pos.getX() - size.getX() / 2f), // dstX
 				(int) (pos.getY() - size.getY() / 2f), // dstY
@@ -221,7 +219,7 @@ class FieldImpl extends Field {
 	private void drawTextImpl(Vec pos, String text, TextOptions options) {
 		// Set color to red and set font
 		RGBColor in = new RGBColor(options.getColor().red, options.getColor().green, options.getColor().blue);
-		RGBColor col = this.filter == null ? in : this.filter.apply(in);
+		RGBColor col = (this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
 		this.graphics.setColor(Utils.calcRGB(col));
 
 		Font font = new Font(options.getFont(), options.getFontOptions() | Font.BOLD, options.getHeight());
@@ -283,7 +281,7 @@ class FieldImpl extends Field {
 	 *            the filter or {@code null} for deleting current filters
 	 */
 	void setFilter(Filter filter) {
-		if (filter == null || !filter.isApplyPixel()) {
+		if (filter == null) {
 			this.filter = null;
 		} else {
 			this.filter = filter;
@@ -297,7 +295,7 @@ class FieldImpl extends Field {
 	 *            the color
 	 */
 	public void setBackground(RGBColor in) {
-		RGBColor col = this.filter == null ? in : this.filter.apply(in);
+		RGBColor col = (this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
 		this.graphics.setColor(Utils.calcRGB(col));
 		this.graphics.fillRect(0, 0, GameConf.PIXEL_W, GameConf.PIXEL_H);
 
@@ -307,7 +305,7 @@ class FieldImpl extends Field {
 
 	@Override
 	public void drawRectangle(Vec pos, Vec size, RGBAColor in, boolean inGame) {
-		RGBAColor col = this.filter == null ? in : this.filter.apply(in);
+		RGBAColor col = (this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
 		if (!inGame) {
 			this.drawRectangleImpl(this.translate2D(pos), size, Utils.calcRGBA(col));
 		} else {
@@ -327,7 +325,7 @@ class FieldImpl extends Field {
 			return;
 		}
 
-		RGBColor col = this.filter == null ? in : this.filter.apply(in);
+		RGBColor col = (this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
 
 		Vec newPos = this.translate2D(startPos);
 		newPos = CalcUtil.units2pixel(newPos);
@@ -348,7 +346,7 @@ class FieldImpl extends Field {
 
 	@Override
 	public void drawCircle(Vec pos, Vec size, RGBAColor in, boolean inGame) {
-		RGBAColor col = this.filter == null ? in : this.filter.apply(in);
+		RGBAColor col = (this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
 		if (!inGame) {
 			this.drawCircleImpl(this.translate2D(pos), size, Utils.calcRGBA(col));
 		} else {
@@ -364,7 +362,7 @@ class FieldImpl extends Field {
 
 	@Override
 	public void drawPolygon(Polygon polygon, RGBAColor in, boolean fill, boolean inGame) {
-		RGBAColor col = this.filter == null ? in : this.filter.apply(in);
+		RGBAColor col = (this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
 		polygon.moveTo(this.translate2D(polygon.getStartPoint()));
 
 		float[] unitArray = polygon.getAbsoluteArray();
@@ -404,7 +402,7 @@ class FieldImpl extends Field {
 
 	@Override
 	public void drawRoundRectangle(Vec pos, Vec size, RGBAColor in, float arcWidth, float arcHeight, boolean inGame) {
-		RGBAColor col = this.filter == null ? in : this.filter.apply(in);
+		RGBAColor col = (this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
 		if (!inGame) {
 			this.drawRoundRectangleImpl(this.translate2D(pos), size, Utils.calcRGBA(col), (int) arcWidth, (int) arcHeight);
 		} else {
