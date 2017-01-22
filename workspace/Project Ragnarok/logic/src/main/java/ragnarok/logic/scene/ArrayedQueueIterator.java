@@ -33,7 +33,7 @@ public final class ArrayedQueueIterator<T> implements Iterator<T> {
 
 	@Override
 	public boolean hasNext() {
-		return this.queue.isEmpty();
+		return !this.queue.isEmpty();
 	}
 
 	@Override
