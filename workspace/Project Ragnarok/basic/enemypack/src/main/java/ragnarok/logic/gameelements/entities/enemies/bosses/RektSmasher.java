@@ -4,8 +4,8 @@ import home.fox.visitors.Visitable;
 import home.fox.visitors.annotations.NoVisit;
 import home.fox.visitors.annotations.VisitInfo;
 import ragnarok.config.GameConf;
-import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
+import ragnarok.core.GameGrid;
 import ragnarok.logic.gameelements.entities.Entity;
 import ragnarok.logic.gameelements.entities.Player;
 import ragnarok.logic.gameelements.entities.enemies.RektKiller;
@@ -16,8 +16,8 @@ import ragnarok.primitives.geometry.Direction;
 import ragnarok.primitives.geometry.Frame;
 import ragnarok.primitives.geometry.Vec;
 import ragnarok.primitives.time.Timer;
-import ragnarok.util.ThreadUtils;
 import ragnarok.util.ReflectUtils.LoadMe;
+import ragnarok.util.ThreadUtils;
 
 /**
  *
@@ -134,7 +134,7 @@ public final class RektSmasher extends Boss implements Visitable {
 			this.innerRektKiller.setSide(Direction.getOpposite(dir), false);
 
 			// start thread to re-add spikes after time
-			ThreadUtils.runThread(() -> {
+			ThreadUtils.runThread("RektSmasher-Spikes", () -> {
 				Timer.sleep(RektSmasher.SPIKE_TIME);
 				this.innerRektKiller.setSide(Direction.getOpposite(dir), true);
 

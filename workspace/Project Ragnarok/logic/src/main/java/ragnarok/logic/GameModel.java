@@ -67,7 +67,7 @@ public class GameModel implements CameraTarget, Model {
 	@Override
 	public void start() {
 		this.init();
-		ThreadUtils.runDaemon(this::playGame);
+		ThreadUtils.runDaemon("GameModel", this::playGame);
 	}
 
 	/**

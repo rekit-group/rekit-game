@@ -99,6 +99,13 @@ public final class ImageManagement {
 		return new AbstractImage(image.getHeight(), image.getWidth(), abstractData);
 	}
 
+	/**
+	 * Convert {@link AbstractImage} to {@link Image}.
+	 * 
+	 * @param in
+	 *            the input image
+	 * @return the converted image
+	 */
 	public static final Image toImage(AbstractImage in) {
 		if (in == null) {
 			return null;

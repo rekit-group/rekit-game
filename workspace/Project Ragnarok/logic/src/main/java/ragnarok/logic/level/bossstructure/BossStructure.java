@@ -129,7 +129,7 @@ public final class BossStructure extends Structure {
 		this.boss.setTarget(player);
 
 		// Create thread for asynchronous stuff
-		ThreadUtils.runThread(() -> {
+		ThreadUtils.runThread("BossRoom-Start", () -> {
 			// keep walking right to the right camera position
 			while (player.getPos().getX() < BossStructure.this.cameraTarget) {
 				player.setVel(player.getVel().setX(1.8f));
@@ -174,7 +174,7 @@ public final class BossStructure extends Structure {
 		);
 
 		// Create thread for asynchronous stuff
-		ThreadUtils.runThread(() -> {
+		ThreadUtils.runThread("BossRoom-End", () -> {
 			// save Players current velocity
 			Vec[] save = { player.getVel(), player.getPos(), this.boss.getPos() };
 			// while timer has time left...

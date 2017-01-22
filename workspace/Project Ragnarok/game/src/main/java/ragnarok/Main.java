@@ -38,6 +38,7 @@ public final class Main {
 	 *            not used
 	 */
 	public static void main(String[] args) {
+		Thread.currentThread().setName("Startup");
 		Main.setLogLevel(GameConf.DEBUG ? Level.ALL : Level.INFO);
 		// Load All Configs
 		Main.visitAllStatic();

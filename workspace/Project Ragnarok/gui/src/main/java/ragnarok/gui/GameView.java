@@ -434,7 +434,7 @@ class GameView implements View {
 	 */
 	@Override
 	public void start() {
-		ThreadUtils.runDaemon(this::update);
+		ThreadUtils.runDaemon("GameView", this::update);
 	}
 
 	/**

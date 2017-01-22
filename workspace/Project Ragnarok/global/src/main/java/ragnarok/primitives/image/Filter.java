@@ -35,7 +35,7 @@ public interface Filter {
 	 * This boolean indicates whether this filter can be applied pixel per pixel
 	 * (slow).
 	 *
-	 * @return {@code true} if {@link #apply(AbstractImage))} shall be used
+	 * @return {@code true} if {@link #apply(AbstractImage)} shall be used
 	 */
 	boolean isApplyImage();
 
