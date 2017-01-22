@@ -1,7 +1,7 @@
 package ragnarok.logic.gui.menu;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.core.GuiElement;
 import ragnarok.core.IScene;
 import ragnarok.primitives.geometry.Vec;
@@ -139,7 +139,7 @@ public abstract class MenuItem extends GuiElement {
 	}
 
 	@Override
-	protected void internalRender(Field f) {
+	protected void internalRender(GameGrid f) {
 		this.renderItem(f);
 	}
 
@@ -149,7 +149,7 @@ public abstract class MenuItem extends GuiElement {
 	 * @param f
 	 *            the field
 	 */
-	protected void renderItem(Field f) {
+	protected void renderItem(GameGrid f) {
 		f.drawRectangle(this.getPos(), this.getSize(), this.hover ? GameConf.MENU_BOX_SELECT_COLOR : GameConf.MENU_BOX_COLOR, false);
 		f.drawText(this.getPos(), this.getText(), GameConf.MENU_TEXT, false);
 	}

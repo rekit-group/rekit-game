@@ -1,7 +1,7 @@
 package ragnarok.logic.gui.parallax;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.primitives.geometry.Polygon;
 import ragnarok.primitives.geometry.Vec;
 import ragnarok.primitives.image.RGBAColor;
@@ -119,7 +119,7 @@ public class HeapElementMountain extends HeapElement {
 	}
 
 	@Override
-	public void internalRender(Field f) {
+	public void internalRender(GameGrid f) {
 		this.polygon.moveTo(this.getPos());
 		f.drawPolygon(this.polygon, this.col, true);
 	}

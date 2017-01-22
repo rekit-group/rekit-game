@@ -1,7 +1,7 @@
 package ragnarok.logic.gameelements.entities.enemies;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
 import ragnarok.logic.gameelements.entities.Entity;
 import ragnarok.logic.gameelements.type.Enemy;
@@ -171,7 +171,7 @@ public final class RektKiller extends Enemy {
 	}
 
 	@Override
-	public void internalRender(Field f) {
+	public void internalRender(GameGrid f) {
 		RGBColor innerColor = new RGBColor(150, 30, 30);
 		RGBColor spikeColor = new RGBColor(80, 80, 80);
 		// draw rectangle in the middle

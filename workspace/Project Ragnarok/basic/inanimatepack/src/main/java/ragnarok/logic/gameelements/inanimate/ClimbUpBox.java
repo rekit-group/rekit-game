@@ -4,7 +4,7 @@ import home.fox.visitors.Visitable;
 import home.fox.visitors.annotations.NoVisit;
 import home.fox.visitors.annotations.VisitInfo;
 import ragnarok.config.GameConf;
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
 import ragnarok.core.Team;
 import ragnarok.logic.gameelements.inanimate.Inanimate;
@@ -115,7 +115,7 @@ public final class ClimbUpBox extends DynamicInanimate implements Visitable {
 	}
 
 	@Override
-	public void internalRender(Field f) {
+	public void internalRender(GameGrid f) {
 		f.drawRectangle(this.getPos(), this.getSize(), this.color);
 		f.drawRectangle(this.getPos().addY(-0.1f), this.getSize().scalar(0.2f, 0.8f), ClimbUpBox.DARK_COLOR);
 		f.drawRectangle(this.getPos().addY(0.4f), this.getSize().scalar(1, 0.2f), ClimbUpBox.DARK_COLOR);
@@ -136,7 +136,7 @@ public final class ClimbUpBox extends DynamicInanimate implements Visitable {
 	 * @param end
 	 *            the end level
 	 */
-	public void renderEnergy(Field f, float start, float end) {
+	public void renderEnergy(GameGrid f, float start, float end) {
 
 		float h = end - start;
 		f.drawRectangle(this.getPos().addY(h / 2f - this.getSize().getY() / 2f + start), this.getSize().scalar(0.2f, h), ClimbUpBox.ENERGY_COLOR);
@@ -193,12 +193,12 @@ public final class ClimbUpBox extends DynamicInanimate implements Visitable {
 		}
 
 		/**
-		 * Same as {@link ClimbUpBox#internalRender(Field)}.
+		 * Same as {@link ClimbUpBox#internalRender(GameGrid)}.
 		 *
 		 * @param f
 		 *            the field
 		 */
-		public void internalRender(Field f) {
+		public void internalRender(GameGrid f) {
 
 		}
 
@@ -267,7 +267,7 @@ public final class ClimbUpBox extends DynamicInanimate implements Visitable {
 		}
 
 		@Override
-		public void internalRender(Field f) {
+		public void internalRender(GameGrid f) {
 			f.drawRectangle(ClimbUpBox.this.getPos().addY(0.4f), ClimbUpBox.this.getSize().scalar(1, 0.2f), ClimbUpBox.ENERGY_COLOR);
 
 			Vec pos = this.parent.getPos().addY(this.parent.getSize().getY() / 2f + 1).addX(-0.5f);

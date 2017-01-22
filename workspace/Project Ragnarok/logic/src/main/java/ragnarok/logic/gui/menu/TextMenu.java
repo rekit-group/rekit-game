@@ -1,7 +1,7 @@
 package ragnarok.logic.gui.menu;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.core.IScene;
 import ragnarok.primitives.geometry.Vec;
 import ragnarok.primitives.image.RGBAColor;
@@ -37,7 +37,7 @@ public class TextMenu extends MenuItem {
 	 *            the field
 	 */
 	@Override
-	protected void renderItem(Field f) {
+	protected void renderItem(GameGrid f) {
 		f.drawRectangle(this.getPos(), this.getSize(), new RGBAColor(0, 0, 0, 200), false);
 		f.drawText(this.getPos().sub(this.getSize().scalar(0.5F)).add(this.space), this.getText(), GameConf.ABOUT_TEXT, false);
 	}

@@ -1,7 +1,7 @@
 package ragnarok.logic.gameelements.inanimate;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.primitives.geometry.Vec;
 import ragnarok.primitives.image.RGBAColor;
 
@@ -26,7 +26,7 @@ public class InanimateBox extends Inanimate {
 	}
 
 	@Override
-	public void internalRender(Field f) {
+	public void internalRender(GameGrid f) {
 		f.drawRectangle(this.getPos(), this.getSize(), this.color);
 
 		RGBAColor darkColor = new RGBAColor(this.color.red - 30, this.color.green - 30, this.color.blue - 30, this.color.alpha);

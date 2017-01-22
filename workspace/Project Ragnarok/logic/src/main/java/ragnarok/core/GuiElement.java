@@ -1,6 +1,6 @@
 package ragnarok.core;
 
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.primitives.geometry.Vec;
 
 /**
@@ -132,10 +132,10 @@ public abstract class GuiElement implements Comparable<GuiElement> {
 	 * </p>
 	 *
 	 * @param f
-	 *            the {@link Field} that represents the games field and supplies
+	 *            the {@link GameGrid} that represents the games field and supplies
 	 *            primitive drawing operations.
 	 */
-	public final void render(Field f) {
+	public final void render(GameGrid f) {
 		if (this.visible) {
 			this.internalRender(f);
 		}
@@ -149,14 +149,14 @@ public abstract class GuiElement implements Comparable<GuiElement> {
 	 * </p>
 	 * <p>
 	 * Should be overwritten in sub classes for custom visualization using the
-	 * {@link Field}.
+	 * {@link GameGrid}.
 	 * </p>
 	 *
 	 * @param f
-	 *            the {@link Field} that represents the games field and supplies
+	 *            the {@link GameGrid} that represents the games field and supplies
 	 *            primitive drawing operations.
 	 */
-	protected abstract void internalRender(Field f);
+	protected abstract void internalRender(GameGrid f);
 
 	@Override
 	public final int compareTo(GuiElement other) {

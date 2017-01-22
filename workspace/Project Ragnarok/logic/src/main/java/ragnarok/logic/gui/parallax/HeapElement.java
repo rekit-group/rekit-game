@@ -1,6 +1,6 @@
 package ragnarok.logic.gui.parallax;
 
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.primitives.geometry.Vec;
 import ragnarok.primitives.image.RGBAColor;
 
@@ -100,7 +100,7 @@ public abstract class HeapElement extends BackgroundElement {
 	}
 
 	@Override
-	public abstract void internalRender(Field f);
+	public abstract void internalRender(GameGrid f);
 
 	public abstract HeapElement create(HeapLayer parent, Vec pos, Vec size, RGBAColor col);
 }

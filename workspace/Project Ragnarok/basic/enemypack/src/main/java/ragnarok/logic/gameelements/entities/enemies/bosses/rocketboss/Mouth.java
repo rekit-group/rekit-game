@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.primitives.geometry.Vec;
 import ragnarok.primitives.image.RGBColor;
 import ragnarok.primitives.time.Timer;
@@ -51,7 +51,7 @@ public class Mouth {
 		}
 	}
 
-	public void render(Field f) {
+	public void render(GameGrid f) {
 		f.drawRectangle(this.parent.getPos().add(this.pos), this.size, this.col);
 		f.drawPath(this.mouthCurvePos, this.mouthCurve, new RGBColor(0, 0, 0));
 	}

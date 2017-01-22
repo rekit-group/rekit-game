@@ -1,6 +1,6 @@
 package ragnarok.logic.gameelements.inanimate;
 
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.primitives.geometry.Vec;
 import ragnarok.primitives.image.RGBAColor;
 import ragnarok.primitives.image.RGBColor;
@@ -22,7 +22,7 @@ public class InanimateDoor extends InanimateBox {
 	}
 
 	@Override
-	public void internalRender(Field f) {
+	public void internalRender(GameGrid f) {
 		f.drawRectangle(this.getPos(), this.getSize(), this.color);
 
 		Vec start = this.getPos().add(this.getSize().scalar(-(1 / 2f))).add(new Vec(0.1f, 0.1f));

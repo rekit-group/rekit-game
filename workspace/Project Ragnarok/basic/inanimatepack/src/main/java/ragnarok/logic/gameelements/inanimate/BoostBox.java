@@ -4,7 +4,7 @@ import home.fox.visitors.Visitable;
 import home.fox.visitors.annotations.NoVisit;
 import home.fox.visitors.annotations.VisitInfo;
 import ragnarok.config.GameConf;
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
 import ragnarok.core.GameTime;
 import ragnarok.core.Team;
@@ -123,7 +123,7 @@ public final class BoostBox extends DynamicInanimate implements Visitable {
 	}
 
 	@Override
-	public void internalRender(Field f) {
+	public void internalRender(GameGrid f) {
 		this.strategies[this.current].internalRender(f);
 		if (this.sparkling) {
 			BoostBox.PARTICLES.spawn(this.getScene(), this.getPos());
@@ -178,12 +178,12 @@ public final class BoostBox extends DynamicInanimate implements Visitable {
 		public abstract RGBAColor getColor();
 
 		/**
-		 * Same as {@link BoostBox#internalRender(Field)}.
+		 * Same as {@link BoostBox#internalRender(GameGrid)}.
 		 *
 		 * @param f
 		 *            the field
 		 */
-		public void internalRender(Field f) {
+		public void internalRender(GameGrid f) {
 			this.parent.innerBox.color = this.getColor();
 			// Call decorated InanimateBoxes internalRender
 			this.parent.innerBox.internalRender(f);

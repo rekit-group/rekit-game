@@ -3,7 +3,7 @@ package ragnarok.logic.gameelements.entities.enemies;
 import home.fox.visitors.Visitable;
 import home.fox.visitors.annotations.NoVisit;
 import home.fox.visitors.annotations.VisitInfo;
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
 import ragnarok.logic.gameelements.entities.Entity;
 import ragnarok.logic.gameelements.particles.ParticleSpawner;
@@ -64,7 +64,7 @@ public final class Warper extends Enemy implements Visitable {
 	}
 
 	@Override
-	public void internalRender(Field f) {
+	public void internalRender(GameGrid f) {
 		float progress = this.warpAction.getProgress();
 		for (float i = 1; i >= 0.2; i -= 0.1) {
 			RGBColor innerColor = new RGBColor((int) (250 * i), (int) (250 * (1 - progress)), (150));

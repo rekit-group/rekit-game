@@ -2,7 +2,7 @@ package ragnarok.logic.gameelements.entities.pickups;
 
 import home.fox.visitors.Visitable;
 import home.fox.visitors.annotations.VisitInfo;
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
 import ragnarok.logic.gameelements.entities.Player;
 import ragnarok.logic.gameelements.type.Pickup;
@@ -36,7 +36,7 @@ public class BluePill extends Pickup implements Visitable {
 	}
 
 	@Override
-	public void internalRender(Field f) {
+	public void internalRender(GameGrid f) {
 		f.drawCircle(this.getPos(), this.getSize(), new RGBAColor(0, 0, 255, 150));
 		f.drawCircle(this.getPos(), this.getSize().scalar(0.5F), new RGBAColor(0, 255, 0, 127));
 		f.drawCircle(this.getPos(), this.getSize().scalar(0.3F), new RGBAColor(255, 0, 0, 88));
@@ -65,7 +65,7 @@ public class BluePill extends Pickup implements Visitable {
 	 * @param p
 	 *            the player
 	 */
-	private void drawPlayer(Field f, Player p) {
+	private void drawPlayer(GameGrid f, Player p) {
 		// TODO Better graphical style.
 		f.drawRoundRectangle(p.getPos(), p.getSize(), new RGBAColor(148, 172, 236, 180), 0.45F, 0.45F);
 		Vec left = p.getPos().sub(p.getSize().scalar(0.15F));

@@ -12,7 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
 import ragnarok.core.GuiElement;
 import ragnarok.primitives.geometry.Polygon;
@@ -25,13 +25,13 @@ import ragnarok.util.TextOptions;
 import ragnarok.util.Utils;
 
 /**
- * This class represents a {@link Field} of the {@link GameView}.
+ * This class represents a {@link GameGrid} of the {@link GameView}.
  *
  * @author Angelo Aracri
  * @author Dominik Fuchss
  *
  */
-class FieldImpl extends Field {
+class GameGridImpl extends GameGrid {
 
 	/**
 	 * The current camera offset.

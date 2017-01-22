@@ -1,7 +1,7 @@
 package ragnarok.logic.gui.parallax;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.core.IScene;
 
 public abstract class ParallaxLayer {
@@ -29,7 +29,7 @@ public abstract class ParallaxLayer {
 		this.generateUntil = this.x + GameConf.GRID_W;
 	}
 
-	public void render(Field f) {
+	public void render(GameGrid f) {
 
 	}
 

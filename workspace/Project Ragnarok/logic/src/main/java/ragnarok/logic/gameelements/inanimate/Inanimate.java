@@ -1,7 +1,7 @@
 package ragnarok.logic.gameelements.inanimate;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
 import ragnarok.core.Team;
 import ragnarok.primitives.geometry.Direction;
@@ -56,7 +56,7 @@ public class Inanimate extends GameElement {
 	}
 
 	@Override
-	public void internalRender(Field f) {
+	public void internalRender(GameGrid f) {
 		f.drawRectangle(this.getPos(), this.getSize().scalar(0.95f), this.color);
 	}
 

@@ -1,6 +1,6 @@
 package ragnarok.logic.gameelements.entities.enemies.slurp;
 
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
 import ragnarok.core.Team;
 import ragnarok.logic.gameelements.entities.Entity;
@@ -125,7 +125,7 @@ public final class SlurpDurp extends Entity {
 	}
 
 	@Override
-	public void internalRender(Field f) {
+	public void internalRender(GameGrid f) {
 		for (SlurpDurpVisComp vis : SlurpDurp.circles) {
 			vis.render(f, this.parentPos.add(this.innerPos), this.getSize());
 		}

@@ -16,7 +16,7 @@ import ragnarok.util.TextOptions;
  * @author Angelo Aracri
  *
  */
-public abstract class Field {
+public abstract class GameGrid {
 	/**
 	 * Set the current camera offset (e.g. for Bosses)
 	 *

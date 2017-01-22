@@ -1,6 +1,6 @@
 package ragnarok.logic.gui;
 
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.core.GuiElement;
 import ragnarok.core.IScene;
 import ragnarok.primitives.time.Timer;
@@ -56,7 +56,7 @@ public final class TimeDecorator extends GuiElement {
 	}
 
 	@Override
-	public void internalRender(Field f) {
+	public void internalRender(GameGrid f) {
 		this.element.render(f);
 	}
 

@@ -1,7 +1,7 @@
 package ragnarok.logic.gameelements.entities.enemies.bosses.rocketboss;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
 import ragnarok.logic.gameelements.entities.enemies.bosses.rocketboss.damagestate.DamageState;
 import ragnarok.logic.gameelements.entities.enemies.bosses.rocketboss.damagestate.State3;
@@ -74,7 +74,7 @@ public class RocketBoss extends Boss {
 	}
 
 	@Override
-	public void internalRender(Field f) {
+	public void internalRender(GameGrid f) {
 		f.drawRectangle(this.getPos(), this.getSize(), RocketBoss.HEAD_COL);
 
 		// Render eyes

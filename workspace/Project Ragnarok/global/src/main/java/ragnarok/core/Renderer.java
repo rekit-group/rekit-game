@@ -1,7 +1,7 @@
 package ragnarok.core;
 
 /**
- * This interface defines an renderer, which can draw on a {@link Field}.
+ * This interface defines an renderer, which can draw on a {@link GameGrid}.
  *
  * @author Dominik Fuchss
  *
@@ -13,5 +13,5 @@ public interface Renderer {
 	 * @param f
 	 *            the field
 	 */
-	void render(Field f);
+	void render(GameGrid f);
 }

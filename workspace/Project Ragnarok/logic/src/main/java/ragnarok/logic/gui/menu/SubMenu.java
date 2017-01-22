@@ -3,7 +3,7 @@ package ragnarok.logic.gui.menu;
 import java.util.ArrayList;
 import java.util.List;
 
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.core.IScene;
 import ragnarok.primitives.geometry.Vec;
 
@@ -204,7 +204,7 @@ public abstract class SubMenu extends MenuItem {
 	}
 
 	@Override
-	protected final void internalRender(Field f) {
+	protected final void internalRender(GameGrid f) {
 		if (this.selected) {
 			// render this menu as complete Menu
 			this.renderMenu(f);
@@ -221,7 +221,7 @@ public abstract class SubMenu extends MenuItem {
 	 * @param f
 	 *            the field for rendering
 	 */
-	protected void renderMenu(Field f) {
+	protected void renderMenu(GameGrid f) {
 		for (final MenuItem menuItem : this.menuItems) {
 			menuItem.renderItem(f);
 		}

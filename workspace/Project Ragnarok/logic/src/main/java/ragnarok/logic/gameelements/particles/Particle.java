@@ -1,6 +1,6 @@
 package ragnarok.logic.gameelements.particles;
 
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
 import ragnarok.core.GameTime;
 import ragnarok.core.Team;
@@ -203,7 +203,7 @@ public class Particle extends GameElement implements Cloneable {
 	}
 
 	@Override
-	public void internalRender(Field f) {
+	public void internalRender(GameGrid f) {
 		this.polygon.moveTo(this.getPos());
 
 		f.drawPolygon(this.polygon, this.currentCol, true);

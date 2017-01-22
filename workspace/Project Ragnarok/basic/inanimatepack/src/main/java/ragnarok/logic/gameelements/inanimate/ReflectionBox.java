@@ -3,7 +3,7 @@ package ragnarok.logic.gameelements.inanimate;
 import org.apache.log4j.Level;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
 import ragnarok.core.Team;
 import ragnarok.logic.gameelements.entities.Player;
@@ -92,7 +92,7 @@ public final class ReflectionBox extends DynamicInanimate {
 	}
 
 	@Override
-	public void internalRender(Field f) {
+	public void internalRender(GameGrid f) {
 		Vec s = this.getSize();
 		Vec p = this.getPos();
 

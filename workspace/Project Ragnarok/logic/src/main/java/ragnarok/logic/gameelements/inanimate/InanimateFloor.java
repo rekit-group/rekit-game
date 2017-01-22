@@ -1,7 +1,7 @@
 package ragnarok.logic.gameelements.inanimate;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
 import ragnarok.logic.gameelements.particles.Particle;
 import ragnarok.logic.gameelements.particles.ParticleSpawner;
@@ -149,7 +149,7 @@ public class InanimateFloor extends Inanimate {
 	 * </p>
 	 * <p>
 	 * In order to show the {@link GrassStraw} one must call
-	 * {@link #internalRender(Field f)}.
+	 * {@link #internalRender(GameGrid f)}.
 	 * </p>
 	 *
 	 * @author Angelo Aracri
@@ -188,15 +188,15 @@ public class InanimateFloor extends Inanimate {
 		 * Render method to display the {@link GrassStraw}.
 		 *
 		 * @param f
-		 *            the {@link Field} to render upon.
+		 *            the {@link GameGrid} to render upon.
 		 */
-		public void internalRender(Field f) {
+		public void internalRender(GameGrid f) {
 			f.drawRectangle(this.pos, this.size, this.col);
 		}
 	}
 
 	@Override
-	public void internalRender(Field f) {
+	public void internalRender(GameGrid f) {
 		// Draw rectangles that this Floor is composed of
 		for (int i = 0; i < InanimateFloor.LAYERS; i++) {
 			f.drawRectangle(this.getPos().add(InanimateFloor.layerVecs[i]), this.getSize().setY(1 / (float) InanimateFloor.LAYERS),

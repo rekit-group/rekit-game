@@ -8,7 +8,7 @@ import home.fox.visitors.annotations.AfterVisit;
 import home.fox.visitors.annotations.NoVisit;
 import home.fox.visitors.annotations.VisitInfo;
 import ragnarok.config.GameConf;
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
 import ragnarok.core.GameTime;
 import ragnarok.logic.gameelements.type.Enemy;
@@ -131,7 +131,7 @@ public final class Stacker extends Enemy implements Visitable {
 		}
 
 		@Override
-		public void internalRender(Field f) {
+		public void internalRender(GameGrid f) {
 			if (this.timeToDie != null) {
 				f.drawCircle(this.getPos(), this.getSize(), Stacker.COLOR);
 			} else {

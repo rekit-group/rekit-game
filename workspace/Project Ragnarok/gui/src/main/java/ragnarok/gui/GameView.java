@@ -361,7 +361,7 @@ class GameView implements View {
 	/**
 	 * The Field that manages the graphic context.
 	 */
-	private FieldImpl field;
+	private GameGridImpl grid;
 	/**
 	 * The frame.
 	 */
@@ -407,7 +407,7 @@ class GameView implements View {
 		this.frame.setVisible(true);
 
 		// Create Graphic context
-		this.field = new FieldImpl();
+		this.grid = new GameGridImpl();
 	}
 
 	/**
@@ -464,7 +464,7 @@ class GameView implements View {
 	public void renderLoop() {
 		IScene scene = this.model.getScene();
 		if (this.model.filterChanged()) {
-			this.field.setFilter(this.model.getFilter());
+			this.grid.setFilter(this.model.getFilter());
 		}
 
 		// Create temporary GC on new Image and let field draw on that
@@ -473,9 +473,9 @@ class GameView implements View {
 		graphics.clearRect(0, 0, this.canvas.getWidth(), this.canvas.getHeight());
 
 		// set current camera position
-		this.field.setGraphics(graphics);
-		this.field.setCurrentOffset(scene.getCameraOffset());
-		this.field.setBackground(GameConf.GAME_BACKGROUD_COLOR);
+		this.grid.setGraphics(graphics);
+		this.grid.setCurrentOffset(scene.getCameraOffset());
+		this.grid.setBackground(GameConf.GAME_BACKGROUD_COLOR);
 
 		this.drawElements(scene);
 
@@ -494,8 +494,8 @@ class GameView implements View {
 	 */
 	private void drawElements(IScene scene) {
 		synchronized (scene.synchronize()) {
-			scene.getOrderedGameElementIterator().forEachRemaining(this.field::render);
-			scene.getGuiElementIterator().forEachRemaining(this.field::render);
+			scene.getOrderedGameElementIterator().forEachRemaining(this.grid::render);
+			scene.getGuiElementIterator().forEachRemaining(this.grid::render);
 		}
 	}
 
@@ -509,7 +509,7 @@ class GameView implements View {
 		}
 		// draw FPS
 		String debugInfo = "FPS: " + this.getFPS();
-		this.field.drawText(new Vec(GameConf.PIXEL_W - 10, GameConf.PIXEL_H - 60), debugInfo, GameConf.HINT_TEXT, false);
+		this.grid.drawText(new Vec(GameConf.PIXEL_W - 10, GameConf.PIXEL_H - 60), debugInfo, GameConf.HINT_TEXT, false);
 
 		HashMap<Class<?>, Integer> classCounter = new HashMap<>();
 
@@ -542,9 +542,9 @@ class GameView implements View {
 			resultDur.append("\n");
 		});
 
-		this.field.drawText(new Vec(GameConf.PIXEL_W - 55, GameConf.PIXEL_H / 2f), resultName.toString(), GameConf.HINT_TEXT, false);
-		this.field.drawText(new Vec(GameConf.PIXEL_W - 30, GameConf.PIXEL_H / 2f), resultNum.toString(), GameConf.HINT_TEXT, false);
-		this.field.drawText(new Vec(GameConf.PIXEL_W - 5, GameConf.PIXEL_H / 2f), resultDur.toString(), GameConf.HINT_TEXT, false);
+		this.grid.drawText(new Vec(GameConf.PIXEL_W - 55, GameConf.PIXEL_H / 2f), resultName.toString(), GameConf.HINT_TEXT, false);
+		this.grid.drawText(new Vec(GameConf.PIXEL_W - 30, GameConf.PIXEL_H / 2f), resultNum.toString(), GameConf.HINT_TEXT, false);
+		this.grid.drawText(new Vec(GameConf.PIXEL_W - 5, GameConf.PIXEL_H / 2f), resultDur.toString(), GameConf.HINT_TEXT, false);
 	}
 
 	/**

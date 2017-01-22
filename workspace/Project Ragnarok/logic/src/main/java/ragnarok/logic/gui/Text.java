@@ -1,6 +1,6 @@
 package ragnarok.logic.gui;
 
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.core.GuiElement;
 import ragnarok.core.IScene;
 import ragnarok.util.TextOptions;
@@ -76,7 +76,7 @@ public final class Text extends GuiElement {
 	}
 
 	@Override
-	public final void internalRender(Field f) {
+	public final void internalRender(GameGrid f) {
 		f.drawText(this.getPos(), this.text, this.getOptions(), false);
 	}
 }

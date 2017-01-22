@@ -1,6 +1,6 @@
 package ragnarok.logic.gui;
 
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.core.GuiElement;
 import ragnarok.core.IScene;
 import ragnarok.logic.gameelements.entities.Player;
@@ -42,7 +42,7 @@ public class LifeGui extends GuiElement {
 	}
 
 	@Override
-	public void internalRender(Field f) {
+	public void internalRender(GameGrid f) {
 		for (int i = 0; i < this.playerLives; i++) {
 			f.drawImage(this.getPos().addX(50 * i), this.imageSize, this.image, false);
 		}

@@ -3,7 +3,7 @@ package ragnarok.logic.gameelements.entities.enemies.cannon;
 import home.fox.visitors.Visitable;
 import home.fox.visitors.annotations.NoVisit;
 import home.fox.visitors.annotations.VisitInfo;
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
 import ragnarok.logic.gameelements.entities.Player;
 import ragnarok.logic.gameelements.entities.enemies.cannon.state.AimingState;
@@ -217,7 +217,7 @@ public class Cannon extends Enemy implements Visitable {
 	}
 
 	@Override
-	public void internalRender(Field f) {
+	public void internalRender(GameGrid f) {
 
 		// draw cannon base
 		f.drawCircle(this.getPos(), this.getSize(), Cannon.COLOR_BASE);

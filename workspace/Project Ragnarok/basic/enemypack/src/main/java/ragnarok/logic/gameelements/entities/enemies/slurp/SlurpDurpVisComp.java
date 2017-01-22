@@ -1,6 +1,6 @@
 package ragnarok.logic.gameelements.entities.enemies.slurp;
 
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.primitives.geometry.Vec;
 import ragnarok.primitives.image.RGBColor;
 
@@ -50,7 +50,7 @@ public final class SlurpDurpVisComp {
 	 * @param size
 	 *            the parent size
 	 */
-	public void render(Field f, Vec pos, Vec size) {
+	public void render(GameGrid f, Vec pos, Vec size) {
 		Vec absSize = size.multiply(this.relativeSize);
 		f.drawCircle(pos.add(this.relativePos.multiply(absSize)), absSize, this.col);
 	}

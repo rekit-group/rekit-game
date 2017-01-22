@@ -3,7 +3,7 @@ package ragnarok.logic.gameelements.type;
 import java.util.Set;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
 import ragnarok.primitives.geometry.Vec;
 import ragnarok.primitives.image.RGBAColor;
@@ -66,7 +66,7 @@ public abstract class Coin extends Pickup {
 	}
 
 	@Override
-	public void internalRender(Field f) {
+	public void internalRender(GameGrid f) {
 
 		for (float x = -0.020f; x <= 0.020f; x += 0.005f) {
 			f.drawCircle(this.getPos().addX(x), this.getSize(), this.getColor());

@@ -1,7 +1,7 @@
 package ragnarok.logic.gui;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.core.GuiElement;
 import ragnarok.core.IScene;
 import ragnarok.logic.gameelements.entities.Player;
@@ -50,7 +50,7 @@ public class ScoreGui extends GuiElement {
 	}
 
 	@Override
-	public void internalRender(Field f) {
+	public void internalRender(GameGrid f) {
 		this.points.internalRender(f);
 		this.highscore.internalRender(f);
 	}

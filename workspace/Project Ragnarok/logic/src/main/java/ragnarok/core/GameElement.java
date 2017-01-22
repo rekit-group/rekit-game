@@ -151,10 +151,10 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 	 * </p>
 	 *
 	 * @param f
-	 *            the {@link Field} that represents the games field and supplies
+	 *            the {@link GameGrid} that represents the games field and supplies
 	 *            primitive drawing operations.
 	 */
-	public final void render(Field f) {
+	public final void render(GameGrid f) {
 		if (this.isVisible()) {
 			this.internalRender(f);
 		}
@@ -168,14 +168,14 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 	 * </p>
 	 * <p>
 	 * Should be overwritten in sub classes for custom visualization using the
-	 * {@link Field}.
+	 * {@link GameGrid}.
 	 * </p>
 	 *
 	 * @param f
-	 *            the {@link Field} that represents the games field and supplies
+	 *            the {@link GameGrid} that represents the games field and supplies
 	 *            primitive drawing operations.
 	 */
-	protected void internalRender(Field f) {
+	protected void internalRender(GameGrid f) {
 		// do nothing
 	}
 

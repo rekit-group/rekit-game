@@ -1,6 +1,6 @@
 package ragnarok.logic.gameelements.inanimate;
 
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
 import ragnarok.core.Team;
 import ragnarok.logic.gameelements.GameElementFactory;
@@ -46,7 +46,7 @@ public class InanimateTrigger extends Inanimate {
 	}
 
 	@Override
-	public void internalRender(Field f) {
+	public void internalRender(GameGrid f) {
 		// Do nothing
 	}
 

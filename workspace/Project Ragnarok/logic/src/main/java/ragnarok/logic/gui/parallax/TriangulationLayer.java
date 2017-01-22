@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.primitives.geometry.Polygon;
 import ragnarok.primitives.geometry.Vec;
 import ragnarok.primitives.image.RGBColor;
@@ -162,7 +162,7 @@ public class TriangulationLayer extends ParallaxLayer {
 		}
 
 		@Override
-		public void internalRender(Field f) {
+		public void internalRender(GameGrid f) {
 			this.polygon.moveTo(this.corners[0]);
 			f.drawPolygon(this.polygon, this.col, true);
 			f.drawPolygon(this.polygon, this.darkCol, false);

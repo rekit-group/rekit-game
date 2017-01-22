@@ -3,7 +3,7 @@ package ragnarok.logic.gameelements.inanimate;
 import java.util.HashMap;
 import java.util.Map;
 
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
 import ragnarok.core.GameTime;
 import ragnarok.logic.gameelements.inanimate.InanimateBox;
@@ -85,7 +85,7 @@ public final class ToggleBox extends DynamicInanimate {
 	}
 
 	@Override
-	public void internalRender(Field f) {
+	public void internalRender(GameGrid f) {
 		this.currentStrategy.internalRender(f);
 	}
 
@@ -142,12 +142,12 @@ public final class ToggleBox extends DynamicInanimate {
 		public abstract int getAlpha();
 
 		/**
-		 * Same as {@link ToggleBox#internalRender(Field)}.
+		 * Same as {@link ToggleBox#internalRender(GameGrid)}.
 		 *
 		 * @param f
 		 *            the field
 		 */
-		public void internalRender(Field f) {
+		public void internalRender(GameGrid f) {
 			// Fill alpha of color with value given of
 			RGBAColor c = this.parent.color;
 			this.parent.innerBox.color = new RGBAColor(c.red, c.green, c.blue, this.getAlpha());

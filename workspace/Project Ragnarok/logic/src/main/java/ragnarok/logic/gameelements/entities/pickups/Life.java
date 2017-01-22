@@ -1,6 +1,6 @@
 package ragnarok.logic.gameelements.entities.pickups;
 
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
 import ragnarok.logic.gameelements.entities.Entity;
 import ragnarok.logic.gameelements.type.Pickup;
@@ -37,7 +37,7 @@ public final class Life extends Pickup {
 	}
 
 	@Override
-	public void internalRender(Field f) {
+	public void internalRender(GameGrid f) {
 		f.drawImage(this.getPos(), this.getSize(), "mrRekt_glasses_left.png");
 	}
 

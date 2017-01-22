@@ -1,6 +1,6 @@
 package ragnarok.logic.gui.parallax;
 
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.primitives.geometry.Vec;
 import ragnarok.primitives.image.RGBAColor;
 
@@ -15,7 +15,7 @@ public class HeapElementCloud extends HeapElement {
 	}
 
 	@Override
-	public void internalRender(Field f) {
+	public void internalRender(GameGrid f) {
 		f.drawCircle(this.getPos(), this.getSize(), this.col);
 	}
 

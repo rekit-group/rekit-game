@@ -1,6 +1,6 @@
 package ragnarok.logic.gameelements.inanimate.filters;
 
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
 import ragnarok.logic.gameelements.inanimate.Inanimate;
 import ragnarok.logic.gameelements.type.DynamicInanimate;
@@ -69,7 +69,7 @@ class FilterBox extends DynamicInanimate {
 	}
 
 	@Override
-	public final void internalRender(Field f) {
+	public final void internalRender(GameGrid f) {
 		this.innerBox.internalRender(f);
 	}
 

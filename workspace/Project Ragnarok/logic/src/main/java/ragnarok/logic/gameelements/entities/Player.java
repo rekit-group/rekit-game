@@ -2,7 +2,7 @@ package ragnarok.logic.gameelements.entities;
 
 import ragnarok.config.GameConf;
 import ragnarok.core.CameraTarget;
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.core.Renderer;
 import ragnarok.core.Team;
 import ragnarok.logic.gameelements.particles.ParticleSpawner;
@@ -80,7 +80,7 @@ public final class Player extends Entity implements CameraTarget {
 	}
 
 	@Override
-	public void internalRender(Field f) {
+	public void internalRender(GameGrid f) {
 		if (this.renderTimer != null && !this.renderTimer.timeUp() && this.tmpRenderer != null) {
 			this.tmpRenderer.render(f);
 			this.renderTimer.logicLoop();

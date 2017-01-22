@@ -1,7 +1,7 @@
 package ragnarok.logic.gameelements.inanimate;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
 import ragnarok.core.GameTime;
 import ragnarok.logic.gameelements.entities.Player;
@@ -159,7 +159,7 @@ public final class MovingBox extends DynamicInanimate {
 	}
 
 	@Override
-	public void internalRender(Field f) {
+	public void internalRender(GameGrid f) {
 		f.drawRectangle(this.getPos().addY(this.getSize().getY() / -4f), this.getSize().scalar(1, 1 / 2f), this.color);
 
 		f.drawPolygon(new Polygon(this.getPos().addX(-3 * this.sizeX16), this.rocketPolygonRelPts), this.darkCol, true);

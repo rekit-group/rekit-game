@@ -7,7 +7,7 @@ import home.fox.visitors.Visitable;
 import home.fox.visitors.annotations.NoVisit;
 import home.fox.visitors.annotations.VisitInfo;
 import ragnarok.config.GameConf;
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
 import ragnarok.logic.gameelements.entities.Entity;
 import ragnarok.logic.gameelements.entities.Player;
@@ -163,7 +163,7 @@ public final class Slurp extends Enemy implements Visitable {
 	}
 
 	@Override
-	public void internalRender(Field f) {
+	public void internalRender(GameGrid f) {
 		for (SlurpDurp slurpDurp : this.slurpDurps) {
 			slurpDurp.internalRender(f);
 		}

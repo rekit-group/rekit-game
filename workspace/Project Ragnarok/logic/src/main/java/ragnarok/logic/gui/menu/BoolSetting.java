@@ -1,7 +1,7 @@
 package ragnarok.logic.gui.menu;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.core.IScene;
 
 /**
@@ -68,7 +68,7 @@ public final class BoolSetting extends MenuItem {
 	}
 
 	@Override
-	protected void renderItem(Field f) {
+	protected void renderItem(GameGrid f) {
 		if (!this.selected) {
 			super.renderItem(f);
 		} else {

@@ -1,7 +1,7 @@
 package ragnarok.logic.gameelements.inanimate;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.Field;
+import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
 import ragnarok.core.GameTime;
 import ragnarok.core.Team;
@@ -179,13 +179,13 @@ public final class EndTrigger extends InanimateTrigger {
 		}
 
 		@Override
-		public void internalRender(Field f) {
+		public void internalRender(GameGrid f) {
 			f.drawCircle(this.getPos(), this.currentSize, this.color);
 		}
 	}
 
 	@Override
-	public void internalRender(Field f) {
+	public void internalRender(GameGrid f) {
 		for (Portal portal : this.innerPortals) {
 			portal.render(f);
 		}
