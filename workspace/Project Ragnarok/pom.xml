@@ -1,13 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>edu.kit.informatik</groupId>
-	<artifactId>ragnarok</artifactId>
+	<artifactId>parent</artifactId>
 	<version>0.4-ALPHA</version>
 	<packaging>pom</packaging>
 	<name>Project Ragnarok</name>
 	<properties>
-		<swt.version>4.6.1</swt.version>
 		<ragnarok.version>0.4-ALPHA</ragnarok.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
@@ -59,6 +57,14 @@
 					<version>2.4</version>
 					<configuration>
 						<outputDirectory>${project.build.directory}/${profile.folder}</outputDirectory>
+						<archive>
+							<manifest>
+								<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+								<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+								<addClasspath>true</addClasspath>
+								<classpathPrefix>lib/</classpathPrefix>
+							</manifest>
+						</archive>
 					</configuration>
 				</plugin>
 				<plugin>
@@ -73,28 +79,28 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>edu.kit.informatik</groupId>
-				<artifactId>ragnarok.logic</artifactId>
+				<groupId>ragnarok</groupId>
+				<artifactId>logic</artifactId>
 				<version>${ragnarok.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>edu.kit.informatik</groupId>
-				<artifactId>ragnarok.filters</artifactId>
+				<groupId>ragnarok</groupId>
+				<artifactId>filters</artifactId>
 				<version>${ragnarok.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>edu.kit.informatik</groupId>
-				<artifactId>ragnarok.control</artifactId>
+				<groupId>ragnarok</groupId>
+				<artifactId>control</artifactId>
 				<version>${ragnarok.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>edu.kit.informatik</groupId>
-				<artifactId>ragnarok.global</artifactId>
+				<groupId>ragnarok</groupId>
+				<artifactId>global</artifactId>
 				<version>${ragnarok.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>edu.kit.informatik</groupId>
-				<artifactId>ragnarok.gui</artifactId>
+				<groupId>ragnarok</groupId>
+				<artifactId>gui</artifactId>
 				<version>${ragnarok.version}</version>
 			</dependency>
 			<dependency>
@@ -165,14 +171,13 @@
 		</profile>
 	</profiles>
 	<modules>
-		<module>ragnarok.logic</module>
-		<module>ragnarok.global</module>
-		<module>ragnarok.gui</module>
-		<module>ragnarok.control</module>
-		<module>ragnarok.game</module>
-		<module>ragnarok.basic.enemypack</module>
-		<module>ragnarok.basic.pickuppack</module>
-		<module>ragnarok.basic.inanimatepack</module>
-		<module>ragnarok.filters</module>
+		<module>logic</module>
+		<module>global</module>
+		<module>gui</module>
+		<module>filters</module>
+		<module>control</module>
+		<module>game</module>
+		<module>basic</module>
 	</modules>
+	<groupId>ragnarok</groupId>
 </project>
