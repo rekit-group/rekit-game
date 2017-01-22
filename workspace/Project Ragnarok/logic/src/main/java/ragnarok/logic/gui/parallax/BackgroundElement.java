@@ -36,8 +36,8 @@ public abstract class BackgroundElement extends GameElement {
 	}
 
 	@Override
-	public int getOrderZ() {
-		return this.backgroundZ - (int) this.parent.fieldXtoLayerX(1000);
+	public byte getOrderZ() {
+		return (byte) (this.backgroundZ - (byte) this.parent.fieldXtoLayerX(1000));
 	}
 
 	@Override

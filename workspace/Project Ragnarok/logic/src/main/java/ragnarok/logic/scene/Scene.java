@@ -1,8 +1,9 @@
 package ragnarok.logic.scene;
 
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Map;
-import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -54,11 +55,11 @@ abstract class Scene implements CameraTarget, IScene {
 	/**
 	 * All gui elements.
 	 */
-	private PriorityQueue<GuiElement> guiElements;
+	private Queue<GuiElement>[] guiElements;
 	/**
 	 * All game elements.
 	 */
-	private PriorityQueue<GameElement> gameElements;
+	private Queue<GameElement>[] gameElements;
 	/**
 	 * GameElements which shall be added.
 	 */
@@ -95,9 +96,20 @@ abstract class Scene implements CameraTarget, IScene {
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public void init() {
-		this.guiElements = new PriorityQueue<>();
-		this.gameElements = new PriorityQueue<>();
+		// Byte: [-128, 127]
+		final int length = 256;
+		this.guiElements = (Queue<GuiElement>[]) new Queue<?>[length];
+		for (int i = 0; i < this.guiElements.length; i++) {
+			this.guiElements[i] = new LinkedList<>();
+		}
+
+		this.gameElements = (Queue<GameElement>[]) new Queue<?>[length];
+		for (int i = 0; i < this.gameElements.length; i++) {
+			this.gameElements[i] = new LinkedList<>();
+		}
+
 		this.gameElementAddQueue = new ConcurrentLinkedQueue<>();
 		this.gameElementRemoveQueue = new ConcurrentLinkedQueue<>();
 	}
@@ -139,7 +151,7 @@ abstract class Scene implements CameraTarget, IScene {
 			this.addGameElements();
 			if (!this.paused) {
 				// iterate all GameElements to invoke logicLoop
-				this.gameElements.parallelStream().forEach(this::logicLoopGameElement);
+				this.getGameElementIterator().forEachRemaining(this::logicLoopGameElement);
 			}
 			// remove GameElements that must be removed
 			this.removeGameElements();
@@ -226,7 +238,7 @@ abstract class Scene implements CameraTarget, IScene {
 			Iterator<GameElement> it = this.gameElementAddQueue.iterator();
 			while (it.hasNext()) {
 				GameElement element = it.next();
-				this.gameElements.add(element);
+				this.gameElements[Byte.toUnsignedInt(element.getOrderZ())].add(element);
 				element.setScene(this);
 			}
 			this.gameElementAddQueue.clear();
@@ -256,19 +268,14 @@ abstract class Scene implements CameraTarget, IScene {
 	 */
 	private void removeGameElements() {
 		synchronized (this.gameElementRemoveQueue) {
-			this.gameElementRemoveQueue.forEach(this.gameElements::remove);
+			this.gameElementRemoveQueue.forEach(e -> this.gameElements[Byte.toUnsignedInt(e.getOrderZ())].remove(e));
 			this.gameElementRemoveQueue.clear();
 		}
 	}
 
 	@Override
-	public Iterator<GameElement> getOrderedGameElementIterator() {
-		return new PriorityQueueIterator<>(this.gameElements);
-	}
-
-	@Override
 	public Iterator<GameElement> getGameElementIterator() {
-		return this.gameElements.iterator();
+		return new ArrayedQueueIterator<>(this.gameElements);
 	}
 
 	/**
@@ -280,20 +287,20 @@ abstract class Scene implements CameraTarget, IScene {
 	@Override
 	public void addGuiElement(GuiElement e) {
 		synchronized (this.synchronize()) {
-			this.guiElements.add(e);
+			this.guiElements[Byte.toUnsignedInt(e.getZ())].add(e);
 		}
 	}
 
 	@Override
 	public void removeGuiElement(GuiElement e) {
 		synchronized (this.synchronize()) {
-			this.guiElements.remove(e);
+			this.guiElements[Byte.toUnsignedInt(e.getZ())].remove(e);
 		}
 	}
 
 	@Override
 	public Iterator<GuiElement> getGuiElementIterator() {
-		return this.guiElements.iterator();
+		return new ArrayedQueueIterator<>(this.guiElements);
 	}
 
 	@Override
@@ -308,7 +315,11 @@ abstract class Scene implements CameraTarget, IScene {
 
 	@Override
 	public int getGameElementCount() {
-		return this.gameElements.size();
+		int size = 0;
+		for (Queue<GameElement> queue : this.gameElements) {
+			size += queue.size();
+		}
+		return size;
 	}
 
 	@Override

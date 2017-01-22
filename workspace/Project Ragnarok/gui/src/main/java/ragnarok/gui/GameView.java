@@ -494,7 +494,7 @@ class GameView implements View {
 	 */
 	private void drawElements(IScene scene) {
 		synchronized (scene.synchronize()) {
-			scene.getOrderedGameElementIterator().forEachRemaining(this.grid::render);
+			scene.getGameElementIterator().forEachRemaining(this.grid::render);
 			scene.getGuiElementIterator().forEachRemaining(this.grid::render);
 		}
 	}

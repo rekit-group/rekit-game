@@ -1,7 +1,7 @@
 package ragnarok.logic.gameelements.particles;
 
-import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
+import ragnarok.core.GameGrid;
 import ragnarok.core.GameTime;
 import ragnarok.core.Team;
 import ragnarok.primitives.geometry.Direction;
@@ -198,7 +198,7 @@ public class Particle extends GameElement implements Cloneable {
 	}
 
 	@Override
-	public int getOrderZ() {
+	public byte getOrderZ() {
 		return 100;
 	}
 

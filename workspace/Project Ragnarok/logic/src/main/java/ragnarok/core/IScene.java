@@ -3,7 +3,6 @@ package ragnarok.core;
 import java.util.Iterator;
 import java.util.Map;
 
-import ragnarok.core.CameraTarget;
 import ragnarok.logic.Model;
 import ragnarok.logic.gameelements.entities.Entity;
 import ragnarok.logic.gui.menu.MenuItem;
@@ -184,13 +183,6 @@ public interface IScene {
 	 * Toggle pause.
 	 */
 	void togglePause();
-
-	/**
-	 * Get an iterator of ordered GameElements (Z-Idx).
-	 *
-	 * @return the ordered GameElement-iterator
-	 */
-	Iterator<GameElement> getOrderedGameElementIterator();
 
 	/**
 	 * Indicates whether game is paused.

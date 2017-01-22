@@ -3,8 +3,8 @@ package ragnarok.logic.gameelements.entities.enemies;
 import home.fox.visitors.Visitable;
 import home.fox.visitors.annotations.NoVisit;
 import home.fox.visitors.annotations.VisitInfo;
-import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
+import ragnarok.core.GameGrid;
 import ragnarok.logic.gameelements.entities.Entity;
 import ragnarok.logic.gameelements.particles.ParticleSpawner;
 import ragnarok.logic.gameelements.type.Enemy;
@@ -136,7 +136,7 @@ public final class Warper extends Enemy implements Visitable {
 	}
 
 	@Override
-	public int getOrderZ() {
+	public byte getOrderZ() {
 		return 20;
 	}
 

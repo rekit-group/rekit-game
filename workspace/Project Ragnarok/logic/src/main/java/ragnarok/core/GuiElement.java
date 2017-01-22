@@ -1,6 +1,5 @@
 package ragnarok.core;
 
-import ragnarok.core.GameGrid;
 import ragnarok.primitives.geometry.Vec;
 
 /**
@@ -11,7 +10,7 @@ import ragnarok.primitives.geometry.Vec;
  * GuiElement
  *
  */
-public abstract class GuiElement implements Comparable<GuiElement> {
+public abstract class GuiElement {
 	/**
 	 * Indicates whether the Element is visible.
 	 */
@@ -102,7 +101,7 @@ public abstract class GuiElement implements Comparable<GuiElement> {
 	 * @return a number that represents the {@link GuiElement GuiElements}
 	 *         rendering-order
 	 */
-	public int getZ() {
+	public byte getZ() {
 		return 0;
 	}
 
@@ -132,8 +131,8 @@ public abstract class GuiElement implements Comparable<GuiElement> {
 	 * </p>
 	 *
 	 * @param f
-	 *            the {@link GameGrid} that represents the games field and supplies
-	 *            primitive drawing operations.
+	 *            the {@link GameGrid} that represents the games field and
+	 *            supplies primitive drawing operations.
 	 */
 	public final void render(GameGrid f) {
 		if (this.visible) {
@@ -153,13 +152,9 @@ public abstract class GuiElement implements Comparable<GuiElement> {
 	 * </p>
 	 *
 	 * @param f
-	 *            the {@link GameGrid} that represents the games field and supplies
-	 *            primitive drawing operations.
+	 *            the {@link GameGrid} that represents the games field and
+	 *            supplies primitive drawing operations.
 	 */
 	protected abstract void internalRender(GameGrid f);
 
-	@Override
-	public final int compareTo(GuiElement other) {
-		return this.getZ() - other.getZ();
-	}
 }

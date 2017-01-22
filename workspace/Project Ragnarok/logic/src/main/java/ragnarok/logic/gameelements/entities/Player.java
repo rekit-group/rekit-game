@@ -128,7 +128,7 @@ public final class Player extends Entity implements CameraTarget {
 	}
 
 	@Override
-	public int getOrderZ() {
+	public byte getOrderZ() {
 		return 10;
 	}
 
@@ -165,7 +165,7 @@ public final class Player extends Entity implements CameraTarget {
 
 	/**
 	 * Get the current direction.
-	 * 
+	 *
 	 * @return the current direction
 	 */
 	public final Direction getCurrentDirection() {

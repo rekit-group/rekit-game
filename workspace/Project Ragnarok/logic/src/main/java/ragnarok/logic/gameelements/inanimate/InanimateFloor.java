@@ -1,8 +1,8 @@
 package ragnarok.logic.gameelements.inanimate;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
+import ragnarok.core.GameGrid;
 import ragnarok.logic.gameelements.particles.Particle;
 import ragnarok.logic.gameelements.particles.ParticleSpawner;
 import ragnarok.logic.gameelements.particles.ParticleSpawnerOption;
@@ -245,7 +245,7 @@ public class InanimateFloor extends Inanimate {
 	}
 
 	@Override
-	protected int getOrderZ() {
+	public byte getOrderZ() {
 		return 2;
 	}
 

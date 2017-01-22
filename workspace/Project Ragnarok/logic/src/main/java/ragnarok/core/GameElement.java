@@ -29,7 +29,7 @@ import ragnarok.primitives.geometry.Vec;
  * @author Angelo Aracri
  * @author Dominik Fuchss
  */
-public abstract class GameElement implements Collidable, Comparable<GameElement> {
+public abstract class GameElement implements Collidable {
 
 	/**
 	 * Flag that is used to signal if the {@link GameElement} is supposed to be
@@ -151,8 +151,8 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 	 * </p>
 	 *
 	 * @param f
-	 *            the {@link GameGrid} that represents the games field and supplies
-	 *            primitive drawing operations.
+	 *            the {@link GameGrid} that represents the games field and
+	 *            supplies primitive drawing operations.
 	 */
 	public final void render(GameGrid f) {
 		if (this.isVisible()) {
@@ -172,8 +172,8 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 	 * </p>
 	 *
 	 * @param f
-	 *            the {@link GameGrid} that represents the games field and supplies
-	 *            primitive drawing operations.
+	 *            the {@link GameGrid} that represents the games field and
+	 *            supplies primitive drawing operations.
 	 */
 	protected void internalRender(GameGrid f) {
 		// do nothing
@@ -356,13 +356,8 @@ public abstract class GameElement implements Collidable, Comparable<GameElement>
 	 * @return a number that represents the {@link GameElement GameElements}
 	 *         rendering-order
 	 */
-	protected int getOrderZ() {
+	public byte getOrderZ() {
 		return 0;
-	}
-
-	@Override
-	public final int compareTo(GameElement other) {
-		return this.getOrderZ() - other.getOrderZ();
 	}
 
 	/**
