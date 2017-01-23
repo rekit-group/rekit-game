@@ -238,7 +238,7 @@ abstract class Scene implements CameraTarget, IScene {
 			Iterator<GameElement> it = this.gameElementAddQueue.iterator();
 			while (it.hasNext()) {
 				GameElement element = it.next();
-				this.gameElements[Byte.toUnsignedInt(element.getOrderZ())].add(element);
+				this.gameElements[Scene.zToIndex(element.getOrderZ())].add(element);
 				element.setScene(this);
 			}
 			this.gameElementAddQueue.clear();
@@ -268,7 +268,7 @@ abstract class Scene implements CameraTarget, IScene {
 	 */
 	private void removeGameElements() {
 		synchronized (this.gameElementRemoveQueue) {
-			this.gameElementRemoveQueue.forEach(e -> this.gameElements[Byte.toUnsignedInt(e.getOrderZ())].remove(e));
+			this.gameElementRemoveQueue.forEach(e -> this.gameElements[Scene.zToIndex(e.getOrderZ())].remove(e));
 			this.gameElementRemoveQueue.clear();
 		}
 	}
@@ -287,14 +287,14 @@ abstract class Scene implements CameraTarget, IScene {
 	@Override
 	public void addGuiElement(GuiElement e) {
 		synchronized (this.synchronize()) {
-			this.guiElements[Byte.toUnsignedInt(e.getZ())].add(e);
+			this.guiElements[Scene.zToIndex(e.getZ())].add(e);
 		}
 	}
 
 	@Override
 	public void removeGuiElement(GuiElement e) {
 		synchronized (this.synchronize()) {
-			this.guiElements[Byte.toUnsignedInt(e.getZ())].remove(e);
+			this.guiElements[Scene.zToIndex(e.getZ())].remove(e);
 		}
 	}
 
@@ -345,5 +345,16 @@ abstract class Scene implements CameraTarget, IScene {
 	@Override
 	public final GameModel getModel() {
 		return this.model;
+	}
+
+	/**
+	 * Get index based on z-value of position.
+	 *
+	 * @param zvalue
+	 *            the zvalue
+	 * @return the index
+	 */
+	private static final int zToIndex(byte zvalue) {
+		return zvalue + 128;
 	}
 }

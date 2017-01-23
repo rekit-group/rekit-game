@@ -26,7 +26,7 @@ public final class ArrayedQueueIterator<T> implements Iterator<T> {
 	 *            the array of queues to iterate over
 	 */
 	public ArrayedQueueIterator(Queue<T>[] queues) {
-		for (int i = queues.length - 1; i >= 0; i--) {
+		for (int i = 0; i < queues.length; i++) {
 			queues[i].forEach(this.queue::add);
 		}
 	}

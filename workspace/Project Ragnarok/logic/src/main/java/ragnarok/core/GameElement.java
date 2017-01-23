@@ -357,7 +357,7 @@ public abstract class GameElement implements Collidable {
 	 *         rendering-order
 	 */
 	public byte getOrderZ() {
-		return 0;
+		return 1;
 	}
 
 	/**

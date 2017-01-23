@@ -1,8 +1,8 @@
 package ragnarok.logic.gameelements.inanimate;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
+import ragnarok.core.GameGrid;
 import ragnarok.core.Team;
 import ragnarok.primitives.geometry.Direction;
 import ragnarok.primitives.geometry.Frame;
@@ -99,6 +99,11 @@ public class Inanimate extends GameElement {
 			Inanimate.instance = new Inanimate(new Vec(), new Vec(1, 1), new RGBAColor(0, 0, 0, 0));
 		}
 		return Inanimate.instance;
+	}
+
+	@Override
+	public final byte getOrderZ() {
+		return 0;
 	}
 
 }

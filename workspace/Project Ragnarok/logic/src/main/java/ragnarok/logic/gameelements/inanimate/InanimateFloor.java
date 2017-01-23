@@ -244,9 +244,4 @@ public class InanimateFloor extends Inanimate {
 		return new InanimateFloor(pos, new Vec(1, 1));
 	}
 
-	@Override
-	public byte getOrderZ() {
-		return 2;
-	}
-
 }

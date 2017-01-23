@@ -32,12 +32,16 @@ public abstract class BackgroundElement extends GameElement {
 	public BackgroundElement(ParallaxLayer parent, Vec pos) {
 		super(pos.setZ(parent == null ? 1 : parent.perspectiveZ), new Vec(), new Vec(1), Team.NEUTRAL);
 		this.parent = parent;
-		this.backgroundZ = -10000;
+		this.backgroundZ = -10;
 	}
 
 	@Override
-	public byte getOrderZ() {
-		return (byte) (this.backgroundZ - (byte) this.parent.fieldXtoLayerX(1000));
+	public final byte getOrderZ() {
+		int calculatedPos = (int) (this.backgroundZ - this.parent.fieldXtoLayerX(100));
+		if (calculatedPos < -10 && calculatedPos >= -128) {
+			return (byte) calculatedPos;
+		}
+		return -10;
 	}
 
 	@Override

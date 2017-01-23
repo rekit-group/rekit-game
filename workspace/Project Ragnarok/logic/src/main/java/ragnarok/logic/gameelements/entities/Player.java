@@ -129,7 +129,7 @@ public final class Player extends Entity implements CameraTarget {
 
 	@Override
 	public byte getOrderZ() {
-		return 10;
+		return 127;
 	}
 
 	/**

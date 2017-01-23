@@ -81,11 +81,6 @@ public final class RektSmasher extends Boss implements Visitable {
 	}
 
 	@Override
-	public void addDamage(int damage) {
-		super.addDamage(damage);
-	}
-
-	@Override
 	public void internalRender(GameGrid f) {
 		// Update innerRektKiller
 		this.innerRektKiller.setPos(this.getPos());

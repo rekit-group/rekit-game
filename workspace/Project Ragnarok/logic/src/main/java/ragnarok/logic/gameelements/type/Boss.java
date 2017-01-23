@@ -125,4 +125,9 @@ public abstract class Boss extends Entity {
 		this.bossStructure.endBattle(this.getScene());
 		this.isHarmless = true;
 	}
+
+	@Override
+	public byte getOrderZ() {
+		return 20;
+	}
 }
