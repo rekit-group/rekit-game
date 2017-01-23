@@ -297,7 +297,11 @@ abstract class Scene implements CameraTarget, IScene {
 
 	@Override
 	public Iterator<GuiElement> getGuiElementIterator() {
-		return this.guiElements.iterator();
+		synchronized (this.synchronize()) {
+			Queue<GuiElement> newQueue = new LinkedList<>();
+			this.guiElements.forEach(newQueue::add);
+			return newQueue.iterator();
+		}
 	}
 
 	@Override

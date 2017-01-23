@@ -30,18 +30,14 @@ public abstract class BackgroundElement extends GameElement {
 	 *            the positon
 	 */
 	public BackgroundElement(ParallaxLayer parent, Vec pos) {
-		super(pos.setZ(parent == null ? 1 : parent.perspectiveZ), new Vec(), new Vec(1), Team.NEUTRAL);
+		super(pos.setZ(parent == null ? 1 : parent.perspectiveZ), new Vec(), new Vec(1), Team.BACKGROUND);
 		this.parent = parent;
-		this.backgroundZ = -10;
+		this.backgroundZ = Team.BACKGROUND.zRange.min;
 	}
 
 	@Override
-	public final byte getZ() {
-		int calculatedPos = (int) (this.backgroundZ - this.parent.fieldXtoLayerX(100));
-		if (calculatedPos < -10 && calculatedPos >= -128) {
-			return (byte) calculatedPos;
-		}
-		return -10;
+	public final Integer getZHint() {
+		return (int) (this.backgroundZ - this.parent.fieldXtoLayerX(100));
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package ragnarok.core;
 
+import ragnarok.core.Team.Range;
 import ragnarok.primitives.geometry.Direction;
 import ragnarok.primitives.geometry.Frame;
 import ragnarok.primitives.geometry.Vec;
@@ -356,8 +357,21 @@ public abstract class GameElement implements Collidable {
 	 * @return a number that represents the {@link GameElement GameElements}
 	 *         rendering-order
 	 */
-	public byte getZ() {
-		return 1;
+	public final byte getZ() {
+		if (this.getZHint() == null) {
+			return this.team.zRange.std;
+		}
+		return this.team.zRange.normalize(this.getZHint());
+	}
+
+	/**
+	 * Get a hint (for {@link Range#normalize(int)} for positioning this
+	 * {@link GameElement} via {@link #getZ()}.
+	 * 
+	 * @return {@code null} if no hint, otherwise the expected position
+	 */
+	public Integer getZHint() {
+		return null;
 	}
 
 	/**

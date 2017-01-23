@@ -127,11 +127,6 @@ public final class Player extends Entity implements CameraTarget {
 		this.invincibility = new Timer(millis);
 	}
 
-	@Override
-	public byte getZ() {
-		return 127;
-	}
-
 	/**
 	 * Reset current camera offset.
 	 */

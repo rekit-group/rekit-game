@@ -135,9 +135,4 @@ public final class Warper extends Enemy implements Visitable {
 		return new Warper(startPos);
 	}
 
-	@Override
-	public byte getZ() {
-		return 20;
-	}
-
 }

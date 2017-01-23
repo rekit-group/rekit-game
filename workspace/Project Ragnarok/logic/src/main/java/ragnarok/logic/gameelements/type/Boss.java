@@ -127,7 +127,7 @@ public abstract class Boss extends Entity {
 	}
 
 	@Override
-	public byte getZ() {
-		return 20;
+	public Integer getZHint() {
+		return Team.ENEMY.zRange.min + 1;
 	}
 }

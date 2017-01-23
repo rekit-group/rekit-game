@@ -231,14 +231,6 @@ public abstract class Entity extends GameElement {
 		this.setLastPos(lastPos);
 	}
 
-	/**
-	 * By default this will return {@code 1}.
-	 */
-	@Override
-	public byte getZ() {
-		return 1;
-	}
-
 	@Override
 	protected boolean isVisible() {
 		if (this.invincibility != null && !this.invincibility.timeUp()) {

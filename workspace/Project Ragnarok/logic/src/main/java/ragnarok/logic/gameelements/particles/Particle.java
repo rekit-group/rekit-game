@@ -85,7 +85,7 @@ public class Particle extends GameElement implements Cloneable {
 	 * Create a particle.
 	 */
 	public Particle() {
-		super(new Vec(), new Vec(), new Vec(1), Team.NEUTRAL);
+		super(new Vec(), new Vec(), new Vec(1), Team.EFFECT);
 	}
 
 	/**
@@ -195,11 +195,6 @@ public class Particle extends GameElement implements Cloneable {
 			// apply distance-vector to position
 			this.setPos(this.getPos().add(this.movementVec));
 		}
-	}
-
-	@Override
-	public byte getZ() {
-		return 100;
 	}
 
 	@Override

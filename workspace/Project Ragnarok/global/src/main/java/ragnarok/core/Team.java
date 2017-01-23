@@ -10,27 +10,38 @@ public enum Team {
 	/**
 	 * The player itself.
 	 */
-	PLAYER,
+	PLAYER((byte) 100, (byte) 100),
 	/**
 	 * An enemy of the player.
 	 */
-	ENEMY,
+	ENEMY((byte) 50, (byte) 60),
 	/**
 	 * An inanimate.
 	 */
-	INANIMATE,
+	INANIMATE((byte) 0, (byte) 10),
 	/**
 	 * A pickup.
 	 */
-	PICKUP,
+	PICKUP((byte) 20, (byte) 30),
 	/**
-	 * A neutral object.
+	 * A background object.
 	 */
-	NEUTRAL,
+	BACKGROUND((byte) -110, (byte) -100),
 	/**
 	 * A trigger.
 	 */
-	TRIGGER;
+	TRIGGER((byte) -120, (byte) -120),
+	/**
+	 * An special effect.
+	 */
+	EFFECT((byte) 110, (byte) 110);
+
+	public final Range zRange;
+
+	private Team(byte min, byte max) {
+		this.zRange = new Range(min, max);
+	}
+
 	/**
 	 * Check whether team t is a hostile of this team.
 	 *
@@ -48,12 +59,39 @@ public enum Team {
 		return false;
 	}
 
+	public final byte getZIndex(int hint) {
+		return 0;
+	}
+
 	/**
-	 * Is this the {@link Team#NEUTRAL Neutral-Team}.
+	 * Is this the {@link Team#BACKGROUND Neutral-Team}.
 	 *
 	 * @return {@code true} if neutral, {@code false} otherwise
 	 */
 	public final boolean isNeutral() {
-		return this == Team.NEUTRAL;
+		return this == Team.BACKGROUND;
+	}
+
+	public static final class Range {
+		public final byte min;
+		public final byte max;
+		public final byte std;
+
+		private Range(byte min, byte max) {
+			this.min = min;
+			this.max = max;
+			this.std = min;
+		}
+
+		public final byte normalize(int expected) {
+			if (expected < this.min) {
+				return this.min;
+			}
+			if (expected > this.max) {
+				return this.max;
+			}
+			return (byte) expected;
+		}
+
 	}
 }

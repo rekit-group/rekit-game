@@ -101,9 +101,4 @@ public class Inanimate extends GameElement {
 		return Inanimate.instance;
 	}
 
-	@Override
-	public final byte getZ() {
-		return 0;
-	}
-
 }
