@@ -55,7 +55,7 @@ abstract class Scene implements CameraTarget, IScene {
 	/**
 	 * All gui elements.
 	 */
-	private Queue<GuiElement>[] guiElements;
+	private Queue<GuiElement> guiElements;
 	/**
 	 * All game elements.
 	 */
@@ -100,10 +100,7 @@ abstract class Scene implements CameraTarget, IScene {
 	public void init() {
 		// Byte: [-128, 127]
 		final int length = 256;
-		this.guiElements = (Queue<GuiElement>[]) new Queue<?>[length];
-		for (int i = 0; i < this.guiElements.length; i++) {
-			this.guiElements[i] = new LinkedList<>();
-		}
+		this.guiElements = new LinkedList<>();
 
 		this.gameElements = (Queue<GameElement>[]) new Queue<?>[length];
 		for (int i = 0; i < this.gameElements.length; i++) {
@@ -238,7 +235,7 @@ abstract class Scene implements CameraTarget, IScene {
 			Iterator<GameElement> it = this.gameElementAddQueue.iterator();
 			while (it.hasNext()) {
 				GameElement element = it.next();
-				this.gameElements[Scene.zToIndex(element.getOrderZ())].add(element);
+				this.gameElements[Scene.zToIndex(element.getZ())].add(element);
 				element.setScene(this);
 			}
 			this.gameElementAddQueue.clear();
@@ -268,7 +265,7 @@ abstract class Scene implements CameraTarget, IScene {
 	 */
 	private void removeGameElements() {
 		synchronized (this.gameElementRemoveQueue) {
-			this.gameElementRemoveQueue.forEach(e -> this.gameElements[Scene.zToIndex(e.getOrderZ())].remove(e));
+			this.gameElementRemoveQueue.forEach(e -> this.gameElements[Scene.zToIndex(e.getZ())].remove(e));
 			this.gameElementRemoveQueue.clear();
 		}
 	}
@@ -287,20 +284,20 @@ abstract class Scene implements CameraTarget, IScene {
 	@Override
 	public void addGuiElement(GuiElement e) {
 		synchronized (this.synchronize()) {
-			this.guiElements[Scene.zToIndex(e.getZ())].add(e);
+			this.guiElements.add(e);
 		}
 	}
 
 	@Override
 	public void removeGuiElement(GuiElement e) {
 		synchronized (this.synchronize()) {
-			this.guiElements[Scene.zToIndex(e.getZ())].remove(e);
+			this.guiElements.remove(e);
 		}
 	}
 
 	@Override
 	public Iterator<GuiElement> getGuiElementIterator() {
-		return new ArrayedQueueIterator<>(this.guiElements);
+		return this.guiElements.iterator();
 	}
 
 	@Override

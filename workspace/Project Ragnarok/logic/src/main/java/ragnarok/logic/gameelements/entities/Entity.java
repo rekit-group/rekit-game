@@ -235,7 +235,7 @@ public abstract class Entity extends GameElement {
 	 * By default this will return {@code 1}.
 	 */
 	@Override
-	public byte getOrderZ() {
+	public byte getZ() {
 		return 1;
 	}
 

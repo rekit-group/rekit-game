@@ -92,21 +92,6 @@ public abstract class GuiElement {
 
 	/**
 	 * <p>
-	 * Getter for an imaginary z-position of the {@link GuiElement}.
-	 * </p>
-	 * <p>
-	 * Is used to determine the rendering order of every {@link GuiElement}.
-	 * </p>
-	 *
-	 * @return a number that represents the {@link GuiElement GuiElements}
-	 *         rendering-order
-	 */
-	public byte getZ() {
-		return 0;
-	}
-
-	/**
-	 * <p>
 	 * Template method that will be called periodically after being added to a
 	 * {@link IScene}.
 	 * </p>

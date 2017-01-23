@@ -198,7 +198,7 @@ public class Particle extends GameElement implements Cloneable {
 	}
 
 	@Override
-	public byte getOrderZ() {
+	public byte getZ() {
 		return 100;
 	}
 

@@ -356,7 +356,7 @@ public abstract class GameElement implements Collidable {
 	 * @return a number that represents the {@link GameElement GameElements}
 	 *         rendering-order
 	 */
-	public byte getOrderZ() {
+	public byte getZ() {
 		return 1;
 	}
 

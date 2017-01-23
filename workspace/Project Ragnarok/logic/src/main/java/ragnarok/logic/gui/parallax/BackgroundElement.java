@@ -36,7 +36,7 @@ public abstract class BackgroundElement extends GameElement {
 	}
 
 	@Override
-	public final byte getOrderZ() {
+	public final byte getZ() {
 		int calculatedPos = (int) (this.backgroundZ - this.parent.fieldXtoLayerX(100));
 		if (calculatedPos < -10 && calculatedPos >= -128) {
 			return (byte) calculatedPos;

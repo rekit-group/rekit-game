@@ -389,7 +389,7 @@ class GameView implements View {
 		this.frame.setIconImage(this.getGameIcon());
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		this.frame.setResizable(false);
+		// this.frame.setResizable(false);
 		this.frame.setSize(GameConf.PIXEL_W, GameConf.PIXEL_H);
 		Utils.center(this.frame);
 		this.frame.setLayout(new BorderLayout());

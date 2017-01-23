@@ -127,7 +127,7 @@ public abstract class Boss extends Entity {
 	}
 
 	@Override
-	public byte getOrderZ() {
+	public byte getZ() {
 		return 20;
 	}
 }

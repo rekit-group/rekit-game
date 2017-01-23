@@ -136,7 +136,7 @@ public final class Warper extends Enemy implements Visitable {
 	}
 
 	@Override
-	public byte getOrderZ() {
+	public byte getZ() {
 		return 20;
 	}
 

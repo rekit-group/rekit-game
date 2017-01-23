@@ -102,7 +102,7 @@ public class Inanimate extends GameElement {
 	}
 
 	@Override
-	public final byte getOrderZ() {
+	public final byte getZ() {
 		return 0;
 	}
 
