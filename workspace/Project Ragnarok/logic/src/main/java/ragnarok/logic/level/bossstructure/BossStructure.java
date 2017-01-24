@@ -2,6 +2,9 @@ package ragnarok.logic.level.bossstructure;
 
 import java.util.HashMap;
 
+import home.fox.visitors.Visitable;
+import home.fox.visitors.annotations.NoVisit;
+import home.fox.visitors.annotations.VisitInfo;
 import ragnarok.config.GameConf;
 import ragnarok.core.GameElement;
 import ragnarok.core.IScene;
@@ -11,7 +14,6 @@ import ragnarok.logic.gameelements.entities.Player;
 import ragnarok.logic.gameelements.inanimate.InanimateDoor;
 import ragnarok.logic.gameelements.inanimate.InanimateTrigger;
 import ragnarok.logic.gameelements.particles.ParticleSpawner;
-import ragnarok.logic.gameelements.particles.ParticleSpawnerOption;
 import ragnarok.logic.gameelements.type.Boss;
 import ragnarok.logic.gui.Text;
 import ragnarok.logic.gui.TimeDecorator;
@@ -28,62 +30,41 @@ import ragnarok.util.ThreadUtils;
  * This class realizes a {@link Structure} for bosses.
  *
  */
-public final class BossStructure extends Structure {
+@VisitInfo(res = "conf/bossstructure")
+public final class BossStructure extends Structure implements Visitable {
 	/**
 	 * The door.
 	 */
+	@NoVisit
 	private InanimateDoor door;
 	/**
 	 * The trigger's position.
 	 */
+	@NoVisit
 	private Vec triggerPos;
 	/**
 	 * The boss.
 	 */
+	@NoVisit
 	private Boss boss;
 	/**
 	 * The camera target offset.
 	 */
+	@NoVisit
 	private float cameraTarget;
 	/**
 	 * The x pos of the level.
 	 */
+	@NoVisit
 	private int levelX;
-	// TODO Config file!
 	/**
 	 * Explosion particles.
 	 */
-	private static ParticleSpawner explosionParticles = null;
-	static {
-		BossStructure.explosionParticles = new ParticleSpawner();
-		BossStructure.explosionParticles.angle = new ParticleSpawnerOption(0, (float) (2 * Math.PI), 0, 0);
-		BossStructure.explosionParticles.colorR = new ParticleSpawnerOption(200, 230, 10, 25);
-		BossStructure.explosionParticles.colorG = new ParticleSpawnerOption(200, 250, -130, -110);
-		BossStructure.explosionParticles.colorB = new ParticleSpawnerOption(150, 200, -130, -110);
-		BossStructure.explosionParticles.colorA = new ParticleSpawnerOption(230, 250, -120, -200);
-		BossStructure.explosionParticles.timeMin = 0.1f;
-		BossStructure.explosionParticles.timeMax = 0.3f;
-		BossStructure.explosionParticles.amountMin = 40;
-		BossStructure.explosionParticles.amountMax = 50;
-		BossStructure.explosionParticles.speed = new ParticleSpawnerOption(4, 9, -1, 1);
-	}
+	private static ParticleSpawner EXPLOSION_PARTICLES;
 	/**
 	 * Fireworks particles.
 	 */
-	private static ParticleSpawner fireworksParticles = null;
-	static {
-		BossStructure.fireworksParticles = new ParticleSpawner();
-		BossStructure.fireworksParticles.angle = new ParticleSpawnerOption(0, (float) (2 * Math.PI), 0, (float) (Math.PI));
-		BossStructure.fireworksParticles.colorR = new ParticleSpawnerOption(100, 250, -100, 5);
-		BossStructure.fireworksParticles.colorG = new ParticleSpawnerOption(100, 250, -100, 5);
-		BossStructure.fireworksParticles.colorB = new ParticleSpawnerOption(100, 250, -100, 5);
-		BossStructure.fireworksParticles.colorA = new ParticleSpawnerOption(230, 250, -120, -200);
-		BossStructure.fireworksParticles.timeMin = 0.5f;
-		BossStructure.fireworksParticles.timeMax = 1f;
-		BossStructure.fireworksParticles.amountMin = 40;
-		BossStructure.fireworksParticles.amountMax = 50;
-		BossStructure.fireworksParticles.speed = new ParticleSpawnerOption(3, 5, -1, 1);
-	}
+	private static ParticleSpawner FIREWORKS_PARTICLES;
 
 	/**
 	 * Create a boss structure.
@@ -223,7 +204,7 @@ public final class BossStructure extends Structure {
 		if (GameConf.PRNG.nextDouble() > 0.9) {
 			Vec randPos = BossStructure.this.boss.getPos()
 					.add(new Vec((float) GameConf.PRNG.nextDouble() * 2 - 1, (float) GameConf.PRNG.nextDouble() * 2f - 1));
-			BossStructure.explosionParticles.spawn(scene, randPos);
+			BossStructure.EXPLOSION_PARTICLES.spawn(scene, randPos);
 		}
 	}
 
@@ -241,7 +222,7 @@ public final class BossStructure extends Structure {
 
 			Vec randPos = new Vec(midX + (float) GameConf.PRNG.nextDouble() * deltaX * 2 - deltaX,
 					midY + (float) GameConf.PRNG.nextDouble() * deltaY * 2 - deltaY);
-			BossStructure.fireworksParticles.spawn(scene, randPos);
+			BossStructure.FIREWORKS_PARTICLES.spawn(scene, randPos);
 		}
 
 		// open door slowly

@@ -23,7 +23,7 @@ import ragnarok.util.ReflectUtils.LoadMe;
  *
  */
 @LoadMe
-@VisitInfo(res = "conf/warper", visit = true)
+@VisitInfo(res = "conf/warper")
 public final class Warper extends Enemy implements Visitable {
 	/**
 	 * The delta time between position changes.

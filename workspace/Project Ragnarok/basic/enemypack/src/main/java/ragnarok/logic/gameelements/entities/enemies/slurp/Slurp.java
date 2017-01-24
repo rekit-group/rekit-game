@@ -26,7 +26,7 @@ import ragnarok.util.ReflectUtils.LoadMe;
  *
  */
 @LoadMe
-@VisitInfo(res = "conf/slurp", visit = true)
+@VisitInfo(res = "conf/slurp")
 public final class Slurp extends Enemy implements Visitable {
 	/**
 	 * The Slurp's SlurpDurps.

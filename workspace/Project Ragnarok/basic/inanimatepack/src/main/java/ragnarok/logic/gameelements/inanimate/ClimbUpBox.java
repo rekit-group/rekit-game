@@ -25,7 +25,7 @@ import ragnarok.util.ReflectUtils.LoadMe;
  *
  */
 @LoadMe
-@VisitInfo(res = "conf/climbup", visit = true)
+@VisitInfo(res = "conf/climbup")
 public final class ClimbUpBox extends DynamicInanimate implements Visitable {
 	/**
 	 * The inner inanimate box.

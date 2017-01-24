@@ -20,7 +20,7 @@ import ragnarok.primitives.time.Timer;
 import ragnarok.util.ReflectUtils.LoadMe;
 
 @LoadMe
-@VisitInfo(res = "conf/stacker", visit = true)
+@VisitInfo(res = "conf/stacker")
 public final class Stacker extends Enemy implements Visitable {
 
 	@NoVisit

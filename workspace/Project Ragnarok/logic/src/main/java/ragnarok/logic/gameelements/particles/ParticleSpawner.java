@@ -2,6 +2,7 @@ package ragnarok.logic.gameelements.particles;
 
 import home.fox.visitors.Visitable;
 import home.fox.visitors.annotations.NoVisit;
+import home.fox.visitors.annotations.VisitInfo;
 import ragnarok.config.GameConf;
 import ragnarok.core.IScene;
 import ragnarok.primitives.geometry.Polygon;
@@ -14,6 +15,7 @@ import ragnarok.primitives.geometry.Vec;
  * your ParticleSpawner Object</b>
  *
  */
+@VisitInfo(res = "", visit = false)
 public class ParticleSpawner implements Visitable {
 	/**
 	 * The particle prototype.

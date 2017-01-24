@@ -25,7 +25,7 @@ import ragnarok.util.ReflectUtils.LoadMe;
  *
  */
 @LoadMe
-@VisitInfo(res = "conf/boost", visit = true)
+@VisitInfo(res = "conf/boost")
 public final class BoostBox extends DynamicInanimate implements Visitable {
 	/**
 	 * The inner inanimate box.

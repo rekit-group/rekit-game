@@ -27,7 +27,7 @@ import ragnarok.util.ThreadUtils;
  *
  */
 @LoadMe
-@VisitInfo(res = "conf/rektsmasher", visit = true)
+@VisitInfo(res = "conf/rektsmasher")
 public final class RektSmasher extends Boss implements Visitable {
 	/**
 	 * The internal {@link RektKiller}.

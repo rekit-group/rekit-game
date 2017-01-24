@@ -23,7 +23,7 @@ import ragnarok.util.ReflectUtils.LoadMe;
  *
  */
 @LoadMe
-@VisitInfo(res = "conf/rocket", visit = true)
+@VisitInfo(res = "conf/rocket")
 public final class Rocket extends Enemy implements Visitable {
 	/**
 	 * Prototype Constructor.

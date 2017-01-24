@@ -49,7 +49,7 @@ import ragnarok.util.ReflectUtils.LoadMe;
  * @author Angelo Aracri
  */
 @LoadMe
-@VisitInfo(res = "conf/cannon", visit = true)
+@VisitInfo(res = "conf/cannon")
 public class Cannon extends Enemy implements Visitable {
 
 	/**

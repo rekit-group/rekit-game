@@ -21,7 +21,7 @@ import ragnarok.util.TextOptions;
  * @author Dominik Fuchss
  * @version 1.1
  */
-@VisitInfo(res = "conf/game", visit = true)
+@VisitInfo(res = "conf/game")
 public final class GameConf implements Visitable {
 	/**
 	 * Prevent instantiation.
@@ -68,11 +68,6 @@ public final class GameConf implements Visitable {
 	 * The version of the Game.
 	 */
 	public static String VERSION;
-
-	/**
-	 * The used version of the StandardWidgetToolkit.
-	 */
-	public static String SWT_VERSION;
 
 	/**
 	 * Size of one in-game unit in pixels. So a Vec2D(1, 0) will be projected to
