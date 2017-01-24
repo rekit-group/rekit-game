@@ -470,7 +470,6 @@ class GameView implements View {
 		// Create temporary GC on new Image and let field draw on that
 		// Double buffering reduces flickering
 		Graphics2D graphics = (Graphics2D) this.bufferStrategy.getDrawGraphics();
-		graphics.clearRect(0, 0, this.canvas.getWidth(), this.canvas.getHeight());
 
 		// set current camera position
 		this.grid.setGraphics(graphics);
@@ -478,7 +477,6 @@ class GameView implements View {
 		this.grid.setBackground(GameConf.GAME_BACKGROUD_COLOR);
 
 		this.drawElements(scene);
-
 		this.drawDebug();
 
 		// draw temporary image on actual cavans
@@ -542,9 +540,9 @@ class GameView implements View {
 			resultDur.append("\n");
 		});
 
-		this.grid.drawText(new Vec(GameConf.PIXEL_W - 55, GameConf.PIXEL_H / 2f), resultName.toString(), GameConf.HINT_TEXT, false);
-		this.grid.drawText(new Vec(GameConf.PIXEL_W - 30, GameConf.PIXEL_H / 2f), resultNum.toString(), GameConf.HINT_TEXT, false);
-		this.grid.drawText(new Vec(GameConf.PIXEL_W - 5, GameConf.PIXEL_H / 2f), resultDur.toString(), GameConf.HINT_TEXT, false);
+		this.grid.drawText(new Vec(GameConf.PIXEL_W - 55, GameConf.PIXEL_H / 4f), resultName.toString(), GameConf.HINT_TEXT, false);
+		this.grid.drawText(new Vec(GameConf.PIXEL_W - 30, GameConf.PIXEL_H / 4f), resultNum.toString(), GameConf.HINT_TEXT, false);
+		this.grid.drawText(new Vec(GameConf.PIXEL_W - 5, GameConf.PIXEL_H / 4f), resultDur.toString(), GameConf.HINT_TEXT, false);
 	}
 
 	/**
@@ -584,10 +582,6 @@ class GameView implements View {
 
 	@Override
 	public void attachMe(InputHelper inputHelper) {
-		// Check if listenerControl is set
-		if (inputHelper == null) {
-			return;
-		}
 		// Add our custom KeyListener to an object
 		KeyAdapter adapter = new KeyAdapter() {
 			@Override
