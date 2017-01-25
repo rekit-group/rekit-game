@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import ragnarok.logic.Model;
-import ragnarok.logic.gameelements.entities.Entity;
+import ragnarok.logic.gameelements.entities.Player;
 import ragnarok.logic.gui.menu.MenuItem;
 import ragnarok.logic.scene.Scenes;
 
@@ -20,7 +20,7 @@ public interface IScene {
 	 *
 	 * @return the current player of {@code null}
 	 */
-	Entity getPlayer();
+	Player getPlayer();
 
 	/**
 	 * Get the current score of the player.

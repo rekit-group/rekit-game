@@ -159,4 +159,13 @@ public abstract class MenuItem extends GuiElement {
 		return this.text;
 	}
 
+	/**
+	 * Indicates whether the item is selectable.
+	 * 
+	 * @return {@code true} iff selectable, {@code false} otherwise
+	 */
+	public boolean isSelectable() {
+		return true;
+	}
+
 }

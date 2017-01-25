@@ -4,8 +4,8 @@ import home.fox.visitors.Visitable;
 import home.fox.visitors.annotations.NoVisit;
 import home.fox.visitors.annotations.VisitInfo;
 import ragnarok.config.GameConf;
-import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
+import ragnarok.core.GameGrid;
 import ragnarok.logic.gameelements.entities.Entity;
 import ragnarok.logic.gameelements.particles.ParticleSpawner;
 import ragnarok.logic.gameelements.type.Enemy;
@@ -124,7 +124,7 @@ public final class Rocket extends Enemy implements Visitable {
 
 			if (dir == Direction.UP) {
 				element.setVel(element.getVel().setY(GameConf.PLAYER_KILL_BOOST));
-				element.addPoints(20);
+				this.getScene().getPlayer().addPoints(20);
 				// Kill the rocket itself
 				this.destroy();
 			} else {

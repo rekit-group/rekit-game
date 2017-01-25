@@ -181,6 +181,33 @@ public abstract class GameElement implements Collidable {
 	}
 
 	/**
+	 * <p>
+	 * Stub Factory method that every {@link GameElement} must implement in
+	 * order to being able to be instantiated dynamically by the level creation.
+	 * </p>
+	 * <p>
+	 * A <i>startPos</i> must be supplied to position the new GameElement right.
+	 * </p>
+	 * <p>
+	 * Also, an array of <i>modifiers</i> that the extending {@link GameElement}
+	 * can define and use is supplied. These are used make level creation able
+	 * to determine the {@link GameElement GameElements} behavior. <b>Note:</b>
+	 * the <i>modifiers</i> are not checked in syntax, so it must be thoroughly
+	 * checked.
+	 * </p>
+	 *
+	 * @param startPos
+	 *            the initial position of the new {@link GameElement}.
+	 * @param modifiers
+	 *            optional parameters that may determine additional behavior of
+	 *            the {@link GameElement}.
+	 * @return the newly created {@link GameElement}.
+	 */
+	public GameElement create(Vec startPos, String[] modifiers) {
+		throw new UnsupportedOperationException("Create not supported for " + this.getClass().getSimpleName());
+	}
+
+	/**
 	 * Returns if the {@link GameElement} is currently supposed to be rendered
 	 * or not.
 	 *
@@ -367,38 +394,11 @@ public abstract class GameElement implements Collidable {
 	/**
 	 * Get a hint (for {@link Range#normalize(int)} for positioning this
 	 * {@link GameElement} via {@link #getZ()}.
-	 * 
+	 *
 	 * @return {@code null} if no hint, otherwise the expected position
 	 */
 	public Integer getZHint() {
 		return null;
-	}
-
-	/**
-	 * <p>
-	 * Stub Factory method that every {@link GameElement} must implement in
-	 * order to being able to be instantiated dynamically by the level creation.
-	 * </p>
-	 * <p>
-	 * A <i>startPos</i> must be supplied to position the new GameElement right.
-	 * </p>
-	 * <p>
-	 * Also, an array of <i>modifiers</i> that the extending {@link GameElement}
-	 * can define and use is supplied. These are used make level creation able
-	 * to determine the {@link GameElement GameElements} behavior. <b>Note:</b>
-	 * the <i>modifiers</i> are not checked in syntax, so it must be thoroughly
-	 * checked.
-	 * </p>
-	 *
-	 * @param startPos
-	 *            the initial position of the new {@link GameElement}.
-	 * @param modifiers
-	 *            optional parameters that may determine additional behavior of
-	 *            the {@link GameElement}.
-	 * @return the newly created {@link GameElement}.
-	 */
-	public GameElement create(Vec startPos, String[] modifiers) {
-		throw new UnsupportedOperationException("Create not supported for " + this.getClass().getSimpleName());
 	}
 
 	/**

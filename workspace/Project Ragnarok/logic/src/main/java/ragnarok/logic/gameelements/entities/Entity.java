@@ -26,14 +26,9 @@ import ragnarok.primitives.time.Timer;
 public abstract class Entity extends GameElement {
 
 	/**
-	 * The amount of lifes the Entity has. Upon reaching 0 lifes, he dies.
+	 * The amount of lives the Entity has. Upon reaching 0 lives, he dies.
 	 */
 	protected int lives = 1;
-
-	/**
-	 * The amount of points the Entity has scored.
-	 */
-	protected int points = 0;
 
 	/**
 	 * The current State the Entity is in and determines the jump behavior.
@@ -135,16 +130,6 @@ public abstract class Entity extends GameElement {
 	@Override
 	public final int getLives() {
 		return this.lives;
-	}
-
-	@Override
-	public final void addPoints(int points) {
-		this.points += points;
-	}
-
-	@Override
-	public final int getPoints() {
-		return this.points;
 	}
 
 	@Override

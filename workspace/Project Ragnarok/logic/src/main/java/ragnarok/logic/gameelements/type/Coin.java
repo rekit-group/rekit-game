@@ -3,8 +3,8 @@ package ragnarok.logic.gameelements.type;
 import java.util.Set;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
+import ragnarok.core.GameGrid;
 import ragnarok.primitives.geometry.Vec;
 import ragnarok.primitives.image.RGBAColor;
 import ragnarok.util.ReflectUtils;
@@ -54,7 +54,7 @@ public abstract class Coin extends Pickup {
 
 	@Override
 	public void perform(GameElement collector) {
-		collector.addPoints(this.getValue());
+		this.getScene().getPlayer().addPoints(this.getValue());
 		this.addDamage(1);
 	}
 

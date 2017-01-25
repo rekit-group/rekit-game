@@ -101,7 +101,7 @@ public final class ImageManagement {
 
 	/**
 	 * Convert {@link AbstractImage} to {@link Image}.
-	 * 
+	 *
 	 * @param in
 	 *            the input image
 	 * @return the converted image
@@ -150,14 +150,4 @@ public final class ImageManagement {
 		return res;
 	}
 
-	// private static int counter = 0;
-
-	// private static void save(BufferedImage img) {
-	// try {
-	// ImageIO.write(img, "png", new File("C:\\Users\\dominik\\Desktop\\img_" +
-	// (ImageManagement.counter++) + ".png"));
-	// } catch (IOException e) {
-	// e.printStackTrace();
-	// }
-	// }
 }

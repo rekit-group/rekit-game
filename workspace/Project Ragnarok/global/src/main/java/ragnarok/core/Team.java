@@ -14,7 +14,7 @@ public enum Team {
 	/**
 	 * An enemy of the player.
 	 */
-	ENEMY((byte) 50, (byte) 60),
+	ENEMY((byte) 110, (byte) 120),
 	/**
 	 * An inanimate.
 	 */
@@ -34,10 +34,20 @@ public enum Team {
 	/**
 	 * An special effect.
 	 */
-	EFFECT((byte) 110, (byte) 110);
-
+	EFFECT((byte) 127, (byte) 127);
+	/**
+	 * The z-range of this type of Element.
+	 */
 	public final Range zRange;
 
+	/**
+	 * Create a team by its min and max z-layer.
+	 *
+	 * @param min
+	 *            the min z-layer
+	 * @param max
+	 *            the max z-layer
+	 */
 	private Team(byte min, byte max) {
 		this.zRange = new Range(min, max);
 	}
@@ -59,10 +69,6 @@ public enum Team {
 		return false;
 	}
 
-	public final byte getZIndex(int hint) {
-		return 0;
-	}
-
 	/**
 	 * Is this the {@link Team#BACKGROUND Neutral-Team}.
 	 *
@@ -72,17 +78,47 @@ public enum Team {
 		return this == Team.BACKGROUND;
 	}
 
+	/**
+	 * This class defines a range to define z-layers.
+	 *
+	 * @author Dominik Fuchss
+	 *
+	 */
 	public static final class Range {
+		/**
+		 * The most behind z-layer.
+		 */
 		public final byte min;
+		/**
+		 * The most in-front-of z-layer.
+		 */
 		public final byte max;
+		/**
+		 * The standard z-layer.
+		 */
 		public final byte std;
 
+		/**
+		 * Create a range.
+		 *
+		 * @param min
+		 *            the {@link #min} and {@link #std}
+		 * @param max
+		 *            the {@link #max}
+		 */
 		private Range(byte min, byte max) {
 			this.min = min;
 			this.max = max;
 			this.std = min;
 		}
 
+		/**
+		 * Normalize to {@link Range}.
+		 *
+		 * @param expected
+		 *            the expected z-layer.
+		 * @return the actual z-layer (trimmed to {@code this}
+		 */
 		public final byte normalize(int expected) {
 			if (expected < this.min) {
 				return this.min;

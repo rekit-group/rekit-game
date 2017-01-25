@@ -66,11 +66,6 @@ public class Inanimate extends GameElement {
 	}
 
 	@Override
-	public int getPoints() {
-		return 0;
-	}
-
-	@Override
 	public void collidedWith(Frame collision, Direction dir) {
 		// Do nothing, blocks cannot collide
 	}

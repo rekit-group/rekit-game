@@ -1,7 +1,7 @@
 package ragnarok.logic.gameelements.entities.pickups;
 
-import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
+import ragnarok.core.GameGrid;
 import ragnarok.logic.gameelements.entities.Entity;
 import ragnarok.logic.gameelements.type.Pickup;
 import ragnarok.primitives.geometry.Vec;
@@ -33,7 +33,7 @@ public final class Life extends Pickup {
 	@Override
 	public void perform(GameElement collector) {
 		collector.addDamage(-1);
-		this.addDamage(1);
+		this.destroy();
 	}
 
 	@Override

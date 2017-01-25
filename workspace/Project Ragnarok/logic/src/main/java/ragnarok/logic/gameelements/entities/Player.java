@@ -47,6 +47,10 @@ public final class Player extends Entity implements CameraTarget {
 	 * The temporary renderer's time.
 	 */
 	private Timer renderTimer;
+	/**
+	 * The points of the player.
+	 */
+	private int points;
 
 	/**
 	 * Create a player by start position.
@@ -166,4 +170,23 @@ public final class Player extends Entity implements CameraTarget {
 	public final Direction getCurrentDirection() {
 		return this.currentDirection;
 	}
+
+	/**
+	 * Adds points to the Players score.
+	 *
+	 * @param points
+	 *            the points to add (or subtract, iff negative)
+	 */
+	public final void addPoints(int points) {
+		this.points += points;
+	}
+
+	/**
+	 * Getter for the collected Points of the Player.
+	 *
+	 * @return the points of the Player
+	 */
+	public final int getPoints() {
+		return this.points;
+	};
 }

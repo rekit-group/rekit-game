@@ -1,6 +1,7 @@
 package ragnarok.logic.scene;
 
 import ragnarok.logic.GameModel;
+import ragnarok.logic.gameelements.entities.Player;
 import ragnarok.logic.gui.menu.MenuItem;
 
 /**
@@ -9,7 +10,7 @@ import ragnarok.logic.gui.menu.MenuItem;
 final class NullScene extends Scene {
 	/**
 	 * Create a new NullScene.
-	 * 
+	 *
 	 * @param model
 	 *            the model
 	 */
@@ -29,6 +30,11 @@ final class NullScene extends Scene {
 
 	@Override
 	public MenuItem getMenu() {
+		return null;
+	}
+
+	@Override
+	public Player getPlayer() {
 		return null;
 	}
 

@@ -2,6 +2,7 @@ package ragnarok.logic.scene;
 
 import ragnarok.config.GameConf;
 import ragnarok.logic.GameModel;
+import ragnarok.logic.gameelements.entities.Player;
 import ragnarok.logic.gui.menu.BoolSetting;
 import ragnarok.logic.gui.menu.MenuActionItem;
 import ragnarok.logic.gui.menu.MenuGrid;
@@ -98,6 +99,11 @@ final class MainMenu extends Scene {
 	@Override
 	public int getHighScore() {
 		throw new UnsupportedOperationException("No HighScore in MenuScene");
+	}
+
+	@Override
+	public Player getPlayer() {
+		throw new UnsupportedOperationException("No Player in MenuScene");
 	}
 
 }

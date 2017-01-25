@@ -15,7 +15,6 @@ import ragnarok.core.GuiElement;
 import ragnarok.core.IScene;
 import ragnarok.core.Team;
 import ragnarok.logic.GameModel;
-import ragnarok.logic.gameelements.entities.Entity;
 
 /**
  * Based on the concept of scenes in Unity. <br>
@@ -326,11 +325,6 @@ abstract class Scene implements CameraTarget, IScene {
 	@Override
 	public Object synchronize() {
 		return this.sync;
-	}
-
-	@Override
-	public Entity getPlayer() {
-		return null;
 	}
 
 	@Override

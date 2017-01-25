@@ -41,17 +41,6 @@ public abstract class BackgroundElement extends GameElement {
 	}
 
 	@Override
-	public void addPoints(int points) {
-		// Do nothing
-	}
-
-	@Override
-	public int getPoints() {
-		// Do nothing
-		return 0;
-	}
-
-	@Override
 	public void addDamage(int damage) {
 		// Do nothing
 	}

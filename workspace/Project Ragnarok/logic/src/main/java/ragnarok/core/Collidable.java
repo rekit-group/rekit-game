@@ -10,23 +10,6 @@ import ragnarok.primitives.geometry.Frame;
  * @version 1.0
  */
 public interface Collidable {
-	/**
-	 * Optional reaction to a collision. Adds points to the GameElements score
-	 *
-	 * @param points
-	 *            the Points to add
-	 */
-	default void addPoints(int points) {
-	};
-
-	/**
-	 * Getter for the collected Points of the GameElement.
-	 *
-	 * @return the points of the GameElement
-	 */
-	default int getPoints() {
-		return 0;
-	};
 
 	/**
 	 * Optional reaction to a collision. Removes lifes of the GameElement.

@@ -1,8 +1,8 @@
 package ragnarok.logic.gameelements.entities.enemies;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
+import ragnarok.core.GameGrid;
 import ragnarok.logic.gameelements.entities.Entity;
 import ragnarok.logic.gameelements.type.Enemy;
 import ragnarok.primitives.geometry.Direction;
@@ -210,7 +210,7 @@ public final class RektKiller extends Enemy {
 			// Touched harmless side
 			if (!this.hasSide(dir)) {
 				// give the player 40 points
-				element.addPoints(20);
+				this.getScene().getPlayer().addPoints(20);
 				// Let the player jump if he landed on top
 				if (dir == Direction.UP) {
 					element.setVel(element.getVel().setY(GameConf.PLAYER_KILL_BOOST));

@@ -41,4 +41,9 @@ public class TextMenu extends MenuItem {
 		f.drawRectangle(this.getPos(), this.getSize(), new RGBAColor(0, 0, 0, 200), false);
 		f.drawText(this.getPos().sub(this.getSize().scalar(0.5F)).add(this.space), this.getText(), GameConf.ABOUT_TEXT, false);
 	}
+
+	@Override
+	public boolean isSelectable() {
+		return false;
+	}
 }

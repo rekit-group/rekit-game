@@ -167,7 +167,7 @@ public abstract class SubMenu extends MenuItem {
 
 	@Override
 	public void select() {
-		if (this.selected) {
+		if (this.selected && this.menuItems.get(this.index).isSelectable()) {
 			// select a MenuItem && unselect me
 			this.selected = false;
 			this.inMenu = true;
