@@ -1,12 +1,11 @@
 package ragnarok.logic.scene;
 
+import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.TreeMap;
 import java.util.function.Function;
 
 import ragnarok.config.GameConf;
@@ -59,15 +58,16 @@ abstract class Scene implements CameraTarget, IScene {
 	/**
 	 * GameElements which shall be added.
 	 */
-	private ConcurrentLinkedQueue<GameElement> gameElementAddQueue;
+	private Queue<GameElement> gameElementAddQueue;
 	/**
 	 * GameElements which shall be removed.
 	 */
-	private ConcurrentLinkedQueue<GameElement> gameElementRemoveQueue;
+	private Queue<GameElement> gameElementRemoveQueue;
+
 	/**
 	 * Stats of the gameElements for debugging.
 	 */
-	private ConcurrentHashMap<Class<?>, Long> gameElementDurations = new ConcurrentHashMap<>();
+	private Map<String, Long> gameElementDurations = new TreeMap<>();
 	/**
 	 * Indicates whether the scene is paused.
 	 */
@@ -96,15 +96,15 @@ abstract class Scene implements CameraTarget, IScene {
 	public void init() {
 		// Byte: [-128, 127]
 		final int length = 256;
-		this.guiElements = new LinkedList<>();
+		this.guiElements = new ArrayDeque<>();
 
 		this.gameElements = (Queue<GameElement>[]) new Queue<?>[length];
 		for (int i = 0; i < this.gameElements.length; i++) {
-			this.gameElements[i] = new LinkedList<>();
+			this.gameElements[i] = new ArrayDeque<>();
 		}
 
-		this.gameElementAddQueue = new ConcurrentLinkedQueue<>();
-		this.gameElementRemoveQueue = new ConcurrentLinkedQueue<>();
+		this.gameElementAddQueue = new ArrayDeque<>();
+		this.gameElementRemoveQueue = new ArrayDeque<>();
 	}
 
 	@Override
@@ -192,7 +192,7 @@ abstract class Scene implements CameraTarget, IScene {
 		if (GameConf.DEBUG) {
 			synchronized (this.gameElementDurations) {
 				long timeAfter = GameTime.getTime();
-				Class<?> clazz = e.getClass();
+				String clazz = e.getClass().getSimpleName();
 				long dur = (timeAfter - timeBefore);
 				if (this.gameElementDurations.containsKey(clazz)) {
 					long newTime = this.gameElementDurations.get(clazz) + dur;
@@ -311,11 +311,11 @@ abstract class Scene implements CameraTarget, IScene {
 	}
 
 	@Override
-	public Map<Class<?>, Long> getGameElementDurations() {
+	public Map<String, Long> getGameElementDurations() {
 		synchronized (this.gameElementDurations) {
 			// Reset debug info
-			Map<Class<?>, Long> ret = this.gameElementDurations;
-			this.gameElementDurations = new ConcurrentHashMap<>();
+			Map<String, Long> ret = this.gameElementDurations;
+			this.gameElementDurations = new TreeMap<>();
 			return ret;
 		}
 	}

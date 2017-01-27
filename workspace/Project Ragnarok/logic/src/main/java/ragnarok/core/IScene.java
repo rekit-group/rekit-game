@@ -157,7 +157,7 @@ public interface IScene {
 	 *
 	 * @return the duration-time of elements by class
 	 */
-	Map<Class<?>, Long> getGameElementDurations();
+	Map<String, Long> getGameElementDurations();
 
 	/**
 	 * Get the amount of elements in the scene.

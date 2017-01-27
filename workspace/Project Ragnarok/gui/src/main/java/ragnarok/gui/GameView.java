@@ -10,9 +10,9 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.io.ByteArrayInputStream;
 import java.util.ArrayDeque;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
+import java.util.TreeMap;
 
 import javax.swing.JFrame;
 
@@ -507,10 +507,10 @@ class GameView implements View {
 		String debugInfo = "FPS: " + this.getFPS();
 		this.grid.drawText(new Vec(GameConf.PIXEL_W - 10, GameConf.PIXEL_H - 60), debugInfo, GameConf.HINT_TEXT, false);
 
-		HashMap<Class<?>, Integer> classCounter = new HashMap<>();
+		Map<String, Integer> classCounter = new TreeMap<>();
 
 		this.model.getScene().applyToGameElements(e -> {
-			Class<?> className = e.getClass();
+			String className = e.getClass().getSimpleName();
 			if (classCounter.containsKey(className)) {
 				classCounter.put(className, classCounter.get(className) + 1);
 			} else {
@@ -525,9 +525,9 @@ class GameView implements View {
 
 		resultNum.append(this.model.getScene().getGameElementCount()).append("\n");
 
-		Map<Class<?>, Long> durations = this.model.getScene().getGameElementDurations();
+		Map<String, Long> durations = this.model.getScene().getGameElementDurations();
 		classCounter.entrySet().forEach((e) -> {
-			resultName.append(e.getKey().getSimpleName());
+			resultName.append(e.getKey());
 			resultName.append("\n");
 			resultNum.append(e.getValue());
 			resultNum.append("\n");
