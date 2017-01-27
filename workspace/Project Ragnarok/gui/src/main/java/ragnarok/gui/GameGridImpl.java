@@ -13,8 +13,6 @@ import java.util.List;
 
 import ragnarok.config.GameConf;
 import ragnarok.core.GameGrid;
-import ragnarok.core.GameElement;
-import ragnarok.core.GuiElement;
 import ragnarok.primitives.geometry.Polygon;
 import ragnarok.primitives.geometry.Vec;
 import ragnarok.primitives.image.Filter;
@@ -58,26 +56,6 @@ class GameGridImpl extends GameGrid {
 	 */
 	void setGraphics(Graphics2D current) {
 		this.graphics = current;
-	}
-
-	/**
-	 * Render a {@link GameElement}.
-	 *
-	 * @param e
-	 *            the element
-	 */
-	void render(GameElement e) {
-		e.render(this);
-	}
-
-	/**
-	 * Render a {@link GuiElement}.
-	 *
-	 * @param e
-	 *            the element
-	 */
-	void render(GuiElement e) {
-		e.render(this);
 	}
 
 	@Override

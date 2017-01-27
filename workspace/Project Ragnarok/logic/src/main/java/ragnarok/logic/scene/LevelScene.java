@@ -128,7 +128,6 @@ public abstract class LevelScene extends Scene {
 
 	@Override
 	protected void logicLoopPre() {
-
 		this.level.getLevelAssember().generate((int) (this.getCameraOffset() + GameConf.GRID_W + 1));
 
 		// dont allow player to go behind currentOffset
@@ -146,22 +145,21 @@ public abstract class LevelScene extends Scene {
 		if (this.isPaused()) {
 			return;
 		}
-		synchronized (this.synchronize()) {
-			// iterate all GameElements to detect collision
-			this.getGameElementIterator().forEachRemaining((e1) -> {
-				if (!e1.getTeam().isNeutral()) {
-					this.getGameElementIterator().forEachRemaining((e2) -> {
-						if (!e2.getTeam().isNeutral() && e1 != e2) {
-							e1.checkCollision(e2);
-						}
-					});
-				}
 
-			});
+		this.applyToGameElements((e1) -> {
+			if (!e1.getTeam().isNeutral()) {
+				this.applyToGameElements((e2) -> {
+					if (!e2.getTeam().isNeutral() && e1 != e2) {
+						e1.checkCollision(e2);
+					}
+					return null;
+				});
+			}
+			return null;
+		});
+		if (this.player.getDeleteMe())
 
-		}
-
-		if (this.player.getDeleteMe()) {
+		{
 			this.end(false);
 		}
 	}

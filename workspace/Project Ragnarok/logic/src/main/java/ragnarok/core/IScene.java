@@ -1,7 +1,7 @@
 package ragnarok.core;
 
-import java.util.Iterator;
 import java.util.Map;
+import java.util.function.Function;
 
 import ragnarok.logic.Model;
 import ragnarok.logic.gameelements.entities.Player;
@@ -90,26 +90,20 @@ public interface IScene {
 	float getCameraOffset();
 
 	/**
-	 * The Object to synchronize with the scene (threading).<br>
-	 * You shall synchronize all access to iterators!
+	 * Apply function on game elements.
 	 *
-	 * @return the sync-object
+	 * @param function
+	 *            the function
 	 */
-	Object synchronize();
+	void applyToGameElements(Function<GameElement, Void> function);
 
 	/**
-	 * Get a game-element iterator.
+	 * Apply function on game elements.
 	 *
-	 * @return a game-element iterator
+	 * @param function
+	 *            the function
 	 */
-	Iterator<GameElement> getGameElementIterator();
-
-	/**
-	 * Get a gui-element iterator.
-	 *
-	 * @return a gui-element iterator
-	 */
-	Iterator<GuiElement> getGuiElementIterator();
+	void applyToGuiElements(Function<GuiElement, Void> function);
 
 	/**
 	 * End a Game/Scene.

@@ -1,11 +1,13 @@
 package ragnarok.logic.scene;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.function.Function;
 
 import ragnarok.config.GameConf;
 import ragnarok.core.CameraTarget;
@@ -42,11 +44,6 @@ import ragnarok.logic.GameModel;
  */
 abstract class Scene implements CameraTarget, IScene {
 
-	/**
-	 * Synchronization Object that is used as a lock variable for blocking
-	 * operations.
-	 */
-	private final Object sync = new Object();
 	/**
 	 * The model.
 	 */
@@ -140,21 +137,20 @@ abstract class Scene implements CameraTarget, IScene {
 	/**
 	 * This method will be invoked in {@link #logicLoop()}.
 	 */
-	protected void innerLogicLoop() {
-		synchronized (this.synchronize()) {
-			this.logicLoopPre();
-			// add GameElements that have been added
-			this.addGameElements();
-			if (!this.paused) {
-				// iterate all GameElements to invoke logicLoop
-				this.getGameElementIterator().forEachRemaining(this::logicLoopGameElement);
-			}
-			// remove GameElements that must be removed
-			this.removeGameElements();
-			this.logicLoopAfter();
-			// after all game related logic update GuiElements
-			this.getGuiElementIterator().forEachRemaining((e) -> e.logicLoop());
+	protected synchronized void innerLogicLoop() {
+		this.logicLoopPre();
+		// add GameElements that have been added
+		this.addGameElements();
+		if (!this.paused) {
+			// iterate all GameElements to invoke logicLoop
+			Arrays.stream(this.gameElements).forEach(list -> list.forEach(this::logicLoopGameElement));
 		}
+		// remove GameElements that must be removed
+		this.removeGameElements();
+		this.logicLoopAfter();
+		// after all game related logic update GuiElements
+		this.guiElements.forEach(e -> e.logicLoop());
+
 	}
 
 	/**
@@ -269,11 +265,6 @@ abstract class Scene implements CameraTarget, IScene {
 		}
 	}
 
-	@Override
-	public Iterator<GameElement> getGameElementIterator() {
-		return new ArrayedQueueIterator<>(this.gameElements);
-	}
-
 	/**
 	 * Adds a GuiElement to the GameModel.
 	 *
@@ -281,26 +272,23 @@ abstract class Scene implements CameraTarget, IScene {
 	 *            the GuiElement to add
 	 */
 	@Override
-	public void addGuiElement(GuiElement e) {
-		synchronized (this.synchronize()) {
-			this.guiElements.add(e);
-		}
+	public synchronized void addGuiElement(GuiElement e) {
+		this.guiElements.add(e);
 	}
 
 	@Override
-	public void removeGuiElement(GuiElement e) {
-		synchronized (this.synchronize()) {
-			this.guiElements.remove(e);
-		}
+	public synchronized void removeGuiElement(GuiElement e) {
+		this.guiElements.remove(e);
 	}
 
 	@Override
-	public Iterator<GuiElement> getGuiElementIterator() {
-		synchronized (this.synchronize()) {
-			Queue<GuiElement> newQueue = new LinkedList<>();
-			this.guiElements.forEach(newQueue::add);
-			return newQueue.iterator();
-		}
+	public synchronized void applyToGameElements(Function<GameElement, Void> function) {
+		Arrays.stream(this.gameElements).forEach(list -> list.forEach(e -> function.apply(e)));
+	}
+
+	@Override
+	public synchronized void applyToGuiElements(Function<GuiElement, Void> function) {
+		this.guiElements.forEach(e -> function.apply(e));
 	}
 
 	@Override
@@ -320,11 +308,6 @@ abstract class Scene implements CameraTarget, IScene {
 			size += queue.size();
 		}
 		return size;
-	}
-
-	@Override
-	public Object synchronize() {
-		return this.sync;
 	}
 
 	@Override

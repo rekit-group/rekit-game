@@ -491,10 +491,8 @@ class GameView implements View {
 	 *            the current scene
 	 */
 	private void drawElements(IScene scene) {
-		synchronized (scene.synchronize()) {
-			scene.getGameElementIterator().forEachRemaining(this.grid::render);
-			scene.getGuiElementIterator().forEachRemaining(this.grid::render);
-		}
+		scene.applyToGameElements(e -> e.render(this.grid));
+		scene.applyToGuiElements(e -> e.render(this.grid));
 	}
 
 	/**
@@ -511,17 +509,15 @@ class GameView implements View {
 
 		HashMap<Class<?>, Integer> classCounter = new HashMap<>();
 
-		synchronized (this.model.getScene().synchronize()) {
-			this.model.getScene().getGameElementIterator().forEachRemaining(e -> {
-				Class<?> className = e.getClass();
-				if (classCounter.containsKey(className)) {
-					classCounter.put(className, classCounter.get(className) + 1);
-				} else {
-					classCounter.put(className, 1);
-				}
-			});
-
-		}
+		this.model.getScene().applyToGameElements(e -> {
+			Class<?> className = e.getClass();
+			if (classCounter.containsKey(className)) {
+				classCounter.put(className, classCounter.get(className) + 1);
+			} else {
+				classCounter.put(className, 1);
+			}
+			return null;
+		});
 
 		StringBuilder resultName = new StringBuilder().append("GameElements\n");
 		StringBuilder resultNum = new StringBuilder();

@@ -118,11 +118,13 @@ public abstract class GuiElement {
 	 * @param f
 	 *            the {@link GameGrid} that represents the games field and
 	 *            supplies primitive drawing operations.
+	 * @return {@code null} (for lambda usage)
 	 */
-	public final void render(GameGrid f) {
+	public final Void render(GameGrid f) {
 		if (this.visible) {
 			this.internalRender(f);
 		}
+		return null;
 	}
 
 	/**
