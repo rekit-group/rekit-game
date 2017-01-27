@@ -14,7 +14,7 @@ import ragnarok.primitives.geometry.Frame;
  *
  * @author Angelo Aracri
  */
-public class CannonParticle extends DamageParticle implements Cloneable {
+public final class CannonParticle extends DamageParticle {
 
 	/**
 	 * The parenting {@link Cannon} whose {@link Cannon#hitSomething()} will be
@@ -36,7 +36,7 @@ public class CannonParticle extends DamageParticle implements Cloneable {
 	}
 
 	@Override
-	public Particle clone() {
+	public DamageParticle clone() {
 		return new CannonParticle(this.parent);
 	}
 

@@ -45,7 +45,7 @@ public abstract class DamageState extends State {
 	/**
 	 * Getter for the amount of arms the {@link RocketBoss} shall have.
 	 *
-	 * @return
+	 * @return the number of arms.
 	 */
 	public abstract float getArmNum();
 

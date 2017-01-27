@@ -85,7 +85,7 @@ public final class BossStructure extends Structure implements Visitable {
 		this.levelX = levelX;
 
 		// generate and add door after room
-		this.door = new InanimateDoor(new Vec(levelX + width - 1, (float) Math.ceil(GameConf.GRID_H / 2)));
+		this.door = new InanimateDoor(new Vec(levelX + width - 1, GameConf.GRID_H / 2));
 		GameElementFactory.generate(this.door);
 
 		// generate trigger at door entrance
@@ -98,6 +98,9 @@ public final class BossStructure extends Structure implements Visitable {
 	 * Start the battle.
 	 */
 	public void startBattle() {
+		if (this.door == null || this.triggerPos == null) {
+			return;
+		}
 		IScene scene = this.door.getScene();
 		GameElement player = scene.getPlayer();
 
@@ -138,7 +141,7 @@ public final class BossStructure extends Structure implements Visitable {
 	 *            the scene
 	 */
 	public void endBattle(IScene scene) {
-		final Player player = (Player) scene.getPlayer();
+		final Player player = scene.getPlayer();
 
 		final Timer timer = new Timer(7000);
 

@@ -4,11 +4,9 @@ import home.fox.visitors.Visitable;
 import home.fox.visitors.annotations.NoVisit;
 import home.fox.visitors.annotations.VisitInfo;
 import ragnarok.config.GameConf;
-import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
+import ragnarok.core.GameGrid;
 import ragnarok.core.Team;
-import ragnarok.logic.gameelements.inanimate.Inanimate;
-import ragnarok.logic.gameelements.inanimate.InanimateBox;
 import ragnarok.logic.gameelements.particles.ParticleSpawner;
 import ragnarok.logic.gameelements.type.DynamicInanimate;
 import ragnarok.primitives.geometry.Direction;
@@ -31,11 +29,11 @@ public final class ClimbUpBox extends DynamicInanimate implements Visitable {
 	 * The inner inanimate box.
 	 */
 	@NoVisit
-	protected InanimateBox innerBox;
+	InanimateBox innerBox;
 	/**
 	 * The time between strategy changes.
 	 */
-	protected static long PERIOD;
+	private static long PERIOD;
 	/**
 	 * All strategies.
 	 */

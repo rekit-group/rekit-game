@@ -3,10 +3,9 @@ package ragnarok.logic.gameelements.inanimate;
 import java.util.HashMap;
 import java.util.Map;
 
-import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
+import ragnarok.core.GameGrid;
 import ragnarok.core.GameTime;
-import ragnarok.logic.gameelements.inanimate.InanimateBox;
 import ragnarok.logic.gameelements.type.DynamicInanimate;
 import ragnarok.primitives.geometry.Direction;
 import ragnarok.primitives.geometry.Vec;
@@ -23,15 +22,15 @@ public final class ToggleBox extends DynamicInanimate {
 	/**
 	 * The inner {@link InanimateBox}.
 	 */
-	protected InanimateBox innerBox;
+	InanimateBox innerBox;
 	/**
 	 * The period between toggling.
 	 */
-	protected static final long PERIOD = 4000;
+	private static final long PERIOD = 4000;
 	/**
 	 * The current time offset.
 	 */
-	protected long offset = 0;
+	private long offset = 0;
 	/**
 	 * The different strategies.
 	 */

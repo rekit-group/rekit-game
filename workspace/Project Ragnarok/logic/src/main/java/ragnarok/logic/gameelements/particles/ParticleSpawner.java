@@ -21,7 +21,7 @@ public class ParticleSpawner implements Visitable {
 	 * The particle prototype.
 	 */
 	@NoVisit
-	private Particle particlePrototype = new Particle();
+	private Particle particlePrototype;
 
 	/**
 	 * The current polygon.
@@ -94,7 +94,7 @@ public class ParticleSpawner implements Visitable {
 	 * Create a new particle spawner with its default values.
 	 */
 	public ParticleSpawner() {
-
+		this.particlePrototype = new Particle();
 		// default polygon is square wit a = 0.2
 		this.polygon = new Polygon(new Vec(), new Vec[] { new Vec(0.2f, 0), new Vec(0.2f, 0.2f), new Vec(0, 0.2f), new Vec() });
 

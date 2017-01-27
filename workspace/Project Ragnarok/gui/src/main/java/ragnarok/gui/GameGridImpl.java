@@ -200,7 +200,7 @@ class GameGridImpl extends GameGrid {
 		RGBColor col = (this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
 		this.graphics.setColor(Utils.calcRGB(col));
 
-		Font font = new Font(options.getFont(), options.getFontOptions() | Font.BOLD, options.getHeight());
+		Font font = new Font(options.getFont(), options.getFontOptions(), options.getHeight());
 		this.graphics.setFont(font);
 		FontMetrics metrics = this.graphics.getFontMetrics(font);
 

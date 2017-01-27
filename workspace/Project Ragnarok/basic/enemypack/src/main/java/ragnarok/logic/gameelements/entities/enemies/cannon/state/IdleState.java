@@ -9,6 +9,12 @@ import ragnarok.logic.gameelements.entities.enemies.cannon.Cannon;
  * @author Angelo Aracri
  */
 public class IdleState extends CannonState {
+	/**
+	 * Create IdleState.
+	 */
+	public IdleState() {
+		super();
+	}
 
 	@Override
 	public CannonState getNextState() {

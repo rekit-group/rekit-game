@@ -31,6 +31,7 @@ public class ChargingState extends CannonState {
 	 *            the angle
 	 */
 	public ChargingState(float angle) {
+		super();
 		this.angle = angle;
 	}
 

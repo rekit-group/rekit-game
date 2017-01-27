@@ -26,6 +26,7 @@ public class AimingState extends CannonState {
 	 *            the {@link Player} to aim at.
 	 */
 	public AimingState(GameElement target) {
+		super();
 		this.target = target;
 	}
 

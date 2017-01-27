@@ -443,17 +443,8 @@ class GameView implements View {
 	private void update() {
 		while (this.frame.isVisible()) {
 			this.renderLoop();
-			Thread.yield();
+			ThreadUtils.sleep(GameConf.RENDER_DELTA);
 		}
-	}
-
-	/**
-	 * Getter for the GameModel.
-	 *
-	 * @return the reference to the GameModel
-	 */
-	public Model getModel() {
-		return this.model;
 	}
 
 	/**
@@ -548,7 +539,7 @@ class GameView implements View {
 	 */
 	private long getFPS() {
 		if (GameTime.isPaused()) {
-			return 1000 * this.fpsQueue.size() / this.lastFpsSum;
+			return 1000L * this.fpsQueue.size() / this.lastFpsSum;
 		}
 
 		long thisTime = GameTime.getTime();
@@ -573,7 +564,7 @@ class GameView implements View {
 			this.lastFpsSum = this.fpsQueue.stream().mapToLong(Long::longValue).sum();
 		}
 
-		return 1000 * this.fpsQueue.size() / this.fpsQueue.stream().mapToLong(Long::longValue).sum();
+		return 1000L * this.fpsQueue.size() / this.fpsQueue.stream().mapToLong(Long::longValue).sum();
 	}
 
 	@Override

@@ -7,7 +7,7 @@ import ragnarok.primitives.image.RGBAColor;
 public class HeapLayer extends ParallaxLayer {
 
 	/**
-	 * Prototype for cloning new HeapElements
+	 * Prototype for cloning new HeapElements.
 	 */
 	private HeapElement prototype;
 

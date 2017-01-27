@@ -6,7 +6,8 @@ import java.awt.image.ColorConvertOp;
 import java.awt.image.WritableRaster;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 
@@ -30,7 +31,7 @@ public final class ImageManagement {
 	/**
 	 * The cache.
 	 */
-	private final static ConcurrentHashMap<String, BufferedImage> CACHE = new ConcurrentHashMap<>();
+	private final static Map<String, BufferedImage> CACHE = new HashMap<>();
 
 	/**
 	 * The loader Object for the Resource loading.
@@ -143,7 +144,7 @@ public final class ImageManagement {
 			int colormodel = image.getColorModel().hasAlpha() ? BufferedImage.TYPE_INT_ARGB : BufferedImage.TYPE_INT_RGB;
 			res = new BufferedImage(image.getWidth(), image.getHeight(), colormodel);
 			new ColorConvertOp(null).filter(image, res);
-		} catch (Exception e) {
+		} catch (RuntimeException e) {
 			Logger.getRootLogger().error("Image could not be converted to (A)RGB.");
 			return image;
 		}

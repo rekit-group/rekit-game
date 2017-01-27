@@ -40,7 +40,6 @@ public class GrayScaleMode implements Filter {
 
 		int taskSize = (this.h > this.numThreads) ? (this.h / this.numThreads) : (this.h);
 		int threads = (taskSize == this.h) ? 1 : this.numThreads;
-		threads = 1;
 		ExecutorService executor = Executors.newFixedThreadPool(threads);
 
 		try {

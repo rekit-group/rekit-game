@@ -154,7 +154,7 @@ public class InanimateFloor extends Inanimate {
 	 *
 	 * @author Angelo Aracri
 	 */
-	public class GrassStraw {
+	private static class GrassStraw {
 		/**
 		 * The (absolute) position of the {@link GrassStraw}.
 		 */

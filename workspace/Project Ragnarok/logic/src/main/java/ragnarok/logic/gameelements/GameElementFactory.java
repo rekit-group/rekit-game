@@ -1,5 +1,6 @@
 package ragnarok.logic.gameelements;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -162,7 +163,7 @@ public final class GameElementFactory {
 				String name = annotation.value().isEmpty() ? group.getSimpleName() : annotation.value();
 				GameConf.GAME_LOGGER.info("Loading group " + name);
 				GameElementFactory.createGroup((Set<? extends GameElement>) group.getDeclaredMethod("getPrototypes").invoke(null), name);
-			} catch (Exception e) {
+			} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
 				GameConf.GAME_LOGGER.error("Could not load prototypes of " + group.getSimpleName() + "\n" + e.getMessage());
 			}
 		}

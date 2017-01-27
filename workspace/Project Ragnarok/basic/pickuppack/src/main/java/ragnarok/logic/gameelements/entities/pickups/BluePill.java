@@ -54,6 +54,9 @@ public class BluePill extends Pickup implements Visitable {
 	@Override
 	public void perform(GameElement collector) {
 		this.destroy();
+		if (collector.getClass() != Player.class) {
+			return;
+		}
 		Player player = (Player) collector;
 		player.setInvincible(4000);
 		player.setTemporaryApperance((f) -> this.drawPlayer(f, player), 4000);

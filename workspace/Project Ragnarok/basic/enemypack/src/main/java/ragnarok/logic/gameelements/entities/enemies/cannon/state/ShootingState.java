@@ -59,6 +59,19 @@ public class ShootingState extends ChargingState {
 	 */
 	public ShootingState(float angle) {
 		super(angle);
+
+		this.spawner = new ParticleSpawner(new CannonParticle(this.parentCannon));
+
+		this.spawner.amountMin = Cannon.PARTICLE_AMOUNT_MIN;
+		this.spawner.amountMax = Cannon.PARTICLE_AMOUNT_MAX;
+		this.spawner.colorR = Cannon.PARTICLE_COLOR_R;
+		this.spawner.colorG = Cannon.PARTICLE_COLOR_G;
+		this.spawner.colorB = Cannon.PARTICLE_COLOR_B;
+		this.spawner.colorA = Cannon.PARTICLE_COLOR_A;
+		this.spawner.speed = Cannon.PARTICLE_SPEED;
+		this.spawner.timeMin = Cannon.PARTICLE_TIME_MIN;
+		this.spawner.timeMax = Cannon.PARTICLE_TIME_MAX;
+
 	}
 
 	@Override

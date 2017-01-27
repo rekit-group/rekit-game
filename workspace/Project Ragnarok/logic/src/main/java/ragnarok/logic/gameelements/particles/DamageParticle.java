@@ -13,7 +13,7 @@ import ragnarok.primitives.geometry.Vec;
  *
  * @author Angelo Aracri
  */
-public class DamageParticle extends Particle {
+public abstract class DamageParticle extends Particle {
 	/**
 	 * Constructor that sets the {@link DamageParticle DamageParticles}
 	 * {@link Team} to {@link Team#ENEMY}.
@@ -31,9 +31,7 @@ public class DamageParticle extends Particle {
 	}
 
 	@Override
-	public Particle clone() {
-		return new DamageParticle();
-	}
+	public abstract DamageParticle clone();
 
 	@Override
 	public Frame getCollisionFrame() {
