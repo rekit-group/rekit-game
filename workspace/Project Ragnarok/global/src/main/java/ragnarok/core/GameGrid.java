@@ -20,10 +20,10 @@ public abstract class GameGrid {
 	/**
 	 * Set the current camera offset (e.g. for Bosses)
 	 *
-	 * @param cameraOffset
-	 *            the camera offset
+	 * @param cameraOffsetUnits
+	 *            the camera offset in units
 	 */
-	public abstract void setCurrentOffset(float cameraOffset);
+	public abstract void setCurrentOffset(float cameraOffsetUnits);
 
 	/**
 	 * Draw a rectangle.

@@ -18,55 +18,99 @@ import ragnarok.util.ReflectUtils.LoadMe;
  *
  */
 @LoadMe
-public class GrayScaleMode implements Filter {
-
-	protected final int numThreads;
-	protected int w;
-	protected int h;
-	protected byte[] orig;
-	protected byte[] result;
-
-	public GrayScaleMode() {
-		this.numThreads = Runtime.getRuntime().availableProcessors();
-	}
+public final class GrayScaleMode implements Filter {
+	/**
+	 * Indicates parallel or sequential mode for {@link #apply(AbstractImage)}.
+	 */
+	public static boolean PARALLEL = true;
 
 	@Override
 	public AbstractImage apply(final AbstractImage image) {
-		this.w = image.width;
-		this.h = image.height;
+		if (!GrayScaleMode.PARALLEL) {
+			return this.applySeq(image);
+		}
+		return this.applyParallel(image);
+	}
 
-		this.orig = image.pixels;
-		this.result = Arrays.copyOf(image.pixels, image.pixels.length);
+	/**
+	 * {@link #apply(AbstractImage)} sequential.
+	 *
+	 * @param image
+	 *            the image
+	 * @return the result
+	 */
+	private AbstractImage applySeq(AbstractImage image) {
+		AbstractImage res = new AbstractImage(image.height, image.width, new byte[image.pixels.length]);
+		for (int i = 0; i < image.pixels.length; i += 4) {
+			int gray = ((image.pixels[i] & 0xFF) + (image.pixels[i + 1] & 0xFF) + (image.pixels[i + 2] & 0xFF)) / 3;
+			res.pixels[i] = res.pixels[i + 1] = res.pixels[i + 2] = (byte) gray;
+			res.pixels[i + 3] = (byte) (image.pixels[i + 3] & 0xFF);
+		}
+		return res;
+	}
 
-		int taskSize = (this.h > this.numThreads) ? (this.h / this.numThreads) : (this.h);
-		int threads = (taskSize == this.h) ? 1 : this.numThreads;
+	/**
+	 * {@link #apply(AbstractImage)} parallel.
+	 *
+	 * @param image
+	 *            the image
+	 * @return the result
+	 */
+	private AbstractImage applyParallel(final AbstractImage image) {
+
+		int threads = Runtime.getRuntime().availableProcessors();
+		int taskSize = (image.height > threads) ? (image.height / threads) : image.height;
+		if (taskSize == image.height) {
+			// Sequential:
+			return this.applySeq(image);
+		}
+
 		ExecutorService executor = Executors.newFixedThreadPool(threads);
-
+		final int threadNums = threads;
+		byte[] result = Arrays.copyOf(image.pixels, image.pixels.length);
 		try {
-			for (int i = 0; i < this.numThreads; i++) {
+			for (int i = 0; i < threads; i++) {
 				final int task = i;
-				executor.submit(() -> this.runIt(taskSize, task));
+				executor.submit(() -> this.runIt(image.width, image.height, taskSize, task, threadNums, image.pixels, result));
 			}
 			executor.shutdown();
 			executor.awaitTermination(Long.MAX_VALUE, TimeUnit.HOURS);
 		} catch (InterruptedException ex) {
 			ex.printStackTrace();
 		}
-		return new AbstractImage(this.h, this.w, this.result);
+		return new AbstractImage(image.height, image.width, result);
 
 	}
 
-	protected void runIt(int taskSize, int task) {
+	/**
+	 * Task for one thread.
+	 * 
+	 * @param w
+	 *            img width
+	 * @param h
+	 *            img height
+	 * @param taskSize
+	 *            the size per task (rows)
+	 * @param task
+	 *            the number of the task
+	 * @param threads
+	 *            number of all threads for the filter task
+	 * @param orig
+	 *            the original data
+	 * @param result
+	 *            the result data
+	 */
+	private void runIt(int w, int h, int taskSize, int task, int threads, byte[] orig, byte[] result) {
 		int start = (task * taskSize);
-		int stop = (task == this.numThreads - 1) ? this.h : ((task + 1) * taskSize);
-		for (int i = start * this.w * 4; i < (this.w + stop * this.w) * 4; i += 4) {
-			int r = this.orig[i] & 0xFF;
-			int g = this.orig[i + 1] & 0xFF;
-			int b = this.orig[i + 2] & 0xFF;
+		int stop = (task == threads - 1) ? h : ((task + 1) * taskSize);
+		for (int i = start * w * 4; i < (w + stop * w) * 4; i += 4) {
+			int r = orig[i] & 0xFF;
+			int g = orig[i + 1] & 0xFF;
+			int b = orig[i + 2] & 0xFF;
 			r = g = b = (r + g + b) / 3;
-			this.result[i] = (byte) r;
-			this.result[i + 1] = (byte) g;
-			this.result[i + 2] = (byte) b;
+			result[i] = (byte) r;
+			result[i + 1] = (byte) g;
+			result[i + 2] = (byte) b;
 		}
 	}
 

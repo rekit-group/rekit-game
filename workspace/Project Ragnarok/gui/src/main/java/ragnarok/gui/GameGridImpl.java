@@ -8,8 +8,10 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.Ellipse2D;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import ragnarok.config.GameConf;
 import ragnarok.core.GameGrid;
@@ -20,6 +22,7 @@ import ragnarok.primitives.image.RGBAColor;
 import ragnarok.primitives.image.RGBColor;
 import ragnarok.util.CalcUtil;
 import ragnarok.util.TextOptions;
+import ragnarok.util.Tuple;
 import ragnarok.util.Utils;
 
 /**
@@ -47,6 +50,10 @@ class GameGridImpl extends GameGrid {
 	 * The current graphics for drawing.
 	 */
 	private Graphics2D graphics;
+	/**
+	 * The image cache: (Path, Filter) -> Image.
+	 */
+	private Map<Tuple<String, Filter>, Image> images = new HashMap<>();
 
 	/**
 	 * Set the current graphics.
@@ -59,9 +66,9 @@ class GameGridImpl extends GameGrid {
 	}
 
 	@Override
-	public void setCurrentOffset(float cameraOffset) {
-		this.cameraOffsetUnits = cameraOffset;
-		this.cameraOffset = -CalcUtil.units2pixel(cameraOffset);
+	public void setCurrentOffset(float cameraOffsetUnits) {
+		this.cameraOffsetUnits = cameraOffsetUnits;
+		this.cameraOffset = -CalcUtil.units2pixel(cameraOffsetUnits);
 	}
 
 	/**
@@ -75,13 +82,12 @@ class GameGridImpl extends GameGrid {
 	 *            same as in base method
 	 */
 	private void drawCircleImpl(Vec pos, Vec size, Color col) {
-		// set color
-		Ellipse2D.Float circle = new Ellipse2D.Float(//
+		this.graphics.setColor(col);
+		Ellipse2D.Float circle = new Ellipse2D.Float( //
 				(pos.getX() - size.getX() / 2f), //
 				(pos.getY() - size.getY() / 2f), //
 				size.getX(), size.getY());
 
-		this.graphics.setColor(col);
 		this.graphics.fill(circle);
 
 	}
@@ -97,9 +103,11 @@ class GameGridImpl extends GameGrid {
 	 *            same as in base method
 	 */
 	private void drawRectangleImpl(Vec pos, Vec size, Color col) {
-		// set color
 		this.graphics.setColor(col);
-		this.graphics.fillRect((int) (pos.getX() - size.getX() / 2f), (int) (pos.getY() - size.getY() / 2f), (int) size.getX(), (int) size.getY());
+		this.graphics.fillRect( //
+				(int) (pos.getX() - size.getX() / 2f), //
+				(int) (pos.getY() - size.getY() / 2f), //
+				(int) size.getX(), (int) size.getY());
 
 	}
 
@@ -120,8 +128,7 @@ class GameGridImpl extends GameGrid {
 	 */
 	private void drawRoundRectangleImpl(Vec pos, Vec size, Color col, int arcWidth, int arcHeight) {
 		this.graphics.setColor(col);
-
-		this.graphics.fillRoundRect(//
+		this.graphics.fillRoundRect( //
 				(int) (pos.getX() - size.getX() / 2f), // X
 				(int) (pos.getY() - size.getY() / 2f), // Y
 				(int) size.getX(), (int) size.getY(), // Size
@@ -170,10 +177,17 @@ class GameGridImpl extends GameGrid {
 	 *            same as in base method
 	 */
 	private void drawImageImpl(Vec pos, Vec size, String imagePath) {
-
-		Image image = ImageManagement.get(imagePath);
-		if (this.filter != null && this.filter.isApplyImage()) {
-			image = ImageManagement.toImage(this.filter.apply(ImageManagement.getAsAbstractImage(imagePath)));
+		Image image = null;
+		Tuple<String, Filter> key = Tuple.create(imagePath, this.filter);
+		if (this.images.containsKey(key)) {
+			image = this.images.get(key);
+		} else {
+			image = ImageManagement.get(imagePath);
+			if (this.filter != null && this.filter.isApplyImage()) {
+				image = ImageManagement.toImage(this.filter.apply(ImageManagement.getAsAbstractImage(imagePath)));
+			}
+			this.images.put(key, image);
+			GameConf.GAME_LOGGER.info("GameGrid: Image Cache Miss: " + key);
 		}
 
 		this.graphics.drawImage(image, // image
@@ -204,14 +218,13 @@ class GameGridImpl extends GameGrid {
 		this.graphics.setFont(font);
 		FontMetrics metrics = this.graphics.getFontMetrics(font);
 
-		float x = pos.getX();
-		float y = pos.getY();
-
+		float x = pos.getX(), y = pos.getY();
+		float xAlign = options.getAlignment().getX(), yAlign = options.getAlignment().getY();
 		for (String line : text.split("\n")) {
 			Dimension offset = this.getOffset(line, metrics);
 			this.graphics.drawString(line, //
-					(x + options.getAlignment().getX() * (float) offset.getWidth()),
-					(y += metrics.getHeight()) + options.getAlignment().getY() * (float) offset.getHeight());
+					(x + xAlign * offset.width), //
+					(y += metrics.getHeight()) + yAlign * offset.height);
 		}
 
 	}

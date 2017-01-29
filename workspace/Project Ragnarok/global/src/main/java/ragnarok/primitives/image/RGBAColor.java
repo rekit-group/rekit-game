@@ -103,4 +103,8 @@ public final class RGBAColor {
 		return new RGBColor(this.red, this.green, this.blue);
 	}
 
+	@Override
+	public String toString() {
+		return "RGBA: " + this.red + "," + this.green + "," + this.blue + "," + this.alpha;
+	}
 }

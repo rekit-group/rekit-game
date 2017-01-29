@@ -1,5 +1,6 @@
 package ragnarok.controller;
 
+import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.Map;
 import ragnarok.config.GameConf;
 import ragnarok.controller.commands.Command;
 import ragnarok.controller.commands.CommandSupervisor;
+import ragnarok.controller.commands.FilterCommand;
 import ragnarok.controller.commands.InputMethod;
 import ragnarok.controller.commands.JumpCommand;
 import ragnarok.controller.commands.MenuCommand;
@@ -16,6 +18,9 @@ import ragnarok.core.IScene;
 import ragnarok.gui.View;
 import ragnarok.logic.GameState;
 import ragnarok.logic.Model;
+import ragnarok.logic.filters.GrayScaleMode;
+import ragnarok.logic.filters.InvertedMode;
+import ragnarok.logic.filters.RandomMode;
 import ragnarok.logic.gameelements.entities.Entity;
 import ragnarok.logic.gui.menu.MenuItem;
 import ragnarok.primitives.geometry.Direction;
@@ -82,14 +87,10 @@ final class ControllerImpl implements Observer, Controller, CommandSupervisor {
 		this.mpCmd.put(Tuple.create(GameState.INGAME, InputHelper.ESCAPE), new PlayPauseCommand(this));
 
 		// Filter Commands ... a test ('u', 'i', 'o' and 'p' key)
-		// this.mpCmd.put(Tuple.create(null, 117), new FilterCommand(true,
-		// this.model, new RandomMode()));
-		// this.mpCmd.put(Tuple.create(null, 105), new FilterCommand(true,
-		// this.model, new InvertedMode()));
-		// this.mpCmd.put(Tuple.create(null, 111), new FilterCommand(true,
-		// this.model, new GrayScaleMode()));
-		// this.mpCmd.put(Tuple.create(null, 112), new FilterCommand(false,
-		// this.model, null));
+		this.mpCmd.put(Tuple.create(null, KeyEvent.VK_U), new FilterCommand(true, this.model, new RandomMode()));
+		this.mpCmd.put(Tuple.create(null, KeyEvent.VK_I), new FilterCommand(true, this.model, new InvertedMode()));
+		this.mpCmd.put(Tuple.create(null, KeyEvent.VK_O), new FilterCommand(true, this.model, new GrayScaleMode()));
+		this.mpCmd.put(Tuple.create(null, KeyEvent.VK_P), new FilterCommand(false, this.model, null));
 
 	}
 

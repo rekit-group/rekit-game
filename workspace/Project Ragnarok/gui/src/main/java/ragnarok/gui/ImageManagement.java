@@ -3,6 +3,7 @@ package ragnarok.gui;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorConvertOp;
+import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 import java.io.IOException;
 import java.io.InputStream;
@@ -52,7 +53,7 @@ public final class ImageManagement {
 				if (!ImageManagement.CACHE.containsKey(src)) {
 					InputStream res = ImageManagement.LOADER.getClass().getResourceAsStream("/images/" + src);
 					try {
-						ImageManagement.CACHE.put(src, ImageIO.read(res));
+						ImageManagement.CACHE.put(src, ImageManagement.convertToRGB(ImageIO.read(res)));
 					} catch (IOException e) {
 						Logger.getRootLogger().warn("Image " + src + " not found!");
 					}
@@ -90,10 +91,10 @@ public final class ImageManagement {
 			}
 		} else {
 			for (int i = 0; i < abstractData.length; i += 4) {
-				abstractData[i] = (byte) data[i + 1];
-				abstractData[i + 1] = (byte) data[i + 2];
-				abstractData[i + 2] = (byte) data[i + 3];
-				abstractData[i + 3] = (byte) data[i];
+				abstractData[i] = (byte) data[i];
+				abstractData[i + 1] = (byte) data[i + 1];
+				abstractData[i + 2] = (byte) data[i + 2];
+				abstractData[i + 3] = (byte) data[i + 3];
 			}
 		}
 
@@ -112,15 +113,11 @@ public final class ImageManagement {
 			return null;
 		}
 		BufferedImage res = new BufferedImage(in.width, in.height, BufferedImage.TYPE_INT_ARGB);
-		WritableRaster raster = res.getRaster();
-
 		int[] pixels = new int[in.pixels.length];
-		for (int i = 0; i < pixels.length; i += 4) {
-			pixels[i] = in.pixels[i + 3] & 0xFF;
-			pixels[i + 1] = in.pixels[i] & 0xFF;
-			pixels[i + 2] = in.pixels[i + 1] & 0xFF;
-			pixels[i + 3] = in.pixels[i + 2] & 0xFF;
+		for (int i = 0; i < pixels.length; i += 1) {
+			pixels[i] = in.pixels[i] & 0xFF;
 		}
+		WritableRaster raster = Raster.createWritableRaster(res.getSampleModel(), null);
 		raster.setPixels(0, 0, in.width, in.height, pixels);
 		res.setData(raster);
 		res.flush();

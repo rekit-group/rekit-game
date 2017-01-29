@@ -93,4 +93,8 @@ public final class Tuple<T, U> {
 		return equal;
 	}
 
+	@Override
+	public String toString() {
+		return "(" + this.t + ", " + this.u + ")";
+	}
 }
