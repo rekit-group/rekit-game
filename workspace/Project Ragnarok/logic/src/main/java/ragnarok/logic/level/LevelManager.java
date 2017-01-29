@@ -4,17 +4,25 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import ragnarok.config.GameConf;
+import ragnarok.logic.level.Level.Type;
 
 /**
  *
@@ -29,7 +37,7 @@ public final class LevelManager {
 	/**
 	 * The global data file for the {@link LevelManager}.
 	 */
-	private final static File FILE = new File(GameConf.LVL_MGMT_FILE);
+	private final static File USER_DATA = new File(GameConf.LVL_MGMT_FILE);
 
 	/**
 	 * Prevent instantiation.
@@ -39,7 +47,63 @@ public final class LevelManager {
 
 	// Load LevelManager
 	static {
-		LevelManager.loadFromFile();
+		try {
+			LevelManager.loadAllLevels();
+		} catch (IOException e) {
+			GameConf.GAME_LOGGER.error("Could not load levels " + e.getMessage());
+		}
+		LevelManager.loadInfosFromFile();
+	}
+
+	/**
+	 * Load all levels.
+	 *
+	 * @throws IOException
+	 *             iff wrong path.
+	 */
+	private static void loadAllLevels() throws IOException {
+		PathMatchingResourcePatternResolver resolv = new PathMatchingResourcePatternResolver();
+		Resource[] res = resolv.getResources("/levels/*");
+		Arrays.stream(res).sorted((r1, r2) -> r1.toString().compareToIgnoreCase(r2.toString())).forEach(LevelManager::addLevel);
+
+	}
+
+	/**
+	 * Add a level by resource.
+	 *
+	 * @param level
+	 *            the resource
+	 */
+	private static void addLevel(Resource level) {
+		try {
+			LevelManager.addLevel(level.toString(), level.getInputStream());
+		} catch (IOException e) {
+			GameConf.GAME_LOGGER.error("Loading of " + level + " failed");
+		}
+	}
+
+	/**
+	 * Add a level by structure-file.
+	 *
+	 * @param name
+	 *            the name of the level
+	 * @param levelStructure
+	 *            the level structure
+	 */
+	public static synchronized void addLevel(String name, InputStream levelStructure) {
+		if (name.contains("infinite")) {
+			// Infinite
+			LevelManager.addLevel(new Level(name, levelStructure, Type.INFINITE));
+
+			// LOTD
+			Level lotd = new Level(name, levelStructure, Type.LOTD);
+			DateFormat levelOfTheDayFormat = new SimpleDateFormat("ddMMyyyy");
+			int seed = Integer.parseInt(levelOfTheDayFormat.format(Calendar.getInstance().getTime()));
+			lotd.setSeed(seed);
+			LevelManager.addLevel(lotd);
+			return;
+		}
+		LevelManager.addLevel(new Level(name, levelStructure, Type.ARCADE));
 	}
 
 	/**
@@ -48,20 +112,16 @@ public final class LevelManager {
 	 * @return the infinite level
 	 */
 	public static Level getInfiniteLevel() {
-		return LevelManager.getLevelById("infinite");
+		return LevelManager.getLevelById("" + Level.Type.INFINITE);
 	}
 
 	/**
-	 * Get the level of the day.
+	 * Get the level-of-the-day level.
 	 *
-	 * @return the level of the day
+	 * @return the level-of-the-day level
 	 */
 	public static Level getLOTDLevel() {
-		Level level = LevelManager.getLevelById("lotd");
-		DateFormat levelOfTheDayFormat = new SimpleDateFormat("ddMMyyyy");
-		int seed = Integer.parseInt(levelOfTheDayFormat.format(Calendar.getInstance().getTime()));
-		level.setSeed(seed);
-		return level;
+		return LevelManager.getLevelById("" + Level.Type.LOTD);
 	}
 
 	/**
@@ -72,7 +132,7 @@ public final class LevelManager {
 	 * @return the arcade level
 	 */
 	public static Level getArcadeLevel(int arcadeId) {
-		return LevelManager.getLevelById(arcadeId + "");
+		return LevelManager.getLevelById(Level.Type.ARCADE + "-" + arcadeId);
 	}
 
 	/**
@@ -80,13 +140,9 @@ public final class LevelManager {
 	 *
 	 * @param id
 	 *            the level
-	 * @return the level or a newly created level with that id
+	 * @return the level
 	 */
 	private static Level getLevelById(String id) {
-		// If no entry for this specific level: create level instance
-		if (!LevelManager.levelMap.containsKey(id)) {
-			LevelManager.addLevel(new Level(id, 0));
-		}
 		return LevelManager.levelMap.get(id);
 	}
 
@@ -100,22 +156,7 @@ public final class LevelManager {
 		if (level == null) {
 			return;
 		}
-		LevelManager.levelMap.put(level.stringIdentifier, level);
-	}
-
-	/**
-	 * Get the last unlocked arcade level.
-	 *
-	 * @return the number of the last unlocked arcade level or {@code -1} if
-	 *         none unlocked
-	 */
-	public static int getLastUnlockedArcadeLevelId() {
-		// check largest id where score is still above 0
-		for (int id = 0;; id++) {
-			if (!(LevelManager.levelMap.containsKey(id + "") && LevelManager.levelMap.get(id + "").getHighScore() > 0)) {
-				return id - 1;
-			}
-		}
+		LevelManager.levelMap.put(level.getID(), level);
 	}
 
 	/**
@@ -124,11 +165,7 @@ public final class LevelManager {
 	 * @return the number of arcade levels
 	 */
 	public static int getNumberOfArcadeLevels() {
-		for (int num = 0;; num++) {
-			if (LevelManager.class.getResourceAsStream("/level_" + num + ".dat") == null) {
-				return num;
-			}
-		}
+		return (int) LevelManager.levelMap.values().stream().filter(level -> level.getType() == Level.Type.ARCADE).count();
 	}
 
 	/**
@@ -141,22 +178,21 @@ public final class LevelManager {
 	/**
 	 * Load Highscores / Infos from file.
 	 */
-	private static void loadFromFile() {
+	private static void loadInfosFromFile() {
 		try {
 			// create Scanner from InputStream
-			Scanner scanner = new Scanner(LevelManager.FILE, Charset.defaultCharset().name());
-			// iterate lines
-			while (scanner.hasNext()) {
-				String line = scanner.next();
-				// input parse level from this lines content.
-				Level level = Level.fromString(line);
-				// Save this level in local data structure
-				LevelManager.addLevel(level);
+			Scanner scanner = new Scanner(LevelManager.USER_DATA, Charset.defaultCharset().name());
+			while (scanner.hasNextLine()) {
+				String[] levelinfo = scanner.nextLine().split(":");
+				String name = levelinfo[0];
+				Level level = LevelManager.findByName(name);
+				if (level != null) {
+					level.setHighScore(Integer.parseInt(levelinfo[1]));
+				}
 			}
-			// close scanner after use to prevent resource-wasting
 			scanner.close();
 		} catch (FileNotFoundException e) {
-			GameConf.GAME_LOGGER.error("Error while opening " + LevelManager.FILE.getAbsolutePath() + " for scores and saves: FileNotFound");
+			GameConf.GAME_LOGGER.error("Error while opening " + LevelManager.USER_DATA.getAbsolutePath() + " for scores and saves: FileNotFound");
 		}
 	}
 
@@ -170,22 +206,38 @@ public final class LevelManager {
 		Iterator<Level> it = LevelManager.levelMap.values().iterator();
 		while (it.hasNext()) {
 			Level next = it.next();
-			result.append(next.toString());
+			result.append(next.getName() + ":" + next.getHighScore());
 			result.append("\n");
 		}
 		return result.toString();
 	}
 
 	/**
-	 * Save state to {@link #FILE}.
+	 * Find level by name.
+	 *
+	 * @param name
+	 *            the name
+	 * @return the level or {@code null} if none found
+	 */
+	private static Level findByName(String name) {
+		List<Level> levels = LevelManager.levelMap.values().stream().filter(level -> level.getName().equals(name)).collect(Collectors.toList());
+		if (levels.isEmpty()) {
+			return null;
+		}
+		return levels.get(0);
+	}
+
+	/**
+	 * Save state to {@link #USER_DATA}.
 	 */
 	private static void saveToFile() {
 		// create OutputStream
 		OutputStream levelStream = null;
 		try {
-			levelStream = new FileOutputStream(LevelManager.FILE);
+			levelStream = new FileOutputStream(LevelManager.USER_DATA);
 		} catch (IOException e) {
-			GameConf.GAME_LOGGER.error("Error while opening " + LevelManager.FILE.getAbsolutePath() + " for saving scores and saves: FileNotFound");
+			GameConf.GAME_LOGGER
+					.error("Error while opening " + LevelManager.USER_DATA.getAbsolutePath() + " for saving scores and saves: FileNotFound");
 			return;
 		}
 		// get byte-array from String
@@ -198,7 +250,7 @@ public final class LevelManager {
 			// close FileInputStream after use to prevent resource-wasting
 			levelStream.close();
 		} catch (IOException e) {
-			GameConf.GAME_LOGGER.error("Error while saving " + LevelManager.FILE.getAbsolutePath() + " for scores and saves: IOException");
+			GameConf.GAME_LOGGER.error("Error while saving " + LevelManager.USER_DATA.getAbsolutePath() + " for scores and saves: IOException");
 			try {
 				levelStream.close();
 			} catch (IOException e1) {

@@ -1,6 +1,8 @@
 package ragnarok.logic.level;
 
-import ragnarok.config.GameConf;
+import java.io.IOException;
+import java.io.InputStream;
+
 import ragnarok.core.GameElement;
 
 /**
@@ -29,28 +31,19 @@ public class LevelAssembler {
 	private StructureManager manager;
 
 	/**
-	 * Simpler constructor that defaults the actual constructors second
-	 * parameter <i>seed</i> to a random integer.
-	 *
-	 * @param levelName
-	 *            the name of the level to be assembled.
-	 */
-	public LevelAssembler(String levelName) {
-		this(levelName, GameConf.PRNG.nextInt());
-	}
-
-	/**
 	 * Constructor that initializes attributes and instructs a new
 	 * {@link StructureManager} to load a level file specified by the
 	 * <i>levelName</i>. The <i>seed</i> is used for pseudo-randomizing.
 	 *
-	 * @param levelName
-	 *            the name of the level to be assembled.
+	 * @param data
+	 *            the structure of the level to be assembled.
 	 * @param seed
 	 *            the seed used for pseudo-randomizing.
+	 * @throws IOException
+	 *             if file cannot be read
 	 */
-	public LevelAssembler(String levelName, int seed) {
-		this.manager = StructureManager.load(seed, levelName);
+	public LevelAssembler(InputStream data, int seed) throws IOException {
+		this.manager = StructureManager.load(data, seed);
 	}
 
 	/**

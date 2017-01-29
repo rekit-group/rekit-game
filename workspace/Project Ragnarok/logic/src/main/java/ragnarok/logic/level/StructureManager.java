@@ -1,5 +1,6 @@
 package ragnarok.logic.level;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -113,21 +114,19 @@ public class StructureManager extends Configurable implements Iterator<Structure
 	 * (first line of file), boss settings (second line of file) and
 	 * {@link Structure}-templates (rest of file) using the {@link LevelParser}.
 	 *
+	 * @param data
+	 *            the structure file
 	 * @param randomSeed
 	 *            the seed to used for the StructureManager that will be used
 	 *            for all random-based actions.
-	 * @param levelName
-	 *            the name of the level that also specifies the name of the file
-	 *            to extract the levels settings from.
 	 * @return the newly created StructureManager.
+	 * @throws IOException
+	 *             iff file does not exist
 	 */
-	public static StructureManager load(int randomSeed, String levelName) {
-
-		// get InputStream from resource with path level_{levelName}.dat
-		InputStream levelStream = StructureManager.class.getResourceAsStream("/level_" + levelName + ".dat");
+	public static StructureManager load(InputStream data, int randomSeed) throws IOException {
 
 		// create Scanner from InputStream
-		Scanner scanner = new Scanner(levelStream, Charset.defaultCharset().name());
+		Scanner scanner = new Scanner(data, Charset.defaultCharset().name());
 		// don't use line-ending-wise iteration, but get the whole file at once
 		// \\A = <EOF>
 		scanner.useDelimiter("\\A");

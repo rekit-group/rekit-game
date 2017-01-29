@@ -1,5 +1,8 @@
 package ragnarok.logic.level;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import ragnarok.config.GameConf;
 
 /**
@@ -7,13 +10,33 @@ import ragnarok.config.GameConf;
  * This class holds all necessary information about a level.
  *
  */
-public class Level {
+public final class Level {
+	/**
+	 * The type of a level.
+	 *
+	 * @author Dominik Fuchss
+	 *
+	 */
+	public enum Type {
+		/**
+		 * Infinite level.
+		 */
+		INFINITE,
+		/**
+		 * Level of the day.
+		 */
+		LOTD,
+		/**
+		 * Arcade level.
+		 */
+		ARCADE
+	}
 
 	/**
 	 * Name of the level that is used as extrinsic state and filename for level
 	 * structure template.
 	 */
-	public String stringIdentifier;
+	private String stringID;
 	/**
 	 * The level's seed.
 	 */
@@ -26,19 +49,44 @@ public class Level {
 	 * The level's assebler.
 	 */
 	private LevelAssembler levelAssembler;
+	/**
+	 * The type of the level.
+	 */
+	private final Type type;
+	/**
+	 * The structure data.
+	 */
+	private final InputStream data;
+	/**
+	 * The name of the level (file).
+	 */
+	private final String name;
+	/**
+	 * The arcade counter.
+	 */
+	private static int ARCADE_CTR = 0;
 
 	/**
-	 * Create a new Level.
-	 *
-	 * @param stringIdentifier
-	 *            the id
-	 * @param highScore
-	 *            the highscore
+	 * Create a new level by data and type.
+	 * 
+	 * @param name
+	 *            the name
+	 * @param levelStructure
+	 *            the structure data
+	 * @param type
+	 *            the type
 	 */
-	public Level(String stringIdentifier, int highScore) {
-		this.stringIdentifier = stringIdentifier;
+	public Level(String name, InputStream levelStructure, Type type) {
+		this.type = type;
+		this.data = levelStructure;
+		this.name = name;
+		if (type == Type.INFINITE || type == Type.LOTD) {
+			this.stringID = "" + this.type;
+		} else {
+			this.stringID = Type.ARCADE + "-" + (++Level.ARCADE_CTR);
+		}
 		this.levelSeed = GameConf.PRNG.nextInt();
-		this.highScore = highScore;
+		this.highScore = 0;
 	}
 
 	/**
@@ -90,11 +138,12 @@ public class Level {
 	 */
 	public LevelAssembler getLevelAssember() {
 		if (this.levelAssembler == null) {
-			// TODO Not rly cool
-			String actualStringIdentifier = this.stringIdentifier.equals("lotd") ? "infinite" : this.stringIdentifier;
-			this.levelAssembler = new LevelAssembler(actualStringIdentifier, this.levelSeed);
+			try {
+				this.levelAssembler = new LevelAssembler(this.data, this.levelSeed);
+			} catch (IOException e) {
+				GameConf.GAME_LOGGER.error("Cannot instantiate level assembler for level " + this);
+			}
 		}
-
 		return this.levelAssembler;
 	}
 
@@ -111,37 +160,33 @@ public class Level {
 
 	@Override
 	public String toString() {
-		return this.stringIdentifier + ":{score:" + this.highScore + "}";
+		return this.name + ":{score:" + this.highScore + "}";
 	}
 
 	/**
-	 * Load level by string (definition).
+	 * Get the level id.
 	 *
-	 * @param in
-	 *            the input string
-	 * @return the level or {@code null} if fails.
+	 * @return the id
 	 */
-	public static Level fromString(String in) {
-		String stringIdentifier = "";
-		int highScore = 0;
-
-		// split "name:{.:.,.:.}" --> "name", "{.:.,.:.}"
-		String[] mainKeyData = in.split(":", 2);
-		stringIdentifier = mainKeyData[0];
-
-		// split "{.:.,.:.}" --> "{.:.}, "{.:.}"
-		String[] entries = mainKeyData[1].substring(1, mainKeyData[1].length() - 1).split(",");
-
-		// iterate all entries
-		for (String entry : entries) {
-			String[] keyVal = entry.split(":");
-			switch (keyVal[0]) {
-			case "score":
-				highScore = Integer.parseInt(keyVal[1]);
-				break;
-			}
-		}
-		return new Level(stringIdentifier, highScore);
+	public String getID() {
+		return this.stringID;
 	}
 
+	/**
+	 * Get the level type.
+	 *
+	 * @return the type
+	 */
+	public Type getType() {
+		return this.type;
+	}
+
+	/**
+	 * Get the level name.
+	 *
+	 * @return the name
+	 */
+	public String getName() {
+		return this.name;
+	}
 }
