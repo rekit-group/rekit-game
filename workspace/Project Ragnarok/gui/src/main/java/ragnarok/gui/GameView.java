@@ -133,11 +133,11 @@ class GameView implements View {
 		DefaultResourceLoader resolv = new DefaultResourceLoader();
 		try {
 			Resource icon = resolv.getResource(GameView.ICON_LOCATION);
-			System.out.println("ICONS: ....... " + icon);
 			if (!icon.exists()) {
 				GameConf.GAME_LOGGER.error("Icon does not exist.");
 				return null;
 			}
+			// Read data to local buffer.
 			ByteArrayInputStream is = new ByteArrayInputStream(IOUtils.toByteArray(icon.getInputStream()));
 			return ImageIO.read(is);
 		} catch (IOException e) {

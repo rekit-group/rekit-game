@@ -3,6 +3,8 @@
  */
 package ragnarok.logic.scene;
 
+import java.awt.Font;
+
 import ragnarok.config.GameConf;
 import ragnarok.core.CameraTarget;
 import ragnarok.logic.GameModel;
@@ -10,6 +12,8 @@ import ragnarok.logic.gameelements.GameElementFactory;
 import ragnarok.logic.gameelements.entities.Player;
 import ragnarok.logic.gui.LifeGui;
 import ragnarok.logic.gui.ScoreGui;
+import ragnarok.logic.gui.Text;
+import ragnarok.logic.gui.TimeDecorator;
 import ragnarok.logic.gui.menu.MenuItem;
 import ragnarok.logic.gui.parallax.HeapElementCloud;
 import ragnarok.logic.gui.parallax.HeapElementMountain;
@@ -19,6 +23,8 @@ import ragnarok.logic.gui.parallax.TriangulationLayer;
 import ragnarok.logic.level.Level;
 import ragnarok.primitives.geometry.Vec;
 import ragnarok.primitives.time.Timer;
+import ragnarok.util.CalcUtil;
+import ragnarok.util.TextOptions;
 
 /**
  * Scene that holds a playable Level created by a LevelCreator. Different Levels
@@ -94,6 +100,12 @@ public abstract class LevelScene extends Scene {
 		this.lifeGui.setPos(new Vec(10));
 		this.addGuiElement(this.scoreGui);
 		this.addGuiElement(this.lifeGui);
+
+		TextOptions op = new TextOptions(new Vec(-0.5f, -0.5f), 30, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, Font.BOLD);
+		Text levelText = new Text(this, op).setText(this.level.getID() + " @ " + this.level.getName());
+		levelText.setPos(CalcUtil.units2pixel(new Vec(GameConf.GRID_W / 2f, GameConf.GRID_H / 2f)));
+		this.addGuiElement(new TimeDecorator(this, levelText, new Timer(5000)));
+
 	}
 
 	@Override

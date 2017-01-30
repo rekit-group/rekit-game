@@ -52,7 +52,7 @@ public final class LevelManager {
 		} catch (IOException e) {
 			GameConf.GAME_LOGGER.error("Could not load levels " + e.getMessage());
 		}
-		LevelManager.loadInfosFromFile();
+		LevelManager.loadInfoFromFile();
 	}
 
 	/**
@@ -76,7 +76,7 @@ public final class LevelManager {
 	 */
 	private static void addLevel(Resource level) {
 		try {
-			LevelManager.addLevel(level.toString(), level.getInputStream());
+			LevelManager.addLevel(level.getFilename(), level.getInputStream());
 		} catch (IOException e) {
 			GameConf.GAME_LOGGER.error("Loading of " + level + " failed");
 		}
@@ -176,9 +176,9 @@ public final class LevelManager {
 	}
 
 	/**
-	 * Load Highscores / Infos from file.
+	 * Load Highscores / Info from file.
 	 */
-	private static void loadInfosFromFile() {
+	private static void loadInfoFromFile() {
 		try {
 			// create Scanner from InputStream
 			Scanner scanner = new Scanner(LevelManager.USER_DATA, Charset.defaultCharset().name());

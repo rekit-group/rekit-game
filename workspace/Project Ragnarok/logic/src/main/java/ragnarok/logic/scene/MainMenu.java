@@ -61,8 +61,8 @@ final class MainMenu extends Scene {
 		MenuGrid arcade = new MenuGrid(this, "Arcade Mode", 6, 100, 100);
 
 		for (int i = 0; i < LevelManager.getNumberOfArcadeLevels(); i++) {
-			final int id = i;
-			MenuActionItem button = new MenuActionItem(this, new Vec(80, 80), String.valueOf(id + 1),
+			final int id = i + 1;
+			MenuActionItem button = new MenuActionItem(this, new Vec(80, 80), String.valueOf(id),
 					() -> this.getModel().switchScene(Scenes.ARCADE, String.valueOf(id)));
 			arcade.addItem(button);
 		}
