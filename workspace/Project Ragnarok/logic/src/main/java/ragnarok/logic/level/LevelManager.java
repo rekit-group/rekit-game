@@ -185,9 +185,10 @@ public final class LevelManager {
 			while (scanner.hasNextLine()) {
 				String[] levelinfo = scanner.nextLine().split(":");
 				String name = levelinfo[0];
-				Level level = LevelManager.findByName(name);
+				Type type = Type.byString(levelinfo[1]);
+				Level level = LevelManager.findByNameAndType(name, type);
 				if (level != null) {
-					level.setHighScore(Integer.parseInt(levelinfo[1]));
+					level.setHighScore(Integer.parseInt(levelinfo[2]));
 				}
 			}
 			scanner.close();
@@ -206,21 +207,24 @@ public final class LevelManager {
 		Iterator<Level> it = LevelManager.levelMap.values().iterator();
 		while (it.hasNext()) {
 			Level next = it.next();
-			result.append(next.getName() + ":" + next.getHighScore());
+			result.append(next.getName() + ":" + next.getType() + ":" + next.getHighScore());
 			result.append("\n");
 		}
 		return result.toString();
 	}
 
 	/**
-	 * Find level by name.
+	 * Find level by name and type.
 	 *
 	 * @param name
 	 *            the name
+	 * @param type
+	 *            the type
 	 * @return the level or {@code null} if none found
 	 */
-	private static Level findByName(String name) {
-		List<Level> levels = LevelManager.levelMap.values().stream().filter(level -> level.getName().equals(name)).collect(Collectors.toList());
+	private static Level findByNameAndType(String name, Type type) {
+		List<Level> levels = LevelManager.levelMap.values().stream().filter(level -> level.getName().equals(name) && level.getType() == type)
+				.collect(Collectors.toList());
 		if (levels.isEmpty()) {
 			return null;
 		}

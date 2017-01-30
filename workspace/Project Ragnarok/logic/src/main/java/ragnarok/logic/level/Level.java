@@ -29,7 +29,21 @@ public final class Level {
 		/**
 		 * Arcade level.
 		 */
-		ARCADE
+		ARCADE;
+		/**
+		 * Same as {@link #valueOf(String)}, but no exception.
+		 *
+		 * @param string
+		 *            the representing String
+		 * @return the type or {@code null} iff none found
+		 */
+		public static Type byString(String string) {
+			try {
+				return Type.valueOf(string);
+			} catch (IllegalArgumentException e) {
+				return null;
+			}
+		}
 	}
 
 	/**
@@ -68,7 +82,7 @@ public final class Level {
 
 	/**
 	 * Create a new level by data and type.
-	 * 
+	 *
 	 * @param name
 	 *            the name
 	 * @param levelStructure
