@@ -6,7 +6,6 @@
 - **Projekt ausslimmen.**
   - Pakete rauslöschen
   - stupiden LevelCreator schreiben (und alles andere Level-relatete rauslöschen)
-- **JavaDocs schreiben**
 - **Folien**
   - Architektur
   - Wichtigste Erklärungen (GameElement)
