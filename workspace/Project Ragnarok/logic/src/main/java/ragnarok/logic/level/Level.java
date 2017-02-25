@@ -156,16 +156,8 @@ public final class Level implements Comparable<Level> {
 	public void setHighScore(int highScore) {
 		if (highScore > this.highScore) {
 			this.highScore = highScore;
-			this.notifyChange();
+			LevelManager.contentChanged();
 		}
-	}
-
-	/**
-	 * Notification method that informs the LevelManager mediator that some
-	 * content changed.
-	 */
-	public void notifyChange() {
-		LevelManager.contentChanged();
 	}
 
 	/**
@@ -194,6 +186,28 @@ public final class Level implements Comparable<Level> {
 		// See Lv. 4 as example that periods are not synchronized if *2 not
 		// written
 		this.getLevelAssember().generate(GameConf.GRID_W * 2);
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((this.name == null) ? 0 : this.name.hashCode());
+		result = prime * result + ((this.stringID == null) ? 0 : this.stringID.hashCode());
+		result = prime * result + ((this.type == null) ? 0 : this.type.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null || this.getClass() != obj.getClass()) {
+			return false;
+		}
+		Level other = (Level) obj;
+		return this.name.equals(other.name) && this.stringID.equals(other.stringID) && this.type == other.type;
 	}
 
 	@Override
