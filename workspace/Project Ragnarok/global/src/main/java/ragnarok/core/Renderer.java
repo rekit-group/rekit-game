@@ -6,6 +6,7 @@ package ragnarok.core;
  * @author Dominik Fuchss
  *
  */
+@FunctionalInterface
 public interface Renderer {
 	/**
 	 * Draw on a field.

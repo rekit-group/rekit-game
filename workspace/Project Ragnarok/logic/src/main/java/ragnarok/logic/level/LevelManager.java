@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -64,7 +65,16 @@ public final class LevelManager {
 	private static void loadAllLevels() throws IOException {
 		PathMatchingResourcePatternResolver resolv = new PathMatchingResourcePatternResolver();
 		Resource[] res = resolv.getResources("/levels/*");
-		Arrays.stream(res).sorted((r1, r2) -> r1.toString().compareToIgnoreCase(r2.toString())).forEach(LevelManager::addLevel);
+		Stream<Resource> numbered = Arrays.stream(res).filter(r -> r.getFilename().matches("level_\\d+\\.dat"));
+		Stream<Resource> notNumbered = Arrays.stream(res).filter(r -> !r.getFilename().matches("level_\\d+\\.dat"));
+		numbered.sorted((r1, r2) -> {
+			String n1 = r1.getFilename(), n2 = r2.getFilename();
+			n1 = n1.substring("level_".length()).split("\\.")[0];
+			n2 = n2.substring("level_".length()).split("\\.")[0];
+			return Integer.compare(Integer.parseInt(n1), Integer.parseInt(n2));
+		}).forEach(LevelManager::addLevel);
+
+		notNumbered.sorted((r1, r2) -> r1.toString().compareToIgnoreCase(r2.toString())).forEach(LevelManager::addLevel);
 
 	}
 
@@ -165,7 +175,7 @@ public final class LevelManager {
 	 * @return the number of arcade levels
 	 */
 	public static int getNumberOfArcadeLevels() {
-		return (int) LevelManager.levelMap.values().stream().filter(level -> level.getType() == Level.Type.ARCADE).count();
+		return (int) LevelManager.levelMap.values().stream().filter(Level.Type.ARCADE::hasType).count();
 	}
 
 	/**
@@ -204,7 +214,7 @@ public final class LevelManager {
 	 */
 	private static String convertToString() {
 		StringBuilder result = new StringBuilder();
-		Iterator<Level> it = LevelManager.levelMap.values().iterator();
+		Iterator<Level> it = LevelManager.levelMap.values().stream().sorted().iterator();
 		while (it.hasNext()) {
 			Level next = it.next();
 			result.append(next.getName() + ":" + next.getType() + ":" + next.getHighScore());
@@ -223,7 +233,7 @@ public final class LevelManager {
 	 * @return the level or {@code null} if none found
 	 */
 	private static Level findByNameAndType(String name, Type type) {
-		List<Level> levels = LevelManager.levelMap.values().stream().filter(level -> level.getName().equals(name) && level.getType() == type)
+		List<Level> levels = LevelManager.levelMap.values().stream().filter(type::hasType).filter(level -> level.getName().equals(name))
 				.collect(Collectors.toList());
 		if (levels.isEmpty()) {
 			return null;

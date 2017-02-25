@@ -283,12 +283,12 @@ abstract class Scene implements CameraTarget, IScene {
 
 	@Override
 	public synchronized void applyToGameElements(Function<GameElement, Void> function) {
-		Arrays.stream(this.gameElements).forEach(list -> list.forEach(e -> function.apply(e)));
+		Arrays.stream(this.gameElements).forEach(list -> list.forEach(function::apply));
 	}
 
 	@Override
 	public synchronized void applyToGuiElements(Function<GuiElement, Void> function) {
-		this.guiElements.forEach(e -> function.apply(e));
+		this.guiElements.forEach(function::apply);
 	}
 
 	@Override

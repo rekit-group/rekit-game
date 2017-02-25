@@ -22,12 +22,17 @@ final class InputHelperImpl implements InputHelper {
 	 * Instantiate the InputHelper.
 	 */
 	public InputHelperImpl() {
-		ThreadUtils.runDaemon("InputHelper", () -> {
-			while (true) {
-				this.notifyObservers();
-				ThreadUtils.sleep(GameConf.LOGIC_DELTA);
-			}
-		});
+		ThreadUtils.runDaemon("InputHelper", this::run);
+	}
+
+	/**
+	 * The notifying method.
+	 */
+	private void run() {
+		while (true) {
+			this.notifyObservers();
+			ThreadUtils.sleep(GameConf.LOGIC_DELTA);
+		}
 	}
 
 	/**

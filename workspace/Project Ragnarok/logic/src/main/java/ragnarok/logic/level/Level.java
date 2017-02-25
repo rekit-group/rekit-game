@@ -10,7 +10,7 @@ import ragnarok.config.GameConf;
  * This class holds all necessary information about a level.
  *
  */
-public final class Level {
+public final class Level implements Comparable<Level> {
 	/**
 	 * The type of a level.
 	 *
@@ -43,6 +43,20 @@ public final class Level {
 			} catch (IllegalArgumentException e) {
 				return null;
 			}
+		}
+
+		/**
+		 * Indicate whether level has this type.
+		 *
+		 * @param lv
+		 *            the level
+		 * @return {@code true} if lv has this level type
+		 */
+		public final boolean hasType(Level lv) {
+			if (lv == null) {
+				return false;
+			}
+			return this == lv.getType();
 		}
 	}
 
@@ -81,6 +95,16 @@ public final class Level {
 	private static int ARCADE_CTR = 0;
 
 	/**
+	 * Get the next level number.
+	 *
+	 * @return the next level number
+	 * @see #ARCADE_CTR
+	 */
+	private static final int nextLevel() {
+		return ++Level.ARCADE_CTR;
+	}
+
+	/**
 	 * Create a new level by data and type.
 	 *
 	 * @param name
@@ -97,7 +121,7 @@ public final class Level {
 		if (type == Type.INFINITE || type == Type.LOTD) {
 			this.stringID = "" + this.type;
 		} else {
-			this.stringID = Type.ARCADE + "-" + (++Level.ARCADE_CTR);
+			this.stringID = Type.ARCADE + "-" + Level.nextLevel();
 		}
 		this.levelSeed = GameConf.PRNG.nextInt();
 		this.highScore = 0;
@@ -202,5 +226,33 @@ public final class Level {
 	 */
 	public String getName() {
 		return this.name;
+	}
+
+	@Override
+	public int compareTo(Level o) {
+		boolean thisIsNumbered = this.isNumbered(), otherIsNumbered = o.isNumbered();
+		if (thisIsNumbered != otherIsNumbered) {
+			// NonNumbered before Numbered
+			return otherIsNumbered ? -1 : 1;
+		}
+		// Numbered will be compared by number
+		if (thisIsNumbered) {
+			String n1 = this.getName(), n2 = o.getName();
+			n1 = n1.substring("level_".length()).split("\\.")[0];
+			n2 = n2.substring("level_".length()).split("\\.")[0];
+			return Integer.compare(Integer.parseInt(n1), Integer.parseInt(n2));
+		}
+
+		// Else order by string order (and secondly by type)
+		return 2 * this.getName().compareTo(o.getName()) + (this.getType().compareTo(o.getType()));
+	}
+
+	/**
+	 * Indicates whether the level is numbered.
+	 *
+	 * @return {@code true} if numbered.
+	 */
+	private final boolean isNumbered() {
+		return this.getName().matches("level_\\d+\\.dat");
 	}
 }
