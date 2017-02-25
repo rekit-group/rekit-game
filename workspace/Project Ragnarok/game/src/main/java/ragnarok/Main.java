@@ -6,9 +6,10 @@ import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import home.fox.visitors.Visitable;
-import home.fox.visitors.Visitor;
-import home.fox.visitors.parser.Parser;
+import home.fox.configuration.Configurable;
+import home.fox.configuration.Setter;
+import home.fox.configuration.parser.Parser;
+import home.fox.configuration.setters.ResourceBundleSetter;
 import ragnarok.config.GameConf;
 import ragnarok.controller.Controller;
 import ragnarok.gui.View;
@@ -70,7 +71,7 @@ public final class Main {
 		// Initialize Loggers ...
 
 		GameConf.GAME_LOGGER.setLevel(level);
-		Visitor.LOGGER.setLevel(level);
+		Setter.LOGGER.setLevel(level);
 		Parser.LOGGER.setLevel(level);
 
 		// This is needed as all loggers add an appender to the rootLogger.
@@ -82,19 +83,19 @@ public final class Main {
 	 * Visit all Classes which shall be visited.
 	 */
 	private static final void visitAllStatic() {
-		Main.visitAllStatic(Visitor.getNewVisitor());
+		Main.visitAllStatic(new ResourceBundleSetter());
 	}
 
 	/**
-	 * Visit all Classes which shall be visited.
+	 * Visit all Classes which shall be setted.
 	 *
-	 * @param visitor
-	 *            the visitor
+	 * @param setter
+	 *            the setter
 	 */
-	private static final void visitAllStatic(Visitor visitor) {
-		Set<Class<? extends Visitable>> toVisit = ReflectUtils.getClasses(GameConf.SEARCH_PATH, Visitable.class);
-		for (Class<? extends Visitable> v : toVisit) {
-			visitor.visit(v);
+	private static final void visitAllStatic(Setter setter) {
+		Set<Class<? extends Configurable>> toSet = ReflectUtils.getClasses(GameConf.SEARCH_PATH, Configurable.class);
+		for (Class<? extends Configurable> s : toSet) {
+			setter.setAttributes(s);
 		}
 	}
 }

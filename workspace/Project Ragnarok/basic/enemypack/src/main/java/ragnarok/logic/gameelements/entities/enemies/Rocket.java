@@ -1,8 +1,8 @@
 package ragnarok.logic.gameelements.entities.enemies;
 
-import home.fox.visitors.Visitable;
-import home.fox.visitors.annotations.NoVisit;
-import home.fox.visitors.annotations.VisitInfo;
+import home.fox.configuration.Configurable;
+import home.fox.configuration.annotations.NoSet;
+import home.fox.configuration.annotations.SetterInfo;
 import ragnarok.config.GameConf;
 import ragnarok.core.GameElement;
 import ragnarok.core.GameGrid;
@@ -23,8 +23,8 @@ import ragnarok.util.ReflectUtils.LoadMe;
  *
  */
 @LoadMe
-@VisitInfo(res = "conf/rocket")
-public final class Rocket extends Enemy implements Visitable {
+@SetterInfo(res = "conf/rocket")
+public final class Rocket extends Enemy implements Configurable {
 	/**
 	 * Prototype Constructor.
 	 */
@@ -61,7 +61,7 @@ public final class Rocket extends Enemy implements Visitable {
 	/**
 	 * The timer of the particles.
 	 */
-	@NoVisit
+	@NoSet
 	private Timer paricleTimer;
 
 	/**

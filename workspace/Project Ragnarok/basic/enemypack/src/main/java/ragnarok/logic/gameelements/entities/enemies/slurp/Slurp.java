@@ -3,12 +3,12 @@ package ragnarok.logic.gameelements.entities.enemies.slurp;
 import java.util.ArrayList;
 import java.util.List;
 
-import home.fox.visitors.Visitable;
-import home.fox.visitors.annotations.NoVisit;
-import home.fox.visitors.annotations.VisitInfo;
+import home.fox.configuration.Configurable;
+import home.fox.configuration.annotations.NoSet;
+import home.fox.configuration.annotations.SetterInfo;
 import ragnarok.config.GameConf;
-import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
+import ragnarok.core.GameGrid;
 import ragnarok.logic.gameelements.entities.Entity;
 import ragnarok.logic.gameelements.entities.Player;
 import ragnarok.logic.gameelements.type.Enemy;
@@ -23,15 +23,15 @@ import ragnarok.util.ReflectUtils.LoadMe;
  * which will slow down the {@link Player} at collision
  *
  * @author Dominik Fuchss
- *
+ * 
  */
 @LoadMe
-@VisitInfo(res = "conf/slurp")
-public final class Slurp extends Enemy implements Visitable {
+@SetterInfo(res = "conf/slurp")
+public final class Slurp extends Enemy implements Configurable {
 	/**
 	 * The Slurp's SlurpDurps.
 	 */
-	@NoVisit
+	@NoSet
 	private List<SlurpDurp> slurpDurps;
 	/**
 	 * The speed of the slurps.
@@ -86,13 +86,13 @@ public final class Slurp extends Enemy implements Visitable {
 	/**
 	 * The current direction of the Slurp.
 	 */
-	@NoVisit
+	@NoSet
 	private Direction currentDirection = Direction.LEFT;
 
 	/**
 	 * This bool indicates whether the Slurp has contact to a wall.
 	 */
-	@NoVisit
+	@NoSet
 	private boolean hasWallContact = true;
 
 	@Override

@@ -3,13 +3,13 @@ package ragnarok.logic.gameelements.entities.enemies;
 import java.util.LinkedList;
 import java.util.List;
 
-import home.fox.visitors.Visitable;
-import home.fox.visitors.annotations.AfterVisit;
-import home.fox.visitors.annotations.NoVisit;
-import home.fox.visitors.annotations.VisitInfo;
+import home.fox.configuration.Configurable;
+import home.fox.configuration.annotations.AfterSetting;
+import home.fox.configuration.annotations.NoSet;
+import home.fox.configuration.annotations.SetterInfo;
 import ragnarok.config.GameConf;
-import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
+import ragnarok.core.GameGrid;
 import ragnarok.core.GameTime;
 import ragnarok.logic.gameelements.type.Enemy;
 import ragnarok.primitives.geometry.Direction;
@@ -20,19 +20,19 @@ import ragnarok.primitives.time.Timer;
 import ragnarok.util.ReflectUtils.LoadMe;
 
 @LoadMe
-@VisitInfo(res = "conf/stacker")
-public final class Stacker extends Enemy implements Visitable {
+@SetterInfo(res = "conf/stacker")
+public final class Stacker extends Enemy implements Configurable {
 
-	@NoVisit
+	@NoSet
 	private List<StackerElement> elements;
 
-	@NoVisit
+	@NoSet
 	private boolean init = false;
 
-	@NoVisit
+	@NoSet
 	private static OpProgress<Vec> dimensions;
 
-	@NoVisit
+	@NoSet
 	private int highestOffset;
 
 	private static int ITERATIONS;
@@ -71,7 +71,7 @@ public final class Stacker extends Enemy implements Visitable {
 		this.highestOffset = Stacker.ITERATIONS - 1;
 	}
 
-	@AfterVisit
+	@AfterSetting
 	private static void afterVisit() {
 		Stacker.dimensions = new OpProgress<>(Stacker.SIZE_REGULAR, Stacker.SIZE_DYING);
 	}

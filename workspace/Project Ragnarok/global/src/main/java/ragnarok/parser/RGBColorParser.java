@@ -4,9 +4,9 @@ import java.lang.reflect.Field;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import home.fox.visitors.Visitable;
-import home.fox.visitors.annotations.ClassParser;
-import home.fox.visitors.parser.Parser;
+import home.fox.configuration.Configurable;
+import home.fox.configuration.annotations.ClassParser;
+import home.fox.configuration.parser.Parser;
 import ragnarok.config.GameConf;
 import ragnarok.primitives.image.RGBColor;
 
@@ -19,7 +19,7 @@ import ragnarok.primitives.image.RGBColor;
 @ClassParser(RGBColorParser.class)
 public final class RGBColorParser implements Parser {
 	@Override
-	public boolean parse(Visitable obj, Field field, String definition, String[] path) throws Exception {
+	public boolean parse(Configurable obj, Field field, String definition, String[] path) throws Exception {
 		if (!Parser.super.parse(obj, field, definition, path)) {
 			return false;
 		}

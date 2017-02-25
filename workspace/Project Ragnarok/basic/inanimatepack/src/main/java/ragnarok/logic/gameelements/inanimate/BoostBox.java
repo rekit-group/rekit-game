@@ -1,8 +1,8 @@
 package ragnarok.logic.gameelements.inanimate;
 
-import home.fox.visitors.Visitable;
-import home.fox.visitors.annotations.NoVisit;
-import home.fox.visitors.annotations.VisitInfo;
+import home.fox.configuration.Configurable;
+import home.fox.configuration.annotations.NoSet;
+import home.fox.configuration.annotations.SetterInfo;
 import ragnarok.config.GameConf;
 import ragnarok.core.GameElement;
 import ragnarok.core.GameGrid;
@@ -23,12 +23,12 @@ import ragnarok.util.ReflectUtils.LoadMe;
  *
  */
 @LoadMe
-@VisitInfo(res = "conf/boost")
-public final class BoostBox extends DynamicInanimate implements Visitable {
+@SetterInfo(res = "conf/boost")
+public final class BoostBox extends DynamicInanimate implements Configurable {
 	/**
 	 * The inner inanimate box.
 	 */
-	@NoVisit
+	@NoSet
 	InanimateBox innerBox;
 	/**
 	 * The time between strategy changes.
@@ -37,17 +37,17 @@ public final class BoostBox extends DynamicInanimate implements Visitable {
 	/**
 	 * The current time offset.
 	 */
-	@NoVisit
+	@NoSet
 	private long offset = 0;
 	/**
 	 * All strategies.
 	 */
-	@NoVisit
+	@NoSet
 	private BoostBoxStrategy[] strategies;
 	/**
 	 * The current strategy id.
 	 */
-	@NoVisit
+	@NoSet
 	private int current = 0;
 	/**
 	 * The particle spawner.
@@ -57,7 +57,7 @@ public final class BoostBox extends DynamicInanimate implements Visitable {
 	/**
 	 * This bool indicates whether particles shall spawn.
 	 */
-	@NoVisit
+	@NoSet
 	private boolean sparkling;
 
 	/**
@@ -92,7 +92,7 @@ public final class BoostBox extends DynamicInanimate implements Visitable {
 	/**
 	 * The last time when {@link #logicLoop(float)} was invoked.
 	 */
-	@NoVisit
+	@NoSet
 	private long lastTime = GameTime.getTime();
 
 	@Override

@@ -1,8 +1,8 @@
 package ragnarok.logic.gameelements.entities.pickups;
 
-import home.fox.visitors.Visitable;
-import home.fox.visitors.annotations.NoVisit;
-import home.fox.visitors.annotations.VisitInfo;
+import home.fox.configuration.Configurable;
+import home.fox.configuration.annotations.NoSet;
+import home.fox.configuration.annotations.SetterInfo;
 import ragnarok.core.GameElement;
 import ragnarok.core.GameGrid;
 import ragnarok.logic.gameelements.entities.Player;
@@ -13,13 +13,13 @@ import ragnarok.primitives.image.RGBColor;
 import ragnarok.util.ReflectUtils.LoadMe;
 
 @LoadMe
-@VisitInfo(res = "conf/bluepill")
-public class BluePill extends Pickup implements Visitable {
+@SetterInfo(res = "conf/bluepill")
+public class BluePill extends Pickup implements Configurable {
 
 	private static Vec SIZE;
-	@NoVisit
+	@NoSet
 	private float x;
-	@NoVisit
+	@NoSet
 	private double sin;
 
 	private BluePill() {

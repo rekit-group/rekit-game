@@ -2,9 +2,9 @@ package ragnarok.logic.level.bossstructure;
 
 import java.util.HashMap;
 
-import home.fox.visitors.Visitable;
-import home.fox.visitors.annotations.NoVisit;
-import home.fox.visitors.annotations.VisitInfo;
+import home.fox.configuration.Configurable;
+import home.fox.configuration.annotations.NoSet;
+import home.fox.configuration.annotations.SetterInfo;
 import ragnarok.config.GameConf;
 import ragnarok.core.GameElement;
 import ragnarok.core.IScene;
@@ -30,32 +30,32 @@ import ragnarok.util.ThreadUtils;
  * This class realizes a {@link Structure} for bosses.
  *
  */
-@VisitInfo(res = "conf/bossstructure")
-public final class BossStructure extends Structure implements Visitable {
+@SetterInfo(res = "conf/bossstructure")
+public final class BossStructure extends Structure implements Configurable {
 	/**
 	 * The door.
 	 */
-	@NoVisit
+	@NoSet
 	private InanimateDoor door;
 	/**
 	 * The trigger's position.
 	 */
-	@NoVisit
+	@NoSet
 	private Vec triggerPos;
 	/**
 	 * The boss.
 	 */
-	@NoVisit
+	@NoSet
 	private Boss boss;
 	/**
 	 * The camera target offset.
 	 */
-	@NoVisit
+	@NoSet
 	private float cameraTarget;
 	/**
 	 * The x pos of the level.
 	 */
-	@NoVisit
+	@NoSet
 	private int levelX;
 	/**
 	 * Explosion particles.

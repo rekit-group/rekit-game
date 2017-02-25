@@ -4,11 +4,10 @@ import java.util.Random;
 
 import org.apache.log4j.Logger;
 
-import home.fox.visitors.Visitable;
-import home.fox.visitors.annotations.AfterVisit;
-import home.fox.visitors.annotations.NoVisit;
-import home.fox.visitors.annotations.VisitInfo;
-import home.fox.visitors.parser.Parser;
+import home.fox.configuration.Configurable;
+import home.fox.configuration.annotations.AfterSetting;
+import home.fox.configuration.annotations.NoSet;
+import home.fox.configuration.annotations.SetterInfo;
 import ragnarok.primitives.geometry.Vec;
 import ragnarok.primitives.image.RGBColor;
 import ragnarok.util.ReflectUtils;
@@ -21,8 +20,8 @@ import ragnarok.util.TextOptions;
  * @author Dominik Fuchss
  * @version 1.1
  */
-@VisitInfo(res = "conf/game")
-public final class GameConf implements Visitable {
+@SetterInfo(res = "conf/game")
+public final class GameConf implements Configurable {
 	/**
 	 * Prevent instantiation.
 	 */
@@ -32,12 +31,12 @@ public final class GameConf implements Visitable {
 	/**
 	 * The search path for dynamically loaded classes; see {@link ReflectUtils}.
 	 */
-	@NoVisit
+	@NoSet
 	public static final String SEARCH_PATH = "ragnarok";
 	/**
 	 * The GameWide randomness source.
 	 */
-	@NoVisit
+	@NoSet
 	public static final Random PRNG = new Random();
 
 	/**
@@ -47,7 +46,7 @@ public final class GameConf implements Visitable {
 	/**
 	 * The text options for {@link #ABOUT}.
 	 */
-	@NoVisit
+	@NoSet
 	public static TextOptions ABOUT_TEXT;
 	/**
 	 * The file location of the level manager file.
@@ -56,7 +55,7 @@ public final class GameConf implements Visitable {
 	/**
 	 * This boolean indicates whether the game is in debug mode.
 	 */
-	@NoVisit
+	@NoSet
 	public static boolean DEBUG = true;
 
 	/**
@@ -87,13 +86,13 @@ public final class GameConf implements Visitable {
 	 * Width of the window.<br>
 	 * Calculated by {@link GameConf#GRID_W} * {@link GameConf#PX_PER_UNIT}.
 	 */
-	@NoVisit
+	@NoSet
 	public static int PIXEL_W;
 	/**
 	 * Height of the window.<br>
 	 * Calculated by {@link GameConf#GRID_H} * {@link GameConf#PX_PER_UNIT}.
 	 */
-	@NoVisit
+	@NoSet
 	public static int PIXEL_H;
 
 	/**
@@ -196,33 +195,33 @@ public final class GameConf implements Visitable {
 	/**
 	 * The game's debug text color.
 	 */
-	@NoVisit
+	@NoSet
 	public static RGBColor DEBUG_TEXT_COLOR;
 	/**
 	 * The game's text options.
 	 */
-	@NoVisit
+	@NoSet
 	public static TextOptions DEFAULT_TEXT;
 	/**
 	 * The game's text options (menu).
 	 */
-	@NoVisit
+	@NoSet
 	public static TextOptions MENU_TEXT;
 	/**
 	 * The game's text options (hints).
 	 */
-	@NoVisit
+	@NoSet
 	public static TextOptions HINT_TEXT;
 	/**
 	 * The Global GAME_LOGGER.
 	 */
-	@NoVisit
+	@NoSet
 	public static final Logger GAME_LOGGER = Logger.getLogger(GameConf.class);
 
 	/**
 	 * Set values which cannot be loaded by {@link Parser Parsers}.
 	 */
-	@AfterVisit
+	@AfterSetting
 	public static void afterVisit() {
 		GameConf.PIXEL_W = GameConf.GRID_W * GameConf.PX_PER_UNIT;
 		GameConf.PIXEL_H = GameConf.GRID_H * GameConf.PX_PER_UNIT;

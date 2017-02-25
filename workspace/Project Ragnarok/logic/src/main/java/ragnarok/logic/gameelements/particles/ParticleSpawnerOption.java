@@ -1,6 +1,6 @@
 package ragnarok.logic.gameelements.particles;
 
-import home.fox.visitors.annotations.ClassParser;
+import home.fox.configuration.annotations.ClassParser;
 import ragnarok.config.GameConf;
 import ragnarok.primitives.time.Progress;
 

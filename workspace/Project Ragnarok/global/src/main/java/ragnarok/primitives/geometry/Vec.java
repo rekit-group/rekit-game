@@ -1,6 +1,6 @@
 package ragnarok.primitives.geometry;
 
-import home.fox.visitors.annotations.ClassParser;
+import home.fox.configuration.annotations.ClassParser;
 import ragnarok.parser.VecParser;
 import ragnarok.primitives.operable.Operable;
 
