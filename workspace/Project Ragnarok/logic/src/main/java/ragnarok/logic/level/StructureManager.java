@@ -141,7 +141,7 @@ public class StructureManager extends Configurable implements Iterator<Structure
 		// create new StructureManager (we gotz them constructor in here!)
 		StructureManager instance = new StructureManager(randomSeed);
 		// create Parser to extract all information of file-String
-		LevelParser.getParser(input).parse(instance);
+		LevelParser.parseLevel(input, instance);
 
 		// return newly created instance of StructureManager
 		return instance;
