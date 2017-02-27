@@ -37,9 +37,10 @@ public final class ThreadUtils {
 	 *            the name of the daemon
 	 * @param r
 	 *            the runnable
+	 * @return the thread
 	 */
-	public static final void runDaemon(String name, Runnable r) {
-		ThreadUtils.runThread(name, r, true);
+	public static final Thread runDaemon(String name, Runnable r) {
+		return ThreadUtils.runThread(name, r, true);
 	}
 
 	/**
@@ -49,9 +50,10 @@ public final class ThreadUtils {
 	 *            the name of the thread
 	 * @param r
 	 *            the runnable
+	 * @return the thread
 	 */
-	public static final void runThread(String name, Runnable r) {
-		ThreadUtils.runThread(name, r, false);
+	public static final Thread runThread(String name, Runnable r) {
+		return ThreadUtils.runThread(name, r, false);
 	}
 
 	/**
@@ -63,12 +65,14 @@ public final class ThreadUtils {
 	 *            the runnable
 	 * @param daemon
 	 *            daemon?
+	 * @return the thread
 	 */
-	private static final void runThread(String name, Runnable r, boolean daemon) {
+	private static final Thread runThread(String name, Runnable r, boolean daemon) {
 		Thread t = new Thread(r);
 		t.setName(name);
 		t.setDaemon(daemon);
 		t.start();
+		return t;
 	}
 
 }

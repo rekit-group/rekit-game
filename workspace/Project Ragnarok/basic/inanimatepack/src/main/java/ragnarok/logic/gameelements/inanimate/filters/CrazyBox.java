@@ -16,6 +16,6 @@ public final class CrazyBox extends FilterBox {
 	 * Create the filter.
 	 */
 	protected CrazyBox() {
-		super(new RandomMode());
+		super(RandomMode.INSTANCE);
 	}
 }

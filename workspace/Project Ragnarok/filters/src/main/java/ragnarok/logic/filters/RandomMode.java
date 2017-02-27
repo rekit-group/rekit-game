@@ -18,6 +18,11 @@ import ragnarok.util.ThreadUtils;
 @LoadMe
 public final class RandomMode implements Filter {
 	/**
+	 * The one and only instance of {@link RandomMode}.
+	 */
+	public static final RandomMode INSTANCE = new RandomMode();
+
+	/**
 	 * The mapping for all colors.
 	 */
 	private Integer[] map = new Integer[256 << 16];
@@ -29,7 +34,7 @@ public final class RandomMode implements Filter {
 	/**
 	 * Create a new RandomMode filter.
 	 */
-	public RandomMode() {
+	private RandomMode() {
 		ThreadUtils.runDaemon(RandomMode.class.getSimpleName(), this::periodicallyReset);
 	}
 
@@ -38,11 +43,12 @@ public final class RandomMode implements Filter {
 	 */
 	private void periodicallyReset() {
 		while (true) {
-			synchronized (this) {
+			if (!this.changed) {
 				Arrays.fill(this.map, null);
 				this.changed = true;
 			}
 			ThreadUtils.sleep(10000);
+
 		}
 	}
 
@@ -55,13 +61,14 @@ public final class RandomMode implements Filter {
 	 * @return the intrinsic, random color
 	 */
 	private synchronized RGBAColor getMapping(RGBAColor color) {
-		if (this.map[color.red + (color.green << 8) + (color.blue << 16)] == null) {
+		Integer mapping = this.map[color.red + (color.green << 8) + (color.blue << 16)];
+		if (mapping == null) {
 			int red = GameConf.PRNG.nextInt(256);
 			int green = GameConf.PRNG.nextInt(256);
 			int blue = GameConf.PRNG.nextInt(256);
-			this.map[color.red + (color.green << 8) + (color.blue << 16)] = (red << 16) | (green << 8) | blue;
+			mapping = this.map[color.red + (color.green << 8) + (color.blue << 16)] = (red << 16) | (green << 8) | blue;
 		}
-		return new RGBAColor(this.map[color.red + (color.green << 8) + (color.blue << 16)] | (color.alpha << 24));
+		return new RGBAColor(mapping | (color.alpha << 24));
 	}
 
 	@Override

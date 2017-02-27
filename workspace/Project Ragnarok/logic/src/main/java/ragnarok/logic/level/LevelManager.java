@@ -34,11 +34,11 @@ public final class LevelManager {
 	/**
 	 * All known levels (ID -> Level).
 	 */
-	private final static Map<String, Level> levelMap = new HashMap<>();
+	private static final Map<String, Level> levelMap = new HashMap<>();
 	/**
 	 * The global data file for the {@link LevelManager}.
 	 */
-	private final static File USER_DATA = new File(GameConf.LVL_MGMT_FILE);
+	private static final File USER_DATA = new File(GameConf.LVL_MGMT_FILE);
 
 	/**
 	 * Prevent instantiation.
