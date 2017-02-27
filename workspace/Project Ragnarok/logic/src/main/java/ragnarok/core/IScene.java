@@ -109,7 +109,7 @@ public interface IScene {
 	 * End a Game/Scene.
 	 *
 	 * @param won
-	 *            indicates whether successfull or died
+	 *            indicates whether successful or died
 	 */
 	void end(boolean won);
 

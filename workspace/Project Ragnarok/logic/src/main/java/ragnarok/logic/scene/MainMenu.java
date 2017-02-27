@@ -80,7 +80,9 @@ final class MainMenu extends Scene {
 		MenuList about = new MenuList(this, "About");
 		about.addItem(new TextMenu(this, GameConf.ABOUT));
 
-		this.menu.addItem(play, settings, about);
+		MenuActionItem exit = new MenuActionItem(this, "Exit", () -> System.exit(0));
+
+		this.menu.addItem(play, settings, about, exit);
 
 		this.addGuiElement(this.menu);
 		this.menu.select();

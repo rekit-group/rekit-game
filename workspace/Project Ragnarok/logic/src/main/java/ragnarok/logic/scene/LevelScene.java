@@ -114,7 +114,7 @@ public abstract class LevelScene extends Scene {
 	}
 
 	@Override
-	public void end(boolean won) {
+	public final void end(boolean won) {
 		// only save score if the level is infinite or the player has won
 		// don't save it upon losing in finite level
 		if (this.level.getLevelAssember().isInfinite() || won) {
@@ -123,9 +123,18 @@ public abstract class LevelScene extends Scene {
 				this.setHighScore(this.getScore());
 			}
 		}
+		this.performEndTasks(won);
+		this.getModel().switchScene(Scenes.MENU);
+	}
 
-		// restart game
-		this.restart();
+	/**
+	 * Perform tasks on the end of the game (level)
+	 * 
+	 * @param won
+	 *            indicates whether successful or died
+	 */
+	protected void performEndTasks(boolean won) {
+		return;
 	}
 
 	@Override

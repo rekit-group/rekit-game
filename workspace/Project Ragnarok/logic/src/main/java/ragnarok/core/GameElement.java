@@ -143,6 +143,9 @@ public abstract class GameElement implements Collidable {
 		this.checkForDelete();
 	}
 
+	/**
+	 * Check whether the element shall be deleted. If so, mark for delete.
+	 */
 	private void checkForDelete() {
 		Vec realPos = this.getPos().translate2D(this.scene.getCameraOffset());
 		if (realPos.getY() > GameConf.GRID_H) {
@@ -151,9 +154,6 @@ public abstract class GameElement implements Collidable {
 		}
 		float relX = realPos.getX() + this.getSize().getX();
 		float offset = this.getScene().getCameraOffset();
-		if (this.getClass().getSimpleName().contains("oud")) {
-			System.out.println("Offset: " + offset + "  X: " + relX);
-		}
 		if (offset > relX + GameConf.GRID_W) {
 			this.destroy();
 			return;
