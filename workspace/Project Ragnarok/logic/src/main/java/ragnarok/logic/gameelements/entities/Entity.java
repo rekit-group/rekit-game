@@ -134,6 +134,7 @@ public abstract class Entity extends GameElement {
 
 	@Override
 	public final void logicLoop() {
+		super.logicLoop();
 		this.deltaTime = GameTime.getTime() - this.lastTime;
 		this.lastTime += this.deltaTime;
 		this.innerLogicLoop();
@@ -144,14 +145,6 @@ public abstract class Entity extends GameElement {
 	 * the velocity.
 	 */
 	protected void innerLogicLoop() {
-		// if delta is too big, clipping likely to appear...
-		// if (deltaTime > GameConf.LOGIC_DELTA) {
-		// // ..so recursively split work up into smaller parts
-		// this.logicLoop(deltaTime / 2);
-		// this.logicLoop(deltaTime / 2);
-		// return;
-		// }
-
 		if (this.invincibility != null) {
 			this.invincibility.logicLoop();
 			// this.invincibility.removeTime(this.deltaTime);
@@ -174,10 +167,6 @@ public abstract class Entity extends GameElement {
 		}
 		// save new velocity
 		this.setVel(newVel);
-		// check if entity fell out of the world
-		if (this.getPos().getY() > GameConf.GRID_H) {
-			this.destroy();
-		}
 	}
 
 	/**

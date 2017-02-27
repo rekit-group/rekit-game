@@ -116,18 +116,13 @@ public final class Warper extends Enemy implements Configurable {
 			element.addDamage(1);
 
 			// Kill the warper itself
-			this.addDamage(1);
+			this.destroy();
 		}
 	}
 
 	@Override
 	public void collidedWith(Frame collision, Direction dir) {
 		// Do nothing, pass right through everything
-	}
-
-	@Override
-	public void addDamage(int damage) {
-		this.destroy();
 	}
 
 	@Override

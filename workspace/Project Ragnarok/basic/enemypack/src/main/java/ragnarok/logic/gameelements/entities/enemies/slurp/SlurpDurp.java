@@ -1,7 +1,7 @@
 package ragnarok.logic.gameelements.entities.enemies.slurp;
 
-import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
+import ragnarok.core.GameGrid;
 import ragnarok.core.Team;
 import ragnarok.logic.gameelements.entities.Entity;
 import ragnarok.logic.gameelements.entities.Player;

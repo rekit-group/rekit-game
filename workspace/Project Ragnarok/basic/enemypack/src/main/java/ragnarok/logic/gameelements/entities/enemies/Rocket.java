@@ -121,19 +121,16 @@ public final class Rocket extends Enemy implements Configurable {
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
 		if (this.getTeam().isHostile(element.getTeam())) {
-
 			if (dir == Direction.UP) {
 				element.setVel(element.getVel().setY(GameConf.PLAYER_KILL_BOOST));
 				this.getScene().getPlayer().addPoints(20);
-				// Kill the rocket itself
-				this.destroy();
 			} else {
 				// Give player damage
 				element.addDamage(1);
-				// Kill the rocket itself
-				this.destroy();
 				Rocket.explosionParticles.spawn(this.getScene(), this.getPos());
 			}
+			// Kill the rocket itself
+			this.destroy();
 		}
 	}
 

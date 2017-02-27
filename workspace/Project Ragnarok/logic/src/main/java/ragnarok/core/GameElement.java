@@ -1,5 +1,6 @@
 package ragnarok.core;
 
+import ragnarok.config.GameConf;
 import ragnarok.core.Team.Range;
 import ragnarok.primitives.geometry.Direction;
 import ragnarok.primitives.geometry.Frame;
@@ -42,7 +43,7 @@ public abstract class GameElement implements Collidable {
 	 * Flag that is used to signal if the {@link GameElement} is supposed to be
 	 * deleted or not.
 	 */
-	protected boolean deleteMe = false;
+	private boolean deleteMe = false;
 
 	/**
 	 * The {@link GameElement GameElements} size that can be imagined as a box
@@ -138,7 +139,25 @@ public abstract class GameElement implements Collidable {
 	 *
 	 */
 	public void logicLoop() {
-		// Do nothing
+		// check if entity fell out of the world
+		this.checkForDelete();
+	}
+
+	private void checkForDelete() {
+		Vec realPos = this.getPos().translate2D(this.scene.getCameraOffset());
+		if (realPos.getY() > GameConf.GRID_H) {
+			this.destroy();
+			return;
+		}
+		float relX = realPos.getX() + this.getSize().getX();
+		float offset = this.getScene().getCameraOffset();
+		if (this.getClass().getSimpleName().contains("oud")) {
+			System.out.println("Offset: " + offset + "  X: " + relX);
+		}
+		if (offset > relX + GameConf.GRID_W) {
+			this.destroy();
+			return;
+		}
 	}
 
 	/**

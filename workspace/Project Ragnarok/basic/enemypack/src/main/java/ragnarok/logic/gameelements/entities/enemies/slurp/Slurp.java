@@ -23,7 +23,7 @@ import ragnarok.util.ReflectUtils.LoadMe;
  * which will slow down the {@link Player} at collision
  *
  * @author Dominik Fuchss
- * 
+ *
  */
 @LoadMe
 @SetterInfo(res = "conf/slurp")
@@ -116,6 +116,7 @@ public final class Slurp extends Enemy implements Configurable {
 
 		// Iterate all contained SlurpDurps
 		for (SlurpDurp slurpDurp : this.slurpDurps) {
+			slurpDurp.setScene(this.getScene());
 			// update new position SlurpPosition
 			slurpDurp.setParentPos(this.getPos());
 
