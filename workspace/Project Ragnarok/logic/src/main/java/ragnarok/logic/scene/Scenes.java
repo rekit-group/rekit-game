@@ -4,8 +4,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.ConcurrentHashMap;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.IScene;
 import ragnarok.logic.GameModel;
+import ragnarok.logic.IScene;
 
 /**
  *

@@ -3,9 +3,9 @@ package ragnarok.logic.gameelements.inanimate;
 import java.util.HashMap;
 import java.util.Map;
 
-import ragnarok.core.GameElement;
 import ragnarok.core.GameGrid;
 import ragnarok.core.GameTime;
+import ragnarok.logic.gameelements.GameElement;
 import ragnarok.logic.gameelements.type.DynamicInanimate;
 import ragnarok.primitives.geometry.Direction;
 import ragnarok.primitives.geometry.Vec;

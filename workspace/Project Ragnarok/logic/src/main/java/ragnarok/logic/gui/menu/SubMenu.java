@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ragnarok.core.GameGrid;
-import ragnarok.core.IScene;
+import ragnarok.logic.IScene;
 import ragnarok.primitives.geometry.Vec;
 
 /**

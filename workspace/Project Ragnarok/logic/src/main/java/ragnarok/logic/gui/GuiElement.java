@@ -1,5 +1,8 @@
-package ragnarok.core;
+package ragnarok.logic.gui;
 
+import ragnarok.core.GameGrid;
+import ragnarok.logic.IScene;
+import ragnarok.logic.gameelements.GameElement;
 import ragnarok.primitives.geometry.Vec;
 
 /**

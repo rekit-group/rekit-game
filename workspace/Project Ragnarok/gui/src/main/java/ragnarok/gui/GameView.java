@@ -23,11 +23,11 @@ import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.GameElement;
 import ragnarok.core.GameTime;
-import ragnarok.core.GuiElement;
-import ragnarok.core.IScene;
+import ragnarok.logic.IScene;
 import ragnarok.logic.Model;
+import ragnarok.logic.gameelements.GameElement;
+import ragnarok.logic.gui.GuiElement;
 import ragnarok.primitives.geometry.Vec;
 import ragnarok.util.InputHelper;
 import ragnarok.util.ThreadUtils;

@@ -1,7 +1,7 @@
 package ragnarok.logic.gameelements.particles;
 
-import ragnarok.core.GameElement;
 import ragnarok.core.Team;
+import ragnarok.logic.gameelements.GameElement;
 import ragnarok.logic.gameelements.entities.Player;
 import ragnarok.primitives.geometry.Direction;
 import ragnarok.primitives.geometry.Frame;

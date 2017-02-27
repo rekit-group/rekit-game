@@ -6,8 +6,8 @@ import home.fox.configuration.Configurable;
 import home.fox.configuration.annotations.NoSet;
 import home.fox.configuration.annotations.SetterInfo;
 import ragnarok.config.GameConf;
-import ragnarok.core.GameElement;
-import ragnarok.core.IScene;
+import ragnarok.logic.IScene;
+import ragnarok.logic.gameelements.GameElement;
 import ragnarok.logic.gameelements.GameElementFactory;
 import ragnarok.logic.gameelements.entities.FixedCameraTarget;
 import ragnarok.logic.gameelements.entities.Player;
@@ -96,41 +96,50 @@ public final class BossStructure extends Structure implements Configurable {
 
 	/**
 	 * Start the battle.
+	 *
 	 */
 	public void startBattle() {
 		if (this.door == null || this.triggerPos == null) {
 			return;
 		}
 		IScene scene = this.door.getScene();
-		GameElement player = scene.getPlayer();
-
 		// calculate where to put camera
-		this.cameraTarget = this.levelX + 5 + GameConf.PLAYER_CAMERA_OFFSET + player.getSize().getX() / 2;
+		this.cameraTarget = this.levelX + 5 + GameConf.PLAYER_CAMERA_OFFSET + scene.getPlayer().getSize().getX() / 2;
 
 		// Prepare boss
 		this.boss = (Boss) this.boss.create(this.boss.getStartPos().addX(this.levelX), new String[0]);
 		this.boss.setBossStructure(this);
-		this.boss.setTarget(player);
+		this.boss.setTarget(scene.getPlayer());
 
 		// Create thread for asynchronous stuff
-		ThreadUtils.runThread("BossRoom-Start", () -> {
-			// keep walking right to the right camera position
-			while (player.getPos().getX() < BossStructure.this.cameraTarget) {
-				player.setVel(player.getVel().setX(1.8f));
-				Timer.sleep(GameConf.LOGIC_DELTA);
-			}
-			scene.setCameraTarget(new FixedCameraTarget(BossStructure.this.cameraTarget - GameConf.PLAYER_CAMERA_OFFSET));
-			// Spawn Boss
-			GameElementFactory.generate(this.boss);
-			// Close door
-			GameElementFactory.generateInanimate((int) BossStructure.this.triggerPos.getX(), (int) BossStructure.this.triggerPos.getY());
+		ThreadUtils.runThread("BossRoom-Start", () -> this.startIntern(scene));
 
-			// Boss text
-			TextOptions op = new TextOptions(new Vec(-0.5f, -0.5f), 30, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, 1);
-			Text bossText = new Text(scene, op).setText(BossStructure.this.boss.getName());
-			bossText.setPos(CalcUtil.units2pixel(new Vec(GameConf.GRID_W / 2f, GameConf.GRID_H / 2f)));
-			scene.addGuiElement(new TimeDecorator(scene, bossText, new Timer(3000)));
-		});
+	}
+
+	/**
+	 * Start Boss Battle. Show intro text, set camera target.
+	 *
+	 * @param scene
+	 *            the scene
+	 */
+	private void startIntern(IScene scene) {
+		GameElement player = scene.getPlayer();
+		// keep walking right to the right camera position
+		while (player.getPos().getX() < this.cameraTarget) {
+			player.setVel(player.getVel().setX(1.8f));
+			Timer.sleep(GameConf.LOGIC_DELTA);
+		}
+		scene.setCameraTarget(new FixedCameraTarget(this.cameraTarget - GameConf.PLAYER_CAMERA_OFFSET));
+		// Spawn Boss
+		GameElementFactory.generate(this.boss);
+		// Close door
+		GameElementFactory.generateInanimate((int) this.triggerPos.getX(), (int) this.triggerPos.getY());
+
+		// Boss text
+		TextOptions op = new TextOptions(new Vec(-0.5f, -0.5f), 30, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, 1);
+		Text bossText = new Text(scene, op).setText(this.boss.getName());
+		bossText.setPos(CalcUtil.units2pixel(new Vec(GameConf.GRID_W / 2f, GameConf.GRID_H / 2f)));
+		scene.addGuiElement(new TimeDecorator(scene, bossText, new Timer(3000)));
 
 	}
 
@@ -233,8 +242,7 @@ public final class BossStructure extends Structure implements Configurable {
 	 */
 	private final void phase1(IScene scene) {
 		if (GameConf.PRNG.nextDouble() > 0.9) {
-			Vec randPos = BossStructure.this.boss.getPos()
-					.add(new Vec((float) GameConf.PRNG.nextDouble() * 2 - 1, (float) GameConf.PRNG.nextDouble() * 2f - 1));
+			Vec randPos = this.boss.getPos().add(new Vec((float) GameConf.PRNG.nextDouble() * 2 - 1, (float) GameConf.PRNG.nextDouble() * 2f - 1));
 			BossStructure.EXPLOSION_PARTICLES.spawn(scene, randPos);
 		}
 	}
@@ -275,7 +283,7 @@ public final class BossStructure extends Structure implements Configurable {
 	/**
 	 * Phase 3: Door will be destroyed. Camera focus moves back to
 	 * {@link Player}.
-	 * 
+	 *
 	 * @param scene
 	 *            the scene
 	 * @param timer

@@ -1,8 +1,7 @@
 package ragnarok.logic.gui;
 
 import ragnarok.core.GameGrid;
-import ragnarok.core.GuiElement;
-import ragnarok.core.IScene;
+import ragnarok.logic.IScene;
 import ragnarok.primitives.time.Timer;
 
 /**

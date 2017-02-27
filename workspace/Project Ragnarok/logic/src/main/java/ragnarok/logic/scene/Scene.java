@@ -12,11 +12,11 @@ import java.util.function.Function;
 
 import ragnarok.config.GameConf;
 import ragnarok.core.CameraTarget;
-import ragnarok.core.GameElement;
 import ragnarok.core.GameTime;
-import ragnarok.core.GuiElement;
-import ragnarok.core.IScene;
 import ragnarok.logic.GameModel;
+import ragnarok.logic.IScene;
+import ragnarok.logic.gameelements.GameElement;
+import ragnarok.logic.gui.GuiElement;
 
 /**
  * Based on the concept of scenes in Unity. <br>

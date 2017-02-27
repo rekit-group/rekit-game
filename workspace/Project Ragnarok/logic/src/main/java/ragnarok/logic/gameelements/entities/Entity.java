@@ -1,9 +1,9 @@
 package ragnarok.logic.gameelements.entities;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.GameElement;
 import ragnarok.core.GameTime;
 import ragnarok.core.Team;
+import ragnarok.logic.gameelements.GameElement;
 import ragnarok.logic.gameelements.entities.state.DefaultState;
 import ragnarok.logic.gameelements.entities.state.EntityState;
 import ragnarok.logic.gameelements.entities.state.NotInitializedState;

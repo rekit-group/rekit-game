@@ -1,5 +1,6 @@
-package ragnarok.core;
+package ragnarok.logic;
 
+import ragnarok.logic.gameelements.GameElement;
 import ragnarok.primitives.geometry.Direction;
 import ragnarok.primitives.geometry.Frame;
 

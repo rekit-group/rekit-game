@@ -1,8 +1,8 @@
 package ragnarok.logic.gameelements.entities.enemies.bosses.rocketboss;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.GameElement;
 import ragnarok.core.GameGrid;
+import ragnarok.logic.gameelements.GameElement;
 import ragnarok.logic.gameelements.entities.enemies.bosses.rocketboss.damagestate.DamageState;
 import ragnarok.logic.gameelements.entities.enemies.bosses.rocketboss.damagestate.State3;
 import ragnarok.logic.gameelements.inanimate.Inanimate;

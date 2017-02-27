@@ -5,8 +5,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.GameElement;
-import ragnarok.core.IScene;
+import ragnarok.logic.IScene;
 import ragnarok.logic.gameelements.inanimate.EndTrigger;
 import ragnarok.logic.gameelements.inanimate.Inanimate;
 import ragnarok.logic.gameelements.inanimate.InanimateBox;

@@ -9,11 +9,11 @@ import ragnarok.logic.level.LevelManager;
 final class LevelOfTheDayScene extends LevelScene {
 	/**
 	 * Create a new LOTD Scene.
-	 * 
+	 *
 	 * @param model
 	 *            the model
 	 */
-	public LevelOfTheDayScene(GameModel model) {
+	private LevelOfTheDayScene(GameModel model) {
 		super(model, LevelManager.getLOTDLevel());
 	}
 

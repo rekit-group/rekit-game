@@ -2,8 +2,7 @@ package ragnarok.logic.gui;
 
 import ragnarok.config.GameConf;
 import ragnarok.core.GameGrid;
-import ragnarok.core.GuiElement;
-import ragnarok.core.IScene;
+import ragnarok.logic.IScene;
 import ragnarok.logic.gameelements.entities.Player;
 import ragnarok.primitives.geometry.Vec;
 import ragnarok.util.TextOptions;

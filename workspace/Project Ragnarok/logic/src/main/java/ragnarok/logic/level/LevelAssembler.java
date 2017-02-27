@@ -3,7 +3,7 @@ package ragnarok.logic.level;
 import java.io.IOException;
 import java.io.InputStream;
 
-import ragnarok.core.GameElement;
+import ragnarok.logic.gameelements.GameElement;
 
 /**
  * <p>

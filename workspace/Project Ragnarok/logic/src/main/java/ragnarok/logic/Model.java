@@ -1,6 +1,5 @@
 package ragnarok.logic;
 
-import ragnarok.core.IScene;
 import ragnarok.logic.gameelements.entities.Entity;
 import ragnarok.logic.gui.menu.MenuItem;
 import ragnarok.primitives.image.Filter;

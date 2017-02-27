@@ -1,7 +1,11 @@
-package ragnarok.core;
+package ragnarok.logic.gameelements;
 
 import ragnarok.config.GameConf;
+import ragnarok.core.GameGrid;
+import ragnarok.core.Team;
 import ragnarok.core.Team.Range;
+import ragnarok.logic.Collidable;
+import ragnarok.logic.IScene;
 import ragnarok.primitives.geometry.Direction;
 import ragnarok.primitives.geometry.Frame;
 import ragnarok.primitives.geometry.Vec;

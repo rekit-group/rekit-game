@@ -30,7 +30,7 @@ final class MainMenu extends Scene {
 	 * @param model
 	 *            the model
 	 */
-	public MainMenu(GameModel model) {
+	private MainMenu(GameModel model) {
 		super(model);
 	}
 

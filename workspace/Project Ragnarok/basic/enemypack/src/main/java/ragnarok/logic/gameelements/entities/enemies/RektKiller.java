@@ -1,8 +1,8 @@
 package ragnarok.logic.gameelements.entities.enemies;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.GameElement;
 import ragnarok.core.GameGrid;
+import ragnarok.logic.gameelements.GameElement;
 import ragnarok.logic.gameelements.entities.Entity;
 import ragnarok.logic.gameelements.type.Enemy;
 import ragnarok.primitives.geometry.Direction;

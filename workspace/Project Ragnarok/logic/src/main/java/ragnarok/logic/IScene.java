@@ -1,10 +1,12 @@
-package ragnarok.core;
+package ragnarok.logic;
 
 import java.util.Map;
 import java.util.function.Function;
 
-import ragnarok.logic.Model;
+import ragnarok.core.CameraTarget;
+import ragnarok.logic.gameelements.GameElement;
 import ragnarok.logic.gameelements.entities.Player;
+import ragnarok.logic.gui.GuiElement;
 import ragnarok.logic.gui.menu.MenuItem;
 import ragnarok.logic.scene.Scenes;
 

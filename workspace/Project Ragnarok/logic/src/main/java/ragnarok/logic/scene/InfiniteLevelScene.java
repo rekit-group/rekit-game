@@ -9,11 +9,11 @@ import ragnarok.logic.level.LevelManager;
 final class InfiniteLevelScene extends LevelScene {
 	/**
 	 * Create a new scene.
-	 * 
+	 *
 	 * @param model
 	 *            the model
 	 */
-	public InfiniteLevelScene(GameModel model) {
+	private InfiniteLevelScene(GameModel model) {
 		super(model, LevelManager.getInfiniteLevel());
 	}
 

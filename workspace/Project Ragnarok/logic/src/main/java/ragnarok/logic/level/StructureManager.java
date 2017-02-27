@@ -12,7 +12,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.GameElement;
+import ragnarok.logic.gameelements.GameElement;
 import ragnarok.logic.gameelements.GameElementFactory;
 import ragnarok.logic.gameelements.entities.Player;
 import ragnarok.logic.gameelements.inanimate.EndTrigger;

@@ -1,7 +1,7 @@
 package ragnarok.logic.gameelements.inanimate.filters;
 
 import ragnarok.core.GameGrid;
-import ragnarok.core.GameElement;
+import ragnarok.logic.gameelements.GameElement;
 import ragnarok.logic.gameelements.inanimate.Inanimate;
 import ragnarok.logic.gameelements.type.DynamicInanimate;
 import ragnarok.primitives.geometry.Direction;

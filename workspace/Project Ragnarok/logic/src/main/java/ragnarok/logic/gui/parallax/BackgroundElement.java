@@ -1,7 +1,7 @@
 package ragnarok.logic.gui.parallax;
 
-import ragnarok.core.GameElement;
 import ragnarok.core.Team;
+import ragnarok.logic.gameelements.GameElement;
 import ragnarok.primitives.geometry.Direction;
 import ragnarok.primitives.geometry.Frame;
 import ragnarok.primitives.geometry.Vec;

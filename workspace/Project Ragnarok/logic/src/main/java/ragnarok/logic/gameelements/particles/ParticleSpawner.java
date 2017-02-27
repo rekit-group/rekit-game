@@ -4,7 +4,7 @@ import home.fox.configuration.Configurable;
 import home.fox.configuration.annotations.NoSet;
 import home.fox.configuration.annotations.SetterInfo;
 import ragnarok.config.GameConf;
-import ragnarok.core.IScene;
+import ragnarok.logic.IScene;
 import ragnarok.primitives.geometry.Polygon;
 import ragnarok.primitives.geometry.Vec;
 
