@@ -107,9 +107,23 @@ public enum Team {
 		 *            the {@link #max}
 		 */
 		private Range(byte min, byte max) {
+			this(min, max, min);
+		}
+
+		/**
+		 * Create a range.
+		 *
+		 * @param min
+		 *            the {@link #min}
+		 * @param max
+		 *            the {@link #max}
+		 * @param std
+		 *            the standard value {@link #std}
+		 */
+		private Range(byte min, byte max, byte std) {
 			this.min = min;
 			this.max = max;
-			this.std = min;
+			this.std = std;
 		}
 
 		/**
@@ -129,5 +143,13 @@ public enum Team {
 			return (byte) expected;
 		}
 
+		/**
+		 * Get the standard value.
+		 * 
+		 * @return the std value
+		 */
+		public byte getStd() {
+			return this.std;
+		}
 	}
 }

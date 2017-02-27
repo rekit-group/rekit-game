@@ -21,12 +21,21 @@ public final class RandomMode implements Filter {
 	 * The mapping for all colors.
 	 */
 	private Integer[] map = new Integer[256 << 16];
+	/**
+	 * Indicates whether the internal state has been changed.
+	 */
 	private boolean changed = false;
 
+	/**
+	 * Create a new RandomMode filter.
+	 */
 	public RandomMode() {
 		ThreadUtils.runDaemon(RandomMode.class.getSimpleName(), this::periodicallyReset);
 	}
 
+	/**
+	 * Update random values periodically.
+	 */
 	private void periodicallyReset() {
 		while (true) {
 			synchronized (this) {
@@ -47,12 +56,10 @@ public final class RandomMode implements Filter {
 	 */
 	private synchronized RGBAColor getMapping(RGBAColor color) {
 		if (this.map[color.red + (color.green << 8) + (color.blue << 16)] == null) {
-			if (this.map[color.red + (color.green << 8) + (color.blue << 16)] == null) {
-				int red = GameConf.PRNG.nextInt(256);
-				int green = GameConf.PRNG.nextInt(256);
-				int blue = GameConf.PRNG.nextInt(256);
-				this.map[color.red + (color.green << 8) + (color.blue << 16)] = (red << 16) | (green << 8) | blue;
-			}
+			int red = GameConf.PRNG.nextInt(256);
+			int green = GameConf.PRNG.nextInt(256);
+			int blue = GameConf.PRNG.nextInt(256);
+			this.map[color.red + (color.green << 8) + (color.blue << 16)] = (red << 16) | (green << 8) | blue;
 		}
 		return new RGBAColor(this.map[color.red + (color.green << 8) + (color.blue << 16)] | (color.alpha << 24));
 	}

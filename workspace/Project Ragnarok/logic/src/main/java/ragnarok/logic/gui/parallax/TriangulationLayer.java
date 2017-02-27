@@ -69,12 +69,6 @@ public class TriangulationLayer extends ParallaxLayer {
 				this.lastIterationEdge = new Edge(this.lastIterationEdge.end, nextCorner);
 			}
 		}
-
-		/*
-		 * synchronized (this.synchronize()) { Iterator<Triangle> it =
-		 * this.triangles.iterator(); while (it.hasNext()) { Triangle t =
-		 * it.next(); if (t.getCorner(0)) } }
-		 */
 	}
 
 	public void recursiveTriangulation(List<Triangle> yet, int depthLeft, Triangle triangle) {

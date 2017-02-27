@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Queue;
 import java.util.TreeMap;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Function;
 
 import ragnarok.config.GameConf;
@@ -67,6 +69,10 @@ abstract class Scene implements CameraTarget, IScene {
 	 * Stats of the gameElements for debugging.
 	 */
 	private Map<String, Long> gameElementDurations = new TreeMap<>();
+	/**
+	 * The lock to synchronize access to {@link #gameElementDurations}.
+	 */
+	private final Lock gameElementDurationsLock = new ReentrantLock();
 	/**
 	 * Indicates whether the scene is paused.
 	 */
@@ -189,7 +195,8 @@ abstract class Scene implements CameraTarget, IScene {
 
 		// Debug: Compare and save logicLoop Duration
 		if (GameConf.DEBUG) {
-			synchronized (this.gameElementDurations) {
+			try {
+				this.gameElementDurationsLock.lock();
 				long timeAfter = GameTime.getTime();
 				String clazz = e.getClass().getSimpleName();
 				long dur = (timeAfter - timeBefore);
@@ -199,6 +206,8 @@ abstract class Scene implements CameraTarget, IScene {
 				} else {
 					this.gameElementDurations.put(clazz, dur);
 				}
+			} finally {
+				this.gameElementDurationsLock.unlock();
 			}
 		}
 	}
@@ -311,12 +320,15 @@ abstract class Scene implements CameraTarget, IScene {
 
 	@Override
 	public Map<String, Long> getGameElementDurations() {
-		synchronized (this.gameElementDurations) {
-			// Reset debug info
+		this.gameElementDurationsLock.lock();
+		try {
 			Map<String, Long> ret = this.gameElementDurations;
 			this.gameElementDurations = new TreeMap<>();
 			return ret;
+		} finally {
+			this.gameElementDurationsLock.unlock();
 		}
+
 	}
 
 	@Override

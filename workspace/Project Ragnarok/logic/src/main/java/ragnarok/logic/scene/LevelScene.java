@@ -128,8 +128,8 @@ public abstract class LevelScene extends Scene {
 	}
 
 	/**
-	 * Perform tasks on the end of the game (level)
-	 * 
+	 * Perform tasks on the end of the game (level).
+	 *
 	 * @param won
 	 *            indicates whether successful or died
 	 */

@@ -21,8 +21,8 @@ import ragnarok.logic.level.parser.token.UnexpectedTokenException;
  */
 public final class LevelParser {
 	/**
-	 * Parse a level
-	 * 
+	 * Parse a level.
+	 *
 	 * @param input
 	 *            the definitions
 	 * @param manager
@@ -35,7 +35,7 @@ public final class LevelParser {
 	/**
 	 * The original string.
 	 */
-	protected final String input;
+	private final String input;
 
 	/**
 	 * The tokenizer.

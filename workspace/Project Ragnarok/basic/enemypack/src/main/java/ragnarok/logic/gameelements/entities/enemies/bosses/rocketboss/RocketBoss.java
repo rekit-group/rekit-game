@@ -1,8 +1,8 @@
 package ragnarok.logic.gameelements.entities.enemies.bosses.rocketboss;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
+import ragnarok.core.GameGrid;
 import ragnarok.logic.gameelements.entities.enemies.bosses.rocketboss.damagestate.DamageState;
 import ragnarok.logic.gameelements.entities.enemies.bosses.rocketboss.damagestate.State3;
 import ragnarok.logic.gameelements.inanimate.Inanimate;
@@ -40,7 +40,7 @@ public class RocketBoss extends Boss {
 	private static RGBColor MOUTH_BG_COL = new RGBColor(200, 200, 200);
 
 	/**
-	 * Standard constructor
+	 * Standard constructor.
 	 */
 	public RocketBoss() {
 

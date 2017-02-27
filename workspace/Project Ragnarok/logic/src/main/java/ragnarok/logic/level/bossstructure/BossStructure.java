@@ -141,8 +141,19 @@ public final class BossStructure extends Structure implements Configurable {
 	 *            the scene
 	 */
 	public void endBattle(IScene scene) {
-		final Player player = scene.getPlayer();
+		// Create thread for asynchronous stuff
+		ThreadUtils.runThread("BossRoom-End", () -> this.endAnimation(scene));
+	}
 
+	/**
+	 * This method will invoked in a separate thread to perform the end
+	 * animation of the Boss.
+	 *
+	 * @param scene
+	 *            the scene
+	 */
+	private final void endAnimation(IScene scene) {
+		final Player player = scene.getPlayer();
 		final Timer timer = new Timer(7000);
 
 		// Needed for animating camera movement
@@ -156,42 +167,52 @@ public final class BossStructure extends Structure implements Configurable {
 				this.door.getPos().getY(), //
 				this.door.getPos().getY() - 10 //
 		);
+		// save Players current velocity
+		Vec[] save = { player.getVel(), player.getPos(), this.boss.getPos() };
+		// while timer has time left...
+		while (!timer.timeUp()) {
+			// freeze player and pos
+			player.setVel(new Vec());
+			player.setPos(save[1]);
+			this.boss.setVel(new Vec());
+			this.boss.setPos(save[2]);
+			// wait for time to be up
+			Timer.sleep(GameConf.LOGIC_DELTA);
+			this.phase(scene, timer, doorMover, cameraMover);
+			timer.logicLoop();
+		}
 
-		// Create thread for asynchronous stuff
-		ThreadUtils.runThread("BossRoom-End", () -> {
-			// save Players current velocity
-			Vec[] save = { player.getVel(), player.getPos(), this.boss.getPos() };
-			// while timer has time left...
-			while (!timer.timeUp()) {
-				// freeze player and pos
-				player.setVel(new Vec());
-				player.setPos(save[1]);
-				this.boss.setVel(new Vec());
-				this.boss.setPos(save[2]);
-				// wait for time to be up
-				Timer.sleep(GameConf.LOGIC_DELTA);
-				this.phase(scene, timer, doorMover, cameraMover);
-				timer.logicLoop();
-			}
-
-			// re-apply velocity to Player
-			player.setVel(save[0]);
-			// give player full health
-			if (player.getLives() < GameConf.PLAYER_LIVES) {
-				player.setLives(GameConf.PLAYER_LIVES);
-			}
-			// set camera back to player
-			player.resetCameraOffset();
-			scene.setCameraTarget(player);
-		});
+		// re-apply velocity to Player
+		player.setVel(save[0]);
+		// give player full health
+		if (player.getLives() < GameConf.PLAYER_LIVES) {
+			player.setLives(GameConf.PLAYER_LIVES);
+		}
+		// set camera back to player
+		player.resetCameraOffset();
+		scene.setCameraTarget(player);
 
 	}
 
-	// TODO JDoc.
+	/**
+	 * Determinate and invoke phase.
+	 *
+	 * @param scene
+	 *            the scene
+	 * @param timer
+	 *            the timer
+	 * @param doorMover
+	 *            the door mover
+	 * @param cameraMover
+	 *            the camera mover
+	 * @see #phase1(IScene)
+	 * @see #phase2(IScene, Timer, Progress)
+	 * @see #phase3(IScene, Timer, Progress)
+	 */
 	private final void phase(IScene scene, Timer timer, Progress doorMover, Progress cameraMover) {
 		// phase one: show explosions
 		if (timer.getProgress() < 0.4) {
-			this.phase1(scene, timer);
+			this.phase1(scene);
 		}
 		// phase two: show fireworks
 		else if (timer.getProgress() < 0.9) {
@@ -203,7 +224,14 @@ public final class BossStructure extends Structure implements Configurable {
 		}
 	}
 
-	private final void phase1(IScene scene, Timer timer) {
+	/**
+	 * Phase 1: {@link #EXPLOSION_PARTICLES} will shown and {@link Boss}
+	 * wobbles.
+	 *
+	 * @param scene
+	 *            the scene
+	 */
+	private final void phase1(IScene scene) {
 		if (GameConf.PRNG.nextDouble() > 0.9) {
 			Vec randPos = BossStructure.this.boss.getPos()
 					.add(new Vec((float) GameConf.PRNG.nextDouble() * 2 - 1, (float) GameConf.PRNG.nextDouble() * 2f - 1));
@@ -211,14 +239,25 @@ public final class BossStructure extends Structure implements Configurable {
 		}
 	}
 
+	/**
+	 * Phase 2: {@link #FIREWORKS_PARTICLES} will shown and door moves up
+	 * (opens).
+	 *
+	 * @param scene
+	 *            the scene
+	 * @param timer
+	 *            the timer to determinate door movement progress
+	 * @param doorMover
+	 *            the door mover
+	 */
 	private final void phase2(IScene scene, Timer timer, Progress doorMover) {
 		// remove boss of last phase
-		scene.markForRemove(BossStructure.this.boss);
+		scene.markForRemove(this.boss);
 
 		// show fireworks
 		if (GameConf.PRNG.nextDouble() > 0.9) {
 			float deltaX = GameConf.GRID_W / 2f;
-			float midX = BossStructure.this.levelX + deltaX;
+			float midX = this.levelX + deltaX;
 
 			float deltaY = GameConf.GRID_H / 2f;
 			float midY = deltaY;
@@ -230,9 +269,20 @@ public final class BossStructure extends Structure implements Configurable {
 
 		// open door slowly
 		float prog = (timer.getProgress() - 0.4f) * 2f;
-		BossStructure.this.door.setPos(BossStructure.this.door.getPos().setY(doorMover.getNow(prog)));
+		this.door.setPos(this.door.getPos().setY(doorMover.getNow(prog)));
 	}
 
+	/**
+	 * Phase 3: Door will be destroyed. Camera focus moves back to
+	 * {@link Player}.
+	 * 
+	 * @param scene
+	 *            the scene
+	 * @param timer
+	 *            the timer to determinate camera movement progress
+	 * @param cameraMover
+	 *            the camera mover
+	 */
 	private final void phase3(IScene scene, Timer timer, Progress cameraMover) {
 		// remove door of last phase
 		this.door.destroy();
