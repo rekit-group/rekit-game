@@ -8,7 +8,7 @@ import java.util.Queue;
 import java.util.TreeMap;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.function.Function;
+import java.util.function.Consumer;
 
 import ragnarok.config.GameConf;
 import ragnarok.core.CameraTarget;
@@ -290,13 +290,18 @@ abstract class Scene implements CameraTarget, IScene {
 	}
 
 	@Override
-	public synchronized void applyToGameElements(Function<GameElement, Void> function) {
-		Arrays.stream(this.gameElements).forEach(list -> list.forEach(function::apply));
+	public synchronized void applyToGameElements(Consumer<GameElement> function) {
+		Arrays.stream(this.gameElements).forEach(list -> list.forEach(function::accept));
 	}
 
 	@Override
-	public synchronized void applyToGuiElements(Function<GuiElement, Void> function) {
-		this.guiElements.forEach(function::apply);
+	public synchronized void applyToNonNeutralGameElements(Consumer<GameElement> function) {
+		Arrays.stream(this.gameElements).forEach(list -> list.stream().filter(e -> !e.getTeam().isNeutral()).forEach(function::accept));
+	}
+
+	@Override
+	public synchronized void applyToGuiElements(Consumer<GuiElement> function) {
+		this.guiElements.forEach(function::accept);
 	}
 
 	@Override

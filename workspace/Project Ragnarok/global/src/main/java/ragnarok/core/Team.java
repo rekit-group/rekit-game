@@ -70,12 +70,12 @@ public enum Team {
 	}
 
 	/**
-	 * Is this the {@link Team#BACKGROUND Neutral-Team}.
+	 * Is this the {@link Team} neutral (no interactions possible).
 	 *
 	 * @return {@code true} if neutral, {@code false} otherwise
 	 */
 	public final boolean isNeutral() {
-		return this == Team.BACKGROUND;
+		return this == Team.BACKGROUND || this == Team.EFFECT;
 	}
 
 	/**
@@ -145,7 +145,7 @@ public enum Team {
 
 		/**
 		 * Get the standard value.
-		 * 
+		 *
 		 * @return the std value
 		 */
 		public byte getStd() {

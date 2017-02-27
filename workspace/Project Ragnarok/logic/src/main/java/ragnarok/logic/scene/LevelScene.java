@@ -4,10 +4,13 @@
 package ragnarok.logic.scene;
 
 import java.awt.Font;
+import java.util.HashSet;
+import java.util.Set;
 
 import ragnarok.config.GameConf;
 import ragnarok.core.CameraTarget;
 import ragnarok.logic.GameModel;
+import ragnarok.logic.gameelements.GameElement;
 import ragnarok.logic.gameelements.GameElementFactory;
 import ragnarok.logic.gameelements.entities.Player;
 import ragnarok.logic.gui.LifeGui;
@@ -167,22 +170,19 @@ public abstract class LevelScene extends Scene {
 			return;
 		}
 
-		this.applyToGameElements((e1) -> {
-			if (!e1.getTeam().isNeutral()) {
-				this.applyToGameElements((e2) -> {
-					if (!e2.getTeam().isNeutral() && e1 != e2) {
-						e1.checkCollision(e2);
-					}
-					return null;
-				});
-			}
-			return null;
-		});
-		if (this.player.getDeleteMe())
-
-		{
+		this.checkCollisions();
+		if (this.player.getDeleteMe()) {
 			this.end(false);
 		}
+	}
+
+	/**
+	 * Check and Threat collisions.
+	 */
+	private void checkCollisions() {
+		Set<GameElement> elements = new HashSet<>();
+		this.applyToNonNeutralGameElements(elements::add);
+		elements.forEach(e1 -> elements.forEach(e1::checkCollision));
 	}
 
 	@Override

@@ -224,7 +224,6 @@ class GameView implements View {
 			} else {
 				classCounter.put(className, 1);
 			}
-			return null;
 		});
 
 		StringBuilder resultName = new StringBuilder().append("GameElements\n");
