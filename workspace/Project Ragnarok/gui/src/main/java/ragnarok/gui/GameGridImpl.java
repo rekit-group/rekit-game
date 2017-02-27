@@ -179,7 +179,7 @@ class GameGridImpl extends GameGrid {
 	private void drawImageImpl(Vec pos, Vec size, String imagePath) {
 		Image image = null;
 		Tuple<String, Filter> key = Tuple.create(imagePath, this.filter);
-		if (this.images.containsKey(key)) {
+		if (this.images.containsKey(key) && !(this.filter != null && this.filter.changed())) {
 			image = this.images.get(key);
 		} else {
 			image = ImageManagement.get(imagePath);

@@ -40,6 +40,16 @@ public interface Filter {
 	boolean isApplyImage();
 
 	/**
+	 * Indicates whether the internal state of the {@link Filter} has been
+	 * changed.
+	 * 
+	 * @return {@code true} if state changed, {@code false} otherwise
+	 */
+	default boolean changed() {
+		return false;
+	}
+
+	/**
 	 * Apply Filter.
 	 *
 	 * @param color

@@ -14,7 +14,6 @@ import ragnarok.core.GameElement;
 import ragnarok.core.GameTime;
 import ragnarok.core.GuiElement;
 import ragnarok.core.IScene;
-import ragnarok.core.Team;
 import ragnarok.logic.GameModel;
 
 /**
@@ -175,9 +174,9 @@ abstract class Scene implements CameraTarget, IScene {
 	protected void logicLoopGameElement(GameElement e) {
 
 		// if this GameElement is marked for destruction
-		// TODO This is a bugfix for inanimates which wont be deleted upon time
-		if (e.getDeleteMe() || (e.getTeam() == Team.INANIMATE && this.getModel().getCameraOffset() - 20 > e.getPos().getX())) {
+		if (e.getDeleteMe()) {
 			this.markForRemove(e);
+			return;
 		}
 
 		// Debug: Save time before logicLoop

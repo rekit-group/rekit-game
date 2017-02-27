@@ -1,10 +1,13 @@
 package ragnarok.logic.filters;
 
+import java.util.Arrays;
+
 import ragnarok.config.GameConf;
 import ragnarok.primitives.image.Filter;
 import ragnarok.primitives.image.RGBAColor;
 import ragnarok.primitives.image.RGBColor;
 import ragnarok.util.ReflectUtils.LoadMe;
+import ragnarok.util.ThreadUtils;
 
 /**
  * This filter realizes a filter which will map a color to a random color.
@@ -18,6 +21,21 @@ public final class RandomMode implements Filter {
 	 * The mapping for all colors.
 	 */
 	private Integer[] map = new Integer[256 << 16];
+	private boolean changed = false;
+
+	public RandomMode() {
+		ThreadUtils.runDaemon(RandomMode.class.getSimpleName(), this::periodicallyReset);
+	}
+
+	private void periodicallyReset() {
+		while (true) {
+			synchronized (this) {
+				Arrays.fill(this.map, null);
+				this.changed = true;
+			}
+			ThreadUtils.sleep(10000);
+		}
+	}
 
 	/**
 	 * Flyweight getter method for getting a random value between 1 and 255 for
@@ -27,18 +45,25 @@ public final class RandomMode implements Filter {
 	 *            the extrinsic, original color
 	 * @return the intrinsic, random color
 	 */
-	private RGBAColor getMapping(RGBAColor color) {
+	private synchronized RGBAColor getMapping(RGBAColor color) {
 		if (this.map[color.red + (color.green << 8) + (color.blue << 16)] == null) {
-			synchronized (this) {
-				if (this.map[color.red + (color.green << 8) + (color.blue << 16)] == null) {
-					int red = GameConf.PRNG.nextInt(256);
-					int green = GameConf.PRNG.nextInt(256);
-					int blue = GameConf.PRNG.nextInt(256);
-					this.map[color.red + (color.green << 8) + (color.blue << 16)] = (red << 16) | (green << 8) | blue;
-				}
+			if (this.map[color.red + (color.green << 8) + (color.blue << 16)] == null) {
+				int red = GameConf.PRNG.nextInt(256);
+				int green = GameConf.PRNG.nextInt(256);
+				int blue = GameConf.PRNG.nextInt(256);
+				this.map[color.red + (color.green << 8) + (color.blue << 16)] = (red << 16) | (green << 8) | blue;
 			}
 		}
 		return new RGBAColor(this.map[color.red + (color.green << 8) + (color.blue << 16)] | (color.alpha << 24));
+	}
+
+	@Override
+	public boolean changed() {
+		if (this.changed) {
+			this.changed = false;
+			return true;
+		}
+		return false;
 	}
 
 	/**
