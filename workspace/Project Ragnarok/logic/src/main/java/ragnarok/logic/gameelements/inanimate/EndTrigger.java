@@ -213,4 +213,8 @@ public final class EndTrigger extends InanimateTrigger {
 		return EndTrigger.instance;
 	}
 
+	@Override
+	public Integer getZHint() {
+		return (int) Team.TRIGGER.zRange.max;
+	}
 }

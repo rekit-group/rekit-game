@@ -30,7 +30,7 @@ public enum Team {
 	/**
 	 * A trigger.
 	 */
-	TRIGGER((byte) -120, (byte) -120),
+	TRIGGER((byte) -120, (byte) -90),
 	/**
 	 * An special effect.
 	 */

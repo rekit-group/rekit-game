@@ -15,6 +15,7 @@ import ragnarok.config.GameConf;
 import ragnarok.core.GameElement;
 import ragnarok.logic.gameelements.GameElementFactory;
 import ragnarok.logic.gameelements.entities.Player;
+import ragnarok.logic.gameelements.inanimate.EndTrigger;
 import ragnarok.logic.gameelements.inanimate.Inanimate;
 import ragnarok.logic.gameelements.inanimate.InanimateTrigger;
 import ragnarok.logic.gameelements.type.Boss;
@@ -371,7 +372,7 @@ public class StructureManager extends Configurable implements Iterator<Structure
 	 */
 	private Structure getEndStructure() {
 
-		String verticalTrigger = "ragnarok.ragnarok.logic.gameelements.inanimate.EndTrigger";
+		String verticalTrigger = EndTrigger.class.getSimpleName();
 		// Vertical wall
 
 		List<String[]> lines = new ArrayList<>();
