@@ -122,7 +122,6 @@ public abstract class Boss extends Entity {
 
 	@Override
 	public final void destroy() {
-		super.destroy();
 		this.bossStructure.endBattle(this.getScene());
 		this.isHarmless = true;
 	}

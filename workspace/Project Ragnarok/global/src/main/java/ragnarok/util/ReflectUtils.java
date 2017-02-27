@@ -54,7 +54,7 @@ public final class ReflectUtils {
 				c.setAccessible(true);
 				objects.add((T) c.newInstance());
 			} catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-				GameConf.GAME_LOGGER.error(clazz.getSimpleName() + " not loaded !");
+				GameConf.GAME_LOGGER.debug(clazz.getSimpleName() + " not loaded !");
 			}
 		}
 		return objects;

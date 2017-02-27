@@ -187,7 +187,7 @@ class GameGridImpl extends GameGrid {
 				image = ImageManagement.toImage(this.filter.apply(ImageManagement.getAsAbstractImage(imagePath)));
 			}
 			this.images.put(key, image);
-			GameConf.GAME_LOGGER.info("GameGrid: Image Cache Miss: " + key);
+			GameConf.GAME_LOGGER.debug("GameGrid: Image Cache Miss: " + key);
 		}
 
 		this.graphics.drawImage(image, // image

@@ -1,10 +1,8 @@
 package ragnarok.logic.gameelements.inanimate;
 
-import org.apache.log4j.Level;
-
 import ragnarok.config.GameConf;
-import ragnarok.core.GameGrid;
 import ragnarok.core.GameElement;
+import ragnarok.core.GameGrid;
 import ragnarok.core.Team;
 import ragnarok.logic.gameelements.entities.Player;
 import ragnarok.logic.gameelements.particles.ParticleSpawner;
@@ -77,8 +75,6 @@ public final class ReflectionBox extends DynamicInanimate {
 			} else {
 				v = new Vec(dir.getVector().getX() * GameConf.PLAYER_WALK_MAX_SPEED, 0.8f * GameConf.PLAYER_JUMP_BOOST);
 			}
-
-			GameConf.GAME_LOGGER.log(Level.DEBUG, dir + ": " + v.toString() + " => " + element.getVel().toString(), null);
 
 			// use internal collision
 			super.reactToCollision(element, dir);

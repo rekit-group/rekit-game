@@ -115,7 +115,7 @@ final class ControllerImpl implements Observer, Controller, CommandSupervisor {
 			this.mpCmd.get(idKey).execute(inputMethod);
 			return;
 		}
-		GameConf.GAME_LOGGER.warn("No Event defined for Key-ID: " + id + " State: " + this.model.getState());
+		GameConf.GAME_LOGGER.debug("No Event defined for Key-ID: " + id + " State: " + this.model.getState());
 
 	}
 

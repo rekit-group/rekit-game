@@ -12,8 +12,7 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-import org.apache.log4j.Logger;
-
+import ragnarok.config.GameConf;
 import ragnarok.primitives.image.AbstractImage;
 
 /**
@@ -55,7 +54,7 @@ public final class ImageManagement {
 					try {
 						ImageManagement.CACHE.put(src, ImageManagement.convertToRGB(ImageIO.read(res)));
 					} catch (IOException e) {
-						Logger.getRootLogger().warn("Image " + src + " not found!");
+						GameConf.GAME_LOGGER.warn("Image " + src + " not found!");
 					}
 				}
 			}
@@ -142,7 +141,7 @@ public final class ImageManagement {
 			res = new BufferedImage(image.getWidth(), image.getHeight(), colormodel);
 			new ColorConvertOp(null).filter(image, res);
 		} catch (RuntimeException e) {
-			Logger.getRootLogger().error("Image could not be converted to (A)RGB.");
+			GameConf.GAME_LOGGER.error("Image could not be converted to (A)RGB.");
 			return image;
 		}
 		return res;
