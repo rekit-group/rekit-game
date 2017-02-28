@@ -76,8 +76,29 @@ public final class LevelManager {
 			return Integer.compare(Integer.parseInt(n1), Integer.parseInt(n2));
 		}).forEach(LevelManager::addLevel);
 
+		LevelManager.loadInfiniteLevels();
+		LevelManager.loadBossRushLevel();
+
 		notNumbered.sorted((r1, r2) -> r1.toString().compareToIgnoreCase(r2.toString())).forEach(LevelManager::addLevel);
 
+	}
+
+	private static void loadInfiniteLevels() throws IOException {
+		PathMatchingResourcePatternResolver resolv = new PathMatchingResourcePatternResolver();
+		Resource level = resolv.getResource("/levels/infinite.dat");
+		// Infinite
+		LevelManager.addLevel(new Level(level.getFilename(), level.getInputStream(), Type.INFINITE));
+		// LOTD
+		Level lotd = new Level(level.getFilename(), level.getInputStream(), Type.LOTD);
+		DateFormat levelOfTheDayFormat = new SimpleDateFormat("ddMMyyyy");
+		int seed = Integer.parseInt(levelOfTheDayFormat.format(Calendar.getInstance().getTime()));
+		lotd.setSeed(seed);
+		LevelManager.addLevel(lotd);
+
+	}
+
+	private static void loadBossRushLevel() {
+		LevelManager.addLevel(new Level(null, null, Type.BOSS_RUSH));
 	}
 
 	/**
@@ -88,7 +109,7 @@ public final class LevelManager {
 	 */
 	private static void addLevel(Resource level) {
 		try {
-			LevelManager.addLevel(level.getFilename(), level.getInputStream());
+			LevelManager.addArcadeLevel(level.getFilename(), level.getInputStream());
 		} catch (IOException e) {
 			GameConf.GAME_LOGGER.error("Loading of " + level + " failed");
 		}
@@ -102,19 +123,7 @@ public final class LevelManager {
 	 * @param levelStructure
 	 *            the level structure
 	 */
-	public static synchronized void addLevel(String name, InputStream levelStructure) {
-		if (name.contains("infinite")) {
-			// Infinite
-			LevelManager.addLevel(new Level(name, levelStructure, Type.INFINITE));
-
-			// LOTD
-			Level lotd = new Level(name, levelStructure, Type.LOTD);
-			DateFormat levelOfTheDayFormat = new SimpleDateFormat("ddMMyyyy");
-			int seed = Integer.parseInt(levelOfTheDayFormat.format(Calendar.getInstance().getTime()));
-			lotd.setSeed(seed);
-			LevelManager.addLevel(lotd);
-			return;
-		}
+	public static synchronized void addArcadeLevel(String name, InputStream levelStructure) {
 		LevelManager.addLevel(new Level(name, levelStructure, Type.ARCADE));
 	}
 
@@ -134,6 +143,15 @@ public final class LevelManager {
 	 */
 	public static synchronized Level getLOTDLevel() {
 		return LevelManager.getLevelById("" + Level.Type.LOTD);
+	}
+
+	/**
+	 * Get the boss rush level.
+	 *
+	 * @return the level-of-the-day level
+	 */
+	public static synchronized Level getBossRushLevel() {
+		return LevelManager.getLevelById("" + Level.Type.BOSS_RUSH);
 	}
 
 	/**

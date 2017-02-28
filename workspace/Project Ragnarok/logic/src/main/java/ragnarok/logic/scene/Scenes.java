@@ -32,7 +32,11 @@ public enum Scenes {
 	/**
 	 * An arcade level.
 	 */
-	ARCADE(ArcadeLevelScene.class);
+	ARCADE(ArcadeLevelScene.class),
+	/**
+	 * An boss rush level.
+	 */
+	BOSS_RUSH(BossRushScene.class);
 	/**
 	 * The scene class.
 	 */

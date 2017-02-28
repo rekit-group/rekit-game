@@ -58,6 +58,11 @@ final class MainMenu extends Scene {
 
 		MenuActionItem inf = new MenuActionItem(this, "Infinite Fun", () -> this.getModel().switchScene(Scenes.INFINITE));
 		MenuActionItem lod = new MenuActionItem(this, "Level of the Day", () -> this.getModel().switchScene(Scenes.LOD));
+		MenuActionItem bossRush = new MenuActionItem(this, "Boss Rush", () -> this.getModel().switchScene(Scenes.BOSS_RUSH));
+
+		MenuList top3 = new MenuList(this, "TOP 3 Levels");
+		top3.addItem(inf, lod, bossRush);
+
 		MenuGrid arcade = new MenuGrid(this, "Arcade Mode", 6, 100, 100);
 
 		for (int i = 0; i < LevelManager.getNumberOfArcadeLevels(); i++) {
@@ -72,7 +77,7 @@ final class MainMenu extends Scene {
 		modPlay.addItem(new MenuActionItem(this, "no Mod Scenes :(", () -> {
 		}));
 
-		play.addItem(inf, lod, arcade, modPlay);
+		play.addItem(top3, arcade, modPlay);
 
 		MenuList settings = new MenuList(this, "Settings");
 		settings.addItem(new BoolSetting(this, "Debug Mode", "DEBUG"));

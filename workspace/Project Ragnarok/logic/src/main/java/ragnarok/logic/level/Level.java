@@ -11,6 +11,7 @@ import ragnarok.config.GameConf;
  *
  */
 public final class Level implements Comparable<Level> {
+
 	/**
 	 * The type of a level.
 	 *
@@ -29,7 +30,11 @@ public final class Level implements Comparable<Level> {
 		/**
 		 * Arcade level.
 		 */
-		ARCADE;
+		ARCADE,
+		/**
+		 * Boss Rush Mode.
+		 */
+		BOSS_RUSH;
 		/**
 		 * Same as {@link #valueOf(String)}, but no exception.
 		 *
@@ -117,8 +122,8 @@ public final class Level implements Comparable<Level> {
 	public Level(String name, InputStream levelStructure, Type type) {
 		this.type = type;
 		this.data = levelStructure;
-		this.name = name;
-		if (type == Type.INFINITE || type == Type.LOTD) {
+		this.name = name == null ? type.toString() : name;
+		if (type == Type.INFINITE || type == Type.LOTD || type == Type.BOSS_RUSH) {
 			this.stringID = "" + this.type;
 		} else {
 			this.stringID = Type.ARCADE + "-" + Level.nextLevel();
@@ -169,7 +174,7 @@ public final class Level implements Comparable<Level> {
 	public LevelAssembler getLevelAssember() {
 		if (this.levelAssembler == null) {
 			try {
-				this.levelAssembler = new LevelAssembler(this.data, this.levelSeed);
+				this.levelAssembler = new LevelAssembler(this.data, this.levelSeed, this.type);
 			} catch (IOException e) {
 				GameConf.GAME_LOGGER.error("Cannot instantiate level assembler for level " + this);
 			}

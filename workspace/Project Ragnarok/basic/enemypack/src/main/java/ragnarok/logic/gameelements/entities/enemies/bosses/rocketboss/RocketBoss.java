@@ -95,7 +95,7 @@ public class RocketBoss extends Boss {
 
 	@Override
 	public BossStructure getBossStructure() {
-		String i = Inanimate.class.getName();
+		String i = Inanimate.class.getSimpleName();
 		String n = null;
 
 		String[][] struct = new String[][] { //
