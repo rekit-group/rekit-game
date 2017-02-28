@@ -138,7 +138,7 @@ public class ParticleSpawner implements Configurable {
 
 			this.polygon.moveTo(pos);
 
-			Particle p = this.particlePrototype.clone();
+			Particle p = this.particlePrototype.create();
 			p.setProperties(this.polygon, pos, randomTime, this.size.randomize(), this.speed.randomize(), this.rotation.randomize(),
 					this.angle.randomize(), this.colorR.randomize(), this.colorG.randomize(), this.colorB.randomize(), this.colorA.randomize());
 

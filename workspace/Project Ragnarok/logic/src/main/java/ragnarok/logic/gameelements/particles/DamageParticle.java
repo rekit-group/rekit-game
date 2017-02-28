@@ -31,7 +31,7 @@ public abstract class DamageParticle extends Particle {
 	}
 
 	@Override
-	public abstract DamageParticle clone();
+	public abstract DamageParticle create();
 
 	@Override
 	public Frame getCollisionFrame() {

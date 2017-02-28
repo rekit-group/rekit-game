@@ -36,7 +36,7 @@ public final class CannonParticle extends DamageParticle {
 	}
 
 	@Override
-	public DamageParticle clone() {
+	public DamageParticle create() {
 		return new CannonParticle(this.parent);
 	}
 
