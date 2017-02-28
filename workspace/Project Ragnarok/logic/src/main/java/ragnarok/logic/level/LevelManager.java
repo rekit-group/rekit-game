@@ -257,7 +257,7 @@ public final class LevelManager {
 			Scanner scanner = new Scanner(LevelManager.USER_DATA, Charset.defaultCharset().name());
 			while (scanner.hasNextLine()) {
 				String[] levelinfo = scanner.nextLine().split(":");
-				if (levelinfo.length != 2) {
+				if (levelinfo.length != 3) {
 					continue;
 				}
 				String name = levelinfo[0];

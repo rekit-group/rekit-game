@@ -65,10 +65,13 @@ final class InputHelperImpl implements InputHelper {
 	 */
 	@Override
 	public final void press(int code) {
-		this.lock.lock();
-		this.pressedKeys.add(code);
-		this.releasedKeys.remove(code);
-		this.lock.unlock();
+		try {
+			this.lock.lock();
+			this.pressedKeys.add(code);
+			this.releasedKeys.remove(code);
+		} finally {
+			this.lock.unlock();
+		}
 	}
 
 	/**
@@ -79,10 +82,13 @@ final class InputHelperImpl implements InputHelper {
 	 */
 	@Override
 	public final void release(int code) {
-		this.lock.lock();
-		this.releasedKeys.add(code);
-		this.pressedKeys.remove(code);
-		this.lock.unlock();
+		try {
+			this.lock.lock();
+			this.releasedKeys.add(code);
+			this.pressedKeys.remove(code);
+		} finally {
+			this.lock.unlock();
+		}
 	}
 
 	/**
@@ -115,9 +121,12 @@ final class InputHelperImpl implements InputHelper {
 	 */
 	private void notifyObservers() {
 		List<Observer> obs = new ArrayList<>();
-		this.observerLock.lock();
-		this.observers.forEach(obs::add);
-		this.observerLock.unlock();
+		try {
+			this.observerLock.lock();
+			this.observers.forEach(obs::add);
+		} finally {
+			this.observerLock.unlock();
+		}
 		obs.forEach(o -> o.update());
 
 	}
@@ -130,9 +139,12 @@ final class InputHelperImpl implements InputHelper {
 	 *            The Observer that wants to listen
 	 */
 	public void register(Observer observer) {
-		this.observerLock.lock();
-		this.observers.add(observer);
-		this.observerLock.unlock();
+		try {
+			this.observerLock.lock();
+			this.observers.add(observer);
+		} finally {
+			this.observerLock.unlock();
+		}
 	}
 
 	/**
@@ -143,9 +155,12 @@ final class InputHelperImpl implements InputHelper {
 	 *            The Observer that does not want to listen anymore
 	 */
 	public void unregister(Observer observer) {
-		this.observerLock.lock();
-		this.observers.remove(observer);
-		this.observerLock.unlock();
+		try {
+			this.observerLock.lock();
+			this.observers.remove(observer);
+		} finally {
+			this.observerLock.unlock();
+		}
 	}
 
 }

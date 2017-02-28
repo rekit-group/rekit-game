@@ -1,5 +1,5 @@
-BOSS_RUSH:BOSS_RUSH:40
-infinite.dat:INFINITE:0
+BOSS_RUSH:BOSS_RUSH:1000
+infinite.dat:INFINITE:64
 infinite.dat:LOTD:0
 infinite.dat:ARCADE:0
 level_0.dat:ARCADE:0
