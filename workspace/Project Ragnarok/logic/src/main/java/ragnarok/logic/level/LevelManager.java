@@ -46,8 +46,10 @@ public final class LevelManager {
 	private LevelManager() {
 	}
 
-	// Load LevelManager
-	static {
+	/**
+	 * Load levels.
+	 */
+	public static final synchronized void init() {
 		try {
 			LevelManager.loadAllLevels();
 		} catch (IOException e) {
@@ -121,7 +123,7 @@ public final class LevelManager {
 	 *
 	 * @return the infinite level
 	 */
-	public static Level getInfiniteLevel() {
+	public static synchronized Level getInfiniteLevel() {
 		return LevelManager.getLevelById("" + Level.Type.INFINITE);
 	}
 
@@ -130,7 +132,7 @@ public final class LevelManager {
 	 *
 	 * @return the level-of-the-day level
 	 */
-	public static Level getLOTDLevel() {
+	public static synchronized Level getLOTDLevel() {
 		return LevelManager.getLevelById("" + Level.Type.LOTD);
 	}
 
@@ -141,7 +143,7 @@ public final class LevelManager {
 	 *            the id
 	 * @return the arcade level
 	 */
-	public static Level getArcadeLevel(int arcadeId) {
+	public static synchronized Level getArcadeLevel(int arcadeId) {
 		return LevelManager.getLevelById(Level.Type.ARCADE + "-" + arcadeId);
 	}
 
@@ -162,7 +164,7 @@ public final class LevelManager {
 	 * @param level
 	 *            the level
 	 */
-	public static void addLevel(Level level) {
+	private static void addLevel(Level level) {
 		if (level == null) {
 			return;
 		}
@@ -174,14 +176,14 @@ public final class LevelManager {
 	 *
 	 * @return the number of arcade levels
 	 */
-	public static int getNumberOfArcadeLevels() {
+	public static synchronized int getNumberOfArcadeLevels() {
 		return (int) LevelManager.levelMap.values().stream().filter(Level.Type.ARCADE::hasType).count();
 	}
 
 	/**
 	 * This method shall be invoked to signalize a content change in a level.
 	 */
-	public static void contentChanged() {
+	public static synchronized void contentChanged() {
 		LevelManager.saveToFile();
 	}
 
@@ -194,6 +196,9 @@ public final class LevelManager {
 			Scanner scanner = new Scanner(LevelManager.USER_DATA, Charset.defaultCharset().name());
 			while (scanner.hasNextLine()) {
 				String[] levelinfo = scanner.nextLine().split(":");
+				if (levelinfo.length != 2) {
+					continue;
+				}
 				String name = levelinfo[0];
 				Type type = Type.byString(levelinfo[1]);
 				Level level = LevelManager.findByNameAndType(name, type);

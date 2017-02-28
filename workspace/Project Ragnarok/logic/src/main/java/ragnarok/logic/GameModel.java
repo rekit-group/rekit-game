@@ -4,6 +4,7 @@ import ragnarok.config.GameConf;
 import ragnarok.logic.gameelements.GameElementFactory;
 import ragnarok.logic.gameelements.entities.Entity;
 import ragnarok.logic.gui.menu.MenuItem;
+import ragnarok.logic.level.LevelManager;
 import ragnarok.logic.scene.Scenes;
 import ragnarok.primitives.image.Filter;
 import ragnarok.util.ThreadUtils;
@@ -52,6 +53,7 @@ public class GameModel implements Model {
 	 * Init game.
 	 */
 	private void init() {
+		LevelManager.init();
 		this.switchScene(Scenes.MENU);
 	}
 
