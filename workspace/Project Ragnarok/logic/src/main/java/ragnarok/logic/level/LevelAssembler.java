@@ -59,9 +59,9 @@ public class LevelAssembler {
 	private StructureManager bossRushManager(int seed) throws IOException {
 		StringBuilder builder = new StringBuilder();
 		builder.append("#SETTING::infinite->true").append("\n");
-		int idx = 25;
+		int idx = 5;
 		for (GameElement boss : Boss.getPrototypes()) {
-			builder.append("#BOSS_SETTING::AT" + (idx += 5) + "->" + boss.getClass().getSimpleName()).append("\n");
+			builder.append("#BOSS_SETTING::AT" + (idx += 50) + "->" + boss.getClass().getSimpleName()).append("\n");
 		}
 		builder.append("{{").append(Inanimate.class.getSimpleName()).append("}}");
 		ByteArrayInputStream is = new ByteArrayInputStream(builder.toString().getBytes());

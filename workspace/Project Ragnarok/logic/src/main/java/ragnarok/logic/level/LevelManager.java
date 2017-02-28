@@ -46,16 +46,23 @@ public final class LevelManager {
 	private LevelManager() {
 	}
 
+	private static boolean initialized = false;
+
 	/**
 	 * Load levels.
 	 */
 	public static final synchronized void init() {
+		if (LevelManager.initialized) {
+			return;
+		}
+		LevelManager.initialized = true;
 		try {
 			LevelManager.loadAllLevels();
 		} catch (IOException e) {
 			GameConf.GAME_LOGGER.error("Could not load levels " + e.getMessage());
 		}
 		LevelManager.loadInfoFromFile();
+
 	}
 
 	/**
@@ -124,6 +131,9 @@ public final class LevelManager {
 	 *            the level structure
 	 */
 	public static synchronized void addArcadeLevel(String name, InputStream levelStructure) {
+		if (!LevelManager.initialized) {
+			return;
+		}
 		LevelManager.addLevel(new Level(name, levelStructure, Type.ARCADE));
 	}
 
@@ -133,6 +143,9 @@ public final class LevelManager {
 	 * @return the infinite level
 	 */
 	public static synchronized Level getInfiniteLevel() {
+		if (!LevelManager.initialized) {
+			return null;
+		}
 		return LevelManager.getLevelById("" + Level.Type.INFINITE);
 	}
 
@@ -142,6 +155,9 @@ public final class LevelManager {
 	 * @return the level-of-the-day level
 	 */
 	public static synchronized Level getLOTDLevel() {
+		if (!LevelManager.initialized) {
+			return null;
+		}
 		return LevelManager.getLevelById("" + Level.Type.LOTD);
 	}
 
@@ -151,6 +167,9 @@ public final class LevelManager {
 	 * @return the level-of-the-day level
 	 */
 	public static synchronized Level getBossRushLevel() {
+		if (!LevelManager.initialized) {
+			return null;
+		}
 		return LevelManager.getLevelById("" + Level.Type.BOSS_RUSH);
 	}
 
@@ -162,6 +181,9 @@ public final class LevelManager {
 	 * @return the arcade level
 	 */
 	public static synchronized Level getArcadeLevel(int arcadeId) {
+		if (!LevelManager.initialized) {
+			return null;
+		}
 		return LevelManager.getLevelById(Level.Type.ARCADE + "-" + arcadeId);
 	}
 
@@ -195,6 +217,9 @@ public final class LevelManager {
 	 * @return the number of arcade levels
 	 */
 	public static synchronized int getNumberOfArcadeLevels() {
+		if (!LevelManager.initialized) {
+			return 0;
+		}
 		return (int) LevelManager.levelMap.values().stream().filter(Level.Type.ARCADE::hasType).count();
 	}
 
@@ -202,6 +227,9 @@ public final class LevelManager {
 	 * This method shall be invoked to signalize a content change in a level.
 	 */
 	public static synchronized void contentChanged() {
+		if (!LevelManager.initialized) {
+			return;
+		}
 		LevelManager.saveToFile();
 	}
 
