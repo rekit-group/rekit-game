@@ -4,17 +4,17 @@ import ragnarok.logic.GameModel;
 import ragnarok.logic.level.LevelManager;
 
 /**
- * This class realizes a LevelScene for lotd levels.
+ * This class realizes a LevelScene for BossRush levels.
  */
-final class LevelOfTheDayScene extends LevelScene {
+final class BossRushScene extends LevelScene {
 	/**
-	 * Create a new LOTD Scene.
+	 * Create a new BossRush Scene.
 	 *
 	 * @param model
 	 *            the model
 	 */
-	private LevelOfTheDayScene(GameModel model) {
-		super(model, LevelManager.getLOTDLevel());
+	private BossRushScene(GameModel model) {
+		super(model, LevelManager.getBossRushLevel());
 	}
 
 	/**
@@ -27,7 +27,7 @@ final class LevelOfTheDayScene extends LevelScene {
 	 * @return a new arcade scene.
 	 */
 	public static Scene create(GameModel model, String[] options) {
-		return new LevelOfTheDayScene(model);
+		return new BossRushScene(model);
 	}
 
 }

@@ -3,7 +3,7 @@ package ragnarok.logic.gui.parallax;
 import java.util.LinkedList;
 import java.util.List;
 
-import ragnarok.core.IScene;
+import ragnarok.logic.IScene;
 
 public class ParallaxContainer {
 

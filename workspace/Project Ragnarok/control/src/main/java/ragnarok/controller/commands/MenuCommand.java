@@ -1,6 +1,6 @@
 package ragnarok.controller.commands;
 
-import ragnarok.logic.GameState;
+import ragnarok.logic.Model.GameState;
 import ragnarok.logic.gui.menu.MenuItem;
 
 /**

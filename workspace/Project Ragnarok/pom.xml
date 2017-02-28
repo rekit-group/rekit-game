@@ -120,8 +120,8 @@
 			</dependency>
 			<dependency>
 				<groupId>com.github.fuchss-dominik</groupId>
-				<artifactId>visitors</artifactId>
-				<version>master-SNAPSHOT</version>
+				<artifactId>configuration-parser</artifactId>
+				<version>0.5</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-io</groupId>

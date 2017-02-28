@@ -6,16 +6,17 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Queue;
 import java.util.TreeMap;
-import java.util.function.Function;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.function.Consumer;
 
 import ragnarok.config.GameConf;
 import ragnarok.core.CameraTarget;
-import ragnarok.core.GameElement;
 import ragnarok.core.GameTime;
-import ragnarok.core.GuiElement;
-import ragnarok.core.IScene;
-import ragnarok.core.Team;
 import ragnarok.logic.GameModel;
+import ragnarok.logic.IScene;
+import ragnarok.logic.gameelements.GameElement;
+import ragnarok.logic.gui.GuiElement;
 
 /**
  * Based on the concept of scenes in Unity. <br>
@@ -68,6 +69,10 @@ abstract class Scene implements CameraTarget, IScene {
 	 * Stats of the gameElements for debugging.
 	 */
 	private Map<String, Long> gameElementDurations = new TreeMap<>();
+	/**
+	 * The lock to synchronize access to {@link #gameElementDurations}.
+	 */
+	private final Lock gameElementDurationsLock = new ReentrantLock();
 	/**
 	 * Indicates whether the scene is paused.
 	 */
@@ -175,9 +180,9 @@ abstract class Scene implements CameraTarget, IScene {
 	protected void logicLoopGameElement(GameElement e) {
 
 		// if this GameElement is marked for destruction
-		// TODO This is a bugfix for inanimates which wont be deleted upon time
-		if (e.getDeleteMe() || (e.getTeam() == Team.INANIMATE && this.getModel().getCameraOffset() - 20 > e.getPos().getX())) {
+		if (e.getDeleteMe()) {
 			this.markForRemove(e);
+			return;
 		}
 
 		// Debug: Save time before logicLoop
@@ -190,7 +195,8 @@ abstract class Scene implements CameraTarget, IScene {
 
 		// Debug: Compare and save logicLoop Duration
 		if (GameConf.DEBUG) {
-			synchronized (this.gameElementDurations) {
+			try {
+				this.gameElementDurationsLock.lock();
 				long timeAfter = GameTime.getTime();
 				String clazz = e.getClass().getSimpleName();
 				long dur = (timeAfter - timeBefore);
@@ -200,6 +206,8 @@ abstract class Scene implements CameraTarget, IScene {
 				} else {
 					this.gameElementDurations.put(clazz, dur);
 				}
+			} finally {
+				this.gameElementDurationsLock.unlock();
 			}
 		}
 	}
@@ -282,13 +290,18 @@ abstract class Scene implements CameraTarget, IScene {
 	}
 
 	@Override
-	public synchronized void applyToGameElements(Function<GameElement, Void> function) {
-		Arrays.stream(this.gameElements).forEach(list -> list.forEach(function::apply));
+	public synchronized void applyToGameElements(Consumer<GameElement> function) {
+		Arrays.stream(this.gameElements).forEach(list -> list.forEach(function::accept));
 	}
 
 	@Override
-	public synchronized void applyToGuiElements(Function<GuiElement, Void> function) {
-		this.guiElements.forEach(function::apply);
+	public synchronized void applyToNonNeutralGameElements(Consumer<GameElement> function) {
+		Arrays.stream(this.gameElements).forEach(list -> list.stream().filter(e -> !e.getTeam().isNeutral()).forEach(function::accept));
+	}
+
+	@Override
+	public synchronized void applyToGuiElements(Consumer<GuiElement> function) {
+		this.guiElements.forEach(function::accept);
 	}
 
 	@Override
@@ -312,12 +325,15 @@ abstract class Scene implements CameraTarget, IScene {
 
 	@Override
 	public Map<String, Long> getGameElementDurations() {
-		synchronized (this.gameElementDurations) {
-			// Reset debug info
+		this.gameElementDurationsLock.lock();
+		try {
 			Map<String, Long> ret = this.gameElementDurations;
 			this.gameElementDurations = new TreeMap<>();
 			return ret;
+		} finally {
+			this.gameElementDurationsLock.unlock();
 		}
+
 	}
 
 	@Override

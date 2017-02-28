@@ -1,7 +1,7 @@
 package ragnarok.logic.gameelements.entities.pickups;
 
-import ragnarok.core.GameElement;
 import ragnarok.core.GameGrid;
+import ragnarok.logic.gameelements.GameElement;
 import ragnarok.logic.gameelements.entities.Entity;
 import ragnarok.logic.gameelements.type.Pickup;
 import ragnarok.primitives.geometry.Vec;

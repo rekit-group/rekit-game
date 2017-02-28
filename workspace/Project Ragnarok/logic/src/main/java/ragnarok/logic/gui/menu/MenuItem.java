@@ -2,8 +2,8 @@ package ragnarok.logic.gui.menu;
 
 import ragnarok.config.GameConf;
 import ragnarok.core.GameGrid;
-import ragnarok.core.GuiElement;
-import ragnarok.core.IScene;
+import ragnarok.logic.IScene;
+import ragnarok.logic.gui.GuiElement;
 import ragnarok.primitives.geometry.Vec;
 
 /**

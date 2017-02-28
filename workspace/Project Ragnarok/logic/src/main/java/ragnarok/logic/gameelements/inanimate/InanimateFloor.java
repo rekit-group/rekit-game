@@ -1,8 +1,8 @@
 package ragnarok.logic.gameelements.inanimate;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.GameElement;
 import ragnarok.core.GameGrid;
+import ragnarok.logic.gameelements.GameElement;
 import ragnarok.logic.gameelements.particles.Particle;
 import ragnarok.logic.gameelements.particles.ParticleSpawner;
 import ragnarok.logic.gameelements.particles.ParticleSpawnerOption;

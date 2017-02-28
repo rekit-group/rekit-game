@@ -1,10 +1,13 @@
-package ragnarok.core;
+package ragnarok.logic;
 
 import java.util.Map;
-import java.util.function.Function;
+import java.util.function.Consumer;
 
-import ragnarok.logic.Model;
+import ragnarok.core.CameraTarget;
+import ragnarok.core.Team;
+import ragnarok.logic.gameelements.GameElement;
 import ragnarok.logic.gameelements.entities.Player;
+import ragnarok.logic.gui.GuiElement;
 import ragnarok.logic.gui.menu.MenuItem;
 import ragnarok.logic.scene.Scenes;
 
@@ -90,12 +93,21 @@ public interface IScene {
 	float getCameraOffset();
 
 	/**
-	 * Apply function on game elements.
+	 * Apply function on game elements (non-neutral).
+	 *
+	 * @param function
+	 *            the function
+	 * @see Team#isNeutral()
+	 */
+	void applyToNonNeutralGameElements(Consumer<GameElement> function);
+
+	/**
+	 * Apply function on all game elements.
 	 *
 	 * @param function
 	 *            the function
 	 */
-	void applyToGameElements(Function<GameElement, Void> function);
+	void applyToGameElements(Consumer<GameElement> function);
 
 	/**
 	 * Apply function on game elements.
@@ -103,13 +115,13 @@ public interface IScene {
 	 * @param function
 	 *            the function
 	 */
-	void applyToGuiElements(Function<GuiElement, Void> function);
+	void applyToGuiElements(Consumer<GuiElement> function);
 
 	/**
 	 * End a Game/Scene.
 	 *
 	 * @param won
-	 *            indicates whether successfull or died
+	 *            indicates whether successful or died
 	 */
 	void end(boolean won);
 

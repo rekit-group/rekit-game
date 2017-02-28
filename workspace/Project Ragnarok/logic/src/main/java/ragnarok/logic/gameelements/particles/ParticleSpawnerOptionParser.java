@@ -2,8 +2,8 @@ package ragnarok.logic.gameelements.particles;
 
 import java.lang.reflect.Field;
 
-import home.fox.visitors.Visitable;
-import home.fox.visitors.parser.Parser;
+import home.fox.configuration.Configurable;
+import home.fox.configuration.parser.Parser;
 
 /**
  * This class realize a parser for a {@link ParticleSpawnerOption}.
@@ -18,7 +18,7 @@ public final class ParticleSpawnerOptionParser implements Parser {
 	private static final String FLOAT_REGEX = "(-|\\+)?[0-9]+\\.[0-9]+(f|F)";
 
 	@Override
-	public synchronized boolean parse(Visitable obj, Field field, String definition, String[] path) throws Exception {
+	public synchronized boolean parse(Configurable obj, Field field, String definition, String[] path) throws Exception {
 		if (!Parser.super.parse(obj, field, definition, path)) {
 			return false;
 		}

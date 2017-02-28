@@ -2,7 +2,7 @@ package ragnarok.logic.gameelements.entities.enemies.bosses.rocketboss;
 
 import ragnarok.config.GameConf;
 import ragnarok.core.GameGrid;
-import ragnarok.core.GameElement;
+import ragnarok.logic.gameelements.GameElement;
 import ragnarok.logic.gameelements.entities.enemies.bosses.rocketboss.damagestate.DamageState;
 import ragnarok.logic.gameelements.entities.enemies.bosses.rocketboss.damagestate.State3;
 import ragnarok.logic.gameelements.inanimate.Inanimate;
@@ -40,7 +40,7 @@ public class RocketBoss extends Boss {
 	private static RGBColor MOUTH_BG_COL = new RGBColor(200, 200, 200);
 
 	/**
-	 * Standard constructor
+	 * Standard constructor.
 	 */
 	public RocketBoss() {
 
@@ -95,7 +95,7 @@ public class RocketBoss extends Boss {
 
 	@Override
 	public BossStructure getBossStructure() {
-		String i = Inanimate.class.getName();
+		String i = Inanimate.class.getSimpleName();
 		String n = null;
 
 		String[][] struct = new String[][] { //

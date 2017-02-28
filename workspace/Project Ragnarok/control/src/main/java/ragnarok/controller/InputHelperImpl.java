@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import ragnarok.config.GameConf;
 import ragnarok.util.InputHelper;
@@ -51,15 +53,22 @@ final class InputHelperImpl implements InputHelper {
 	private ConcurrentSkipListSet<Integer> releasedKeys = new ConcurrentSkipListSet<>();
 
 	/**
+	 * The lock to synchronize {@link #press(int)} and {@link #release(int)}.
+	 */
+	private final Lock lock = new ReentrantLock();
+
+	/**
 	 * Adds a pressed keys keyCode to the List and notifies observers.
 	 *
 	 * @param code
 	 *            the keyCode of the just pressed key
 	 */
 	@Override
-	public final synchronized void press(int code) {
+	public final void press(int code) {
+		this.lock.lock();
 		this.pressedKeys.add(code);
 		this.releasedKeys.remove(code);
+		this.lock.unlock();
 	}
 
 	/**
@@ -69,9 +78,11 @@ final class InputHelperImpl implements InputHelper {
 	 *            the keyCode of the just released key
 	 */
 	@Override
-	public final synchronized void release(int code) {
+	public final void release(int code) {
+		this.lock.lock();
 		this.releasedKeys.add(code);
 		this.pressedKeys.remove(code);
+		this.lock.unlock();
 	}
 
 	/**
@@ -93,29 +104,22 @@ final class InputHelperImpl implements InputHelper {
 	}
 
 	/**
-	 * Synchronization Object that is used as a lock variable for blocking
+	 * Synchronization Lock that is used as a lock variable for blocking
 	 * operations.
 	 */
-	private final Object observerSync = new Object();
+	private final Lock observerLock = new ReentrantLock();
 
 	/**
 	 * Used to tell all Observers that something important changed Iterates all
 	 * Observers and invokes every {@link Observer#update()}.
 	 */
 	private void notifyObservers() {
-
 		List<Observer> obs = new ArrayList<>();
-		synchronized (this.observerSync) {
-			// Kind of hacky but works
-			// add all Observers to regular List...
-			for (Observer o : this.observers) {
-				obs.add(o);
-			}
-		}
-		// ... iterate this List and invoke each Observers update();
-		for (Observer o : obs) {
-			o.update();
-		}
+		this.observerLock.lock();
+		this.observers.forEach(obs::add);
+		this.observerLock.unlock();
+		obs.forEach(o -> o.update());
+
 	}
 
 	/**
@@ -126,9 +130,9 @@ final class InputHelperImpl implements InputHelper {
 	 *            The Observer that wants to listen
 	 */
 	public void register(Observer observer) {
-		synchronized (this.observerSync) {
-			this.observers.add(observer);
-		}
+		this.observerLock.lock();
+		this.observers.add(observer);
+		this.observerLock.unlock();
 	}
 
 	/**
@@ -139,9 +143,9 @@ final class InputHelperImpl implements InputHelper {
 	 *            The Observer that does not want to listen anymore
 	 */
 	public void unregister(Observer observer) {
-		synchronized (this.observerSync) {
-			this.observers.remove(observer);
-		}
+		this.observerLock.lock();
+		this.observers.remove(observer);
+		this.observerLock.unlock();
 	}
 
 }

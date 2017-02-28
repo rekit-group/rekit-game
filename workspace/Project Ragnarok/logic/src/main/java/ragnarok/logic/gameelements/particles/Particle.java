@@ -1,9 +1,9 @@
 package ragnarok.logic.gameelements.particles;
 
-import ragnarok.core.GameElement;
 import ragnarok.core.GameGrid;
 import ragnarok.core.GameTime;
 import ragnarok.core.Team;
+import ragnarok.logic.gameelements.GameElement;
 import ragnarok.primitives.geometry.Direction;
 import ragnarok.primitives.geometry.Polygon;
 import ragnarok.primitives.geometry.Vec;

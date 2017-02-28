@@ -1,8 +1,8 @@
 package ragnarok.logic.gameelements.inanimate;
 
 import ragnarok.core.GameGrid;
-import ragnarok.core.GameElement;
 import ragnarok.core.Team;
+import ragnarok.logic.gameelements.GameElement;
 import ragnarok.logic.gameelements.GameElementFactory;
 import ragnarok.primitives.geometry.Direction;
 import ragnarok.primitives.geometry.Vec;

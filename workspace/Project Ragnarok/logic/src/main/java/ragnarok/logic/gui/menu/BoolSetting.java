@@ -2,7 +2,7 @@ package ragnarok.logic.gui.menu;
 
 import ragnarok.config.GameConf;
 import ragnarok.core.GameGrid;
-import ragnarok.core.IScene;
+import ragnarok.logic.IScene;
 
 /**
  *

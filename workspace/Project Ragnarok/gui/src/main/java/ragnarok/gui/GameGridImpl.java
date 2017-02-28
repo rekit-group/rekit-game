@@ -53,7 +53,7 @@ class GameGridImpl extends GameGrid {
 	/**
 	 * The image cache: (Path, Filter) -> Image.
 	 */
-	private Map<Tuple<String, Filter>, Image> images = new HashMap<>();
+	private final Map<Tuple<String, Filter>, Image> images = new HashMap<>();
 
 	/**
 	 * Set the current graphics.
@@ -179,7 +179,7 @@ class GameGridImpl extends GameGrid {
 	private void drawImageImpl(Vec pos, Vec size, String imagePath) {
 		Image image = null;
 		Tuple<String, Filter> key = Tuple.create(imagePath, this.filter);
-		if (this.images.containsKey(key)) {
+		if (this.images.containsKey(key) && !(this.filter != null && this.filter.changed())) {
 			image = this.images.get(key);
 		} else {
 			image = ImageManagement.get(imagePath);
@@ -187,7 +187,7 @@ class GameGridImpl extends GameGrid {
 				image = ImageManagement.toImage(this.filter.apply(ImageManagement.getAsAbstractImage(imagePath)));
 			}
 			this.images.put(key, image);
-			GameConf.GAME_LOGGER.info("GameGrid: Image Cache Miss: " + key);
+			GameConf.GAME_LOGGER.debug("GameGrid: Image Cache Miss: " + key);
 		}
 
 		this.graphics.drawImage(image, // image

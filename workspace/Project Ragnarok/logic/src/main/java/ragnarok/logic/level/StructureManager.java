@@ -12,9 +12,10 @@ import java.util.Random;
 import java.util.Scanner;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.GameElement;
+import ragnarok.logic.gameelements.GameElement;
 import ragnarok.logic.gameelements.GameElementFactory;
 import ragnarok.logic.gameelements.entities.Player;
+import ragnarok.logic.gameelements.inanimate.EndTrigger;
 import ragnarok.logic.gameelements.inanimate.Inanimate;
 import ragnarok.logic.gameelements.inanimate.InanimateTrigger;
 import ragnarok.logic.gameelements.type.Boss;
@@ -48,7 +49,7 @@ public class StructureManager extends Configurable implements Iterator<Structure
 	 * Private data structure that hold all structures that can be build in this
 	 * level.
 	 */
-	private Map<Integer, Structure> structures;
+	private final Map<Integer, Structure> structures;
 
 	/**
 	 * Instance of Random that is used for all randomized actions involving
@@ -67,14 +68,14 @@ public class StructureManager extends Configurable implements Iterator<Structure
 	 * Instance of BossSettings used to hold all settings concerning boss
 	 * spawning. See {@link BossSettings} for more.
 	 */
-	public BossSettings bossSettings;
+	public final BossSettings bossSettings;
 
 	/**
 	 * Used to keep track how many columns have been built into the level since
 	 * the last call if <i>init()</i>. Is used to keep track of when to spawn
-	 * {@link Boss}es.
+	 * {@link Boss Bosses}.
 	 */
-	private int unitsBuilt = 0;
+	protected int unitsBuilt = 0;
 
 	/**
 	 * Used to keep track how many columns had been build into the level since
@@ -85,7 +86,7 @@ public class StructureManager extends Configurable implements Iterator<Structure
 	/**
 	 * All aliases.
 	 */
-	private Map<String, String> alias = new HashMap<>();
+	private final Map<String, String> alias = new HashMap<>();
 
 	/**
 	 * Private constructor to prevent instantiation from outside.
@@ -96,6 +97,7 @@ public class StructureManager extends Configurable implements Iterator<Structure
 	private StructureManager(int randomSeed) {
 		super();
 		this.structures = new HashMap<>();
+		this.bossSettings = new BossSettings();
 		this.rand = new Random(randomSeed);
 	}
 
@@ -138,16 +140,8 @@ public class StructureManager extends Configurable implements Iterator<Structure
 
 		// create new StructureManager (we gotz them constructor in here!)
 		StructureManager instance = new StructureManager(randomSeed);
-
-		// WTF is this syntax
-		// Java, I don't like you anymore
-		// Usually you are so consequent and intuitive
-		// But what is this?????
-		instance.bossSettings = instance.new BossSettings();
-
-		LevelParser parser = LevelParser.getParser(input);
 		// create Parser to extract all information of file-String
-		parser.parse(instance);
+		LevelParser.parseLevel(input, instance);
 
 		// return newly created instance of StructureManager
 		return instance;
@@ -378,7 +372,7 @@ public class StructureManager extends Configurable implements Iterator<Structure
 	 */
 	private Structure getEndStructure() {
 
-		String verticalTrigger = "ragnarok.ragnarok.logic.gameelements.inanimate.EndTrigger";
+		String verticalTrigger = EndTrigger.class.getSimpleName();
 		// Vertical wall
 
 		List<String[]> lines = new ArrayList<>();

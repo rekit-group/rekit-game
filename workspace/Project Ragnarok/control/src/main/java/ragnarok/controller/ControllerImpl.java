@@ -14,10 +14,10 @@ import ragnarok.controller.commands.JumpCommand;
 import ragnarok.controller.commands.MenuCommand;
 import ragnarok.controller.commands.PlayPauseCommand;
 import ragnarok.controller.commands.WalkCommand;
-import ragnarok.core.IScene;
 import ragnarok.gui.View;
-import ragnarok.logic.GameState;
+import ragnarok.logic.IScene;
 import ragnarok.logic.Model;
+import ragnarok.logic.Model.GameState;
 import ragnarok.logic.filters.GrayScaleMode;
 import ragnarok.logic.filters.InvertedMode;
 import ragnarok.logic.filters.RandomMode;
@@ -87,7 +87,7 @@ final class ControllerImpl implements Observer, Controller, CommandSupervisor {
 		this.mpCmd.put(Tuple.create(GameState.INGAME, InputHelper.ESCAPE), new PlayPauseCommand(this));
 
 		// Filter Commands ... a test ('u', 'i', 'o' and 'p' key)
-		this.mpCmd.put(Tuple.create(null, KeyEvent.VK_U), new FilterCommand(true, this.model, new RandomMode()));
+		this.mpCmd.put(Tuple.create(null, KeyEvent.VK_U), new FilterCommand(true, this.model, RandomMode.INSTANCE));
 		this.mpCmd.put(Tuple.create(null, KeyEvent.VK_I), new FilterCommand(true, this.model, new InvertedMode()));
 		this.mpCmd.put(Tuple.create(null, KeyEvent.VK_O), new FilterCommand(true, this.model, new GrayScaleMode()));
 		this.mpCmd.put(Tuple.create(null, KeyEvent.VK_P), new FilterCommand(false, this.model, null));
@@ -115,7 +115,7 @@ final class ControllerImpl implements Observer, Controller, CommandSupervisor {
 			this.mpCmd.get(idKey).execute(inputMethod);
 			return;
 		}
-		GameConf.GAME_LOGGER.warn("No Event defined for Key-ID: " + id + " State: " + this.model.getState());
+		GameConf.GAME_LOGGER.debug("No Event defined for Key-ID: " + id + " State: " + this.model.getState());
 
 	}
 

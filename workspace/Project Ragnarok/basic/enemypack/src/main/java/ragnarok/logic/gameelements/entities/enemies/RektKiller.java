@@ -1,8 +1,8 @@
 package ragnarok.logic.gameelements.entities.enemies;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.GameElement;
 import ragnarok.core.GameGrid;
+import ragnarok.logic.gameelements.GameElement;
 import ragnarok.logic.gameelements.entities.Entity;
 import ragnarok.logic.gameelements.type.Enemy;
 import ragnarok.primitives.geometry.Direction;
@@ -95,7 +95,6 @@ public final class RektKiller extends Enemy {
 	 */
 	public void prepare() {
 		// calculate size dependent Polygon for spikes
-		// TODO Define via configuration &| parsers
 		this.spikePolygon = new Polygon(new Vec(),
 				new Vec[] { //
 						new Vec(0.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),

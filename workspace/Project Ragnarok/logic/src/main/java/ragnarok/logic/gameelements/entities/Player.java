@@ -73,7 +73,6 @@ public final class Player extends Entity implements CameraTarget {
 		this.points = 0;
 		this.currentDirection = Direction.RIGHT;
 		this.setVel(new Vec(0, 0));
-		this.deleteMe = false;
 		this.currentCameraOffset = 0;
 		this.damageParticles = new ParticleSpawner();
 		this.damageParticles.colorR = new ParticleSpawnerOption(222, 242, -10, 10);

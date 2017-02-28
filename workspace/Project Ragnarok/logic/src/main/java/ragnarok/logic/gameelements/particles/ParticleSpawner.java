@@ -1,10 +1,10 @@
 package ragnarok.logic.gameelements.particles;
 
-import home.fox.visitors.Visitable;
-import home.fox.visitors.annotations.NoVisit;
-import home.fox.visitors.annotations.VisitInfo;
+import home.fox.configuration.Configurable;
+import home.fox.configuration.annotations.NoSet;
+import home.fox.configuration.annotations.SetterInfo;
 import ragnarok.config.GameConf;
-import ragnarok.core.IScene;
+import ragnarok.logic.IScene;
 import ragnarok.primitives.geometry.Polygon;
 import ragnarok.primitives.geometry.Vec;
 
@@ -15,18 +15,18 @@ import ragnarok.primitives.geometry.Vec;
  * your ParticleSpawner Object</b>
  *
  */
-@VisitInfo(res = "", visit = false)
-public class ParticleSpawner implements Visitable {
+@SetterInfo(res = "", set = false)
+public class ParticleSpawner implements Configurable {
 	/**
 	 * The particle prototype.
 	 */
-	@NoVisit
+	@NoSet
 	private Particle particlePrototype;
 
 	/**
 	 * The current polygon.
 	 */
-	@NoVisit
+	@NoSet
 	public Polygon polygon;
 	/**
 	 * Red Channel.

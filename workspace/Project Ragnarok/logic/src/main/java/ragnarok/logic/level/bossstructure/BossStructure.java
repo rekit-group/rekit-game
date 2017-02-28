@@ -2,12 +2,12 @@ package ragnarok.logic.level.bossstructure;
 
 import java.util.HashMap;
 
-import home.fox.visitors.Visitable;
-import home.fox.visitors.annotations.NoVisit;
-import home.fox.visitors.annotations.VisitInfo;
+import home.fox.configuration.Configurable;
+import home.fox.configuration.annotations.NoSet;
+import home.fox.configuration.annotations.SetterInfo;
 import ragnarok.config.GameConf;
-import ragnarok.core.GameElement;
-import ragnarok.core.IScene;
+import ragnarok.logic.IScene;
+import ragnarok.logic.gameelements.GameElement;
 import ragnarok.logic.gameelements.GameElementFactory;
 import ragnarok.logic.gameelements.entities.FixedCameraTarget;
 import ragnarok.logic.gameelements.entities.Player;
@@ -30,32 +30,32 @@ import ragnarok.util.ThreadUtils;
  * This class realizes a {@link Structure} for bosses.
  *
  */
-@VisitInfo(res = "conf/bossstructure")
-public final class BossStructure extends Structure implements Visitable {
+@SetterInfo(res = "conf/bossstructure")
+public final class BossStructure extends Structure implements Configurable {
 	/**
 	 * The door.
 	 */
-	@NoVisit
+	@NoSet
 	private InanimateDoor door;
 	/**
 	 * The trigger's position.
 	 */
-	@NoVisit
+	@NoSet
 	private Vec triggerPos;
 	/**
 	 * The boss.
 	 */
-	@NoVisit
+	@NoSet
 	private Boss boss;
 	/**
 	 * The camera target offset.
 	 */
-	@NoVisit
+	@NoSet
 	private float cameraTarget;
 	/**
 	 * The x pos of the level.
 	 */
-	@NoVisit
+	@NoSet
 	private int levelX;
 	/**
 	 * Explosion particles.
@@ -96,41 +96,50 @@ public final class BossStructure extends Structure implements Visitable {
 
 	/**
 	 * Start the battle.
+	 *
 	 */
 	public void startBattle() {
 		if (this.door == null || this.triggerPos == null) {
 			return;
 		}
 		IScene scene = this.door.getScene();
-		GameElement player = scene.getPlayer();
-
 		// calculate where to put camera
-		this.cameraTarget = this.levelX + 5 + GameConf.PLAYER_CAMERA_OFFSET + player.getSize().getX() / 2;
+		this.cameraTarget = this.levelX + 5 + GameConf.PLAYER_CAMERA_OFFSET + scene.getPlayer().getSize().getX() / 2;
 
 		// Prepare boss
 		this.boss = (Boss) this.boss.create(this.boss.getStartPos().addX(this.levelX), new String[0]);
 		this.boss.setBossStructure(this);
-		this.boss.setTarget(player);
+		this.boss.setTarget(scene.getPlayer());
 
 		// Create thread for asynchronous stuff
-		ThreadUtils.runThread("BossRoom-Start", () -> {
-			// keep walking right to the right camera position
-			while (player.getPos().getX() < BossStructure.this.cameraTarget) {
-				player.setVel(player.getVel().setX(1.8f));
-				Timer.sleep(GameConf.LOGIC_DELTA);
-			}
-			scene.setCameraTarget(new FixedCameraTarget(BossStructure.this.cameraTarget - GameConf.PLAYER_CAMERA_OFFSET));
-			// Spawn Boss
-			GameElementFactory.generate(this.boss);
-			// Close door
-			GameElementFactory.generateInanimate((int) BossStructure.this.triggerPos.getX(), (int) BossStructure.this.triggerPos.getY());
+		ThreadUtils.runThread("BossRoom-Start", () -> this.startIntern(scene));
 
-			// Boss text
-			TextOptions op = new TextOptions(new Vec(-0.5f, -0.5f), 30, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, 1);
-			Text bossText = new Text(scene, op).setText(BossStructure.this.boss.getName());
-			bossText.setPos(CalcUtil.units2pixel(new Vec(GameConf.GRID_W / 2f, GameConf.GRID_H / 2f)));
-			scene.addGuiElement(new TimeDecorator(scene, bossText, new Timer(3000)));
-		});
+	}
+
+	/**
+	 * Start Boss Battle. Show intro text, set camera target.
+	 *
+	 * @param scene
+	 *            the scene
+	 */
+	private void startIntern(IScene scene) {
+		GameElement player = scene.getPlayer();
+		// keep walking right to the right camera position
+		while (player.getPos().getX() < this.cameraTarget) {
+			player.setVel(player.getVel().setX(1.8f));
+			Timer.sleep(GameConf.LOGIC_DELTA);
+		}
+		scene.setCameraTarget(new FixedCameraTarget(this.cameraTarget - GameConf.PLAYER_CAMERA_OFFSET));
+		// Spawn Boss
+		GameElementFactory.generate(this.boss);
+		// Close door
+		GameElementFactory.generateInanimate((int) this.triggerPos.getX(), (int) this.triggerPos.getY());
+
+		// Boss text
+		TextOptions op = new TextOptions(new Vec(-0.5f, -0.5f), 30, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, 1);
+		Text bossText = new Text(scene, op).setText(this.boss.getName());
+		bossText.setPos(CalcUtil.units2pixel(new Vec(GameConf.GRID_W / 2f, GameConf.GRID_H / 2f)));
+		scene.addGuiElement(new TimeDecorator(scene, bossText, new Timer(3000)));
 
 	}
 
@@ -141,8 +150,19 @@ public final class BossStructure extends Structure implements Visitable {
 	 *            the scene
 	 */
 	public void endBattle(IScene scene) {
-		final Player player = scene.getPlayer();
+		// Create thread for asynchronous stuff
+		ThreadUtils.runThread("BossRoom-End", () -> this.endAnimation(scene));
+	}
 
+	/**
+	 * This method will invoked in a separate thread to perform the end
+	 * animation of the Boss.
+	 *
+	 * @param scene
+	 *            the scene
+	 */
+	private final void endAnimation(IScene scene) {
+		final Player player = scene.getPlayer();
 		final Timer timer = new Timer(7000);
 
 		// Needed for animating camera movement
@@ -156,42 +176,52 @@ public final class BossStructure extends Structure implements Visitable {
 				this.door.getPos().getY(), //
 				this.door.getPos().getY() - 10 //
 		);
+		// save Players current velocity
+		Vec[] save = { player.getVel(), player.getPos(), this.boss.getPos() };
+		// while timer has time left...
+		while (!timer.timeUp()) {
+			// freeze player and pos
+			player.setVel(new Vec());
+			player.setPos(save[1]);
+			this.boss.setVel(new Vec());
+			this.boss.setPos(save[2]);
+			// wait for time to be up
+			Timer.sleep(GameConf.LOGIC_DELTA);
+			this.phase(scene, timer, doorMover, cameraMover);
+			timer.logicLoop();
+		}
 
-		// Create thread for asynchronous stuff
-		ThreadUtils.runThread("BossRoom-End", () -> {
-			// save Players current velocity
-			Vec[] save = { player.getVel(), player.getPos(), this.boss.getPos() };
-			// while timer has time left...
-			while (!timer.timeUp()) {
-				// freeze player and pos
-				player.setVel(new Vec());
-				player.setPos(save[1]);
-				this.boss.setVel(new Vec());
-				this.boss.setPos(save[2]);
-				// wait for time to be up
-				Timer.sleep(GameConf.LOGIC_DELTA);
-				this.phase(scene, timer, doorMover, cameraMover);
-				timer.logicLoop();
-			}
-
-			// re-apply velocity to Player
-			player.setVel(save[0]);
-			// give player full health
-			if (player.getLives() < GameConf.PLAYER_LIVES) {
-				player.setLives(GameConf.PLAYER_LIVES);
-			}
-			// set camera back to player
-			player.resetCameraOffset();
-			scene.setCameraTarget(player);
-		});
+		// re-apply velocity to Player
+		player.setVel(save[0]);
+		// give player full health
+		if (player.getLives() < GameConf.PLAYER_LIVES) {
+			player.setLives(GameConf.PLAYER_LIVES);
+		}
+		// set camera back to player
+		player.resetCameraOffset();
+		scene.setCameraTarget(player);
 
 	}
 
-	// TODO JDoc.
+	/**
+	 * Determinate and invoke phase.
+	 *
+	 * @param scene
+	 *            the scene
+	 * @param timer
+	 *            the timer
+	 * @param doorMover
+	 *            the door mover
+	 * @param cameraMover
+	 *            the camera mover
+	 * @see #phase1(IScene)
+	 * @see #phase2(IScene, Timer, Progress)
+	 * @see #phase3(IScene, Timer, Progress)
+	 */
 	private final void phase(IScene scene, Timer timer, Progress doorMover, Progress cameraMover) {
 		// phase one: show explosions
 		if (timer.getProgress() < 0.4) {
-			this.phase1(scene, timer);
+			this.phase1(scene);
 		}
 		// phase two: show fireworks
 		else if (timer.getProgress() < 0.9) {
@@ -203,22 +233,39 @@ public final class BossStructure extends Structure implements Visitable {
 		}
 	}
 
-	private final void phase1(IScene scene, Timer timer) {
+	/**
+	 * Phase 1: {@link #EXPLOSION_PARTICLES} will shown and {@link Boss}
+	 * wobbles.
+	 *
+	 * @param scene
+	 *            the scene
+	 */
+	private final void phase1(IScene scene) {
 		if (GameConf.PRNG.nextDouble() > 0.9) {
-			Vec randPos = BossStructure.this.boss.getPos()
-					.add(new Vec((float) GameConf.PRNG.nextDouble() * 2 - 1, (float) GameConf.PRNG.nextDouble() * 2f - 1));
+			Vec randPos = this.boss.getPos().add(new Vec((float) GameConf.PRNG.nextDouble() * 2 - 1, (float) GameConf.PRNG.nextDouble() * 2f - 1));
 			BossStructure.EXPLOSION_PARTICLES.spawn(scene, randPos);
 		}
 	}
 
+	/**
+	 * Phase 2: {@link #FIREWORKS_PARTICLES} will shown and door moves up
+	 * (opens).
+	 *
+	 * @param scene
+	 *            the scene
+	 * @param timer
+	 *            the timer to determinate door movement progress
+	 * @param doorMover
+	 *            the door mover
+	 */
 	private final void phase2(IScene scene, Timer timer, Progress doorMover) {
 		// remove boss of last phase
-		scene.markForRemove(BossStructure.this.boss);
+		scene.markForRemove(this.boss);
 
 		// show fireworks
 		if (GameConf.PRNG.nextDouble() > 0.9) {
 			float deltaX = GameConf.GRID_W / 2f;
-			float midX = BossStructure.this.levelX + deltaX;
+			float midX = this.levelX + deltaX;
 
 			float deltaY = GameConf.GRID_H / 2f;
 			float midY = deltaY;
@@ -230,9 +277,20 @@ public final class BossStructure extends Structure implements Visitable {
 
 		// open door slowly
 		float prog = (timer.getProgress() - 0.4f) * 2f;
-		BossStructure.this.door.setPos(BossStructure.this.door.getPos().setY(doorMover.getNow(prog)));
+		this.door.setPos(this.door.getPos().setY(doorMover.getNow(prog)));
 	}
 
+	/**
+	 * Phase 3: Door will be destroyed. Camera focus moves back to
+	 * {@link Player}.
+	 *
+	 * @param scene
+	 *            the scene
+	 * @param timer
+	 *            the timer to determinate camera movement progress
+	 * @param cameraMover
+	 *            the camera mover
+	 */
 	private final void phase3(IScene scene, Timer timer, Progress cameraMover) {
 		// remove door of last phase
 		this.door.destroy();

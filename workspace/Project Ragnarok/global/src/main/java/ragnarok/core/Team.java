@@ -30,7 +30,7 @@ public enum Team {
 	/**
 	 * A trigger.
 	 */
-	TRIGGER((byte) -120, (byte) -120),
+	TRIGGER((byte) -120, (byte) -90),
 	/**
 	 * An special effect.
 	 */
@@ -70,12 +70,12 @@ public enum Team {
 	}
 
 	/**
-	 * Is this the {@link Team#BACKGROUND Neutral-Team}.
+	 * Is this the {@link Team} neutral (no interactions possible).
 	 *
 	 * @return {@code true} if neutral, {@code false} otherwise
 	 */
 	public final boolean isNeutral() {
-		return this == Team.BACKGROUND;
+		return this == Team.BACKGROUND || this == Team.EFFECT;
 	}
 
 	/**
@@ -107,9 +107,23 @@ public enum Team {
 		 *            the {@link #max}
 		 */
 		private Range(byte min, byte max) {
+			this(min, max, min);
+		}
+
+		/**
+		 * Create a range.
+		 *
+		 * @param min
+		 *            the {@link #min}
+		 * @param max
+		 *            the {@link #max}
+		 * @param std
+		 *            the standard value {@link #std}
+		 */
+		private Range(byte min, byte max, byte std) {
 			this.min = min;
 			this.max = max;
-			this.std = min;
+			this.std = std;
 		}
 
 		/**
@@ -129,5 +143,13 @@ public enum Team {
 			return (byte) expected;
 		}
 
+		/**
+		 * Get the standard value.
+		 *
+		 * @return the std value
+		 */
+		public byte getStd() {
+			return this.std;
+		}
 	}
 }

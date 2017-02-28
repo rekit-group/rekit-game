@@ -3,8 +3,8 @@ package ragnarok.logic.gameelements.type;
 import java.util.Set;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.GameElement;
 import ragnarok.core.Team;
+import ragnarok.logic.gameelements.GameElement;
 import ragnarok.logic.gameelements.entities.Entity;
 import ragnarok.primitives.geometry.Vec;
 import ragnarok.util.ReflectUtils;

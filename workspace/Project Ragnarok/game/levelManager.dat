@@ -1,5 +1,7 @@
-level_infinite.dat:INFINITE:32
-level_infinite.dat:LOTD:0
+BOSS_RUSH:BOSS_RUSH:40
+infinite.dat:INFINITE:0
+infinite.dat:LOTD:0
+infinite.dat:ARCADE:0
 level_0.dat:ARCADE:0
 level_1.dat:ARCADE:0
 level_2.dat:ARCADE:0

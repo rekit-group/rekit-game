@@ -1,10 +1,10 @@
 package ragnarok.logic.gameelements.entities.enemies.cannon;
 
-import home.fox.visitors.Visitable;
-import home.fox.visitors.annotations.NoVisit;
-import home.fox.visitors.annotations.VisitInfo;
+import home.fox.configuration.Configurable;
+import home.fox.configuration.annotations.NoSet;
+import home.fox.configuration.annotations.SetterInfo;
 import ragnarok.core.GameGrid;
-import ragnarok.core.GameElement;
+import ragnarok.logic.gameelements.GameElement;
 import ragnarok.logic.gameelements.entities.Player;
 import ragnarok.logic.gameelements.entities.enemies.cannon.state.AimingState;
 import ragnarok.logic.gameelements.entities.enemies.cannon.state.CannonState;
@@ -49,8 +49,8 @@ import ragnarok.util.ReflectUtils.LoadMe;
  * @author Angelo Aracri
  */
 @LoadMe
-@VisitInfo(res = "conf/cannon")
-public class Cannon extends Enemy implements Visitable {
+@SetterInfo(res = "conf/cannon")
+public class Cannon extends Enemy implements Configurable {
 
 	/**
 	 * Configurable Vector that holds the size of the Cannon.
@@ -154,27 +154,27 @@ public class Cannon extends Enemy implements Visitable {
 	 * The inner, decorated {@link CannonStateMachine} that implements the
 	 * phase-like behavior.
 	 */
-	@NoVisit
+	@NoSet
 	private CannonStateMachine innerStateMachine;
 
 	/**
 	 * The angle in radians the {@link Cannon Cannons} pipe currently aims at,
 	 * where 0 is down.
 	 */
-	@NoVisit
+	@NoSet
 	private float currentAngle;
 
 	/**
 	 * The {@link Polygon} that will be used for rendering the {@link Cannon
 	 * Cannons} pipe.
 	 */
-	@NoVisit
+	@NoSet
 	private Polygon pipePolygon;
 
 	/**
 	 * The {@link Direction} this Cannon will be (graphically) attached to.
 	 */
-	@NoVisit
+	@NoSet
 	private Direction attachedSide;
 
 	/**

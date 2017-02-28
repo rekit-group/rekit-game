@@ -1,10 +1,10 @@
 package ragnarok.logic.gameelements.inanimate;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.GameElement;
 import ragnarok.core.GameGrid;
 import ragnarok.core.GameTime;
 import ragnarok.core.Team;
+import ragnarok.logic.gameelements.GameElement;
 import ragnarok.logic.gameelements.particles.ParticleSpawner;
 import ragnarok.logic.gameelements.particles.ParticleSpawnerOption;
 import ragnarok.primitives.geometry.Vec;
@@ -213,4 +213,8 @@ public final class EndTrigger extends InanimateTrigger {
 		return EndTrigger.instance;
 	}
 
+	@Override
+	public Integer getZHint() {
+		return (int) Team.TRIGGER.zRange.max;
+	}
 }

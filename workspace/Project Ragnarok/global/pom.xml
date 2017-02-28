@@ -14,7 +14,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.github.fuchss-dominik</groupId>
-			<artifactId>visitors</artifactId>
+			<artifactId>configuration-parser</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>

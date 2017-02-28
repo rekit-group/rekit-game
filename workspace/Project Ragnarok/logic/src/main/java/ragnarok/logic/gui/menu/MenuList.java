@@ -1,6 +1,6 @@
 package ragnarok.logic.gui.menu;
 
-import ragnarok.core.IScene;
+import ragnarok.logic.IScene;
 import ragnarok.primitives.geometry.Vec;
 
 /**

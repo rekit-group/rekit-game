@@ -1,11 +1,10 @@
 package ragnarok.logic;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.CameraTarget;
-import ragnarok.core.IScene;
 import ragnarok.logic.gameelements.GameElementFactory;
 import ragnarok.logic.gameelements.entities.Entity;
 import ragnarok.logic.gui.menu.MenuItem;
+import ragnarok.logic.level.LevelManager;
 import ragnarok.logic.scene.Scenes;
 import ragnarok.primitives.image.Filter;
 import ragnarok.util.ThreadUtils;
@@ -18,7 +17,7 @@ import ragnarok.util.ThreadUtils;
  *
  * @version 1.1
  */
-public class GameModel implements CameraTarget, Model {
+public class GameModel implements Model {
 
 	/**
 	 * The current scene.
@@ -54,6 +53,7 @@ public class GameModel implements CameraTarget, Model {
 	 * Init game.
 	 */
 	private void init() {
+		LevelManager.init();
 		this.switchScene(Scenes.MENU);
 	}
 
@@ -145,11 +145,6 @@ public class GameModel implements CameraTarget, Model {
 			return null;
 		}
 		return this.curScene.getMenu();
-	}
-
-	@Override
-	public float getCameraOffset() {
-		return this.curScene.getCameraOffset();
 	}
 
 	@Override

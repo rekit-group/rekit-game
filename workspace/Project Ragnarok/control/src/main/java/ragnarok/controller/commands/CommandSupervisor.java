@@ -1,6 +1,6 @@
 package ragnarok.controller.commands;
 
-import ragnarok.core.IScene;
+import ragnarok.logic.IScene;
 import ragnarok.logic.Model;
 import ragnarok.logic.gameelements.entities.Entity;
 import ragnarok.logic.gui.menu.MenuItem;

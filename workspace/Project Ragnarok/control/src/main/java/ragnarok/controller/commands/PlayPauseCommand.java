@@ -1,6 +1,6 @@
 package ragnarok.controller.commands;
 
-import ragnarok.logic.GameState;
+import ragnarok.logic.Model.GameState;
 
 /**
  * This class will be used while {@link GameState#INGAME ingame} to toggle

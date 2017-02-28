@@ -1,12 +1,12 @@
 package ragnarok.logic.gameelements.inanimate;
 
-import home.fox.visitors.Visitable;
-import home.fox.visitors.annotations.NoVisit;
-import home.fox.visitors.annotations.VisitInfo;
+import home.fox.configuration.Configurable;
+import home.fox.configuration.annotations.NoSet;
+import home.fox.configuration.annotations.SetterInfo;
 import ragnarok.config.GameConf;
-import ragnarok.core.GameElement;
 import ragnarok.core.GameGrid;
 import ragnarok.core.Team;
+import ragnarok.logic.gameelements.GameElement;
 import ragnarok.logic.gameelements.particles.ParticleSpawner;
 import ragnarok.logic.gameelements.type.DynamicInanimate;
 import ragnarok.primitives.geometry.Direction;
@@ -23,12 +23,12 @@ import ragnarok.util.ReflectUtils.LoadMe;
  *
  */
 @LoadMe
-@VisitInfo(res = "conf/climbup")
-public final class ClimbUpBox extends DynamicInanimate implements Visitable {
+@SetterInfo(res = "conf/climbup")
+public final class ClimbUpBox extends DynamicInanimate implements Configurable {
 	/**
 	 * The inner inanimate box.
 	 */
-	@NoVisit
+	@NoSet
 	InanimateBox innerBox;
 	/**
 	 * The time between strategy changes.
@@ -37,12 +37,12 @@ public final class ClimbUpBox extends DynamicInanimate implements Visitable {
 	/**
 	 * All strategies.
 	 */
-	@NoVisit
+	@NoSet
 	private ClimbBoxStrategy[] strategies;
 	/**
 	 * The current strategy.
 	 */
-	@NoVisit
+	@NoSet
 	private int current = 0;
 	/**
 	 * The outer color.
@@ -59,7 +59,7 @@ public final class ClimbUpBox extends DynamicInanimate implements Visitable {
 	/**
 	 * The timer (how long climb enables?).
 	 */
-	@NoVisit
+	@NoSet
 	private Timer timer;
 	/**
 	 * The particles of the ClimbUpBox.

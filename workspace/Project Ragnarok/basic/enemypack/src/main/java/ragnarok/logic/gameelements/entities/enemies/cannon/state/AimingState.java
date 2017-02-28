@@ -1,6 +1,6 @@
 package ragnarok.logic.gameelements.entities.enemies.cannon.state;
 
-import ragnarok.core.GameElement;
+import ragnarok.logic.gameelements.GameElement;
 import ragnarok.logic.gameelements.entities.Player;
 import ragnarok.logic.gameelements.entities.enemies.cannon.Cannon;
 

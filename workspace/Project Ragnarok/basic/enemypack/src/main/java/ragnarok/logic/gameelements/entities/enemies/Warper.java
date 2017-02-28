@@ -1,10 +1,10 @@
 package ragnarok.logic.gameelements.entities.enemies;
 
-import home.fox.visitors.Visitable;
-import home.fox.visitors.annotations.NoVisit;
-import home.fox.visitors.annotations.VisitInfo;
-import ragnarok.core.GameElement;
+import home.fox.configuration.Configurable;
+import home.fox.configuration.annotations.NoSet;
+import home.fox.configuration.annotations.SetterInfo;
 import ragnarok.core.GameGrid;
+import ragnarok.logic.gameelements.GameElement;
 import ragnarok.logic.gameelements.entities.Entity;
 import ragnarok.logic.gameelements.particles.ParticleSpawner;
 import ragnarok.logic.gameelements.type.Enemy;
@@ -23,8 +23,8 @@ import ragnarok.util.ReflectUtils.LoadMe;
  *
  */
 @LoadMe
-@VisitInfo(res = "conf/warper")
-public final class Warper extends Enemy implements Visitable {
+@SetterInfo(res = "conf/warper")
+public final class Warper extends Enemy implements Configurable {
 	/**
 	 * The delta time between position changes.
 	 */
@@ -33,7 +33,7 @@ public final class Warper extends Enemy implements Visitable {
 	/**
 	 * The time between the next jump (to next position).
 	 */
-	@NoVisit
+	@NoSet
 	private final Timer warpAction = new Timer((long) (1000 * Warper.WARPER_WARP_DELTA));
 
 	/**
@@ -116,18 +116,13 @@ public final class Warper extends Enemy implements Visitable {
 			element.addDamage(1);
 
 			// Kill the warper itself
-			this.addDamage(1);
+			this.destroy();
 		}
 	}
 
 	@Override
 	public void collidedWith(Frame collision, Direction dir) {
 		// Do nothing, pass right through everything
-	}
-
-	@Override
-	public void addDamage(int damage) {
-		this.destroy();
 	}
 
 	@Override

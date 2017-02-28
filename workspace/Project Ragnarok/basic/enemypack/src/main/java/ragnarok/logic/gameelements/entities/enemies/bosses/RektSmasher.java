@@ -1,11 +1,11 @@
 package ragnarok.logic.gameelements.entities.enemies.bosses;
 
-import home.fox.visitors.Visitable;
-import home.fox.visitors.annotations.NoVisit;
-import home.fox.visitors.annotations.VisitInfo;
+import home.fox.configuration.Configurable;
+import home.fox.configuration.annotations.NoSet;
+import home.fox.configuration.annotations.SetterInfo;
 import ragnarok.config.GameConf;
-import ragnarok.core.GameElement;
 import ragnarok.core.GameGrid;
+import ragnarok.logic.gameelements.GameElement;
 import ragnarok.logic.gameelements.entities.Entity;
 import ragnarok.logic.gameelements.entities.Player;
 import ragnarok.logic.gameelements.entities.enemies.RektKiller;
@@ -27,12 +27,12 @@ import ragnarok.util.ThreadUtils;
  *
  */
 @LoadMe
-@VisitInfo(res = "conf/rektsmasher")
-public final class RektSmasher extends Boss implements Visitable {
+@SetterInfo(res = "conf/rektsmasher")
+public final class RektSmasher extends Boss implements Configurable {
 	/**
 	 * The internal {@link RektKiller}.
 	 */
-	@NoVisit
+	@NoSet
 	private RektKiller innerRektKiller;
 	/**
 	 * The base movement speed.

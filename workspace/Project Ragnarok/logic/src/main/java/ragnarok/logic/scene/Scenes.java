@@ -4,8 +4,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.ConcurrentHashMap;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.IScene;
 import ragnarok.logic.GameModel;
+import ragnarok.logic.IScene;
 
 /**
  *
@@ -32,7 +32,11 @@ public enum Scenes {
 	/**
 	 * An arcade level.
 	 */
-	ARCADE(ArcadeLevelScene.class);
+	ARCADE(ArcadeLevelScene.class),
+	/**
+	 * An boss rush level.
+	 */
+	BOSS_RUSH(BossRushScene.class);
 	/**
 	 * The scene class.
 	 */

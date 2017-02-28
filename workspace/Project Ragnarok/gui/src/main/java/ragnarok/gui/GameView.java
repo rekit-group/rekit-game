@@ -23,11 +23,11 @@ import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 
 import ragnarok.config.GameConf;
-import ragnarok.core.GameElement;
 import ragnarok.core.GameTime;
-import ragnarok.core.GuiElement;
-import ragnarok.core.IScene;
+import ragnarok.logic.IScene;
 import ragnarok.logic.Model;
+import ragnarok.logic.gameelements.GameElement;
+import ragnarok.logic.gui.GuiElement;
 import ragnarok.primitives.geometry.Vec;
 import ragnarok.util.InputHelper;
 import ragnarok.util.ThreadUtils;
@@ -103,7 +103,7 @@ class GameView implements View {
 		this.frame.setIconImage(this.getGameIcon());
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		this.frame.setResizable(GameConf.DEBUG);
+		this.frame.setResizable(false);
 		this.frame.setSize(GameConf.PIXEL_W, GameConf.PIXEL_H);
 		Utils.center(this.frame);
 		this.frame.setLayout(new BorderLayout());
@@ -224,7 +224,6 @@ class GameView implements View {
 			} else {
 				classCounter.put(className, 1);
 			}
-			return null;
 		});
 
 		StringBuilder resultName = new StringBuilder().append("GameElements\n");

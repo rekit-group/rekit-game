@@ -14,7 +14,7 @@ final class NullScene extends Scene {
 	 * @param model
 	 *            the model
 	 */
-	public NullScene(GameModel model) {
+	private NullScene(GameModel model) {
 		super(model);
 	}
 

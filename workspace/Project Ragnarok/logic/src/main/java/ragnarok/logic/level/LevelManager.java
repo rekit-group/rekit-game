@@ -34,11 +34,11 @@ public final class LevelManager {
 	/**
 	 * All known levels (ID -> Level).
 	 */
-	private final static Map<String, Level> levelMap = new HashMap<>();
+	private static final Map<String, Level> levelMap = new HashMap<>();
 	/**
 	 * The global data file for the {@link LevelManager}.
 	 */
-	private final static File USER_DATA = new File(GameConf.LVL_MGMT_FILE);
+	private static final File USER_DATA = new File(GameConf.LVL_MGMT_FILE);
 
 	/**
 	 * Prevent instantiation.
@@ -46,14 +46,23 @@ public final class LevelManager {
 	private LevelManager() {
 	}
 
-	// Load LevelManager
-	static {
+	private static boolean initialized = false;
+
+	/**
+	 * Load levels.
+	 */
+	public static final synchronized void init() {
+		if (LevelManager.initialized) {
+			return;
+		}
+		LevelManager.initialized = true;
 		try {
 			LevelManager.loadAllLevels();
 		} catch (IOException e) {
 			GameConf.GAME_LOGGER.error("Could not load levels " + e.getMessage());
 		}
 		LevelManager.loadInfoFromFile();
+
 	}
 
 	/**
@@ -74,8 +83,29 @@ public final class LevelManager {
 			return Integer.compare(Integer.parseInt(n1), Integer.parseInt(n2));
 		}).forEach(LevelManager::addLevel);
 
+		LevelManager.loadInfiniteLevels();
+		LevelManager.loadBossRushLevel();
+
 		notNumbered.sorted((r1, r2) -> r1.toString().compareToIgnoreCase(r2.toString())).forEach(LevelManager::addLevel);
 
+	}
+
+	private static void loadInfiniteLevels() throws IOException {
+		PathMatchingResourcePatternResolver resolv = new PathMatchingResourcePatternResolver();
+		Resource level = resolv.getResource("/levels/infinite.dat");
+		// Infinite
+		LevelManager.addLevel(new Level(level.getFilename(), level.getInputStream(), Type.INFINITE));
+		// LOTD
+		Level lotd = new Level(level.getFilename(), level.getInputStream(), Type.LOTD);
+		DateFormat levelOfTheDayFormat = new SimpleDateFormat("ddMMyyyy");
+		int seed = Integer.parseInt(levelOfTheDayFormat.format(Calendar.getInstance().getTime()));
+		lotd.setSeed(seed);
+		LevelManager.addLevel(lotd);
+
+	}
+
+	private static void loadBossRushLevel() {
+		LevelManager.addLevel(new Level(null, null, Type.BOSS_RUSH));
 	}
 
 	/**
@@ -86,7 +116,7 @@ public final class LevelManager {
 	 */
 	private static void addLevel(Resource level) {
 		try {
-			LevelManager.addLevel(level.getFilename(), level.getInputStream());
+			LevelManager.addArcadeLevel(level.getFilename(), level.getInputStream());
 		} catch (IOException e) {
 			GameConf.GAME_LOGGER.error("Loading of " + level + " failed");
 		}
@@ -100,17 +130,8 @@ public final class LevelManager {
 	 * @param levelStructure
 	 *            the level structure
 	 */
-	public static synchronized void addLevel(String name, InputStream levelStructure) {
-		if (name.contains("infinite")) {
-			// Infinite
-			LevelManager.addLevel(new Level(name, levelStructure, Type.INFINITE));
-
-			// LOTD
-			Level lotd = new Level(name, levelStructure, Type.LOTD);
-			DateFormat levelOfTheDayFormat = new SimpleDateFormat("ddMMyyyy");
-			int seed = Integer.parseInt(levelOfTheDayFormat.format(Calendar.getInstance().getTime()));
-			lotd.setSeed(seed);
-			LevelManager.addLevel(lotd);
+	public static synchronized void addArcadeLevel(String name, InputStream levelStructure) {
+		if (!LevelManager.initialized) {
 			return;
 		}
 		LevelManager.addLevel(new Level(name, levelStructure, Type.ARCADE));
@@ -121,7 +142,10 @@ public final class LevelManager {
 	 *
 	 * @return the infinite level
 	 */
-	public static Level getInfiniteLevel() {
+	public static synchronized Level getInfiniteLevel() {
+		if (!LevelManager.initialized) {
+			return null;
+		}
 		return LevelManager.getLevelById("" + Level.Type.INFINITE);
 	}
 
@@ -130,8 +154,23 @@ public final class LevelManager {
 	 *
 	 * @return the level-of-the-day level
 	 */
-	public static Level getLOTDLevel() {
+	public static synchronized Level getLOTDLevel() {
+		if (!LevelManager.initialized) {
+			return null;
+		}
 		return LevelManager.getLevelById("" + Level.Type.LOTD);
+	}
+
+	/**
+	 * Get the boss rush level.
+	 *
+	 * @return the level-of-the-day level
+	 */
+	public static synchronized Level getBossRushLevel() {
+		if (!LevelManager.initialized) {
+			return null;
+		}
+		return LevelManager.getLevelById("" + Level.Type.BOSS_RUSH);
 	}
 
 	/**
@@ -141,7 +180,10 @@ public final class LevelManager {
 	 *            the id
 	 * @return the arcade level
 	 */
-	public static Level getArcadeLevel(int arcadeId) {
+	public static synchronized Level getArcadeLevel(int arcadeId) {
+		if (!LevelManager.initialized) {
+			return null;
+		}
 		return LevelManager.getLevelById(Level.Type.ARCADE + "-" + arcadeId);
 	}
 
@@ -162,7 +204,7 @@ public final class LevelManager {
 	 * @param level
 	 *            the level
 	 */
-	public static void addLevel(Level level) {
+	private static void addLevel(Level level) {
 		if (level == null) {
 			return;
 		}
@@ -174,14 +216,20 @@ public final class LevelManager {
 	 *
 	 * @return the number of arcade levels
 	 */
-	public static int getNumberOfArcadeLevels() {
+	public static synchronized int getNumberOfArcadeLevels() {
+		if (!LevelManager.initialized) {
+			return 0;
+		}
 		return (int) LevelManager.levelMap.values().stream().filter(Level.Type.ARCADE::hasType).count();
 	}
 
 	/**
 	 * This method shall be invoked to signalize a content change in a level.
 	 */
-	public static void contentChanged() {
+	public static synchronized void contentChanged() {
+		if (!LevelManager.initialized) {
+			return;
+		}
 		LevelManager.saveToFile();
 	}
 
@@ -194,6 +242,9 @@ public final class LevelManager {
 			Scanner scanner = new Scanner(LevelManager.USER_DATA, Charset.defaultCharset().name());
 			while (scanner.hasNextLine()) {
 				String[] levelinfo = scanner.nextLine().split(":");
+				if (levelinfo.length != 2) {
+					continue;
+				}
 				String name = levelinfo[0];
 				Type type = Type.byString(levelinfo[1]);
 				Level level = LevelManager.findByNameAndType(name, type);

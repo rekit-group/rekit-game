@@ -1,6 +1,6 @@
 package ragnarok.primitives.image;
 
-import home.fox.visitors.annotations.ClassParser;
+import home.fox.configuration.annotations.ClassParser;
 import ragnarok.parser.RGBAColorParser;
 
 /**

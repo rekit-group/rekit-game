@@ -1,11 +1,11 @@
 package ragnarok.logic.gameelements.entities.enemies;
 
-import home.fox.visitors.Visitable;
-import home.fox.visitors.annotations.NoVisit;
-import home.fox.visitors.annotations.VisitInfo;
+import home.fox.configuration.Configurable;
+import home.fox.configuration.annotations.NoSet;
+import home.fox.configuration.annotations.SetterInfo;
 import ragnarok.config.GameConf;
-import ragnarok.core.GameElement;
 import ragnarok.core.GameGrid;
+import ragnarok.logic.gameelements.GameElement;
 import ragnarok.logic.gameelements.entities.Entity;
 import ragnarok.logic.gameelements.particles.ParticleSpawner;
 import ragnarok.logic.gameelements.type.Enemy;
@@ -23,8 +23,8 @@ import ragnarok.util.ReflectUtils.LoadMe;
  *
  */
 @LoadMe
-@VisitInfo(res = "conf/rocket")
-public final class Rocket extends Enemy implements Visitable {
+@SetterInfo(res = "conf/rocket")
+public final class Rocket extends Enemy implements Configurable {
 	/**
 	 * Prototype Constructor.
 	 */
@@ -61,7 +61,7 @@ public final class Rocket extends Enemy implements Visitable {
 	/**
 	 * The timer of the particles.
 	 */
-	@NoVisit
+	@NoSet
 	private Timer paricleTimer;
 
 	/**
@@ -121,19 +121,16 @@ public final class Rocket extends Enemy implements Visitable {
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
 		if (this.getTeam().isHostile(element.getTeam())) {
-
 			if (dir == Direction.UP) {
 				element.setVel(element.getVel().setY(GameConf.PLAYER_KILL_BOOST));
 				this.getScene().getPlayer().addPoints(20);
-				// Kill the rocket itself
-				this.destroy();
 			} else {
 				// Give player damage
 				element.addDamage(1);
-				// Kill the rocket itself
-				this.destroy();
 				Rocket.explosionParticles.spawn(this.getScene(), this.getPos());
 			}
+			// Kill the rocket itself
+			this.destroy();
 		}
 	}
 

@@ -20,9 +20,8 @@ final class ArcadeLevelScene extends LevelScene {
 	 * @param arcadeLevelId
 	 *            the arcade level's id
 	 */
-	public ArcadeLevelScene(GameModel model, int arcadeLevelId) {
+	private ArcadeLevelScene(GameModel model, int arcadeLevelId) {
 		super(model, LevelManager.getArcadeLevel(arcadeLevelId));
-
 		this.arcadeLevelId = arcadeLevelId;
 	}
 
@@ -32,11 +31,11 @@ final class ArcadeLevelScene extends LevelScene {
 	 * @param model
 	 *            the model
 	 * @param options
-	 *            the options
+	 *            the options - options[0] should be an Integer with the
+	 *            arcadeLevelId
 	 * @return a new arcade scene.
 	 */
 	public static Scene create(GameModel model, String[] options) {
-		// options[0] should be an Integer with the arcadeLevelId
 		if (options == null || options.length < 1) {
 			throw new IllegalArgumentException("cant switch to unspecified arcade level");
 		}
