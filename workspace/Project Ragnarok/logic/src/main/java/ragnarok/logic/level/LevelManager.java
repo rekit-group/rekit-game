@@ -46,6 +46,9 @@ public final class LevelManager {
 	private LevelManager() {
 	}
 
+	/**
+	 * Indicates whether the {@link LevelManager} is initialized.
+	 */
 	private static boolean initialized = false;
 
 	/**
@@ -90,6 +93,12 @@ public final class LevelManager {
 
 	}
 
+	/**
+	 * Load {@link Type#INFINITE} and {@link Type#LOTD} levels.
+	 *
+	 * @throws IOException
+	 *             will thrown if Resources are not accessible
+	 */
 	private static void loadInfiniteLevels() throws IOException {
 		PathMatchingResourcePatternResolver resolv = new PathMatchingResourcePatternResolver();
 		Resource level = resolv.getResource("/levels/infinite.dat");
@@ -104,6 +113,12 @@ public final class LevelManager {
 
 	}
 
+	/**
+	 * Load {@link Type#BOSS_RUSH} level.
+	 *
+	 * @throws IOException
+	 *             will thrown if Resources are not accessible
+	 */
 	private static void loadBossRushLevel() {
 		LevelManager.addLevel(new Level(null, null, Type.BOSS_RUSH));
 	}

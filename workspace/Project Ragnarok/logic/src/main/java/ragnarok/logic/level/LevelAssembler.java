@@ -56,6 +56,16 @@ public class LevelAssembler {
 		}
 	}
 
+	/**
+	 * Get the {@link Type#BOSS_RUSH} structure.
+	 * 
+	 * @param seed
+	 *            the rnd seed
+	 * @return the resulting {@link StructureManager}
+	 * @throws IOException
+	 *             will thrown by
+	 *             {@link StructureManager#load(InputStream, int)}
+	 */
 	private StructureManager bossRushManager(int seed) throws IOException {
 		StringBuilder builder = new StringBuilder();
 		builder.append("#SETTING::infinite->true").append("\n");
