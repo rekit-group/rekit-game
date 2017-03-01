@@ -119,7 +119,7 @@ public final class Level implements Comparable<Level> {
 	 * @param type
 	 *            the type
 	 */
-	public Level(String name, InputStream levelStructure, Type type) {
+	Level(String name, InputStream levelStructure, Type type) {
 		this.type = type;
 		this.data = levelStructure;
 		this.name = name == null ? type.toString() : name;

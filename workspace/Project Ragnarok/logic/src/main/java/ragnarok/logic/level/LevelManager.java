@@ -79,15 +79,16 @@ public final class LevelManager {
 		Resource[] res = resolv.getResources("/levels/*");
 		Stream<Resource> numbered = Arrays.stream(res).filter(r -> r.getFilename().matches("level_\\d+\\.dat"));
 		Stream<Resource> notNumbered = Arrays.stream(res).filter(r -> !r.getFilename().matches("level_\\d+\\.dat"));
+
+		LevelManager.loadInfiniteLevels();
+		LevelManager.loadBossRushLevel();
+
 		numbered.sorted((r1, r2) -> {
 			String n1 = r1.getFilename(), n2 = r2.getFilename();
 			n1 = n1.substring("level_".length()).split("\\.")[0];
 			n2 = n2.substring("level_".length()).split("\\.")[0];
 			return Integer.compare(Integer.parseInt(n1), Integer.parseInt(n2));
 		}).forEach(LevelManager::addLevel);
-
-		LevelManager.loadInfiniteLevels();
-		LevelManager.loadBossRushLevel();
 
 		notNumbered.sorted((r1, r2) -> r1.toString().compareToIgnoreCase(r2.toString())).forEach(LevelManager::addLevel);
 
