@@ -1,15 +1,15 @@
-BOSS_RUSH:BOSS_RUSH:1000
-infinite.dat:INFINITE:64
-infinite.dat:LOTD:0
-infinite.dat:ARCADE:0
-level_0.dat:ARCADE:0
-level_1.dat:ARCADE:0
-level_2.dat:ARCADE:0
-level_3.dat:ARCADE:0
-level_4.dat:ARCADE:0
-level_5.dat:ARCADE:0
-level_6.dat:ARCADE:0
-level_7.dat:ARCADE:0
-level_8.dat:ARCADE:0
-level_9.dat:ARCADE:0
-level_10.dat:ARCADE:0
+ARCADE-10:ARCADE:0
+ARCADE-11:ARCADE:0
+ARCADE-12:ARCADE:0
+ARCADE-2:ARCADE:0
+ARCADE-3:ARCADE:0
+ARCADE-4:ARCADE:0
+ARCADE-5:ARCADE:0
+ARCADE-6:ARCADE:0
+ARCADE-7:ARCADE:0
+ARCADE-8:ARCADE:0
+ARCADE-9:ARCADE:0
+Boss Rush:Boss_Rush:0
+Infinite Fun:Infinite_Fun:13
+Level of the Day:Level_of_the_Day:0
+The Nightmare of the Rekt-Killer:ARCADE:100

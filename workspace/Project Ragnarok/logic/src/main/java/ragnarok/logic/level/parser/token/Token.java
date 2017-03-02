@@ -83,7 +83,7 @@ public class Token {
 		if (input.equals("#SETTING")) {
 			return TokenType.SETTING;
 		}
-		if (input.matches("(\\w|(\\+|-)?\\d|\\.)+->(\\w|\\d|\\.)+")) {
+		if (input.matches("(\\w|(\\+|-)?\\d|_|\\.)+->(\\w|\\d|_|-|\\.)+")) {
 			return TokenType.MAPPING;
 		}
 		return TokenType.RAW;

@@ -49,7 +49,7 @@ public class LevelAssembler {
 	 *             if file cannot be read
 	 */
 	public LevelAssembler(InputStream data, int seed, Type type) throws IOException {
-		if (type != Type.BOSS_RUSH) {
+		if (type != Type.Boss_Rush) {
 			this.manager = StructureManager.load(data, seed);
 		} else {
 			this.manager = this.bossRushManager(seed);
@@ -57,8 +57,8 @@ public class LevelAssembler {
 	}
 
 	/**
-	 * Get the {@link Type#BOSS_RUSH} structure.
-	 * 
+	 * Get the {@link Type#Boss_Rush} structure.
+	 *
 	 * @param seed
 	 *            the rnd seed
 	 * @return the resulting {@link StructureManager}
@@ -112,4 +112,12 @@ public class LevelAssembler {
 		return this.manager.isSettingSet("infinite");
 	}
 
+	/**
+	 * Get the structure manager of the level.
+	 *
+	 * @return the structure manager
+	 */
+	public StructureManager getStructureManager() {
+		return this.manager;
+	}
 }

@@ -22,11 +22,11 @@ public final class Level implements Comparable<Level> {
 		/**
 		 * Infinite level.
 		 */
-		INFINITE,
+		Infinite_Fun,
 		/**
 		 * Level of the day.
 		 */
-		LOTD,
+		Level_of_the_Day,
 		/**
 		 * Arcade level.
 		 */
@@ -34,7 +34,7 @@ public final class Level implements Comparable<Level> {
 		/**
 		 * Boss Rush Mode.
 		 */
-		BOSS_RUSH;
+		Boss_Rush;
 		/**
 		 * Same as {@link #valueOf(String)}, but no exception.
 		 *
@@ -69,11 +69,11 @@ public final class Level implements Comparable<Level> {
 	 * Name of the level that is used as extrinsic state and filename for level
 	 * structure template.
 	 */
-	private String stringID;
+	private final String stringID;
 	/**
 	 * The level's seed.
 	 */
-	private int levelSeed;
+	private final int levelSeed;
 	/**
 	 * The level's highscore.
 	 */
@@ -81,7 +81,7 @@ public final class Level implements Comparable<Level> {
 	/**
 	 * The level's assebler.
 	 */
-	private LevelAssembler levelAssembler;
+	private final LevelAssembler levelAssembler;
 	/**
 	 * The type of the level.
 	 */
@@ -112,35 +112,49 @@ public final class Level implements Comparable<Level> {
 	/**
 	 * Create a new level by data and type.
 	 *
-	 * @param name
-	 *            the name
 	 * @param levelStructure
 	 *            the structure data
 	 * @param type
 	 *            the type
 	 */
-	Level(String name, InputStream levelStructure, Type type) {
-		this.type = type;
-		this.data = levelStructure;
-		this.name = name == null ? type.toString() : name;
-		if (type == Type.INFINITE || type == Type.LOTD || type == Type.BOSS_RUSH) {
-			this.stringID = "" + this.type;
-		} else {
-			this.stringID = Type.ARCADE + "-" + Level.nextLevel();
-		}
-		this.levelSeed = GameConf.PRNG.nextInt();
-		this.highScore = 0;
+	Level(InputStream levelStructure, Type type) {
+		this(levelStructure, type, GameConf.PRNG.nextInt());
 	}
 
 	/**
-	 * Optional invokable method to set the seed for all randomized actions of
-	 * the level generation.
+	 * Create a new level by data and type.
 	 *
+	 * @param levelStructure
+	 *            the structure data
+	 * @param type
+	 *            the type
 	 * @param seed
-	 *            the seed
+	 *            the rnd seed
 	 */
-	public void setSeed(int seed) {
+	Level(InputStream levelStructure, Type type, int seed) {
+		this.type = type;
+		this.data = levelStructure;
 		this.levelSeed = seed;
+		this.levelAssembler = this.getLevelAssember();
+		this.levelAssembler.init();
+		String name = this.levelAssembler.getStructureManager().getSettingValue("name");
+		if (type == Type.Infinite_Fun || type == Type.Level_of_the_Day || type == Type.Boss_Rush) {
+			this.stringID = "" + this.type;
+			name = null;
+		} else {
+			this.stringID = Type.ARCADE + "-" + Level.nextLevel();
+		}
+
+		this.name = (name == null ? this.stringID : name).replace('_', ' ');
+		this.highScore = 0;
+
+	}
+
+	/**
+	 * Reset level.
+	 */
+	public void reset() {
+		this.levelAssembler.init();
 	}
 
 	/**
@@ -174,20 +188,12 @@ public final class Level implements Comparable<Level> {
 	public LevelAssembler getLevelAssember() {
 		if (this.levelAssembler == null) {
 			try {
-				this.levelAssembler = new LevelAssembler(this.data, this.levelSeed, this.type);
+				return new LevelAssembler(this.data, this.levelSeed, this.type);
 			} catch (IOException e) {
 				GameConf.GAME_LOGGER.error("Cannot instantiate level assembler for level " + this);
 			}
 		}
 		return this.levelAssembler;
-	}
-
-	/**
-	 * Initialize level & generate level.
-	 */
-	public void init() {
-		this.getLevelAssember().init();
-		this.getLevelAssember().generate(GameConf.GRID_W);
 	}
 
 	@Override

@@ -86,9 +86,7 @@ public abstract class LevelScene extends Scene {
 
 		// Init EnemyFactory with model
 		GameElementFactory.setScene(this);
-
-		this.level.init();
-
+		this.level.reset();
 		// Create parallax background
 		this.parallax = new ParallaxContainer(this);
 
@@ -105,7 +103,7 @@ public abstract class LevelScene extends Scene {
 		this.addGuiElement(this.lifeGui);
 
 		TextOptions op = new TextOptions(new Vec(-0.5f, -0.5f), 30, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, Font.BOLD);
-		Text levelText = new Text(this, op).setText(this.level.getID() + " @ " + this.level.getName());
+		Text levelText = new Text(this, op).setText(this.level.getName());
 		levelText.setPos(CalcUtil.units2pixel(new Vec(GameConf.GRID_W / 2f, GameConf.GRID_H / 2f)));
 		this.addGuiElement(new TimeDecorator(this, levelText, new Timer(5000)));
 

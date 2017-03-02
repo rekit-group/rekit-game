@@ -24,6 +24,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import ragnarok.config.GameConf;
 import ragnarok.logic.level.Level.Type;
+import ragnarok.logic.level.parser.token.UnexpectedTokenException;
 
 /**
  *
@@ -95,7 +96,7 @@ public final class LevelManager {
 	}
 
 	/**
-	 * Load {@link Type#INFINITE} and {@link Type#LOTD} levels.
+	 * Load {@link Type#Infinite_Fun} and {@link Type#Level_of_the_Day} levels.
 	 *
 	 * @throws IOException
 	 *             will thrown if Resources are not accessible
@@ -104,24 +105,23 @@ public final class LevelManager {
 		PathMatchingResourcePatternResolver resolv = new PathMatchingResourcePatternResolver();
 		Resource level = resolv.getResource("/levels/infinite.dat");
 		// Infinite
-		LevelManager.addLevel(new Level(level.getFilename(), level.getInputStream(), Type.INFINITE));
+		LevelManager.addLevel(new Level(level.getInputStream(), Type.Infinite_Fun));
 		// LOTD
-		Level lotd = new Level(level.getFilename(), level.getInputStream(), Type.LOTD);
 		DateFormat levelOfTheDayFormat = new SimpleDateFormat("ddMMyyyy");
 		int seed = Integer.parseInt(levelOfTheDayFormat.format(Calendar.getInstance().getTime()));
-		lotd.setSeed(seed);
+		Level lotd = new Level(level.getInputStream(), Type.Level_of_the_Day, seed);
 		LevelManager.addLevel(lotd);
 
 	}
 
 	/**
-	 * Load {@link Type#BOSS_RUSH} level.
+	 * Load {@link Type#Boss_Rush} level.
 	 *
 	 * @throws IOException
 	 *             will thrown if Resources are not accessible
 	 */
 	private static void loadBossRushLevel() {
-		LevelManager.addLevel(new Level(null, null, Type.BOSS_RUSH));
+		LevelManager.addLevel(new Level(null, Type.Boss_Rush));
 	}
 
 	/**
@@ -132,25 +132,23 @@ public final class LevelManager {
 	 */
 	private static void addLevel(Resource level) {
 		try {
-			LevelManager.addArcadeLevel(level.getFilename(), level.getInputStream());
-		} catch (IOException e) {
-			GameConf.GAME_LOGGER.error("Loading of " + level + " failed");
+			LevelManager.addArcadeLevel(level.getInputStream());
+		} catch (IOException | UnexpectedTokenException e) {
+			GameConf.GAME_LOGGER.error("Loading of " + level + " failed: " + e.getMessage());
 		}
 	}
 
 	/**
 	 * Add a level by structure-file.
 	 *
-	 * @param name
-	 *            the name of the level
 	 * @param levelStructure
 	 *            the level structure
 	 */
-	public static synchronized void addArcadeLevel(String name, InputStream levelStructure) {
+	public static synchronized void addArcadeLevel(InputStream levelStructure) {
 		if (!LevelManager.initialized) {
 			return;
 		}
-		LevelManager.addLevel(new Level(name, levelStructure, Type.ARCADE));
+		LevelManager.addLevel(new Level(levelStructure, Type.ARCADE));
 	}
 
 	/**
@@ -162,7 +160,7 @@ public final class LevelManager {
 		if (!LevelManager.initialized) {
 			return null;
 		}
-		return LevelManager.getLevelById("" + Level.Type.INFINITE);
+		return LevelManager.getLevelById("" + Level.Type.Infinite_Fun);
 	}
 
 	/**
@@ -174,7 +172,7 @@ public final class LevelManager {
 		if (!LevelManager.initialized) {
 			return null;
 		}
-		return LevelManager.getLevelById("" + Level.Type.LOTD);
+		return LevelManager.getLevelById("" + Level.Type.Level_of_the_Day);
 	}
 
 	/**
@@ -186,7 +184,7 @@ public final class LevelManager {
 		if (!LevelManager.initialized) {
 			return null;
 		}
-		return LevelManager.getLevelById("" + Level.Type.BOSS_RUSH);
+		return LevelManager.getLevelById("" + Level.Type.Boss_Rush);
 	}
 
 	/**
@@ -300,6 +298,9 @@ public final class LevelManager {
 	 * @return the level or {@code null} if none found
 	 */
 	private static Level findByNameAndType(String name, Type type) {
+		if (name == null || type == null) {
+			return null;
+		}
 		List<Level> levels = LevelManager.levelMap.values().stream().filter(type::hasType).filter(level -> level.getName().equals(name))
 				.collect(Collectors.toList());
 		if (levels.isEmpty()) {
