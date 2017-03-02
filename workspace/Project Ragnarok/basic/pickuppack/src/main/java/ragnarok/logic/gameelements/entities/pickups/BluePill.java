@@ -98,7 +98,7 @@ public class BluePill extends Pickup implements Configurable {
 	private void drawPlayer(GameGrid f, Player p) {
 		Direction dir = Direction.RIGHT;
 		// determine if direction needs to be changed +- delta: 0.15
-		if (this.getVel().getX() < -0.15) {
+		if (p.getVel().getX() < -0.15) {
 			dir = Direction.LEFT;
 		}
 		f.drawRoundRectangle(p.getPos(), p.getSize(), new RGBAColor(148, 172, 236, 180), 0.45F, 0.45F);

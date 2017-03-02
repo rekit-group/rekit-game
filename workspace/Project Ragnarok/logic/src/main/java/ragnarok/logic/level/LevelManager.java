@@ -77,7 +77,7 @@ public final class LevelManager {
 	 */
 	private static void loadAllLevels() throws IOException {
 		PathMatchingResourcePatternResolver resolv = new PathMatchingResourcePatternResolver();
-		Resource[] res = resolv.getResources("/levels/*");
+		Resource[] res = resolv.getResources("/levels/level*");
 		Stream<Resource> numbered = Arrays.stream(res).filter(r -> r.getFilename().matches("level_\\d+\\.dat"));
 		Stream<Resource> notNumbered = Arrays.stream(res).filter(r -> !r.getFilename().matches("level_\\d+\\.dat"));
 
@@ -148,7 +148,7 @@ public final class LevelManager {
 		if (!LevelManager.initialized) {
 			return;
 		}
-		LevelManager.addLevel(new Level(levelStructure, Type.ARCADE));
+		LevelManager.addLevel(new Level(levelStructure, Type.Arcade));
 	}
 
 	/**
@@ -198,7 +198,7 @@ public final class LevelManager {
 		if (!LevelManager.initialized) {
 			return null;
 		}
-		return LevelManager.getLevelById(Level.Type.ARCADE + "-" + arcadeId);
+		return LevelManager.getLevelById(Level.Type.Arcade + "-" + arcadeId);
 	}
 
 	/**
@@ -234,7 +234,7 @@ public final class LevelManager {
 		if (!LevelManager.initialized) {
 			return 0;
 		}
-		return (int) LevelManager.levelMap.values().stream().filter(Level.Type.ARCADE::hasType).count();
+		return (int) LevelManager.levelMap.values().stream().filter(Level.Type.Arcade::hasType).count();
 	}
 
 	/**

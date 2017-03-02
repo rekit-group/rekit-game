@@ -72,12 +72,12 @@ final class MainMenu extends Scene {
 			arcade.addItem(button);
 		}
 
-		MenuList modPlay = new MenuList(this, "Mod Scenes");
+		// MenuList modPlay = new MenuList(this, "Mod Scenes");
+		//
+		// modPlay.addItem(new MenuActionItem(this, "no Mod Scenes :(", () -> {
+		// }));
 
-		modPlay.addItem(new MenuActionItem(this, "no Mod Scenes :(", () -> {
-		}));
-
-		play.addItem(top3, arcade, modPlay);
+		play.addItem(top3, arcade); // , modPlay);
 
 		MenuList settings = new MenuList(this, "Settings");
 		settings.addItem(new BoolSetting(this, "Debug Mode", "DEBUG"));

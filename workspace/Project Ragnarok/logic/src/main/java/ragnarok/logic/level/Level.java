@@ -30,7 +30,7 @@ public final class Level implements Comparable<Level> {
 		/**
 		 * Arcade level.
 		 */
-		ARCADE,
+		Arcade,
 		/**
 		 * Boss Rush Mode.
 		 */
@@ -142,7 +142,7 @@ public final class Level implements Comparable<Level> {
 			this.stringID = "" + this.type;
 			name = null;
 		} else {
-			this.stringID = Type.ARCADE + "-" + Level.nextLevel();
+			this.stringID = Type.Arcade + "-" + Level.nextLevel();
 		}
 
 		this.name = (name == null ? this.stringID : name).replace('_', ' ');

@@ -24,7 +24,7 @@ import ragnarok.logic.level.Level.Type;
  * @author Angelo Aracri
  * @version 1.0
  */
-public class LevelAssembler {
+public final class LevelAssembler {
 	/**
 	 * Position of the current end of the level (x pos).
 	 */
@@ -32,7 +32,7 @@ public class LevelAssembler {
 	/**
 	 * The structure manager.
 	 */
-	private StructureManager manager;
+	private final StructureManager manager;
 
 	/**
 	 * Constructor that initializes attributes and instructs a new
