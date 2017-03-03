@@ -91,7 +91,7 @@ public final class Level implements Comparable<Level> {
 	/**
 	 * The structure manager.
 	 */
-	private final StructureManager levelManager;
+	private final StructureManager structureManager;
 
 	/**
 	 * The level's assebler.
@@ -164,8 +164,8 @@ public final class Level implements Comparable<Level> {
 	 */
 	public Level(StructureManager manager, Type type) {
 		this.type = type;
-		this.levelManager = manager;
-		this.levelAssembler = new LevelAssembler(this.levelManager);
+		this.structureManager = manager;
+		this.levelAssembler = new LevelAssembler(this.structureManager);
 		this.levelAssembler.reset();
 		String name = this.levelAssembler.getStructureManager().getSettingValue("name");
 		this.id = type.getID();
@@ -179,7 +179,7 @@ public final class Level implements Comparable<Level> {
 	 */
 	public void reset() {
 		this.levelAssembler.reset();
-		this.levelManager.reset();
+		this.structureManager.reset();
 	}
 
 	/**
@@ -205,22 +205,12 @@ public final class Level implements Comparable<Level> {
 	}
 
 	/**
-	 * Creates and returns a LevelAssember for this level if not created
-	 * already. Singleton.
+	 * Get the associate {@link Configurable}.
 	 *
-	 * @return the only instance of a LevelAssembler
+	 * @return the configurable
 	 */
-	public LevelAssembler getLevelAssember() {
-		return this.levelAssembler;
-	}
-
-	/**
-	 * Create the new structure manager.
-	 *
-	 * @return the structure manager
-	 */
-	public StructureManager getStructureManager() {
-		return this.levelManager;
+	public Configurable getConfigurable() {
+		return this.structureManager;
 	}
 
 	@Override
@@ -294,6 +284,20 @@ public final class Level implements Comparable<Level> {
 
 		// Else order by string order (and secondly by type)
 		return 2 * this.getName().compareTo(o.getName()) + (this.getType().compareTo(o.getType()));
+	}
+
+	/**
+	 * Orders the {@link StructureManager} of the level to build
+	 * {@link Structure Structures} if it must. This decision depends on the
+	 * {@link Structure Structures} build so far and the parameter <i>max</i>
+	 * that specifies which x position is the smallest that needs to be
+	 * generated at.
+	 *
+	 * @param max
+	 *            the lowest x position that must still be generated at.
+	 */
+	public void generate(int max) {
+		this.levelAssembler.generate(max);
 	}
 
 }

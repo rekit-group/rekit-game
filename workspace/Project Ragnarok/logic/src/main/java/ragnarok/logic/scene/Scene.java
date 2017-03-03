@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Queue;
 import java.util.TreeMap;
+import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Consumer;
@@ -51,7 +52,7 @@ abstract class Scene implements CameraTarget, IScene {
 	/**
 	 * All gui elements.
 	 */
-	private Queue<GuiElement> guiElements;
+	private ConcurrentLinkedDeque<GuiElement> guiElements;
 	/**
 	 * All game elements.
 	 */
@@ -101,7 +102,7 @@ abstract class Scene implements CameraTarget, IScene {
 	public void init() {
 		// Byte: [-128, 127]
 		final int length = 256;
-		this.guiElements = new ArrayDeque<>();
+		this.guiElements = new ConcurrentLinkedDeque<>();
 
 		this.gameElements = (Queue<GameElement>[]) new Queue<?>[length];
 		for (int i = 0; i < this.gameElements.length; i++) {
