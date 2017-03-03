@@ -130,7 +130,7 @@ public final class Level implements Comparable<Level> {
 	 * @throws IOException
 	 *             iff file cannot accessed
 	 * @throws UnexpectedTokenException
-	 *             if syntax is wrong
+	 *             iff syntax is wrong
 	 */
 	public Level(InputStream levelStructure, Type type) throws UnexpectedTokenException, IOException {
 		this(levelStructure, type, GameConf.PRNG.nextInt());
@@ -148,7 +148,7 @@ public final class Level implements Comparable<Level> {
 	 * @throws IOException
 	 *             iff file cannot accessed
 	 * @throws UnexpectedTokenException
-	 *             if syntax is wrong
+	 *             iff syntax is wrong
 	 */
 	public Level(InputStream levelStructure, Type type, int seed) throws UnexpectedTokenException, IOException {
 		this(StructureManager.load(levelStructure, seed), type);
@@ -167,7 +167,7 @@ public final class Level implements Comparable<Level> {
 		this.structureManager = manager;
 		this.levelAssembler = new LevelAssembler(this.structureManager);
 		this.levelAssembler.reset();
-		String name = this.levelAssembler.getStructureManager().getSettingValue("name");
+		String name = this.structureManager.getSettingValue("name");
 		this.id = type.getID();
 		this.name = (name == null ? this.id : name).replace('_', ' ');
 		this.highScore = 0;
@@ -287,14 +287,14 @@ public final class Level implements Comparable<Level> {
 	}
 
 	/**
-	 * Orders the {@link StructureManager} of the level to build
-	 * {@link Structure Structures} if it must. This decision depends on the
-	 * {@link Structure Structures} build so far and the parameter <i>max</i>
-	 * that specifies which x position is the smallest that needs to be
-	 * generated at.
+	 * Orders the {@link LevelAssembler} of the level to build {@link Structure
+	 * Structures} if it must. This decision depends on the {@link Structure
+	 * Structures} build so far and the parameter <i>max</i> that specifies
+	 * which x position is the smallest that needs to be generated at.
 	 *
 	 * @param max
 	 *            the lowest x position that must still be generated at.
+	 * @see LevelAssembler#generate(int)
 	 */
 	public void generate(int max) {
 		this.levelAssembler.generate(max);
