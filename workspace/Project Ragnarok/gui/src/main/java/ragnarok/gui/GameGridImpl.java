@@ -175,10 +175,12 @@ class GameGridImpl extends GameGrid {
 	 *            same as in base method
 	 * @param imagePath
 	 *            same as in base method
+	 * @param usefilter
+	 *            indicates whether a filter shall used
 	 */
-	private void drawImageImpl(Vec pos, Vec size, String imagePath) {
+	private void drawImageImpl(Vec pos, Vec size, String imagePath, boolean usefilter) {
 		Image image = null;
-		Tuple<String, Filter> key = Tuple.create(imagePath, this.filter);
+		Tuple<String, Filter> key = Tuple.create(imagePath, usefilter ? this.filter : null);
 		if (this.images.containsKey(key) && !(this.filter != null && this.filter.changed())) {
 			image = this.images.get(key);
 		} else {
@@ -211,7 +213,7 @@ class GameGridImpl extends GameGrid {
 	private void drawTextImpl(Vec pos, String text, TextOptions options) {
 		// Set color to red and set font
 		RGBColor in = new RGBColor(options.getColor().red, options.getColor().green, options.getColor().blue);
-		RGBColor col = (this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
+		RGBColor col = (!options.getUseFilter() || this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
 		this.graphics.setColor(Utils.calcRGB(col));
 
 		Font font = new Font(options.getFont(), options.getFontOptions(), options.getHeight());
@@ -295,8 +297,8 @@ class GameGridImpl extends GameGrid {
 	// Adapt methods (separate world position calculation from drawing)
 
 	@Override
-	public void drawRectangle(Vec pos, Vec size, RGBAColor in, boolean inGame) {
-		RGBAColor col = (this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
+	public void drawRectangle(Vec pos, Vec size, RGBAColor in, boolean inGame, boolean usefilter) {
+		RGBAColor col = (!usefilter || this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
 		if (!inGame) {
 			this.drawRectangleImpl(this.translate2D(pos), size, Utils.calcRGBA(col));
 		} else {
@@ -336,8 +338,8 @@ class GameGridImpl extends GameGrid {
 	}
 
 	@Override
-	public void drawCircle(Vec pos, Vec size, RGBAColor in, boolean inGame) {
-		RGBAColor col = (this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
+	public void drawCircle(Vec pos, Vec size, RGBAColor in, boolean inGame, boolean usefilter) {
+		RGBAColor col = (!usefilter || this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
 		if (!inGame) {
 			this.drawCircleImpl(this.translate2D(pos), size, Utils.calcRGBA(col));
 		} else {
@@ -352,8 +354,8 @@ class GameGridImpl extends GameGrid {
 	}
 
 	@Override
-	public void drawPolygon(Polygon polygon, RGBAColor in, boolean fill, boolean inGame) {
-		RGBAColor col = (this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
+	public void drawPolygon(Polygon polygon, RGBAColor in, boolean fill, boolean inGame, boolean usefilter) {
+		RGBAColor col = (!usefilter || this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
 		polygon.moveTo(this.translate2D(polygon.getStartPoint()));
 
 		float[] unitArray = polygon.getAbsoluteArray();
@@ -369,14 +371,14 @@ class GameGridImpl extends GameGrid {
 	}
 
 	@Override
-	public void drawImage(Vec pos, Vec size, String imagePath, boolean inGame) {
+	public void drawImage(Vec pos, Vec size, String imagePath, boolean inGame, boolean usefilter) {
 		if (!inGame) {
-			this.drawImageImpl(pos, size, imagePath);
+			this.drawImageImpl(pos, size, imagePath, usefilter);
 		} else {
 			Vec newPos = CalcUtil.units2pixel(pos);
 			newPos = newPos.addX(this.cameraOffset);
 			Vec newSize = CalcUtil.units2pixel(size);
-			this.drawImageImpl(newPos, newSize, imagePath);
+			this.drawImageImpl(newPos, newSize, imagePath, usefilter);
 		}
 	}
 
@@ -392,8 +394,8 @@ class GameGridImpl extends GameGrid {
 	}
 
 	@Override
-	public void drawRoundRectangle(Vec pos, Vec size, RGBAColor in, float arcWidth, float arcHeight, boolean inGame) {
-		RGBAColor col = (this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
+	public void drawRoundRectangle(Vec pos, Vec size, RGBAColor in, float arcWidth, float arcHeight, boolean inGame, boolean usefilter) {
+		RGBAColor col = (!usefilter || this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
 		if (!inGame) {
 			this.drawRoundRectangleImpl(this.translate2D(pos), size, Utils.calcRGBA(col), (int) arcWidth, (int) arcHeight);
 		} else {

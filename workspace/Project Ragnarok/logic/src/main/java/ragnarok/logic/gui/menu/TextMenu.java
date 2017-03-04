@@ -38,7 +38,7 @@ public class TextMenu extends MenuItem {
 	 */
 	@Override
 	protected void renderItem(GameGrid f) {
-		f.drawRectangle(this.getPos(), this.getSize(), new RGBAColor(0, 0, 0, 200), false);
+		f.drawRectangle(this.getPos(), this.getSize(), new RGBAColor(0, 0, 0, 200), false, true);
 		f.drawText(this.getPos().sub(this.getSize().scalar(0.5F)).add(this.space), this.getText(), GameConf.ABOUT_TEXT, false);
 	}
 
