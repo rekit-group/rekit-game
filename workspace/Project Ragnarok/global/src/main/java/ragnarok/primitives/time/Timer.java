@@ -115,8 +115,8 @@ public final class Timer {
 	 *            the job
 	 */
 	public static void execute(int offset, Runnable r) {
-		ThreadUtils.runThread(r.toString(), () -> {
-			ThreadUtils.sleep(offset);
+		ThreadUtils.runDaemon(r.toString(), () -> {
+			Timer.sleep(offset);
 			r.run();
 		});
 	}

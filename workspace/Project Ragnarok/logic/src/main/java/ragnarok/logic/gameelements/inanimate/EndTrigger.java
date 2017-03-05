@@ -193,6 +193,9 @@ public final class EndTrigger extends InanimateTrigger {
 
 	@Override
 	public void perform() {
+		// Make player invisible
+		this.getScene().getPlayer().setTemporaryApperance((f) -> {
+		}, 3000);
 		this.getScene().end(true);
 	}
 
@@ -211,6 +214,11 @@ public final class EndTrigger extends InanimateTrigger {
 			EndTrigger.instance = new EndTrigger(new Vec(), new Vec(1.5f, GameConf.GRID_H));
 		}
 		return EndTrigger.instance;
+	}
+
+	@Override
+	public void destroy() {
+		// cannot be destroyed.
 	}
 
 	@Override

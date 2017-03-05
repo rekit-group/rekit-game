@@ -149,7 +149,11 @@ public abstract class LevelScene extends Scene {
 		Text levelText = new Text(this, op).setText("You" + (won ? " win!" : " have lost!"));
 		levelText.setPos(CalcUtil.units2pixel(new Vec(GameConf.GRID_W / 2f, GameConf.GRID_H / 2f)));
 		this.addGuiElement(new TimeDecorator(this, levelText, new Timer(5000)));
-		this.getModel().setFilter(this.findGrayScale());
+		if (won) {
+			this.getModel().removeFilter();
+		} else {
+			this.getModel().setFilter(this.findGrayScale());
+		}
 	}
 
 	/**
