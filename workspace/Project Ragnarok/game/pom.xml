@@ -6,9 +6,6 @@
 		<artifactId>parent</artifactId>
 		<version>0.5-ALPHA</version>
 	</parent>
-	<properties>
-		<main.class>ragnarok.Main</main.class>
-	</properties>
 	<build>
 		<plugins>
 			<plugin>

@@ -71,6 +71,10 @@ class GameView implements View {
 	 * Amount of points in time to calculate FPS.
 	 */
 	private static final int FPS_COUNTER = 500;
+	/**
+	 * Max tries of {@link #getGameIcon(int)}.
+	 */
+	private static final int MAX_TRIES = 5;
 
 	/**
 	 * The Field that manages the graphic context.
@@ -130,6 +134,21 @@ class GameView implements View {
 	 * @return the game icon
 	 */
 	private Image getGameIcon() {
+		return this.getGameIcon(0);
+	}
+
+	/**
+	 * Try to get icon multiple times, as sometimes stream will closes (don't
+	 * know why).
+	 *
+	 * @param nTry
+	 *            the number of the try
+	 * @return hopefully the game icon
+	 */
+	private Image getGameIcon(final int nTry) {
+		if (nTry > GameView.MAX_TRIES) {
+			return null;
+		}
 		DefaultResourceLoader resolv = new DefaultResourceLoader();
 		try {
 			Resource icon = resolv.getResource(GameView.ICON_LOCATION);
@@ -141,8 +160,8 @@ class GameView implements View {
 			ByteArrayInputStream is = new ByteArrayInputStream(IOUtils.toByteArray(icon.getInputStream()));
 			return ImageIO.read(is);
 		} catch (IOException e) {
-			GameConf.GAME_LOGGER.error(e + ", Icon does not exist.");
-			return null;
+			GameConf.GAME_LOGGER.debug(e + ", Icon does not exist. Try " + nTry);
+			return this.getGameIcon(nTry + 1);
 		}
 	}
 

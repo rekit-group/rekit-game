@@ -13,6 +13,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+		<main.class>ragnarok.Main</main.class>
 	</properties>
 	<repositories>
 		<repository>
@@ -80,7 +81,30 @@
 					<artifactId>maven-dependency-plugin</artifactId>
 					<version>3.0.0</version>
 				</plugin>
-
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>3.0.0</version>
+					<configuration>
+						<executions>
+							<execution>
+								<id>make-assembly</id>
+								<goals>
+									<goal>single</goal>
+								</goals>
+							</execution>
+						</executions>
+						<descriptorRefs>
+							<descriptorRef>jar-with-dependencies</descriptorRef>
+						</descriptorRefs>
+						<archive>
+							<manifest>
+								<mainClass>${main.class}</mainClass>
+							</manifest>
+						</archive>
+						<outputDirectory>${project.build.directory}/${profile.folder}</outputDirectory>
+					</configuration>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
@@ -124,7 +148,7 @@
 			<dependency>
 				<groupId>org.reflections</groupId>
 				<artifactId>reflections</artifactId>
-				<version>0.9.10</version>
+				<version>0.9.11</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.fuchss-dominik</groupId>
