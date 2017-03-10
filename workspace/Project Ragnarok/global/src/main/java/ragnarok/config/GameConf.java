@@ -1,5 +1,6 @@
 package ragnarok.config;
 
+import java.awt.Font;
 import java.util.Random;
 
 import org.apache.log4j.Logger;
@@ -55,8 +56,7 @@ public final class GameConf implements Configurable {
 	/**
 	 * This boolean indicates whether the game is in debug mode.
 	 */
-	@NoSet
-	public static boolean DEBUG = true;
+	public static boolean DEBUG;
 
 	/**
 	 * The Name of the Game.
@@ -226,10 +226,10 @@ public final class GameConf implements Configurable {
 		GameConf.PIXEL_W = GameConf.GRID_W * GameConf.PX_PER_UNIT;
 		GameConf.PIXEL_H = GameConf.GRID_H * GameConf.PX_PER_UNIT;
 
-		GameConf.DEFAULT_TEXT = new TextOptions(new Vec(-1, 0), GameConf.GAME_TEXT_SIZE, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, 0);
-		GameConf.MENU_TEXT = new TextOptions(new Vec(-0.5F, -0.65f), GameConf.MENU_TEXT_SIZE, GameConf.MENU_TEXT_COLOR, GameConf.MENU_TEXT_FONT, 0);
+		GameConf.DEFAULT_TEXT = new TextOptions(new Vec(-1, 0), GameConf.GAME_TEXT_SIZE, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, Font.PLAIN);
+		GameConf.MENU_TEXT = new TextOptions(new Vec(-0.5F, -0.65f), GameConf.MENU_TEXT_SIZE, GameConf.MENU_TEXT_COLOR, GameConf.MENU_TEXT_FONT, Font.PLAIN);
 		GameConf.DEBUG_TEXT_COLOR = new RGBColor(255, 255, 255);
 		GameConf.HINT_TEXT = GameConf.DEFAULT_TEXT.clone().setHeight(GameConf.GAME_TEXT_SIZE - 5).setColor(GameConf.DEBUG_TEXT_COLOR);
-		GameConf.ABOUT_TEXT = GameConf.HINT_TEXT.clone().setHeight(GameConf.GAME_TEXT_SIZE - 3).setAlignmentLeft(new Vec());
+		GameConf.ABOUT_TEXT = GameConf.HINT_TEXT.clone().setHeight(GameConf.GAME_TEXT_SIZE - 2).setAlignmentLeft(new Vec());
 	}
 }
