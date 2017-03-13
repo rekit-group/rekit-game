@@ -33,7 +33,7 @@ public final class Stacker extends Enemy implements Configurable {
 	private static OpProgress<Vec> dimensions;
 
 	@NoSet
-	private int highestOffset;
+	protected int highestOffset;
 
 	private static int ITERATIONS;
 	private static RGBColor COLOR;
@@ -101,7 +101,7 @@ public final class Stacker extends Enemy implements Configurable {
 
 		private Timer timeToDie;
 
-		StackerElement(Vec relPos, int offset) {
+		private StackerElement(Vec relPos, int offset) {
 			super(Stacker.this.getPos().add(relPos), new Vec(), Stacker.dimensions.getNow(0));
 			this.relPos = relPos;
 			this.offset = offset;
@@ -158,7 +158,10 @@ public final class Stacker extends Enemy implements Configurable {
 			}
 		}
 
-		public void customDie() {
+		/**
+		 * Will be called upon death.
+		 */
+		private void customDie() {
 			if (this.offset == Stacker.this.highestOffset) {
 				this.timeToDie = new Timer((long) (1000 * Stacker.DIE_ANIMATION_TIME));
 				Stacker.this.highestOffset--;

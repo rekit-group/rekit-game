@@ -123,6 +123,10 @@ public final class BossStructure extends Structure implements Configurable {
 	 *            the scene
 	 */
 	private void startIntern(IScene scene) {
+		if (this.door == null || this.triggerPos == null) {
+			return;
+		}
+
 		GameElement player = scene.getPlayer();
 		// keep walking right to the right camera position
 		while (player.getPos().getX() < this.cameraTarget) {
@@ -162,6 +166,9 @@ public final class BossStructure extends Structure implements Configurable {
 	 *            the scene
 	 */
 	private final void endAnimation(IScene scene) {
+		if (this.door == null) {
+			return;
+		}
 		final Player player = scene.getPlayer();
 		final Timer timer = new Timer(7000);
 
@@ -259,6 +266,7 @@ public final class BossStructure extends Structure implements Configurable {
 	 *            the door mover
 	 */
 	private final void phase2(IScene scene, Timer timer, Progress doorMover) {
+
 		// remove boss of last phase
 		scene.markForRemove(this.boss);
 
@@ -277,7 +285,9 @@ public final class BossStructure extends Structure implements Configurable {
 
 		// open door slowly
 		float prog = (timer.getProgress() - 0.4f) * 2f;
-		this.door.setPos(this.door.getPos().setY(doorMover.getNow(prog)));
+		if (this.door != null) {
+			this.door.setPos(this.door.getPos().setY(doorMover.getNow(prog)));
+		}
 	}
 
 	/**
@@ -292,8 +302,10 @@ public final class BossStructure extends Structure implements Configurable {
 	 *            the camera mover
 	 */
 	private final void phase3(IScene scene, Timer timer, Progress cameraMover) {
-		// remove door of last phase
-		this.door.destroy();
+		if (this.door != null) {
+			// remove door of last phase
+			this.door.destroy();
+		}
 		float prog = (timer.getProgress() - 0.9f) * 10f;
 		scene.setCameraTarget(new FixedCameraTarget(cameraMover.getNow(prog)));
 	}

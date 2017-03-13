@@ -23,7 +23,7 @@ import ragnarok.primitives.time.Timer;
  * @author Angelo Aracri
  * @version 1.0
  */
-public class Particle extends GameElement implements Cloneable {
+public class Particle extends GameElement {
 	/**
 	 * The initial polygon.
 	 */
@@ -143,11 +143,6 @@ public class Particle extends GameElement implements Cloneable {
 	}
 
 	@Override
-	public Particle clone() {
-		return new Particle();
-	}
-
-	@Override
 	public void logicLoop() {
 		long deltaTime = GameTime.getTime() - this.lastTime;
 		this.lastTime += deltaTime;
@@ -214,6 +209,15 @@ public class Particle extends GameElement implements Cloneable {
 	public int capColor(float col) {
 		int intCol = (int) col;
 		return intCol > 255 ? 255 : (intCol < 0 ? 0 : intCol);
+	}
+
+	/**
+	 * Create a particle.
+	 *
+	 * @return a new particle
+	 */
+	public Particle create() {
+		return new Particle();
 	}
 
 }

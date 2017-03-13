@@ -25,6 +25,7 @@ import ragnarok.logic.gui.parallax.ParallaxContainer;
 import ragnarok.logic.gui.parallax.TriangulationLayer;
 import ragnarok.logic.level.Level;
 import ragnarok.primitives.geometry.Vec;
+import ragnarok.primitives.image.Filter;
 import ragnarok.primitives.time.Timer;
 import ragnarok.util.CalcUtil;
 import ragnarok.util.TextOptions;
@@ -61,6 +62,10 @@ public abstract class LevelScene extends Scene {
 	 * The ParallaxContainer for the background.
 	 */
 	protected ParallaxContainer parallax;
+	/**
+	 * Indicates whether the level has ended.
+	 */
+	private boolean hasEnded;
 
 	/**
 	 * Create a new LevelScene.
@@ -73,6 +78,7 @@ public abstract class LevelScene extends Scene {
 	public LevelScene(GameModel model, Level level) {
 		super(model);
 		this.level = level;
+		this.hasEnded = true;
 	}
 
 	@Override
@@ -86,9 +92,7 @@ public abstract class LevelScene extends Scene {
 
 		// Init EnemyFactory with model
 		GameElementFactory.setScene(this);
-
-		this.level.init();
-
+		this.level.reset();
 		// Create parallax background
 		this.parallax = new ParallaxContainer(this);
 
@@ -104,8 +108,8 @@ public abstract class LevelScene extends Scene {
 		this.addGuiElement(this.scoreGui);
 		this.addGuiElement(this.lifeGui);
 
-		TextOptions op = new TextOptions(new Vec(-0.5f, -0.5f), 30, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, Font.BOLD);
-		Text levelText = new Text(this, op).setText(this.level.getID() + " @ " + this.level.getName());
+		TextOptions op = new TextOptions(new Vec(-0.5f, -0.5f), 40, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, Font.BOLD);
+		Text levelText = new Text(this, op).setText(this.level.getName());
 		levelText.setPos(CalcUtil.units2pixel(new Vec(GameConf.GRID_W / 2f, GameConf.GRID_H / 2f)));
 		this.addGuiElement(new TimeDecorator(this, levelText, new Timer(5000)));
 
@@ -113,21 +117,25 @@ public abstract class LevelScene extends Scene {
 
 	@Override
 	public void start() {
-		return;
+		this.hasEnded = false;
 	}
 
 	@Override
 	public final void end(boolean won) {
+		if (this.hasEnded) {
+			return;
+		}
+		this.hasEnded = true;
+		this.performEndTasks(won);
 		// only save score if the level is infinite or the player has won
 		// don't save it upon losing in finite level
-		if (this.level.getLevelAssember().isInfinite() || won) {
+		if (this.level.getConfigurable().isSettingSet("infinite") || won) {
 			// save score if higher than highscore
 			if (this.getScore() > this.getHighScore()) {
 				this.setHighScore(this.getScore());
 			}
 		}
-		this.performEndTasks(won);
-		this.getModel().switchScene(Scenes.MENU);
+		Timer.execute(6000, () -> this.getModel().switchScene(Scenes.MENU));
 	}
 
 	/**
@@ -137,7 +145,29 @@ public abstract class LevelScene extends Scene {
 	 *            indicates whether successful or died
 	 */
 	protected void performEndTasks(boolean won) {
-		return;
+		TextOptions op = new TextOptions(new Vec(-0.5f, -0.5f), 50, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, Font.BOLD, false);
+		Text levelText = new Text(this, op).setText("You" + (won ? " win!" : " have lost!"));
+		levelText.setPos(CalcUtil.units2pixel(new Vec(GameConf.GRID_W / 2f, GameConf.GRID_H / 2f)));
+		this.addGuiElement(new TimeDecorator(this, levelText, new Timer(5000)));
+		if (won) {
+			this.getModel().removeFilter();
+		} else {
+			this.getModel().setFilter(this.findGrayScale());
+		}
+	}
+
+	/**
+	 * Find gray scale filter for after death scene.
+	 *
+	 * @return the filter or {@code null} if not found
+	 */
+	private Filter findGrayScale() {
+		for (Filter f : Filter.getAllFilters()) {
+			if (f.getClass().getSimpleName().equals("GrayScaleMode")) {
+				return f;
+			}
+		}
+		return null;
 	}
 
 	@Override
@@ -152,7 +182,7 @@ public abstract class LevelScene extends Scene {
 
 	@Override
 	protected void logicLoopPre() {
-		this.level.getLevelAssember().generate((int) (this.getCameraOffset() + GameConf.GRID_W + 1));
+		this.level.generate((int) (this.getCameraOffset() + GameConf.GRID_W + 1));
 
 		// dont allow player to go behind currentOffset
 		float minX = this.getCameraOffset() + this.player.getSize().getX() / 2f;

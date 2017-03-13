@@ -56,7 +56,7 @@ public abstract class Configurable {
 	 * @return <b>true</b> if the setting is defined and not <i>0</i>,
 	 *         <b>false</b> otherwise.
 	 */
-	protected boolean isSettingSet(String settingName) {
+	public boolean isSettingSet(String settingName) {
 		if (!this.settings.containsKey(settingName)) {
 			return false;
 		}
@@ -75,7 +75,7 @@ public abstract class Configurable {
 	 *            the name of the setting to get the value from.
 	 * @return the value of the setting if defined, <i>null</i> otherwise.
 	 */
-	protected String getSettingValue(String settingName) {
+	public String getSettingValue(String settingName) {
 		if (!this.isSettingSet(settingName)) {
 			return null;
 		}

@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>ragnarok</groupId>
 		<artifactId>basic</artifactId>
-		<version>0.4-ALPHA</version>
+		<version>0.5-beta</version>
 	</parent>
 	<artifactId>basic.pickuppack</artifactId>
 	<name>Basic - PickupPack</name>

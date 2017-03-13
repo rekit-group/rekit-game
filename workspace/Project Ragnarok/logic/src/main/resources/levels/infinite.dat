@@ -1,8 +1,6 @@
 #SETTING::shuffle->true
 #SETTING::doGaps->true
 #SETTING::infinite->true
-#SETTING::doEpicNeuralNetStuff->true
-#SETTING::takeOverWorld->false
 #SETTING::autoCoinSpawn->false
 
 #BOSS_SETTING::AT25->RektSmasher

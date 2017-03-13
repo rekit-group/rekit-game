@@ -1,5 +1,6 @@
 package ragnarok.logic.level;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -23,7 +24,11 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import ragnarok.config.GameConf;
+import ragnarok.logic.gameelements.GameElement;
+import ragnarok.logic.gameelements.inanimate.Inanimate;
+import ragnarok.logic.gameelements.type.Boss;
 import ragnarok.logic.level.Level.Type;
+import ragnarok.logic.level.parser.token.UnexpectedTokenException;
 
 /**
  *
@@ -34,7 +39,7 @@ public final class LevelManager {
 	/**
 	 * All known levels (ID -> Level).
 	 */
-	private static final Map<String, Level> levelMap = new HashMap<>();
+	private static final Map<String, Level> LEVEL_MAP = new HashMap<>();
 	/**
 	 * The global data file for the {@link LevelManager}.
 	 */
@@ -46,6 +51,9 @@ public final class LevelManager {
 	private LevelManager() {
 	}
 
+	/**
+	 * Indicates whether the {@link LevelManager} is initialized.
+	 */
 	private static boolean initialized = false;
 
 	/**
@@ -73,9 +81,13 @@ public final class LevelManager {
 	 */
 	private static void loadAllLevels() throws IOException {
 		PathMatchingResourcePatternResolver resolv = new PathMatchingResourcePatternResolver();
-		Resource[] res = resolv.getResources("/levels/*");
+		Resource[] res = resolv.getResources("/levels/level*");
 		Stream<Resource> numbered = Arrays.stream(res).filter(r -> r.getFilename().matches("level_\\d+\\.dat"));
 		Stream<Resource> notNumbered = Arrays.stream(res).filter(r -> !r.getFilename().matches("level_\\d+\\.dat"));
+
+		LevelManager.loadInfiniteLevels();
+		LevelManager.loadBossRushLevel();
+
 		numbered.sorted((r1, r2) -> {
 			String n1 = r1.getFilename(), n2 = r2.getFilename();
 			n1 = n1.substring("level_".length()).split("\\.")[0];
@@ -83,29 +95,59 @@ public final class LevelManager {
 			return Integer.compare(Integer.parseInt(n1), Integer.parseInt(n2));
 		}).forEach(LevelManager::addLevel);
 
-		LevelManager.loadInfiniteLevels();
-		LevelManager.loadBossRushLevel();
-
 		notNumbered.sorted((r1, r2) -> r1.toString().compareToIgnoreCase(r2.toString())).forEach(LevelManager::addLevel);
 
 	}
 
+	/**
+	 * Load {@link Type#Infinite_Fun} and {@link Type#Level_of_the_Day} levels.
+	 *
+	 * @throws IOException
+	 *             will thrown if Resources are not accessible
+	 */
 	private static void loadInfiniteLevels() throws IOException {
 		PathMatchingResourcePatternResolver resolv = new PathMatchingResourcePatternResolver();
 		Resource level = resolv.getResource("/levels/infinite.dat");
 		// Infinite
-		LevelManager.addLevel(new Level(level.getFilename(), level.getInputStream(), Type.INFINITE));
+		LevelManager.addLevel(new Level(level.getInputStream(), Type.Infinite_Fun));
 		// LOTD
-		Level lotd = new Level(level.getFilename(), level.getInputStream(), Type.LOTD);
 		DateFormat levelOfTheDayFormat = new SimpleDateFormat("ddMMyyyy");
 		int seed = Integer.parseInt(levelOfTheDayFormat.format(Calendar.getInstance().getTime()));
-		lotd.setSeed(seed);
+		Level lotd = new Level(level.getInputStream(), Type.Level_of_the_Day, seed);
 		LevelManager.addLevel(lotd);
 
 	}
 
-	private static void loadBossRushLevel() {
-		LevelManager.addLevel(new Level(null, null, Type.BOSS_RUSH));
+	/**
+	 * Load {@link Type#Boss_Rush} level.
+	 *
+	 * @throws IOException
+	 *             will thrown if Resources are not accessible
+	 */
+	private static void loadBossRushLevel() throws IOException {
+		LevelManager.addLevel(new Level(LevelManager.bossRushManager(GameConf.PRNG.nextInt()), Type.Boss_Rush));
+	}
+
+	/**
+	 * Get the {@link Type#Boss_Rush} structure.
+	 *
+	 * @param seed
+	 *            the rnd seed
+	 * @return the resulting {@link StructureManager}
+	 * @throws IOException
+	 *             will thrown by
+	 *             {@link StructureManager#load(InputStream, int)}
+	 */
+	private static StructureManager bossRushManager(int seed) throws IOException {
+		StringBuilder builder = new StringBuilder();
+		builder.append("#SETTING::infinite->true").append("\n");
+		int idx = 5;
+		for (GameElement boss : Boss.getPrototypes()) {
+			builder.append("#BOSS_SETTING::AT" + (idx += 50) + "->" + boss.getClass().getSimpleName()).append("\n");
+		}
+		builder.append("{{").append(Inanimate.class.getSimpleName()).append("}}");
+		ByteArrayInputStream is = new ByteArrayInputStream(builder.toString().getBytes());
+		return StructureManager.load(is, seed);
 	}
 
 	/**
@@ -116,25 +158,27 @@ public final class LevelManager {
 	 */
 	private static void addLevel(Resource level) {
 		try {
-			LevelManager.addArcadeLevel(level.getFilename(), level.getInputStream());
-		} catch (IOException e) {
-			GameConf.GAME_LOGGER.error("Loading of " + level + " failed");
+			LevelManager.addArcadeLevel(level.getInputStream());
+		} catch (IOException | UnexpectedTokenException e) {
+			GameConf.GAME_LOGGER.error("Loading of " + level + " failed: " + e.getMessage());
 		}
 	}
 
 	/**
 	 * Add a level by structure-file.
 	 *
-	 * @param name
-	 *            the name of the level
 	 * @param levelStructure
 	 *            the level structure
+	 * @throws IOException
+	 *             will thrown if Resources are not accessible
+	 * @throws UnexpectedTokenException
+	 *             will thrown if syntax of Resources are wrong
 	 */
-	public static synchronized void addArcadeLevel(String name, InputStream levelStructure) {
+	public static synchronized void addArcadeLevel(InputStream levelStructure) throws UnexpectedTokenException, IOException {
 		if (!LevelManager.initialized) {
 			return;
 		}
-		LevelManager.addLevel(new Level(name, levelStructure, Type.ARCADE));
+		LevelManager.addLevel(new Level(levelStructure, Type.Arcade));
 	}
 
 	/**
@@ -146,7 +190,7 @@ public final class LevelManager {
 		if (!LevelManager.initialized) {
 			return null;
 		}
-		return LevelManager.getLevelById("" + Level.Type.INFINITE);
+		return LevelManager.getLevelById("" + Level.Type.Infinite_Fun);
 	}
 
 	/**
@@ -158,7 +202,7 @@ public final class LevelManager {
 		if (!LevelManager.initialized) {
 			return null;
 		}
-		return LevelManager.getLevelById("" + Level.Type.LOTD);
+		return LevelManager.getLevelById("" + Level.Type.Level_of_the_Day);
 	}
 
 	/**
@@ -170,7 +214,7 @@ public final class LevelManager {
 		if (!LevelManager.initialized) {
 			return null;
 		}
-		return LevelManager.getLevelById("" + Level.Type.BOSS_RUSH);
+		return LevelManager.getLevelById("" + Level.Type.Boss_Rush);
 	}
 
 	/**
@@ -184,7 +228,7 @@ public final class LevelManager {
 		if (!LevelManager.initialized) {
 			return null;
 		}
-		return LevelManager.getLevelById(Level.Type.ARCADE + "-" + arcadeId);
+		return LevelManager.getLevelById(Level.Type.Arcade + "-" + arcadeId);
 	}
 
 	/**
@@ -195,7 +239,7 @@ public final class LevelManager {
 	 * @return the level
 	 */
 	private static Level getLevelById(String id) {
-		return LevelManager.levelMap.get(id);
+		return LevelManager.LEVEL_MAP.get(id);
 	}
 
 	/**
@@ -204,11 +248,11 @@ public final class LevelManager {
 	 * @param level
 	 *            the level
 	 */
-	private static void addLevel(Level level) {
+	public static synchronized void addLevel(Level level) {
 		if (level == null) {
 			return;
 		}
-		LevelManager.levelMap.put(level.getID(), level);
+		LevelManager.LEVEL_MAP.put(level.getID(), level);
 	}
 
 	/**
@@ -220,7 +264,7 @@ public final class LevelManager {
 		if (!LevelManager.initialized) {
 			return 0;
 		}
-		return (int) LevelManager.levelMap.values().stream().filter(Level.Type.ARCADE::hasType).count();
+		return (int) LevelManager.LEVEL_MAP.values().stream().filter(Level.Type.Arcade::hasType).count();
 	}
 
 	/**
@@ -242,12 +286,12 @@ public final class LevelManager {
 			Scanner scanner = new Scanner(LevelManager.USER_DATA, Charset.defaultCharset().name());
 			while (scanner.hasNextLine()) {
 				String[] levelinfo = scanner.nextLine().split(":");
-				if (levelinfo.length != 2) {
+				if (levelinfo.length != 3) {
 					continue;
 				}
-				String name = levelinfo[0];
+				String id = levelinfo[0];
 				Type type = Type.byString(levelinfo[1]);
-				Level level = LevelManager.findByNameAndType(name, type);
+				Level level = LevelManager.findByIDAndType(id, type);
 				if (level != null) {
 					level.setHighScore(Integer.parseInt(levelinfo[2]));
 				}
@@ -265,10 +309,10 @@ public final class LevelManager {
 	 */
 	private static String convertToString() {
 		StringBuilder result = new StringBuilder();
-		Iterator<Level> it = LevelManager.levelMap.values().stream().sorted().iterator();
+		Iterator<Level> it = LevelManager.LEVEL_MAP.values().stream().sorted().iterator();
 		while (it.hasNext()) {
 			Level next = it.next();
-			result.append(next.getName() + ":" + next.getType() + ":" + next.getHighScore());
+			result.append(next.getID() + ":" + next.getType() + ":" + next.getHighScore());
 			result.append("\n");
 		}
 		return result.toString();
@@ -277,14 +321,17 @@ public final class LevelManager {
 	/**
 	 * Find level by name and type.
 	 *
-	 * @param name
-	 *            the name
+	 * @param id
+	 *            the id
 	 * @param type
 	 *            the type
 	 * @return the level or {@code null} if none found
 	 */
-	private static Level findByNameAndType(String name, Type type) {
-		List<Level> levels = LevelManager.levelMap.values().stream().filter(type::hasType).filter(level -> level.getName().equals(name))
+	private static Level findByIDAndType(String id, Type type) {
+		if (id == null || type == null) {
+			return null;
+		}
+		List<Level> levels = LevelManager.LEVEL_MAP.values().stream().filter(type::hasType).filter(level -> level.getID().equals(id))
 				.collect(Collectors.toList());
 		if (levels.isEmpty()) {
 			return null;

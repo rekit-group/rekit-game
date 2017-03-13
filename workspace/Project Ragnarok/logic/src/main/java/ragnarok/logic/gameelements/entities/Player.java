@@ -177,6 +177,10 @@ public final class Player extends Entity implements CameraTarget {
 	 *            the points to add (or subtract, iff negative)
 	 */
 	public final void addPoints(int points) {
+		if (points < 0 && this.invincibility != null && !this.invincibility.timeUp()) {
+			return;
+		}
+
 		this.points += points;
 	}
 
@@ -187,5 +191,5 @@ public final class Player extends Entity implements CameraTarget {
 	 */
 	public final int getPoints() {
 		return this.points;
-	};
+	}
 }

@@ -2,14 +2,19 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>parent</artifactId>
-	<version>0.4-ALPHA</version>
+	<version>0.5-beta</version>
 	<packaging>pom</packaging>
 	<name>Project Ragnarok</name>
+	<prerequisites>
+		<maven>3.0</maven>
+	</prerequisites>
 	<properties>
-		<ragnarok.version>0.4-ALPHA</ragnarok.version>
+		<ragnarok.version>0.5-beta</ragnarok.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+		<main.class>ragnarok.Main</main.class>
+		<singlejar.name>Ragnarok-v.${ragnarok.version}</singlejar.name>
 	</properties>
 	<repositories>
 		<repository>
@@ -30,31 +35,30 @@
 		</resources>
 		<plugins>
 			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>versions-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+			</plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>copy-dependencies</id>
-						<phase>package</phase>
-						<goals>
-							<goal>copy-dependencies</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${project.build.directory}/${profile.folder}/lib/</outputDirectory>
-							<overWriteReleases>true</overWriteReleases>
-							<overWriteSnapshots>true</overWriteSnapshots>
-							<overWriteIfNewer>true</overWriteIfNewer>
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
+
+		<!-- Plugin Management -->
 		<pluginManagement>
 			<plugins>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
-					<version>2.4</version>
+					<version>3.0.2</version>
 					<configuration>
 						<outputDirectory>${project.build.directory}/${profile.folder}</outputDirectory>
 						<archive>
@@ -63,6 +67,7 @@
 								<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
 								<addClasspath>true</addClasspath>
 								<classpathPrefix>lib/</classpathPrefix>
+								<mainClass>${main.class}</mainClass>
 							</manifest>
 						</archive>
 					</configuration>
@@ -70,9 +75,52 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-dependency-plugin</artifactId>
-					<version>2.10</version>
+					<version>3.0.0</version>
+					<executions>
+						<execution>
+							<id>copy-dependencies</id>
+							<phase>package</phase>
+							<goals>
+								<goal>copy-dependencies</goal>
+							</goals>
+							<configuration>
+								<outputDirectory>${project.build.directory}/${profile.folder}/lib/</outputDirectory>
+								<overWriteReleases>true</overWriteReleases>
+								<overWriteSnapshots>true</overWriteSnapshots>
+								<overWriteIfNewer>true</overWriteIfNewer>
+							</configuration>
+						</execution>
+					</executions>
 				</plugin>
-
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>3.0.0</version>
+					<configuration>
+						<executions>
+							<execution>
+								<id>make-assembly</id>
+								<goals>
+									<goal>single</goal>
+								</goals>
+							</execution>
+						</executions>
+						<descriptorRefs>
+							<descriptorRef>jar-with-dependencies</descriptorRef>
+						</descriptorRefs>
+						<archive>
+							<manifest>
+								<mainClass>${main.class}</mainClass>
+							</manifest>
+						</archive>
+						<outputDirectory>${project.build.directory}/${profile.folder}</outputDirectory>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>versions-maven-plugin</artifactId>
+					<version>2.3</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
@@ -116,7 +164,7 @@
 			<dependency>
 				<groupId>org.reflections</groupId>
 				<artifactId>reflections</artifactId>
-				<version>0.9.10</version>
+				<version>0.9.11</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.fuchss-dominik</groupId>
@@ -137,7 +185,7 @@
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-core</artifactId>
-				<version>4.3.6.RELEASE</version>
+				<version>4.3.7.RELEASE</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

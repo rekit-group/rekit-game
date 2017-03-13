@@ -105,4 +105,19 @@ public final class Timer {
 			ThreadUtils.sleep(GameConf.LOGIC_DELTA);
 		}
 	}
+
+	/**
+	 * This method can be used instead to execute a job after a specified time.
+	 *
+	 * @param offset
+	 *            the time to wait in millis
+	 * @param r
+	 *            the job
+	 */
+	public static void execute(int offset, Runnable r) {
+		ThreadUtils.runDaemon(r.toString(), () -> {
+			Timer.sleep(offset);
+			r.run();
+		});
+	}
 }

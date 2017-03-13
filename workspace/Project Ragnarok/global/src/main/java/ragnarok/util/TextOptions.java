@@ -29,6 +29,10 @@ public final class TextOptions implements Cloneable {
 	 * The font-options.
 	 */
 	private int fontOptions;
+	/**
+	 * Indicates whether a filter shall used.
+	 */
+	private boolean usefilter;
 
 	/**
 	 * Get the alignment.
@@ -136,6 +140,27 @@ public final class TextOptions implements Cloneable {
 	}
 
 	/**
+	 * Get the usefilter-option.
+	 *
+	 * @return the usefilter-option
+	 */
+	public boolean getUseFilter() {
+		return this.usefilter;
+	}
+
+	/**
+	 * Set the usefilter-option.
+	 *
+	 * @param usefilter
+	 *            the usefilter-option
+	 * @return the modified text-options (this)
+	 */
+	public TextOptions setFontOptions(boolean usefilter) {
+		this.usefilter = usefilter;
+		return this;
+	}
+
+	/**
 	 * Create a TextOption container.
 	 *
 	 * @param alignment
@@ -150,16 +175,37 @@ public final class TextOptions implements Cloneable {
 	 *            the font-options
 	 */
 	public TextOptions(Vec alignment, int height, RGBColor color, String font, int fontOptions) {
+		this(alignment, height, color, font, fontOptions, true);
+	}
+
+	/**
+	 * Create a TextOption container.
+	 *
+	 * @param alignment
+	 *            the alignment (left anchor)
+	 * @param height
+	 *            the height
+	 * @param color
+	 *            the color
+	 * @param font
+	 *            the font
+	 * @param fontOptions
+	 *            the font-options
+	 * @param usefilter
+	 *            indicates whether a filter shall used
+	 */
+	public TextOptions(Vec alignment, int height, RGBColor color, String font, int fontOptions, boolean usefilter) {
 		this.alignment = alignment;
 		this.height = height;
 		this.color = color;
 		this.font = font;
+		this.usefilter = usefilter;
 		this.fontOptions = fontOptions;
 	}
 
 	@Override
 	public TextOptions clone() {
-		return new TextOptions(this.alignment.clone(), this.height, this.color.clone(), "" + this.font, this.fontOptions);
+		return new TextOptions(this.alignment.clone(), this.height, this.color.clone(), "" + this.font, this.fontOptions, this.usefilter);
 
 	}
 }

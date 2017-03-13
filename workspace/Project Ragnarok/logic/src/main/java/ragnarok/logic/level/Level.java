@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import ragnarok.config.GameConf;
+import ragnarok.logic.level.parser.token.UnexpectedTokenException;
 
 /**
  *
@@ -22,19 +23,19 @@ public final class Level implements Comparable<Level> {
 		/**
 		 * Infinite level.
 		 */
-		INFINITE,
+		Infinite_Fun,
 		/**
 		 * Level of the day.
 		 */
-		LOTD,
+		Level_of_the_Day,
 		/**
 		 * Arcade level.
 		 */
-		ARCADE,
+		Arcade,
 		/**
 		 * Boss Rush Mode.
 		 */
-		BOSS_RUSH;
+		Boss_Rush;
 		/**
 		 * Same as {@link #valueOf(String)}, but no exception.
 		 *
@@ -63,33 +64,43 @@ public final class Level implements Comparable<Level> {
 			}
 			return this == lv.getType();
 		}
+
+		/**
+		 * Get the next identifier for this type of level.
+		 *
+		 * @return the next identifier
+		 */
+		private String getID() {
+			if (this != Type.Arcade) {
+				return this.toString();
+			} else {
+				return Type.Arcade + "-" + Level.nextLevel();
+			}
+		}
 	}
 
 	/**
 	 * Name of the level that is used as extrinsic state and filename for level
 	 * structure template.
 	 */
-	private String stringID;
-	/**
-	 * The level's seed.
-	 */
-	private int levelSeed;
+	private final String id;
 	/**
 	 * The level's highscore.
 	 */
 	private int highScore = 0;
 	/**
+	 * The structure manager.
+	 */
+	private final StructureManager structureManager;
+
+	/**
 	 * The level's assebler.
 	 */
-	private LevelAssembler levelAssembler;
+	private final LevelAssembler levelAssembler;
 	/**
 	 * The type of the level.
 	 */
 	private final Type type;
-	/**
-	 * The structure data.
-	 */
-	private final InputStream data;
 	/**
 	 * The name of the level (file).
 	 */
@@ -112,35 +123,63 @@ public final class Level implements Comparable<Level> {
 	/**
 	 * Create a new level by data and type.
 	 *
-	 * @param name
-	 *            the name
 	 * @param levelStructure
 	 *            the structure data
 	 * @param type
 	 *            the type
+	 * @throws IOException
+	 *             iff file cannot accessed
+	 * @throws UnexpectedTokenException
+	 *             iff syntax is wrong
 	 */
-	public Level(String name, InputStream levelStructure, Type type) {
-		this.type = type;
-		this.data = levelStructure;
-		this.name = name == null ? type.toString() : name;
-		if (type == Type.INFINITE || type == Type.LOTD || type == Type.BOSS_RUSH) {
-			this.stringID = "" + this.type;
-		} else {
-			this.stringID = Type.ARCADE + "-" + Level.nextLevel();
-		}
-		this.levelSeed = GameConf.PRNG.nextInt();
-		this.highScore = 0;
+	public Level(InputStream levelStructure, Type type) throws UnexpectedTokenException, IOException {
+		this(levelStructure, type, GameConf.PRNG.nextInt());
 	}
 
 	/**
-	 * Optional invokable method to set the seed for all randomized actions of
-	 * the level generation.
+	 * Create a new level by data and type.
 	 *
+	 * @param levelStructure
+	 *            the structure data
+	 * @param type
+	 *            the type
 	 * @param seed
-	 *            the seed
+	 *            the rnd seed
+	 * @throws IOException
+	 *             iff file cannot accessed
+	 * @throws UnexpectedTokenException
+	 *             iff syntax is wrong
 	 */
-	public void setSeed(int seed) {
-		this.levelSeed = seed;
+	public Level(InputStream levelStructure, Type type, int seed) throws UnexpectedTokenException, IOException {
+		this(StructureManager.load(levelStructure, seed), type);
+	}
+
+	/**
+	 * Create a new level by data and type.
+	 *
+	 * @param manager
+	 *            the structure manager
+	 * @param type
+	 *            the type
+	 */
+	public Level(StructureManager manager, Type type) {
+		this.type = type;
+		this.structureManager = manager;
+		this.levelAssembler = new LevelAssembler(this.structureManager);
+		this.levelAssembler.reset();
+		String name = this.structureManager.getSettingValue("name");
+		this.id = type.getID();
+		this.name = (name == null ? this.id : name).replace('_', ' ');
+		this.highScore = 0;
+
+	}
+
+	/**
+	 * Reset level.
+	 */
+	public void reset() {
+		this.levelAssembler.reset();
+		this.structureManager.reset();
 	}
 
 	/**
@@ -166,28 +205,12 @@ public final class Level implements Comparable<Level> {
 	}
 
 	/**
-	 * Creates and returns a LevelAssember for this level if not created
-	 * already. Singleton.
+	 * Get the associate {@link Configurable}.
 	 *
-	 * @return the only instance of a LevelAssembler
+	 * @return the configurable
 	 */
-	public LevelAssembler getLevelAssember() {
-		if (this.levelAssembler == null) {
-			try {
-				this.levelAssembler = new LevelAssembler(this.data, this.levelSeed, this.type);
-			} catch (IOException e) {
-				GameConf.GAME_LOGGER.error("Cannot instantiate level assembler for level " + this);
-			}
-		}
-		return this.levelAssembler;
-	}
-
-	/**
-	 * Initialize level & generate level.
-	 */
-	public void init() {
-		this.getLevelAssember().init();
-		this.getLevelAssember().generate(GameConf.GRID_W);
+	public Configurable getConfigurable() {
+		return this.structureManager;
 	}
 
 	@Override
@@ -195,7 +218,7 @@ public final class Level implements Comparable<Level> {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((this.name == null) ? 0 : this.name.hashCode());
-		result = prime * result + ((this.stringID == null) ? 0 : this.stringID.hashCode());
+		result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
 		result = prime * result + ((this.type == null) ? 0 : this.type.hashCode());
 		return result;
 	}
@@ -209,7 +232,7 @@ public final class Level implements Comparable<Level> {
 			return false;
 		}
 		Level other = (Level) obj;
-		return this.name.equals(other.name) && this.stringID.equals(other.stringID) && this.type == other.type;
+		return this.name.equals(other.name) && this.id.equals(other.id) && this.type == other.type;
 	}
 
 	@Override
@@ -223,7 +246,7 @@ public final class Level implements Comparable<Level> {
 	 * @return the id
 	 */
 	public String getID() {
-		return this.stringID;
+		return this.id;
 	}
 
 	/**
@@ -246,7 +269,7 @@ public final class Level implements Comparable<Level> {
 
 	@Override
 	public int compareTo(Level o) {
-		boolean thisIsNumbered = this.isNumbered(), otherIsNumbered = o.isNumbered();
+		boolean thisIsNumbered = this.getName().matches("level_\\d+\\.dat"), otherIsNumbered = o.getName().matches("level_\\d+\\.dat");
 		if (thisIsNumbered != otherIsNumbered) {
 			// NonNumbered before Numbered
 			return otherIsNumbered ? -1 : 1;
@@ -264,11 +287,17 @@ public final class Level implements Comparable<Level> {
 	}
 
 	/**
-	 * Indicates whether the level is numbered.
+	 * Orders the {@link LevelAssembler} of the level to build {@link Structure
+	 * Structures} if it must. This decision depends on the {@link Structure
+	 * Structures} build so far and the parameter <i>max</i> that specifies
+	 * which x position is the smallest that needs to be generated at.
 	 *
-	 * @return {@code true} if numbered.
+	 * @param max
+	 *            the lowest x position that must still be generated at.
+	 * @see LevelAssembler#generate(int)
 	 */
-	private final boolean isNumbered() {
-		return this.getName().matches("level_\\d+\\.dat");
+	public void generate(int max) {
+		this.levelAssembler.generate(max);
 	}
+
 }

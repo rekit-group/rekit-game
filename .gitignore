@@ -10,3 +10,4 @@ workspace/ragnarok/src/**/*.class
 sh.exe.stackdump
 stat.html
 *.checkstyle
+workspace/Project Ragnarok/target/

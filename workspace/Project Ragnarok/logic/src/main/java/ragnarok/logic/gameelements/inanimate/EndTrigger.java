@@ -1,5 +1,8 @@
 package ragnarok.logic.gameelements.inanimate;
 
+import home.fox.configuration.Configurable;
+import home.fox.configuration.annotations.NoSet;
+import home.fox.configuration.annotations.SetterInfo;
 import ragnarok.config.GameConf;
 import ragnarok.core.GameGrid;
 import ragnarok.core.GameTime;
@@ -15,34 +18,26 @@ import ragnarok.primitives.image.RGBAColor;
  * This class represents an EndPortal.
  *
  */
-public final class EndTrigger extends InanimateTrigger {
+@SetterInfo(res = "conf/endtrigger")
+public final class EndTrigger extends InanimateTrigger implements Configurable {
 	/**
 	 * The prototype-instance.
 	 */
+	@NoSet
 	private static EndTrigger instance;
 	/**
 	 * The number of portal-rings.
 	 */
-	private static final int PORTAL_NUM = 20;
+	private static int PORTAL_NUM;
 	/**
 	 * The inner portals.
 	 */
+	@NoSet
 	private Portal[] innerPortals;
 	/**
 	 * The particle spawner.
 	 */
-	private static ParticleSpawner portalParticles = null;
-
-	static {
-		EndTrigger.portalParticles = new ParticleSpawner();
-		EndTrigger.portalParticles.colorA = new ParticleSpawnerOption(220, -100);
-		EndTrigger.portalParticles.timeMin = 0.3f;
-		EndTrigger.portalParticles.timeMax = 0.3f;
-		EndTrigger.portalParticles.speed = new ParticleSpawnerOption(2, 2, 6, 6);
-		EndTrigger.portalParticles.amountMin = 1;
-		EndTrigger.portalParticles.amountMax = 1;
-		EndTrigger.portalParticles.size = new ParticleSpawnerOption(1, -0.8f);
-	}
+	private static ParticleSpawner PORTAL_PARTICLES;
 
 	/**
 	 * Create an EndTrigger.
@@ -169,12 +164,12 @@ public final class EndTrigger extends InanimateTrigger {
 
 			y = (y / this.currentSize.getX()) * this.currentSize.getY();
 
-			EndTrigger.portalParticles.angle = new ParticleSpawnerOption((float) (randomAngle - Math.PI / 2));
-			EndTrigger.portalParticles.colorR = new ParticleSpawnerOption((float) (this.color.red * 1.2));
-			EndTrigger.portalParticles.colorG = new ParticleSpawnerOption((float) (this.color.green * 1.2));
-			EndTrigger.portalParticles.colorB = new ParticleSpawnerOption((float) (this.color.blue * 1.2));
+			EndTrigger.PORTAL_PARTICLES.angle = new ParticleSpawnerOption((float) (randomAngle - Math.PI / 2));
+			EndTrigger.PORTAL_PARTICLES.colorR = new ParticleSpawnerOption((float) (this.color.red * 1.2));
+			EndTrigger.PORTAL_PARTICLES.colorG = new ParticleSpawnerOption((float) (this.color.green * 1.2));
+			EndTrigger.PORTAL_PARTICLES.colorB = new ParticleSpawnerOption((float) (this.color.blue * 1.2));
 
-			EndTrigger.portalParticles.spawn(EndTrigger.this.getScene(), new Vec(x, y).add(this.getPos()));
+			EndTrigger.PORTAL_PARTICLES.spawn(EndTrigger.this.getScene(), new Vec(x, y).add(this.getPos()));
 
 		}
 
@@ -193,6 +188,8 @@ public final class EndTrigger extends InanimateTrigger {
 
 	@Override
 	public void perform() {
+		// Make player invisible
+		this.getScene().getPlayer().setTemporaryApperance((f) -> {}, 3000);
 		this.getScene().end(true);
 	}
 
@@ -211,6 +208,11 @@ public final class EndTrigger extends InanimateTrigger {
 			EndTrigger.instance = new EndTrigger(new Vec(), new Vec(1.5f, GameConf.GRID_H));
 		}
 		return EndTrigger.instance;
+	}
+
+	@Override
+	public void destroy() {
+		// cannot be destroyed.
 	}
 
 	@Override

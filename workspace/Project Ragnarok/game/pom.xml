@@ -4,25 +4,20 @@
 	<parent>
 		<groupId>ragnarok</groupId>
 		<artifactId>parent</artifactId>
-		<version>0.4-ALPHA</version>
+		<version>0.5-beta</version>
 	</parent>
-	<properties>
-		<main.class>ragnarok.Main</main.class>
-	</properties>
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
+				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
-					<archive>
-						<manifest>
-							<mainClass>${main.class}</mainClass>
-						</manifest>
-					</archive>
+					<finalName>${singlejar.name}</finalName>
+					<appendAssemblyId>false</appendAssemblyId>
 				</configuration>
 			</plugin>
 		</plugins>
+
 	</build>
 	<artifactId>game</artifactId>
 	<dependencies>

@@ -22,6 +22,7 @@ import ragnarok.logic.gameelements.type.Boss;
 import ragnarok.logic.gameelements.type.Enemy;
 import ragnarok.logic.level.bossstructure.BossStructure;
 import ragnarok.logic.level.parser.LevelParser;
+import ragnarok.logic.level.parser.token.UnexpectedTokenException;
 import ragnarok.primitives.geometry.Vec;
 
 /**
@@ -105,7 +106,7 @@ public class StructureManager extends Configurable implements Iterator<Structure
 	 * Initializes all attributes. Must also be called upon re-initialization
 	 * (dying, loading new level, ...).
 	 */
-	public void init() {
+	public void reset() {
 		this.currentStructureId = -1;
 		this.unitsBuilt = 0;
 	}
@@ -124,8 +125,10 @@ public class StructureManager extends Configurable implements Iterator<Structure
 	 * @return the newly created StructureManager.
 	 * @throws IOException
 	 *             iff file does not exist
+	 * @throws UnexpectedTokenException
+	 *             iff file syntax is wrong
 	 */
-	public static StructureManager load(InputStream data, int randomSeed) throws IOException {
+	public static StructureManager load(InputStream data, int randomSeed) throws IOException, UnexpectedTokenException {
 
 		// create Scanner from InputStream
 		Scanner scanner = new Scanner(data, Charset.defaultCharset().name());
