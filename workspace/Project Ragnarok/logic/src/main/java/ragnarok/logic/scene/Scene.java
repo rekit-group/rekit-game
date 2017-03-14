@@ -179,7 +179,6 @@ abstract class Scene implements CameraTarget, IScene {
 	 *            the elements
 	 */
 	protected void logicLoopGameElement(GameElement e) {
-
 		// if this GameElement is marked for destruction
 		if (e.getDeleteMe()) {
 			this.markForRemove(e);
@@ -292,17 +291,23 @@ abstract class Scene implements CameraTarget, IScene {
 
 	@Override
 	public synchronized void applyToGameElements(Consumer<GameElement> function) {
-		Arrays.stream(this.gameElements).forEach(list -> list.forEach(function::accept));
+		for (Queue<GameElement> level : this.gameElements) {
+			level.forEach(function::accept);
+		}
 	}
 
 	@Override
 	public synchronized void applyToNonNeutralGameElements(Consumer<GameElement> function) {
-		Arrays.stream(this.gameElements).forEach(list -> list.stream().filter(e -> !e.getTeam().isNeutral()).forEach(function::accept));
+		for (Queue<GameElement> level : this.gameElements) {
+			level.stream().filter(e -> !e.getTeam().isNeutral()).forEach(function::accept);
+		}
 	}
 
 	@Override
 	public synchronized void applyToGuiElements(Consumer<GuiElement> function) {
-		this.guiElements.forEach(function::accept);
+		for (GuiElement level : this.guiElements) {
+			function.accept(level);
+		}
 	}
 
 	@Override
@@ -312,7 +317,7 @@ abstract class Scene implements CameraTarget, IScene {
 
 	@Override
 	public void setCameraTarget(CameraTarget cameraTarget) {
-
+		return;
 	}
 
 	@Override

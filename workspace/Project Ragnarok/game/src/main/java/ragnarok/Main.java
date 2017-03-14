@@ -5,6 +5,7 @@ import java.util.Set;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import home.fox.configuration.Configurable;
 import home.fox.configuration.Setter;
@@ -40,7 +41,7 @@ public final class Main {
 	 */
 	public static void main(String[] args) {
 		Thread.currentThread().setName("Startup");
-		Main.setLogLevel(GameConf.DEBUG ? Level.ALL : Level.INFO);
+		Main.setLogLevel(GameConf.DEBUG ? Level.ALL : Level.FATAL);
 		// Load All Configs
 		Main.visitAllStatic();
 		// Create MVC
@@ -73,6 +74,7 @@ public final class Main {
 		GameConf.GAME_LOGGER.setLevel(level);
 		Setter.LOGGER.setLevel(level);
 		Parser.LOGGER.setLevel(level);
+		Logger.getLogger(PathMatchingResourcePatternResolver.class).setLevel(level);
 
 		// This is needed as all loggers add an appender to the rootLogger.
 		Logger.getRootLogger().removeAllAppenders();
