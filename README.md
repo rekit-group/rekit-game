@@ -1,12 +1,8 @@
 # Project Ragnarok
 
 
-## TO-DO
-
-- **Projekt ausslimmen.**
-  - Pakete rauslöschen
-  - stupiden LevelCreator schreiben (und alles andere Level-relatete rauslöschen)
-- **Folien**
+## Übungstutorium
+- **Folien - Übungsaufgaben**
   - Architektur
   - Wichtigste Erklärungen (GameElement)
   - Planung - Entwurf - Implementierung
