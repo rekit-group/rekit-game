@@ -10,6 +10,7 @@ import java.util.Set;
 import ragnarok.config.GameConf;
 import ragnarok.core.CameraTarget;
 import ragnarok.logic.GameModel;
+import ragnarok.logic.filters.GrayScaleMode;
 import ragnarok.logic.gameelements.GameElement;
 import ragnarok.logic.gameelements.GameElementFactory;
 import ragnarok.logic.gameelements.entities.Player;
@@ -25,7 +26,6 @@ import ragnarok.logic.gui.parallax.ParallaxContainer;
 import ragnarok.logic.gui.parallax.TriangulationLayer;
 import ragnarok.logic.level.Level;
 import ragnarok.primitives.geometry.Vec;
-import ragnarok.primitives.image.Filter;
 import ragnarok.primitives.time.Timer;
 import ragnarok.util.CalcUtil;
 import ragnarok.util.TextOptions;
@@ -152,22 +152,8 @@ public abstract class LevelScene extends Scene {
 		if (won) {
 			this.getModel().removeFilter();
 		} else {
-			this.getModel().setFilter(this.findGrayScale());
+			this.getModel().setFilter(new GrayScaleMode());
 		}
-	}
-
-	/**
-	 * Find gray scale filter for after death scene.
-	 *
-	 * @return the filter or {@code null} if not found
-	 */
-	private Filter findGrayScale() {
-		for (Filter f : Filter.getAllFilters()) {
-			if (f.getClass().getSimpleName().equals("GrayScaleMode")) {
-				return f;
-			}
-		}
-		return null;
 	}
 
 	@Override
