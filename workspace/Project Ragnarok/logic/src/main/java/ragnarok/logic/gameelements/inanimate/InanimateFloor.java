@@ -73,7 +73,7 @@ public class InanimateFloor extends Inanimate {
 	 * {@link Entity} lands on the {@link InanimateFloor}.
 	 */
 	private static final ParticleSpawnerOption dustParticleAngleTop;
-
+	// TODO: Config file.
 	static {
 		// define color range for blocks layers
 		RGBColor startCol = new RGBColor(22, 140, 30);
@@ -103,10 +103,8 @@ public class InanimateFloor extends Inanimate {
 		InanimateFloor.dustParticles.colorG = new ParticleSpawnerOption(InanimateFloor.layerCols[0].green);
 		InanimateFloor.dustParticles.colorB = new ParticleSpawnerOption(InanimateFloor.layerCols[0].blue);
 		InanimateFloor.dustParticles.colorA = new ParticleSpawnerOption(255);
-		dustParticleAngleLeft = new ParticleSpawnerOption((float) ((7 / 4f) * Math.PI), (float) ((5 / 4f) * Math.PI), -(float) ((1 / 4f) * Math.PI),
-				0);
-		dustParticleAngleRight = new ParticleSpawnerOption((float) ((1 / 4f) * Math.PI), (float) ((3 / 4f) * Math.PI), 0,
-				(float) ((1 / 4f) * Math.PI));
+		dustParticleAngleLeft = new ParticleSpawnerOption((float) ((7 / 4f) * Math.PI), (float) ((5 / 4f) * Math.PI), -(float) ((1 / 4f) * Math.PI), 0);
+		dustParticleAngleRight = new ParticleSpawnerOption((float) ((1 / 4f) * Math.PI), (float) ((3 / 4f) * Math.PI), 0, (float) ((1 / 4f) * Math.PI));
 		dustParticleAngleTop = new ParticleSpawnerOption((float) (-(1 / 2f) * Math.PI), (float) ((1 / 2f) * Math.PI), 0, 0);
 		InanimateFloor.dustParticles.amountMin = 8;
 		InanimateFloor.dustParticles.amountMax = 15;
