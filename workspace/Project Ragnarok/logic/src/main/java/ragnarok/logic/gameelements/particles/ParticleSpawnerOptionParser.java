@@ -2,8 +2,8 @@ package ragnarok.logic.gameelements.particles;
 
 import java.lang.reflect.Field;
 
-import home.fox.configuration.Configurable;
-import home.fox.configuration.parser.Parser;
+import org.fuchss.configuration.Configurable;
+import org.fuchss.configuration.parser.Parser;
 
 /**
  * This class realize a parser for a {@link ParticleSpawnerOption}.

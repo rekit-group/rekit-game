@@ -1,8 +1,9 @@
 package ragnarok.logic.gameelements.inanimate;
 
-import home.fox.configuration.Configurable;
-import home.fox.configuration.annotations.NoSet;
-import home.fox.configuration.annotations.SetterInfo;
+import org.fuchss.configuration.Configurable;
+import org.fuchss.configuration.annotations.NoSet;
+import org.fuchss.configuration.annotations.SetterInfo;
+
 import ragnarok.config.GameConf;
 import ragnarok.core.GameGrid;
 import ragnarok.core.Team;
@@ -119,8 +120,7 @@ public final class ClimbUpBox extends DynamicInanimate implements Configurable {
 		f.drawRectangle(this.getPos().addY(0.4f), this.getSize().scalar(1, 0.2f), ClimbUpBox.DARK_COLOR);
 
 		this.renderEnergy(f, //
-				this.strategies[this.current].getEnergyStart(this.timer.getProgress()),
-				this.strategies[this.current].getEnergyEnd(this.timer.getProgress()));
+				this.strategies[this.current].getEnergyStart(this.timer.getProgress()), this.strategies[this.current].getEnergyEnd(this.timer.getProgress()));
 		this.strategies[this.current].internalRender(f);
 	}
 

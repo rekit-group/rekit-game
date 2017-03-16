@@ -4,8 +4,9 @@ import java.lang.reflect.Field;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import home.fox.configuration.Configurable;
-import home.fox.configuration.parser.Parser;
+import org.fuchss.configuration.Configurable;
+import org.fuchss.configuration.parser.Parser;
+
 import ragnarok.config.GameConf;
 import ragnarok.primitives.geometry.Vec;
 

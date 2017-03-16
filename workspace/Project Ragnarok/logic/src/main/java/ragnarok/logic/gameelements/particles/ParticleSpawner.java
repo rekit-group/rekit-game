@@ -1,8 +1,9 @@
 package ragnarok.logic.gameelements.particles;
 
-import home.fox.configuration.Configurable;
-import home.fox.configuration.annotations.NoSet;
-import home.fox.configuration.annotations.SetterInfo;
+import org.fuchss.configuration.Configurable;
+import org.fuchss.configuration.annotations.NoSet;
+import org.fuchss.configuration.annotations.SetterInfo;
+
 import ragnarok.config.GameConf;
 import ragnarok.logic.IScene;
 import ragnarok.primitives.geometry.Polygon;
@@ -139,8 +140,8 @@ public class ParticleSpawner implements Configurable {
 			this.polygon.moveTo(pos);
 
 			Particle p = this.particlePrototype.create();
-			p.setProperties(this.polygon, pos, randomTime, this.size.randomize(), this.speed.randomize(), this.rotation.randomize(),
-					this.angle.randomize(), this.colorR.randomize(), this.colorG.randomize(), this.colorB.randomize(), this.colorA.randomize());
+			p.setProperties(this.polygon, pos, randomTime, this.size.randomize(), this.speed.randomize(), this.rotation.randomize(), this.angle.randomize(),
+					this.colorR.randomize(), this.colorG.randomize(), this.colorB.randomize(), this.colorA.randomize());
 
 			scene.addGameElement(p);
 		}

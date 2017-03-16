@@ -3,10 +3,11 @@ package ragnarok.logic.gameelements.entities.enemies;
 import java.util.LinkedList;
 import java.util.List;
 
-import home.fox.configuration.Configurable;
-import home.fox.configuration.annotations.AfterSetting;
-import home.fox.configuration.annotations.NoSet;
-import home.fox.configuration.annotations.SetterInfo;
+import org.fuchss.configuration.Configurable;
+import org.fuchss.configuration.annotations.AfterSetting;
+import org.fuchss.configuration.annotations.NoSet;
+import org.fuchss.configuration.annotations.SetterInfo;
+
 import ragnarok.config.GameConf;
 import ragnarok.core.GameGrid;
 import ragnarok.core.GameTime;

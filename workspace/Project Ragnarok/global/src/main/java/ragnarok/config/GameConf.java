@@ -4,11 +4,11 @@ import java.awt.Font;
 import java.util.Random;
 
 import org.apache.log4j.Logger;
+import org.fuchss.configuration.Configurable;
+import org.fuchss.configuration.annotations.AfterSetting;
+import org.fuchss.configuration.annotations.NoSet;
+import org.fuchss.configuration.annotations.SetterInfo;
 
-import home.fox.configuration.Configurable;
-import home.fox.configuration.annotations.AfterSetting;
-import home.fox.configuration.annotations.NoSet;
-import home.fox.configuration.annotations.SetterInfo;
 import ragnarok.primitives.geometry.Vec;
 import ragnarok.primitives.image.RGBColor;
 import ragnarok.util.ReflectUtils;

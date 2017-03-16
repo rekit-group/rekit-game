@@ -5,12 +5,12 @@ import java.util.Set;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.fuchss.configuration.Configurable;
+import org.fuchss.configuration.Setter;
+import org.fuchss.configuration.parser.Parser;
+import org.fuchss.configuration.setters.ResourceBundleSetter;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
-import home.fox.configuration.Configurable;
-import home.fox.configuration.Setter;
-import home.fox.configuration.parser.Parser;
-import home.fox.configuration.setters.ResourceBundleSetter;
 import ragnarok.config.GameConf;
 import ragnarok.controller.Controller;
 import ragnarok.gui.View;

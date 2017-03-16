@@ -1,6 +1,7 @@
 package ragnarok.primitives.image;
 
-import home.fox.configuration.annotations.ClassParser;
+import org.fuchss.configuration.annotations.ClassParser;
+
 import ragnarok.parser.RGBColorParser;
 import ragnarok.primitives.operable.Operable;
 
