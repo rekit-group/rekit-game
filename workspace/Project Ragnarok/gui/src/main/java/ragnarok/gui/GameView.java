@@ -120,7 +120,7 @@ class GameView implements View {
 		this.frame.add(this.canvas, BorderLayout.CENTER);
 		this.frame.pack();
 
-		this.canvas.createBufferStrategy(2);
+		this.canvas.createBufferStrategy(3);
 		this.bufferStrategy = this.canvas.getBufferStrategy();
 		this.frame.setVisible(true);
 

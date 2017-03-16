@@ -1,6 +1,7 @@
 package ragnarok.logic.gameelements.particles;
 
-import home.fox.configuration.annotations.ClassParser;
+import org.fuchss.configuration.annotations.ClassParser;
+
 import ragnarok.config.GameConf;
 import ragnarok.primitives.time.Progress;
 
@@ -100,8 +101,7 @@ public class ParticleSpawnerOption {
 	public Progress randomize() {
 		// calculate random start value between startMin and startMax
 		// (only if startMin != startMax)
-		float start = this.startMin == this.startMax ? this.startMin
-				: (float) (this.startMin + GameConf.PRNG.nextDouble() * (this.startMax - this.startMin));
+		float start = this.startMin == this.startMax ? this.startMin : (float) (this.startMin + GameConf.PRNG.nextDouble() * (this.startMax - this.startMin));
 
 		// calculate random delta value between deltaMin and deltaMax
 		// (only if deltaMin != deltaMax)

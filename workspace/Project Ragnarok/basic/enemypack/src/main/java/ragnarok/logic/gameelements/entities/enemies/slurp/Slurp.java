@@ -3,9 +3,10 @@ package ragnarok.logic.gameelements.entities.enemies.slurp;
 import java.util.ArrayList;
 import java.util.List;
 
-import home.fox.configuration.Configurable;
-import home.fox.configuration.annotations.NoSet;
-import home.fox.configuration.annotations.SetterInfo;
+import org.fuchss.configuration.Configurable;
+import org.fuchss.configuration.annotations.NoSet;
+import org.fuchss.configuration.annotations.SetterInfo;
+
 import ragnarok.config.GameConf;
 import ragnarok.core.GameGrid;
 import ragnarok.logic.gameelements.GameElement;
@@ -105,11 +106,11 @@ public final class Slurp extends Enemy implements Configurable {
 
 		// calculate velocity (by currentDirection)
 		if (this.currentDirection == Direction.LEFT || this.currentDirection == Direction.RIGHT) {
-			this.setVel(new Vec(this.currentDirection.getVector().getX() * Slurp.SLURP_SPEED,
-					this.currentDirection.getNextAntiClockwise().getVector().getY() * 3));
+			this.setVel(
+					new Vec(this.currentDirection.getVector().getX() * Slurp.SLURP_SPEED, this.currentDirection.getNextAntiClockwise().getVector().getY() * 3));
 		} else {
-			this.setVel(new Vec(this.currentDirection.getNextAntiClockwise().getVector().getX() * 3,
-					this.currentDirection.getVector().getY() * Slurp.SLURP_SPEED));
+			this.setVel(
+					new Vec(this.currentDirection.getNextAntiClockwise().getVector().getX() * 3, this.currentDirection.getVector().getY() * Slurp.SLURP_SPEED));
 		}
 
 		super.innerLogicLoop();

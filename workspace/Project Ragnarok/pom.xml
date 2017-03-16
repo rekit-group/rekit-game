@@ -133,11 +133,6 @@
 			</dependency>
 			<dependency>
 				<groupId>ragnarok</groupId>
-				<artifactId>filters</artifactId>
-				<version>${ragnarok.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>ragnarok</groupId>
 				<artifactId>control</artifactId>
 				<version>${ragnarok.version}</version>
 			</dependency>
@@ -169,7 +164,7 @@
 			<dependency>
 				<groupId>com.github.fuchss-dominik</groupId>
 				<artifactId>configuration-parser</artifactId>
-				<version>0.5</version>
+				<version>0.5.1</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-io</groupId>
@@ -233,7 +228,6 @@
 		<module>logic</module>
 		<module>global</module>
 		<module>gui</module>
-		<module>filters</module>
 		<module>control</module>
 		<module>game</module>
 		<module>basic</module>

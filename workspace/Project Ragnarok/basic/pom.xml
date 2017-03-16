@@ -15,10 +15,6 @@
 			<groupId>ragnarok</groupId>
 			<artifactId>logic</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>ragnarok</groupId>
-			<artifactId>filters</artifactId>
-		</dependency>
 	</dependencies>
 	<modules>
 		<module>enemypack</module>

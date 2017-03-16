@@ -12,9 +12,5 @@
 			<groupId>ragnarok</groupId>
 			<artifactId>gui</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>ragnarok</groupId>
-			<artifactId>filters</artifactId>
-		</dependency>
 	</dependencies>
 </project>

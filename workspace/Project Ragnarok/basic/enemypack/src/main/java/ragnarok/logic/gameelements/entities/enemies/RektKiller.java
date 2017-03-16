@@ -116,7 +116,7 @@ public final class RektKiller extends Enemy {
 	 *         otherwise.
 	 */
 	public boolean hasSide(Direction dir) {
-		int bitPos = this.dirToInt(dir);
+		int bitPos = dir.getPosId();
 		return ((this.getSides() >> bitPos) & 1) == 1;
 	}
 
@@ -129,44 +129,12 @@ public final class RektKiller extends Enemy {
 	 *            true to set, false to remove spikes.
 	 */
 	public void setSide(Direction dir, boolean spikes) {
-		int bitPos = this.dirToInt(dir);
+		int bitPos = dir.getPosId();
 		if (spikes) {
 			this.setSides(this.getSides() | (1 << bitPos));
 		} else {
 			this.setSides(this.getSides() & ~(1 << bitPos));
 		}
-	}
-
-	/**
-	 * <p>
-	 * Converts a given {@link Direction} to the corresponding int that will be
-	 * used for determining the bit position of <i>sides</i>.
-	 * </p>
-	 * <p>
-	 * 1 represents UP, the rest is clockwise.
-	 * </p>
-	 *
-	 * @param dir
-	 *            the {@link Direction} to convert.
-	 * @return the int corresponding to the {@link Direction} <i>dir</i>.
-	 */
-	private int dirToInt(Direction dir) {
-		int bitPos;
-		switch (dir) {
-		case UP:
-			bitPos = 0;
-			break;
-		case RIGHT:
-			bitPos = 1;
-			break;
-		case DOWN:
-			bitPos = 2;
-			break;
-		default:
-			bitPos = 3;
-			break;
-		}
-		return bitPos;
 	}
 
 	@Override
@@ -209,7 +177,7 @@ public final class RektKiller extends Enemy {
 			// Touched harmless side
 			if (!this.hasSide(dir)) {
 				// give the player 40 points
-				this.getScene().getPlayer().addPoints(20);
+				this.getScene().getPlayer().addPoints(40);
 				// Let the player jump if he landed on top
 				if (dir == Direction.UP) {
 					element.setVel(element.getVel().setY(GameConf.PLAYER_KILL_BOOST));

@@ -5,11 +5,12 @@ import java.util.Set;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.fuchss.configuration.Configurable;
+import org.fuchss.configuration.Setter;
+import org.fuchss.configuration.parser.Parser;
+import org.fuchss.configuration.setters.ResourceBundleSetter;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
-import home.fox.configuration.Configurable;
-import home.fox.configuration.Setter;
-import home.fox.configuration.parser.Parser;
-import home.fox.configuration.setters.ResourceBundleSetter;
 import ragnarok.config.GameConf;
 import ragnarok.controller.Controller;
 import ragnarok.gui.View;
@@ -40,7 +41,7 @@ public final class Main {
 	 */
 	public static void main(String[] args) {
 		Thread.currentThread().setName("Startup");
-		Main.setLogLevel(GameConf.DEBUG ? Level.ALL : Level.INFO);
+		Main.setLogLevel(GameConf.DEBUG ? Level.ALL : Level.FATAL);
 		// Load All Configs
 		Main.visitAllStatic();
 		// Create MVC
@@ -73,6 +74,7 @@ public final class Main {
 		GameConf.GAME_LOGGER.setLevel(level);
 		Setter.LOGGER.setLevel(level);
 		Parser.LOGGER.setLevel(level);
+		Logger.getLogger(PathMatchingResourcePatternResolver.class).setLevel(level);
 
 		// This is needed as all loggers add an appender to the rootLogger.
 		Logger.getRootLogger().removeAllAppenders();

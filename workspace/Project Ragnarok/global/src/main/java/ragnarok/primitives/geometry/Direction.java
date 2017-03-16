@@ -13,27 +13,31 @@ public enum Direction {
 	 * Represents the Direction left with the Vector (-1|0).
 	 */
 
-	LEFT(new Vec(-1, 0), 1.5 * Math.PI),
+	LEFT(new Vec(-1, 0), 1.5 * Math.PI, 3),
 	/**
 	 * Represents the Direction right with the Vector (1|0).
 	 */
-	RIGHT(new Vec(1, 0), 0.5 * Math.PI),
+	RIGHT(new Vec(1, 0), 0.5 * Math.PI, 1),
 	/**
 	 * Represents the Direction up with the Vector (0|-1).
 	 */
-	UP(new Vec(0, -1), 0),
+	UP(new Vec(0, -1), 0, 0),
 	/**
 	 * Represents the Direction down with the Vector (0|1).
 	 */
-	DOWN(new Vec(0, 1), 1 * Math.PI);
+	DOWN(new Vec(0, 1), 1 * Math.PI, 2);
 	/**
 	 * The representing vector.
 	 */
-	private Vec vec;
+	private final Vec vec;
 	/**
 	 * The representing angle.
 	 */
-	private double angle;
+	private final double angle;
+	/**
+	 * The position id; 0 represents UP, the rest is clockwise.
+	 */
+	private final int posId;
 
 	/**
 	 * Create a Direction.
@@ -43,9 +47,10 @@ public enum Direction {
 	 * @param angle
 	 *            the angle
 	 */
-	private Direction(Vec vec, double angle) {
+	private Direction(Vec vec, double angle, int pos) {
 		this.vec = vec;
 		this.angle = angle;
+		this.posId = pos;
 	}
 
 	/**
@@ -130,6 +135,15 @@ public enum Direction {
 	}
 
 	/**
+	 * Get the position id.
+	 * 
+	 * @return the position id
+	 */
+	public int getPosId() {
+		return this.posId;
+	}
+
+	/**
 	 * Get a random Direction.
 	 *
 	 * @return the direction or {@code null} if none defined
@@ -137,4 +151,5 @@ public enum Direction {
 	public static Direction getRandom() {
 		return Direction.values()[(int) (GameConf.PRNG.nextDouble() * Direction.values().length)];
 	}
+
 }

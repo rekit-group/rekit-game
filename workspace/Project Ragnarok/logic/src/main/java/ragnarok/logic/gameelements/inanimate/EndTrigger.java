@@ -1,8 +1,9 @@
 package ragnarok.logic.gameelements.inanimate;
 
-import home.fox.configuration.Configurable;
-import home.fox.configuration.annotations.NoSet;
-import home.fox.configuration.annotations.SetterInfo;
+import org.fuchss.configuration.Configurable;
+import org.fuchss.configuration.annotations.NoSet;
+import org.fuchss.configuration.annotations.SetterInfo;
+
 import ragnarok.config.GameConf;
 import ragnarok.core.GameGrid;
 import ragnarok.core.GameTime;
@@ -189,7 +190,8 @@ public final class EndTrigger extends InanimateTrigger implements Configurable {
 	@Override
 	public void perform() {
 		// Make player invisible
-		this.getScene().getPlayer().setTemporaryApperance((f) -> {}, 3000);
+		this.getScene().getPlayer().setTemporaryApperance((f) -> {
+		}, 3000);
 		this.getScene().end(true);
 	}
 

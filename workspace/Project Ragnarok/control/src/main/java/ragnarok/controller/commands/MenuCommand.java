@@ -1,5 +1,7 @@
 package ragnarok.controller.commands;
 
+import java.util.function.Consumer;
+
 import ragnarok.logic.Model.GameState;
 import ragnarok.logic.gui.menu.MenuItem;
 
@@ -14,33 +16,49 @@ public class MenuCommand implements Command {
 	 * The enum defines the different directions of KeyPress in a Menu Context.
 	 *
 	 * @author Matthias Schmitt
+	 * @author Dominik Fuchss
 	 *
 	 */
 	public enum Dir {
 		/**
 		 * Up.
 		 */
-		UP,
+		UP(item -> item.up()),
 		/**
 		 * Down.
 		 */
-		DOWN,
+		DOWN(item -> item.down()),
 		/**
 		 * Left.
 		 */
-		LEFT,
+		LEFT(item -> item.left()),
 		/**
 		 * Right.
 		 */
-		RIGHT,
+		RIGHT(item -> item.right()),
 		/**
 		 * Back.
 		 */
-		BACK,
+		BACK(item -> item.unselect()),
 		/**
 		 * Select.
 		 */
-		SELECT
+		SELECT(item -> item.select());
+		/**
+		 * The action bound to the direction.
+		 */
+		private final Consumer<MenuItem> action;
+
+		/**
+		 * Bind action to Dir.
+		 * 
+		 * @param action
+		 *            the action
+		 */
+		private Dir(Consumer<MenuItem> action) {
+			this.action = action;
+		}
+
 	}
 
 	/**
@@ -84,28 +102,7 @@ public class MenuCommand implements Command {
 			return;
 		}
 		MenuItem item = this.supervisor.getMenu(this);
-		switch (this.dir) {
-		case UP:
-			item.up();
-			break;
-		case DOWN:
-			item.down();
-			break;
-		case LEFT:
-			item.left();
-			break;
-		case RIGHT:
-			item.right();
-			break;
-		case BACK:
-			item.unselect();
-			break;
-		case SELECT:
-			item.select();
-			break;
-		default:
-			throw new Error("This is impossible: Direction cannot be null");
-		}
+		this.dir.action.accept(item);
 	}
 
 }

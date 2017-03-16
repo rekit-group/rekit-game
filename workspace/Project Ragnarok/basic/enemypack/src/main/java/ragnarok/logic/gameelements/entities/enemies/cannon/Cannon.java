@@ -1,8 +1,9 @@
 package ragnarok.logic.gameelements.entities.enemies.cannon;
 
-import home.fox.configuration.Configurable;
-import home.fox.configuration.annotations.NoSet;
-import home.fox.configuration.annotations.SetterInfo;
+import org.fuchss.configuration.Configurable;
+import org.fuchss.configuration.annotations.NoSet;
+import org.fuchss.configuration.annotations.SetterInfo;
+
 import ragnarok.core.GameGrid;
 import ragnarok.logic.gameelements.GameElement;
 import ragnarok.logic.gameelements.entities.Player;
@@ -259,8 +260,7 @@ public class Cannon extends Enemy implements Configurable {
 		this.innerStateMachine.logicLoop();
 
 		// move angle in right direction
-		this.currentAngle += Math.signum(this.innerStateMachine.getState().getTargetAngle() - this.currentAngle) * this.deltaTime / 1000F
-				* Cannon.ANGLE_SPEED;
+		this.currentAngle += Math.signum(this.innerStateMachine.getState().getTargetAngle() - this.currentAngle) * this.deltaTime / 1000F * Cannon.ANGLE_SPEED;
 
 		if (Math.abs(this.innerStateMachine.getState().getTargetAngle() - this.currentAngle) < Cannon.ANGLE_SPEED / 20) {
 			this.currentAngle = this.innerStateMachine.getState().getTargetAngle();
