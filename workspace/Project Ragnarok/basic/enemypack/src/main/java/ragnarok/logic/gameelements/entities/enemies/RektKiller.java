@@ -177,7 +177,7 @@ public final class RektKiller extends Enemy {
 			// Touched harmless side
 			if (!this.hasSide(dir)) {
 				// give the player 40 points
-				this.getScene().getPlayer().addPoints(20);
+				this.getScene().getPlayer().addPoints(40);
 				// Let the player jump if he landed on top
 				if (dir == Direction.UP) {
 					element.setVel(element.getVel().setY(GameConf.PLAYER_KILL_BOOST));
