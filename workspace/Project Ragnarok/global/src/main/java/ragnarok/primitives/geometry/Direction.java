@@ -9,23 +9,23 @@ import ragnarok.config.GameConf;
  * @version 1.0
  */
 public enum Direction {
-	/**
-	 * Represents the Direction left with the Vector (-1|0).
-	 */
 
-	LEFT(new Vec(-1, 0), 1.5 * Math.PI, 3),
-	/**
-	 * Represents the Direction right with the Vector (1|0).
-	 */
-	RIGHT(new Vec(1, 0), 0.5 * Math.PI, 1),
 	/**
 	 * Represents the Direction up with the Vector (0|-1).
 	 */
-	UP(new Vec(0, -1), 0, 0),
+	UP(new Vec(0, -1), 0),
+	/**
+	 * Represents the Direction right with the Vector (1|0).
+	 */
+	RIGHT(new Vec(1, 0), 0.5 * Math.PI),
 	/**
 	 * Represents the Direction down with the Vector (0|1).
 	 */
-	DOWN(new Vec(0, 1), 1 * Math.PI, 2);
+	DOWN(new Vec(0, 1), 1 * Math.PI),
+	/**
+	 * Represents the Direction left with the Vector (-1|0).
+	 */
+	LEFT(new Vec(-1, 0), 1.5 * Math.PI);
 	/**
 	 * The representing vector.
 	 */
@@ -34,10 +34,6 @@ public enum Direction {
 	 * The representing angle.
 	 */
 	private final double angle;
-	/**
-	 * The position id; 0 represents UP, the rest is clockwise.
-	 */
-	private final int posId;
 
 	/**
 	 * Create a Direction.
@@ -46,11 +42,11 @@ public enum Direction {
 	 *            the vector
 	 * @param angle
 	 *            the angle
+	 *
 	 */
-	private Direction(Vec vec, double angle, int pos) {
+	private Direction(Vec vec, double angle) {
 		this.vec = vec;
 		this.angle = angle;
-		this.posId = pos;
 	}
 
 	/**
@@ -80,18 +76,10 @@ public enum Direction {
 	 * @return the direction or random if dir == null
 	 */
 	public static Direction getOpposite(Direction dir) {
-		switch (dir) {
-		case UP:
-			return Direction.DOWN;
-		case RIGHT:
-			return Direction.LEFT;
-		case DOWN:
-			return Direction.UP;
-		case LEFT:
-			return Direction.RIGHT;
-		default:
+		if (dir == null) {
 			return Direction.getRandom();
 		}
+		return Direction.values()[Math.floorMod(dir.ordinal() + 2, Direction.values().length)];
 	}
 
 	/**
@@ -100,18 +88,7 @@ public enum Direction {
 	 * @return the direction or {@code null} if none defined
 	 */
 	public Direction getNextClockwise() {
-		switch (this) {
-		case UP:
-			return Direction.RIGHT;
-		case RIGHT:
-			return Direction.DOWN;
-		case DOWN:
-			return Direction.LEFT;
-		case LEFT:
-			return Direction.UP;
-		default:
-			return null;
-		}
+		return Direction.values()[Math.floorMod(this.ordinal() + 1, Direction.values().length)];
 	}
 
 	/**
@@ -120,27 +97,7 @@ public enum Direction {
 	 * @return the direction or {@code null} if none defined
 	 */
 	public Direction getNextAntiClockwise() {
-		switch (this) {
-		case UP:
-			return Direction.LEFT;
-		case RIGHT:
-			return Direction.UP;
-		case DOWN:
-			return Direction.RIGHT;
-		case LEFT:
-			return Direction.DOWN;
-		default:
-			return null;
-		}
-	}
-
-	/**
-	 * Get the position id.
-	 * 
-	 * @return the position id
-	 */
-	public int getPosId() {
-		return this.posId;
+		return Direction.values()[Math.floorMod(this.ordinal() - 1, Direction.values().length)];
 	}
 
 	/**
@@ -151,5 +108,4 @@ public enum Direction {
 	public static Direction getRandom() {
 		return Direction.values()[(int) (GameConf.PRNG.nextDouble() * Direction.values().length)];
 	}
-
 }

@@ -116,7 +116,7 @@ public final class RektKiller extends Enemy {
 	 *         otherwise.
 	 */
 	public boolean hasSide(Direction dir) {
-		int bitPos = dir.getPosId();
+		int bitPos = dir.ordinal();
 		return ((this.getSides() >> bitPos) & 1) == 1;
 	}
 
@@ -129,7 +129,7 @@ public final class RektKiller extends Enemy {
 	 *            true to set, false to remove spikes.
 	 */
 	public void setSide(Direction dir, boolean spikes) {
-		int bitPos = dir.getPosId();
+		int bitPos = dir.ordinal();
 		if (spikes) {
 			this.setSides(this.getSides() | (1 << bitPos));
 		} else {
