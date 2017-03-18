@@ -2,9 +2,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>ragnarok</groupId>
+		<groupId>rekit</groupId>
 		<artifactId>parent</artifactId>
-		<version>0.5-beta</version>
+		<version>0.5.1-beta</version>
 	</parent>
 	<artifactId>basic</artifactId>
 	<packaging>pom</packaging>
@@ -12,7 +12,7 @@
 	<description>Contains several Entities</description>
 	<dependencies>
 		<dependency>
-			<groupId>ragnarok</groupId>
+			<groupId>rekit</groupId>
 			<artifactId>logic</artifactId>
 		</dependency>
 	</dependencies>

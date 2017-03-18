@@ -2,19 +2,19 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>parent</artifactId>
-	<version>0.5-beta</version>
+	<version>0.5.1-beta</version>
 	<packaging>pom</packaging>
-	<name>Project Ragnarok</name>
+	<name>RεKiT</name>
 	<prerequisites>
 		<maven>3.0</maven>
 	</prerequisites>
 	<properties>
-		<ragnarok.version>0.5-beta</ragnarok.version>
+		<rekit.version>0.5.1-beta</rekit.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<main.class>ragnarok.Main</main.class>
-		<singlejar.name>Ragnarok-v.${ragnarok.version}</singlejar.name>
+		<main.class>rekit.Main</main.class>
+		<singlejar.name>rekit-v.${rekit.version}</singlejar.name>
 	</properties>
 	<repositories>
 		<repository>
@@ -127,24 +127,24 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>ragnarok</groupId>
+				<groupId>rekit</groupId>
 				<artifactId>logic</artifactId>
-				<version>${ragnarok.version}</version>
+				<version>${rekit.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>ragnarok</groupId>
+				<groupId>rekit</groupId>
 				<artifactId>control</artifactId>
-				<version>${ragnarok.version}</version>
+				<version>${rekit.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>ragnarok</groupId>
+				<groupId>rekit</groupId>
 				<artifactId>global</artifactId>
-				<version>${ragnarok.version}</version>
+				<version>${rekit.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>ragnarok</groupId>
+				<groupId>rekit</groupId>
 				<artifactId>gui</artifactId>
-				<version>${ragnarok.version}</version>
+				<version>${rekit.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>log4j</groupId>
@@ -232,5 +232,5 @@
 		<module>game</module>
 		<module>basic</module>
 	</modules>
-	<groupId>ragnarok</groupId>
+	<groupId>rekit</groupId>
 </project>

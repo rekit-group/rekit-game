@@ -2,9 +2,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>ragnarok</groupId>
+		<groupId>rekit</groupId>
 		<artifactId>parent</artifactId>
-		<version>0.5-beta</version>
+		<version>0.5.1-beta</version>
 	</parent>
 	<build>
 		<plugins>
@@ -22,31 +22,31 @@
 	<artifactId>game</artifactId>
 	<dependencies>
 		<dependency>
-			<groupId>ragnarok</groupId>
+			<groupId>rekit</groupId>
 			<artifactId>control</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>ragnarok</groupId>
+			<groupId>rekit</groupId>
 			<artifactId>gui</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>ragnarok</groupId>
+			<groupId>rekit</groupId>
 			<artifactId>logic</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>ragnarok</groupId>
+			<groupId>rekit</groupId>
 			<artifactId>basic.pickuppack</artifactId>
-			<version>${ragnarok.version}</version>
+			<version>${rekit.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>ragnarok</groupId>
+			<groupId>rekit</groupId>
 			<artifactId>basic.enemypack</artifactId>
-			<version>${ragnarok.version}</version>
+			<version>${rekit.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>ragnarok</groupId>
+			<groupId>rekit</groupId>
 			<artifactId>basic.inanimatepack</artifactId>
-			<version>${ragnarok.version}</version>
+			<version>${rekit.version}</version>
 		</dependency>
 	</dependencies>
 </project>
