@@ -12,6 +12,7 @@ import ragnarok.controller.commands.FilterCommand;
 import ragnarok.controller.commands.InputMethod;
 import ragnarok.controller.commands.JumpCommand;
 import ragnarok.controller.commands.MenuCommand;
+import ragnarok.controller.commands.MenuDirection;
 import ragnarok.controller.commands.PlayPauseCommand;
 import ragnarok.controller.commands.WalkCommand;
 import ragnarok.gui.View;
@@ -73,12 +74,12 @@ final class ControllerImpl implements Observer, Controller, CommandSupervisor {
 	 */
 	private void init() {
 		// Menu
-		this.mpCmd.put(Tuple.create(GameState.MENU, InputHelper.ESCAPE), new MenuCommand(this, MenuCommand.Dir.BACK));
-		this.mpCmd.put(Tuple.create(GameState.MENU, InputHelper.ENTER), new MenuCommand(this, MenuCommand.Dir.SELECT));
-		this.mpCmd.put(Tuple.create(GameState.MENU, InputHelper.ARROW_UP), new MenuCommand(this, MenuCommand.Dir.UP));
-		this.mpCmd.put(Tuple.create(GameState.MENU, InputHelper.ARROW_DOWN), new MenuCommand(this, MenuCommand.Dir.DOWN));
-		this.mpCmd.put(Tuple.create(GameState.MENU, InputHelper.ARROW_LEFT), new MenuCommand(this, MenuCommand.Dir.LEFT));
-		this.mpCmd.put(Tuple.create(GameState.MENU, InputHelper.ARROW_RIGHT), new MenuCommand(this, MenuCommand.Dir.RIGHT));
+		this.mpCmd.put(Tuple.create(GameState.MENU, InputHelper.ESCAPE), new MenuCommand(this, MenuDirection.BACK));
+		this.mpCmd.put(Tuple.create(GameState.MENU, InputHelper.ENTER), new MenuCommand(this, MenuDirection.SELECT));
+		this.mpCmd.put(Tuple.create(GameState.MENU, InputHelper.ARROW_UP), new MenuCommand(this, MenuDirection.UP));
+		this.mpCmd.put(Tuple.create(GameState.MENU, InputHelper.ARROW_DOWN), new MenuCommand(this, MenuDirection.DOWN));
+		this.mpCmd.put(Tuple.create(GameState.MENU, InputHelper.ARROW_LEFT), new MenuCommand(this, MenuDirection.LEFT));
+		this.mpCmd.put(Tuple.create(GameState.MENU, InputHelper.ARROW_RIGHT), new MenuCommand(this, MenuDirection.RIGHT));
 
 		// Game
 		this.mpCmd.put(Tuple.create(GameState.INGAME, InputHelper.ARROW_UP), new JumpCommand(this));

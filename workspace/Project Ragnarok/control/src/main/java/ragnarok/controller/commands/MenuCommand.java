@@ -1,7 +1,5 @@
 package ragnarok.controller.commands;
 
-import java.util.function.Consumer;
-
 import ragnarok.logic.Model.GameState;
 import ragnarok.logic.gui.menu.MenuItem;
 
@@ -12,59 +10,11 @@ import ragnarok.logic.gui.menu.MenuItem;
  *
  */
 public class MenuCommand implements Command {
-	/**
-	 * The enum defines the different directions of KeyPress in a Menu Context.
-	 *
-	 * @author Matthias Schmitt
-	 * @author Dominik Fuchss
-	 *
-	 */
-	public enum Dir {
-		/**
-		 * Up.
-		 */
-		UP(item -> item.up()),
-		/**
-		 * Down.
-		 */
-		DOWN(item -> item.down()),
-		/**
-		 * Left.
-		 */
-		LEFT(item -> item.left()),
-		/**
-		 * Right.
-		 */
-		RIGHT(item -> item.right()),
-		/**
-		 * Back.
-		 */
-		BACK(item -> item.unselect()),
-		/**
-		 * Select.
-		 */
-		SELECT(item -> item.select());
-		/**
-		 * The action bound to the direction.
-		 */
-		private final Consumer<MenuItem> action;
-
-		/**
-		 * Bind action to Dir.
-		 * 
-		 * @param action
-		 *            the action
-		 */
-		private Dir(Consumer<MenuItem> action) {
-			this.action = action;
-		}
-
-	}
 
 	/**
 	 * The direction for the command.
 	 */
-	private Dir dir;
+	private MenuDirection dir;
 	/**
 	 * The supervisor.
 	 */
@@ -78,7 +28,7 @@ public class MenuCommand implements Command {
 	 * @param dir
 	 *            the direction
 	 */
-	public MenuCommand(CommandSupervisor supervisor, Dir dir) {
+	public MenuCommand(CommandSupervisor supervisor, MenuDirection dir) {
 		this.supervisor = supervisor;
 		this.dir = dir;
 	}
@@ -102,7 +52,7 @@ public class MenuCommand implements Command {
 			return;
 		}
 		MenuItem item = this.supervisor.getMenu(this);
-		this.dir.action.accept(item);
+		this.dir.accept(item);
 	}
 
 }

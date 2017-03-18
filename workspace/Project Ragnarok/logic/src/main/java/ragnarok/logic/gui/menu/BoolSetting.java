@@ -1,5 +1,7 @@
 package ragnarok.logic.gui.menu;
 
+import java.lang.reflect.Field;
+
 import ragnarok.config.GameConf;
 import ragnarok.core.GameGrid;
 import ragnarok.logic.IScene;
@@ -11,9 +13,9 @@ import ragnarok.logic.IScene;
  */
 public final class BoolSetting extends MenuItem {
 	/**
-	 * The {@link java.lang.reflect.Field Field} which shall be modified.
+	 * The {@link Field} which shall be modified.
 	 */
-	private java.lang.reflect.Field setting;
+	private Field setting;
 	/**
 	 * The current value.
 	 */
