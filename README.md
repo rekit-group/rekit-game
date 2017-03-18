@@ -1,30 +1,16 @@
-# Project Ragnarok
+# R&#949;​KiT
 
+[![GitHub issues](https://img.shields.io/github/issues/fuchss-dominik/configuration-parser.svg?style=square)](https://github.com/fuchss-dominik/rekit-game/issues)
+[![GitHub license](https://img.shields.io/badge/license-GPLv3-blue.svg?style=square)](https://github.com/fuchss-dominik/rekit-game/blob/master/LICENSE.md)
 
-## Übungstutorium
-- **Folien - Übungsaufgaben**
-  - Architektur
-  - Wichtigste Erklärungen (GameElement)
-  - Planung - Entwurf - Implementierung
-- **Aufgabenzettel**
-  - Gegner *(Schablonenmethode, Strategie/State, Kompositum/Fabrikmethode)*
-    - z.B. hüpfend
-    - z.B. aufsplittend
-    - mehrere Leben -> mehrere Verhaltensmuster
-  - Items *(Schablonenmethode, State)*
-    - z.B. Score-Item
-    - z.B. Leben
-    - temporäre PowerUps
-      - z.B. schneller
-      - z.B. unsterblich
-  - LevelCreator *(Fliegengewicht)*
-  - Angriff *(State, Fabrikmethode)*
-    - z.B. Nahkampf
-    - z.B. Fernkampf
-  - Background *(Kompositium/Mediator)*
-    - Mehrere Layer, zufällig zusammengesetzt
-  - Spezialblöcke *(Schablonenmethode, State, Fabrikmethode)*
-    - z.B. bewegliche Plattformen
-    - z.B. "alternierende" Blöcke
-    - z.B. Stacheln / Lava
-    - z.B. explodierende Plattformen (per Particles)
+R&#949;​KiT is a platform jumper game entirely written in Java without any frameworks or libraries except [AWT](https://docs.oracle.com/javase/7/docs/api/java/awt/package-summary.html).
+
+The project is aiming to educate about good software design and was created by students of the [Karlsruher Institut für Technologie](https://www.kit.edu/).
+
+## Screenshots
+
+### Infinite Mode
+![Randomly Generated Levels](https://github.com/fuchss-dominik/rekit-game/blob/master/graphix/rekitScreenshot1.png)
+
+### Bosses
+![Bosses](https://github.com/fuchss-dominik/rekit-game/blob/master/graphix/rekitScreenshot2.png)
