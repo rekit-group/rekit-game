@@ -3,6 +3,7 @@ package ragnarok.logic.gameelements.entities.enemies.bosses.rocketboss;
 import ragnarok.config.GameConf;
 import ragnarok.core.GameGrid;
 import ragnarok.logic.gameelements.GameElement;
+import ragnarok.logic.gameelements.entities.enemies.RektKiller;
 import ragnarok.logic.gameelements.entities.enemies.bosses.rocketboss.damagestate.DamageState;
 import ragnarok.logic.gameelements.entities.enemies.bosses.rocketboss.damagestate.State3;
 import ragnarok.logic.gameelements.inanimate.Inanimate;
@@ -24,33 +25,39 @@ public class RocketBoss extends Boss {
 
 	private Mouth mouth;
 
-	private static Vec MOVEMENT_PERIOD = new Vec(1.6f, 0.9f);
-	private static Vec MOVEMENT_RANGE = new Vec(0.3f, 0.7f);
+	public static Vec MOVEMENT_PERIOD = new Vec(1.6f, 0.9f);
+	public static Vec MOVEMENT_RANGE = new Vec(0.3f, 0.7f);
 
-	private static Vec HEAD_SIZE = new Vec(2, 1.6f);
-	private static Vec HEAD_PADDING = new Vec(0.2f, 0.2f);
-	private static RGBColor HEAD_COL = new RGBColor(100, 100, 100);
+	public static Vec HEAD_SIZE = new Vec(2, 1.6f);
+	public static Vec HEAD_PADDING = new Vec(0.2f, 0.2f);
+	public static RGBColor HEAD_COL = new RGBColor(100, 100, 100);
 
-	private static Vec EYE_SIZE = new Vec(0.4f, 0.4f);
-	private static Vec EYE_LEFT_POS = RocketBoss.EYE_SIZE.scalar(0.5f).add(RocketBoss.HEAD_PADDING).sub(RocketBoss.HEAD_SIZE.scalar(0.5f));
-	private static Vec EYE_RIGHT_POS = RocketBoss.EYE_LEFT_POS.scalar(-1, 1);
+	public static Vec EYE_SIZE = new Vec(0.4f, 0.4f);
+	public static Vec EYE_LEFT_POS = EYE_SIZE.scalar(0.5f).add(HEAD_PADDING).sub(HEAD_SIZE.scalar(0.5f));
+	public static Vec EYE_RIGHT_POS = EYE_LEFT_POS.scalar(-1, 1);
 
-	private static Vec MOUTH_SIZE = new Vec(1.6f, 0.4f);
-	private static Vec MOUTH_POS = (RocketBoss.MOUTH_SIZE.scalar(-0.5f).sub(RocketBoss.HEAD_PADDING).add(RocketBoss.HEAD_SIZE.scalar(0.5f))).setX(0);
-	private static RGBColor MOUTH_BG_COL = new RGBColor(200, 200, 200);
+	public static Vec MOUTH_SIZE = new Vec(1.6f, 0.4f);
+	public static Vec MOUTH_POS = (MOUTH_SIZE.scalar(-0.5f).sub(HEAD_PADDING).add(HEAD_SIZE.scalar(0.5f))).setX(0);
+	public static RGBColor MOUTH_BG_COL = new RGBColor(200, 200, 200);
+
+	public static long ARM_STATE_TIME_BUILD = 100;
+	public static long ARM_SEGMENT_DIST = 10;
+	public static Vec ARM_SEGMENT_SIZE = new Vec(1f, 1f);
+
+	public static RGBColor ARM_SEGMENT_COL = new RGBColor(100, 100, 100);
 
 	/**
-	 * Standard constructor.
+	 * Standard constructor
 	 */
 	public RocketBoss() {
 
 	}
 
 	public RocketBoss(Vec startPos) {
-		super(startPos, new Vec(), RocketBoss.HEAD_SIZE);
+		super(startPos, new Vec(), HEAD_SIZE);
 		this.startPos = startPos;
 		this.machine = new TimeStateMachine(new State3());
-		this.mouth = new Mouth(this, RocketBoss.MOUTH_POS, RocketBoss.MOUTH_SIZE, RocketBoss.MOUTH_BG_COL);
+		this.mouth = new Mouth(this, MOUTH_POS, MOUTH_SIZE, MOUTH_BG_COL);
 	}
 
 	public DamageState getState() {
@@ -58,58 +65,75 @@ public class RocketBoss extends Boss {
 	}
 
 	@Override
-	protected void innerLogicLoop() {
-
+	public void innerLogicLoop() {
 		// add deltaTime with factor to local x
-		float deltaX = this.deltaTime * this.getState().getTimeFactor() / 1000;
-		this.calcX += deltaX;
+		float deltaX = deltaTime * getState().getTimeFactor();
+		calcX += deltaX;
 
 		// calculate and update position
-		Vec scaleVec = new Vec((float) Math.sin(RocketBoss.MOVEMENT_PERIOD.getX() * this.calcX),
-				(float) Math.cos(RocketBoss.MOVEMENT_PERIOD.getY() * this.calcX));
-		Vec scaledUnit = RocketBoss.MOVEMENT_RANGE.multiply(scaleVec);
-		this.setPos(this.startPos.add(scaledUnit));
+		Vec scaleVec = new Vec((float) Math.sin(MOVEMENT_PERIOD.getX() * calcX), (float) Math.cos(MOVEMENT_PERIOD.getY() * calcX));
+		Vec scaledUnit = MOVEMENT_RANGE.multiply(scaleVec);
+		this.setPos(startPos.add(scaledUnit));
 
-		this.mouth.logicLoop(this.calcX, deltaX);
+		mouth.logicLoop(calcX, deltaX);
 	}
 
-	@Override
 	public void internalRender(GameGrid f) {
-		f.drawRectangle(this.getPos(), this.getSize(), RocketBoss.HEAD_COL);
+		f.drawRectangle(this.getPos(), this.getSize(), HEAD_COL);
 
 		// Render eyes
-		f.drawImage(this.getPos().add(RocketBoss.EYE_LEFT_POS), RocketBoss.EYE_SIZE, this.getState().getEyeImgSrc());
-		f.drawImage(this.getPos().add(RocketBoss.EYE_RIGHT_POS), RocketBoss.EYE_SIZE, this.getState().getEyeImgSrc());
+		f.drawImage(this.getPos().add(EYE_LEFT_POS), EYE_SIZE, this.getState().getEyeImgSrc());
+		f.drawImage(this.getPos().add(EYE_RIGHT_POS), EYE_SIZE, this.getState().getEyeImgSrc());
 
 		// Render mouth
-
-		this.mouth.render(f);
+		mouth.internalRender(f);
 	}
 
 	/**
 	 * @return the machine
 	 */
 	public TimeStateMachine getMachine() {
-		return this.machine;
+		return machine;
 	}
 
 	@Override
 	public BossStructure getBossStructure() {
-		String i = Inanimate.class.getSimpleName();
-		String n = null;
+		// TODO Refactor to new Layout
 
-		String[][] struct = new String[][] { //
-				{ i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i },
-				{ i, n, n, n, n, n, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n },
-				{ i, n, n, n, n, n, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n },
-				{ i, n, n, n, n, n, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n },
-				{ i, n, n, n, n, n, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n },
-				{ i, n, n, n, n, n, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n },
-				{ i, i, i, i, i, i, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n },
-				{ n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n },
-				{ i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i } //
-		};
+		int[][][] oldStruct = new int[][][] {
+				{ { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 },
+						{ 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 } },
+				{ { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 },
+						{ 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 } },
+				{ { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 },
+						{ 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 } },
+				{ { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 },
+						{ 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 } },
+				{ { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 },
+						{ 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 } },
+				{ { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 },
+						{ 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 } },
+				{ { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 },
+						{ 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 } },
+				{ { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 },
+						{ 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 }, { 0 } },
+				{ { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 },
+						{ 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 } } };
 
+		String[][] struct = new String[oldStruct.length][];
+		for (int i = 0; i < oldStruct.length; i++) {
+			String[] l = new String[oldStruct[i].length];
+			for (int j = 0; j < oldStruct[i].length; j++) {
+				if (oldStruct[i][j][0] == 0) {
+					l[j] = null;
+				} else if (oldStruct[i][j][0] == 1) {
+					l[j] = Inanimate.class.getName();
+				} else if (oldStruct[i][j][0] == 2) {
+					l[j] = RektKiller.class.getName();
+				}
+			}
+			struct[i] = l;
+		}
 		BossStructure structure = new BossStructure(struct, this);
 		this.setBossStructure(structure);
 		return structure;
