@@ -1,8 +1,5 @@
 .DS_Store
-workspace/ragnarok/target
-workspace/.metadata
-workspace/.recommenders
-workspace/ragnarok/src/**/*.class
+.metadata
 **/*.cfs
 *.classpath
 *.settings
@@ -10,4 +7,4 @@ workspace/ragnarok/src/**/*.class
 sh.exe.stackdump
 stat.html
 *.checkstyle
-workspace/Project Ragnarok/target/
+target*
