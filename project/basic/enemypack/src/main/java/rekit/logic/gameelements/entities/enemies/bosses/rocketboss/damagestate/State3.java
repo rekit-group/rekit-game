@@ -11,7 +11,7 @@ public class State3 extends DamageState {
 	@Override
 	public float getTimeFactor() {
 		// TODO Auto-generated method stub
-		return 1;
+		return 1E-3F;
 	}
 
 	@Override

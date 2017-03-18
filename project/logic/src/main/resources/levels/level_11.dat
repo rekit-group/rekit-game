@@ -1,0 +1,11 @@
+#SETTING::name->Rocket_Boss_Test
+#SETTING::shuffle->false
+#SETTING::infinite->true
+#SETTING::doGaps->true
+
+#ALIAS::1->Inanimate
+#BOSS_SETTING::AT25->RocketBoss
+
+{
+{1}
+}
