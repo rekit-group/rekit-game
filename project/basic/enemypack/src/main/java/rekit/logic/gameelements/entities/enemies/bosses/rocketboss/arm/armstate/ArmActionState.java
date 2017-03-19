@@ -1,12 +1,7 @@
 package rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm.armstate;
 
-import rekit.logic.gameelements.GameElement;
-import rekit.logic.gameelements.entities.enemies.Rocket;
 import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.RocketBoss;
 import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm.Arm;
-import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm.armaction.ArmAction;
-import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm.armaction.ArmActionRocketLauncher;
-import rekit.primitives.geometry.Vec;
 import rekit.util.state.State;
 import rekit.util.state.TimeStateMachine;
 
@@ -21,14 +16,22 @@ public class ArmActionState extends ArmState {
 	@Override
 	public void enter(TimeStateMachine parent) {
 		super.enter(parent);
+		this.getParentArm().nextArmAction();
+	}
+	
+	@Override
+	public void leave() {
+		this.getParentArm().armAction.tearDown();
 	}
 	
 	protected void internalLogicLoop() {
 		if (!hasPerformedAction && timer.getProgress() >= getParentArm().getActionProgressThreshold()) {
-			System.out.println("PERF " + this.getParentArm().armAction.getPos());
 			this.getParentArm().armAction.perform();
 			this.hasPerformedAction = true;
 		}
+	}
+	
+	protected void internalRender() {
 		
 	}
 

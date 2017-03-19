@@ -6,7 +6,7 @@ import rekit.core.GameGrid;
 import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.RocketBoss;
 import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm.armaction.ArmAction;
-import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm.armstate.ArmBuildState;
+import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm.armstate.ArmIdleState;
 import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm.armstate.ArmState;
 import rekit.primitives.geometry.Vec;
 import rekit.util.CalcUtil;
@@ -41,9 +41,7 @@ public class Arm extends RocketBossChild {
 		
 		this.actionProgressThreshold = actionProgressThreshold;
 		
-		this.machine = new TimeStateMachine(new ArmBuildState(this));
-		
-		nextArmAction();
+		this.machine = new TimeStateMachine(new ArmIdleState(this));
 	}
 	
 	public void nextArmAction() {
@@ -84,6 +82,10 @@ public class Arm extends RocketBossChild {
 		}
 
 		this.getState().logicLoop();
+		
+		if (this.armAction != null) {
+			this.armAction.logicLoop(calcX, deltaX);
+		}
 
 		for (ArmSegment segment : this.armSegments) {
 			segment.logicLoop(deltaX);
@@ -101,6 +103,8 @@ public class Arm extends RocketBossChild {
 			}
 			segment.render(f);
 		}
+		
+		armAction.internalRender(f);
 	}
 
 	public TimeStateMachine getMachine() {

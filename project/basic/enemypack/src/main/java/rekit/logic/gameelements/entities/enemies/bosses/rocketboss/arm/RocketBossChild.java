@@ -1,5 +1,6 @@
 package rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm;
 
+import rekit.core.GameGrid;
 import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm.armaction.ArmAction;
 import rekit.primitives.geometry.Vec;
@@ -32,7 +33,9 @@ public abstract class RocketBossChild {
 		return this.parent.getPos().add(this.relPos);
 	}
 	
+	public abstract void logicLoop(float calcX, float deltaX);
 	
+	public abstract void internalRender(GameGrid f);
 	
 	public abstract RocketBossChild create(GameElement parent, Vec relPos);
 }

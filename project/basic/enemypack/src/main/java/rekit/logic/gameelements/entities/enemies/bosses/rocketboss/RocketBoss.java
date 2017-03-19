@@ -46,13 +46,17 @@ public class RocketBoss extends Boss {
 	
 	public static Vec[] ARM_POSITIONS = new Vec[]{new Vec(0.85f, 0.8f), new Vec(-0.85f, 0.8f)};
 	public static float[][] ARM_SHAPE_SETTINGS = new float[][]{new float[]{0.3f, 0.2f, 2f, 0.3f}, new float[]{0.2f, 0.1f, 0.6f, 0.3f}};
-	public static float[] ARM_ACTION_PROGRESS_THRESHOLDS = new float[]{0.1f, 0.8f};
+	public static float[] ARM_ACTION_PROGRESS_THRESHOLDS = new float[]{0.1f, 0.4f};
+	
+	public static Vec ARM_ACTION_ROCKET_LAUNCHER_SIZE = new Vec(0.8f, 0.4f);
+	public static RGBColor ARM_ACTION_ROCKET_LAUNCHER_COLOR = new RGBColor(70, 70, 70);
 	
 	public static float ARM_SEGMENT_DIST = 0.1f;
 	public static Vec ARM_SEGMENT_SIZE = new Vec(0.25f, 0.25f);
 	
+	public static long ARM_STATE_TIME_IDLE = 2000;
 	public static long ARM_STATE_TIME_BUILD = 2000;
-	public static long ARM_STATE_TIME_ACTION = 2000;
+	public static long ARM_STATE_TIME_ACTION = 4000;
 	public static long ARM_STATE_TIME_UNBUILD = 2000;
 
 	public static RGBColor ARM_SEGMENT_COL = new RGBColor(100, 100, 100);

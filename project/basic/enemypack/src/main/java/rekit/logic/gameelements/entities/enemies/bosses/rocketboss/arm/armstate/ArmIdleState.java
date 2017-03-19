@@ -4,24 +4,24 @@ import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.RocketBoss;
 import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm.Arm;
 import rekit.util.state.State;
 
-public class ArmUnbuildState extends ArmState {
+public class ArmIdleState extends ArmState {
 
-	public ArmUnbuildState(Arm parentArm) {
+	public ArmIdleState(Arm parentArm) {
 		super(parentArm);
 	}
 
 	@Override
 	public State getNextState() {
-		return new ArmIdleState(getParentArm());
+		return new ArmBuildState(getParentArm());
 	}
 
 	@Override
 	public long getTimerTime() {
-		return RocketBoss.ARM_STATE_TIME_UNBUILD;
+		return RocketBoss.ARM_STATE_TIME_IDLE;
 	}
 
 	public float getSegmentAmount() {
-		return 1 - this.timer.getProgress();
+		return 0;
 	}
 
 }
