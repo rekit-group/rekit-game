@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import rekit.core.GameGrid;
 import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.RocketBoss;
+import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm.armaction.ArmAction;
 import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm.armstate.ArmBuildState;
 import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm.armstate.ArmState;
 import rekit.primitives.geometry.Vec;
@@ -20,18 +21,19 @@ public class Arm extends RocketBossChild {
 	
 	private float actionProgressThreshold;
 	
-	
 	private float curveA;
 	private float maxLengthY;
 
 	private TimeStateMachine machine;
 
 	private LinkedList<ArmSegment> armSegments;
+	
+	public ArmAction armAction;
 
 	public Arm(GameElement parent, Vec relPos, float[] shapeSettings, float actionProgressThreshold) {
 		super(parent, relPos);
 		
-		// TODO passing float arrays is not best practice
+		// TODO passing float arrays is not exactly best practice
 		curveAMu = shapeSettings[0];
 		curveASigma = shapeSettings[1];
 		maxLengthYMu = shapeSettings[2];
@@ -40,6 +42,12 @@ public class Arm extends RocketBossChild {
 		this.actionProgressThreshold = actionProgressThreshold;
 		
 		this.machine = new TimeStateMachine(new ArmBuildState(this));
+		
+		nextArmAction();
+	}
+	
+	public void nextArmAction() {
+		this.armAction = (ArmAction) ArmAction.getRandomArmAction().create(this.parent, this.getHandPos().sub(this.parent.getPos()));
 	}
 	
 	/**
@@ -113,6 +121,11 @@ public class Arm extends RocketBossChild {
 
 	public Vec getHandPos() {
 		return this.armSegments.getLast().getPos();
+	}
+
+	@Override
+	public RocketBossChild create(GameElement parent, Vec relPos) {
+		return new Arm(parent, relPos, new float[]{0,0,0,0}, 0);
 	}
 
 }

@@ -10,8 +10,17 @@ public class ArmActionRocketLauncher extends ArmAction {
 		super(parent, relPos);
 	}
 	
+	public ArmActionRocketLauncher() {
+		super();
+	}
+	
 	public void perform() {
-		GameElement rocket = new Rocket().create(this.relPos, new String[]{});
+		GameElement rocket = new Rocket().create(this.getPos(), new String[]{});
 		this.parent.getScene().addGameElement(rocket);
+	}
+
+	@Override
+	public ArmAction create(GameElement parent, Vec relPos) {
+		return new ArmActionRocketLauncher(parent, relPos);
 	}
 }

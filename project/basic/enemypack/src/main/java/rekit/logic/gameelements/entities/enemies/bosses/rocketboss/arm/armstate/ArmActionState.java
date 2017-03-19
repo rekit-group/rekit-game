@@ -25,9 +25,8 @@ public class ArmActionState extends ArmState {
 	
 	protected void internalLogicLoop() {
 		if (!hasPerformedAction && timer.getProgress() >= getParentArm().getActionProgressThreshold()) {
-			Vec spawnPos = this.getParentArm().getHandPos();
-			GameElement rocket = new Rocket().create(spawnPos, new String[]{});
-			this.getParentArm().getParent().getScene().addGameElement(rocket);
+			System.out.println("PERF " + this.getParentArm().armAction.getPos());
+			this.getParentArm().armAction.perform();
 			this.hasPerformedAction = true;
 		}
 		
