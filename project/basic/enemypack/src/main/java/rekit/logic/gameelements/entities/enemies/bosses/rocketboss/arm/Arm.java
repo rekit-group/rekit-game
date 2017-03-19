@@ -12,28 +12,35 @@ import rekit.primitives.geometry.Vec;
 import rekit.util.CalcUtil;
 import rekit.util.state.TimeStateMachine;
 
-public class Arm {
-
-	private GameElement parent;
-
-	private Vec relPos;
-
-	public float curveA;
-	public float maxLengthY;
+public class Arm extends RocketBossChild {
+	
+	private float curveAMu;
+	private float curveASigma;
+	private float maxLengthYMu;
+	private float maxLengthYSigma;
+	
+	private float curveA;
+	private float maxLengthY;
 
 	private TimeStateMachine machine;
 
-	private List<ArmSegment> armSegments;
+	private LinkedList<ArmSegment> armSegments;
 
-	public Arm(GameElement parent, Vec relPos) {
-		this.parent = parent;
-		this.relPos = relPos;
+	public Arm(GameElement parent, Vec relPos, float[] shapeSettings) {
+		super(parent, relPos);
+		
+		// TODO passing float arrays is not best practice
+		curveAMu = shapeSettings[0];
+		curveASigma = shapeSettings[1];
+		maxLengthYMu = shapeSettings[2];
+		maxLengthYSigma = shapeSettings[3];
+		
 		this.machine = new TimeStateMachine(new ArmBuildState(this));
 	}
 
 	public void createArmSegments() {
-		this.curveA = CalcUtil.randomize(0.6f, 0.5f);
-		this.maxLengthY = CalcUtil.randomize(2.5f, 0.5f);
+		this.curveA = CalcUtil.randomize(curveAMu, curveASigma);
+		this.maxLengthY = CalcUtil.randomize(maxLengthYMu, maxLengthYSigma);
 		this.armSegments = new LinkedList<>();
 		for (float dy = 0; dy <= this.maxLengthY; dy += RocketBoss.ARM_SEGMENT_DIST) {
 			// calculate angle
@@ -46,9 +53,6 @@ public class Arm {
 		}
 	}
 
-	public Vec getPos() {
-		return this.parent.getPos().add(this.relPos);
-	}
 
 	public ArmState getState() {
 		return (ArmState) this.machine.getState();
@@ -93,6 +97,10 @@ public class Arm {
 
 	public float fndy(float y) {
 		return -this.curveA * (float) Math.cos((y / maxLengthY) * (2 * Math.PI));
+	}
+
+	public Vec getHandPos() {
+		return this.armSegments.getLast().getPos();
 	}
 
 }

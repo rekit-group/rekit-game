@@ -15,6 +15,7 @@ import rekit.logic.gameelements.type.Boss;
 import rekit.logic.level.bossstructure.BossStructure;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBColor;
+import rekit.util.CalcUtil;
 import rekit.util.ReflectUtils.LoadMe;
 import rekit.util.state.TimeStateMachine;
 
@@ -45,9 +46,10 @@ public class RocketBoss extends Boss {
 	public static Vec MOUTH_POS = (RocketBoss.MOUTH_SIZE.scalar(-0.5f).sub(RocketBoss.HEAD_PADDING).add(RocketBoss.HEAD_SIZE.scalar(0.5f))).setX(0);
 	public static RGBColor MOUTH_BG_COL = new RGBColor(200, 200, 200);
 	
-	public static Vec[] ARM_POSITIONS = new Vec[]{new Vec(-1f, 0.8f)}; 
-	public static float ARM_SEGMENT_DIST = 0.15f;
-	public static Vec ARM_SEGMENT_SIZE = new Vec(0.30f, 0.30f);
+	public static Vec[] ARM_POSITIONS = new Vec[]{new Vec(-0.95f, 0.8f), new Vec(0.95f, 0.8f)};
+	public static float[][] ARM_SHAPE_SETTINGS = new float[][]{new float[]{0.3f, 0.2f, 2f, 0.3f}, new float[]{0.1f, 0.1f, 0.8f, 0.5f}};
+	public static float ARM_SEGMENT_DIST = 0.1f;
+	public static Vec ARM_SEGMENT_SIZE = new Vec(0.25f, 0.25f);
 	
 	public static long ARM_STATE_TIME_BUILD = 2000;
 	public static long ARM_STATE_TIME_ACTION = 2000;
@@ -70,7 +72,8 @@ public class RocketBoss extends Boss {
 		
 		this.arms = new LinkedList<Arm>();
 		for (int i = 0; i < RocketBoss.ARM_POSITIONS.length; ++i) {
-			this.arms.add(new Arm(this, RocketBoss.ARM_POSITIONS[i]));
+			float[] shapeSettings = ARM_SHAPE_SETTINGS[i];
+			this.arms.add(new Arm(this, RocketBoss.ARM_POSITIONS[i], shapeSettings));
 		}
 		
 	}
@@ -129,15 +132,15 @@ public class RocketBoss extends Boss {
 		String i = Inanimate.class.getSimpleName();
 		String n = null;
 		String[][] struct = new String[][] { //
-				{ i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i },
-				{ i, n, n, n, n, n, i, n, n, n, n, n, i, n, n, n, i, i, n, n, n, i, n, n, n, n, n, n },
-				{ i, n, n, n, n, n, i, n, n, n, n, n, i, n, n, n, n, n, n, n, n, i, n, n, n, n, n, n },
-				{ i, n, n, n, n, n, i, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n },
-				{ i, n, n, n, n, n, i, i, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n },
-				{ i, n, n, n, n, n, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n },
-				{ i, i, i, i, i, i, i, n, n, n, n, n, n, i, n, i, i, i, i, n, i, n, n, n, n, n, n, n },
-				{ n, n, n, n, n, n, n, n, n, n, n, n, n, i, n, i, i, i, i, n, i, n, n, n, n, n, n, n },
-				{ i, i, i, i, i, i, i, i, i, i, i, i, i, i, n, i, i, i, i, n, i, i, i, i, i, i, i, i } //
+			{ i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i },
+			{ i, n, n, n, n, n, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n },
+			{ i, n, n, n, n, n, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n },
+			{ i, n, n, n, n, n, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n },
+			{ i, n, n, n, n, n, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n },
+			{ i, n, n, n, n, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n },
+			{ i, i, i, i, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n },
+			{ n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n },
+			{ i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, n, n, n, n, n, n, n, i, i, i, i, i } //
 		};
 
 		BossStructure structure = new BossStructure(struct, this);
@@ -147,12 +150,12 @@ public class RocketBoss extends Boss {
 
 	@Override
 	public Vec getStartPos() {
-		return new Vec(25, GameConf.GRID_H / 2);
+		return new Vec(22, 3.5f);
 	}
 
 	@Override
 	public String getName() {
-		return "Crazy Rocket Robot";
+		return "Unintentionally world-dominating Robot";
 	}
 
 	@Override

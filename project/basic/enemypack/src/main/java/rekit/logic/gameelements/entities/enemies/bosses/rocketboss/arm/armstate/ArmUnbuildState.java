@@ -6,13 +6,13 @@ import rekit.util.state.State;
 
 public class ArmUnbuildState extends ArmState {
 
-	public ArmUnbuildState(Arm parent) {
-		super(parent);
+	public ArmUnbuildState(Arm parentArm) {
+		super(parentArm);
 	}
 
 	@Override
 	public State getNextState() {
-		return new ArmBuildState(parent);
+		return new ArmBuildState(getParentArm());
 	}
 
 	@Override

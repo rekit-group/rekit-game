@@ -4,10 +4,16 @@ import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm.Arm;
 import rekit.util.state.State;
 
 public abstract class ArmState extends State {
-	protected Arm parent;
-
-	public ArmState(Arm parent) {
-		this.parent = parent;
+	private Arm parentArm;
+	
+	public ArmState(Arm parentArm) {
+		super();
+		
+		this.parentArm = parentArm;
+	}
+	
+	public Arm getParentArm() {
+		return this.parentArm;
 	}
 
 	public float getSegmentAmount() {

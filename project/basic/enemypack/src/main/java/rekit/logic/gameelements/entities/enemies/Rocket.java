@@ -49,6 +49,11 @@ public final class Rocket extends Enemy implements Configurable {
 	 * The Particles's spawn time.
 	 */
 	private static float PARTICLE_SPAWN_TIME;
+	
+	/**
+	 * The Rockets speed
+	 */
+	private static float SPEED;
 
 	/**
 	 * The particle spawner for the rocket's flight.
@@ -108,7 +113,7 @@ public final class Rocket extends Enemy implements Configurable {
 	@Override
 	protected void innerLogicLoop() {
 		// move ahead with player max speed
-		this.setPos(this.getPos().addX(-GameConf.PLAYER_WALK_MAX_SPEED * this.deltaTime / 1000F));
+		this.setPos(this.getPos().addX(-Rocket.SPEED * this.deltaTime / 1000F));
 
 		// spawn particles
 		this.paricleTimer.logicLoop();

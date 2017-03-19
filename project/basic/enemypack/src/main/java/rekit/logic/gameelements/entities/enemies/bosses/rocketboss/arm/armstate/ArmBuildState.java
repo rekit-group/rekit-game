@@ -7,19 +7,21 @@ import rekit.util.state.TimeStateMachine;
 
 public class ArmBuildState extends ArmState {
 
-	public ArmBuildState(Arm parent) {
-		super(parent);
+	public ArmBuildState(Arm parentArm) {
+		super(parentArm);
+		System.out.println("Adding arm " + (getParentArm() == null));
 	}
 
 	@Override
 	public void enter(TimeStateMachine parent) {
 		super.enter(parent);
-		this.parent.createArmSegments();
+		System.out.println("Creating Arm segmets " + (getParentArm() == null));
+		this.getParentArm().createArmSegments();
 	}
 
 	@Override
 	public State getNextState() {
-		return new ArmActionState(parent);
+		return new ArmActionState(getParentArm());
 	}
 
 	@Override
