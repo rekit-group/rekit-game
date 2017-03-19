@@ -1,8 +1,13 @@
 package rekit.logic.gameelements.entities.enemies.bosses.rocketboss;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
 import rekit.config.GameConf;
 import rekit.core.GameGrid;
 import rekit.logic.gameelements.GameElement;
+import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm.Arm;
 import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.damagestate.DamageState;
 import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.damagestate.State3;
 import rekit.logic.gameelements.inanimate.Inanimate;
@@ -23,6 +28,7 @@ public class RocketBoss extends Boss {
 	private float calcX;
 
 	private Mouth mouth;
+	private List<Arm> arms;
 
 	public static Vec MOVEMENT_PERIOD = new Vec(1.6f, 0.9f);
 	public static Vec MOVEMENT_RANGE = new Vec(0.3f, 0.7f);
@@ -38,10 +44,14 @@ public class RocketBoss extends Boss {
 	public static Vec MOUTH_SIZE = new Vec(1.6f, 0.4f);
 	public static Vec MOUTH_POS = (RocketBoss.MOUTH_SIZE.scalar(-0.5f).sub(RocketBoss.HEAD_PADDING).add(RocketBoss.HEAD_SIZE.scalar(0.5f))).setX(0);
 	public static RGBColor MOUTH_BG_COL = new RGBColor(200, 200, 200);
-
-	public static long ARM_STATE_TIME_BUILD = 100;
-	public static long ARM_SEGMENT_DIST = 10;
-	public static Vec ARM_SEGMENT_SIZE = new Vec(1f, 1f);
+	
+	public static Vec[] ARM_POSITIONS = new Vec[]{new Vec(-1f, 0.8f)}; 
+	public static float ARM_SEGMENT_DIST = 0.15f;
+	public static Vec ARM_SEGMENT_SIZE = new Vec(0.30f, 0.30f);
+	
+	public static long ARM_STATE_TIME_BUILD = 2000;
+	public static long ARM_STATE_TIME_ACTION = 2000;
+	public static long ARM_STATE_TIME_UNBUILD = 2000;
 
 	public static RGBColor ARM_SEGMENT_COL = new RGBColor(100, 100, 100);
 
@@ -57,6 +67,12 @@ public class RocketBoss extends Boss {
 		this.startPos = startPos;
 		this.machine = new TimeStateMachine(new State3());
 		this.mouth = new Mouth(this, RocketBoss.MOUTH_POS, RocketBoss.MOUTH_SIZE, RocketBoss.MOUTH_BG_COL);
+		
+		this.arms = new LinkedList<Arm>();
+		for (int i = 0; i < RocketBoss.ARM_POSITIONS.length; ++i) {
+			this.arms.add(new Arm(this, RocketBoss.ARM_POSITIONS[i]));
+		}
+		
 	}
 
 	public DamageState getState() {
@@ -77,6 +93,11 @@ public class RocketBoss extends Boss {
 		this.setPos(this.startPos.add(scaledUnit));
 
 		this.mouth.logicLoop(this.calcX, deltaX);
+		
+		Iterator<Arm> it = this.arms.iterator();
+		while (it.hasNext()) {
+			it.next().logicLoop(deltaX, calcX);
+		}
 	}
 
 	@Override
@@ -89,6 +110,11 @@ public class RocketBoss extends Boss {
 
 		// Render mouth
 		this.mouth.internalRender(f);
+		
+		Iterator<Arm> it = this.arms.iterator();
+		while (it.hasNext()) {
+			it.next().internalRender(f);
+		}
 	}
 
 	/**

@@ -19,7 +19,7 @@ public class ArmBuildState extends ArmState {
 
 	@Override
 	public State getNextState() {
-		return new ArmUnbuildState(parent);
+		return new ArmActionState(parent);
 	}
 
 	@Override
