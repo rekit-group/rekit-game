@@ -1,7 +1,6 @@
 package rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm;
 
 import java.util.LinkedList;
-import java.util.List;
 
 import rekit.core.GameGrid;
 import rekit.logic.gameelements.GameElement;
@@ -19,6 +18,9 @@ public class Arm extends RocketBossChild {
 	private float maxLengthYMu;
 	private float maxLengthYSigma;
 	
+	private float actionProgressThreshold;
+	
+	
 	private float curveA;
 	private float maxLengthY;
 
@@ -26,7 +28,7 @@ public class Arm extends RocketBossChild {
 
 	private LinkedList<ArmSegment> armSegments;
 
-	public Arm(GameElement parent, Vec relPos, float[] shapeSettings) {
+	public Arm(GameElement parent, Vec relPos, float[] shapeSettings, float actionProgressThreshold) {
 		super(parent, relPos);
 		
 		// TODO passing float arrays is not best practice
@@ -35,7 +37,17 @@ public class Arm extends RocketBossChild {
 		maxLengthYMu = shapeSettings[2];
 		maxLengthYSigma = shapeSettings[3];
 		
+		this.actionProgressThreshold = actionProgressThreshold;
+		
 		this.machine = new TimeStateMachine(new ArmBuildState(this));
+	}
+	
+	/**
+	 * Getter for when to trigger the arms action during the ArmActionState
+	 * @return the number between 0 and 1, representing when to perform an action.
+	 */
+	public float getActionProgressThreshold() {
+		return this.actionProgressThreshold;
 	}
 
 	public void createArmSegments() {

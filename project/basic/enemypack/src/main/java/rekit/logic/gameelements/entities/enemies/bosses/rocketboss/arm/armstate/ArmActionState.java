@@ -11,19 +11,26 @@ import rekit.util.state.State;
 import rekit.util.state.TimeStateMachine;
 
 public class ArmActionState extends ArmState {
-
+	
+	private boolean hasPerformedAction = false;
+	
 	public ArmActionState(Arm parentArm) {
 		super(parentArm);
 	}
-
+	
 	@Override
 	public void enter(TimeStateMachine parent) {
 		super.enter(parent);
+	}
+	
+	protected void internalLogicLoop() {
+		if (!hasPerformedAction && timer.getProgress() >= getParentArm().getActionProgressThreshold()) {
+			Vec spawnPos = this.getParentArm().getHandPos();
+			GameElement rocket = new Rocket().create(spawnPos, new String[]{});
+			this.getParentArm().getParent().getScene().addGameElement(rocket);
+			this.hasPerformedAction = true;
+		}
 		
-		Vec spawnPos = this.getParentArm().getHandPos();
-		
-		GameElement rocket = new Rocket().create(spawnPos, new String[]{});
-		this.getParentArm().getParent().getScene().addGameElement(rocket);
 	}
 
 	@Override

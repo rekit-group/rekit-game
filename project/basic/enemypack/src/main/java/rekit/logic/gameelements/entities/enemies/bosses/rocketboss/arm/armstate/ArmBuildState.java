@@ -9,13 +9,11 @@ public class ArmBuildState extends ArmState {
 
 	public ArmBuildState(Arm parentArm) {
 		super(parentArm);
-		System.out.println("Adding arm " + (getParentArm() == null));
 	}
 
 	@Override
 	public void enter(TimeStateMachine parent) {
 		super.enter(parent);
-		System.out.println("Creating Arm segmets " + (getParentArm() == null));
 		this.getParentArm().createArmSegments();
 	}
 

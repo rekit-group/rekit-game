@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import rekit.config.GameConf;
 import rekit.core.GameGrid;
 import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm.Arm;
@@ -15,7 +14,6 @@ import rekit.logic.gameelements.type.Boss;
 import rekit.logic.level.bossstructure.BossStructure;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBColor;
-import rekit.util.CalcUtil;
 import rekit.util.ReflectUtils.LoadMe;
 import rekit.util.state.TimeStateMachine;
 
@@ -32,7 +30,7 @@ public class RocketBoss extends Boss {
 	private List<Arm> arms;
 
 	public static Vec MOVEMENT_PERIOD = new Vec(1.6f, 0.9f);
-	public static Vec MOVEMENT_RANGE = new Vec(0.3f, 0.7f);
+	public static Vec MOVEMENT_RANGE = new Vec(0.3f, 0.3f);
 
 	public static Vec HEAD_SIZE = new Vec(2, 1.6f);
 	public static Vec HEAD_PADDING = new Vec(0.2f, 0.2f);
@@ -46,8 +44,10 @@ public class RocketBoss extends Boss {
 	public static Vec MOUTH_POS = (RocketBoss.MOUTH_SIZE.scalar(-0.5f).sub(RocketBoss.HEAD_PADDING).add(RocketBoss.HEAD_SIZE.scalar(0.5f))).setX(0);
 	public static RGBColor MOUTH_BG_COL = new RGBColor(200, 200, 200);
 	
-	public static Vec[] ARM_POSITIONS = new Vec[]{new Vec(-0.95f, 0.8f), new Vec(0.95f, 0.8f)};
-	public static float[][] ARM_SHAPE_SETTINGS = new float[][]{new float[]{0.3f, 0.2f, 2f, 0.3f}, new float[]{0.1f, 0.1f, 0.8f, 0.5f}};
+	public static Vec[] ARM_POSITIONS = new Vec[]{new Vec(0.85f, 0.8f), new Vec(-0.85f, 0.8f)};
+	public static float[][] ARM_SHAPE_SETTINGS = new float[][]{new float[]{0.3f, 0.2f, 2f, 0.3f}, new float[]{0.2f, 0.1f, 0.6f, 0.3f}};
+	public static float[] ARM_ACTION_PROGRESS_THRESHOLDS = new float[]{0.1f, 0.8f};
+	
 	public static float ARM_SEGMENT_DIST = 0.1f;
 	public static Vec ARM_SEGMENT_SIZE = new Vec(0.25f, 0.25f);
 	
@@ -73,7 +73,7 @@ public class RocketBoss extends Boss {
 		this.arms = new LinkedList<Arm>();
 		for (int i = 0; i < RocketBoss.ARM_POSITIONS.length; ++i) {
 			float[] shapeSettings = ARM_SHAPE_SETTINGS[i];
-			this.arms.add(new Arm(this, RocketBoss.ARM_POSITIONS[i], shapeSettings));
+			this.arms.add(new Arm(this, RocketBoss.ARM_POSITIONS[i], shapeSettings, ARM_ACTION_PROGRESS_THRESHOLDS[i]));
 		}
 		
 	}
@@ -140,7 +140,7 @@ public class RocketBoss extends Boss {
 			{ i, n, n, n, n, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n },
 			{ i, i, i, i, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n },
 			{ n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n },
-			{ i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, n, n, n, n, n, n, n, i, i, i, i, i } //
+			{ i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i } //
 		};
 
 		BossStructure structure = new BossStructure(struct, this);

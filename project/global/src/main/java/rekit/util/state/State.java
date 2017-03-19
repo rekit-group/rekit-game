@@ -82,6 +82,16 @@ public abstract class State {
 		if (this.timer.timeUp()) {
 			this.parent.nextState();
 		}
+		
+		this.internalLogicLoop();
+	}
+	
+	/**
+	 * Method that may or may not be implemented by a concrete state to perform
+	 * periodic actions
+	 */
+	protected void internalLogicLoop() {
+		
 	}
 
 	/**
