@@ -10,7 +10,7 @@ import rekit.primitives.image.Filter;
 import rekit.util.ThreadUtils;
 
 /**
- * Main class of the Model. Manages the logic
+ * Main class of the Model. Manages the logic.
  *
  * @author Angelo Aracri
  * @author Dominik Fuchss
@@ -83,8 +83,8 @@ public class GameModel implements Model {
 	}
 
 	/**
-	 * Calculate DeltaTime Get Collisions .. & Invoke ReactCollision Iterate
-	 * over Elements --> invoke GameElement:logicLoop()
+	 * Calculate DeltaTime Get Collisions .. and Invoke ReactCollision Iterate
+	 * over Elements --&gt; invoke GameElement:logicLoop()
 	 *
 	 */
 	public void logicLoop() {

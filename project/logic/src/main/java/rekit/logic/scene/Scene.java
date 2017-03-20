@@ -25,7 +25,7 @@ import rekit.logic.gui.GuiElement;
  * menu, individual levels, and anything else. Think of each unique Scene file
  * as a unique level. In each Scene, you will place your environments,
  * obstacles, and decorations, essentially designing and building your game in
- * pieces." <a href=" https://docs.unity3d.com/Manual/CreatingScenes.html">Unity
+ * pieces." <a href="https://docs.unity3d.com/Manual/CreatingScenes.html">Unity
  * Manual</a>
  * <p>
  * A new Scene needs an entry in {@link Scenes} and a method with the Signature:
@@ -160,20 +160,20 @@ abstract class Scene implements CameraTarget, IScene {
 	}
 
 	/**
-	 * Will be invoked after all {@link GameElement#logicLoop(float)}.
+	 * Will be invoked after all {@link GameElement#logicLoop()}.
 	 */
 	protected void logicLoopAfter() {
 	}
 
 	/**
-	 * Will be invoked before all {@link GameElement#logicLoop(float)}.
+	 * Will be invoked before all {@link GameElement#logicLoop()}.
 	 *
 	 */
 	protected void logicLoopPre() {
 	}
 
 	/**
-	 * Invoke {@link GameElement#logicLoop(float)} for all game elements.
+	 * Invoke {@link GameElement#logicLoop()} for all game elements.
 	 *
 	 * @param e
 	 *            the elements

@@ -15,7 +15,7 @@ public final class CalcUtil {
 	}
 
 	/**
-	 * Units -> Pixels.
+	 * Units to Pixels.
 	 *
 	 * @param units
 	 *            the units

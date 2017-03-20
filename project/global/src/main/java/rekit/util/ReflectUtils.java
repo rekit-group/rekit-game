@@ -30,7 +30,7 @@ public final class ReflectUtils {
 
 	/**
 	 * Load all implementations that shall be loaded (see {@link LoadMe}) of a
-	 * class by search path (-> classpath). <br>
+	 * class by search path (-&gt; classpath). <br>
 	 * If a class wants to be loaded, the class needs a <b>default
 	 * constructor</b>
 	 *
@@ -62,7 +62,7 @@ public final class ReflectUtils {
 	}
 
 	/**
-	 * Get all implementations of a class by search path (-> classpath) .<br>
+	 * Get all implementations of a class by search path (-&gt; classpath) .<br>
 	 *
 	 * @param searchPath
 	 *            the search path (e.g. java.lang)
@@ -77,7 +77,7 @@ public final class ReflectUtils {
 	}
 
 	/**
-	 * Get all classes which are annotated with ... by search path (->
+	 * Get all classes which are annotated with ... by search path (-&gt;
 	 * classpath).<br>
 	 * No subtypes will be returned except if they are annotated too.
 	 *

@@ -50,6 +50,14 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+			</plugin>
 		</plugins>
 
 		<!-- Plugin Management -->
@@ -120,6 +128,27 @@
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>versions-maven-plugin</artifactId>
 					<version>2.3</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>3.0.0</version>
+					<!-- <configuration> -->
+					<!-- <filesets> -->
+					<!-- <fileset> -->
+					<!-- <directory>docs</directory> -->
+					<!-- </fileset> -->
+					<!-- </filesets> -->
+					<!-- </configuration> -->
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>2.10.4</version>
+					<configuration>
+						<reportOutputDirectory>docs</reportOutputDirectory>
+						<destDir>apidocs</destDir>
+					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>

@@ -51,8 +51,8 @@ public abstract class Pickup extends Entity {
 	public abstract GameElement create(Vec startPos, String[] options);
 
 	/**
-	 * Template method that should be overwritten in concrete {@link PickUp
-	 * PickUps} to add the action that is performed upon being collected by the
+	 * Template method that should be overwritten in concrete {@link Pickup
+	 * Pickups} to add the action that is performed upon being collected by the
 	 * Player.
 	 *
 	 * @param collector

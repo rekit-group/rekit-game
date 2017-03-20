@@ -30,7 +30,6 @@ import rekit.primitives.geometry.Vec;
  * <li>Implement template method <i>internalRender(Field field)</i> to add
  * custom visualization.</li>
  * </ul>
- * </p>
  *
  * @author Angelo Aracri
  * @author Dominik Fuchss
