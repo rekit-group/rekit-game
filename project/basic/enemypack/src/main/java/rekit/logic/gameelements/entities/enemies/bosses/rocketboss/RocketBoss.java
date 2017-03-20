@@ -20,6 +20,8 @@ import rekit.util.state.TimeStateMachine;
 @LoadMe
 public class RocketBoss extends Boss {
 
+	public static Vec BRAIN_SIZE = new Vec(2, 0.6f);
+
 	private TimeStateMachine machine;
 
 	private Vec startPos;
@@ -28,13 +30,14 @@ public class RocketBoss extends Boss {
 
 	private Mouth mouth;
 	private List<Arm> arms;
+	
+	private Brain brain;
 
 	public static Vec MOVEMENT_PERIOD = new Vec(1.6f, 0.9f);
 	public static Vec MOVEMENT_RANGE = new Vec(0.3f, 0.3f);
 
 	public static Vec HEAD_SIZE = new Vec(2, 1.6f);
 	public static Vec HEAD_PADDING = new Vec(0.2f, 0.2f);
-	public static RGBColor HEAD_COL = new RGBColor(100, 100, 100);
 
 	public static Vec EYE_SIZE = new Vec(0.4f, 0.4f);
 	public static Vec EYE_LEFT_POS = RocketBoss.EYE_SIZE.scalar(0.5f).add(RocketBoss.HEAD_PADDING).sub(RocketBoss.HEAD_SIZE.scalar(0.5f));
@@ -42,14 +45,14 @@ public class RocketBoss extends Boss {
 
 	public static Vec MOUTH_SIZE = new Vec(1.6f, 0.4f);
 	public static Vec MOUTH_POS = (RocketBoss.MOUTH_SIZE.scalar(-0.5f).sub(RocketBoss.HEAD_PADDING).add(RocketBoss.HEAD_SIZE.scalar(0.5f))).setX(0);
-	public static RGBColor MOUTH_BG_COL = new RGBColor(200, 200, 200);
+	public static RGBColor MOUTH_BG_COL = new RGBColor(183, 183, 183);
 	
 	public static Vec[] ARM_POSITIONS = new Vec[]{new Vec(0.85f, 0.8f), new Vec(-0.85f, 0.8f)};
 	public static float[][] ARM_SHAPE_SETTINGS = new float[][]{new float[]{0.3f, 0.2f, 2f, 0.3f}, new float[]{0.2f, 0.1f, 0.6f, 0.3f}};
 	public static float[] ARM_ACTION_PROGRESS_THRESHOLDS = new float[]{0.1f, 0.4f};
 	
 	public static Vec ARM_ACTION_ROCKET_LAUNCHER_SIZE = new Vec(0.8f, 0.4f);
-	public static RGBColor ARM_ACTION_ROCKET_LAUNCHER_COLOR = new RGBColor(70, 70, 70);
+	public static RGBColor ARM_ACTION_ROCKET_LAUNCHER_COLOR = new RGBColor(160, 160, 160);
 	
 	public static float ARM_SEGMENT_DIST = 0.1f;
 	public static Vec ARM_SEGMENT_SIZE = new Vec(0.25f, 0.25f);
@@ -59,7 +62,8 @@ public class RocketBoss extends Boss {
 	public static long ARM_STATE_TIME_ACTION = 4000;
 	public static long ARM_STATE_TIME_UNBUILD = 2000;
 
-	public static RGBColor ARM_SEGMENT_COL = new RGBColor(100, 100, 100);
+	public static RGBColor ARM_SEGMENT_COL = new RGBColor(160, 160, 160);
+	public static RGBColor ARM_SEGMENT_BORDER_COL = new RGBColor(77, 7, 7);
 
 	/**
 	 * Standard constructor
@@ -85,6 +89,7 @@ public class RocketBoss extends Boss {
 	public DamageState getState() {
 		return (DamageState) this.getMachine().getState();
 	}
+	
 
 	@Override
 	public void innerLogicLoop() {
@@ -105,23 +110,35 @@ public class RocketBoss extends Boss {
 		while (it.hasNext()) {
 			it.next().logicLoop(deltaX, calcX);
 		}
+		
+		if (this.brain == null) {
+			this.brain = new Brain(this, team);
+			this.getScene().addGameElement(brain);
+		}
 	}
 
 	@Override
 	public void internalRender(GameGrid f) {
-		f.drawRectangle(this.getPos(), this.getSize(), RocketBoss.HEAD_COL);
-
-		// Render eyes
-		f.drawImage(this.getPos().add(RocketBoss.EYE_LEFT_POS), RocketBoss.EYE_SIZE, this.getState().getEyeImgSrc());
-		f.drawImage(this.getPos().add(RocketBoss.EYE_RIGHT_POS), RocketBoss.EYE_SIZE, this.getState().getEyeImgSrc());
-
-		// Render mouth
-		this.mouth.internalRender(f);
 		
+		// Render arms
 		Iterator<Arm> it = this.arms.iterator();
 		while (it.hasNext()) {
 			it.next().internalRender(f);
 		}
+		
+		
+		// Render head background image
+		Vec backgroundPos = this.getPos().add(new Vec());
+		f.drawImage(backgroundPos, this.getSize(), this.getState().getHeadImgSrc());
+		
+		// Render eyes
+		f.drawImage(this.getPos().add(RocketBoss.EYE_LEFT_POS), RocketBoss.EYE_SIZE, this.getState().getEyeImgSrc());
+		f.drawImage(this.getPos().add(RocketBoss.EYE_RIGHT_POS), RocketBoss.EYE_SIZE, this.getState().getEyeImgSrc());
+		
+		// Render mouth
+		this.mouth.internalRender(f);
+		
+		
 	}
 
 	/**

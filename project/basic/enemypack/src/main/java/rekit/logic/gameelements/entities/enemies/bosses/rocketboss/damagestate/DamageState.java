@@ -67,4 +67,6 @@ public abstract class DamageState extends State {
 
 	public abstract float getMouthPhaseFactor();
 
+	public abstract String getHeadImgSrc();
+
 }

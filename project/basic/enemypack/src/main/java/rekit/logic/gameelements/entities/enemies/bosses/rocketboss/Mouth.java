@@ -52,7 +52,6 @@ public class Mouth {
 	}
 
 	public void internalRender(GameGrid f) {
-		f.drawRectangle(this.parent.getPos().add(this.pos), this.size, this.col);
 		f.drawPath(mouthCurvePos, mouthCurve, new RGBColor(0, 0, 0));
 	}
 }

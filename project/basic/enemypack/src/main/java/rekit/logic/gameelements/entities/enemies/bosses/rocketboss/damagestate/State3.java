@@ -22,13 +22,17 @@ public class State3 extends DamageState {
 
 	@Override
 	public String getBrainImgSrc() {
-		// TODO Auto-generated method stub
-		return null;
+		return "rocketBoss/brain_3.png";
 	}
 
 	@Override
 	public String getEyeImgSrc() {
-		return "rocketBoss/eye.png";
+		return "rocketBoss/eye_3.png";
+	}
+	
+	@Override
+	public String getHeadImgSrc() {
+		return "rocketBoss/head_3.png";
 	}
 
 	@Override
