@@ -6,7 +6,9 @@
 
 R&#949;​KiT is a platform jumper game entirely written in Java with [AWT](https://docs.oracle.com/javase/8/docs/api/java/awt/package-summary.html).
 
-The project is aiming to educate about good software design and was created by students of the [Karlsruher Institut für Technologie](https://www.kit.edu/).
+The project is aiming to educate about software design and was created by students of the [Karlsruher Institut für Technologie](https://www.kit.edu/).
+
+API-Docs are available at https://fuchss-dominik.github.io/rekit-game/
 
 ## Screenshots
 

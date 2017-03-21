@@ -4,7 +4,7 @@
 	<artifactId>parent</artifactId>
 	<version>0.5.1-beta</version>
 	<packaging>pom</packaging>
-	<name>RεKiT</name>
+	<name>ReKiT</name>
 	<prerequisites>
 		<maven>3.0</maven>
 	</prerequisites>
