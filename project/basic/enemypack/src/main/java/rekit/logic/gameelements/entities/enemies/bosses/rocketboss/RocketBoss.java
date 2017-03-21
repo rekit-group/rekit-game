@@ -10,12 +10,8 @@ import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.damagestate.D
 import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.damagestate.State3;
 import rekit.logic.gameelements.inanimate.Inanimate;
 import rekit.logic.gameelements.type.Boss;
-<<<<<<< HEAD
-import rekit.logic.level.bossstructure.BossStructure;
 import rekit.primitives.geometry.Direction;
-=======
 import rekit.logic.level.BossStructure;
->>>>>>> dd9d1f31bac86f631ac54bdeaccb1af072e891ab
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBColor;
 import rekit.util.ReflectUtils.LoadMe;
