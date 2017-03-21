@@ -25,7 +25,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import rekit.config.GameConf;
 import rekit.persistence.level.LevelDefinition.Type;
-import rekit.persistence.level.parser.token.UnexpectedTokenException;
+import rekit.persistence.level.token.UnexpectedTokenException;
 
 /**
  *
@@ -201,14 +201,16 @@ public final class LevelManager {
 		if (level == null) {
 			return null;
 		}
+		level.activate();
 		LevelManager.LEVEL_MAP.put(level.getID(), level);
+		LevelManager.loadDataFromFile();
 		return level.getID();
 	}
 
 	/**
 	 * This method shall be invoked to signalize a content change in a level.
 	 */
-	public static synchronized void contentChanged() {
+	static synchronized void contentChanged() {
 		if (!LevelManager.initialized) {
 			return;
 		}
@@ -234,7 +236,7 @@ public final class LevelManager {
 				}
 				DataKey[] keys = DataKey.values();
 				for (int idx = 1; idx < levelinfo.length; idx++) {
-					level.setData(keys[idx - 1], keys[idx - 1].parse(levelinfo[idx]));
+					level.setData(keys[idx - 1], keys[idx - 1].parse(levelinfo[idx]), false);
 				}
 
 			}

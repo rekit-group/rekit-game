@@ -28,12 +28,10 @@ rekit.logic.gui
 rekit.logic.gui.menu
 rekit.logic.gui.parallax
 rekit.logic.level
-rekit.logic.level.bossstructure
 rekit.logic.scene
 rekit.parser
 rekit.persistence.level
-rekit.persistence.level.parser
-rekit.persistence.level.parser.token
+rekit.persistence.level.token
 rekit.primitives.geometry
 rekit.primitives.image
 rekit.primitives.operable

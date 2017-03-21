@@ -7,7 +7,6 @@ import rekit.logic.gameelements.inanimate.EndTrigger;
 import rekit.logic.gameelements.inanimate.Inanimate;
 import rekit.logic.gameelements.inanimate.InanimateTrigger;
 import rekit.logic.gameelements.type.Enemy;
-import rekit.logic.level.bossstructure.BossSetting;
 import rekit.persistence.level.LevelDefinition;
 
 /**
@@ -15,7 +14,7 @@ import rekit.persistence.level.LevelDefinition;
  * This class holds all necessary information about a level.
  *
  */
-public final class Level implements Comparable<Level> {
+public final class Level {
 
 	private final LevelDefinition definition;
 	private int generatedUntil;
@@ -221,11 +220,6 @@ public final class Level implements Comparable<Level> {
 		return this.definition.isSettingSet("doGaps") ? this.rand.nextInt(2) + 1 : 0;
 	}
 
-	@Override
-	public final int compareTo(Level o) {
-		return this.getName().compareToIgnoreCase(o.getName());
-	}
-
 	public boolean hasNext() {
 		return this.definition.isSettingSet("infinite") || this.currentStructureId < this.definition.size();
 	}
@@ -238,7 +232,4 @@ public final class Level implements Comparable<Level> {
 		return this.definition;
 	}
 
-	public String getName() {
-		return this.definition.getName();
-	}
 }

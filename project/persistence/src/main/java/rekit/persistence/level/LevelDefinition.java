@@ -14,7 +14,6 @@ import java.util.Scanner;
 import java.util.TreeMap;
 
 import rekit.config.GameConf;
-import rekit.persistence.level.parser.LevelParser;
 
 /**
  *
@@ -62,7 +61,7 @@ public final class LevelDefinition {
 		}
 	}
 
-	private boolean finished;
+	private boolean activated;
 	private final Type type;
 	private String name;
 	private final int seed;
@@ -91,14 +90,13 @@ public final class LevelDefinition {
 		if (this.isSettingSet("name")) {
 			this.name = this.getSetting("name");
 		}
-		this.finish();
 	}
 
-	private void finish() {
-		if (this.finished) {
-			throw new IllegalStateException("LevelDefinition already finished");
+	void activate() {
+		if (this.activated) {
+			return;
 		}
-		this.finished = true;
+		this.activated = true;
 		this.getID();
 		this.name = (this.name == null ? this.id : this.name);
 
@@ -107,7 +105,7 @@ public final class LevelDefinition {
 	private List<String[][]> structures = new LinkedList<>();
 
 	public void addStructure(List<String[]> lines) {
-		if (this.finished) {
+		if (this.activated) {
 			throw new IllegalStateException("LevelDefinition already finished");
 		}
 		String[][] structure = new String[lines.size()][];
@@ -121,7 +119,7 @@ public final class LevelDefinition {
 	private Map<String, String> aliases = new TreeMap<>();
 
 	public void setAlias(String toReplace, String replaceWith) {
-		if (this.finished) {
+		if (this.activated) {
 			throw new IllegalStateException("LevelDefinition already finished");
 		}
 		if (this.aliases.put(toReplace, replaceWith) != null) {
@@ -137,7 +135,7 @@ public final class LevelDefinition {
 	private Map<String, String> settings = new TreeMap<>();
 
 	public void setSetting(String key, String value) {
-		if (this.finished) {
+		if (this.activated) {
 			throw new IllegalStateException("LevelDefinition already finished");
 		}
 		if (this.settings.put(key, value) != null) {
@@ -164,7 +162,7 @@ public final class LevelDefinition {
 	private Map<String, String> bossSettings = new TreeMap<>();
 
 	public void setBossSetting(String setting, String value) {
-		if (this.finished) {
+		if (this.activated) {
 			throw new IllegalStateException("LevelDefinition already finished");
 		}
 		if (this.bossSettings.put(setting, value) != null) {
@@ -182,7 +180,7 @@ public final class LevelDefinition {
 	}
 
 	public String getName() {
-		if (!this.finished) {
+		if (!this.activated) {
 			throw new IllegalStateException("LevelDefinition not finished yet");
 		}
 		return this.name;
@@ -191,12 +189,18 @@ public final class LevelDefinition {
 	private String id = null;
 
 	public synchronized String getID() {
-		if (!this.finished) {
+		if (!this.activated) {
 			throw new IllegalStateException("LevelDefinition not finished yet");
 		}
 		if (this.id != null) {
 			return this.id;
 		}
+		this.id = this.calcID();
+		return this.id;
+
+	}
+
+	private String calcID() {
 		MessageDigest cs = null;
 		try {
 			cs = MessageDigest.getInstance("SHA-512");
@@ -213,24 +217,28 @@ public final class LevelDefinition {
 			this.settings.forEach((k, v) -> content.append(k).append(v));
 			this.bossSettings.forEach((k, v) -> content.append(k).append(v));
 		}
-		byte[] data = content.toString().getBytes();
-		cs.update(data);
-		byte[] digest = cs.digest();
-		StringBuffer sb = new StringBuffer();
-		for (byte b : digest) {
-			sb.append(String.format("%02x", b & 0xff));
+		cs.update(content.toString().getBytes());
+		StringBuffer res = new StringBuffer();
+		for (byte bytes : cs.digest()) {
+			res.append(String.format("%02x", bytes & 0xff));
 		}
-		this.id = sb.toString();
-		return this.id;
-
+		return res.toString();
 	}
 
 	private Map<String, Object> data = new HashMap<>();
 
 	public void setData(DataKey key, Object value) {
+		this.setData(key, value, true);
+	}
+
+	public void setData(DataKey key, Object value, boolean notify) {
 		if (this.data.put(key.getKey(), value) != null) {
 			GameConf.GAME_LOGGER.warn("Multiple definitions (data) for " + key);
 		}
+		if (this.activated && notify) {
+			LevelManager.contentChanged();
+		}
+
 	}
 
 	public Object getData(DataKey key) {

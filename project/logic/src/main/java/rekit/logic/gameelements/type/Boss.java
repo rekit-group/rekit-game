@@ -7,7 +7,7 @@ import rekit.core.Team;
 import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.entities.Entity;
 import rekit.logic.gameelements.inanimate.Inanimate;
-import rekit.logic.level.bossstructure.BossStructure;
+import rekit.logic.level.BossStructure;
 import rekit.primitives.geometry.Vec;
 import rekit.util.ReflectUtils;
 import rekit.util.ReflectUtils.LoadMe;

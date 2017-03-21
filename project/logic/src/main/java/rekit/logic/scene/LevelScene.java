@@ -27,7 +27,6 @@ import rekit.logic.gui.parallax.TriangulationLayer;
 import rekit.logic.level.Level;
 import rekit.persistence.level.DataKey;
 import rekit.persistence.level.LevelDefinition;
-import rekit.persistence.level.LevelManager;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.time.Timer;
 import rekit.util.CalcUtil;
@@ -112,7 +111,7 @@ public abstract class LevelScene extends Scene {
 		this.addGuiElement(this.lifeGui);
 
 		TextOptions op = new TextOptions(new Vec(-0.5f, -0.5f), 40, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, Font.BOLD);
-		Text levelText = new Text(this, op).setText(this.level.getName());
+		Text levelText = new Text(this, op).setText(this.level.getDefinition().getName());
 		levelText.setPos(CalcUtil.units2pixel(new Vec(GameConf.GRID_W / 2f, GameConf.GRID_H / 2f)));
 		this.addGuiElement(new TimeDecorator(this, levelText, new Timer(5000)));
 
@@ -241,7 +240,6 @@ public abstract class LevelScene extends Scene {
 	 */
 	public void setHighScore(int highScore) {
 		this.level.getDefinition().setData(DataKey.HIGH_SCORE, highScore);
-		LevelManager.contentChanged();
 	}
 
 	@Override

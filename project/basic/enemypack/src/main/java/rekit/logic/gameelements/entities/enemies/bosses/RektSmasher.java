@@ -12,7 +12,7 @@ import rekit.logic.gameelements.entities.Player;
 import rekit.logic.gameelements.entities.enemies.RektKiller;
 import rekit.logic.gameelements.inanimate.Inanimate;
 import rekit.logic.gameelements.type.Boss;
-import rekit.logic.level.bossstructure.BossStructure;
+import rekit.logic.level.BossStructure;
 import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Frame;
 import rekit.primitives.geometry.Vec;
