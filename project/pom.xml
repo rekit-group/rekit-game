@@ -255,6 +255,7 @@
 		<module>control</module>
 		<module>game</module>
 		<module>basic</module>
+		<module>persistence</module>
 	</modules>
 	<groupId>rekit</groupId>
 </project>

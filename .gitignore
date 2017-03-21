@@ -8,3 +8,4 @@ sh.exe.stackdump
 stat.html
 *.checkstyle
 target*
+.recommenders/
