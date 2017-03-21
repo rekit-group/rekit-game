@@ -13,7 +13,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -252,12 +251,10 @@ public final class LevelManager {
 	 */
 	private static String convertToString() {
 		StringBuilder result = new StringBuilder();
-		Iterator<LevelDefinition> it = LevelManager.LEVEL_MAP.values().stream().sorted().iterator();
-		while (it.hasNext()) {
-			LevelDefinition next = it.next();
-			result.append(next.getID());
+		for (LevelDefinition lvd : LevelManager.LEVEL_MAP.values()) {
+			result.append(lvd.getID());
 			for (DataKey dk : DataKey.values()) {
-				result.append(":").append(next.getData(dk));
+				result.append(":").append(lvd.getData(dk));
 			}
 			result.append("\n");
 		}
