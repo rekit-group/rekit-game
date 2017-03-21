@@ -1,7 +1,7 @@
 package rekit.logic.scene;
 
 import rekit.logic.GameModel;
-import rekit.logic.level.LevelManager;
+import rekit.persistence.level.LevelManager;
 
 /**
  * This class realizes a LevelScene for lotd levels.

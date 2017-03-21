@@ -4,8 +4,8 @@ import rekit.config.GameConf;
 import rekit.logic.gameelements.GameElementFactory;
 import rekit.logic.gameelements.entities.Entity;
 import rekit.logic.gui.menu.MenuItem;
-import rekit.logic.level.LevelManager;
 import rekit.logic.scene.Scenes;
+import rekit.persistence.level.LevelManager;
 import rekit.primitives.image.Filter;
 import rekit.util.ThreadUtils;
 

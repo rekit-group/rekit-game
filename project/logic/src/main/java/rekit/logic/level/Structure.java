@@ -1,11 +1,10 @@
 package rekit.logic.level;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 
 import rekit.config.GameConf;
 import rekit.logic.gameelements.GameElementFactory;
+import rekit.persistence.level.LevelDefinition;
 
 /**
  * <p>
@@ -35,7 +34,7 @@ import rekit.logic.gameelements.GameElementFactory;
  * @author Dominik Fuchss
  * @version 1.1
  */
-public class Structure extends Configurable {
+public class Structure {
 
 	/**
 	 * Initially passed array that acts as a template for building actual
@@ -50,53 +49,16 @@ public class Structure extends Configurable {
 	 * being build in the exact way as the <i>structureArray</i> specifies.
 	 */
 	private int gapWidth;
-	/**
-	 * A mapping of all aliases.
-	 */
-	private Map<String, String> alias;
 
-	/**
-	 * Constructor that requires a not null two dimensional array that acts as a
-	 * template for building actual GameElements. It will be saved locally. The
-	 * mapping from each integer to GameElements is specified by the
-	 * {@link GameElementFactory}.
-	 *
-	 * @param lines
-	 *            the two dimensional template of the GameElements of this
-	 *            Structure.
-	 *
-	 * @param alias
-	 *            the aliases
-	 */
-	public Structure(List<String[]> lines, Map<String, String> alias) {
-		this.structure = new String[lines.size()][];
-		int i = 0;
-		for (String[] line : lines) {
-			this.structure[i++] = line.clone();
-		}
+	private LevelDefinition definition;
 
-		this.alias = alias;
-	}
-
-	/**
-	 * Constructor that requires a not null two dimensional array that acts as a
-	 * template for building actual GameElements. It will be saved locally. The
-	 * mapping from each integer to GameElements is specified by the
-	 * {@link GameElementFactory}.
-	 *
-	 * @param lines
-	 *            the two dimensional template of the GameElements of this
-	 *            Structure.
-	 * @param alias
-	 *            the aliases
-	 */
-	public Structure(String[][] lines, Map<String, String> alias) {
+	public Structure(LevelDefinition definition, String[][] lines) {
+		this.definition = definition;
 		this.structure = new String[lines.length][];
 		int i = 0;
 		for (String[] line : lines) {
 			this.structure[i++] = line.clone();
 		}
-		this.alias = alias;
 	}
 
 	/**
@@ -176,8 +138,8 @@ public class Structure extends Configurable {
 	 *            the source string
 	 * @return the alias or {@code null} if none found
 	 */
-	private String alias(String string) {
-		String alias = this.alias.get(string);
+	protected String alias(String string) {
+		String alias = this.definition.getAlias(string);
 		if (alias == null && !"0".equals(string)) {
 			GameConf.GAME_LOGGER.warn("No alias found for ID " + string);
 		}

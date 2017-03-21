@@ -11,8 +11,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +37,10 @@ public final class LevelManager {
 	/**
 	 * All known levels (ID -> Level).
 	 */
-	private static final Map<Long, LevelDefinition> LEVEL_MAP = new HashMap<>();
+	private static final Map<String, LevelDefinition> LEVEL_MAP = new HashMap<>();
+
+	private static final Set<String> BANNED_IDS = new HashSet<>();
+
 	/**
 	 * The global data file for the {@link LevelManager}.
 	 */
@@ -114,7 +117,8 @@ public final class LevelManager {
 		DateFormat levelOfTheDayFormat = new SimpleDateFormat("ddMMyyyy");
 		int seed = Integer.parseInt(levelOfTheDayFormat.format(Calendar.getInstance().getTime()));
 		LevelManager.addLevel(LevelManager.LOTD = new LevelDefinition(level.getInputStream(), Type.Level_of_the_Day, seed));
-
+		LevelManager.BANNED_IDS.add(LevelManager.INFINITE.getID());
+		LevelManager.BANNED_IDS.add(LevelManager.LOTD.getID());
 	}
 
 	/**
@@ -183,8 +187,8 @@ public final class LevelManager {
 		return LevelManager.LEVEL_MAP.get(id);
 	}
 
-	public static synchronized Set<Long> getLevelIDs() {
-		return Collections.unmodifiableSet(LevelManager.LEVEL_MAP.keySet());
+	public static synchronized Set<String> getArcadeLevelIDs() {
+		return LevelManager.LEVEL_MAP.keySet().stream().filter(id -> !LevelManager.BANNED_IDS.contains(id)).collect(Collectors.toSet());
 	}
 
 	/**
@@ -193,11 +197,12 @@ public final class LevelManager {
 	 * @param level
 	 *            the level
 	 */
-	public static synchronized void addLevel(LevelDefinition level) {
+	public static synchronized String addLevel(LevelDefinition level) {
 		if (level == null) {
-			return;
+			return null;
 		}
 		LevelManager.LEVEL_MAP.put(level.getID(), level);
+		return level.getID();
 	}
 
 	/**
@@ -222,11 +227,11 @@ public final class LevelManager {
 				if (levelinfo.length != 3) {
 					continue;
 				}
-				Long id = Long.parseLong(levelinfo[0]);
+				String id = levelinfo[0];
 				Type type = Type.byString(levelinfo[1]);
 				LevelDefinition level = LevelManager.findByIDAndType(id, type);
 				if (level != null) {
-					level.setData("highscore", Integer.parseInt(levelinfo[2]));
+					level.setData(DataKey.HIGH_SCORE, Integer.parseInt(levelinfo[2]));
 				}
 			}
 			scanner.close();
@@ -245,7 +250,7 @@ public final class LevelManager {
 		Iterator<LevelDefinition> it = LevelManager.LEVEL_MAP.values().stream().sorted().iterator();
 		while (it.hasNext()) {
 			LevelDefinition next = it.next();
-			result.append(next.getID() + ":" + next.getType() + ":" + next.getData("highscore"));
+			result.append(next.getID() + ":" + next.getType() + ":" + next.getData(DataKey.HIGH_SCORE, 0));
 			result.append("\n");
 		}
 		return result.toString();
@@ -260,11 +265,11 @@ public final class LevelManager {
 	 *            the type
 	 * @return the level or {@code null} if none found
 	 */
-	private static LevelDefinition findByIDAndType(long id, Type type) {
-		if (type == null) {
+	private static LevelDefinition findByIDAndType(String id, Type type) {
+		if (id == null || type == null) {
 			return null;
 		}
-		List<LevelDefinition> levels = LevelManager.LEVEL_MAP.values().stream().filter(type::hasType).filter(level -> level.getID() == id)
+		List<LevelDefinition> levels = LevelManager.LEVEL_MAP.values().stream().filter(type::hasType).filter(level -> id.equals(level.getID()))
 				.collect(Collectors.toList());
 		if (levels.isEmpty()) {
 			return null;

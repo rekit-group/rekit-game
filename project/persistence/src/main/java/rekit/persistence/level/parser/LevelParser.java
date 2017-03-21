@@ -71,7 +71,6 @@ public final class LevelParser {
 		this.lookAhead = this.tokenizer.nextToken();
 		this.parseLevel(manager);
 		this.readToken(TokenType.EOS);
-		manager.finish();
 		this.reset();
 	}
 

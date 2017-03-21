@@ -1,16 +1,12 @@
 package rekit.logic.scene;
 
 import rekit.logic.GameModel;
-import rekit.logic.level.LevelManager;
+import rekit.persistence.level.LevelManager;
 
 /**
  * This class realizes a LevelScene for arcade levels.
  */
 final class ArcadeLevelScene extends LevelScene {
-	/**
-	 * The arcade level's id.
-	 */
-	private final int arcadeLevelId;
 
 	/**
 	 * Create a new arcade level.
@@ -20,9 +16,8 @@ final class ArcadeLevelScene extends LevelScene {
 	 * @param arcadeLevelId
 	 *            the arcade level's id
 	 */
-	private ArcadeLevelScene(GameModel model, int arcadeLevelId) {
-		super(model, LevelManager.getArcadeLevel(arcadeLevelId));
-		this.arcadeLevelId = arcadeLevelId;
+	private ArcadeLevelScene(GameModel model, String id) {
+		super(model, LevelManager.getLevelById(id));
 	}
 
 	/**
@@ -39,17 +34,7 @@ final class ArcadeLevelScene extends LevelScene {
 		if (options == null || options.length < 1) {
 			throw new IllegalArgumentException("cant switch to unspecified arcade level");
 		}
-		int arcadeId = Integer.parseInt(options[0]);
-		return new ArcadeLevelScene(model, arcadeId);
-	}
-
-	/**
-	 * Get the arcade level's id.
-	 *
-	 * @return the arcade level's id
-	 */
-	public int getArcadeId() {
-		return this.arcadeLevelId;
+		return new ArcadeLevelScene(model, options[0]);
 	}
 
 }

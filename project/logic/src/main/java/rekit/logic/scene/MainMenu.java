@@ -10,7 +10,7 @@ import rekit.logic.gui.menu.MenuItem;
 import rekit.logic.gui.menu.MenuList;
 import rekit.logic.gui.menu.SubMenu;
 import rekit.logic.gui.menu.TextMenu;
-import rekit.logic.level.LevelManager;
+import rekit.persistence.level.LevelManager;
 import rekit.primitives.geometry.Vec;
 
 /**
@@ -64,11 +64,10 @@ final class MainMenu extends Scene {
 		top3.addItem(inf, lod, bossRush);
 
 		MenuGrid arcade = new MenuGrid(this, "Arcade Mode", 6, 100, 100);
-
-		for (int i = 0; i < LevelManager.getNumberOfArcadeLevels(); i++) {
-			final int id = i + 1;
-			MenuActionItem button = new MenuActionItem(this, new Vec(80, 80), String.valueOf(id),
-					() -> this.getModel().switchScene(Scenes.ARCADE, String.valueOf(id)));
+		int i = 1;
+		for (String idx : LevelManager.getArcadeLevelIDs()) {
+			final String id = "" + idx;
+			MenuActionItem button = new MenuActionItem(this, new Vec(80, 80), String.valueOf(i++), () -> this.getModel().switchScene(Scenes.ARCADE, id));
 			arcade.addItem(button);
 		}
 

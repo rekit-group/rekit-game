@@ -25,6 +25,9 @@ import rekit.logic.gui.parallax.HeapLayer;
 import rekit.logic.gui.parallax.ParallaxContainer;
 import rekit.logic.gui.parallax.TriangulationLayer;
 import rekit.logic.level.Level;
+import rekit.persistence.level.DataKey;
+import rekit.persistence.level.LevelDefinition;
+import rekit.persistence.level.LevelManager;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.time.Timer;
 import rekit.util.CalcUtil;
@@ -75,9 +78,9 @@ public abstract class LevelScene extends Scene {
 	 * @param level
 	 *            the level
 	 */
-	public LevelScene(GameModel model, Level level) {
+	public LevelScene(GameModel model, LevelDefinition level) {
 		super(model);
-		this.level = level;
+		this.level = new Level(level);
 		this.hasEnded = true;
 	}
 
@@ -129,7 +132,7 @@ public abstract class LevelScene extends Scene {
 		this.performEndTasks(won);
 		// only save score if the level is infinite or the player has won
 		// don't save it upon losing in finite level
-		if (this.level.getConfigurable().isSettingSet("infinite") || won) {
+		if (this.level.getDefinition().isSettingSet("infinite") || won) {
 			// save score if higher than highscore
 			if (this.getScore() > this.getHighScore()) {
 				this.setHighScore(this.getScore());
@@ -223,7 +226,11 @@ public abstract class LevelScene extends Scene {
 
 	@Override
 	public int getHighScore() {
-		return this.level.getHighScore();
+		Integer hs = (Integer) this.level.getDefinition().getData(DataKey.HIGH_SCORE);
+		if (hs == null) {
+			return 0;
+		}
+		return hs;
 	}
 
 	/**
@@ -233,7 +240,8 @@ public abstract class LevelScene extends Scene {
 	 *            the highscore
 	 */
 	public void setHighScore(int highScore) {
-		this.level.setHighScore(highScore);
+		this.level.getDefinition().setData(DataKey.HIGH_SCORE, highScore);
+		LevelManager.contentChanged();
 	}
 
 	@Override

@@ -1,8 +1,5 @@
 package rekit.logic.level.bossstructure;
 
-import java.util.HashMap;
-
-import org.fuchss.configuration.Configurable;
 import org.fuchss.configuration.annotations.NoSet;
 import org.fuchss.configuration.annotations.SetterInfo;
 
@@ -32,7 +29,7 @@ import rekit.util.ThreadUtils;
  *
  */
 @SetterInfo(res = "conf/bossstructure")
-public final class BossStructure extends Structure implements Configurable {
+public final class BossStructure extends Structure {
 	/**
 	 * The door.
 	 */
@@ -76,8 +73,14 @@ public final class BossStructure extends Structure implements Configurable {
 	 *            the boss
 	 */
 	public BossStructure(String[][] structure, Boss boss) {
-		super(structure, new HashMap<>());
+		super(null, structure);
 		this.boss = boss;
+	}
+
+	@Override
+	protected String alias(String string) {
+		// No alias needed as LevelDefinition is not set.
+		return null;
 	}
 
 	@Override

@@ -1,7 +1,10 @@
 package rekit.logic.scene;
 
+import java.io.ByteArrayInputStream;
+
 import rekit.logic.GameModel;
-import rekit.logic.level.LevelManager;
+import rekit.persistence.level.LevelDefinition;
+import rekit.persistence.level.LevelDefinition.Type;
 
 /**
  * This class realizes a LevelScene for BossRush levels.
@@ -14,7 +17,12 @@ final class BossRushScene extends LevelScene {
 	 *            the model
 	 */
 	private BossRushScene(GameModel model) {
-		super(model, LevelManager.getBossRushLevel());
+		super(model, BossRushScene.getBossRushLevel());
+	}
+
+	private static final LevelDefinition getBossRushLevel() {
+		LevelDefinition def = new LevelDefinition(new ByteArrayInputStream(new byte[0]), Type.Boss_Rush);
+		return def;
 	}
 
 	/**
