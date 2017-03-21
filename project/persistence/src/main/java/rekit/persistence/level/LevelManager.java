@@ -59,6 +59,8 @@ public final class LevelManager {
 	 */
 	private static boolean initialized = false;
 
+	private static int ARCADE_NUM = 0;
+
 	/**
 	 * Load levels.
 	 */
@@ -148,7 +150,7 @@ public final class LevelManager {
 		if (!LevelManager.initialized) {
 			return;
 		}
-		LevelManager.addLevel(new LevelDefinition(levelStructure, Type.Arcade));
+		LevelManager.addLevel(new LevelDefinition(levelStructure, ++LevelManager.ARCADE_NUM));
 	}
 
 	/**
@@ -186,8 +188,9 @@ public final class LevelManager {
 		return LevelManager.LEVEL_MAP.get(id);
 	}
 
-	public static synchronized Set<String> getArcadeLevelIDs() {
-		return LevelManager.LEVEL_MAP.keySet().stream().filter(id -> !LevelManager.BANNED_IDS.contains(id)).collect(Collectors.toSet());
+	public static synchronized List<String> getArcadeLevelIDs() {
+		return LevelManager.LEVEL_MAP.entrySet().stream().filter(e -> !LevelManager.BANNED_IDS.contains(e.getKey()))
+				.sorted((e1, e2) -> e1.getValue().compareTo(e2.getValue())).map(e -> e.getKey()).collect(Collectors.toList());
 	}
 
 	/**
@@ -201,7 +204,6 @@ public final class LevelManager {
 		if (level == null) {
 			return null;
 		}
-		level.activate();
 		LevelManager.LEVEL_MAP.put(level.getID(), level);
 		LevelManager.loadDataFromFile();
 		return level.getID();

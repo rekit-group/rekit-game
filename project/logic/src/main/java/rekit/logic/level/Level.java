@@ -14,7 +14,7 @@ import rekit.persistence.level.LevelDefinition;
  * This class holds all necessary information about a level.
  *
  */
-public final class Level {
+public final class Level implements Comparable<Level> {
 
 	private final LevelDefinition definition;
 	private int generatedUntil;
@@ -230,6 +230,11 @@ public final class Level {
 
 	public LevelDefinition getDefinition() {
 		return this.definition;
+	}
+
+	@Override
+	public final int compareTo(Level o) {
+		return this.definition.compareTo(o.definition);
 	}
 
 }

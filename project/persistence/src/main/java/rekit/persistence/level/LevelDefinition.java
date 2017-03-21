@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.SortedMap;
 import java.util.TreeMap;
 
 import rekit.config.GameConf;
@@ -20,7 +21,7 @@ import rekit.config.GameConf;
  * This class holds all necessary information about a level.
  *
  */
-public final class LevelDefinition {
+public final class LevelDefinition implements Comparable<LevelDefinition> {
 
 	/**
 	 * The type of a level.
@@ -61,10 +62,10 @@ public final class LevelDefinition {
 		}
 	}
 
-	private boolean activated;
 	private final Type type;
-	private String name;
+	private final String name;
 	private final int seed;
+	private int arcadeNum;
 
 	public LevelDefinition(InputStream inputStream, Type type) {
 		this(inputStream, type, GameConf.PRNG.nextInt());
@@ -73,41 +74,35 @@ public final class LevelDefinition {
 	public LevelDefinition(InputStream inputStream, Type type, int seed) {
 		this.type = type;
 		this.seed = seed;
-		// create Scanner from InputStream
 		Scanner scanner = new Scanner(inputStream, Charset.defaultCharset().name());
-		// don't use line-ending-wise iteration, but get the whole file at once
-		// \\A = <EOF>
 		scanner.useDelimiter("\\A");
-		// get whole file content as String
 		String input = scanner.hasNext() ? scanner.next() : "";
-		// close scanner after use to prevent java-typical resource-wasting ;)
 		scanner.close();
-		// create Parser to extract all information of file-String
+
 		LevelParser.parseLevel(input, this);
-		if (this.type == Type.Infinite_Fun || this.type == Type.Level_of_the_Day || this.type == Type.Boss_Rush) {
-			this.name = this.type.toString().replace('_', ' ');
-		}
-		if (this.isSettingSet("name")) {
-			this.name = this.getSetting("name");
-		}
+		this.name = this.calcName();
+		this.arcadeNum = -1;
 	}
 
-	void activate() {
-		if (this.activated) {
-			return;
-		}
-		this.activated = true;
-		this.getID();
-		this.name = (this.name == null ? this.id : this.name);
+	LevelDefinition(InputStream inputStream, int arcadeNumber) {
+		this(inputStream, Type.Arcade);
+		this.arcadeNum = arcadeNumber;
+	}
 
+	private String calcName() {
+		String name = null;
+		if (this.type != Type.Arcade) {
+			name = this.type.toString().replace('_', ' ');
+		}
+		if (this.isSettingSet("name")) {
+			name = this.getSetting("name").replace('_', ' ');
+		}
+		return (name == null ? this.getID() : name);
 	}
 
 	private List<String[][]> structures = new LinkedList<>();
 
 	public void addStructure(List<String[]> lines) {
-		if (this.activated) {
-			throw new IllegalStateException("LevelDefinition already finished");
-		}
 		String[][] structure = new String[lines.size()][];
 		int i = 0;
 		for (String[] line : lines) {
@@ -116,12 +111,9 @@ public final class LevelDefinition {
 		this.structures.add(structure);
 	}
 
-	private Map<String, String> aliases = new TreeMap<>();
+	private SortedMap<String, String> aliases = new TreeMap<>();
 
 	public void setAlias(String toReplace, String replaceWith) {
-		if (this.activated) {
-			throw new IllegalStateException("LevelDefinition already finished");
-		}
 		if (this.aliases.put(toReplace, replaceWith) != null) {
 			GameConf.GAME_LOGGER.warn("Multiple definitions (alias) for " + toReplace);
 		}
@@ -132,12 +124,9 @@ public final class LevelDefinition {
 		return this.aliases.get(key);
 	}
 
-	private Map<String, String> settings = new TreeMap<>();
+	private SortedMap<String, String> settings = new TreeMap<>();
 
 	public void setSetting(String key, String value) {
-		if (this.activated) {
-			throw new IllegalStateException("LevelDefinition already finished");
-		}
 		if (this.settings.put(key, value) != null) {
 			GameConf.GAME_LOGGER.warn("Multiple definitions (settings) for " + key);
 		}
@@ -159,12 +148,9 @@ public final class LevelDefinition {
 		return this.settings.get(key) != null;
 	}
 
-	private Map<String, String> bossSettings = new TreeMap<>();
+	private SortedMap<String, String> bossSettings = new TreeMap<>();
 
 	public void setBossSetting(String setting, String value) {
-		if (this.activated) {
-			throw new IllegalStateException("LevelDefinition already finished");
-		}
 		if (this.bossSettings.put(setting, value) != null) {
 			GameConf.GAME_LOGGER.warn("Multiple definitions (bosssettings) for " + setting);
 		}
@@ -180,18 +166,12 @@ public final class LevelDefinition {
 	}
 
 	public String getName() {
-		if (!this.activated) {
-			throw new IllegalStateException("LevelDefinition not finished yet");
-		}
 		return this.name;
 	}
 
 	private String id = null;
 
 	public synchronized String getID() {
-		if (!this.activated) {
-			throw new IllegalStateException("LevelDefinition not finished yet");
-		}
 		if (this.id != null) {
 			return this.id;
 		}
@@ -209,7 +189,6 @@ public final class LevelDefinition {
 			return null;
 		}
 		StringBuilder content = new StringBuilder();
-		content.append(this.name);
 		content.append(this.type);
 		if (this.type == Type.Arcade) {
 			this.structures.forEach(struct -> Arrays.stream(struct).forEach(row -> Arrays.stream(row).forEach(elem -> content.append(elem.trim()))));
@@ -235,7 +214,7 @@ public final class LevelDefinition {
 		if (this.data.put(key.getKey(), value) != null) {
 			GameConf.GAME_LOGGER.warn("Multiple definitions (data) for " + key);
 		}
-		if (this.activated && notify) {
+		if (notify) {
 			LevelManager.contentChanged();
 		}
 
@@ -259,6 +238,11 @@ public final class LevelDefinition {
 
 	public String[][] get(int idx) {
 		return this.structures.get(idx);
+	}
+
+	@Override
+	public int compareTo(LevelDefinition o) {
+		return 2 * this.type.compareTo(o.type) + Integer.compare(this.arcadeNum, o.arcadeNum);
 	}
 
 }
