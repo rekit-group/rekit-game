@@ -60,15 +60,15 @@ public final class LevelParser {
 	/**
 	 * Parse the level to the LevelDefinition.
 	 *
-	 * @param manager
+	 * @param definition
 	 *            the LevelDefinition
 	 */
-	public void parse(LevelDefinition manager) {
-		if (manager == null) {
+	public void parse(LevelDefinition definition) {
+		if (definition == null) {
 			throw new IllegalArgumentException("manager cannot be null");
 		}
 		this.lookAhead = this.tokenizer.nextToken();
-		this.parseLevel(manager);
+		this.parseLevel(definition);
 		this.readToken(TokenType.EOS);
 		this.reset();
 	}
@@ -76,41 +76,41 @@ public final class LevelParser {
 	/**
 	 * Parse a LevelDefinition.
 	 *
-	 * @param manager
+	 * @param definition
 	 *            LevelDefinition
 	 */
-	private void parseLevel(LevelDefinition manager) {
+	private void parseLevel(LevelDefinition definition) {
 		if (this.isToken(TokenType.ALIAS)) {
-			this.parseAlias(manager);
+			this.parseAlias(definition);
 		}
 		if (this.isToken(TokenType.SETTING)) {
-			this.parseSetting(manager);
+			this.parseSetting(definition);
 		}
 		if (this.isToken(TokenType.BOSS_SETTING)) {
-			this.parseBossSetting(manager);
+			this.parseBossSetting(definition);
 		}
 		if (this.isToken(TokenType.BEGIN)) {
-			this.parseStructure(manager);
+			this.parseStructure(definition);
 		}
 		if (this.isToken(TokenType.ALIAS, TokenType.SETTING, TokenType.BOSS_SETTING, TokenType.BEGIN)) {
-			this.parseLevel(manager);
+			this.parseLevel(definition);
 		}
 	}
 
 	/**
 	 * Parse a Structure.
 	 *
-	 * @param manager
+	 * @param definition
 	 *            the LevelDefinition
 	 */
-	private void parseStructure(LevelDefinition manager) {
+	private void parseStructure(LevelDefinition definition) {
 		this.readToken(TokenType.BEGIN);
 		List<String[]> lines = new LinkedList<>();
 		while (this.isToken(TokenType.BEGIN)) {
 			this.readLevelLine(lines);
 		}
 		this.readToken(TokenType.END);
-		manager.addStructure(lines);
+		definition.addStructure(lines);
 	}
 
 	/**
@@ -136,40 +136,40 @@ public final class LevelParser {
 	/**
 	 * Parse an alias.
 	 *
-	 * @param manager
+	 * @param definition
 	 *            the LevelDefinition
 	 */
-	private void parseAlias(LevelDefinition manager) {
+	private void parseAlias(LevelDefinition definition) {
 		this.readToken(TokenType.ALIAS);
 		this.readToken(TokenType.DELIMITER);
 		String[] mapping = this.parseMapping();
-		manager.setAlias(mapping[0], mapping[1]);
+		definition.setAlias(mapping[0], mapping[1]);
 	}
 
 	/**
 	 * Parse a setting.
 	 *
-	 * @param manager
+	 * @param definition
 	 *            the LevelDefinition
 	 */
-	private void parseSetting(LevelDefinition manager) {
+	private void parseSetting(LevelDefinition definition) {
 		this.readToken(TokenType.SETTING);
 		this.readToken(TokenType.DELIMITER);
 		String[] mapping = this.parseMapping();
-		manager.setSetting(mapping[0], mapping[1]);
+		definition.setSetting(mapping[0], mapping[1]);
 	}
 
 	/**
 	 * Parse an boss setting.
 	 *
-	 * @param manager
+	 * @param definition
 	 *            the LevelDefinition
 	 */
-	private void parseBossSetting(LevelDefinition manager) {
+	private void parseBossSetting(LevelDefinition definition) {
 		this.readToken(TokenType.BOSS_SETTING);
 		this.readToken(TokenType.DELIMITER);
 		String[] mapping = this.parseMapping();
-		manager.setBossSetting(mapping[0], mapping[1]);
+		definition.setBossSetting(mapping[0], mapping[1]);
 	}
 
 	/**

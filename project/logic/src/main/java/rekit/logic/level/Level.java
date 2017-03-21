@@ -65,7 +65,7 @@ public final class Level implements Comparable<Level> {
 			this.currentStructureId++;
 
 			// if end of sequence reached: Determine if to repeat or end level
-			if (this.currentStructureId >= this.definition.size()) {
+			if (this.currentStructureId >= this.definition.amountOfStructures()) {
 				if (this.definition.isSettingSet("infinite")) {
 					this.currentStructureId = 0;
 				} else {
@@ -172,8 +172,8 @@ public final class Level implements Comparable<Level> {
 	 */
 	private Structure nextShuffeled() {
 		// get random next Structure
-		int randId = this.rand.nextInt(this.definition.size());
-		Structure selected = new Structure(this.definition, this.definition.get(randId));
+		int randId = this.rand.nextInt(this.definition.amountOfStructures());
+		Structure selected = new Structure(this.definition, this.definition.getStructure(randId));
 
 		// determine and set gap width
 		int gap = this.nextGapWidth();
@@ -198,7 +198,7 @@ public final class Level implements Comparable<Level> {
 	 */
 	private Structure nextInOrder() {
 		// get next Structure in order
-		Structure selected = new Structure(this.definition, this.definition.get(this.currentStructureId));
+		Structure selected = new Structure(this.definition, this.definition.getStructure(this.currentStructureId));
 
 		// determine and set gap width
 		int gap = this.nextGapWidth();
@@ -221,7 +221,7 @@ public final class Level implements Comparable<Level> {
 	}
 
 	public boolean hasNext() {
-		return this.definition.isSettingSet("infinite") || this.currentStructureId < this.definition.size();
+		return this.definition.isSettingSet("infinite") || this.currentStructureId < this.definition.amountOfStructures();
 	}
 
 	public void addUnitsBuild(int width) {

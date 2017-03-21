@@ -224,7 +224,6 @@ public final class LevelManager {
 	 */
 	private static void loadDataFromFile() {
 		try {
-			// create Scanner from InputStream
 			Scanner scanner = new Scanner(LevelManager.USER_DATA, Charset.defaultCharset().name());
 			while (scanner.hasNextLine()) {
 				String[] levelinfo = scanner.nextLine().split(":");
@@ -288,7 +287,6 @@ public final class LevelManager {
 	 * Save state to {@link #USER_DATA}.
 	 */
 	private static void saveToFile() {
-		// create OutputStream
 		OutputStream levelStream = null;
 		try {
 			levelStream = new FileOutputStream(LevelManager.USER_DATA);
@@ -296,21 +294,13 @@ public final class LevelManager {
 			GameConf.GAME_LOGGER.error("Error while opening " + LevelManager.USER_DATA.getAbsolutePath() + " for saving scores and saves: FileNotFound");
 			return;
 		}
-		// get byte-array from String
 		byte[] bytes = LevelManager.convertToString().getBytes(Charset.defaultCharset());
 		try {
-			// write out contents to Buffer
 			levelStream.write(bytes);
-			// write buffer to actual File
 			levelStream.flush();
-			// close FileInputStream after use to prevent resource-wasting
 			levelStream.close();
 		} catch (IOException e) {
 			GameConf.GAME_LOGGER.error("Error while saving " + LevelManager.USER_DATA.getAbsolutePath() + " for scores and saves: IOException");
-			try {
-				levelStream.close();
-			} catch (IOException e1) {
-			}
 		}
 	}
 

@@ -67,14 +67,14 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 	private final int seed;
 	private int arcadeNum;
 
-	public LevelDefinition(InputStream inputStream, Type type) {
-		this(inputStream, type, GameConf.PRNG.nextInt());
+	public LevelDefinition(InputStream in, Type type) {
+		this(in, type, GameConf.PRNG.nextInt());
 	}
 
-	public LevelDefinition(InputStream inputStream, Type type, int seed) {
+	public LevelDefinition(InputStream in, Type type, int seed) {
 		this.type = type;
 		this.seed = seed;
-		Scanner scanner = new Scanner(inputStream, Charset.defaultCharset().name());
+		Scanner scanner = new Scanner(in, Charset.defaultCharset().name());
 		scanner.useDelimiter("\\A");
 		String input = scanner.hasNext() ? scanner.next() : "";
 		scanner.close();
@@ -102,7 +102,7 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 
 	private List<String[][]> structures = new LinkedList<>();
 
-	public void addStructure(List<String[]> lines) {
+	void addStructure(List<String[]> lines) {
 		String[][] structure = new String[lines.size()][];
 		int i = 0;
 		for (String[] line : lines) {
@@ -113,7 +113,7 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 
 	private SortedMap<String, String> aliases = new TreeMap<>();
 
-	public void setAlias(String toReplace, String replaceWith) {
+	void setAlias(String toReplace, String replaceWith) {
 		if (this.aliases.put(toReplace, replaceWith) != null) {
 			GameConf.GAME_LOGGER.warn("Multiple definitions (alias) for " + toReplace);
 		}
@@ -126,7 +126,7 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 
 	private SortedMap<String, String> settings = new TreeMap<>();
 
-	public void setSetting(String key, String value) {
+	void setSetting(String key, String value) {
 		if (this.settings.put(key, value) != null) {
 			GameConf.GAME_LOGGER.warn("Multiple definitions (settings) for " + key);
 		}
@@ -150,7 +150,7 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 
 	private SortedMap<String, String> bossSettings = new TreeMap<>();
 
-	public void setBossSetting(String setting, String value) {
+	void setBossSetting(String setting, String value) {
 		if (this.bossSettings.put(setting, value) != null) {
 			GameConf.GAME_LOGGER.warn("Multiple definitions (bosssettings) for " + setting);
 		}
@@ -210,14 +210,11 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 		this.setData(key, value, true);
 	}
 
-	public void setData(DataKey key, Object value, boolean notify) {
-		if (this.data.put(key.getKey(), value) != null) {
-			GameConf.GAME_LOGGER.warn("Multiple definitions (data) for " + key);
-		}
+	void setData(DataKey key, Object value, boolean notify) {
+		this.data.put(key.getKey(), value);
 		if (notify) {
 			LevelManager.contentChanged();
 		}
-
 	}
 
 	public Object getData(DataKey key) {
@@ -232,11 +229,11 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 		return this.seed;
 	}
 
-	public int size() {
+	public int amountOfStructures() {
 		return this.structures.size();
 	}
 
-	public String[][] get(int idx) {
+	public String[][] getStructure(int idx) {
 		return this.structures.get(idx);
 	}
 
