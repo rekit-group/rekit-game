@@ -65,10 +65,15 @@ class GameGridImpl extends GameGrid {
 		this.graphics = current;
 	}
 
+	/**
+	 * Offset correction value, estimated by tests.
+	 */
+	private static final float CORRECTION = 0.1F;
+
 	@Override
 	public void setCurrentOffset(float cameraOffsetUnits) {
-		this.cameraOffsetUnits = cameraOffsetUnits;
-		this.cameraOffset = -CalcUtil.units2pixel(cameraOffsetUnits);
+		this.cameraOffsetUnits = cameraOffsetUnits + GameGridImpl.CORRECTION;
+		this.cameraOffset = -CalcUtil.units2pixel(cameraOffsetUnits + GameGridImpl.CORRECTION);
 	}
 
 	/**

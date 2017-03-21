@@ -1,7 +1,5 @@
 package rekit;
 
-import java.util.Set;
-
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -44,11 +42,11 @@ public final class Main {
 		Main.setLogLevel(GameConf.DEBUG ? Level.ALL : Level.FATAL);
 		// Load All Configs
 		Main.visitAllStatic();
+
 		// Create MVC
 		// Set References:
 		// V----> M <----C
 		// ^-------------|
-
 		Model model = Model.getModel();
 		View view = View.getView(model);
 		Controller controller = Controller.getController(model, view);
@@ -95,9 +93,6 @@ public final class Main {
 	 *            the setter
 	 */
 	private static final void visitAllStatic(Setter setter) {
-		Set<Class<? extends Configurable>> toSet = ReflectUtils.getClasses(GameConf.SEARCH_PATH, Configurable.class);
-		for (Class<? extends Configurable> s : toSet) {
-			setter.setAttributes(s);
-		}
+		ReflectUtils.getClasses(GameConf.SEARCH_PATH, Configurable.class).forEach(c -> setter.setAttributes(c));
 	}
 }

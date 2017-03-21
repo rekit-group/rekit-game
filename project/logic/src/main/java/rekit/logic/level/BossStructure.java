@@ -1,5 +1,6 @@
 package rekit.logic.level;
 
+import org.fuchss.configuration.Configurable;
 import org.fuchss.configuration.annotations.NoSet;
 import org.fuchss.configuration.annotations.SetterInfo;
 
@@ -28,7 +29,7 @@ import rekit.util.ThreadUtils;
  *
  */
 @SetterInfo(res = "conf/bossstructure")
-public final class BossStructure extends Structure {
+public final class BossStructure extends Structure implements Configurable {
 	/**
 	 * The door.
 	 */
