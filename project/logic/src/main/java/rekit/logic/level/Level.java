@@ -223,7 +223,7 @@ public final class Level implements Comparable<Level> {
 
 	@Override
 	public final int compareTo(Level o) {
-		return this.definition.compareTo(o.definition);
+		return this.getName().compareToIgnoreCase(o.getName());
 	}
 
 	public boolean hasNext() {

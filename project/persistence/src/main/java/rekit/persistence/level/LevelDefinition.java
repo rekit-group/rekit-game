@@ -21,7 +21,7 @@ import rekit.persistence.level.parser.LevelParser;
  * This class holds all necessary information about a level.
  *
  */
-public final class LevelDefinition implements Comparable<LevelDefinition> {
+public final class LevelDefinition {
 
 	/**
 	 * The type of a level.
@@ -60,20 +60,6 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 				return null;
 			}
 		}
-
-		/**
-		 * Indicate whether level has this type.
-		 *
-		 * @param lv
-		 *            the level
-		 * @return {@code true} if lv has this level type
-		 */
-		public final boolean hasType(LevelDefinition lv) {
-			if (lv == null) {
-				return false;
-			}
-			return this == lv.getType();
-		}
 	}
 
 	private boolean finished;
@@ -99,32 +85,13 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 		scanner.close();
 		// create Parser to extract all information of file-String
 		LevelParser.parseLevel(input, this);
-		if (this.type == Type.Infinite_Fun || this.type == Type.Level_of_the_Day) {
+		if (this.type == Type.Infinite_Fun || this.type == Type.Level_of_the_Day || this.type == Type.Boss_Rush) {
 			this.name = this.type.toString().replace('_', ' ');
 		}
 		if (this.isSettingSet("name")) {
 			this.name = this.getSetting("name");
 		}
 		this.finish();
-	}
-
-	@Override
-	public int compareTo(LevelDefinition o) {
-		boolean thisIsNumbered = this.getName().matches("level_\\d+\\.dat"), otherIsNumbered = o.getName().matches("level_\\d+\\.dat");
-		if (thisIsNumbered != otherIsNumbered) {
-			// NonNumbered before Numbered
-			return otherIsNumbered ? -1 : 1;
-		}
-		// Numbered will be compared by number
-		if (thisIsNumbered) {
-			String n1 = this.getName(), n2 = o.getName();
-			n1 = n1.substring("level_".length()).split("\\.")[0];
-			n2 = n2.substring("level_".length()).split("\\.")[0];
-			return Integer.compare(Integer.parseInt(n1), Integer.parseInt(n2));
-		}
-
-		// Else order by string order (and secondly by type)
-		return 2 * this.getName().compareTo(o.getName()) + (this.getType().compareTo(o.getType()));
 	}
 
 	private void finish() {
@@ -240,12 +207,12 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 		StringBuilder content = new StringBuilder();
 		content.append(this.name);
 		content.append(this.type);
-
-		this.structures.forEach(struct -> Arrays.stream(struct).forEach(row -> Arrays.stream(row).forEach(elem -> content.append(elem.trim()))));
-		this.aliases.forEach((k, v) -> content.append(k).append(v));
-		this.settings.forEach((k, v) -> content.append(k).append(v));
-		this.bossSettings.forEach((k, v) -> content.append(k).append(v));
-
+		if (this.type == Type.Arcade) {
+			this.structures.forEach(struct -> Arrays.stream(struct).forEach(row -> Arrays.stream(row).forEach(elem -> content.append(elem.trim()))));
+			this.aliases.forEach((k, v) -> content.append(k).append(v));
+			this.settings.forEach((k, v) -> content.append(k).append(v));
+			this.bossSettings.forEach((k, v) -> content.append(k).append(v));
+		}
 		byte[] data = content.toString().getBytes();
 		cs.update(data);
 		byte[] digest = cs.digest();
@@ -267,7 +234,11 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 	}
 
 	public Object getData(DataKey key) {
-		return this.data.get(key.getKey());
+		Object data = this.data.get(key.getKey());
+		if (data == null) {
+			return key.getDefaultVal();
+		}
+		return data;
 	}
 
 	public int getSeed() {
@@ -280,13 +251,6 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 
 	public String[][] get(int idx) {
 		return this.structures.get(idx);
-	}
-
-	public Object getData(DataKey key, Object std) {
-		if (this.getData(key) == null) {
-			return std;
-		}
-		return this.getData(key);
 	}
 
 }

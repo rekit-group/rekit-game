@@ -41,12 +41,13 @@ public final class LevelManager {
 
 	private static final Set<String> BANNED_IDS = new HashSet<>();
 
+	private static LevelDefinition INFINITE = null;
+	private static LevelDefinition LOTD = null;
+
 	/**
 	 * The global data file for the {@link LevelManager}.
 	 */
 	private static final File USER_DATA = new File(GameConf.LVL_MGMT_FILE);
-	private static LevelDefinition INFINITE = null;
-	private static LevelDefinition LOTD = null;
 
 	/**
 	 * Prevent instantiation.
@@ -72,7 +73,7 @@ public final class LevelManager {
 		} catch (IOException e) {
 			GameConf.GAME_LOGGER.error("Could not load levels " + e.getMessage());
 		}
-		LevelManager.loadInfoFromFile();
+		LevelManager.loadDataFromFile();
 
 	}
 
@@ -89,7 +90,6 @@ public final class LevelManager {
 		Stream<Resource> notNumbered = Arrays.stream(res).filter(r -> !r.getFilename().matches("level_\\d+\\.dat"));
 
 		LevelManager.loadInfiniteLevels();
-		// LevelManager.loadBossRushLevel();
 
 		numbered.sorted((r1, r2) -> {
 			String n1 = r1.getFilename(), n2 = r2.getFilename();
@@ -218,21 +218,25 @@ public final class LevelManager {
 	/**
 	 * Load Highscores / Info from file.
 	 */
-	private static void loadInfoFromFile() {
+	private static void loadDataFromFile() {
 		try {
 			// create Scanner from InputStream
 			Scanner scanner = new Scanner(LevelManager.USER_DATA, Charset.defaultCharset().name());
 			while (scanner.hasNextLine()) {
 				String[] levelinfo = scanner.nextLine().split(":");
-				if (levelinfo.length != 3) {
+				if (levelinfo.length != DataKey.values().length + 1) {
 					continue;
 				}
 				String id = levelinfo[0];
-				Type type = Type.byString(levelinfo[1]);
-				LevelDefinition level = LevelManager.findByIDAndType(id, type);
-				if (level != null) {
-					level.setData(DataKey.HIGH_SCORE, Integer.parseInt(levelinfo[2]));
+				LevelDefinition level = LevelManager.findByID(id);
+				if (level == null) {
+					continue;
 				}
+				DataKey[] keys = DataKey.values();
+				for (int idx = 1; idx < levelinfo.length; idx++) {
+					level.setData(keys[idx - 1], keys[idx - 1].parse(levelinfo[idx]));
+				}
+
 			}
 			scanner.close();
 		} catch (FileNotFoundException e) {
@@ -250,7 +254,10 @@ public final class LevelManager {
 		Iterator<LevelDefinition> it = LevelManager.LEVEL_MAP.values().stream().sorted().iterator();
 		while (it.hasNext()) {
 			LevelDefinition next = it.next();
-			result.append(next.getID() + ":" + next.getType() + ":" + next.getData(DataKey.HIGH_SCORE, 0));
+			result.append(next.getID());
+			for (DataKey dk : DataKey.values()) {
+				result.append(":").append(next.getData(dk));
+			}
 			result.append("\n");
 		}
 		return result.toString();
@@ -261,16 +268,14 @@ public final class LevelManager {
 	 *
 	 * @param id
 	 *            the id
-	 * @param type
-	 *            the type
+	 *
 	 * @return the level or {@code null} if none found
 	 */
-	private static LevelDefinition findByIDAndType(String id, Type type) {
-		if (id == null || type == null) {
+	private static LevelDefinition findByID(String id) {
+		if (id == null) {
 			return null;
 		}
-		List<LevelDefinition> levels = LevelManager.LEVEL_MAP.values().stream().filter(type::hasType).filter(level -> id.equals(level.getID()))
-				.collect(Collectors.toList());
+		List<LevelDefinition> levels = LevelManager.LEVEL_MAP.values().stream().filter(level -> id.equals(level.getID())).collect(Collectors.toList());
 		if (levels.isEmpty()) {
 			return null;
 		}
