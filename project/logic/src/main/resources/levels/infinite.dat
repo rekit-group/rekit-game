@@ -4,7 +4,7 @@
 #SETTING::autoCoinSpawn->false
 
 #BOSS_SETTING::AT100->RektSmasher
-#BOSS_SETTING::AT20->RocketBoss
+#BOSS_SETTING::AT500->RocketBoss
 
 #ALIAS::-1->Enemy
 #ALIAS::1->Inanimate
