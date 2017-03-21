@@ -2,6 +2,7 @@ package rekit.logic.gameelements.entities.enemies.cannon.state;
 
 import rekit.config.GameConf;
 import rekit.logic.gameelements.entities.enemies.cannon.Cannon;
+import rekit.util.state.State;
 
 /**
  * Third {@link CannonState} of the {@link State} that represents the phase

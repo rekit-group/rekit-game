@@ -40,12 +40,10 @@ import rekit.util.ReflectUtils.LoadMe;
  * <li><i>Shooting</i>, where the Cannon spawns {@link CannonParticle
  * CannonParticles} in a straight line.</li>
  * </ul>
- * </p>
  * <p>
  * Internally, it uses the {@link CannonStateMachine} and corresponding
  * {@link CannonState CannonStates} to implement the phase-like behavior as
  * described above.
- * </p>
  *
  * @author Angelo Aracri
  */
@@ -278,11 +276,7 @@ public class Cannon extends Enemy implements Configurable {
 
 	/**
 	 * Signal that one of the {@link Particle Particles} collided with something
-	 * and the laser should stop. Is only used while in the {@ShootingState
-	 *
-	 *
-	 *
-	 * }.
+	 * and the laser should stop. Is only used while in the ShootingState.
 	 */
 	public void hitSomething() {
 		this.innerStateMachine.getState().hitSomething();

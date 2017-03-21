@@ -17,7 +17,7 @@ public final class AbstractImage {
 	public final int height;
 	/**
 	 * This array contains the RGBA values of the image in this order
-	 * R->G->B->A.
+	 * R-&gt;G-&gt;B-&gt;A.
 	 */
 	public final byte[] pixels;
 

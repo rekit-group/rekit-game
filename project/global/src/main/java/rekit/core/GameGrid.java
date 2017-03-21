@@ -9,8 +9,8 @@ import rekit.primitives.image.RGBColor;
 import rekit.util.TextOptions;
 
 /**
- * This class defines all necessary methods for drawing {@link GameElement
- * GameElements} etc. on a game grid
+ * This class defines all necessary methods for drawing GameElements etc. on a
+ * game grid
  *
  * @author Dominik Fuchss
  * @author Angelo Aracri
@@ -49,9 +49,9 @@ public abstract class GameGrid {
 	 * @param color
 	 *            the color
 	 * @param inGame
-	 *            this indicates whether the drawing belongs to a
-	 *            {@link GameElement} (ingame -> CameraDependend) or a
-	 *            {@link GuiElement} (not ingame -> FrameDepenedend)
+	 *            this indicates whether the drawing belongs to a GameElement
+	 *            (ingame -&gt; CameraDependend) or a GuiElement (not ingame
+	 *            -&gt; FrameDepenedend)
 	 *
 	 */
 	public final void drawRectangle(Vec pos, Vec size, RGBColor color, boolean inGame) {
@@ -82,9 +82,9 @@ public abstract class GameGrid {
 	 * @param rgbaColor
 	 *            the color
 	 * @param inGame
-	 *            this indicates whether the drawing belongs to a
-	 *            {@link GameElement} (ingame -> CameraDependend) or a
-	 *            {@link GuiElement} (not ingame -> FrameDepenedend)
+	 *            this indicates whether the drawing belongs to a GameElement
+	 *            (ingame -&gt; CameraDependend) or a GuiElement (not ingame
+	 *            -&gt; FrameDepenedend)
 	 * @param usefilter
 	 *            indicates whether a filter shall be used if set
 	 *
@@ -115,9 +115,9 @@ public abstract class GameGrid {
 	 * @param color
 	 *            the color
 	 * @param inGame
-	 *            this indicates whether the drawing belongs to a
-	 *            {@link GameElement} (ingame -> CameraDependend) or a
-	 *            {@link GuiElement} (not ingame -> FrameDepenedend)
+	 *            this indicates whether the drawing belongs to a GameElement
+	 *            (ingame -&gt; CameraDependend) or a GuiElement (not ingame
+	 *            -&gt; FrameDepenedend)
 	 */
 	public final void drawCircle(Vec pos, Vec size, RGBColor color, boolean inGame) {
 		this.drawCircle(pos, size, color.toRGBA(), inGame, true);
@@ -147,9 +147,9 @@ public abstract class GameGrid {
 	 * @param color
 	 *            the color
 	 * @param inGame
-	 *            this indicates whether the drawing belongs to a
-	 *            {@link GameElement} (ingame -> CameraDependend) or a
-	 *            {@link GuiElement} (not ingame -> FrameDepenedend)
+	 *            this indicates whether the drawing belongs to a GameElement
+	 *            (ingame -&gt; CameraDependend) or a GuiElement (not ingame
+	 *            -&gt; FrameDepenedend)
 	 */
 	public final void drawCircle(Vec pos, Vec size, RGBAColor color, boolean inGame) {
 		this.drawCircle(pos, size, color, inGame, true);
@@ -165,9 +165,9 @@ public abstract class GameGrid {
 	 * @param color
 	 *            the color
 	 * @param inGame
-	 *            this indicates whether the drawing belongs to a
-	 *            {@link GameElement} (ingame -> CameraDependend) or a
-	 *            {@link GuiElement} (not ingame -> FrameDepenedend)
+	 *            this indicates whether the drawing belongs to a GameElement
+	 *            (ingame -&gt; CameraDependend) or a GuiElement (not ingame
+	 *            -&gt; FrameDepenedend)
 	 * @param usefilter
 	 *            indicates whether a filter shall be used if set
 	 *
@@ -198,9 +198,9 @@ public abstract class GameGrid {
 	 * @param imagePath
 	 *            the path to the image
 	 * @param inGame
-	 *            this indicates whether the drawing belongs to a
-	 *            {@link GameElement} (ingame -> CameraDependend) or a
-	 *            {@link GuiElement} (not ingame -> FrameDepenedend)
+	 *            this indicates whether the drawing belongs to a GameElement
+	 *            (ingame -&gt; CameraDependend) or a GuiElement (not ingame
+	 *            -&gt; FrameDepenedend)
 	 * @param usefilter
 	 *            indicates whether a filter shall be used if set
 	 *
@@ -232,9 +232,9 @@ public abstract class GameGrid {
 	 * @param fill
 	 *            indicates whether the polygon shall be filled or not
 	 * @param inGame
-	 *            this indicates whether the drawing belongs to a
-	 *            {@link GameElement} (ingame -> CameraDependend) or a
-	 *            {@link GuiElement} (not ingame -> FrameDepenedend)
+	 *            this indicates whether the drawing belongs to a GameElement
+	 *            (ingame -&gt; CameraDependend) or a GuiElement (not ingame
+	 *            -&gt; FrameDepenedend)
 	 */
 	public final void drawPolygon(Polygon polygon, RGBColor color, boolean fill, boolean inGame) {
 		this.drawPolygon(polygon, color.toRGBA(), fill, inGame, true);
@@ -264,9 +264,9 @@ public abstract class GameGrid {
 	 * @param fill
 	 *            indicates whether the polygon shall be filled or not
 	 * @param inGame
-	 *            this indicates whether the drawing belongs to a
-	 *            {@link GameElement} (ingame -> CameraDependend) or a
-	 *            {@link GuiElement} (not ingame -> FrameDepenedend)
+	 *            this indicates whether the drawing belongs to a GameElement
+	 *            (ingame -&gt; CameraDependend) or a GuiElement (not ingame
+	 *            -&gt; FrameDepenedend)
 	 */
 	public final void drawPolygon(Polygon polygon, RGBAColor color, boolean fill, boolean inGame) {
 		this.drawPolygon(polygon, color, fill, inGame, true);
@@ -282,9 +282,9 @@ public abstract class GameGrid {
 	 * @param fill
 	 *            indicates whether the polygon shall be filled or not
 	 * @param inGame
-	 *            this indicates whether the drawing belongs to a
-	 *            {@link GameElement} (ingame -> CameraDependend) or a
-	 *            {@link GuiElement} (not ingame -> FrameDepenedend)
+	 *            this indicates whether the drawing belongs to a GameElement
+	 *            (ingame -&gt; CameraDependend) or a GuiElement (not ingame
+	 *            -&gt; FrameDepenedend)
 	 * @param usefilter
 	 *            indicates whether a filter shall be used if set
 	 *
@@ -301,9 +301,9 @@ public abstract class GameGrid {
 	 * @param options
 	 *            the text's options
 	 * @param inGame
-	 *            this indicates whether the drawing belongs to a
-	 *            {@link GameElement} (ingame -> CameraDependend) or a
-	 *            {@link GuiElement} (not ingame -> FrameDepenedend)
+	 *            this indicates whether the drawing belongs to a GameElement
+	 *            (ingame -&gt; CameraDependend) or a GuiElement (not ingame
+	 *            -&gt; FrameDepenedend)
 	 *
 	 */
 	public abstract void drawText(Vec pos, String text, TextOptions options, boolean inGame);
@@ -322,9 +322,9 @@ public abstract class GameGrid {
 	 * @param arcHeight
 	 *            the height of the arc
 	 * @param inGame
-	 *            this indicates whether the drawing belongs to a
-	 *            {@link GameElement} (ingame -> CameraDependend) or a
-	 *            {@link GuiElement} (not ingame -> FrameDepenedend)
+	 *            this indicates whether the drawing belongs to a GameElement
+	 *            (ingame -&gt; CameraDependend) or a GuiElement (not ingame
+	 *            -&gt; FrameDepenedend)
 	 */
 	public final void drawRoundRectangle(Vec pos, Vec size, RGBColor rgbColor, float arcWidth, float arcHeight, boolean inGame) {
 		this.drawRoundRectangle(pos, size, rgbColor.toRGBA(), arcWidth, arcHeight);
@@ -381,14 +381,13 @@ public abstract class GameGrid {
 	 *            the height of the arc
 	 *
 	 * @param inGame
-	 *            this indicates whether the drawing belongs to a
-	 *            {@link GameElement} (ingame -> CameraDependend) or a
-	 *            {@link GuiElement} (not ingame -> FrameDepenedend)
+	 *            this indicates whether the drawing belongs to a GameElement
+	 *            (ingame -&gt; CameraDependend) or a GuiElement (not ingame
+	 *            -&gt; FrameDepenedend)
 	 * @param usefilter
 	 *            indicates whether a filter shall be used if set
 	 */
-	public abstract void drawRoundRectangle(Vec pos, Vec size, RGBAColor rgbaColor, float arcWidth, float arcHeight, boolean inGame,
-			boolean usefilter);
+	public abstract void drawRoundRectangle(Vec pos, Vec size, RGBAColor rgbaColor, float arcWidth, float arcHeight, boolean inGame, boolean usefilter);
 
 	/**
 	 * Draw a path.

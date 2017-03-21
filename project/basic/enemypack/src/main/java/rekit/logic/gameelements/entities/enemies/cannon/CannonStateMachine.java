@@ -11,7 +11,7 @@ import rekit.util.state.TimeStateMachine;
  * Different from the regular {@link TimeStateMachine} as it saves the reference
  * to a {@link Cannon} supplied in the constructor and only accepts and returns
  * specialized {@link CannonState CannonStates}.
- * 
+ *
  * @author Angelo Aracri
  */
 public class CannonStateMachine extends TimeStateMachine {
@@ -22,11 +22,11 @@ public class CannonStateMachine extends TimeStateMachine {
 	protected Cannon parentCannon;
 
 	/**
-	 * Constructor that extends the {@link TimeStateMachines}
+	 * Constructor that extends the {@link TimeStateMachine TimeStateMachines}
 	 * {@link TimeStateMachine#TimeStateMachine(rekit.util.state.State)
 	 * constructor} by also saving the reference to a given parenting
 	 * {@link Cannon}.
-	 * 
+	 *
 	 * @param parentCannon
 	 *            the parenting {@link Cannon}.
 	 * @param initialState
@@ -46,10 +46,10 @@ public class CannonStateMachine extends TimeStateMachine {
 		CannonState nextState = (CannonState) this.currentState.getNextState();
 
 		// set reference to Cannon
-		nextState.setCannon(parentCannon);
+		nextState.setCannon(this.parentCannon);
 
 		// call States protected nextState with the modified CannonState
-		nextState(nextState);
+		this.nextState(nextState);
 	}
 
 	@Override

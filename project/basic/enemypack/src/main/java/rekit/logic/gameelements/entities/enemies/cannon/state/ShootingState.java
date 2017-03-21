@@ -9,6 +9,7 @@ import rekit.logic.gameelements.particles.ParticleSpawner;
 import rekit.logic.gameelements.particles.ParticleSpawnerOption;
 import rekit.primitives.geometry.Vec;
 import rekit.util.CalcUtil;
+import rekit.util.state.State;
 import rekit.util.state.TimeStateMachine;
 
 /**

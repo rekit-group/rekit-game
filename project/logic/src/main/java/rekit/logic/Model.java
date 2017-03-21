@@ -68,7 +68,7 @@ public interface Model {
 	void removeFilter();
 
 	/**
-	 * Get the current filter & reset {@link #filterChanged()}.
+	 * Get the current filter and reset {@link #filterChanged()}.
 	 *
 	 * @return the filter or {@code null} if none set
 	 */

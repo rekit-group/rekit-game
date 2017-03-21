@@ -36,7 +36,7 @@ public abstract class Entity extends GameElement {
 	protected EntityState entityState;
 	/**
 	 * This {@link Timer} defines invincibility of an {@link Entity}.
-	 * ({@code null} --> not invincible)
+	 * ({@code null} --&gt; not invincible)
 	 */
 	protected Timer invincibility = null;
 	/**

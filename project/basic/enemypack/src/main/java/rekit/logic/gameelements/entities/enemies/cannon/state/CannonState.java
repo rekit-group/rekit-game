@@ -3,6 +3,7 @@ package rekit.logic.gameelements.entities.enemies.cannon.state;
 import rekit.logic.gameelements.entities.Player;
 import rekit.logic.gameelements.entities.enemies.cannon.Cannon;
 import rekit.logic.gameelements.entities.enemies.cannon.CannonParticle;
+import rekit.logic.gameelements.inanimate.Inanimate;
 import rekit.util.state.State;
 
 /**
@@ -56,7 +57,7 @@ public abstract class CannonState extends State {
 	 * <p>
 	 * Template method that can be filled by concrete implementations to perform
 	 * custom actions when a {@link CannonParticle} collided with an
-	 * {@ink Inanimate} or a {@link Player}.
+	 * {@link Inanimate} or a {@link Player}.
 	 * </p>
 	 * <p>
 	 * Is only used by {@link ShootingState}.

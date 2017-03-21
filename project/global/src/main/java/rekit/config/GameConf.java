@@ -8,6 +8,7 @@ import org.fuchss.configuration.Configurable;
 import org.fuchss.configuration.annotations.AfterSetting;
 import org.fuchss.configuration.annotations.NoSet;
 import org.fuchss.configuration.annotations.SetterInfo;
+import org.fuchss.configuration.parser.Parser;
 
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBColor;
