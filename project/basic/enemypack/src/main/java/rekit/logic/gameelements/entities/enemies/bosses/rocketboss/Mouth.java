@@ -31,7 +31,7 @@ public class Mouth {
 	public void logicLoop(float calcX, float deltaX) {
 		this.mouthCurvePos = parent.getPos().add(this.pos).addX(0.5f * this.size.getX()).addX(-calcX);
 		mouthCurveTimer.logicLoop();
-		float maxDelta = this.size.getY() * 0.5f;
+		float maxDelta = this.size.getY() * 0.5f * this.parent.getState().getMouthAmplitude();
 		while (mouthCurveTimer.timeUp()) {
 			mouthCurveTimer.reset();
 			Vec newVec = new Vec(calcX, (float) (Math.tan(calcX * 10) * Math.sin(calcX * 4) * Math.cos(calcX * 0.5f) * maxDelta));
@@ -47,6 +47,8 @@ public class Mouth {
 		while (it.hasNext()) {
 			if (it.next().getX() <= calcX - this.size.getX()) {
 				it.remove();
+			} else {
+				break;
 			}
 		}
 	}

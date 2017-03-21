@@ -1,24 +1,24 @@
 package rekit.logic.gameelements.entities.enemies.bosses.rocketboss.damagestate;
 
-public class State3 extends DamageState {
+public class State2 extends DamageState {
 
 	@Override
 	public DamageState getNextState() {
-		return new State2();
+		return new State1();
 	}
 
 	@Override
 	public float getTimeFactor() {
-		return 1E-3F;
+		return 2E-3F;
 	}
-
+	
 	@Override
 	public String getHeadImgSrc() {
-		return "rocketBoss/head_3.png";
+		return "rocketBoss/head_2.png";
 	}
-
+	
 	@Override
 	public float getMouthAmplitude() {
-		return 1;
+		return 1.1f;
 	}
 }

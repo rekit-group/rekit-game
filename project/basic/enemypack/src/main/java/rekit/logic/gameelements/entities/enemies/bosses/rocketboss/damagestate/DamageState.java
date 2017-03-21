@@ -41,32 +41,14 @@ public abstract class DamageState extends State {
 	 * @return the factor for the {@link RocketBoss RocketBosses} time
 	 */
 	public abstract float getTimeFactor();
+	
+	public abstract float getMouthAmplitude();
 
 	/**
-	 * Getter for the amount of arms the {@link RocketBoss} shall have.
+	 * Getter for the source path of the image for the boss.
 	 * 
-	 * @return
+	 * @return the source path of the {@link RocketBoss RocketBosses} image.
 	 */
-	public abstract float getArmNum();
-
-	/**
-	 * Getter for the source path of the brains image to take.
-	 * 
-	 * @return the source path of the {@link RocketBoss RocketBosses} brain.
-	 */
-	public abstract String getBrainImgSrc();
-
-	/**
-	 * Getter for the source path of the eye image to take.
-	 * 
-	 * @return the source path of the {@link RocketBoss RocketBosses} eye.
-	 */
-	public abstract String getEyeImgSrc();
-
-	public abstract float getMouthMovement();
-
-	public abstract float getMouthPhaseFactor();
-
 	public abstract String getHeadImgSrc();
 
 }
