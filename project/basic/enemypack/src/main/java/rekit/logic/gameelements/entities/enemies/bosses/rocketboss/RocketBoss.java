@@ -3,7 +3,6 @@ package rekit.logic.gameelements.entities.enemies.bosses.rocketboss;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
 import rekit.core.GameGrid;
 import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm.Arm;
@@ -12,6 +11,7 @@ import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.damagestate.S
 import rekit.logic.gameelements.inanimate.Inanimate;
 import rekit.logic.gameelements.type.Boss;
 import rekit.logic.level.bossstructure.BossStructure;
+import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBColor;
 import rekit.util.ReflectUtils.LoadMe;
@@ -19,8 +19,6 @@ import rekit.util.state.TimeStateMachine;
 
 @LoadMe
 public class RocketBoss extends Boss {
-
-	public static Vec BRAIN_SIZE = new Vec(2, 0.6f);
 
 	private TimeStateMachine machine;
 
@@ -33,9 +31,13 @@ public class RocketBoss extends Boss {
 	
 	private Brain brain;
 
+	private static int LIVES = 3;
+	
 	public static Vec MOVEMENT_PERIOD = new Vec(1.6f, 0.9f);
 	public static Vec MOVEMENT_RANGE = new Vec(0.3f, 0.3f);
-
+	
+	public static Vec BRAIN_SIZE = new Vec(1.4f, 0.6f);
+	
 	public static Vec HEAD_SIZE = new Vec(2, 1.6f);
 	public static Vec HEAD_PADDING = new Vec(0.2f, 0.2f);
 
@@ -77,6 +79,7 @@ public class RocketBoss extends Boss {
 		this.startPos = startPos;
 		this.machine = new TimeStateMachine(new State3());
 		this.mouth = new Mouth(this, RocketBoss.MOUTH_POS, RocketBoss.MOUTH_SIZE, RocketBoss.MOUTH_BG_COL);
+		this.setLives(RocketBoss.LIVES);
 		
 		this.arms = new LinkedList<Arm>();
 		for (int i = 0; i < RocketBoss.ARM_POSITIONS.length; ++i) {
@@ -93,6 +96,10 @@ public class RocketBoss extends Boss {
 
 	@Override
 	public void innerLogicLoop() {
+		
+		super.innerLogicLoop();
+		
+				
 		// add deltaTime with factor to local x
 		float deltaX = this.deltaTime * this.getState().getTimeFactor();
 		this.calcX += deltaX;
@@ -124,21 +131,23 @@ public class RocketBoss extends Boss {
 		Iterator<Arm> it = this.arms.iterator();
 		while (it.hasNext()) {
 			it.next().internalRender(f);
-		}
-		
+		}	
 		
 		// Render head background image
-		Vec backgroundPos = this.getPos().add(new Vec());
-		f.drawImage(backgroundPos, this.getSize(), this.getState().getHeadImgSrc());
-		
-		// Render eyes
-		f.drawImage(this.getPos().add(RocketBoss.EYE_LEFT_POS), RocketBoss.EYE_SIZE, this.getState().getEyeImgSrc());
-		f.drawImage(this.getPos().add(RocketBoss.EYE_RIGHT_POS), RocketBoss.EYE_SIZE, this.getState().getEyeImgSrc());
+		Vec backgroundPos = this.getPos().add(RocketBoss.BRAIN_SIZE.scalar(-1/2f).setX(0));
+		f.drawImage(backgroundPos, this.getSize().addY(RocketBoss.BRAIN_SIZE.getY()), this.getState().getHeadImgSrc());
 		
 		// Render mouth
 		this.mouth.internalRender(f);
-		
-		
+	}
+	
+	@Override
+	public void addDamage(int damage) {
+		// If Boss is not already taking damage
+		if (!this.isHarmless) {
+			this.getMachine().nextState();
+		}
+		super.addDamage(damage);
 	}
 
 	/**
@@ -168,7 +177,18 @@ public class RocketBoss extends Boss {
 		this.setBossStructure(structure);
 		return structure;
 	}
-
+	
+	@Override
+	public void reactToCollision(GameElement element, Direction dir) {
+		if (this.isHarmless) {
+			return;
+		}
+		if (this.getTeam().isHostile(element.getTeam())) {
+			element.addDamage(1);
+			element.collidedWith(this.getCollisionFrame(), dir);
+		}
+	}
+	
 	@Override
 	public Vec getStartPos() {
 		return new Vec(22, 3.5f);
