@@ -12,7 +12,7 @@ import rekit.persistence.level.parser.token.UnexpectedTokenException;
 
 /**
  * This class shall be implemented from all classes which want to parse a
- * {@link LevelDefinition} to a {@link StructureManager}.
+ * {@link LevelDefinition}.
  *
  * @author Dominik Fuchss
  *
@@ -59,10 +59,10 @@ public final class LevelParser {
 	}
 
 	/**
-	 * Parse the level to the {@link StructureManager}.
+	 * Parse the level to the LevelDefinition.
 	 *
 	 * @param manager
-	 *            the structure manager
+	 *            the LevelDefinition
 	 */
 	public void parse(LevelDefinition manager) {
 		if (manager == null) {
@@ -75,10 +75,10 @@ public final class LevelParser {
 	}
 
 	/**
-	 * Parse a {@link StructureDefinition}.
+	 * Parse a LevelDefinition.
 	 *
 	 * @param manager
-	 *            the manager
+	 *            LevelDefinition
 	 */
 	private void parseLevel(LevelDefinition manager) {
 		if (this.isToken(TokenType.ALIAS)) {
@@ -99,10 +99,10 @@ public final class LevelParser {
 	}
 
 	/**
-	 * Parse a {@link LevelDefinition}.
+	 * Parse a Structure.
 	 *
 	 * @param manager
-	 *            the manager
+	 *            the LevelDefinition
 	 */
 	private void parseStructure(LevelDefinition manager) {
 		this.readToken(TokenType.BEGIN);
@@ -138,7 +138,7 @@ public final class LevelParser {
 	 * Parse an alias.
 	 *
 	 * @param manager
-	 *            the manager
+	 *            the LevelDefinition
 	 */
 	private void parseAlias(LevelDefinition manager) {
 		this.readToken(TokenType.ALIAS);
@@ -151,7 +151,7 @@ public final class LevelParser {
 	 * Parse a setting.
 	 *
 	 * @param manager
-	 *            the manager
+	 *            the LevelDefinition
 	 */
 	private void parseSetting(LevelDefinition manager) {
 		this.readToken(TokenType.SETTING);
@@ -164,7 +164,7 @@ public final class LevelParser {
 	 * Parse an boss setting.
 	 *
 	 * @param manager
-	 *            the manager
+	 *            the LevelDefinition
 	 */
 	private void parseBossSetting(LevelDefinition manager) {
 		this.readToken(TokenType.BOSS_SETTING);

@@ -8,6 +8,7 @@ import rekit.logic.gameelements.GameElementFactory;
 import rekit.logic.gameelements.type.Boss;
 import rekit.logic.level.Level;
 import rekit.logic.level.Structure;
+import rekit.persistence.level.LevelDefinition;
 import rekit.primitives.geometry.Vec;
 
 /**
@@ -30,7 +31,7 @@ public class BossSetting {
 	}
 
 	/**
-	 * Uses information stored in the upper instance of {@link StructureManager}
+	 * Uses information stored in the upper instance of {@link LevelDefinition}
 	 * and the internal settings supplied by extending {@link Configurable} to
 	 * do one of the following things:
 	 * <ul>

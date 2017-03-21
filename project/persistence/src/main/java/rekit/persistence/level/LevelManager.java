@@ -196,6 +196,7 @@ public final class LevelManager {
 	 *
 	 * @param level
 	 *            the level
+	 * @return the id of the level
 	 */
 	public static synchronized String addLevel(LevelDefinition level) {
 		if (level == null) {
