@@ -62,7 +62,25 @@ public abstract class Boss extends Entity {
 	protected Boss(Vec startPos, Vec vel, Vec size) {
 		super(startPos, vel, size, Team.ENEMY);
 	}
-
+	
+	@Override
+	protected void innerLogicLoop() {
+		// if no invincibility or invincibility time is up
+		if (this.invincibility == null || this.invincibility.timeUp()) {
+			this.isHarmless = false;
+		}
+		// if invincible
+		if (this.invincibility != null && !this.invincibility.timeUp()) {
+			this.isHarmless = true;
+		}
+		// we dont want him damaging the player when hes actually dead
+		if (this.getLives() <= 0) {
+			this.isHarmless = true;
+		}
+		
+		super.innerLogicLoop();
+	}
+	
 	/**
 	 * Get the BossName.
 	 *

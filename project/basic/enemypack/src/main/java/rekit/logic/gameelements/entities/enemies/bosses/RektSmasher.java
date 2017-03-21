@@ -165,21 +165,9 @@ public final class RektSmasher extends Boss implements Configurable {
 
 	@Override
 	protected void innerLogicLoop() {
-		// if no invincibility or invincibility time is up
-		if (this.invincibility == null || this.invincibility.timeUp()) {
-			this.isHarmless = false;
-		}
-		// if invincible
-		if (this.invincibility != null && !this.invincibility.timeUp()) {
-			this.isHarmless = true;
-		}
-		// we dont want him damaging the player when hes actually dead
-		if (this.getLives() <= 0) {
-			this.isHarmless = true;
-		}
+		super.innerLogicLoop();
 		float speed = RektSmasher.BASE_SPEED + (RektSmasher.LIVES - this.getLives()) * 0.25f;
 		this.setVel(this.innerRektKiller.getCurrentDirection().getVector().scalar(speed * GameConf.PLAYER_WALK_MAX_SPEED));
-		super.innerLogicLoop();
 	}
 
 	@Override
