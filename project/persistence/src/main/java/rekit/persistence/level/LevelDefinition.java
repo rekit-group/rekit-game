@@ -22,7 +22,6 @@ import rekit.config.GameConf;
  *
  */
 public final class LevelDefinition implements Comparable<LevelDefinition> {
-
 	/**
 	 * The type of a level.
 	 *
@@ -210,7 +209,7 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 		this.setData(key, value, true);
 	}
 
-	void setData(DataKey key, Object value, boolean notify) {
+	public void setData(DataKey key, Object value, boolean notify) {
 		this.data.put(key.getKey(), value);
 		if (notify) {
 			LevelManager.contentChanged();
@@ -225,7 +224,7 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 		return data;
 	}
 
-	public int getSeed() {
+	public long getSeed() {
 		return this.seed;
 	}
 
@@ -237,9 +236,13 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 		return this.structures.get(idx);
 	}
 
+	public int getArcadeNum() {
+		return this.arcadeNum;
+	}
+
 	@Override
 	public int compareTo(LevelDefinition o) {
-		return 2 * this.type.compareTo(o.type) + Integer.compare(this.arcadeNum, o.arcadeNum);
+		return 2 * this.type.compareTo(o.getType()) + Integer.compare(this.arcadeNum, o.getArcadeNum());
 	}
 
 }

@@ -78,8 +78,12 @@ public abstract class LevelScene extends Scene {
 	 *            the level
 	 */
 	public LevelScene(GameModel model, LevelDefinition level) {
+		this(model, new Level(level));
+	}
+
+	public LevelScene(GameModel model, Level level) {
 		super(model);
-		this.level = new Level(level);
+		this.level = level;
 		this.hasEnded = true;
 	}
 
