@@ -1,5 +1,8 @@
 package rekit.logic.scene;
 
+import java.awt.Desktop;
+import java.io.IOException;
+
 import rekit.config.GameConf;
 import rekit.logic.GameModel;
 import rekit.logic.gameelements.entities.Player;
@@ -10,8 +13,10 @@ import rekit.logic.gui.menu.MenuItem;
 import rekit.logic.gui.menu.MenuList;
 import rekit.logic.gui.menu.SubMenu;
 import rekit.logic.gui.menu.TextMenu;
+import rekit.persistence.DirFileDefinitions;
 import rekit.persistence.level.LevelManager;
 import rekit.primitives.geometry.Vec;
+import rekit.util.LambdaTools;
 
 /**
  *
@@ -80,7 +85,8 @@ final class MainMenu extends Scene {
 
 		MenuList settings = new MenuList(this, "Settings");
 		settings.addItem(new BoolSetting(this, "Debug Mode", "DEBUG"));
-
+		settings.addItem(new MenuActionItem(this, "Open Config",
+				LambdaTools.tryCatch(IOException.class, () -> Desktop.getDesktop().open(DirFileDefinitions.SYS_CONF)), true));
 		MenuList about = new MenuList(this, "About");
 		about.addItem(new TextMenu(this, GameConf.ABOUT));
 

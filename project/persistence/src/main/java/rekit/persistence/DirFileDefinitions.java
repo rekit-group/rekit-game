@@ -8,7 +8,7 @@ import rekit.persistence.level.LevelManager;
 
 public class DirFileDefinitions {
 
-	private static final File SYS_CONF = DirFileDefinitions.getConfDir();
+	public static final File SYS_CONF = DirFileDefinitions.getConfDir();
 	public static final File LEVEL_DIR = new File(DirFileDefinitions.SYS_CONF.getAbsolutePath() + "/levels");
 	public static final File CONFIG_DIR = new File(DirFileDefinitions.SYS_CONF.getAbsolutePath() + "/config");
 	public static final File MODS_DIR = new File(DirFileDefinitions.SYS_CONF.getAbsolutePath() + "/mods");
