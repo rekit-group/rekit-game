@@ -1,6 +1,7 @@
 package rekit.persistence.level;
 
 import java.io.InputStream;
+import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -203,21 +204,21 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 		return res.toString();
 	}
 
-	private Map<String, Object> data = new HashMap<>();
+	private Map<String, Serializable> data = new HashMap<>();
 
-	public void setData(DataKey key, Object value) {
+	public void setData(DataKey key, Serializable value) {
 		this.setData(key, value, true);
 	}
 
-	public void setData(DataKey key, Object value, boolean notify) {
+	public void setData(DataKey key, Serializable value, boolean notify) {
 		this.data.put(key.getKey(), value);
 		if (notify) {
 			LevelManager.contentChanged();
 		}
 	}
 
-	public Object getData(DataKey key) {
-		Object data = this.data.get(key.getKey());
+	public Serializable getData(DataKey key) {
+		Serializable data = this.data.get(key.getKey());
 		if (data == null) {
 			return key.getDefaultVal();
 		}

@@ -1,15 +1,21 @@
 package rekit.persistence.level;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -237,7 +243,7 @@ public final class LevelManager {
 				}
 				DataKey[] keys = DataKey.values();
 				for (int idx = 1; idx < levelinfo.length; idx++) {
-					level.setData(keys[idx - 1], keys[idx - 1].parse(levelinfo[idx]), false);
+					level.setData(keys[idx - 1], LevelManager.fromBase64(levelinfo[idx]), false);
 				}
 
 			}
@@ -257,11 +263,39 @@ public final class LevelManager {
 		for (LevelDefinition lvd : LevelManager.LEVEL_MAP.values()) {
 			result.append(lvd.getID());
 			for (DataKey dk : DataKey.values()) {
-				result.append(":").append(lvd.getData(dk));
+				Serializable data = lvd.getData(dk);
+				result.append(":").append(LevelManager.toBase64(data));
 			}
 			result.append("\n");
 		}
 		return result.toString();
+	}
+
+	private static Serializable fromBase64(String s) {
+		try {
+			byte[] data = Base64.getDecoder().decode(s);
+			ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(data));
+			Object o = ois.readObject();
+			ois.close();
+			return (Serializable) o;
+		} catch (IOException | IllegalArgumentException | ClassNotFoundException e) {
+			GameConf.GAME_LOGGER.error(e.getMessage());
+			return null;
+		}
+	}
+
+	private static String toBase64(Serializable o) {
+		try {
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ObjectOutputStream oos = new ObjectOutputStream(baos);
+			oos.writeObject(o);
+			oos.close();
+			return Base64.getEncoder().encodeToString(baos.toByteArray());
+		} catch (IOException e) {
+			GameConf.GAME_LOGGER.error(e.getMessage());
+			return null;
+		}
+
 	}
 
 	/**
