@@ -1,10 +1,9 @@
 package rekit.persistence;
 
 import java.io.File;
-import java.io.IOException;
 
-import rekit.config.GameConf;
 import rekit.persistence.level.LevelManager;
+import rekit.util.LambdaTools;
 
 public class DirFileDefinitions {
 
@@ -23,11 +22,7 @@ public class DirFileDefinitions {
 		DirFileDefinitions.CONFIG_DIR.mkdirs();
 		DirFileDefinitions.MODS_DIR.mkdirs();
 		if (!DirFileDefinitions.USER_DATA.exists()) {
-			try {
-				DirFileDefinitions.USER_DATA.createNewFile();
-			} catch (IOException e) {
-				GameConf.GAME_LOGGER.error(e.getMessage());
-			}
+			LambdaTools.tryCatch(DirFileDefinitions.USER_DATA::createNewFile).run();
 		}
 	}
 

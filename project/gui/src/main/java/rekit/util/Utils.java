@@ -3,12 +3,7 @@ package rekit.util;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
-import java.awt.Image;
 import java.awt.Toolkit;
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.imageio.ImageIO;
 
 import rekit.primitives.image.RGBAColor;
 import rekit.primitives.image.RGBColor;
@@ -63,18 +58,4 @@ public final class Utils {
 
 	}
 
-	/**
-	 * Get Image by {@link InputStream}.
-	 *
-	 * @param is
-	 *            the stream
-	 * @return the image or {@code null} if error occured
-	 */
-	public static Image getImage(InputStream is) {
-		try {
-			return ImageIO.read(is);
-		} catch (IOException e) {
-			return null;
-		}
-	}
 }

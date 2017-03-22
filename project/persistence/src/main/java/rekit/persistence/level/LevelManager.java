@@ -34,6 +34,7 @@ import rekit.config.GameConf;
 import rekit.persistence.DirFileDefinitions;
 import rekit.persistence.level.LevelDefinition.Type;
 import rekit.persistence.level.token.UnexpectedTokenException;
+import rekit.util.LambdaTools;
 
 /**
  *
@@ -72,11 +73,7 @@ public final class LevelManager {
 			return;
 		}
 		LevelManager.initialized = true;
-		try {
-			LevelManager.loadAllLevels();
-		} catch (IOException e) {
-			GameConf.GAME_LOGGER.error("Could not load levels " + e.getMessage());
-		}
+		LambdaTools.tryCatch(LevelManager::loadAllLevels).run();
 		LevelManager.loadDataFromFile();
 
 	}
@@ -115,11 +112,7 @@ public final class LevelManager {
 		}
 		for (File lv : levels) {
 			if (lv.getName().startsWith("level")) {
-				try {
-					LevelManager.addArcadeLevel(new FileInputStream(lv));
-				} catch (IOException | UnexpectedTokenException e) {
-					GameConf.GAME_LOGGER.error("Loading of " + lv.getName() + " failed: " + e.getMessage());
-				}
+				LambdaTools.tryCatch(() -> LevelManager.addArcadeLevel(new FileInputStream(lv))).run();
 			}
 		}
 
@@ -151,11 +144,7 @@ public final class LevelManager {
 	 *            the resource
 	 */
 	private static void addArcadeLevel(Resource level) {
-		try {
-			LevelManager.addArcadeLevel(level.getInputStream());
-		} catch (IOException | UnexpectedTokenException e) {
-			GameConf.GAME_LOGGER.error("Loading of " + level + " failed: " + e.getMessage());
-		}
+		LambdaTools.tryCatch(() -> LevelManager.addArcadeLevel(level.getInputStream())).run();
 	}
 
 	/**
