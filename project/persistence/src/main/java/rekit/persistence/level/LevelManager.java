@@ -110,6 +110,9 @@ public final class LevelManager {
 
 	private static final void loadCustomLevels() {
 		File[] levels = DirFileDefinitions.LEVEL_DIR.listFiles();
+		if (levels == null) {
+			return;
+		}
 		for (File lv : levels) {
 			if (lv.getName().startsWith("level")) {
 				try {

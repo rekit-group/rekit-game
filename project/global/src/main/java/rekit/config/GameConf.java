@@ -54,7 +54,7 @@ public final class GameConf implements Configurable {
 	 * This boolean indicates whether the game is in debug mode.
 	 */
 	@NoSet
-	public static final boolean DEBUG = true;
+	public static boolean DEBUG = true;
 
 	/**
 	 * The Name of the Game.

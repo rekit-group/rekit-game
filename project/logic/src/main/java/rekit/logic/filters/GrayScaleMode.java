@@ -19,16 +19,9 @@ import rekit.util.ReflectUtils.LoadMe;
  */
 @LoadMe
 public final class GrayScaleMode implements Filter {
-	/**
-	 * Indicates parallel or sequential mode for {@link #apply(AbstractImage)}.
-	 */
-	public static boolean PARALLEL = true;
 
 	@Override
 	public AbstractImage apply(final AbstractImage image) {
-		if (!GrayScaleMode.PARALLEL) {
-			return this.applySeq(image);
-		}
 		return this.applyParallel(image);
 	}
 
@@ -84,7 +77,7 @@ public final class GrayScaleMode implements Filter {
 
 	/**
 	 * Task for one thread.
-	 * 
+	 *
 	 * @param w
 	 *            img width
 	 * @param h
