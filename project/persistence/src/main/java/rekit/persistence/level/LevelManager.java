@@ -3,6 +3,7 @@ package rekit.persistence.level;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -50,11 +51,6 @@ public final class LevelManager {
 	private static LevelDefinition LOTD = null;
 
 	/**
-	 * The global data file for the {@link LevelManager}.
-	 */
-	private static final File USER_DATA = new File(GameConf.LVL_MGMT_FILE);
-
-	/**
 	 * Prevent instantiation.
 	 */
 	private LevelManager() {
@@ -67,6 +63,14 @@ public final class LevelManager {
 
 	private static int ARCADE_NUM = 0;
 
+	private static File LEVEL_DIR;
+
+	private static File CONFIG_DIR;
+	/**
+	 * The global data file for the {@link LevelManager}.
+	 */
+	private static File USER_DATA;
+
 	/**
 	 * Load levels.
 	 */
@@ -75,6 +79,7 @@ public final class LevelManager {
 			return;
 		}
 		LevelManager.initialized = true;
+		LevelManager.initDirectoriesAndFiles();
 		try {
 			LevelManager.loadAllLevels();
 		} catch (IOException e) {
@@ -82,6 +87,30 @@ public final class LevelManager {
 		}
 		LevelManager.loadDataFromFile();
 
+	}
+
+	private static void initDirectoriesAndFiles() {
+		File confdir = LevelManager.getConfDir();
+		confdir.mkdirs();
+		LevelManager.LEVEL_DIR = new File(confdir.getAbsolutePath() + "/levels");
+		LevelManager.LEVEL_DIR.mkdirs();
+		LevelManager.CONFIG_DIR = new File(confdir.getAbsolutePath() + "/config");
+		LevelManager.CONFIG_DIR.mkdirs();
+		LevelManager.USER_DATA = new File(LevelManager.CONFIG_DIR.getAbsolutePath() + "/levelManager.dat");
+		if (!LevelManager.USER_DATA.exists()) {
+			try {
+				LevelManager.USER_DATA.createNewFile();
+			} catch (IOException e) {
+				GameConf.GAME_LOGGER.error(e.getMessage());
+			}
+		}
+	}
+
+	private static File getConfDir() {
+		if (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0) {
+			return new File(System.getenv("APPDATA") + "/rekit");
+		}
+		return new File(System.getProperty("user.home") + "/.config/rekit");
 	}
 
 	/**
@@ -106,6 +135,22 @@ public final class LevelManager {
 		}).forEach(LevelManager::addArcadeLevel);
 
 		notNumbered.sorted((r1, r2) -> r1.toString().compareToIgnoreCase(r2.toString())).forEach(LevelManager::addArcadeLevel);
+
+		LevelManager.loadCustomLevels();
+
+	}
+
+	private static final void loadCustomLevels() {
+		File[] levels = LevelManager.LEVEL_DIR.listFiles();
+		for (File lv : levels) {
+			if (lv.getName().startsWith("level")) {
+				try {
+					LevelManager.addArcadeLevel(new FileInputStream(lv));
+				} catch (IOException | UnexpectedTokenException e) {
+					GameConf.GAME_LOGGER.error("Loading of " + lv.getName() + " failed: " + e.getMessage());
+				}
+			}
+		}
 
 	}
 
