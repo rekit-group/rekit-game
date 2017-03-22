@@ -9,3 +9,12 @@ stat.html
 *.checkstyle
 target*
 .recommenders/
+project/global/docs/
+project/logic/docs/
+project/persistence/docs/
+project/gui/docs/
+project/control/docs/
+project/basic/enemypack/docs/
+project/basic/inanimatepack/docs/
+project/game/docs/
+project/basic/pickuppack/docs/
