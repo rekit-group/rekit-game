@@ -10,58 +10,51 @@ public class LambdaTools {
 	}
 
 	@FunctionalInterface
-	public interface RunnableWithException<E extends Throwable> {
-		void apply() throws E;
+	public interface RunnableWithException {
+		void apply() throws Exception;
 	}
 
 	@FunctionalInterface
-	public interface FunctionWithException<I, O, E extends Throwable> {
-		O apply(I i) throws E;
+	public interface FunctionWithException<I, O> {
+		O apply(I i) throws Exception;
 	}
 
 	@FunctionalInterface
-	public interface ConsumerWithException<I, E extends Throwable> {
-		void apply(I i) throws E;
+	public interface ConsumerWithException<I> {
+		void apply(I i) throws Exception;
 	}
 
-	public static final <I, O, E extends Throwable> Function<I, O> tryCatch(Class<E> exType, FunctionWithException<I, O, E> in) {
+	public static final <I, O> Function<I, O> tryCatch(FunctionWithException<I, O> in) {
 		return i -> {
 			try {
 				return in.apply(i);
-			} catch (Throwable t) {
-				if (!exType.isInstance(t)) {
-					throw new RuntimeException(t);
-				}
-				GameConf.GAME_LOGGER.error(t.getMessage());
+			} catch (Exception e) {
+				GameConf.GAME_LOGGER.error(e.getMessage());
 				return null;
 			}
 		};
 	}
 
-	public static final <E extends Throwable> Runnable tryCatch(Class<E> exType, RunnableWithException<E> in) {
+	public static final Runnable tryCatch(RunnableWithException in) {
 		return () -> {
 			try {
 				in.apply();
-			} catch (Throwable t) {
-				if (!exType.isInstance(t)) {
-					throw new RuntimeException(t);
-				}
-				GameConf.GAME_LOGGER.error(t.getMessage());
+			} catch (Exception e) {
+				GameConf.GAME_LOGGER.error(e.getMessage());
 			}
 		};
+
 	}
 
-	public static final <I, E extends Throwable> Consumer<I> tryCatch(Class<E> exType, ConsumerWithException<I, E> in) {
+	public static final <I> Consumer<I> tryCatch(ConsumerWithException<I> in) {
 		return i -> {
 			try {
 				in.apply(i);
-			} catch (Throwable t) {
-				if (!exType.isInstance(t)) {
-					throw new RuntimeException(t);
-				}
-				GameConf.GAME_LOGGER.error(t.getMessage());
+			} catch (Exception e) {
+				GameConf.GAME_LOGGER.error(e.getMessage());
 			}
 		};
+
 	}
 
 }
