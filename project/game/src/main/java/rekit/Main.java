@@ -13,6 +13,8 @@ import rekit.config.GameConf;
 import rekit.controller.Controller;
 import rekit.gui.View;
 import rekit.logic.Model;
+import rekit.persistence.JarManager;
+import rekit.persistence.level.LevelManager;
 import rekit.util.ReflectUtils;
 import rekit.util.ThreadUtils;
 
@@ -40,8 +42,9 @@ public final class Main {
 	public static void main(String[] args) {
 		Thread.currentThread().setName("Startup");
 		Main.setLogLevel(GameConf.DEBUG ? Level.ALL : Level.FATAL);
-		// Load All Configs
-		Main.visitAllStatic();
+		JarManager.loadMods();
+		Main.applyAllConfigs();
+		LevelManager.init();
 
 		// Create MVC
 		// Set References:
@@ -82,8 +85,8 @@ public final class Main {
 	/**
 	 * Visit all Classes which shall be visited.
 	 */
-	private static final void visitAllStatic() {
-		Main.visitAllStatic(new ResourceBundleSetter());
+	private static final void applyAllConfigs() {
+		Main.applyAllConfigs(new ResourceBundleSetter());
 	}
 
 	/**
@@ -92,7 +95,7 @@ public final class Main {
 	 * @param setter
 	 *            the setter
 	 */
-	private static final void visitAllStatic(Setter setter) {
+	private static final void applyAllConfigs(Setter setter) {
 		ReflectUtils.getClasses(GameConf.SEARCH_PATH, Configurable.class).forEach(c -> setter.setAttributes(c));
 	}
 }

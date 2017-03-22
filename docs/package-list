@@ -30,6 +30,7 @@ rekit.logic.gui.parallax
 rekit.logic.level
 rekit.logic.scene
 rekit.parser
+rekit.persistence
 rekit.persistence.level
 rekit.persistence.level.token
 rekit.primitives.geometry

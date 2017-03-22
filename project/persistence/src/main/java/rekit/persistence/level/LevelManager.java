@@ -31,6 +31,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import rekit.config.GameConf;
+import rekit.persistence.DirFileDefinitions;
 import rekit.persistence.level.LevelDefinition.Type;
 import rekit.persistence.level.token.UnexpectedTokenException;
 
@@ -63,14 +64,6 @@ public final class LevelManager {
 
 	private static int ARCADE_NUM = 0;
 
-	private static File LEVEL_DIR;
-
-	private static File CONFIG_DIR;
-	/**
-	 * The global data file for the {@link LevelManager}.
-	 */
-	private static File USER_DATA;
-
 	/**
 	 * Load levels.
 	 */
@@ -79,7 +72,6 @@ public final class LevelManager {
 			return;
 		}
 		LevelManager.initialized = true;
-		LevelManager.initDirectoriesAndFiles();
 		try {
 			LevelManager.loadAllLevels();
 		} catch (IOException e) {
@@ -87,30 +79,6 @@ public final class LevelManager {
 		}
 		LevelManager.loadDataFromFile();
 
-	}
-
-	private static void initDirectoriesAndFiles() {
-		File confdir = LevelManager.getConfDir();
-		confdir.mkdirs();
-		LevelManager.LEVEL_DIR = new File(confdir.getAbsolutePath() + "/levels");
-		LevelManager.LEVEL_DIR.mkdirs();
-		LevelManager.CONFIG_DIR = new File(confdir.getAbsolutePath() + "/config");
-		LevelManager.CONFIG_DIR.mkdirs();
-		LevelManager.USER_DATA = new File(LevelManager.CONFIG_DIR.getAbsolutePath() + "/levelManager.dat");
-		if (!LevelManager.USER_DATA.exists()) {
-			try {
-				LevelManager.USER_DATA.createNewFile();
-			} catch (IOException e) {
-				GameConf.GAME_LOGGER.error(e.getMessage());
-			}
-		}
-	}
-
-	private static File getConfDir() {
-		if (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0) {
-			return new File(System.getenv("APPDATA") + "/rekit");
-		}
-		return new File(System.getProperty("user.home") + "/.config/rekit");
 	}
 
 	/**
@@ -141,7 +109,7 @@ public final class LevelManager {
 	}
 
 	private static final void loadCustomLevels() {
-		File[] levels = LevelManager.LEVEL_DIR.listFiles();
+		File[] levels = DirFileDefinitions.LEVEL_DIR.listFiles();
 		for (File lv : levels) {
 			if (lv.getName().startsWith("level")) {
 				try {
@@ -275,7 +243,7 @@ public final class LevelManager {
 	 */
 	private static void loadDataFromFile() {
 		try {
-			Scanner scanner = new Scanner(LevelManager.USER_DATA, Charset.defaultCharset().name());
+			Scanner scanner = new Scanner(DirFileDefinitions.USER_DATA, Charset.defaultCharset().name());
 			while (scanner.hasNextLine()) {
 				String[] levelinfo = scanner.nextLine().split(":");
 				if (levelinfo.length != DataKey.values().length + 1) {
@@ -294,7 +262,7 @@ public final class LevelManager {
 			}
 			scanner.close();
 		} catch (FileNotFoundException e) {
-			GameConf.GAME_LOGGER.error("Error while opening " + LevelManager.USER_DATA.getAbsolutePath() + " for scores and saves: FileNotFound");
+			GameConf.GAME_LOGGER.error("Error while opening " + DirFileDefinitions.USER_DATA.getAbsolutePath() + " for scores and saves: FileNotFound");
 		}
 	}
 
@@ -368,9 +336,9 @@ public final class LevelManager {
 	private static void saveToFile() {
 		OutputStream levelStream = null;
 		try {
-			levelStream = new FileOutputStream(LevelManager.USER_DATA);
+			levelStream = new FileOutputStream(DirFileDefinitions.USER_DATA);
 		} catch (IOException e) {
-			GameConf.GAME_LOGGER.error("Error while opening " + LevelManager.USER_DATA.getAbsolutePath() + " for saving scores and saves: FileNotFound");
+			GameConf.GAME_LOGGER.error("Error while opening " + DirFileDefinitions.USER_DATA.getAbsolutePath() + " for saving scores and saves: FileNotFound");
 			return;
 		}
 		byte[] bytes = LevelManager.convertToString().getBytes(Charset.defaultCharset());
@@ -379,7 +347,7 @@ public final class LevelManager {
 			levelStream.flush();
 			levelStream.close();
 		} catch (IOException e) {
-			GameConf.GAME_LOGGER.error("Error while saving " + LevelManager.USER_DATA.getAbsolutePath() + " for scores and saves: IOException");
+			GameConf.GAME_LOGGER.error("Error while saving " + DirFileDefinitions.USER_DATA.getAbsolutePath() + " for scores and saves: IOException");
 		}
 	}
 
