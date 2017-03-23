@@ -50,6 +50,6 @@ public class MenuActionItem extends MenuItem {
 	public void select() {
 		this.selected = true;
 		this.selectAction.run();
+		this.unselect();
 	}
-
 }

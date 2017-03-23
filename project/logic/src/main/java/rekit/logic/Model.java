@@ -95,6 +95,12 @@ public interface Model {
 		/**
 		 * This state indicates that currently a level is shown by the game.
 		 */
-		INGAME
+		INGAME,
+		
+		/**
+		 * This state indicates that currently a level is shown bd the game, and it is paused.
+		 * So a pause menu might be drawn.
+		 */
+		INGAME_PAUSED
 	}
 }

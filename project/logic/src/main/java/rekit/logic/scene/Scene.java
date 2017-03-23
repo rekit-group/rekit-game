@@ -111,6 +111,9 @@ abstract class Scene implements CameraTarget, IScene {
 
 		this.gameElementAddQueue = new ArrayDeque<>();
 		this.gameElementRemoveQueue = new ArrayDeque<>();
+		
+		// never start the game in paused state
+		this.setPause(false);
 	}
 
 	@Override
@@ -127,7 +130,17 @@ abstract class Scene implements CameraTarget, IScene {
 	public boolean isPaused() {
 		return this.paused;
 	}
-
+	
+	@Override
+	public void setPause(boolean pause) {
+		if (pause) {
+			GameTime.pause();
+		} else {
+			GameTime.resume();
+		}
+		this.paused = pause;
+	}
+	
 	@Override
 	public void end(boolean won) {
 		this.model.switchScene(Scenes.MENU);

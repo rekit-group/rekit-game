@@ -18,7 +18,7 @@ import rekit.primitives.geometry.Vec;
  * This class realizes the static part of the main menu of the game.
  *
  */
-final class MainMenu extends Scene {
+final class MainMenuScene extends Scene {
 	/**
 	 * The menu.
 	 */
@@ -30,7 +30,7 @@ final class MainMenu extends Scene {
 	 * @param model
 	 *            the model
 	 */
-	private MainMenu(GameModel model) {
+	private MainMenuScene(GameModel model) {
 		super(model);
 	}
 
@@ -44,7 +44,7 @@ final class MainMenu extends Scene {
 	 * @return a new arcade scene.
 	 */
 	public static Scene create(GameModel model, String[] options) {
-		return new MainMenu(model);
+		return new MainMenuScene(model);
 	}
 
 	@Override

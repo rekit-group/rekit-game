@@ -1,6 +1,7 @@
 package rekit.logic;
 
 import rekit.config.GameConf;
+import rekit.core.GameTime;
 import rekit.logic.gameelements.GameElementFactory;
 import rekit.logic.gameelements.entities.Entity;
 import rekit.logic.gui.menu.MenuItem;
@@ -118,6 +119,7 @@ public class GameModel implements Model {
 		this.curScene.stop();
 		this.curScene = nextScene;
 		this.state = Scenes.getByInstance(this.curScene).isMenu() ? GameState.MENU : GameState.INGAME;
+		GameTime.resume();
 	}
 
 	@Override
@@ -140,14 +142,14 @@ public class GameModel implements Model {
 
 	@Override
 	public MenuItem getMenu() {
-		if (this.state != GameState.MENU) {
-			return null;
-		}
 		return this.curScene.getMenu();
 	}
 
 	@Override
 	public GameState getState() {
+		if (this.state == GameState.INGAME || this.state == GameState.INGAME_PAUSED) {
+			this.state = this.curScene.isPaused() ? GameState.INGAME_PAUSED : GameState.INGAME;
+		}
 		return this.state;
 	}
 

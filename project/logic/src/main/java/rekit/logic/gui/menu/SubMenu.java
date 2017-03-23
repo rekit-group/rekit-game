@@ -51,12 +51,12 @@ public abstract class SubMenu extends MenuItem {
 	 *
 	 * @param i
 	 *            the item
-	 * @param itms
+	 * @param items
 	 *            more items
 	 */
-	public void addItem(MenuItem i, MenuItem... itms) {
+	public void addItem(MenuItem i, MenuItem... items) {
 		this.addItem(i);
-		for (MenuItem it : itms) {
+		for (MenuItem it : items) {
 			this.addItem(it);
 		}
 	}
@@ -84,6 +84,30 @@ public abstract class SubMenu extends MenuItem {
 		this.menuItems.remove(i);
 		this.index = 0;
 		this.calcItemPos();
+	}
+	
+	
+	/**
+	 * Set the index (only when the menu is currently shown).
+	 * On if the index is < 0 or >= length it will be set to 0 or length-1
+	 * 
+	 * @param index the new index.
+	 */
+	public void setIndex(int index) {
+		if (this.inMenu) {
+			return;
+		}
+		
+		
+		if (index < 0) {
+			this.index = 0;
+		}
+		else if (index >= this.menuItems.size()) {
+			this.index = this.menuItems.size() - 1;
+		}
+		else {
+			this.index = index;
+		}
 	}
 
 	/**
@@ -167,18 +191,19 @@ public abstract class SubMenu extends MenuItem {
 
 	@Override
 	public void select() {
-		if (this.selected && this.menuItems.get(this.index).isSelectable()) {
+		MenuItem currentItem = this.menuItems.get(this.index);
+		if (this.selected && currentItem.isSelectable()) {
 			// select a MenuItem && unselect me
 			this.selected = false;
 			this.inMenu = true;
-			this.menuItems.get(this.index).select();
+			currentItem.select();
 		} else if (this.inMenu) {
 			// pass select
-			this.menuItems.get(this.index).select();
+			currentItem.select();
 		} else {
 			// select me
 			this.selected = true;
-			this.menuItems.get(this.index).setHover(true);
+			currentItem.setHover(true);
 		}
 	}
 
