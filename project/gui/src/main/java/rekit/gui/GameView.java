@@ -317,7 +317,7 @@ class GameView implements View {
 			}
 		};
 		this.frame.addKeyListener(adapter);
-
+		this.canvas.addKeyListener(adapter);
 	}
 
 }
