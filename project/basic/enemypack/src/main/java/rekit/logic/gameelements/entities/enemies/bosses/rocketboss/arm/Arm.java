@@ -64,7 +64,7 @@ public class Arm extends RocketBossChild {
 		for (float dy = 0; dy <= this.maxLengthY; dy += RocketBoss.ARM_SEGMENT_DIST) {
 			// calculate angle
 			float dxdy = fndy(dy);
-			float angle = (float) Math.atan(dxdy);
+			float angle = (float) (2.0 * Math.atan(dxdy));
 
 			ArmSegment segment = new ArmSegment(this, fnVec(dy), angle);
 
@@ -117,11 +117,11 @@ public class Arm extends RocketBossChild {
 	}
 	
 	private float fn(float y) {
-		return this.parent.getXSignum() * this.curveA  * (float) Math.sin((y / maxLengthY) * (2 * Math.PI));
+		return this.parent.getXSignum() * this.curveA  * (float) Math.sin(this.getParent().getState().getTimeFactor() * (y / maxLengthY) * (2 * Math.PI));
 	}
 
 	private float fndy(float y) {
-		return this.parent.getXSignum() * this.curveA * (float) Math.cos((y / maxLengthY) * (2 * Math.PI));
+		return this.parent.getXSignum() * this.curveA * (float) Math.cos(this.getParent().getState().getTimeFactor() * (y / maxLengthY) * (2 * Math.PI));
 	}
 
 	private Vec getHandPos() {

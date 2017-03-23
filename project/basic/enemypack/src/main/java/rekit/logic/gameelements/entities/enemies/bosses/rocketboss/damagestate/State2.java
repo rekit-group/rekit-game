@@ -9,7 +9,7 @@ public class State2 extends DamageState {
 
 	@Override
 	public float getTimeFactor() {
-		return 2E-3F;
+		return 2;
 	}
 	
 	@Override

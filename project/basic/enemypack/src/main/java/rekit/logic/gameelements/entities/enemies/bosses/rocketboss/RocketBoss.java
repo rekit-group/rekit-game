@@ -55,26 +55,29 @@ public class RocketBoss extends Boss {
 	public static RGBColor MOUTH_BG_COL = new RGBColor(183, 183, 183);
 	
 	public static Vec[] ARM_POSITIONS = new Vec[]{new Vec(0.85f, 0.8f), new Vec(-0.85f, 0.8f)};
-	public static float[][] ARM_SHAPE_SETTINGS = new float[][]{new float[]{0.3f, 0.2f, 2f, 0.3f}, new float[]{0.2f, 0.1f, 0.6f, 0.3f}};
+	public static float[][] ARM_SHAPE_SETTINGS = new float[][]{new float[]{0.3f, 0.2f, 2f, 0.3f}, new float[]{0.15f, 0.08f, 0.65f, 0.2f}};
 	public static float[] ARM_ACTION_PROGRESS_THRESHOLDS = new float[]{0.1f, 0.4f};
 	
-	public static Vec ARM_ACTION_ROCKET_LAUNCHER_SIZE = new Vec(0.8f, 0.4f);
-	public static RGBColor ARM_ACTION_ROCKET_LAUNCHER_COLOR = new RGBColor(160, 160, 160);
+	public static Vec ARM_ACTION_ROCKET_LAUNCHER_SIZE = new Vec(1.2f, 0.6f);
+	public static String ARM_ACTION_ROCKET_LAUNCHER_SOURCE_LEFT = "rocketBoss/cannon_left.png";
+	public static String ARM_ACTION_ROCKET_LAUNCHER_SOURCE_RIGHT = "rocketBoss/cannon_right.png";
 	
-	public static float ARM_SEGMENT_DIST = 0.1f;
 	public static Vec ARM_SEGMENT_SIZE = new Vec(0.25f, 0.25f);
+	public static float ARM_SEGMENT_DIST = 0.04f;
+	public static RGBColor ARM_SEGMENT_COL = new RGBColor(160, 160, 160);
+	public static RGBColor ARM_SEGMENT_BORDER_COL = new RGBColor(76, 76, 76);
+	
 	
 	public static long ARM_STATE_TIME_IDLE = 2000;
 	public static long ARM_STATE_TIME_BUILD = 2000;
 	public static long ARM_STATE_TIME_ACTION = 4000;
 	public static long ARM_STATE_TIME_UNBUILD = 2000;
 
-	public static RGBColor ARM_SEGMENT_COL = new RGBColor(160, 160, 160);
-	public static RGBColor ARM_SEGMENT_BORDER_COL = new RGBColor(77, 7, 7);
 	
-	public static Vec[] POSITIONS = new Vec[]{new Vec(), new Vec(-8, 0), new Vec(3, 0), new Vec(-14, 0.6f), new Vec(3, 0.6f), new Vec(-3, -1.8f)};
+	
+	public static Vec[] POSITIONS = new Vec[]{new Vec(), new Vec(-8, 0), new Vec(3, 0), new Vec(-14, 0.3f), new Vec(3, 0.3f), new Vec(-3, -1.8f)};
 	public static Direction[] DIRECTIONS = new Direction[]{Direction.LEFT, Direction.RIGHT, Direction.LEFT, Direction.RIGHT, Direction.LEFT, Direction.LEFT};
-	private static long NEXT_POS_DURATION = 2;
+	private static long NEXT_POS_DURATION = 2000;
 	
 	private int positionId = 0;
 	
@@ -161,13 +164,13 @@ public class RocketBoss extends Boss {
 			this.nextPosTimer.logicLoop();
 		}
 				
-		// add deltaTime with factor to local x
-		float deltaX = this.deltaTime * this.getState().getTimeFactor();
+		// add deltaTime with factor to local x (1000 to get u/s)
+		float deltaX = this.deltaTime * this.getState().getTimeFactor() / 1000;
 		this.calcX += deltaX;
 
 		// calculate and update position
 		Vec scaleVec = new Vec( //
-				(float) Math.sin(RocketBoss.MOVEMENT_PERIOD.getX() * this.calcX), //
+				(float) Math.sin(RocketBoss.MOVEMENT_PERIOD.getX() * this.calcX),
 				(float) Math.cos(RocketBoss.MOVEMENT_PERIOD.getY() * this.calcX));
 		Vec scaledUnit = RocketBoss.MOVEMENT_RANGE.multiply(scaleVec);
 		

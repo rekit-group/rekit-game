@@ -63,7 +63,8 @@ public class ArmSegment extends GameElement {
 
 	public void internalRender(GameGrid f) {
 		f.drawPolygon(this.shape, RocketBoss.ARM_SEGMENT_COL, true);
-		f.drawPath(this.getPos(), pathRight, RocketBoss.ARM_SEGMENT_BORDER_COL, 2);
-		f.drawPath(this.getPos(), pathLeft, RocketBoss.ARM_SEGMENT_BORDER_COL, 2);
+		
+		f.drawPath(this.getPos(), pathRight, RocketBoss.ARM_SEGMENT_BORDER_COL, 1);
+		f.drawPath(this.getPos(), pathLeft, RocketBoss.ARM_SEGMENT_BORDER_COL, 1);
 	}
 }

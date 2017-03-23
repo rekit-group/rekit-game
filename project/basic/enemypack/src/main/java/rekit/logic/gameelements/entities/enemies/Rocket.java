@@ -72,7 +72,10 @@ public final class Rocket extends Enemy implements Configurable {
 	
 	@NoSet
 	private Direction direction;
-
+	
+	@NoSet
+	private float currentSpeed = Rocket.SPEED;
+	
 	/**
 	 * Create a rocket by start position.
 	 *
@@ -117,7 +120,7 @@ public final class Rocket extends Enemy implements Configurable {
 	@Override
 	protected void innerLogicLoop() {
 		// move ahead with player max speed
-		this.setPos(this.getPos().addX(this.getXSignum() * Rocket.SPEED * this.deltaTime / 1000F));
+		this.setPos(this.getPos().addX(this.getXSignum() * this.currentSpeed * this.deltaTime / 1000F));
 
 		// spawn particles
 		this.paricleTimer.logicLoop();
@@ -126,6 +129,20 @@ public final class Rocket extends Enemy implements Configurable {
 			this.paricleTimer.reset();
 			Rocket.sparkParticles.spawn(this.getScene(), this.getPos().addX(-this.getXSignum() * this.getSize().getX() / 2));
 		}
+	}
+	
+	/**
+	 * Sets the speed of the rocket
+	 * @param speed the new speed
+	 */
+	public void setSpeed(float speed) {
+		this.currentSpeed = speed;
+	}
+	/**
+	 * Resets the Rockets speed to the default speed as specified by configuration. 
+	 */
+	public void resetSpeed() {
+		this.currentSpeed = Rocket.SPEED;
 	}
 
 	@Override
