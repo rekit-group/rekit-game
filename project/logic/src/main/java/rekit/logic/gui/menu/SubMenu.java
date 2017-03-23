@@ -88,7 +88,7 @@ public abstract class SubMenu extends MenuItem {
 
 	/**
 	 * Set the index (only when the menu is currently shown). On if the index is
-	 * < 0 or >= length it will be set to 0 or length-1
+	 * &lt; 0 or &ge; length it will be set to 0 or length-1
 	 *
 	 * @param index
 	 *            the new index.
