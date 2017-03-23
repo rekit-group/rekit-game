@@ -72,6 +72,6 @@ public class MenuActionItem extends MenuItem {
 			this.unselect();
 		}
 		this.selectAction.run();
+		this.unselect();
 	}
-
 }

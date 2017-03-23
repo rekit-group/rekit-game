@@ -20,7 +20,7 @@ public enum Scenes {
 	/**
 	 * A Menu.
 	 */
-	MENU(MainMenu.class),
+	MENU(MainMenuScene.class),
 	/**
 	 * An infinite level.
 	 */
@@ -72,7 +72,7 @@ public enum Scenes {
 	 * @return {@code true} if it is a menu, {@code false} otherwise
 	 */
 	public boolean isMenu() {
-		return this.sceneClass.isAssignableFrom(MainMenu.class);
+		return this.sceneClass.isAssignableFrom(MainMenuScene.class);
 	}
 
 	/**

@@ -9,6 +9,7 @@ import java.util.Set;
 
 import rekit.config.GameConf;
 import rekit.core.CameraTarget;
+import rekit.core.GameTime;
 import rekit.logic.GameModel;
 import rekit.logic.filters.GrayScaleMode;
 import rekit.logic.gameelements.GameElement;
@@ -18,7 +19,10 @@ import rekit.logic.gui.LifeGui;
 import rekit.logic.gui.ScoreGui;
 import rekit.logic.gui.Text;
 import rekit.logic.gui.TimeDecorator;
+import rekit.logic.gui.menu.MenuActionItem;
 import rekit.logic.gui.menu.MenuItem;
+import rekit.logic.gui.menu.MenuList;
+import rekit.logic.gui.menu.SubMenu;
 import rekit.logic.gui.parallax.HeapElementCloud;
 import rekit.logic.gui.parallax.HeapElementMountain;
 import rekit.logic.gui.parallax.HeapLayer;
@@ -40,6 +44,12 @@ import rekit.util.TextOptions;
  *
  */
 public abstract class LevelScene extends Scene {
+	
+	/**
+	 * Menu than will be displayed when the game is paused.	
+	 */
+	protected SubMenu pauseMenu;
+	
 	/**
 	 * The player in the scene.
 	 */
@@ -118,7 +128,21 @@ public abstract class LevelScene extends Scene {
 		Text levelText = new Text(this, op).setText(this.level.getDefinition().getName());
 		levelText.setPos(CalcUtil.units2pixel(new Vec(GameConf.GRID_W / 2f, GameConf.GRID_H / 2f)));
 		this.addGuiElement(new TimeDecorator(this, levelText, new Timer(5000)));
+		
+		
+		// create pause menu
+		this.pauseMenu = new MenuList(this, "Pause Menu");
+		this.pauseMenu.setPos(new Vec(GameConf.PIXEL_W / 2f, GameConf.PIXEL_H / 2f));
 
+		MenuActionItem resume = new MenuActionItem(this, "Resume", () -> this.togglePause());
+		MenuActionItem restart = new MenuActionItem(this, "Restart", () -> this.restart());
+		MenuActionItem back = new MenuActionItem(this, "Exit to Main Menu", () -> this.getModel().switchScene(Scenes.MENU));
+		MenuActionItem desktop = new MenuActionItem(this, "Exit to Desktop", () -> System.exit(0));
+		
+		this.pauseMenu.addItem(resume, restart, back, desktop);
+		this.pauseMenu.setVisible(false);
+		this.pauseMenu.select();
+		this.addGuiElement(pauseMenu);
 	}
 
 	@Override
@@ -161,11 +185,22 @@ public abstract class LevelScene extends Scene {
 			this.getModel().setFilter(new GrayScaleMode());
 		}
 	}
+	
+	
+	@Override
+	public void togglePause() {
+		super.togglePause();
+		System.out.println("pause");
+		this.pauseMenu.setVisible(!this.pauseMenu.isVisible()); // toggle visibility of pause menu
+		this.pauseMenu.setIndex(0);
+		
+	}
 
 	@Override
 	public void restart() {
+		// TODO Timer.sleep doesn't work!!!
 		// wait 2 seconds
-		Timer.sleep(2000);
+		// Timer.sleep(2000);
 		// reset all data structures
 		this.init();
 		// restart logic thread
@@ -183,7 +218,6 @@ public abstract class LevelScene extends Scene {
 		}
 
 		this.parallax.logicLoop(this.getCameraOffset());
-
 	}
 
 	@Override
@@ -248,6 +282,9 @@ public abstract class LevelScene extends Scene {
 
 	@Override
 	public final MenuItem getMenu() {
+		if (this.isPaused()) {
+			return this.pauseMenu;
+		}
 		throw new UnsupportedOperationException("Menu not supported in LevelScene");
 	}
 }

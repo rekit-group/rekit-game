@@ -85,6 +85,27 @@ public abstract class GuiElement {
 	}
 
 	/**
+	 * Get the current visibility.
+	 * 
+	 * @return the current visibility
+	 */
+	public boolean isVisible() {
+		return visible;
+	}
+
+
+	/**
+	 * Set the visibility. An invisible Element will not be rendered.
+	 * 
+	 * @param visible
+	 * 				the new visibility
+	 */
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+	}
+
+
+	/**
 	 * Get the corresponding scene.
 	 *
 	 * @return the scene
