@@ -247,7 +247,8 @@ public class RocketBoss extends Boss {
 		}
 		if (this.getTeam().isHostile(element.getTeam())) {
 			element.addDamage(1);
-			element.collidedWith(this.getCollisionFrame(), dir);
+			element.collidedWith(this.getCollisionFrame(), dir.getOpposite());
+			element.setVel(element.getVel().add(Direction.DOWN.getVector().scalar(-GameConf.PLAYER_KILL_BOOST)));
 		}
 	}
 	

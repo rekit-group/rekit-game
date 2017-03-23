@@ -108,4 +108,8 @@ public enum Direction {
 	public static Direction getRandom() {
 		return Direction.values()[(int) (GameConf.PRNG.nextDouble() * Direction.values().length)];
 	}
+
+	public Direction getOpposite() {
+		return Direction.getOpposite(this);
+	}
 }
