@@ -124,7 +124,7 @@ public final class Rocket extends Enemy implements Configurable {
 		// this.paricleTimer.removeTime(this.deltaTime);
 		if (this.paricleTimer.timeUp()) {
 			this.paricleTimer.reset();
-			Rocket.sparkParticles.spawn(this.getScene(), this.getPos().addX(this.getSize().getX() / 2));
+			Rocket.sparkParticles.spawn(this.getScene(), this.getPos().addX(-this.getXSignum() * this.getSize().getX() / 2));
 		}
 	}
 
