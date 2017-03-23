@@ -8,6 +8,7 @@ import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.RocketBoss;
 import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm.armaction.ArmAction;
 import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm.armstate.ArmIdleState;
 import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm.armstate.ArmState;
+import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Vec;
 import rekit.util.CalcUtil;
 import rekit.util.state.TimeStateMachine;
@@ -30,7 +31,7 @@ public class Arm extends RocketBossChild {
 	
 	public ArmAction armAction;
 
-	public Arm(GameElement parent, Vec relPos, float[] shapeSettings, float actionProgressThreshold) {
+	public Arm(RocketBoss parent, Vec relPos, float[] shapeSettings, float actionProgressThreshold) {
 		super(parent, relPos);
 		
 		// TODO passing float arrays is not exactly best practice
@@ -114,21 +115,21 @@ public class Arm extends RocketBossChild {
 	public Vec fnVec(float y) {
 		return new Vec(fn(y), y);
 	}
-
-	public float fn(float y) {
-		return -this.curveA * (float) Math.sin((y / maxLengthY) * (2 * Math.PI));
+	
+	private float fn(float y) {
+		return this.parent.getXSignum() * this.curveA  * (float) Math.sin((y / maxLengthY) * (2 * Math.PI));
 	}
 
-	public float fndy(float y) {
-		return -this.curveA * (float) Math.cos((y / maxLengthY) * (2 * Math.PI));
+	private float fndy(float y) {
+		return this.parent.getXSignum() * this.curveA * (float) Math.cos((y / maxLengthY) * (2 * Math.PI));
 	}
 
-	public Vec getHandPos() {
+	private Vec getHandPos() {
 		return this.armSegments.getLast().getPos();
 	}
 
 	@Override
-	public RocketBossChild create(GameElement parent, Vec relPos) {
+	public RocketBossChild create(RocketBoss parent, Vec relPos) {
 		return new Arm(parent, relPos, new float[]{0,0,0,0}, 0);
 	}
 

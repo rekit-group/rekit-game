@@ -2,6 +2,7 @@ package rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm.armactio
 
 import rekit.core.GameGrid;
 import rekit.logic.gameelements.GameElement;
+import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.RocketBoss;
 import rekit.logic.gameelements.entities.enemies.cannon.Cannon;
 import rekit.primitives.geometry.Vec;
 
@@ -9,7 +10,7 @@ public class ArmActionCannon extends ArmAction {
 	
 	private GameElement innerCannon;
 	
-	public ArmActionCannon(GameElement parent, Vec relPos) {
+	public ArmActionCannon(RocketBoss parent, Vec relPos) {
 		super(parent, relPos);
 		
 		innerCannon = new Cannon().create(this.getPos(), new String[]{});
@@ -32,7 +33,7 @@ public class ArmActionCannon extends ArmAction {
 	}
 
 	@Override
-	public ArmAction create(GameElement parent, Vec relPos) {
+	public ArmAction create(RocketBoss parent, Vec relPos) {
 		return new ArmActionCannon(parent, relPos);
 	}
 	

@@ -69,6 +69,9 @@ public final class Rocket extends Enemy implements Configurable {
 	 */
 	@NoSet
 	private Timer paricleTimer;
+	
+	@NoSet
+	private Direction direction;
 
 	/**
 	 * Create a rocket by start position.
@@ -78,6 +81,7 @@ public final class Rocket extends Enemy implements Configurable {
 	 */
 	public Rocket(Vec startPos) {
 		super(startPos, new Vec(), new Vec(1.8f, 0.5f));
+		this.direction = Direction.LEFT;
 		this.paricleTimer = new Timer((long) (1000 * Rocket.PARTICLE_SPAWN_TIME));
 	}
 
@@ -86,25 +90,25 @@ public final class Rocket extends Enemy implements Configurable {
 		// draw body
 		f.drawRectangle(this.getPos(), this.getSize().scalar(0.8f, 0.6f), Rocket.INNER_COLOR);
 		// draw spike at front
-		Vec startPt = this.getPos().addX(-this.getSize().scalar(0.5f).getX());
+		Vec startPt = this.getPos().addX(this.getXSignum() * this.getSize().scalar(0.5f).getX());
 		Vec[] relPts = new Vec[] { //
-				new Vec(this.getSize().scalar(0.1f).getX(), -this.getSize().scalar(0.5f).getY()),
-				new Vec(this.getSize().scalar(0.1f).getX(), this.getSize().scalar(0.5f).getY()), //
+				new Vec(-this.getXSignum() * this.getSize().scalar(0.1f).getX(), -this.getSize().scalar(0.5f).getY()),
+				new Vec(-this.getXSignum() * this.getSize().scalar(0.1f).getX(), this.getSize().scalar(0.5f).getY()), //
 				new Vec() //
 		};
 		f.drawPolygon(new Polygon(startPt, relPts), Rocket.FRONT_COLOR, true);
 
 		// draw stripes
-		Vec stripeStart = this.getPos().addX(-this.getSize().scalar(0.4f - 0.05f - 0.025f).getX());
+		Vec stripeStart = this.getPos().addX(this.getSize().scalar(this.getXSignum()*(0.05f + 0.025f - 0.4f)).getX());
 		for (int x = 0; x < 9; x++) {
-			f.drawRectangle(stripeStart.addX(0.15f * x), this.getSize().scalar(0.05f, 0.75f), Rocket.OUTER_COLOR);
+			f.drawRectangle(stripeStart.addX(this.getXSignum() * 0.15f * x), this.getSize().scalar(0.05f, 0.75f), Rocket.OUTER_COLOR);
 		}
 
 		// draw drive at back
-		startPt = this.getPos().addX(this.getSize().scalar(0.5f).getX()).addY(-this.getSize().scalar(0.5f).getY());
+		startPt = this.getPos().addX(this.getSize().scalar(-this.getXSignum() * 0.5f).getX()).addY(-this.getSize().scalar(0.5f).getY());
 		relPts = new Vec[] { //
-				new Vec(0, this.getSize().getY()), new Vec(-this.getSize().getX() * 0.1f, this.getSize().getY() * 0.8f),
-				new Vec(-this.getSize().getX() * 0.1f, this.getSize().getY() * 0.2f), //
+				new Vec(0, this.getSize().getY()), new Vec(this.getXSignum() * this.getSize().getX() * 0.1f, this.getSize().getY() * 0.8f),
+				new Vec(this.getXSignum() * this.getSize().getX() * 0.1f, this.getSize().getY() * 0.2f), //
 				new Vec() //
 		};
 		f.drawPolygon(new Polygon(startPt, relPts), Rocket.OUTER_COLOR, true);
@@ -113,7 +117,7 @@ public final class Rocket extends Enemy implements Configurable {
 	@Override
 	protected void innerLogicLoop() {
 		// move ahead with player max speed
-		this.setPos(this.getPos().addX(-Rocket.SPEED * this.deltaTime / 1000F));
+		this.setPos(this.getPos().addX(this.getXSignum() * Rocket.SPEED * this.deltaTime / 1000F));
 
 		// spawn particles
 		this.paricleTimer.logicLoop();
@@ -147,7 +151,27 @@ public final class Rocket extends Enemy implements Configurable {
 
 	@Override
 	public Entity create(Vec startPos, String[] options) {
-		return new Rocket(startPos);
+		Rocket inst = new Rocket(startPos);
+		
+		// if option 0 is given: set defined direction
+		if (options.length >= 1 && options[0] != null && options[0].matches("(\\+|-)?[0-3]+")) {
+			int opt = Integer.parseInt(options[0]);
+			if (opt >= 0 && opt < Direction.values().length) {
+				inst.setDirection(Direction.values()[opt]);
+			} else {
+				GameConf.GAME_LOGGER.error("RektKiller was supplied invalid option " + options[0] + " at index 0 for Direction");
+			}
+		}
+		
+		return inst;
+	}
+	
+	public float getXSignum() {	
+		return (this.direction == Direction.RIGHT) ? 1 : -1;
+	}
+
+	private void setDirection(Direction direction) {
+		this.direction = direction;
 	}
 
 }

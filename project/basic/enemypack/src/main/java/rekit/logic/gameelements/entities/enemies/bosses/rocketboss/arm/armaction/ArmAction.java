@@ -3,6 +3,7 @@ package rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm.armactio
 import rekit.config.GameConf;
 import rekit.core.GameGrid;
 import rekit.logic.gameelements.GameElement;
+import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.RocketBoss;
 import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm.RocketBossChild;
 import rekit.primitives.geometry.Vec;
 
@@ -19,7 +20,7 @@ public abstract class ArmAction extends RocketBossChild {
 		super();
 	}
 	
-	public ArmAction(GameElement parent, Vec relPos) {
+	public ArmAction(RocketBoss parent, Vec relPos) {
 		super(parent, relPos);
 	}
 	

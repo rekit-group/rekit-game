@@ -8,7 +8,7 @@ import rekit.primitives.geometry.Vec;
 
 public class ArmActionRocketLauncher extends ArmAction {
 	
-	public ArmActionRocketLauncher(GameElement parent, Vec relPos) {
+	public ArmActionRocketLauncher(RocketBoss parent, Vec relPos) {
 		super(parent, relPos);
 	}
 	
@@ -17,18 +17,18 @@ public class ArmActionRocketLauncher extends ArmAction {
 	}
 	
 	public void perform() {
-		GameElement rocket = new Rocket().create(this.getPos(), new String[]{});
+		GameElement rocket = new Rocket().create(this.getPos(), new String[]{Integer.toString(this.parent.getDirection().ordinal())});
 		this.parent.getScene().addGameElement(rocket);
 	}
 
 	@Override
-	public ArmAction create(GameElement parent, Vec relPos) {
+	public ArmAction create(RocketBoss parent, Vec relPos) {
 		return new ArmActionRocketLauncher(parent, relPos);
 	}
 	
 	
 	@Override
 	public void internalRender(GameGrid f) {
-		f.drawRectangle(this.getPos().addX(-0.2f), RocketBoss.ARM_ACTION_ROCKET_LAUNCHER_SIZE, RocketBoss.ARM_ACTION_ROCKET_LAUNCHER_COLOR);
+		f.drawRectangle(this.getPos().addX(this.parent.getXSignum() * 0.2f), RocketBoss.ARM_ACTION_ROCKET_LAUNCHER_SIZE, RocketBoss.ARM_ACTION_ROCKET_LAUNCHER_COLOR);
 	}
 }

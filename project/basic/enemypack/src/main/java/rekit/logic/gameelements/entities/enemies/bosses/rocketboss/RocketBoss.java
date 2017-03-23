@@ -3,6 +3,8 @@ package rekit.logic.gameelements.entities.enemies.bosses.rocketboss;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
+import rekit.config.GameConf;
 import rekit.core.GameGrid;
 import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm.Arm;
@@ -14,6 +16,9 @@ import rekit.primitives.geometry.Direction;
 import rekit.logic.level.BossStructure;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBColor;
+import rekit.primitives.operable.OpProgress;
+import rekit.primitives.time.Progress;
+import rekit.primitives.time.Timer;
 import rekit.util.ReflectUtils.LoadMe;
 import rekit.util.state.TimeStateMachine;
 
@@ -66,7 +71,21 @@ public class RocketBoss extends Boss {
 
 	public static RGBColor ARM_SEGMENT_COL = new RGBColor(160, 160, 160);
 	public static RGBColor ARM_SEGMENT_BORDER_COL = new RGBColor(77, 7, 7);
+	
+	public static Vec[] POSITIONS = new Vec[]{new Vec(), new Vec(-8, 0), new Vec(3, 0), new Vec(-14, 0.6f), new Vec(3, 0.6f), new Vec(-3, -1.8f)};
+	public static Direction[] DIRECTIONS = new Direction[]{Direction.LEFT, Direction.RIGHT, Direction.LEFT, Direction.RIGHT, Direction.LEFT, Direction.LEFT};
+	private static long NEXT_POS_DURATION = 2;
+	
+	private int positionId = 0;
+	
+	private Timer nextPosTimer;
+	
+	private OpProgress<Vec> nextPosProgress;
 
+	private Direction currentDirection;
+	
+	
+	
 	/**
 	 * Standard constructor
 	 */
@@ -80,13 +99,52 @@ public class RocketBoss extends Boss {
 		this.machine = new TimeStateMachine(new State3());
 		this.mouth = new Mouth(this, RocketBoss.MOUTH_POS, RocketBoss.MOUTH_SIZE, RocketBoss.MOUTH_BG_COL);
 		this.setLives(RocketBoss.LIVES);
-		
 		this.arms = new LinkedList<Arm>();
+		
+		this.moveToNextPosition(0);
+		
 		for (int i = 0; i < RocketBoss.ARM_POSITIONS.length; ++i) {
 			float[] shapeSettings = ARM_SHAPE_SETTINGS[i];
 			this.arms.add(new Arm(this, RocketBoss.ARM_POSITIONS[i], shapeSettings, ARM_ACTION_PROGRESS_THRESHOLDS[i]));
 		}
 		
+	}
+	
+	public Vec getCurrentBasePos() {
+		return startPos.add(this.nextPosProgress.getNow(this.nextPosTimer.getProgress()));
+	}
+	
+	public Direction getDirection() {	
+		return this.currentDirection;
+	}
+	public float getXSignum() {	
+		return (this.currentDirection == Direction.RIGHT) ? 1 : -1;
+	}
+	
+	/**
+	 * Moves to the next position of the RocketBoss.
+	 * The current positions can be accessed via the OpProgress nextPosProgress and
+	 * the Timer nextPosTimer. 
+	 * @param i the id of the position to start moving to. Can be the old position id too.
+	 */
+	private void moveToNextPosition(int i) {
+		// if currently still moving: return
+		if (this.nextPosTimer != null && !this.nextPosTimer.timeUp()) {
+			return;
+		}
+		Vec oldPosition = RocketBoss.POSITIONS[this.positionId];
+		Vec newPosition = RocketBoss.POSITIONS[i];
+		this.currentDirection = RocketBoss.DIRECTIONS[i];
+		
+		System.out.println(this.positionId + " / " + oldPosition + " -> " + i + " / " + newPosition);
+		this.nextPosProgress = new OpProgress<Vec>(oldPosition, newPosition);
+		
+		this.nextPosTimer = new Timer((long) (RocketBoss.NEXT_POS_DURATION / this.getState().getTimeFactor()));
+		this.positionId = i;
+	}
+	
+	public void moveToNextPosition() {
+		moveToNextPosition(GameConf.PRNG.nextInt(RocketBoss.POSITIONS.length));
 	}
 
 	public DamageState getState() {
@@ -99,6 +157,9 @@ public class RocketBoss extends Boss {
 		
 		super.innerLogicLoop();
 		
+		if (this.nextPosTimer != null) {
+			this.nextPosTimer.logicLoop();
+		}
 				
 		// add deltaTime with factor to local x
 		float deltaX = this.deltaTime * this.getState().getTimeFactor();
@@ -109,7 +170,8 @@ public class RocketBoss extends Boss {
 				(float) Math.sin(RocketBoss.MOVEMENT_PERIOD.getX() * this.calcX), //
 				(float) Math.cos(RocketBoss.MOVEMENT_PERIOD.getY() * this.calcX));
 		Vec scaledUnit = RocketBoss.MOVEMENT_RANGE.multiply(scaleVec);
-		this.setPos(this.startPos.add(scaledUnit));
+		
+		this.setPos(this.getCurrentBasePos().add(scaledUnit));
 
 		this.mouth.logicLoop(this.calcX, deltaX);
 		
