@@ -93,7 +93,9 @@ public final class Timer {
 
 	/**
 	 * This method can be used instead of {@link ThreadUtils#sleep(long)} if
-	 * {@link GameTime#pause()} shall take effect.
+	 * {@link GameTime#pause()} shall take effect.<br>
+	 * <b>Be careful: If game is paused, this method will cause endless
+	 * waiting</b>
 	 *
 	 * @param offset
 	 *            the time to wait in millis

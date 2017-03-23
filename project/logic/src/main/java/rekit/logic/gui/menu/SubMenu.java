@@ -85,27 +85,24 @@ public abstract class SubMenu extends MenuItem {
 		this.index = 0;
 		this.calcItemPos();
 	}
-	
-	
+
 	/**
-	 * Set the index (only when the menu is currently shown).
-	 * On if the index is < 0 or >= length it will be set to 0 or length-1
-	 * 
-	 * @param index the new index.
+	 * Set the index (only when the menu is currently shown). On if the index is
+	 * < 0 or >= length it will be set to 0 or length-1
+	 *
+	 * @param index
+	 *            the new index.
 	 */
 	public void setIndex(int index) {
 		if (this.inMenu) {
 			return;
 		}
-		
-		
+
 		if (index < 0) {
 			this.index = 0;
-		}
-		else if (index >= this.menuItems.size()) {
+		} else if (index >= this.menuItems.size()) {
 			this.index = this.menuItems.size() - 1;
-		}
-		else {
+		} else {
 			this.index = index;
 		}
 	}

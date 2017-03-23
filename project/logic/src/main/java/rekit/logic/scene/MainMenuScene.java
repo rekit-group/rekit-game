@@ -80,7 +80,7 @@ final class MainMenuScene extends Scene {
 		MenuList settings = new MenuList(this, "Settings");
 		settings.addItem( //
 				new BoolSetting(this, "Debug Mode", "DEBUG"), //
-				new MenuActionItem(this, "Open Config", LambdaTools.tryCatch(() -> Desktop.getDesktop().open(DirFileDefinitions.SYS_CONF)), true)//
+				new MenuActionItem(this, "Open Config", LambdaTools.tryCatch(() -> Desktop.getDesktop().open(DirFileDefinitions.SYS_CONF))) //
 		);
 
 		MenuList about = new MenuList(this, "About");

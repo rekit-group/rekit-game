@@ -9,7 +9,6 @@ import java.util.Set;
 
 import rekit.config.GameConf;
 import rekit.core.CameraTarget;
-import rekit.core.GameTime;
 import rekit.logic.GameModel;
 import rekit.logic.filters.GrayScaleMode;
 import rekit.logic.gameelements.GameElement;
@@ -35,6 +34,7 @@ import rekit.primitives.geometry.Vec;
 import rekit.primitives.time.Timer;
 import rekit.util.CalcUtil;
 import rekit.util.TextOptions;
+import rekit.util.ThreadUtils;
 
 /**
  * Scene that holds a playable Level created by a LevelCreator. Different Levels
@@ -44,12 +44,12 @@ import rekit.util.TextOptions;
  *
  */
 public abstract class LevelScene extends Scene {
-	
+
 	/**
-	 * Menu than will be displayed when the game is paused.	
+	 * Menu than will be displayed when the game is paused.
 	 */
 	protected SubMenu pauseMenu;
-	
+
 	/**
 	 * The player in the scene.
 	 */
@@ -128,8 +128,7 @@ public abstract class LevelScene extends Scene {
 		Text levelText = new Text(this, op).setText(this.level.getDefinition().getName());
 		levelText.setPos(CalcUtil.units2pixel(new Vec(GameConf.GRID_W / 2f, GameConf.GRID_H / 2f)));
 		this.addGuiElement(new TimeDecorator(this, levelText, new Timer(5000)));
-		
-		
+
 		// create pause menu
 		this.pauseMenu = new MenuList(this, "Pause Menu");
 		this.pauseMenu.setPos(new Vec(GameConf.PIXEL_W / 2f, GameConf.PIXEL_H / 2f));
@@ -138,11 +137,11 @@ public abstract class LevelScene extends Scene {
 		MenuActionItem restart = new MenuActionItem(this, "Restart", () -> this.restart());
 		MenuActionItem back = new MenuActionItem(this, "Exit to Main Menu", () -> this.getModel().switchScene(Scenes.MENU));
 		MenuActionItem desktop = new MenuActionItem(this, "Exit to Desktop", () -> System.exit(0));
-		
+
 		this.pauseMenu.addItem(resume, restart, back, desktop);
 		this.pauseMenu.setVisible(false);
 		this.pauseMenu.select();
-		this.addGuiElement(pauseMenu);
+		this.addGuiElement(this.pauseMenu);
 	}
 
 	@Override
@@ -185,22 +184,22 @@ public abstract class LevelScene extends Scene {
 			this.getModel().setFilter(new GrayScaleMode());
 		}
 	}
-	
-	
+
 	@Override
 	public void togglePause() {
 		super.togglePause();
 		System.out.println("pause");
-		this.pauseMenu.setVisible(!this.pauseMenu.isVisible()); // toggle visibility of pause menu
+		this.pauseMenu.setVisible(!this.pauseMenu.isVisible()); // toggle
+																// visibility of
+																// pause menu
 		this.pauseMenu.setIndex(0);
-		
+
 	}
 
 	@Override
 	public void restart() {
-		// TODO Timer.sleep doesn't work!!!
 		// wait 2 seconds
-		// Timer.sleep(2000);
+		ThreadUtils.sleep(2000);
 		// reset all data structures
 		this.init();
 		// restart logic thread

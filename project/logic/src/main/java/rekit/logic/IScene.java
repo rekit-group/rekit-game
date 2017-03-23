@@ -196,12 +196,12 @@ public interface IScene {
 	 * @return {@code true} if paused, {@code false} otherwise
 	 */
 	boolean isPaused();
-	
+
 	/**
-	 * Set the pause state.
-	 * Useful when resetting.
-	 * 
-	 * @param pause the new pause state
+	 * Set the pause state. Useful when resetting.
+	 *
+	 * @param pause
+	 *            the new pause state
 	 */
 	void setPause(boolean pause);
 }
