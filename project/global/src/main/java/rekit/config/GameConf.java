@@ -51,14 +51,10 @@ public final class GameConf implements Configurable {
 	@NoSet
 	public static TextOptions ABOUT_TEXT;
 	/**
-	 * The file location of the level manager file.
-	 */
-	public static String LVL_MGMT_FILE;
-	/**
 	 * This boolean indicates whether the game is in debug mode.
 	 */
 	@NoSet
-	public static final boolean DEBUG = true;
+	public static boolean DEBUG = true;
 
 	/**
 	 * The Name of the Game.

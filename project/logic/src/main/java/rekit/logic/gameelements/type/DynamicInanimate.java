@@ -44,7 +44,7 @@ public abstract class DynamicInanimate extends Inanimate {
 	 * @return a set of dynamic inanimate-prototypes
 	 * @see LoadMe
 	 */
-	public static final Set<? extends GameElement> getPrototypes() {
+	public static Set<? extends GameElement> getPrototypes() {
 		return ReflectUtils.loadInstances(GameConf.SEARCH_PATH, DynamicInanimate.class);
 	}
 

@@ -14,7 +14,7 @@ import rekit.persistence.level.LevelDefinition;
  * This class holds all necessary information about a level.
  *
  */
-public final class Level implements Comparable<Level> {
+public class Level implements Comparable<Level> {
 
 	private final LevelDefinition definition;
 	private int generatedUntil;
@@ -23,17 +23,17 @@ public final class Level implements Comparable<Level> {
 	private int lastUnitsBuilt;
 
 	private int currentStructureId;
-	private Random rand;
+	protected final Random random;
 
 	private final BossSetting bosssetting;
 
 	public Level(LevelDefinition definition) {
 		this.definition = definition;
-		this.rand = new Random(definition.getSeed());
+		this.random = new Random(definition.getSeed());
 		this.bosssetting = new BossSetting(this);
 	}
 
-	public void reset() {
+	public final void reset() {
 		this.currentStructureId = -1;
 		this.unitsBuilt = 0;
 		this.generatedUntil = 0;
@@ -56,42 +56,37 @@ public final class Level implements Comparable<Level> {
 	}
 
 	public Structure next() {
-
 		// if this is level start: build initial Structure
 		if (this.unitsBuilt == 0) {
 			return this.getInitialStructure();
-		} else {
-			// increment structureId / count
-			this.currentStructureId++;
+		}
 
-			// if end of sequence reached: Determine if to repeat or end level
-			if (this.currentStructureId >= this.definition.amountOfStructures()) {
-				if (this.definition.isSettingSet("infinite")) {
-					this.currentStructureId = 0;
-				} else {
-					return this.getEndStructure();
-				}
-			}
-
-			// get a BossStructure or null.
-			Structure bossStructureOrNull = this.bosssetting.getNextOrNull(this.lastUnitsBuilt, this.unitsBuilt);
-
-			// keep track of last <i>unitsBuilt</i> before it is incremented.
-			this.lastUnitsBuilt = this.unitsBuilt;
-
-			// return BossStructure if we want it (no usual Structure in this
-			// case!)
-			if (bossStructureOrNull != null) {
-				return bossStructureOrNull;
-			}
-
-			// get next Structure depending on strategy (shuffled / in order)
-			if (this.definition.isSettingSet("shuffle")) {
-				return this.nextShuffeled();
+		// increment structureId / count
+		this.currentStructureId++;
+		// if end of sequence reached: Determine if to repeat or end level
+		if (this.currentStructureId >= this.definition.amountOfStructures()) {
+			if (this.definition.isSettingSet("infinite")) {
+				this.currentStructureId = 0;
 			} else {
-				return this.nextInOrder();
+				return this.getEndStructure();
 			}
 		}
+
+		Structure boss = this.bosssetting.getNextOrNull(this.lastUnitsBuilt, this.unitsBuilt);
+
+		// keep track of last <i>unitsBuilt</i> before it is incremented.
+		this.lastUnitsBuilt = this.unitsBuilt;
+
+		if (boss != null) {
+			return boss;
+		}
+
+		if (this.definition.isSettingSet("shuffle")) {
+			return this.nextShuffeled();
+		} else {
+			return this.nextInOrder();
+		}
+
 	}
 
 	/**
@@ -106,7 +101,7 @@ public final class Level implements Comparable<Level> {
 	 *
 	 * @return the first {@link Structure} to be returned by <i>next()</i>.
 	 */
-	private Structure getInitialStructure() {
+	protected Structure getInitialStructure() {
 		// Flat floor
 		String floor = Inanimate.class.getSimpleName();
 		String[][] lines = new String[1][];
@@ -172,7 +167,7 @@ public final class Level implements Comparable<Level> {
 	 */
 	private Structure nextShuffeled() {
 		// get random next Structure
-		int randId = this.rand.nextInt(this.definition.amountOfStructures());
+		int randId = this.random.nextInt(this.definition.amountOfStructures());
 		Structure selected = new Structure(this.definition, this.definition.getStructure(randId));
 
 		// determine and set gap width
@@ -217,7 +212,7 @@ public final class Level implements Comparable<Level> {
 	 * @return the random gapWidth between 1 and 2.
 	 */
 	private int nextGapWidth() {
-		return this.definition.isSettingSet("doGaps") ? this.rand.nextInt(2) + 1 : 0;
+		return this.definition.isSettingSet("doGaps") ? this.random.nextInt(2) + 1 : 0;
 	}
 
 	public boolean hasNext() {

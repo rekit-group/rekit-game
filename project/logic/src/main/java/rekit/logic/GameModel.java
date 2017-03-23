@@ -5,7 +5,6 @@ import rekit.logic.gameelements.GameElementFactory;
 import rekit.logic.gameelements.entities.Entity;
 import rekit.logic.gui.menu.MenuItem;
 import rekit.logic.scene.Scenes;
-import rekit.persistence.level.LevelManager;
 import rekit.primitives.image.Filter;
 import rekit.util.ThreadUtils;
 
@@ -53,7 +52,6 @@ public class GameModel implements Model {
 	 * Init game.
 	 */
 	private void init() {
-		LevelManager.init();
 		this.switchScene(Scenes.MENU);
 	}
 

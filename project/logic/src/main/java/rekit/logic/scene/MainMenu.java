@@ -1,5 +1,7 @@
 package rekit.logic.scene;
 
+import java.awt.Desktop;
+
 import rekit.config.GameConf;
 import rekit.logic.GameModel;
 import rekit.logic.gameelements.entities.Player;
@@ -10,8 +12,10 @@ import rekit.logic.gui.menu.MenuItem;
 import rekit.logic.gui.menu.MenuList;
 import rekit.logic.gui.menu.SubMenu;
 import rekit.logic.gui.menu.TextMenu;
+import rekit.persistence.DirFileDefinitions;
 import rekit.persistence.level.LevelManager;
 import rekit.primitives.geometry.Vec;
+import rekit.util.LambdaTools;
 
 /**
  *
@@ -71,15 +75,13 @@ final class MainMenu extends Scene {
 			arcade.addItem(button);
 		}
 
-		// MenuList modPlay = new MenuList(this, "Mod Scenes");
-		//
-		// modPlay.addItem(new MenuActionItem(this, "no Mod Scenes :(", () -> {
-		// }));
-
-		play.addItem(top3, arcade); // , modPlay);
+		play.addItem(top3, arcade);
 
 		MenuList settings = new MenuList(this, "Settings");
-		settings.addItem(new BoolSetting(this, "Debug Mode", "DEBUG"));
+		settings.addItem( //
+				new BoolSetting(this, "Debug Mode", "DEBUG"), //
+				new MenuActionItem(this, "Open Config", LambdaTools.tryCatch(() -> Desktop.getDesktop().open(DirFileDefinitions.SYS_CONF)), true)//
+		);
 
 		MenuList about = new MenuList(this, "About");
 		about.addItem(new TextMenu(this, GameConf.ABOUT));

@@ -204,11 +204,7 @@ public final class RektSmasher extends Boss implements Configurable {
 
 	@Override
 	public Entity create(Vec startPos, String[] options) {
-		RektSmasher clone = new RektSmasher(startPos);
-		clone.setTarget(this.target);
-		clone.setBossStructure(this.bossStructure);
-
-		return clone;
+		return new RektSmasher(startPos);
 	}
 
 }

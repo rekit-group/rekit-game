@@ -1,6 +1,7 @@
 package rekit.persistence.level;
 
 import java.io.InputStream;
+import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -15,6 +16,8 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import rekit.config.GameConf;
+import rekit.util.LambdaTools;
+import rekit.util.LambdaTools.FunctionWithException;
 
 /**
  *
@@ -22,7 +25,6 @@ import rekit.config.GameConf;
  *
  */
 public final class LevelDefinition implements Comparable<LevelDefinition> {
-
 	/**
 	 * The type of a level.
 	 *
@@ -54,11 +56,7 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 		 * @return the type or {@code null} iff none found
 		 */
 		public static Type byString(String string) {
-			try {
-				return Type.valueOf(string);
-			} catch (IllegalArgumentException e) {
-				return null;
-			}
+			return LambdaTools.tryCatch((FunctionWithException<String, Type>) Type::valueOf).apply(string);
 		}
 	}
 
@@ -204,28 +202,28 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 		return res.toString();
 	}
 
-	private Map<String, Object> data = new HashMap<>();
+	private Map<String, Serializable> data = new HashMap<>();
 
-	public void setData(DataKey key, Object value) {
+	public void setData(DataKey key, Serializable value) {
 		this.setData(key, value, true);
 	}
 
-	void setData(DataKey key, Object value, boolean notify) {
+	public void setData(DataKey key, Serializable value, boolean notify) {
 		this.data.put(key.getKey(), value);
 		if (notify) {
 			LevelManager.contentChanged();
 		}
 	}
 
-	public Object getData(DataKey key) {
-		Object data = this.data.get(key.getKey());
+	public Serializable getData(DataKey key) {
+		Serializable data = this.data.get(key.getKey());
 		if (data == null) {
 			return key.getDefaultVal();
 		}
 		return data;
 	}
 
-	public int getSeed() {
+	public long getSeed() {
 		return this.seed;
 	}
 
@@ -237,9 +235,13 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 		return this.structures.get(idx);
 	}
 
+	public int getArcadeNum() {
+		return this.arcadeNum;
+	}
+
 	@Override
 	public int compareTo(LevelDefinition o) {
-		return 2 * this.type.compareTo(o.type) + Integer.compare(this.arcadeNum, o.arcadeNum);
+		return 2 * this.type.compareTo(o.getType()) + Integer.compare(this.arcadeNum, o.getArcadeNum());
 	}
 
 }

@@ -1,15 +1,22 @@
 package rekit.persistence.level;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -24,8 +31,10 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import rekit.config.GameConf;
+import rekit.persistence.DirFileDefinitions;
 import rekit.persistence.level.LevelDefinition.Type;
 import rekit.persistence.level.token.UnexpectedTokenException;
+import rekit.util.LambdaTools;
 
 /**
  *
@@ -42,11 +51,6 @@ public final class LevelManager {
 
 	private static LevelDefinition INFINITE = null;
 	private static LevelDefinition LOTD = null;
-
-	/**
-	 * The global data file for the {@link LevelManager}.
-	 */
-	private static final File USER_DATA = new File(GameConf.LVL_MGMT_FILE);
 
 	/**
 	 * Prevent instantiation.
@@ -69,11 +73,7 @@ public final class LevelManager {
 			return;
 		}
 		LevelManager.initialized = true;
-		try {
-			LevelManager.loadAllLevels();
-		} catch (IOException e) {
-			GameConf.GAME_LOGGER.error("Could not load levels " + e.getMessage());
-		}
+		LambdaTools.tryCatch(LevelManager::loadAllLevels).run();
 		LevelManager.loadDataFromFile();
 
 	}
@@ -100,6 +100,21 @@ public final class LevelManager {
 		}).forEach(LevelManager::addArcadeLevel);
 
 		notNumbered.sorted((r1, r2) -> r1.toString().compareToIgnoreCase(r2.toString())).forEach(LevelManager::addArcadeLevel);
+
+		LevelManager.loadCustomLevels();
+
+	}
+
+	private static final void loadCustomLevels() {
+		File[] levels = DirFileDefinitions.LEVEL_DIR.listFiles();
+		if (levels == null) {
+			return;
+		}
+		for (File lv : levels) {
+			if (lv.getName().startsWith("level")) {
+				LambdaTools.tryCatch(() -> LevelManager.addArcadeLevel(new FileInputStream(lv))).run();
+			}
+		}
 
 	}
 
@@ -129,11 +144,7 @@ public final class LevelManager {
 	 *            the resource
 	 */
 	private static void addArcadeLevel(Resource level) {
-		try {
-			LevelManager.addArcadeLevel(level.getInputStream());
-		} catch (IOException | UnexpectedTokenException e) {
-			GameConf.GAME_LOGGER.error("Loading of " + level + " failed: " + e.getMessage());
-		}
+		LambdaTools.tryCatch(() -> LevelManager.addArcadeLevel(level.getInputStream())).run();
 	}
 
 	/**
@@ -224,7 +235,7 @@ public final class LevelManager {
 	 */
 	private static void loadDataFromFile() {
 		try {
-			Scanner scanner = new Scanner(LevelManager.USER_DATA, Charset.defaultCharset().name());
+			Scanner scanner = new Scanner(DirFileDefinitions.USER_DATA, Charset.defaultCharset().name());
 			while (scanner.hasNextLine()) {
 				String[] levelinfo = scanner.nextLine().split(":");
 				if (levelinfo.length != DataKey.values().length + 1) {
@@ -237,13 +248,13 @@ public final class LevelManager {
 				}
 				DataKey[] keys = DataKey.values();
 				for (int idx = 1; idx < levelinfo.length; idx++) {
-					level.setData(keys[idx - 1], keys[idx - 1].parse(levelinfo[idx]), false);
+					level.setData(keys[idx - 1], LevelManager.fromBase64(levelinfo[idx]), false);
 				}
 
 			}
 			scanner.close();
 		} catch (FileNotFoundException e) {
-			GameConf.GAME_LOGGER.error("Error while opening " + LevelManager.USER_DATA.getAbsolutePath() + " for scores and saves: FileNotFound");
+			GameConf.GAME_LOGGER.error("Error while opening " + DirFileDefinitions.USER_DATA.getAbsolutePath() + " for scores and saves: FileNotFound");
 		}
 	}
 
@@ -257,11 +268,39 @@ public final class LevelManager {
 		for (LevelDefinition lvd : LevelManager.LEVEL_MAP.values()) {
 			result.append(lvd.getID());
 			for (DataKey dk : DataKey.values()) {
-				result.append(":").append(lvd.getData(dk));
+				Serializable data = lvd.getData(dk);
+				result.append(":").append(LevelManager.toBase64(data));
 			}
 			result.append("\n");
 		}
 		return result.toString();
+	}
+
+	private static Serializable fromBase64(String s) {
+		try {
+			byte[] data = Base64.getDecoder().decode(s);
+			ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(data));
+			Object o = ois.readObject();
+			ois.close();
+			return (Serializable) o;
+		} catch (IOException | IllegalArgumentException | ClassNotFoundException e) {
+			GameConf.GAME_LOGGER.error(e.getMessage());
+			return null;
+		}
+	}
+
+	private static String toBase64(Serializable o) {
+		try {
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ObjectOutputStream oos = new ObjectOutputStream(baos);
+			oos.writeObject(o);
+			oos.close();
+			return Base64.getEncoder().encodeToString(baos.toByteArray());
+		} catch (IOException e) {
+			GameConf.GAME_LOGGER.error(e.getMessage());
+			return null;
+		}
+
 	}
 
 	/**
@@ -289,9 +328,9 @@ public final class LevelManager {
 	private static void saveToFile() {
 		OutputStream levelStream = null;
 		try {
-			levelStream = new FileOutputStream(LevelManager.USER_DATA);
+			levelStream = new FileOutputStream(DirFileDefinitions.USER_DATA);
 		} catch (IOException e) {
-			GameConf.GAME_LOGGER.error("Error while opening " + LevelManager.USER_DATA.getAbsolutePath() + " for saving scores and saves: FileNotFound");
+			GameConf.GAME_LOGGER.error("Error while opening " + DirFileDefinitions.USER_DATA.getAbsolutePath() + " for saving scores and saves: FileNotFound");
 			return;
 		}
 		byte[] bytes = LevelManager.convertToString().getBytes(Charset.defaultCharset());
@@ -300,7 +339,7 @@ public final class LevelManager {
 			levelStream.flush();
 			levelStream.close();
 		} catch (IOException e) {
-			GameConf.GAME_LOGGER.error("Error while saving " + LevelManager.USER_DATA.getAbsolutePath() + " for scores and saves: IOException");
+			GameConf.GAME_LOGGER.error("Error while saving " + DirFileDefinitions.USER_DATA.getAbsolutePath() + " for scores and saves: IOException");
 		}
 	}
 

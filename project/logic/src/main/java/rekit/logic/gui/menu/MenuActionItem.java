@@ -12,7 +12,27 @@ public class MenuActionItem extends MenuItem {
 	/**
 	 * The action.
 	 */
-	private Runnable selectAction;
+	private final Runnable selectAction;
+	private final boolean isOnlyAction;
+
+	/**
+	 * Create MenuActionItem.
+	 *
+	 * @param scene
+	 *            the scene
+	 * @param text
+	 *            the text
+	 * @param selectAction
+	 *            the action
+	 * @param isOnlyAction
+	 *            indicates whether this item can't be selected for further
+	 *            actions and just invoke the action or not
+	 */
+	public MenuActionItem(IScene scene, String text, Runnable selectAction, boolean isOnlyAction) {
+		super(scene, text);
+		this.selectAction = selectAction;
+		this.isOnlyAction = isOnlyAction;
+	}
 
 	/**
 	 * Create MenuActionItem.
@@ -25,8 +45,7 @@ public class MenuActionItem extends MenuItem {
 	 *            the action
 	 */
 	public MenuActionItem(IScene scene, String text, Runnable selectAction) {
-		super(scene, text);
-		this.selectAction = selectAction;
+		this(scene, text, selectAction, false);
 	}
 
 	/**
@@ -49,6 +68,9 @@ public class MenuActionItem extends MenuItem {
 	@Override
 	public void select() {
 		this.selected = true;
+		if (this.isOnlyAction) {
+			this.unselect();
+		}
 		this.selectAction.run();
 	}
 

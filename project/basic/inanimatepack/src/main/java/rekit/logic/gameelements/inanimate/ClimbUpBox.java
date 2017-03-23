@@ -149,7 +149,6 @@ public final class ClimbUpBox extends DynamicInanimate implements Configurable {
 	public ClimbUpBox create(Vec startPos, String[] options) {
 		long offset = 0;
 		if (options.length >= 1 && options[0] != null && options[0].matches("(\\+|-)?[0-9]+")) {
-			// TODO Check offset
 			offset = (Long.parseLong(options[0]) * ClimbUpBox.PERIOD) / 2000;
 		}
 		return new ClimbUpBox(startPos, offset);

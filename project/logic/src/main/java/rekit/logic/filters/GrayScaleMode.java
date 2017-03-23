@@ -9,6 +9,7 @@ import rekit.primitives.image.AbstractImage;
 import rekit.primitives.image.Filter;
 import rekit.primitives.image.RGBAColor;
 import rekit.primitives.image.RGBColor;
+import rekit.util.LambdaTools;
 import rekit.util.ReflectUtils.LoadMe;
 
 /**
@@ -19,16 +20,9 @@ import rekit.util.ReflectUtils.LoadMe;
  */
 @LoadMe
 public final class GrayScaleMode implements Filter {
-	/**
-	 * Indicates parallel or sequential mode for {@link #apply(AbstractImage)}.
-	 */
-	public static boolean PARALLEL = true;
 
 	@Override
 	public AbstractImage apply(final AbstractImage image) {
-		if (!GrayScaleMode.PARALLEL) {
-			return this.applySeq(image);
-		}
 		return this.applyParallel(image);
 	}
 
@@ -68,23 +62,19 @@ public final class GrayScaleMode implements Filter {
 		ExecutorService executor = Executors.newFixedThreadPool(threads);
 		final int threadNums = threads;
 		byte[] result = Arrays.copyOf(image.pixels, image.pixels.length);
-		try {
-			for (int i = 0; i < threads; i++) {
-				final int task = i;
-				executor.submit(() -> this.runIt(image.width, image.height, taskSize, task, threadNums, image.pixels, result));
-			}
-			executor.shutdown();
-			executor.awaitTermination(Long.MAX_VALUE, TimeUnit.HOURS);
-		} catch (InterruptedException ex) {
-			ex.printStackTrace();
+		for (int i = 0; i < threads; i++) {
+			final int task = i;
+			executor.submit(() -> this.runIt(image.width, image.height, taskSize, task, threadNums, image.pixels, result));
 		}
+		executor.shutdown();
+		LambdaTools.tryCatch(() -> executor.awaitTermination(Long.MAX_VALUE, TimeUnit.HOURS)).run();
 		return new AbstractImage(image.height, image.width, result);
 
 	}
 
 	/**
 	 * Task for one thread.
-	 * 
+	 *
 	 * @param w
 	 *            img width
 	 * @param h

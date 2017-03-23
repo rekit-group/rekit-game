@@ -64,6 +64,9 @@ public final class BossStructure extends Structure implements Configurable {
 	 */
 	private static ParticleSpawner FIREWORKS_PARTICLES;
 
+	@NoSet
+	private boolean ended = false;
+
 	/**
 	 * Create a boss structure.
 	 *
@@ -106,6 +109,7 @@ public final class BossStructure extends Structure implements Configurable {
 		if (this.door == null || this.triggerPos == null) {
 			return;
 		}
+		this.ended = false;
 		IScene scene = this.door.getScene();
 		// calculate where to put camera
 		this.cameraTarget = this.levelX + 5 + GameConf.PLAYER_CAMERA_OFFSET + scene.getPlayer().getSize().getX() / 2;
@@ -158,6 +162,10 @@ public final class BossStructure extends Structure implements Configurable {
 	 *            the scene
 	 */
 	public void endBattle(IScene scene) {
+		if (this.ended) {
+			return;
+		}
+		this.ended = true;
 		// Create thread for asynchronous stuff
 		ThreadUtils.runThread("BossRoom-End", () -> this.endAnimation(scene));
 	}

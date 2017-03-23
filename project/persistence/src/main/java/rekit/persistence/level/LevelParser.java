@@ -58,10 +58,10 @@ public final class LevelParser {
 	}
 
 	/**
-	 * Parse the level to the LevelDefinition.
+	 * Parse the level to the LevelDefinitionImpl.
 	 *
 	 * @param definition
-	 *            the LevelDefinition
+	 *            the LevelDefinitionImpl
 	 */
 	public void parse(LevelDefinition definition) {
 		if (definition == null) {
@@ -74,10 +74,10 @@ public final class LevelParser {
 	}
 
 	/**
-	 * Parse a LevelDefinition.
+	 * Parse a LevelDefinitionImpl.
 	 *
 	 * @param definition
-	 *            LevelDefinition
+	 *            LevelDefinitionImpl
 	 */
 	private void parseLevel(LevelDefinition definition) {
 		if (this.isToken(TokenType.ALIAS)) {
@@ -101,7 +101,7 @@ public final class LevelParser {
 	 * Parse a Structure.
 	 *
 	 * @param definition
-	 *            the LevelDefinition
+	 *            the LevelDefinitionImpl
 	 */
 	private void parseStructure(LevelDefinition definition) {
 		this.readToken(TokenType.BEGIN);
@@ -137,7 +137,7 @@ public final class LevelParser {
 	 * Parse an alias.
 	 *
 	 * @param definition
-	 *            the LevelDefinition
+	 *            the LevelDefinitionImpl
 	 */
 	private void parseAlias(LevelDefinition definition) {
 		this.readToken(TokenType.ALIAS);
@@ -150,7 +150,7 @@ public final class LevelParser {
 	 * Parse a setting.
 	 *
 	 * @param definition
-	 *            the LevelDefinition
+	 *            the LevelDefinitionImpl
 	 */
 	private void parseSetting(LevelDefinition definition) {
 		this.readToken(TokenType.SETTING);
@@ -163,7 +163,7 @@ public final class LevelParser {
 	 * Parse an boss setting.
 	 *
 	 * @param definition
-	 *            the LevelDefinition
+	 *            the LevelDefinitionImpl
 	 */
 	private void parseBossSetting(LevelDefinition definition) {
 		this.readToken(TokenType.BOSS_SETTING);
