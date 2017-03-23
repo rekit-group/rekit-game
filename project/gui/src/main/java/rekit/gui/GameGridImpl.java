@@ -319,27 +319,7 @@ class GameGridImpl extends GameGrid {
 
 	@Override
 	public void drawPath(Vec startPos, List<Vec> pts, RGBColor in) {
-		if (pts.size() == 0) {
-			return;
-		}
-
-		RGBColor col = (this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
-
-		Vec newPos = this.translate2D(startPos);
-		newPos = CalcUtil.units2pixel(newPos);
-		newPos = newPos.addX(this.cameraOffset);
-
-		Iterator<Vec> it = pts.iterator();
-
-		Vec lastPt = newPos.add(CalcUtil.units2pixel(it.next()));
-
-		this.graphics.setColor(Utils.calcRGB(col));
-		this.graphics.setStroke(new BasicStroke(1));
-		while (it.hasNext()) {
-			Vec pt = newPos.add(CalcUtil.units2pixel(it.next()));
-			this.graphics.drawLine((int) lastPt.getX(), (int) lastPt.getY(), (int) pt.getX(), (int) pt.getY());
-			lastPt = pt;
-		}
+		this.drawPath(startPos, pts, in, 1);
 	}
 
 	@Override
@@ -413,6 +393,31 @@ class GameGridImpl extends GameGrid {
 			this.drawRoundRectangleImpl(newPos, newSize, Utils.calcRGBA(col), CalcUtil.units2pixel(arcWidth), CalcUtil.units2pixel(arcHeight));
 		}
 
+	}
+
+	@Override
+	public void drawPath(Vec startPos, List<Vec> pts, RGBColor in, int lineWidth) {
+		if (pts.size() == 0) {
+			return;
+		}
+
+		RGBColor col = (this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
+
+		Vec newPos = this.translate2D(startPos);
+		newPos = CalcUtil.units2pixel(newPos);
+		newPos = newPos.addX(this.cameraOffset);
+
+		Iterator<Vec> it = pts.iterator();
+
+		Vec lastPt = newPos.add(CalcUtil.units2pixel(it.next()));
+
+		this.graphics.setColor(Utils.calcRGB(col));
+		this.graphics.setStroke(new BasicStroke(lineWidth));
+		while (it.hasNext()) {
+			Vec pt = newPos.add(CalcUtil.units2pixel(it.next()));
+			this.graphics.drawLine((int) lastPt.getX(), (int) lastPt.getY(), (int) pt.getX(), (int) pt.getY());
+			lastPt = pt;
+		}
 	}
 
 }

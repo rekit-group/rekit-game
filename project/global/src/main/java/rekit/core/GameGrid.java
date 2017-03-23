@@ -395,10 +395,21 @@ public abstract class GameGrid {
 	 * @param startPos
 	 *            the start point
 	 * @param pts
-	 *            the next points (relative to startPos ?!)
+	 *            the next points (relative to startPos)
 	 * @param in
 	 *            the color
 	 */
 	// TODO Check JDoc
 	public abstract void drawPath(Vec startPos, List<Vec> pts, RGBColor in);
+
+
+	/**
+	 * Draw a path with a given lineWidth
+	 * @param startPos the start point
+	 * @param pts the next points (relative to startPos)
+	 * @param in the color
+	 * @param lineWidth the lineWidth in pixels
+	 */
+	public abstract void drawPath(Vec startPos, List<Vec> pts, RGBColor in, int lineWidth);
+	
 }
