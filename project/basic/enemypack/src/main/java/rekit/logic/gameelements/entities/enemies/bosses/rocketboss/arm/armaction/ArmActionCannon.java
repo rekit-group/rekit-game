@@ -1,13 +1,19 @@
 package rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm.armaction;
 
-import rekit.core.GameGrid;
 import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.RocketBoss;
 import rekit.logic.gameelements.entities.enemies.cannon.Cannon;
 import rekit.primitives.geometry.Vec;
 
+/**
+ * This concrete {@link ArmAction} spawns and de-spawns a modified {@link Cannon}.
+ * @author Angelo Aracri
+ */
 public class ArmActionCannon extends ArmAction {
 	
+	/**
+	 * Reference to the internally used {@link Cannon}.
+	 */
 	private GameElement innerCannon;
 	
 	public ArmActionCannon(RocketBoss parent, Vec relPos) {
@@ -24,7 +30,7 @@ public class ArmActionCannon extends ArmAction {
 	
 	@Override
 	public void perform() {
-		// Do nothing here
+		// Do nothing here, as the Cannon acts on its own.
 	}
 	
 	@Override

@@ -6,8 +6,26 @@ import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.RocketBoss;
 import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Vec;
 
+/**
+ * This concrete {@link ArmAction} launches a {@link Rocket}.
+ * @author Angelo Aracri
+ */
 public class ArmActionRocketLauncher extends ArmAction {
 	
+	private Rocket rocket;
+	
+	/**
+	 * Standard Constructor used to fulfill the prototype pattern
+	 */
+	public ArmActionRocketLauncher() {
+		super();
+	}
+	
+	/**
+	 * Constructor that spawns the {@link Rocket} and sets its speed to 0.
+	 * @param parent the parenting {@link RocketBoss}
+	 * @param relPos the position of this {@link ArmAction} relative to the {@link RocketBoss}
+	 */
 	public ArmActionRocketLauncher(RocketBoss parent, Vec relPos) {
 		super(parent, relPos);
 		
@@ -22,12 +40,7 @@ public class ArmActionRocketLauncher extends ArmAction {
 		this.rocket.setSpeed(0);
 	}
 	
-	private Rocket rocket;
-	
-	public ArmActionRocketLauncher() {
-		super();
-	}
-	
+	@Override
 	public void perform() {
 		if (this.rocket != null) {
 			this.rocket.resetSpeed();
@@ -40,6 +53,10 @@ public class ArmActionRocketLauncher extends ArmAction {
 		return new ArmActionRocketLauncher(parent, relPos);
 	}
 	
+	/**
+	 * Calculates the position where to spawn a {@link Rocket}.
+	 * @return the absolute position of the {@link Rocket}
+	 */
 	private Vec getRocketPos() {
 		return this.getPos().addX(this.parent.getXSignum() * 0.6f);
 	}
