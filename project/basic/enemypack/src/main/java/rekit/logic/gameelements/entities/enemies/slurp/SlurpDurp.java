@@ -7,7 +7,7 @@ import rekit.logic.gameelements.entities.Entity;
 import rekit.logic.gameelements.entities.Player;
 import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Vec;
-import rekit.primitives.image.RGBColor;
+import rekit.primitives.image.RGBAColor;
 import rekit.primitives.operable.OpProgress;
 
 /**
@@ -55,7 +55,7 @@ public final class SlurpDurp extends Entity {
 	private static SlurpDurpVisComp[] circles;
 
 	static {
-		OpProgress<RGBColor> col = new OpProgress<>(new RGBColor(94, 233, 101), new RGBColor(184, 255, 201));
+		OpProgress<RGBAColor> col = new OpProgress<>(new RGBAColor(94, 233, 101), new RGBAColor(184, 255, 201));
 		OpProgress<Vec> relPos = new OpProgress<>(new Vec(0), new Vec(-0.45f));
 		OpProgress<Vec> relSize = new OpProgress<>(new Vec(1), new Vec(0.1f));
 
@@ -130,7 +130,7 @@ public final class SlurpDurp extends Entity {
 			vis.render(f, this.parentPos.add(this.innerPos), this.getSize());
 		}
 		// f.drawCircle(this.parentPos.add(this.innerPos), this.getSize(), new
-		// RGBColor(94, 233, 101));
+		// (94, 233, 101));
 	}
 
 }

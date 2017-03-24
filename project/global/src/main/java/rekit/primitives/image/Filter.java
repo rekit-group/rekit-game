@@ -26,8 +26,7 @@ public interface Filter {
 	 * This boolean indicates whether this filter can be applied pixel per pixel
 	 * (fast).
 	 *
-	 * @return {@code true} if {@link #apply(RGBAColor)} and
-	 *         {@link #apply(RGBColor)} shall be used
+	 * @return {@code true} if {@link #apply(RGBAColor)} shall be used
 	 */
 	boolean isApplyPixel();
 
@@ -42,22 +41,11 @@ public interface Filter {
 	/**
 	 * Indicates whether the internal state of the {@link Filter} has been
 	 * changed.
-	 * 
+	 *
 	 * @return {@code true} if state changed, {@code false} otherwise
 	 */
 	default boolean changed() {
 		return false;
-	}
-
-	/**
-	 * Apply Filter.
-	 *
-	 * @param color
-	 *            the original color
-	 * @return the new color
-	 */
-	default RGBColor apply(final RGBColor color) {
-		throw new UnsupportedOperationException("Not supported by " + this.getClass().getSimpleName());
 	}
 
 	/**

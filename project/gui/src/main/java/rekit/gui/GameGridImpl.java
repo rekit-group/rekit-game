@@ -19,7 +19,6 @@ import rekit.primitives.geometry.Polygon;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.Filter;
 import rekit.primitives.image.RGBAColor;
-import rekit.primitives.image.RGBColor;
 import rekit.util.CalcUtil;
 import rekit.util.TextOptions;
 import rekit.util.Tuple;
@@ -217,9 +216,9 @@ class GameGridImpl extends GameGrid {
 	 */
 	private void drawTextImpl(Vec pos, String text, TextOptions options) {
 		// Set color to red and set font
-		RGBColor in = new RGBColor(options.getColor().red, options.getColor().green, options.getColor().blue);
-		RGBColor col = (!options.getUseFilter() || this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
-		this.graphics.setColor(Utils.calcRGB(col));
+		RGBAColor in = options.getColor();
+		RGBAColor col = (!options.getUseFilter() || this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
+		this.graphics.setColor(Utils.calcRGBA(col));
 
 		Font font = new Font(options.getFont(), options.getFontOptions(), options.getHeight());
 		this.graphics.setFont(font);
@@ -292,9 +291,9 @@ class GameGridImpl extends GameGrid {
 	 * @param in
 	 *            the color
 	 */
-	public void setBackground(RGBColor in) {
-		RGBColor col = (this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
-		this.graphics.setColor(Utils.calcRGB(col));
+	public void setBackground(RGBAColor in) {
+		RGBAColor col = (this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
+		this.graphics.setColor(Utils.calcRGBA(col));
 		this.graphics.fillRect(0, 0, GameConf.PIXEL_W, GameConf.PIXEL_H);
 
 	}

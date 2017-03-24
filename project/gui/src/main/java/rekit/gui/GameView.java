@@ -116,7 +116,7 @@ class GameView implements View {
 		this.canvas = new Canvas();
 		this.canvas.setPreferredSize(new Dimension(GameConf.PIXEL_W, GameConf.PIXEL_H));
 		this.canvas.setIgnoreRepaint(true);
-		this.canvas.setBackground(Utils.calcRGB(GameConf.GAME_BACKGROUD_COLOR));
+		this.canvas.setBackground(Utils.calcRGBA(GameConf.GAME_BACKGROUD_COLOR));
 		this.frame.add(this.canvas, BorderLayout.CENTER);
 		this.frame.pack();
 

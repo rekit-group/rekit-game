@@ -15,7 +15,7 @@ import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.type.Enemy;
 import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Vec;
-import rekit.primitives.image.RGBColor;
+import rekit.primitives.image.RGBAColor;
 import rekit.primitives.operable.OpProgress;
 import rekit.primitives.time.Timer;
 import rekit.util.ReflectUtils.LoadMe;
@@ -37,7 +37,7 @@ public final class Stacker extends Enemy implements Configurable {
 	protected int highestOffset;
 
 	private static int ITERATIONS;
-	private static RGBColor COLOR;
+	private static RGBAColor COLOR;
 	private static int FACES;
 
 	private static Vec SIZE_REGULAR;
@@ -134,9 +134,9 @@ public final class Stacker extends Enemy implements Configurable {
 		@Override
 		public void internalRender(GameGrid f) {
 			if (this.timeToDie != null) {
-				f.drawCircle(this.getPos(), this.getSize(), Stacker.COLOR.toRGBA());
+				f.drawCircle(this.getPos(), this.getSize(), Stacker.COLOR);
 			} else {
-				f.drawCircle(this.getPos(), this.getSize(), Stacker.COLOR.toRGBA());
+				f.drawCircle(this.getPos(), this.getSize(), Stacker.COLOR);
 				f.drawImage(this.getPos(), this.getSize(), "stacker/stackerFaces_0" + this.faceId + ".png");
 			}
 		}

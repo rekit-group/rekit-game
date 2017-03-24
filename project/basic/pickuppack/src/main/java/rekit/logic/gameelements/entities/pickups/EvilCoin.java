@@ -4,13 +4,12 @@ import rekit.logic.gameelements.type.Coin;
 import rekit.logic.gameelements.type.Pickup;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBAColor;
-import rekit.primitives.image.RGBColor;
 import rekit.util.ReflectUtils.LoadMe;
 
 /**
  * This class defines a simple {@link Pickup}; a <b>EvilCoin</b> which will give
  * the player negative points.
- * 
+ *
  * @author Dominik Fuchss
  *
  */
@@ -19,11 +18,11 @@ public final class EvilCoin extends Coin {
 	/**
 	 * The default color of the coin.
 	 */
-	private static RGBColor color = new RGBColor(232, 50, 16);
+	private static RGBAColor color = new RGBAColor(232, 50, 16);
 	/**
 	 * The shadow color of the coin.
 	 */
-	private static RGBColor darkColor = new RGBColor(192, 25, 6);
+	private static RGBAColor darkColor = new RGBAColor(192, 25, 6);
 
 	/**
 	 * Prototype constructor.
@@ -44,12 +43,12 @@ public final class EvilCoin extends Coin {
 
 	@Override
 	protected RGBAColor getColor() {
-		return EvilCoin.color.toRGBA();
+		return EvilCoin.color;
 	}
 
 	@Override
 	protected RGBAColor getDarkerColor() {
-		return EvilCoin.darkColor.toRGBA();
+		return EvilCoin.darkColor;
 	}
 
 	@Override

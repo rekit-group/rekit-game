@@ -8,7 +8,7 @@ import rekit.logic.gameelements.particles.ParticleSpawner;
 import rekit.logic.gameelements.particles.ParticleSpawnerOption;
 import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Vec;
-import rekit.primitives.image.RGBColor;
+import rekit.primitives.image.RGBAColor;
 import rekit.primitives.operable.OpProgress;
 
 /**
@@ -35,7 +35,7 @@ public class InanimateFloor extends Inanimate {
 	 * Holds the colors for each layer the {@link InanimateFloor} is composed
 	 * of.
 	 */
-	private static RGBColor[] layerCols;
+	private static RGBAColor[] layerCols;
 
 	/**
 	 * Holds the positions relative to the middle position for each layer the
@@ -76,8 +76,8 @@ public class InanimateFloor extends Inanimate {
 	// TODO: Config file.
 	static {
 		// define color range for blocks layers
-		RGBColor startCol = new RGBColor(22, 140, 30);
-		RGBColor endCol = new RGBColor(23, 210, 49);
+		RGBAColor startCol = new RGBAColor(22, 140, 30);
+		RGBAColor endCol = new RGBAColor(23, 210, 49);
 
 		// define position range for blocks layers
 		float size = 1;
@@ -85,11 +85,11 @@ public class InanimateFloor extends Inanimate {
 		Vec endVec = new Vec(0, size / 2 - (size / 2) / InanimateFloor.LAYERS);
 
 		// create Progresses from ranges.
-		OpProgress<RGBColor> progCols = new OpProgress<>(startCol, endCol);
+		OpProgress<RGBAColor> progCols = new OpProgress<>(startCol, endCol);
 		OpProgress<Vec> progVecs = new OpProgress<>(startVec, endVec);
 
 		// fill arrays for each layer
-		InanimateFloor.layerCols = new RGBColor[InanimateFloor.LAYERS];
+		InanimateFloor.layerCols = new RGBAColor[InanimateFloor.LAYERS];
 		InanimateFloor.layerVecs = new Vec[InanimateFloor.LAYERS];
 		for (int i = 0; i < InanimateFloor.LAYERS; i++) {
 			float prog = i / (float) (InanimateFloor.LAYERS - 1);
@@ -128,7 +128,7 @@ public class InanimateFloor extends Inanimate {
 	 *            the size of the {@link InanimateFloor}.
 	 */
 	protected InanimateFloor(Vec pos, Vec size) {
-		super(pos, size, InanimateFloor.layerCols[0].toRGBA());
+		super(pos, size, InanimateFloor.layerCols[0]);
 
 		this.straws = new GrassStraw[InanimateFloor.STRAW_NUM];
 		for (int i = 0; i < InanimateFloor.STRAW_NUM; i++) {
@@ -161,7 +161,7 @@ public class InanimateFloor extends Inanimate {
 		/**
 		 * The color of the {@link GrassStraw}.
 		 */
-		private RGBColor col;
+		private RGBAColor col;
 
 		/**
 		 * The size of the {@link GrassStraw}.
@@ -189,7 +189,7 @@ public class InanimateFloor extends Inanimate {
 		 *            the {@link GameGrid} to render upon.
 		 */
 		public void internalRender(GameGrid f) {
-			f.drawRectangle(this.pos, this.size, this.col.toRGBA());
+			f.drawRectangle(this.pos, this.size, this.col);
 		}
 	}
 
@@ -198,7 +198,7 @@ public class InanimateFloor extends Inanimate {
 		// Draw rectangles that this Floor is composed of
 		for (int i = 0; i < InanimateFloor.LAYERS; i++) {
 			f.drawRectangle(this.getPos().add(InanimateFloor.layerVecs[i]), this.getSize().setY(1 / (float) InanimateFloor.LAYERS),
-					InanimateFloor.layerCols[i].toRGBA());
+					InanimateFloor.layerCols[i]);
 		}
 		// Draw GrassStraws
 		for (GrassStraw straw : this.straws) {

@@ -6,7 +6,7 @@ import java.util.List;
 
 import rekit.core.GameGrid;
 import rekit.primitives.geometry.Vec;
-import rekit.primitives.image.RGBColor;
+import rekit.primitives.image.RGBAColor;
 import rekit.primitives.time.Timer;
 
 public class Mouth {
@@ -52,6 +52,6 @@ public class Mouth {
 	}
 
 	public void internalRender(GameGrid f) {
-		f.drawPath(this.mouthCurvePos, this.mouthCurve, new RGBColor(0, 0, 0).toRGBA(), true);
+		f.drawPath(this.mouthCurvePos, this.mouthCurve, new RGBAColor(0, 0, 0), true);
 	}
 }

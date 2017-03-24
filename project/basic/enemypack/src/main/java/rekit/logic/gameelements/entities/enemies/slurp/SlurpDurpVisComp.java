@@ -2,7 +2,7 @@ package rekit.logic.gameelements.entities.enemies.slurp;
 
 import rekit.core.GameGrid;
 import rekit.primitives.geometry.Vec;
-import rekit.primitives.image.RGBColor;
+import rekit.primitives.image.RGBAColor;
 
 /**
  * Simple data-holding class that represents a component of the visualization of
@@ -22,7 +22,7 @@ public final class SlurpDurpVisComp {
 	/**
 	 * The color.
 	 */
-	private RGBColor col;
+	private RGBAColor col;
 
 	/**
 	 * Create a component.
@@ -34,7 +34,7 @@ public final class SlurpDurpVisComp {
 	 * @param col
 	 *            the color
 	 */
-	public SlurpDurpVisComp(Vec relativePos, Vec relativeSize, RGBColor col) {
+	public SlurpDurpVisComp(Vec relativePos, Vec relativeSize, RGBAColor col) {
 		this.relativePos = relativePos;
 		this.relativeSize = relativeSize;
 		this.col = col;
@@ -52,6 +52,6 @@ public final class SlurpDurpVisComp {
 	 */
 	public void render(GameGrid f, Vec pos, Vec size) {
 		Vec absSize = size.multiply(this.relativeSize);
-		f.drawCircle(pos.add(this.relativePos.multiply(absSize)), absSize, this.col.toRGBA());
+		f.drawCircle(pos.add(this.relativePos.multiply(absSize)), absSize, this.col);
 	}
 }

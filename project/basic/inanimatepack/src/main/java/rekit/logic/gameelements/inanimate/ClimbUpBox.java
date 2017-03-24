@@ -13,7 +13,6 @@ import rekit.logic.gameelements.type.DynamicInanimate;
 import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBAColor;
-import rekit.primitives.image.RGBColor;
 import rekit.primitives.time.Timer;
 import rekit.util.ReflectUtils.LoadMe;
 
@@ -56,7 +55,7 @@ public final class ClimbUpBox extends DynamicInanimate implements Configurable {
 	/**
 	 * The energy's color.
 	 */
-	private static RGBColor ENERGY_COLOR;
+	private static RGBAColor ENERGY_COLOR;
 	/**
 	 * The timer (how long climb enables?).
 	 */
@@ -137,10 +136,10 @@ public final class ClimbUpBox extends DynamicInanimate implements Configurable {
 	public void renderEnergy(GameGrid f, float start, float end) {
 
 		float h = end - start;
-		f.drawRectangle(this.getPos().addY(h / 2f - this.getSize().getY() / 2f + start), this.getSize().scalar(0.2f, h), ClimbUpBox.ENERGY_COLOR.toRGBA());
+		f.drawRectangle(this.getPos().addY(h / 2f - this.getSize().getY() / 2f + start), this.getSize().scalar(0.2f, h), ClimbUpBox.ENERGY_COLOR);
 
 		if (end == 1) {
-			f.drawRectangle(this.getPos().addY(0.4f), this.getSize().scalar(1, 0.2f), ClimbUpBox.ENERGY_COLOR.toRGBA());
+			f.drawRectangle(this.getPos().addY(0.4f), this.getSize().scalar(1, 0.2f), ClimbUpBox.ENERGY_COLOR);
 		}
 
 	}
@@ -265,7 +264,7 @@ public final class ClimbUpBox extends DynamicInanimate implements Configurable {
 
 		@Override
 		public void internalRender(GameGrid f) {
-			f.drawRectangle(ClimbUpBox.this.getPos().addY(0.4f), ClimbUpBox.this.getSize().scalar(1, 0.2f), ClimbUpBox.ENERGY_COLOR.toRGBA());
+			f.drawRectangle(ClimbUpBox.this.getPos().addY(0.4f), ClimbUpBox.this.getSize().scalar(1, 0.2f), ClimbUpBox.ENERGY_COLOR);
 
 			Vec pos = this.parent.getPos().addY(this.parent.getSize().getY() / 2f + 1).addX(-0.5f);
 			pos = pos.addX(this.parent.getSize().getX() * GameConf.PRNG.nextFloat());

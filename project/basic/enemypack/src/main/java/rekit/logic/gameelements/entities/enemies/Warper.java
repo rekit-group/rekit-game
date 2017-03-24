@@ -12,7 +12,7 @@ import rekit.logic.gameelements.type.Enemy;
 import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Frame;
 import rekit.primitives.geometry.Vec;
-import rekit.primitives.image.RGBColor;
+import rekit.primitives.image.RGBAColor;
 import rekit.primitives.time.Timer;
 import rekit.util.ReflectUtils.LoadMe;
 
@@ -68,9 +68,9 @@ public final class Warper extends Enemy implements Configurable {
 	public void internalRender(GameGrid f) {
 		float progress = this.warpAction.getProgress();
 		for (float i = 1; i >= 0.2; i -= 0.1) {
-			RGBColor innerColor = new RGBColor((int) (250 * i), (int) (250 * (1 - progress)), (150));
+			RGBAColor innerColor = new RGBAColor((int) (250 * i), (int) (250 * (1 - progress)), (150));
 			// draw body
-			f.drawCircle(this.getPos(), this.getSize().scalar(i), innerColor.toRGBA());
+			f.drawCircle(this.getPos(), this.getSize().scalar(i), innerColor);
 		}
 
 	}

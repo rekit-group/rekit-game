@@ -14,7 +14,7 @@ import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Frame;
 import rekit.primitives.geometry.Polygon;
 import rekit.primitives.geometry.Vec;
-import rekit.primitives.image.RGBColor;
+import rekit.primitives.image.RGBAColor;
 import rekit.primitives.time.Timer;
 import rekit.util.ReflectUtils.LoadMe;
 
@@ -36,15 +36,15 @@ public final class Rocket extends Enemy implements Configurable {
 	/**
 	 * The inner color of the rocket.
 	 */
-	private static RGBColor INNER_COLOR;
+	private static RGBAColor INNER_COLOR;
 	/**
 	 * The color of the front.
 	 */
-	private static RGBColor FRONT_COLOR;
+	private static RGBAColor FRONT_COLOR;
 	/**
 	 * The outer color of the rocket.
 	 */
-	private static RGBColor OUTER_COLOR;
+	private static RGBAColor OUTER_COLOR;
 	/**
 	 * The Particles's spawn time.
 	 */
@@ -91,7 +91,7 @@ public final class Rocket extends Enemy implements Configurable {
 	@Override
 	public void internalRender(GameGrid f) {
 		// draw body
-		f.drawRectangle(this.getPos(), this.getSize().scalar(0.8f, 0.6f), Rocket.INNER_COLOR.toRGBA());
+		f.drawRectangle(this.getPos(), this.getSize().scalar(0.8f, 0.6f), Rocket.INNER_COLOR);
 		// draw spike at front
 		Vec startPt = this.getPos().addX(this.getXSignum() * this.getSize().scalar(0.5f).getX());
 		Vec[] relPts = new Vec[] { //
@@ -99,12 +99,12 @@ public final class Rocket extends Enemy implements Configurable {
 				new Vec(-this.getXSignum() * this.getSize().scalar(0.1f).getX(), this.getSize().scalar(0.5f).getY()), //
 				new Vec() //
 		};
-		f.drawPolygon(new Polygon(startPt, relPts), Rocket.FRONT_COLOR.toRGBA(), true);
+		f.drawPolygon(new Polygon(startPt, relPts), Rocket.FRONT_COLOR, true);
 
 		// draw stripes
 		Vec stripeStart = this.getPos().addX(this.getSize().scalar(this.getXSignum() * (0.05f + 0.025f - 0.4f)).getX());
 		for (int x = 0; x < 9; x++) {
-			f.drawRectangle(stripeStart.addX(this.getXSignum() * 0.15f * x), this.getSize().scalar(0.05f, 0.75f), Rocket.OUTER_COLOR.toRGBA());
+			f.drawRectangle(stripeStart.addX(this.getXSignum() * 0.15f * x), this.getSize().scalar(0.05f, 0.75f), Rocket.OUTER_COLOR);
 		}
 
 		// draw drive at back
@@ -114,7 +114,7 @@ public final class Rocket extends Enemy implements Configurable {
 				new Vec(this.getXSignum() * this.getSize().getX() * 0.1f, this.getSize().getY() * 0.2f), //
 				new Vec() //
 		};
-		f.drawPolygon(new Polygon(startPt, relPts), Rocket.OUTER_COLOR.toRGBA(), true);
+		f.drawPolygon(new Polygon(startPt, relPts), Rocket.OUTER_COLOR, true);
 	}
 
 	@Override
@@ -133,7 +133,7 @@ public final class Rocket extends Enemy implements Configurable {
 
 	/**
 	 * Sets the speed of the rocket
-	 * 
+	 *
 	 * @param speed
 	 *            the new speed
 	 */

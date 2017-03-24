@@ -8,7 +8,6 @@ import java.util.concurrent.TimeUnit;
 import rekit.primitives.image.AbstractImage;
 import rekit.primitives.image.Filter;
 import rekit.primitives.image.RGBAColor;
-import rekit.primitives.image.RGBColor;
 import rekit.util.LambdaTools;
 import rekit.util.ReflectUtils.LoadMe;
 
@@ -109,13 +108,6 @@ public final class GrayScaleMode implements Filter {
 		int gray = color.red + color.green + color.blue;
 		gray /= 3;
 		return new RGBAColor(gray, gray, gray, color.alpha);
-	}
-
-	@Override
-	public RGBColor apply(RGBColor color) {
-		int gray = color.red + color.green + color.blue;
-		gray /= 3;
-		return new RGBColor(gray, gray, gray);
 	}
 
 	@Override

@@ -5,7 +5,6 @@ import java.util.Arrays;
 import rekit.config.GameConf;
 import rekit.primitives.image.Filter;
 import rekit.primitives.image.RGBAColor;
-import rekit.primitives.image.RGBColor;
 import rekit.util.ReflectUtils.LoadMe;
 import rekit.util.ThreadUtils;
 
@@ -80,25 +79,9 @@ public final class RandomMode implements Filter {
 		return false;
 	}
 
-	/**
-	 * Get the mapping of an RGBColor to RGBAColor.
-	 *
-	 * @param color
-	 *            the RGBColor
-	 * @return the corresponding RGBAColor
-	 */
-	private RGBAColor getMapping(RGBColor color) {
-		return this.getMapping(color.toRGBA());
-	}
-
 	@Override
 	public RGBAColor apply(RGBAColor color) {
 		return this.getMapping(color);
-	}
-
-	@Override
-	public RGBColor apply(RGBColor color) {
-		return this.getMapping(color).toRGB();
 	}
 
 	@Override

@@ -9,7 +9,7 @@ import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Frame;
 import rekit.primitives.geometry.Polygon;
 import rekit.primitives.geometry.Vec;
-import rekit.primitives.image.RGBColor;
+import rekit.primitives.image.RGBAColor;
 import rekit.util.ReflectUtils.LoadMe;
 
 /**
@@ -139,17 +139,17 @@ public final class RektKiller extends Enemy {
 
 	@Override
 	public void internalRender(GameGrid f) {
-		RGBColor innerColor = new RGBColor(150, 30, 30);
-		RGBColor spikeColor = new RGBColor(80, 80, 80);
+		RGBAColor innerColor = new RGBAColor(150, 30, 30);
+		RGBAColor spikeColor = new RGBAColor(80, 80, 80);
 		// draw rectangle in the middle
-		f.drawRectangle(this.getPos(), this.getSize().scalar(0.8f), innerColor.toRGBA());
+		f.drawRectangle(this.getPos(), this.getSize().scalar(0.8f), innerColor);
 		// move to upper position
 		this.spikePolygon.moveTo(this.getPos().add(this.getSize().scalar(-0.8f / 2f)));
 		for (Direction d : Direction.values()) {
 			if (this.hasSide(d)) {
 				double angle = d.getAngle();
 				Polygon rotatedSpikes = this.spikePolygon.rotate((float) angle, this.getPos());
-				f.drawPolygon(rotatedSpikes, spikeColor.toRGBA(), true);
+				f.drawPolygon(rotatedSpikes, spikeColor, true);
 			}
 		}
 

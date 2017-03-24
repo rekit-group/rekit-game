@@ -3,12 +3,11 @@ package rekit.logic.gameelements.entities.pickups;
 import rekit.logic.gameelements.type.Coin;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBAColor;
-import rekit.primitives.image.RGBColor;
 import rekit.util.ReflectUtils.LoadMe;
 
 /**
  * This class represents default coins.
- * 
+ *
  *
  */
 @LoadMe
@@ -33,20 +32,20 @@ public class DefaultCoin extends Coin {
 	/**
 	 * The default color of the coin.
 	 */
-	private static RGBColor color = new RGBColor(232, 214, 16);
+	private static RGBAColor color = new RGBAColor(232, 214, 16);
 	/**
 	 * The shadow color of the coin.
 	 */
-	private static RGBColor darkColor = new RGBColor(192, 174, 6);
+	private static RGBAColor darkColor = new RGBAColor(192, 174, 6);
 
 	@Override
 	protected RGBAColor getColor() {
-		return DefaultCoin.color.toRGBA();
+		return DefaultCoin.color;
 	}
 
 	@Override
 	protected RGBAColor getDarkerColor() {
-		return DefaultCoin.darkColor.toRGBA();
+		return DefaultCoin.darkColor;
 	}
 
 	@Override
