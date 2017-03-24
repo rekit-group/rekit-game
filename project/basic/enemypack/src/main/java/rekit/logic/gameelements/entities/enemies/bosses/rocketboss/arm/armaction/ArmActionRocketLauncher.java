@@ -1,7 +1,6 @@
 package rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm.armaction;
 
 import rekit.core.GameGrid;
-import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.entities.enemies.Rocket;
 import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.RocketBoss;
 import rekit.primitives.geometry.Direction;
@@ -52,7 +51,7 @@ public class ArmActionRocketLauncher extends ArmAction {
 		}
 		
 		Vec renderPos = this.getPos().addX(this.parent.getXSignum() * 0.6f);
-		String imageSrc = (this.getParent().getDirection() == Direction.LEFT) ? RocketBoss.ARM_ACTION_ROCKET_LAUNCHER_SOURCE_LEFT : RocketBoss.ARM_ACTION_ROCKET_LAUNCHER_SOURCE_RIGHT;
-		f.drawImage(renderPos, RocketBoss.ARM_ACTION_ROCKET_LAUNCHER_SIZE, imageSrc);
+		String imageSrc = (this.getParent().getDirection() == Direction.LEFT) ? RocketBoss.ROCKET_LAUNCHER_SOURCE_LEFT : RocketBoss.ROCKET_LAUNCHER_SOURCE_RIGHT;
+		f.drawImage(renderPos, RocketBoss.ROCKET_LAUNCHER_SIZE, imageSrc);
 	}
 }

@@ -15,17 +15,15 @@ public class Mouth {
 
 	private Vec pos;
 	private Vec size;
-	private RGBColor col;
 
 	private Timer mouthCurveTimer = new Timer(50);
 	private Vec mouthCurvePos;
 	private List<Vec> mouthCurve = new LinkedList<>();
 
-	public Mouth(RocketBoss parent, Vec pos, Vec size, RGBColor col) {
+	public Mouth(RocketBoss parent, Vec pos, Vec size) {
 		this.parent = parent;
 		this.pos = pos;
 		this.size = size;
-		this.col = col;
 	}
 
 	public void logicLoop(float calcX, float deltaX) {

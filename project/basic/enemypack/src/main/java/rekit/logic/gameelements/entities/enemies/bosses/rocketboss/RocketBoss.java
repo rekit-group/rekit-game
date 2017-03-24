@@ -32,64 +32,175 @@ import rekit.util.state.TimeStateMachine;
 public class RocketBoss extends Boss implements Configurable {
 	
 	/**
-	 * The particle spawner for the rocket's flight.
+	 * The particle spawner for the jets sparks
 	 */
-	private static ParticleSpawner sparkParticles;
+	private static ParticleSpawner jetSparkSpawner;
 	
 	/**
-	 * The Particles's spawn time.
+	 * The jet Particles's spawn time.
 	 */
-	private static long PARTICLE_SPAWN_TIME = 100;
+	private static long JET_SPARK_SPAWN_DELTA;
 	
 	/**
 	 * The position where to spawn the particles of the right jet, relative to the middle point of the RocketBoss.
 	 * Invert x to get the left point.
 	 */
-	private static Vec PARTICLE_SPAWN_POS = new Vec(1.5f, 0.8f);
+	private static Vec PARTICLE_SPAWN_POS;
 	
-	public static Vec MOVEMENT_PERIOD = new Vec(1.6f, 0.9f);
-	public static Vec MOVEMENT_RANGE = new Vec(0.3f, 0.3f);
+	/**
+	 * The duration fur a full movement cycle in x and y direction  
+	 */
+	public static Vec MOVEMENT_PERIOD;
 	
-	public static Vec BRAIN_SIZE = new Vec(1.4f, 0.6f);
+	/**
+	 * The length the RocketBoss moves "randomly" on spot
+	 */
+	public static Vec MOVEMENT_RANGE;
 	
-	public static Vec HEAD_SIZE = new Vec(2, 1.6f);
-	public static Vec HEAD_PADDING = new Vec(0.2f, 0.2f);
-
-	public static Vec EYE_SIZE = new Vec(0.4f, 0.4f);
-	public static Vec EYE_LEFT_POS = RocketBoss.EYE_SIZE.scalar(0.5f).add(RocketBoss.HEAD_PADDING).sub(RocketBoss.HEAD_SIZE.scalar(0.5f));
-	public static Vec EYE_RIGHT_POS = RocketBoss.EYE_LEFT_POS.scalar(-1, 1);
-
-	public static Vec MOUTH_SIZE = new Vec(1.6f, 0.4f);
-	public static Vec MOUTH_POS = (RocketBoss.MOUTH_SIZE.scalar(-0.5f).sub(RocketBoss.HEAD_PADDING).add(RocketBoss.HEAD_SIZE.scalar(0.5f))).setX(0);
-	public static RGBColor MOUTH_BG_COL = new RGBColor(183, 183, 183);
+	/**
+	 * The size of the Brain that will also determine the hitbox for the only
+	 * damage-sensitive place of the RocketBoss 
+	 */
+	public static Vec BRAIN_SIZE;
 	
+	/**
+	 * The size of the robots main corpus.
+	 */
+	public static Vec HEAD_SIZE;
+	
+	/** 
+	 * The size of the robots mouth, that will be used for starting and ending the mouth-function (x) as well as
+	 * its amplitude (y).
+	 */
+	public static Vec MOUTH_SIZE;
+	
+	/**
+	 * The mouths position relative to the RocketBosses position
+	 */
+	public static Vec MOUTH_POS;
+	
+	/**
+	 * A list where to position the Arms relative to the RocketBoss. 
+	 */
+	@NoSet
 	public static Vec[] ARM_POSITIONS = new Vec[]{new Vec(0.85f, 0.8f), new Vec(-0.85f, 0.8f)};
+	
+	/**
+	 * A list of settings concerning the arms shaping parameters.
+	 * Each consists of:
+	 * <ul>
+	 * <li>Mu of the curves amplitude in x-direction</li>
+	 * <li>Sigma of the curves amplitude in x-direction</li>
+	 * <li>Mu of the curves length in y-direction</li>
+	 * <li>Sigma of the curves length in y-direction</li>
+	 * </ul>
+	 */
+	@NoSet
 	public static float[][] ARM_SHAPE_SETTINGS = new float[][]{new float[]{0.3f, 0.2f, 2f, 0.3f}, new float[]{0.15f, 0.08f, 0.65f, 0.2f}};
+	
+	/**
+	 * A list of thresholds in time, when to trigger an Arms Action during its ArmActionState.
+	 * The thresholds are fractions of the ArmActionStates duration and should be smaller than or equal to 1 
+	 */
+	@NoSet
 	public static float[] ARM_ACTION_PROGRESS_THRESHOLDS = new float[]{0.1f, 0.4f};
 	
-	public static Vec ARM_ACTION_ROCKET_LAUNCHER_SIZE = new Vec(1.2f, 0.6f);
-	public static String ARM_ACTION_ROCKET_LAUNCHER_SOURCE_LEFT = "rocketBoss/cannon_left.png";
-	public static String ARM_ACTION_ROCKET_LAUNCHER_SOURCE_RIGHT = "rocketBoss/cannon_right.png";
+	/**
+	 * The rocket launchers size
+	 */
+	public static Vec ROCKET_LAUNCHER_SIZE;
 	
-	public static Vec ARM_SEGMENT_SIZE = new Vec(0.25f, 0.25f);
-	public static float ARM_SEGMENT_DIST = 0.04f;
-	public static RGBColor ARM_SEGMENT_COL = new RGBColor(160, 160, 160);
-	public static RGBColor ARM_SEGMENT_BORDER_COL = new RGBColor(76, 76, 76);
+	/**
+	 * The image source for the rocket launcher when facing left
+	 */
+	public static String ROCKET_LAUNCHER_SOURCE_LEFT;
 	
+	/**
+	 * The image source for the rocket launcher when facing right
+	 */
+	public static String ROCKET_LAUNCHER_SOURCE_RIGHT;
 	
-	public static long ARM_STATE_TIME_IDLE = 2000;
-	public static long ARM_STATE_TIME_BUILD = 2000;
-	public static long ARM_STATE_TIME_ACTION = 4000;
-	public static long ARM_STATE_TIME_UNBUILD = 2000;
+	/**
+	 * The size of one square/segment of the arm
+	 */
+	public static Vec ARM_SEGMENT_SIZE;
+	
+	/**
+	 * The distance on x axis to render the ArmSegments and calculate the corresponding y.
+	 * Warning: This is not the actual 2d-euclidian distance but only on the x axis!
+	 */
+	public static float ARM_SEGMENT_DIST;
+	
+	/**
+	 * The Color to fill the ArmSegment with.
+	 */
+	public static RGBColor ARM_SEGMENT_COL;
+	
+	/**
+	 * The Color to give the ArmSegments border.
+	 */
+	public static RGBColor ARM_SEGMENT_BORDER_COL;
+	
+	/**
+	 * The ArmStates duration in ms for the IDLE phase,
+	 * where the RocketBoss has no arms
+	 */
+	public static long ARM_STATE_TIME_IDLE;
+	
+	/**
+	 * The ArmStates duration in ms for the BUILD phase,
+	 * where the RocketBoss slowly grows Arms
+	 */
+	public static long ARM_STATE_TIME_BUILD;
+	
+	/**
+	 * The ArmStates duration in ms for the ACTION phase,
+	 * where the Arms perform their actions.
+	 */
+	public static long ARM_STATE_TIME_ACTION;
+	
+	/**
+	 * The ArmStates duration in ms for the UNBUILD phase,
+	 * where the RocketBoss rolls the arms back in.
+	 */
+	public static long ARM_STATE_TIME_UNBUILD;
 
-	public static String JET_SOURCE = "rocketBoss/jet.png";
-	public static Vec JET_SIZE = new Vec(3.8f, 1.6f);
-	public static float JET_SHAKE_MU = 0.01f;
-	public static float JET_SHAKE_SIGMA = 0.005f;
+	/**
+	 * The source for the image of the jet.
+	 */
+	public static String JET_SOURCE;
 	
+	/**
+	 * The size of the jet, used for rendering the image
+	 */
+	public static Vec JET_SIZE;
+	
+	/**
+	 * Mu used for the "random shaking" of the jet.
+	 */
+	public static float JET_SHAKE_MU;
+	
+	/**
+	 * Sigma used for the "random shaking" of the jet.
+	 */
+	public static float JET_SHAKE_SIGMA;
+	
+	/**
+	 * A list of locations where the RocketBoss can move relative to the startPosition.
+	 */
+	@NoSet
 	public static Vec[] POSITIONS = new Vec[]{new Vec(), new Vec(-8, 0), new Vec(3, 0), new Vec(-14, 0.3f), new Vec(3, 0.3f), new Vec(-3, -1.8f)};
+	
+	/**
+	 * A list of Directions to face in correspondence to the list POSITIONS.
+	 */
+	@NoSet
 	public static Direction[] DIRECTIONS = new Direction[]{Direction.LEFT, Direction.RIGHT, Direction.LEFT, Direction.RIGHT, Direction.LEFT, Direction.LEFT};
-	private static long NEXT_POS_DURATION = 2000;
+	
+	/**
+	 * The time it takes to switch from one position to another. Is later modified by the DamageStates timeFactor. 
+	 */
+	private static long NEXT_POS_DURATION;
 	
 	@NoSet
 	private TimeStateMachine machine;
@@ -112,16 +223,19 @@ public class RocketBoss extends Boss implements Configurable {
 	@NoSet
 	private static int LIVES = 3;
 	
+	@NoSet
 	private Timer particleTimer;
 	
-	
-	
+	@NoSet
 	private int positionId = 0;
 	
+	@NoSet
 	private Timer nextPosTimer;
 	
+	@NoSet
 	private OpProgress<Vec> nextPosProgress;
-
+	
+	@NoSet
 	private Direction currentDirection;
 
 	
@@ -136,13 +250,13 @@ public class RocketBoss extends Boss implements Configurable {
 		super(startPos, new Vec(), RocketBoss.HEAD_SIZE);
 		this.startPos = startPos;
 		this.machine = new TimeStateMachine(new State3());
-		this.mouth = new Mouth(this, RocketBoss.MOUTH_POS, RocketBoss.MOUTH_SIZE, RocketBoss.MOUTH_BG_COL);
+		this.mouth = new Mouth(this, RocketBoss.MOUTH_POS, RocketBoss.MOUTH_SIZE);
 		this.setLives(RocketBoss.LIVES);
 		this.arms = new LinkedList<Arm>();
 		
 		this.moveToNextPosition(0);
 		
-		this.particleTimer = new Timer(RocketBoss.PARTICLE_SPAWN_TIME);
+		this.particleTimer = new Timer(RocketBoss.JET_SPARK_SPAWN_DELTA);
 		
 		for (int i = 0; i < RocketBoss.ARM_POSITIONS.length; ++i) {
 			float[] shapeSettings = ARM_SHAPE_SETTINGS[i];
@@ -184,7 +298,7 @@ public class RocketBoss extends Boss implements Configurable {
 		this.nextPosTimer = new Timer((long) (RocketBoss.NEXT_POS_DURATION / this.getState().getTimeFactor()));
 		this.positionId = i;
 		
-		this.particleTimer = new Timer((long) (RocketBoss.PARTICLE_SPAWN_TIME / this.getState().getTimeFactor()));
+		this.particleTimer = new Timer((long) (RocketBoss.JET_SPARK_SPAWN_DELTA / this.getState().getTimeFactor()));
 	}
 	
 	public void moveToNextPosition() {
@@ -228,7 +342,7 @@ public class RocketBoss extends Boss implements Configurable {
 			//RocketBoss.sparkParticles.spawn(this.getScene(), this.getPos().addX(-this.getXSignum() * this.getSize().getX() / 2));
 			
 			for (int i = -1; i <= 1; i +=2) {
-				RocketBoss.sparkParticles.spawn(this.getScene(), this.getPos().add(RocketBoss.PARTICLE_SPAWN_POS.scalar(i, 1)));
+				RocketBoss.jetSparkSpawner.spawn(this.getScene(), this.getPos().add(RocketBoss.PARTICLE_SPAWN_POS.scalar(i, 1)));
 			}
 			
 		}
@@ -259,6 +373,7 @@ public class RocketBoss extends Boss implements Configurable {
 		float jetX = (GameConf.PRNG.nextBoolean() ? 1 : -1) * CalcUtil.randomize(jetMu, jetSigma);
 		float jetY = (GameConf.PRNG.nextBoolean() ? 1 : -1) * CalcUtil.randomize(jetMu, jetSigma);
 		Vec jetPos = this.getPos().add(new Vec(jetX, jetY));
+		
 		f.drawImage(jetPos, RocketBoss.JET_SIZE, RocketBoss.JET_SOURCE);
 		
 		

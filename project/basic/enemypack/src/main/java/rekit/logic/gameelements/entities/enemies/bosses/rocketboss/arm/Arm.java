@@ -94,18 +94,25 @@ public class Arm extends RocketBossChild {
 	}
 
 	public void internalRender(GameGrid f) {
-		int c = 0;
-		int l = (int) (this.getState().getSegmentAmount() * this.armSegments.size());
-
-		for (ArmSegment segment : this.armSegments) {
-			c++;
-			if (c > l) {
-				return;
+		
+		// Render all segments of the arm 
+		if (this.armSegments != null) {
+			int c = 0;
+			int l = (int) (this.getState().getSegmentAmount() * this.armSegments.size());
+	
+			for (ArmSegment segment : this.armSegments) {
+				c++;
+				if (c > l) {
+					return;
+				}
+				segment.render(f);
 			}
-			segment.render(f);
 		}
 		
-		armAction.internalRender(f);
+		if (this.armAction != null) {
+			// Render Hand/ArmAction if there is any
+			armAction.internalRender(f);
+		}
 	}
 
 	public TimeStateMachine getMachine() {
