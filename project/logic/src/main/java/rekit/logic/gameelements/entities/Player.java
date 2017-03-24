@@ -67,7 +67,9 @@ public final class Player extends Entity implements CameraTarget {
 	/**
 	 * Initialize the player.
 	 */
+	@Override
 	public void init() {
+		super.init();
 		this.setPos(this.startPos);
 		this.lives = GameConf.PLAYER_LIVES;
 		this.points = 0;

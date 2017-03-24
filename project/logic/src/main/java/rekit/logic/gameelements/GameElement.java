@@ -130,6 +130,10 @@ public abstract class GameElement implements Collidable {
 		this.size = size;
 		this.setPos(startPos);
 	}
+	
+	public void init() {
+		this.deleteMe = false;
+	}
 
 	/**
 	 * <p>
