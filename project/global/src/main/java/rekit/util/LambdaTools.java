@@ -29,7 +29,7 @@ public class LambdaTools {
 			try {
 				return in.apply(i);
 			} catch (Exception e) {
-				GameConf.GAME_LOGGER.error(e.getMessage());
+				GameConf.GAME_LOGGER.fatal(e.getMessage());
 				return null;
 			}
 		};
@@ -40,7 +40,7 @@ public class LambdaTools {
 			try {
 				in.apply();
 			} catch (Exception e) {
-				GameConf.GAME_LOGGER.error(e.getMessage());
+				GameConf.GAME_LOGGER.fatal(e.getMessage());
 			}
 		};
 
@@ -51,7 +51,7 @@ public class LambdaTools {
 			try {
 				in.apply(i);
 			} catch (Exception e) {
-				GameConf.GAME_LOGGER.error(e.getMessage());
+				GameConf.GAME_LOGGER.fatal(e.getMessage());
 			}
 		};
 

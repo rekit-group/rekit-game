@@ -112,8 +112,11 @@ public class GameModel implements Model {
 	 *            pass options to the scene (e.g. the arcade level id)
 	 */
 	public void switchScene(Scenes s, String... options) {
-		this.removeFilter();
 		IScene nextScene = s.getNewScene(this, options);
+		if (nextScene == null) {
+			return;
+		}
+		this.removeFilter();
 		nextScene.init();
 		nextScene.start();
 		this.curScene.stop();
