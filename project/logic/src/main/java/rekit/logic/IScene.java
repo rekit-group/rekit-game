@@ -156,7 +156,7 @@ public interface IScene {
 	MenuItem getMenu();
 
 	/**
-	 * Toggle pause for the scene. See {@link IScene#setPause(boolean).}
+	 * Toggle pause for the scene. See {@link IScene#setPause(boolean)}.
 	 */
 	void togglePause();
 
@@ -168,10 +168,9 @@ public interface IScene {
 	boolean isPaused();
 
 	/**
-	 * Set the pause state.
-	 * When pause usually the logic loop 
-	 * 
-	 * 
+	 * Set the pause state. When pause usually the logic loop
+	 *
+	 *
 	 * Useful when resetting.
 	 *
 	 * @param pause

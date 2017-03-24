@@ -22,7 +22,7 @@ public class DirFileDefinitions {
 		DirFileDefinitions.CONFIG_DIR.mkdirs();
 		DirFileDefinitions.MODS_DIR.mkdirs();
 		if (!DirFileDefinitions.USER_DATA.exists()) {
-			LambdaTools.tryCatch(DirFileDefinitions.USER_DATA::createNewFile).run();
+			LambdaTools.invoke(DirFileDefinitions.USER_DATA::createNewFile);
 		}
 	}
 

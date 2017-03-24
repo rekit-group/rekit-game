@@ -66,7 +66,7 @@ public final class GrayScaleMode implements Filter {
 			executor.submit(() -> this.runIt(image.width, image.height, taskSize, task, threadNums, image.pixels, result));
 		}
 		executor.shutdown();
-		LambdaTools.tryCatch(() -> executor.awaitTermination(Long.MAX_VALUE, TimeUnit.HOURS)).run();
+		LambdaTools.invoke(() -> executor.awaitTermination(Long.MAX_VALUE, TimeUnit.HOURS));
 		return new AbstractImage(image.height, image.width, result);
 
 	}
