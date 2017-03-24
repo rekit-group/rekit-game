@@ -19,6 +19,7 @@ import rekit.primitives.image.RGBColor;
 import rekit.primitives.operable.OpProgress;
 import rekit.primitives.time.Progress;
 import rekit.primitives.time.Timer;
+import rekit.util.CalcUtil;
 import rekit.util.ReflectUtils.LoadMe;
 import rekit.util.state.TimeStateMachine;
 
@@ -73,7 +74,10 @@ public class RocketBoss extends Boss {
 	public static long ARM_STATE_TIME_ACTION = 4000;
 	public static long ARM_STATE_TIME_UNBUILD = 2000;
 
-	
+	public static String JET_SOURCE = "rocketBoss/jet.png";
+	public static Vec JET_SIZE = new Vec(3.8f, 1.6f);
+	public static float JET_SHAKE_MU = 0.01f;
+	public static float JET_SHAKE_SIGMA = 0.005f;
 	
 	public static Vec[] POSITIONS = new Vec[]{new Vec(), new Vec(-8, 0), new Vec(3, 0), new Vec(-14, 0.3f), new Vec(3, 0.3f), new Vec(-3, -1.8f)};
 	public static Direction[] DIRECTIONS = new Direction[]{Direction.LEFT, Direction.RIGHT, Direction.LEFT, Direction.RIGHT, Direction.LEFT, Direction.LEFT};
@@ -86,6 +90,7 @@ public class RocketBoss extends Boss {
 	private OpProgress<Vec> nextPosProgress;
 
 	private Direction currentDirection;
+	
 	
 	
 	
@@ -197,6 +202,17 @@ public class RocketBoss extends Boss {
 		while (it.hasNext()) {
 			it.next().internalRender(f);
 		}	
+		
+		// Render shaking jets
+		float jetMu = this.getState().getTimeFactor() * RocketBoss.JET_SHAKE_MU;
+		float jetSigma = this.getState().getTimeFactor() * RocketBoss.JET_SHAKE_SIGMA;
+		float jetX = (GameConf.PRNG.nextBoolean() ? 1 : -1) * CalcUtil.randomize(jetMu, jetSigma);
+		float jetY = (GameConf.PRNG.nextBoolean() ? 1 : -1) * CalcUtil.randomize(jetMu, jetSigma);
+		Vec jetPos = this.getPos().add(new Vec(jetX, jetY));
+		f.drawImage(jetPos, RocketBoss.JET_SIZE, RocketBoss.JET_SOURCE);
+		
+		
+		
 		
 		// Render head background image
 		Vec backgroundPos = this.getPos().add(RocketBoss.BRAIN_SIZE.scalar(-1/2f).setX(0));
