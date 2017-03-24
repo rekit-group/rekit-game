@@ -150,7 +150,7 @@ public abstract class MenuItem extends GuiElement {
 	 *            the field
 	 */
 	protected void renderItem(GameGrid f) {
-		f.drawRectangle(this.getPos(), this.getSize(), this.hover ? GameConf.MENU_BOX_SELECT_COLOR : GameConf.MENU_BOX_COLOR, false);
+		f.drawRectangle(this.getPos(), this.getSize(), (this.hover ? GameConf.MENU_BOX_SELECT_COLOR : GameConf.MENU_BOX_COLOR).toRGBA(), false, true);
 		f.drawText(this.getPos(), this.getText(), GameConf.MENU_TEXT, false);
 	}
 

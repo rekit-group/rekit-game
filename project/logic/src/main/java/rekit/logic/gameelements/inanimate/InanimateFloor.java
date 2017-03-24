@@ -189,7 +189,7 @@ public class InanimateFloor extends Inanimate {
 		 *            the {@link GameGrid} to render upon.
 		 */
 		public void internalRender(GameGrid f) {
-			f.drawRectangle(this.pos, this.size, this.col);
+			f.drawRectangle(this.pos, this.size, this.col.toRGBA());
 		}
 	}
 
@@ -198,7 +198,7 @@ public class InanimateFloor extends Inanimate {
 		// Draw rectangles that this Floor is composed of
 		for (int i = 0; i < InanimateFloor.LAYERS; i++) {
 			f.drawRectangle(this.getPos().add(InanimateFloor.layerVecs[i]), this.getSize().setY(1 / (float) InanimateFloor.LAYERS),
-					InanimateFloor.layerCols[i]);
+					InanimateFloor.layerCols[i].toRGBA());
 		}
 		// Draw GrassStraws
 		for (GrassStraw straw : this.straws) {

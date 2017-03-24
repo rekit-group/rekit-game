@@ -13,7 +13,7 @@ import rekit.primitives.image.RGBColor;
 public class InanimateDoor extends InanimateBox {
 	/**
 	 * Create a new door.
-	 * 
+	 *
 	 * @param pos
 	 *            the position
 	 */
@@ -29,13 +29,13 @@ public class InanimateDoor extends InanimateBox {
 		Vec end = start.add(this.getSize()).add(new Vec(-0.2f, -0.2f));
 
 		for (float x = start.getX(); x <= end.getX(); x += 0.2) {
-			f.drawCircle(new Vec(x, start.getY()), new Vec(0.12f), new RGBColor(80, 80, 80));
-			f.drawCircle(new Vec(x, end.getY()), new Vec(0.12f), new RGBColor(80, 80, 80));
+			f.drawCircle(new Vec(x, start.getY()), new Vec(0.12f), new RGBColor(80, 80, 80).toRGBA());
+			f.drawCircle(new Vec(x, end.getY()), new Vec(0.12f), new RGBColor(80, 80, 80).toRGBA());
 		}
 
 		for (float y = start.getY(); y <= end.getY(); y += 0.2) {
-			f.drawCircle(new Vec(start.getX(), y), new Vec(0.12f), new RGBColor(80, 80, 80));
-			f.drawCircle(new Vec(end.getX(), y), new Vec(0.12f), new RGBColor(80, 80, 80));
+			f.drawCircle(new Vec(start.getX(), y), new Vec(0.12f), new RGBColor(80, 80, 80).toRGBA());
+			f.drawCircle(new Vec(end.getX(), y), new Vec(0.12f), new RGBColor(80, 80, 80).toRGBA());
 		}
 	}
 

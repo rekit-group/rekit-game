@@ -318,11 +318,6 @@ class GameGridImpl extends GameGrid {
 	}
 
 	@Override
-	public void drawPath(Vec startPos, List<Vec> pts, RGBColor in) {
-		this.drawPath(startPos, pts, in, 1);
-	}
-
-	@Override
 	public void drawCircle(Vec pos, Vec size, RGBAColor in, boolean inGame, boolean usefilter) {
 		RGBAColor col = (!usefilter || this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
 		if (!inGame) {
@@ -396,12 +391,12 @@ class GameGridImpl extends GameGrid {
 	}
 
 	@Override
-	public void drawPath(Vec startPos, List<Vec> pts, RGBColor in, int lineWidth) {
+	public void drawPath(Vec startPos, List<Vec> pts, RGBAColor in, int lineWidth, boolean usefilter) {
 		if (pts.size() == 0) {
 			return;
 		}
 
-		RGBColor col = (this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
+		RGBAColor col = (!usefilter || this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
 
 		Vec newPos = this.translate2D(startPos);
 		newPos = CalcUtil.units2pixel(newPos);
@@ -411,7 +406,7 @@ class GameGridImpl extends GameGrid {
 
 		Vec lastPt = newPos.add(CalcUtil.units2pixel(it.next()));
 
-		this.graphics.setColor(Utils.calcRGB(col));
+		this.graphics.setColor(Utils.calcRGBA(col));
 		this.graphics.setStroke(new BasicStroke(lineWidth));
 		while (it.hasNext()) {
 			Vec pt = newPos.add(CalcUtil.units2pixel(it.next()));

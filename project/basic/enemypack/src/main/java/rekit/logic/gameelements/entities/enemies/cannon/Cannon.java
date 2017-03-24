@@ -219,7 +219,7 @@ public class Cannon extends Enemy implements Configurable {
 	public void internalRender(GameGrid f) {
 
 		// draw cannon base
-		f.drawCircle(this.getPos(), this.getSize(), Cannon.COLOR_BASE);
+		f.drawCircle(this.getPos(), this.getSize(), Cannon.COLOR_BASE.toRGBA());
 
 		Vec size;
 		Vec pos;
@@ -244,13 +244,13 @@ public class Cannon extends Enemy implements Configurable {
 			pos = new Vec();
 			size = new Vec();
 		}
-		f.drawRectangle(pos, size, Cannon.COLOR_BASE);
+		f.drawRectangle(pos, size, Cannon.COLOR_BASE.toRGBA());
 
 		// draw rotated cannon with (optional) shaking
 		Vec cannonPos = this.getPos().addX(this.innerStateMachine.getState().getCannonShake());
-		f.drawCircle(cannonPos, this.getSize().scalar(Cannon.JOINT_RATIO), Cannon.COLOR_CANNON);
+		f.drawCircle(cannonPos, this.getSize().scalar(Cannon.JOINT_RATIO), Cannon.COLOR_CANNON.toRGBA());
 		this.pipePolygon.moveTo(cannonPos);
-		f.drawPolygon(this.pipePolygon.rotate(-this.currentAngle, this.getPos()), Cannon.COLOR_CANNON, true);
+		f.drawPolygon(this.pipePolygon.rotate(-this.currentAngle, this.getPos()), Cannon.COLOR_CANNON.toRGBA(), true);
 	}
 
 	@Override

@@ -142,14 +142,14 @@ public final class RektKiller extends Enemy {
 		RGBColor innerColor = new RGBColor(150, 30, 30);
 		RGBColor spikeColor = new RGBColor(80, 80, 80);
 		// draw rectangle in the middle
-		f.drawRectangle(this.getPos(), this.getSize().scalar(0.8f), innerColor);
+		f.drawRectangle(this.getPos(), this.getSize().scalar(0.8f), innerColor.toRGBA());
 		// move to upper position
 		this.spikePolygon.moveTo(this.getPos().add(this.getSize().scalar(-0.8f / 2f)));
 		for (Direction d : Direction.values()) {
 			if (this.hasSide(d)) {
 				double angle = d.getAngle();
 				Polygon rotatedSpikes = this.spikePolygon.rotate((float) angle, this.getPos());
-				f.drawPolygon(rotatedSpikes, spikeColor, true);
+				f.drawPolygon(rotatedSpikes, spikeColor.toRGBA(), true);
 			}
 		}
 

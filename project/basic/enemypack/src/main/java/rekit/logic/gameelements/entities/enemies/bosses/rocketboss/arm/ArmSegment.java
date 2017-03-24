@@ -25,8 +25,8 @@ public class ArmSegment extends GameElement {
 		this.relPos = relPos;
 
 		// calculate half height and width
-		float hw = getSize().getX() / 2;
-		float hh = getSize().getY() / 2;
+		float hw = this.getSize().getX() / 2;
+		float hh = this.getSize().getY() / 2;
 
 		// create Polygon around center
 		this.shape = new Polygon(new Vec(), new Vec[] {});
@@ -57,14 +57,15 @@ public class ArmSegment extends GameElement {
 
 	public void logicLoop(float deltaTime) {
 		// Do nothing
-		this.setPos(parent.getPos().add(relPos));
+		this.setPos(this.parent.getPos().add(this.relPos));
 		this.shape.moveTo(this.getPos());
 	}
 
+	@Override
 	public void internalRender(GameGrid f) {
-		f.drawPolygon(this.shape, RocketBoss.ARM_SEGMENT_COL, true);
-		
-		f.drawPath(this.getPos(), pathRight, RocketBoss.ARM_SEGMENT_BORDER_COL, 2);
-		f.drawPath(this.getPos(), pathLeft, RocketBoss.ARM_SEGMENT_BORDER_COL, 2);
+		f.drawPolygon(this.shape, RocketBoss.ARM_SEGMENT_COL.toRGBA(), true);
+
+		f.drawPath(this.getPos(), this.pathRight, RocketBoss.ARM_SEGMENT_BORDER_COL.toRGBA(), 2, true);
+		f.drawPath(this.getPos(), this.pathLeft, RocketBoss.ARM_SEGMENT_BORDER_COL.toRGBA(), 2, true);
 	}
 }

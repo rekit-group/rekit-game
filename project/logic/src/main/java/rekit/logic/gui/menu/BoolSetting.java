@@ -74,7 +74,7 @@ public final class BoolSetting extends MenuItem {
 		if (!this.selected) {
 			super.renderItem(f);
 		} else {
-			f.drawRectangle(this.getPos(), this.getSize(), GameConf.MENU_BOX_OPTION_COLOR, false);
+			f.drawRectangle(this.getPos(), this.getSize(), GameConf.MENU_BOX_OPTION_COLOR.toRGBA(), false, true);
 			f.drawText(this.getPos(), this.getText(), GameConf.MENU_TEXT, false);
 		}
 	}

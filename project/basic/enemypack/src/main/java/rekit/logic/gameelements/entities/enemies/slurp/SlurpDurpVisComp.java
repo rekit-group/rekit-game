@@ -42,7 +42,7 @@ public final class SlurpDurpVisComp {
 
 	/**
 	 * Render component.
-	 * 
+	 *
 	 * @param f
 	 *            the field
 	 * @param pos
@@ -52,6 +52,6 @@ public final class SlurpDurpVisComp {
 	 */
 	public void render(GameGrid f, Vec pos, Vec size) {
 		Vec absSize = size.multiply(this.relativeSize);
-		f.drawCircle(pos.add(this.relativePos.multiply(absSize)), absSize, this.col);
+		f.drawCircle(pos.add(this.relativePos.multiply(absSize)), absSize, this.col.toRGBA());
 	}
 }

@@ -49,7 +49,7 @@ public final class Rocket extends Enemy implements Configurable {
 	 * The Particles's spawn time.
 	 */
 	private static float PARTICLE_SPAWN_TIME;
-	
+
 	/**
 	 * The Rockets speed
 	 */
@@ -69,13 +69,13 @@ public final class Rocket extends Enemy implements Configurable {
 	 */
 	@NoSet
 	private Timer paricleTimer;
-	
+
 	@NoSet
 	private Direction direction;
-	
+
 	@NoSet
 	private float currentSpeed = Rocket.SPEED;
-	
+
 	/**
 	 * Create a rocket by start position.
 	 *
@@ -91,7 +91,7 @@ public final class Rocket extends Enemy implements Configurable {
 	@Override
 	public void internalRender(GameGrid f) {
 		// draw body
-		f.drawRectangle(this.getPos(), this.getSize().scalar(0.8f, 0.6f), Rocket.INNER_COLOR);
+		f.drawRectangle(this.getPos(), this.getSize().scalar(0.8f, 0.6f), Rocket.INNER_COLOR.toRGBA());
 		// draw spike at front
 		Vec startPt = this.getPos().addX(this.getXSignum() * this.getSize().scalar(0.5f).getX());
 		Vec[] relPts = new Vec[] { //
@@ -99,12 +99,12 @@ public final class Rocket extends Enemy implements Configurable {
 				new Vec(-this.getXSignum() * this.getSize().scalar(0.1f).getX(), this.getSize().scalar(0.5f).getY()), //
 				new Vec() //
 		};
-		f.drawPolygon(new Polygon(startPt, relPts), Rocket.FRONT_COLOR, true);
+		f.drawPolygon(new Polygon(startPt, relPts), Rocket.FRONT_COLOR.toRGBA(), true);
 
 		// draw stripes
-		Vec stripeStart = this.getPos().addX(this.getSize().scalar(this.getXSignum()*(0.05f + 0.025f - 0.4f)).getX());
+		Vec stripeStart = this.getPos().addX(this.getSize().scalar(this.getXSignum() * (0.05f + 0.025f - 0.4f)).getX());
 		for (int x = 0; x < 9; x++) {
-			f.drawRectangle(stripeStart.addX(this.getXSignum() * 0.15f * x), this.getSize().scalar(0.05f, 0.75f), Rocket.OUTER_COLOR);
+			f.drawRectangle(stripeStart.addX(this.getXSignum() * 0.15f * x), this.getSize().scalar(0.05f, 0.75f), Rocket.OUTER_COLOR.toRGBA());
 		}
 
 		// draw drive at back
@@ -114,7 +114,7 @@ public final class Rocket extends Enemy implements Configurable {
 				new Vec(this.getXSignum() * this.getSize().getX() * 0.1f, this.getSize().getY() * 0.2f), //
 				new Vec() //
 		};
-		f.drawPolygon(new Polygon(startPt, relPts), Rocket.OUTER_COLOR, true);
+		f.drawPolygon(new Polygon(startPt, relPts), Rocket.OUTER_COLOR.toRGBA(), true);
 	}
 
 	@Override
@@ -130,16 +130,20 @@ public final class Rocket extends Enemy implements Configurable {
 			Rocket.sparkParticles.spawn(this.getScene(), this.getPos().addX(-this.getXSignum() * this.getSize().getX() / 2));
 		}
 	}
-	
+
 	/**
 	 * Sets the speed of the rocket
-	 * @param speed the new speed
+	 * 
+	 * @param speed
+	 *            the new speed
 	 */
 	public void setSpeed(float speed) {
 		this.currentSpeed = speed;
 	}
+
 	/**
-	 * Resets the Rockets speed to the default speed as specified by configuration. 
+	 * Resets the Rockets speed to the default speed as specified by
+	 * configuration.
 	 */
 	public void resetSpeed() {
 		this.currentSpeed = Rocket.SPEED;
@@ -169,7 +173,7 @@ public final class Rocket extends Enemy implements Configurable {
 	@Override
 	public Entity create(Vec startPos, String[] options) {
 		Rocket inst = new Rocket(startPos);
-		
+
 		// if option 0 is given: set defined direction
 		if (options.length >= 1 && options[0] != null && options[0].matches("(\\+|-)?[0-3]+")) {
 			int opt = Integer.parseInt(options[0]);
@@ -179,11 +183,11 @@ public final class Rocket extends Enemy implements Configurable {
 				GameConf.GAME_LOGGER.error("RektKiller was supplied invalid option " + options[0] + " at index 0 for Direction");
 			}
 		}
-		
+
 		return inst;
 	}
-	
-	public float getXSignum() {	
+
+	public float getXSignum() {
 		return (this.direction == Direction.RIGHT) ? 1 : -1;
 	}
 

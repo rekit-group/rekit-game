@@ -158,8 +158,8 @@ public class TriangulationLayer extends ParallaxLayer {
 		@Override
 		public void internalRender(GameGrid f) {
 			this.polygon.moveTo(this.corners[0]);
-			f.drawPolygon(this.polygon, this.col, true);
-			f.drawPolygon(this.polygon, this.darkCol, false);
+			f.drawPolygon(this.polygon, this.col.toRGBA(), true);
+			f.drawPolygon(this.polygon, this.darkCol.toRGBA(), false);
 		}
 	}
 

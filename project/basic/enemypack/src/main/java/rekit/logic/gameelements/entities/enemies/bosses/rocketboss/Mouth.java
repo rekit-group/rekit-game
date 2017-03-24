@@ -27,11 +27,11 @@ public class Mouth {
 	}
 
 	public void logicLoop(float calcX, float deltaX) {
-		this.mouthCurvePos = parent.getPos().add(this.pos).addX(0.5f * this.size.getX()).addX(-calcX);
-		mouthCurveTimer.logicLoop();
+		this.mouthCurvePos = this.parent.getPos().add(this.pos).addX(0.5f * this.size.getX()).addX(-calcX);
+		this.mouthCurveTimer.logicLoop();
 		float maxDelta = this.size.getY() * 0.5f * this.parent.getState().getMouthAmplitude();
-		while (mouthCurveTimer.timeUp()) {
-			mouthCurveTimer.reset();
+		while (this.mouthCurveTimer.timeUp()) {
+			this.mouthCurveTimer.reset();
 			Vec newVec = new Vec(calcX, (float) (Math.tan(calcX * 10) * Math.sin(calcX * 4) * Math.cos(calcX * 0.5f) * maxDelta));
 			if (newVec.getY() > maxDelta) {
 				newVec = newVec.setY(maxDelta);
@@ -39,9 +39,9 @@ public class Mouth {
 			if (newVec.getY() < -maxDelta) {
 				newVec = newVec.setY(-maxDelta);
 			}
-			mouthCurve.add(newVec);
+			this.mouthCurve.add(newVec);
 		}
-		Iterator<Vec> it = mouthCurve.iterator();
+		Iterator<Vec> it = this.mouthCurve.iterator();
 		while (it.hasNext()) {
 			if (it.next().getX() <= calcX - this.size.getX()) {
 				it.remove();
@@ -52,6 +52,6 @@ public class Mouth {
 	}
 
 	public void internalRender(GameGrid f) {
-		f.drawPath(mouthCurvePos, mouthCurve, new RGBColor(0, 0, 0));
+		f.drawPath(this.mouthCurvePos, this.mouthCurve, new RGBColor(0, 0, 0).toRGBA(), true);
 	}
 }

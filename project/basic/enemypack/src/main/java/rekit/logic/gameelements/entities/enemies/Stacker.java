@@ -134,9 +134,9 @@ public final class Stacker extends Enemy implements Configurable {
 		@Override
 		public void internalRender(GameGrid f) {
 			if (this.timeToDie != null) {
-				f.drawCircle(this.getPos(), this.getSize(), Stacker.COLOR);
+				f.drawCircle(this.getPos(), this.getSize(), Stacker.COLOR.toRGBA());
 			} else {
-				f.drawCircle(this.getPos(), this.getSize(), Stacker.COLOR);
+				f.drawCircle(this.getPos(), this.getSize(), Stacker.COLOR.toRGBA());
 				f.drawImage(this.getPos(), this.getSize(), "stacker/stackerFaces_0" + this.faceId + ".png");
 			}
 		}

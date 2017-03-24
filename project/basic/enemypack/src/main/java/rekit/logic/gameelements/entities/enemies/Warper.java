@@ -70,7 +70,7 @@ public final class Warper extends Enemy implements Configurable {
 		for (float i = 1; i >= 0.2; i -= 0.1) {
 			RGBColor innerColor = new RGBColor((int) (250 * i), (int) (250 * (1 - progress)), (150));
 			// draw body
-			f.drawCircle(this.getPos(), this.getSize().scalar(i), innerColor);
+			f.drawCircle(this.getPos(), this.getSize().scalar(i), innerColor.toRGBA());
 		}
 
 	}
