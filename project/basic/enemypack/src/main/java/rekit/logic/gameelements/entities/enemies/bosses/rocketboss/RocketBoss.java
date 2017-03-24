@@ -4,6 +4,10 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.fuchss.configuration.Configurable;
+import org.fuchss.configuration.annotations.NoSet;
+import org.fuchss.configuration.annotations.SetterInfo;
+
 import rekit.config.GameConf;
 import rekit.core.GameGrid;
 import rekit.logic.gameelements.GameElement;
@@ -11,33 +15,37 @@ import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm.Arm;
 import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.damagestate.DamageState;
 import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.damagestate.State3;
 import rekit.logic.gameelements.inanimate.Inanimate;
+import rekit.logic.gameelements.particles.ParticleSpawner;
 import rekit.logic.gameelements.type.Boss;
 import rekit.primitives.geometry.Direction;
 import rekit.logic.level.BossStructure;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBColor;
 import rekit.primitives.operable.OpProgress;
-import rekit.primitives.time.Progress;
 import rekit.primitives.time.Timer;
 import rekit.util.CalcUtil;
 import rekit.util.ReflectUtils.LoadMe;
 import rekit.util.state.TimeStateMachine;
 
 @LoadMe
-public class RocketBoss extends Boss {
-
-	private TimeStateMachine machine;
-
-	private Vec startPos;
-
-	private float calcX;
-
-	private Mouth mouth;
-	private List<Arm> arms;
+@SetterInfo(res = "conf/rocketBoss")
+public class RocketBoss extends Boss implements Configurable {
 	
-	private Brain brain;
-
-	private static int LIVES = 3;
+	/**
+	 * The particle spawner for the rocket's flight.
+	 */
+	private static ParticleSpawner sparkParticles;
+	
+	/**
+	 * The Particles's spawn time.
+	 */
+	private static long PARTICLE_SPAWN_TIME = 100;
+	
+	/**
+	 * The position where to spawn the particles of the right jet, relative to the middle point of the RocketBoss.
+	 * Invert x to get the left point.
+	 */
+	private static Vec PARTICLE_SPAWN_POS = new Vec(1.5f, 0.8f);
 	
 	public static Vec MOVEMENT_PERIOD = new Vec(1.6f, 0.9f);
 	public static Vec MOVEMENT_RANGE = new Vec(0.3f, 0.3f);
@@ -83,6 +91,31 @@ public class RocketBoss extends Boss {
 	public static Direction[] DIRECTIONS = new Direction[]{Direction.LEFT, Direction.RIGHT, Direction.LEFT, Direction.RIGHT, Direction.LEFT, Direction.LEFT};
 	private static long NEXT_POS_DURATION = 2000;
 	
+	@NoSet
+	private TimeStateMachine machine;
+	
+	@NoSet
+	private Vec startPos;
+
+	@NoSet
+	private float calcX;
+
+	@NoSet
+	private Mouth mouth;
+	
+	@NoSet
+	private List<Arm> arms;
+	
+	@NoSet
+	private Brain brain;
+
+	@NoSet
+	private static int LIVES = 3;
+	
+	private Timer particleTimer;
+	
+	
+	
 	private int positionId = 0;
 	
 	private Timer nextPosTimer;
@@ -90,9 +123,7 @@ public class RocketBoss extends Boss {
 	private OpProgress<Vec> nextPosProgress;
 
 	private Direction currentDirection;
-	
-	
-	
+
 	
 	/**
 	 * Standard constructor
@@ -110,6 +141,8 @@ public class RocketBoss extends Boss {
 		this.arms = new LinkedList<Arm>();
 		
 		this.moveToNextPosition(0);
+		
+		this.particleTimer = new Timer(RocketBoss.PARTICLE_SPAWN_TIME);
 		
 		for (int i = 0; i < RocketBoss.ARM_POSITIONS.length; ++i) {
 			float[] shapeSettings = ARM_SHAPE_SETTINGS[i];
@@ -140,15 +173,18 @@ public class RocketBoss extends Boss {
 		if (this.nextPosTimer != null && !this.nextPosTimer.timeUp()) {
 			return;
 		}
+		
 		Vec oldPosition = RocketBoss.POSITIONS[this.positionId];
 		Vec newPosition = RocketBoss.POSITIONS[i];
+		
 		this.currentDirection = RocketBoss.DIRECTIONS[i];
 		
-		System.out.println(this.positionId + " / " + oldPosition + " -> " + i + " / " + newPosition);
 		this.nextPosProgress = new OpProgress<Vec>(oldPosition, newPosition);
 		
 		this.nextPosTimer = new Timer((long) (RocketBoss.NEXT_POS_DURATION / this.getState().getTimeFactor()));
 		this.positionId = i;
+		
+		this.particleTimer = new Timer((long) (RocketBoss.PARTICLE_SPAWN_TIME / this.getState().getTimeFactor()));
 	}
 	
 	public void moveToNextPosition() {
@@ -183,6 +219,20 @@ public class RocketBoss extends Boss {
 
 		this.mouth.logicLoop(this.calcX, deltaX);
 		
+	
+		// spawn particles
+		this.particleTimer.logicLoop();
+		// this.paricleTimer.removeTime(this.deltaTime);
+		if (this.particleTimer.timeUp()) {
+			this.particleTimer.reset();
+			//RocketBoss.sparkParticles.spawn(this.getScene(), this.getPos().addX(-this.getXSignum() * this.getSize().getX() / 2));
+			
+			for (int i = -1; i <= 1; i +=2) {
+				RocketBoss.sparkParticles.spawn(this.getScene(), this.getPos().add(RocketBoss.PARTICLE_SPAWN_POS.scalar(i, 1)));
+			}
+			
+		}
+		
 		Iterator<Arm> it = this.arms.iterator();
 		while (it.hasNext()) {
 			it.next().logicLoop(deltaX, calcX);
@@ -210,8 +260,6 @@ public class RocketBoss extends Boss {
 		float jetY = (GameConf.PRNG.nextBoolean() ? 1 : -1) * CalcUtil.randomize(jetMu, jetSigma);
 		Vec jetPos = this.getPos().add(new Vec(jetX, jetY));
 		f.drawImage(jetPos, RocketBoss.JET_SIZE, RocketBoss.JET_SOURCE);
-		
-		
 		
 		
 		// Render head background image
