@@ -18,7 +18,7 @@ if [ "$TRAVIS_REPO_SLUG" == "fuchss-dominik/rekit-game" ] && [ "$TRAVIS_PULL_REQ
   cp -Rf $HOME/doc-latest/* ./gh-pages
   
   cd gh-pages
-  git add -f .
+  git add --all -f .
   git commit -m "Latest JavaDocs on successful travis build $TRAVIS_BUILD_NUMBER auto-pushed to gh-pages"
   git push -fq origin gh-pages > /dev/null
 
