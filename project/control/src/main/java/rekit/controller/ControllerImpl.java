@@ -160,7 +160,7 @@ final class ControllerImpl implements Observer, Controller, CommandSupervisor {
 
 	@Override
 	public IScene getScene() {
-		return this.model.getState() == GameState.INGAME || this.model.getState() == GameState.INGAME_PAUSED ? this.model.getScene() : null;
+		return this.model.getScene();
 	}
 
 	@Override

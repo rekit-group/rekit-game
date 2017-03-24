@@ -10,6 +10,7 @@ import java.util.Set;
 import rekit.config.GameConf;
 import rekit.core.CameraTarget;
 import rekit.logic.GameModel;
+import rekit.logic.ILevelScene;
 import rekit.logic.filters.GrayScaleMode;
 import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.GameElementFactory;
@@ -43,7 +44,7 @@ import rekit.util.ThreadUtils;
  * @author matze
  *
  */
-public abstract class LevelScene extends Scene {
+public abstract class LevelScene extends Scene implements ILevelScene {
 
 	/**
 	 * Menu than will be displayed when the game is paused.
@@ -77,7 +78,7 @@ public abstract class LevelScene extends Scene {
 	/**
 	 * Indicates whether the level has ended.
 	 */
-	private boolean hasEnded;
+	private boolean ended = false;
 
 	/**
 	 * Create a new LevelScene.
@@ -94,7 +95,7 @@ public abstract class LevelScene extends Scene {
 	public LevelScene(GameModel model, Level level) {
 		super(model);
 		this.level = level;
-		this.hasEnded = true;
+		this.ended = true;
 	}
 
 	@Override
@@ -146,16 +147,17 @@ public abstract class LevelScene extends Scene {
 
 	@Override
 	public void start() {
-		this.hasEnded = false;
+		this.ended = false;
 	}
 
 	@Override
 	public final void end(boolean won) {
-		if (this.hasEnded) {
+		if (this.ended) {
 			return;
 		}
-		this.hasEnded = true;
 		this.performEndTasks(won);
+
+		this.ended = true;
 		// only save score if the level is infinite or the player has won
 		// don't save it upon losing in finite level
 		if (this.level.getDefinition().isSettingSet("infinite") || won) {
@@ -167,6 +169,11 @@ public abstract class LevelScene extends Scene {
 		Timer.execute(6000, () -> this.getModel().switchScene(Scenes.MENU));
 	}
 
+	@Override
+	public boolean hasEnded() {
+		return this.ended;
+	}
+	
 	/**
 	 * Perform tasks on the end of the game (level).
 	 *
@@ -193,7 +200,6 @@ public abstract class LevelScene extends Scene {
 																// visibility of
 																// pause menu
 		this.pauseMenu.setIndex(0);
-
 	}
 
 	@Override
@@ -275,8 +281,22 @@ public abstract class LevelScene extends Scene {
 	 * @param highScore
 	 *            the highscore
 	 */
-	public void setHighScore(int highScore) {
+	protected void setHighScore(int highScore) {
 		this.level.getDefinition().setData(DataKey.HIGH_SCORE, highScore);
+	}
+	
+	/**
+	 * Tries to save the current score as new highscore if it is higher
+	 * than the current highscore.
+	 * 
+	 * @return true if the highscore changed
+	 */
+	public boolean processScore() {
+		if (this.getScore() > this.getHighScore()) {
+			this.setHighScore(this.getScore());
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -284,6 +304,12 @@ public abstract class LevelScene extends Scene {
 		if (this.isPaused()) {
 			return this.pauseMenu;
 		}
-		throw new UnsupportedOperationException("Menu not supported in LevelScene");
+		return null;
+	}
+	
+
+	@Override
+	public boolean isLevelScene() {
+		return true;
 	}
 }

@@ -2,7 +2,7 @@ package rekit.logic.gui;
 
 import rekit.config.GameConf;
 import rekit.core.GameGrid;
-import rekit.logic.IScene;
+import rekit.logic.ILevelScene;
 import rekit.logic.gameelements.entities.Player;
 import rekit.primitives.geometry.Vec;
 import rekit.util.TextOptions;
@@ -13,17 +13,25 @@ import rekit.util.TextOptions;
  * Score.
  *
  */
-public class ScoreGui extends GuiElement {
+public class ScoreGui extends LevelGuiElement {
 	/**
-	 * The points of the {@link Player}.
+	 * Current score of the {@link Player}.
 	 */
-	private Text points;
+	private int score;
 	/**
 	 * The Highscore of the current Level.
 	 */
-	private Text highscore;
+	private int highscore;
 	/**
-	 * The text options.
+	 * Text that prints the score on the GUI.
+	 */
+	private Text scoreText;
+	/**
+	 * Text thas prints the highscore on the GUI.
+	 */
+	private Text highscoreText;
+	/**
+	 * The text options for this.highscoreText and this.pointsText.
 	 */
 	private TextOptions op;
 
@@ -33,25 +41,27 @@ public class ScoreGui extends GuiElement {
 	 * @param scene
 	 *            the scene
 	 */
-	public ScoreGui(IScene scene) {
+	public ScoreGui(ILevelScene scene) {
 		super(scene);
 		this.op = new TextOptions(new Vec(-1, 0), GameConf.GAME_TEXT_SIZE, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, 1);
-		this.points = new Text(scene, this.op);
-		this.highscore = new Text(scene, this.op);
-		this.points.setPos(new Vec(GameConf.PIXEL_W - 10, 10));
-		this.highscore.setPos(new Vec(GameConf.PIXEL_W - 10, 50));
+		this.scoreText = new Text(scene, this.op);
+		this.highscoreText = new Text(scene, this.op);
+		this.scoreText.setPos(new Vec(GameConf.PIXEL_W - 10, 10));
+		this.highscoreText.setPos(new Vec(GameConf.PIXEL_W - 10, 50));
+		this.highscore = this.getScene().getHighScore();
 	}
 
 	@Override
 	public void logicLoop() {
-		this.points.setText(this.scene.getScore() + " Points");
-		this.highscore.setText(this.scene.getHighScore() + " Highscore");
+		this.score = this.getScene().getScore();
+		this.scoreText.setText(String.format("%d Points", this.score));
+		this.highscoreText.setText(String.format("%d Highscore", this.highscore));
 	}
 
 	@Override
 	public void internalRender(GameGrid f) {
-		this.points.internalRender(f);
-		this.highscore.internalRender(f);
+		this.scoreText.internalRender(f);
+		this.highscoreText.internalRender(f);
 	}
 
 }

@@ -142,11 +142,6 @@ abstract class Scene implements CameraTarget, IScene {
 	}
 
 	@Override
-	public void end(boolean won) {
-		this.model.switchScene(Scenes.MENU);
-	}
-
-	@Override
 	public final void logicLoop() {
 		this.deltaTime = GameTime.getTime() - this.lastTime;
 		this.lastTime += this.deltaTime;

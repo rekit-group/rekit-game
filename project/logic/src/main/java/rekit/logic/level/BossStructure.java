@@ -5,6 +5,7 @@ import org.fuchss.configuration.annotations.NoSet;
 import org.fuchss.configuration.annotations.SetterInfo;
 
 import rekit.config.GameConf;
+import rekit.logic.ILevelScene;
 import rekit.logic.IScene;
 import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.GameElementFactory;
@@ -110,7 +111,7 @@ public final class BossStructure extends Structure implements Configurable {
 			return;
 		}
 		this.ended = false;
-		IScene scene = this.door.getScene();
+		ILevelScene scene = this.door.getScene();
 		// calculate where to put camera
 		this.cameraTarget = this.levelX + 5 + GameConf.PLAYER_CAMERA_OFFSET + scene.getPlayer().getSize().getX() / 2;
 
@@ -130,7 +131,7 @@ public final class BossStructure extends Structure implements Configurable {
 	 * @param scene
 	 *            the scene
 	 */
-	private void startIntern(IScene scene) {
+	private void startIntern(ILevelScene scene) {
 		if (this.door == null || this.triggerPos == null) {
 			return;
 		}
@@ -161,7 +162,7 @@ public final class BossStructure extends Structure implements Configurable {
 	 * @param scene
 	 *            the scene
 	 */
-	public void endBattle(IScene scene) {
+	public void endBattle(ILevelScene scene) {
 		if (this.ended) {
 			return;
 		}
@@ -177,7 +178,7 @@ public final class BossStructure extends Structure implements Configurable {
 	 * @param scene
 	 *            the scene
 	 */
-	private final void endAnimation(IScene scene) {
+	private final void endAnimation(ILevelScene scene) {
 		if (this.door == null) {
 			return;
 		}

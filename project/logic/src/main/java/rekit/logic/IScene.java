@@ -6,7 +6,6 @@ import java.util.function.Consumer;
 import rekit.core.CameraTarget;
 import rekit.core.Team;
 import rekit.logic.gameelements.GameElement;
-import rekit.logic.gameelements.entities.Player;
 import rekit.logic.gui.GuiElement;
 import rekit.logic.gui.menu.MenuItem;
 import rekit.logic.scene.Scenes;
@@ -18,27 +17,6 @@ import rekit.logic.scene.Scenes;
  *
  */
 public interface IScene {
-	/**
-	 * Get the current player of {@code null} if none set.
-	 *
-	 * @return the current player of {@code null}
-	 */
-	Player getPlayer();
-
-	/**
-	 * Get the current score of the player.
-	 *
-	 * @return the current score or 0 if none available
-	 */
-	int getScore();
-
-	/**
-	 * Get the current high score for the current level.
-	 *
-	 * @return the current high score or 0 if none available
-	 */
-	int getHighScore();
-
 	/**
 	 * Adds a GameElement to the Model. The elements will not directly be added
 	 * to the internal data structure to prevent concurrency errors. Instead
@@ -118,14 +96,6 @@ public interface IScene {
 	void applyToGuiElements(Consumer<GuiElement> function);
 
 	/**
-	 * End a Game/Scene.
-	 *
-	 * @param won
-	 *            indicates whether successful or died
-	 */
-	void end(boolean won);
-
-	/**
 	 * Get the model of the MVC.
 	 *
 	 * @return the model
@@ -186,22 +156,30 @@ public interface IScene {
 	MenuItem getMenu();
 
 	/**
-	 * Toggle pause.
+	 * Toggle pause for the scene. See {@link IScene#setPause(boolean).}
 	 */
 	void togglePause();
 
 	/**
-	 * Indicates whether game is paused.
+	 * Indicates whether the scene is paused.
 	 *
 	 * @return {@code true} if paused, {@code false} otherwise
 	 */
 	boolean isPaused();
 
 	/**
-	 * Set the pause state. Useful when resetting.
+	 * Set the pause state.
+	 * When pause usually the logic loop 
+	 * 
+	 * 
+	 * Useful when resetting.
 	 *
 	 * @param pause
 	 *            the new pause state
 	 */
 	void setPause(boolean pause);
+
+	default boolean isLevelScene() {
+		return false;
+	}
 }

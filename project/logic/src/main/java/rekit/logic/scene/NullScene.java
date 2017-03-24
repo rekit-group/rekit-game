@@ -1,7 +1,6 @@
 package rekit.logic.scene;
 
 import rekit.logic.GameModel;
-import rekit.logic.gameelements.entities.Player;
 import rekit.logic.gui.menu.MenuItem;
 
 /**
@@ -19,22 +18,7 @@ final class NullScene extends Scene {
 	}
 
 	@Override
-	public int getScore() {
-		return 0;
-	}
-
-	@Override
-	public int getHighScore() {
-		return 0;
-	}
-
-	@Override
 	public MenuItem getMenu() {
-		return null;
-	}
-
-	@Override
-	public Player getPlayer() {
 		return null;
 	}
 
@@ -50,5 +34,4 @@ final class NullScene extends Scene {
 	public static Scene create(GameModel model, String[] options) {
 		return new NullScene(model);
 	}
-
 }
