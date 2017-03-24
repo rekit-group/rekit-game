@@ -15,7 +15,7 @@ if [ "$TRAVIS_REPO_SLUG" == "fuchss-dominik/rekit-game" ] && [ "$TRAVIS_PULL_REQ
   git clone --quiet --branch=gh-pages https://${GH_TOKEN}@github.com/fuchss-dominik/rekit-game gh-pages > /dev/null
 
   # cd gh-pages
-  git rm -rf gh-pages
+  git rm -rf gh-pages/*
   cp -Rf $HOME/doc-latest/* ./gh-pages
   
   cd gh-pages
