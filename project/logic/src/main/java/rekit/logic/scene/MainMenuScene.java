@@ -4,7 +4,6 @@ import java.awt.Desktop;
 
 import rekit.config.GameConf;
 import rekit.logic.GameModel;
-import rekit.logic.gameelements.entities.Player;
 import rekit.logic.gui.menu.BoolSetting;
 import rekit.logic.gui.menu.MenuActionItem;
 import rekit.logic.gui.menu.MenuGrid;
@@ -98,20 +97,4 @@ final class MainMenuScene extends Scene {
 	public MenuItem getMenu() {
 		return this.menu;
 	}
-
-	@Override
-	public int getScore() {
-		throw new UnsupportedOperationException("No Score in MenuScene");
-	}
-
-	@Override
-	public int getHighScore() {
-		throw new UnsupportedOperationException("No HighScore in MenuScene");
-	}
-
-	@Override
-	public Player getPlayer() {
-		throw new UnsupportedOperationException("No Player in MenuScene");
-	}
-
 }
