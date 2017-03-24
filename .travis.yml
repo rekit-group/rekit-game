@@ -1,4 +1,9 @@
 language: java
 jdk:
-  - oraclejdk8
+- oraclejdk8
 script: sh -c 'cd project && mvn test -B'
+after_success:
+- scripts/gh-pages.sh
+env:
+  global:
+    secure: f///YOqDPp/v4nnads9gB1ApJkNxuDtxXNIP6i/+CofDM+tFyjDIgqXBtHgXhUbiiTSf3LS3D+Rag7nrViJVaFO8Qahl6qVdHSyO85OLNwtqfNS9bW/pYoPM+4UgY0NTgTFiMkHfKwIAuqotdUyAAvhK8k0UAPMy3XEJ/G9SheYOAyyIMzCvslVnPnN+CXjhfGDVUnG8DnXOq+6p4YW+y5R6F0qh3boyAiQQ7syo6NPyPo1B4jQAlnn4o9Rg2q6RwPghdi3sHL6vuW/sYQnBxHisLtVrzd2aPwMkifDC8cH+0t9JfVnKJmr43vmmYb3hgLsc9eQKnnE63lTJg7q1pYuiegvTsGl/lmJJur6b2LSxB9xoOoJjTTVpZCh3oayaZRz1SNhVdpBGfoklV9LZ8HsLdtoj/1wqN6x11HlrYIoasdqt0QyutZ1vrETeKXoeMLgzrd1THSkfbyv+3q7T5Mm89+RR1yfK/fqInq/FQVa3m2vwoy1Oa+tg0+TtiWQlEEqup1Cmbw+AqjGvM1RB421mUD4qEms043vlDgZpA6yfeS7DkTuavxtcu49Eb85bX5Tj2J4FKsEGpvRHmoh0611onz89pF1Jaz1RvxyBGFYq+0+cGsMNMEzOf8eaXtcT+0VNoW442BpD8Pm0HBKjpNYX5y9djwKQZYelk5/jjLI=
