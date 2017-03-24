@@ -52,6 +52,12 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 	protected SubMenu pauseMenu;
 
 	/**
+	 * Menu that will be displayed when the game has ended.
+	 * Shows options dependent on whether the player won or lost and wether its an arcade level or not.
+	 */
+	protected SubMenu endMenu;
+	
+	/**
 	 * The player in the scene.
 	 */
 	private Player player = new Player(new Vec(6, 5));
@@ -136,18 +142,21 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 
 		MenuActionItem resume = new MenuActionItem(this, "Resume", () -> this.togglePause());
 		MenuActionItem restart = new MenuActionItem(this, "Restart", () -> this.restart());
-		MenuActionItem back = new MenuActionItem(this, "Exit to Main Menu", () -> this.getModel().switchScene(Scenes.MENU));
+		MenuActionItem back = new MenuActionItem(this, "Back to Main Menu", () -> this.getModel().switchScene(Scenes.MENU));
 		MenuActionItem desktop = new MenuActionItem(this, "Exit to Desktop", () -> System.exit(0));
 
 		this.pauseMenu.addItem(resume, restart, back, desktop);
 		this.pauseMenu.setVisible(false);
 		this.pauseMenu.select();
 		this.addGuiElement(this.pauseMenu);
+		
 	}
 
 	@Override
 	public void start() {
 		this.ended = false;
+
+		this.getModel().removeFilter();
 	}
 
 	@Override
@@ -155,18 +164,65 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 		if (this.ended) {
 			return;
 		}
-		this.performEndTasks(won);
 
 		this.ended = true;
+
+		// create the end menu before actually populating and showing it
+		this.endMenu = new MenuList(this, "End Menu");
+		this.endMenu.setPos(new Vec(GameConf.PIXEL_W / 2f, GameConf.PIXEL_H / 2f));
+		this.endMenu.setVisible(false);
+		this.addGuiElement(endMenu);
+
+		int delay = this.performEndTasks(won);
 		// only save score if the level is infinite or the player has won
 		// don't save it upon losing in finite level
+
+		// TODO not the proper place to do this????
+		// do this in an FinitLevelScene and InifinitLevelScene (not to current one a new one)
 		if (this.level.getDefinition().isSettingSet("infinite") || won) {
-			// save score if higher than highscore
-			if (this.getScore() > this.getHighScore()) {
-				this.setHighScore(this.getScore());
-			}
+			processScore();
 		}
-		Timer.execute(6000, () -> this.getModel().switchScene(Scenes.MENU));
+
+		// show end menu after the specified time
+		if (delay >= 0) {
+			Timer.execute(delay, () -> this.showEndMenu(won));
+		}
+	}
+	
+	/**
+	 * Populate the end menu and show it.
+	 * 
+	 * @param won Indicates whether the game was won.
+	 * 				This has an effect on the created items of the menu
+	 */
+	private void showEndMenu(boolean won) {
+		// TODO definitely not the proper place to do this
+		// do this in an FinitLevelScene and InifinitLevelScene (not to current one a new one)
+		MenuActionItem endBack;
+		MenuActionItem endExit = new MenuActionItem(this, "Exit to Desktop", () -> System.exit(0));
+
+		if (!this.level.getDefinition().isSettingSet("infinite") && won) {
+			// TODO implement something like ArcadeLevelManager which also knows about finished
+			// arcade levels and has a nextLevel() method
+			MenuActionItem endNext = new MenuActionItem(this, "Next Level", () -> this.restart());
+			this.endMenu.addItem(endNext);
+		} else {
+			MenuActionItem endRestart = new MenuActionItem(this, "Restart", () -> this.restart());
+			this.endMenu.addItem(endRestart);
+		}
+		
+		if (!this.level.getDefinition().isSettingSet("infinite")) {
+			// TODO go directly to level selection
+			// maybe via an argument passed to MainMenueScene
+			endBack = new MenuActionItem(this, "Back to level selection", () -> this.getModel().switchScene(Scenes.MENU));
+		} else {
+			
+			endBack = new MenuActionItem(this, "Back to Main Menu", () -> this.getModel().switchScene(Scenes.MENU));
+		}
+		
+		this.endMenu.addItem(endBack, endExit);
+		this.endMenu.select();
+		this.endMenu.setVisible(true);
 	}
 
 	@Override
@@ -179,33 +235,38 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 	 *
 	 * @param won
 	 *            indicates whether successful or died
+	 *            
+	 * @return delay 
+	 * 			  delay (in ms) when to show the end menu.
+	 * 			  on -1 the endMenu will not be shown.
+	 * 
 	 */
-	protected void performEndTasks(boolean won) {
+	protected int performEndTasks(boolean won) {
 		TextOptions op = new TextOptions(new Vec(-0.5f, -0.5f), 50, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, Font.BOLD, false);
+		
 		Text levelText = new Text(this, op).setText("You" + (won ? " win!" : " have lost!"));
 		levelText.setPos(CalcUtil.units2pixel(new Vec(GameConf.GRID_W / 2f, GameConf.GRID_H / 2f)));
-		this.addGuiElement(new TimeDecorator(this, levelText, new Timer(5000)));
+		this.addGuiElement(new TimeDecorator(this, levelText, new Timer(2000)));
 		if (won) {
 			this.getModel().removeFilter();
 		} else {
+			// TODO don't affect GuiElements (or at least the end menu)
 			this.getModel().setFilter(new GrayScaleMode());
 		}
+		// show menu short after the winning text has faded out
+		return 2500; 
 	}
 
 	@Override
 	public void togglePause() {
 		super.togglePause();
-		System.out.println("pause");
-		this.pauseMenu.setVisible(!this.pauseMenu.isVisible()); // toggle
-																// visibility of
-																// pause menu
+		// toggle visibility of pause menu
+		this.pauseMenu.setVisible(!this.pauseMenu.isVisible());
 		this.pauseMenu.setIndex(0);
 	}
 
 	@Override
 	public void restart() {
-		// wait 2 seconds
-		ThreadUtils.sleep(2000);
 		// reset all data structures
 		this.init();
 		// restart logic thread
@@ -303,6 +364,9 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 	public final MenuItem getMenu() {
 		if (this.isPaused()) {
 			return this.pauseMenu;
+		}
+		if (this.hasEnded()) {
+			return this.endMenu;
 		}
 		return null;
 	}
