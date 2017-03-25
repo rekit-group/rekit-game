@@ -51,7 +51,7 @@ class GameGridImpl extends GameGrid {
 	 */
 	private Graphics2D graphics;
 	/**
-	 * The image cache: (Path, Filter) -> Image.
+	 * The image cache: (Path, Filter) -&gt; Image.
 	 */
 	private final Map<Tuple<String, Filter>, Image> images = new HashMap<>();
 

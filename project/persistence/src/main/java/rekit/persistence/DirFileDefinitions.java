@@ -3,7 +3,7 @@ package rekit.persistence;
 import java.io.File;
 
 import rekit.persistence.level.LevelManager;
-import rekit.util.LambdaTools;
+import rekit.util.LambdaUtil;
 
 public class DirFileDefinitions {
 
@@ -22,7 +22,7 @@ public class DirFileDefinitions {
 		DirFileDefinitions.CONFIG_DIR.mkdirs();
 		DirFileDefinitions.MODS_DIR.mkdirs();
 		if (!DirFileDefinitions.USER_DATA.exists()) {
-			LambdaTools.invoke(DirFileDefinitions.USER_DATA::createNewFile);
+			LambdaUtil.invoke(DirFileDefinitions.USER_DATA::createNewFile);
 		}
 	}
 

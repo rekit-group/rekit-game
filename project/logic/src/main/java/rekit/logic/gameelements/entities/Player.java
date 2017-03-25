@@ -1,9 +1,10 @@
 package rekit.logic.gameelements.entities;
 
+import java.util.function.Consumer;
+
 import rekit.config.GameConf;
 import rekit.core.CameraTarget;
 import rekit.core.GameGrid;
-import rekit.core.Renderer;
 import rekit.core.Team;
 import rekit.logic.gameelements.particles.ParticleSpawner;
 import rekit.logic.gameelements.particles.ParticleSpawnerOption;
@@ -42,7 +43,7 @@ public final class Player extends Entity implements CameraTarget {
 	/**
 	 * A temporary renderer.
 	 */
-	private Renderer tmpRenderer;
+	private Consumer<GameGrid> tmpRenderer;
 	/**
 	 * The temporary renderer's time.
 	 */
@@ -87,7 +88,7 @@ public final class Player extends Entity implements CameraTarget {
 	@Override
 	public void internalRender(GameGrid f) {
 		if (this.renderTimer != null && !this.renderTimer.timeUp() && this.tmpRenderer != null) {
-			this.tmpRenderer.render(f);
+			this.tmpRenderer.accept(f);
 			this.renderTimer.logicLoop();
 			return;
 		}
@@ -157,7 +158,7 @@ public final class Player extends Entity implements CameraTarget {
 	 * @param millis
 	 *            the time
 	 */
-	public void setTemporaryApperance(Renderer r, long millis) {
+	public void setTemporaryApperance(Consumer<GameGrid> r, long millis) {
 		this.tmpRenderer = r;
 		this.renderTimer = new Timer(millis);
 

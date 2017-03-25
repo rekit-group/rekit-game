@@ -45,7 +45,7 @@ public abstract class GameGrid {
 	 * @param color
 	 *            the color
 	 */
-	@InGameMethod
+	@Ingame
 	public final void drawRectangle(Vec pos, Vec size, RGBAColor color) {
 		this.drawRectangle(pos, size, color, true, true);
 	}
@@ -67,8 +67,8 @@ public abstract class GameGrid {
 	 *            indicates whether a filter (if set) shall applied before
 	 *            drawing
 	 */
-	@InGameMethod
-	@NonInGameMethod
+	@Ingame
+	@NonIngame
 	public abstract void drawRectangle(Vec pos, Vec size, RGBAColor color, boolean ingame, boolean usefilter);
 
 	/////////////////////////////////////////////////////////
@@ -86,7 +86,7 @@ public abstract class GameGrid {
 	 * @param color
 	 *            the color
 	 */
-	@InGameMethod
+	@Ingame
 	public final void drawCircle(Vec pos, Vec size, RGBAColor color) {
 		this.drawCircle(pos, size, color, true, true);
 	}
@@ -108,8 +108,8 @@ public abstract class GameGrid {
 	 *            indicates whether a filter (if set) shall applied before
 	 *            drawing
 	 */
-	@InGameMethod
-	@NonInGameMethod
+	@Ingame
+	@NonIngame
 	public abstract void drawCircle(Vec pos, Vec size, RGBAColor color, boolean ingame, boolean usefilter);
 
 	/////////////////////////////////////////////////////////
@@ -127,7 +127,7 @@ public abstract class GameGrid {
 	 * @param imagePath
 	 *            the path to the image
 	 */
-	@InGameMethod
+	@Ingame
 	public final void drawImage(Vec pos, Vec size, String imagePath) {
 		this.drawImage(pos, size, imagePath, true, true);
 	}
@@ -149,8 +149,8 @@ public abstract class GameGrid {
 	 *            indicates whether a filter (if set) shall applied before
 	 *            drawing
 	 */
-	@InGameMethod
-	@NonInGameMethod
+	@Ingame
+	@NonIngame
 	public abstract void drawImage(Vec pos, Vec size, String imagePath, boolean ingame, boolean usefilter);
 
 	/////////////////////////////////////////////////////////
@@ -168,7 +168,7 @@ public abstract class GameGrid {
 	 * @param fill
 	 *            indicates whether the polygon shall be filled
 	 */
-	@InGameMethod
+	@Ingame
 	public final void drawPolygon(Polygon polygon, RGBAColor color, boolean fill) {
 		this.drawPolygon(polygon, color, fill, true);
 	}
@@ -186,7 +186,7 @@ public abstract class GameGrid {
 	 *            indicates whether a filter (if set) shall applied before
 	 *            drawing
 	 */
-	@InGameMethod
+	@Ingame
 	public abstract void drawPolygon(Polygon polygon, RGBAColor color, boolean fill, boolean usefilter);
 
 	/////////////////////////////////////////////////////////
@@ -206,8 +206,8 @@ public abstract class GameGrid {
 	 *            (relative to current game progress) or relative to the
 	 *            surrounding frame
 	 */
-	@InGameMethod
-	@NonInGameMethod
+	@Ingame
+	@NonIngame
 	public abstract void drawText(Vec pos, String text, TextOptions options, boolean ingame);
 
 	/////////////////////////////////////////////////////////
@@ -230,7 +230,7 @@ public abstract class GameGrid {
 	 * @param arcHeight
 	 *            the vertical diameter of the arc at the four corners
 	 */
-	@InGameMethod
+	@Ingame
 	public final void drawRoundRectangle(Vec pos, Vec size, RGBAColor color, float arcWidth, float arcHeight) {
 		this.drawRoundRectangle(pos, size, color, arcWidth, arcHeight, true, true);
 	}
@@ -256,8 +256,8 @@ public abstract class GameGrid {
 	 *            indicates whether a filter (if set) shall applied before
 	 *            drawing
 	 */
-	@InGameMethod
-	@NonInGameMethod
+	@Ingame
+	@NonIngame
 	public abstract void drawRoundRectangle(Vec pos, Vec size, RGBAColor color, float arcWidth, float arcHeight, boolean ingame, boolean usefilter);
 
 	/////////////////////////////////////////////////////////
@@ -278,7 +278,7 @@ public abstract class GameGrid {
 	 *            indicates whether a filter (if set) shall applied before
 	 *            drawing
 	 */
-	@InGameMethod
+	@Ingame
 	public final void drawPath(Vec startPos, List<Vec> pts, RGBAColor color, boolean usefilter) {
 		this.drawPath(startPos, pts, color, 1, usefilter);
 	}
@@ -298,7 +298,7 @@ public abstract class GameGrid {
 	 *            indicates whether a filter (if set) shall applied before
 	 *            drawing
 	 */
-	@InGameMethod
+	@Ingame
 	public abstract void drawPath(Vec startPos, List<Vec> pts, RGBAColor color, int lineWidth, boolean usefilter);
 
 	/**
@@ -308,10 +308,10 @@ public abstract class GameGrid {
 	 * @author Dominik Fuchss
 	 *
 	 */
-	@Retention(value = RetentionPolicy.SOURCE)
-	@Target(value = ElementType.METHOD)
+	@Retention(RetentionPolicy.SOURCE)
+	@Target(ElementType.METHOD)
 	@Documented
-	public @interface InGameMethod {
+	public @interface Ingame {
 	}
 
 	/**
@@ -321,10 +321,10 @@ public abstract class GameGrid {
 	 * @author Dominik Fuchss
 	 *
 	 */
-	@Retention(value = RetentionPolicy.SOURCE)
-	@Target(value = ElementType.METHOD)
+	@Retention(RetentionPolicy.SOURCE)
+	@Target(ElementType.METHOD)
 	@Documented
-	public @interface NonInGameMethod {
+	public @interface NonIngame {
 	}
 
 }

@@ -2,11 +2,12 @@ package rekit.util;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 import rekit.config.GameConf;
 
-public class LambdaTools {
-	private LambdaTools() {
+public class LambdaUtil {
+	private LambdaUtil() {
 	}
 
 	@FunctionalInterface
@@ -25,16 +26,15 @@ public class LambdaTools {
 	}
 
 	public static final <I, O> O invoke(FunctionWithException<I, O> in, I i) {
-		return LambdaTools.tryCatch(in).apply(i);
+		return LambdaUtil.tryCatch(in).apply(i);
 	}
 
 	public static final void invoke(RunnableWithException in) {
-		LambdaTools.tryCatch(in).run();
-
+		LambdaUtil.tryCatch(in).run();
 	}
 
 	public static final <I> void invoke(ConsumerWithException<I> in, I i) {
-		LambdaTools.tryCatch(in).accept(i);
+		LambdaUtil.tryCatch(in).accept(i);
 
 	}
 
@@ -69,6 +69,15 @@ public class LambdaTools {
 			}
 		};
 
+	}
+
+	public static final <T> Predicate<T> not(Predicate<T> in) {
+		return in.negate();
+	}
+
+	public static final <T> Consumer<T> destroy() {
+		return t -> {
+		};
 	}
 
 }

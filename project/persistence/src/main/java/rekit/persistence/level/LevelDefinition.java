@@ -16,8 +16,8 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import rekit.config.GameConf;
-import rekit.util.LambdaTools;
-import rekit.util.LambdaTools.FunctionWithException;
+import rekit.util.LambdaUtil;
+import rekit.util.LambdaUtil.FunctionWithException;
 
 /**
  *
@@ -56,7 +56,7 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 		 * @return the type or {@code null} iff none found
 		 */
 		public static Type byString(String string) {
-			return LambdaTools.invoke((FunctionWithException<String, Type>) Type::valueOf, string);
+			return LambdaUtil.invoke((FunctionWithException<String, Type>) Type::valueOf, string);
 		}
 	}
 

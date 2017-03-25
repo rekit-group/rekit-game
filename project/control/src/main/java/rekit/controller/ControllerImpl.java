@@ -37,7 +37,7 @@ import rekit.util.Tuple;
  */
 final class ControllerImpl implements Observer, Controller, CommandSupervisor {
 	/**
-	 * Map State, Key-ID --> Command.
+	 * Map State, Key-ID --&gt; Command.
 	 */
 	private Map<Tuple<GameState, Integer>, Command> mpCmd;
 	/**
@@ -86,7 +86,7 @@ final class ControllerImpl implements Observer, Controller, CommandSupervisor {
 		this.mpCmd.put(Tuple.create(GameState.INGAME, InputHelper.ARROW_LEFT), new WalkCommand(this, Direction.LEFT));
 		this.mpCmd.put(Tuple.create(GameState.INGAME, InputHelper.ARROW_RIGHT), new WalkCommand(this, Direction.RIGHT));
 		this.mpCmd.put(Tuple.create(GameState.INGAME, InputHelper.ESCAPE), new PlayPauseCommand(this));
-		
+
 		// pause menu
 		this.mpCmd.put(Tuple.create(GameState.INGAME_PAUSED, InputHelper.ENTER), new MenuCommand(this, MenuDirection.SELECT));
 		this.mpCmd.put(Tuple.create(GameState.INGAME_PAUSED, InputHelper.ARROW_UP), new MenuCommand(this, MenuDirection.UP));

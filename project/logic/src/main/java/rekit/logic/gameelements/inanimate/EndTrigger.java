@@ -13,6 +13,7 @@ import rekit.logic.gameelements.particles.ParticleSpawner;
 import rekit.logic.gameelements.particles.ParticleSpawnerOption;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBAColor;
+import rekit.util.LambdaUtil;
 
 /**
  *
@@ -190,8 +191,7 @@ public final class EndTrigger extends InanimateTrigger implements Configurable {
 	@Override
 	public void perform() {
 		// Make player invisible
-		this.getScene().getPlayer().setTemporaryApperance((f) -> {
-		}, 3000);
+		this.getScene().getPlayer().setTemporaryApperance(LambdaUtil.destroy(), 3000);
 		this.getScene().end(true);
 	}
 

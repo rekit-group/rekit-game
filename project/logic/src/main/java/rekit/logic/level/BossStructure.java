@@ -121,7 +121,7 @@ public final class BossStructure extends Structure implements Configurable {
 		this.boss.setTarget(scene.getPlayer());
 
 		// Create thread for asynchronous stuff
-		ThreadUtils.runThread("BossRoom-Start", () -> this.startIntern(scene));
+		ThreadUtils.runDaemon("BossRoom-Start", () -> this.startIntern(scene));
 
 	}
 
@@ -168,7 +168,7 @@ public final class BossStructure extends Structure implements Configurable {
 		}
 		this.ended = true;
 		// Create thread for asynchronous stuff
-		ThreadUtils.runThread("BossRoom-End", () -> this.endAnimation(scene));
+		ThreadUtils.runDaemon("BossRoom-End", () -> this.endAnimation(scene));
 	}
 
 	/**
