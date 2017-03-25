@@ -10,7 +10,7 @@ if [ "$TRAVIS_REPO_SLUG" == "fuchss-dominik/rekit-game" ] && [ "$TRAVIS_PULL_REQ
   cp -R "gh-pages" $HOME/doc-latest
 
   cd $HOME
-  git config --global user.email "develop@fuchss.org"
+  git config --global user.email "travis-ci@fuchss.org"
   git config --global user.name "Travis-CI"
   git clone --quiet --branch=gh-pages https://${GH_TOKEN}@github.com/fuchss-dominik/rekit-game gh-pages > /dev/null
 
