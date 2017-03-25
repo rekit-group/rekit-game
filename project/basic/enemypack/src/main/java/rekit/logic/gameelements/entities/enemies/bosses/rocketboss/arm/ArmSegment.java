@@ -25,8 +25,8 @@ public class ArmSegment extends GameElement {
 		this.relPos = relPos;
 
 		// calculate half height and width
-		float hw = this.getSize().getX() / 2;
-		float hh = this.getSize().getY() / 2;
+		float hw = this.getSize().x / 2;
+		float hh = this.getSize().y / 2;
 
 		// create Polygon around center
 		this.shape = new Polygon(new Vec(), new Vec[] {});

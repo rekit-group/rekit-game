@@ -32,14 +32,14 @@ public class InanimateBox extends Inanimate {
 		RGBAColor darkColor = new RGBAColor(this.color.red - 30, this.color.green - 30, this.color.blue - 30, this.color.alpha);
 		float plateThickness = 0.10f;
 
-		f.drawRectangle(this.getPos().add(new Vec(0, this.getSize().getY() / 2f - plateThickness / 2f)), this.getSize().setY(plateThickness),
+		f.drawRectangle(this.getPos().add(new Vec(0, this.getSize().y / 2f - plateThickness / 2f)), this.getSize().setY(plateThickness),
 				darkColor);
-		f.drawRectangle(this.getPos().add(new Vec(0, -this.getSize().getY() / 2f + plateThickness / 2f)), this.getSize().setY(plateThickness),
+		f.drawRectangle(this.getPos().add(new Vec(0, -this.getSize().y / 2f + plateThickness / 2f)), this.getSize().setY(plateThickness),
 				darkColor);
 
-		f.drawRectangle(this.getPos().add(new Vec(this.getSize().getX() / 2f - plateThickness / 2f, 0)), this.getSize().setX(plateThickness),
+		f.drawRectangle(this.getPos().add(new Vec(this.getSize().x / 2f - plateThickness / 2f, 0)), this.getSize().setX(plateThickness),
 				darkColor);
-		f.drawRectangle(this.getPos().add(new Vec(-this.getSize().getX() / 2f + plateThickness / 2f, 0)), this.getSize().setX(plateThickness),
+		f.drawRectangle(this.getPos().add(new Vec(-this.getSize().x / 2f + plateThickness / 2f, 0)), this.getSize().setX(plateThickness),
 				darkColor);
 		f.drawRectangle(this.getPos(), this.getSize().scalar(0.5f), darkColor);
 	}

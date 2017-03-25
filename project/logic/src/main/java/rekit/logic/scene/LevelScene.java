@@ -283,8 +283,8 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 		this.level.generate((int) (this.getCameraOffset() + GameConf.GRID_W + 1));
 
 		// dont allow player to go behind currentOffset
-		float minX = this.getCameraOffset() + this.player.getSize().getX() / 2f;
-		if (this.player.getPos().getX() < minX) {
+		float minX = this.getCameraOffset() + this.player.getSize().x / 2f;
+		if (this.player.getPos().x < minX) {
 			this.player.setPos(this.player.getPos().setX(minX));
 		}
 

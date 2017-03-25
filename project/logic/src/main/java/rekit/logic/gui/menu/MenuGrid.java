@@ -103,18 +103,18 @@ public class MenuGrid extends SubMenu {
 	protected void calcItemPos() {
 		// render menu as grid with max colCount items per row
 		this.rowCount = this.menuItems.size() / this.colCount + 1;
-		final Vec startOffset = new Vec(-((this.colCount - 1) * this.itemSize.getY()) / 2, -((this.rowCount - 1) * this.itemSize.getY()) / 2);
+		final Vec startOffset = new Vec(-((this.colCount - 1) * this.itemSize.y) / 2, -((this.rowCount - 1) * this.itemSize.y) / 2);
 		Vec offset = startOffset.clone();
 
 		int curCol = 0;
 		for (final MenuItem menuItem : this.menuItems) {
 			menuItem.setPos(this.getPos().add(offset));
 			if (++curCol >= this.colCount) {
-				offset = offset.setX(startOffset.getX());
-				offset = offset.addY(this.itemSize.getY());
+				offset = offset.setX(startOffset.x);
+				offset = offset.addY(this.itemSize.y);
 				curCol = 0;
 			} else {
-				offset = offset.addX(this.itemSize.getX());
+				offset = offset.addX(this.itemSize.x);
 			}
 		}
 	}

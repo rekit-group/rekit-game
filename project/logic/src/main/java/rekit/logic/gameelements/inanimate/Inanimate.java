@@ -77,7 +77,7 @@ public class Inanimate extends GameElement {
 
 	@Override
 	public Inanimate create(Vec startPos, String[] options) {
-		if (startPos.getY() + 1 >= GameConf.GRID_H) {
+		if (startPos.y + 1 >= GameConf.GRID_H) {
 			return InanimateFloor.staticCreate(startPos);
 		} else {
 			return InanimateBox.staticCreate(startPos);

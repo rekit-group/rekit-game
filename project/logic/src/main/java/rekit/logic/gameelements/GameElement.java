@@ -92,8 +92,8 @@ public abstract class GameElement implements Collidable {
 	protected Team team;
 
 	/**
-	 * The {@link ILevelScene} the {@link GameElement} is in and manages this and all
-	 * other {@link GameElement GameElements}.
+	 * The {@link ILevelScene} the {@link GameElement} is in and manages this
+	 * and all other {@link GameElement GameElements}.
 	 */
 	private ILevelScene scene;
 
@@ -130,7 +130,7 @@ public abstract class GameElement implements Collidable {
 		this.size = size;
 		this.setPos(startPos);
 	}
-	
+
 	public void init() {
 		this.deleteMe = false;
 	}
@@ -156,11 +156,11 @@ public abstract class GameElement implements Collidable {
 	 */
 	private void checkForDelete() {
 		Vec realPos = this.getPos().translate2D(this.scene.getCameraOffset());
-		if (realPos.getY() > GameConf.GRID_H) {
+		if (realPos.y > GameConf.GRID_H) {
 			this.destroy();
 			return;
 		}
-		float relX = realPos.getX() + this.getSize().getX();
+		float relX = realPos.x + this.getSize().x;
 		float offset = this.getScene().getCameraOffset();
 		if (offset > relX + GameConf.GRID_W) {
 			this.destroy();
@@ -380,15 +380,15 @@ public abstract class GameElement implements Collidable {
 	 *            the new {@link IScene} the GameElement is in.
 	 */
 	public final void setScene(IScene value) {
-		/* TODO
-		 * Scene.addGameElements calls this function with (this :: Scene)
-		 * as argument, but we know the Scene is a LevelScene.
-		 * This cast is no what we want.
-		 * 
-		 * Currently all GameElements are part of an LevelScene but
-		 * in anticipation of a level editor we want GameElements
-		 * which are not part of a ILevelScene.
-		 * 
+		/*
+		 * TODO Scene.addGameElements calls this function with (this :: Scene)
+		 * as argument, but we know the Scene is a LevelScene. This cast is no
+		 * what we want.
+		 *
+		 * Currently all GameElements are part of an LevelScene but in
+		 * anticipation of a level editor we want GameElements which are not
+		 * part of a ILevelScene.
+		 *
 		 * Proposal: Create LevelElemement which gets an ILevelScene.
 		 */
 		this.scene = (ILevelScene) value;
@@ -500,19 +500,19 @@ public abstract class GameElement implements Collidable {
 		}
 
 		// Simulate CollisionFrame with last Y position
-		Vec e1lastYVec = new Vec(e1.getPos().getX(), e1lastPos.getY());
+		Vec e1lastYVec = new Vec(e1.getPos().x, e1lastPos.y);
 		Frame e1lastYFrame = new Frame(e1lastYVec.add(e1.getSize().scalar(-0.5f)), e1lastYVec.add(e1.getSize().scalar(0.5f)));
 
 		// Simulate CollisionFrame with last X position
-		Vec e1lastXVec = new Vec(e1lastPos.getX(), e1.getPos().getY());
+		Vec e1lastXVec = new Vec(e1lastPos.x, e1.getPos().y);
 		Frame e1lastXFrame = new Frame(e1lastXVec.add(e1.getSize().scalar(-0.5f)), e1lastXVec.add(e1.getSize().scalar(0.5f)));
 
 		// Simulate CollisionFrame with last Y position
-		Vec e2lastYVec = new Vec(e2.getPos().getX(), e2lastPos.getY());
+		Vec e2lastYVec = new Vec(e2.getPos().x, e2lastPos.y);
 		Frame e2lastYFrame = new Frame(e2lastYVec.add(e2.getSize().scalar(-0.5f)), e2lastYVec.add(e2.getSize().scalar(0.5f)));
 
 		// Simulate CollisionFrame with last X position
-		Vec e2lastXVec = new Vec(e2lastPos.getX(), e2.getPos().getY());
+		Vec e2lastXVec = new Vec(e2lastPos.x, e2.getPos().y);
 		Frame e2lastXFrame = new Frame(e2lastXVec.add(e2.getSize().scalar(-0.5f)), e2lastXVec.add(e2.getSize().scalar(0.5f)));
 
 		this.simulateCollision(e1lastXFrame, e2lastXFrame, e1, e2, e1lastPos, e2lastPos, e1lastYFrame, e2lastYFrame);
@@ -544,7 +544,7 @@ public abstract class GameElement implements Collidable {
 		// it must be because of the y position
 		if (e1lastXFrame.collidesWith(e2lastXFrame)) {
 			// If relative movement is in positive y direction (down)
-			float relMovement = (e2.getPos().getY() - e2lastPos.getY()) - (e1.getPos().getY() - e1lastPos.getY());
+			float relMovement = (e2.getPos().y - e2lastPos.y) - (e1.getPos().y - e1lastPos.y);
 			if (relMovement > 0) {
 				e1.reactToCollision(e2, Direction.UP);
 			} else
@@ -555,13 +555,13 @@ public abstract class GameElement implements Collidable {
 				return;
 			}
 			// check if he is still colliding even with last x position
-			this.checkCollision(e1, e2, new Vec(e1lastPos.getX(), e1.getPos().getY()), new Vec(e2lastPos.getX(), e2.getPos().getY()));
+			this.checkCollision(e1, e2, new Vec(e1lastPos.x, e1.getPos().y), new Vec(e2lastPos.x, e2.getPos().y));
 		} else
 		// If they still collide with the old y positions:
 		// it must be because of the x position
 		if (e1lastYFrame.collidesWith(e2lastYFrame)) {
 			// If he moved in positive x direction (right)
-			float relMovement = (e2.getPos().getX() - e2lastPos.getX()) - (e1.getPos().getX() - e1lastPos.getX());
+			float relMovement = (e2.getPos().x - e2lastPos.x) - (e1.getPos().x - e1lastPos.x);
 			if (relMovement > 0) {
 				e1.reactToCollision(e2, Direction.LEFT);
 			} else
@@ -572,7 +572,7 @@ public abstract class GameElement implements Collidable {
 				return;
 			}
 			// check if he is still colliding even with last x position
-			this.checkCollision(e1, e2, new Vec(e1.getPos().getX(), e1lastPos.getY()), new Vec(e2.getPos().getX(), e2lastPos.getY()));
+			this.checkCollision(e1, e2, new Vec(e1.getPos().x, e1lastPos.y), new Vec(e2.getPos().x, e2lastPos.y));
 		}
 
 	}

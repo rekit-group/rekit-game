@@ -38,14 +38,14 @@ public class TriangulationLayer extends ParallaxLayer {
 
 			// determine which Point of the last Edge is further right, then:
 			// go even further (x-wise) and to the other side (y-wise)
-			if (this.lastIterationEdge.start.getX() >= this.lastIterationEdge.end.getX()) {
-				x = this.lastIterationEdge.start.getX() + GameConf.PRNG.nextFloat() * 3 + 3;
-				y = this.lastIterationEdge.end.getY();
-				smallestX = this.lastIterationEdge.end.getX();
+			if (this.lastIterationEdge.start.x >= this.lastIterationEdge.end.x) {
+				x = this.lastIterationEdge.start.x + GameConf.PRNG.nextFloat() * 3 + 3;
+				y = this.lastIterationEdge.end.y;
+				smallestX = this.lastIterationEdge.end.x;
 			} else {
-				x = this.lastIterationEdge.end.getX() + GameConf.PRNG.nextFloat() * 3 + 3;
-				y = this.lastIterationEdge.start.getY();
-				smallestX = this.lastIterationEdge.start.getX();
+				x = this.lastIterationEdge.end.x + GameConf.PRNG.nextFloat() * 3 + 3;
+				y = this.lastIterationEdge.start.y;
+				smallestX = this.lastIterationEdge.start.x;
 			}
 			Vec nextCorner = new Vec(x, y);
 
@@ -63,7 +63,7 @@ public class TriangulationLayer extends ParallaxLayer {
 			}
 
 			this.currentlyGeneratedUntil = smallestX;
-			if (this.lastIterationEdge.start.getX() >= this.lastIterationEdge.end.getX()) {
+			if (this.lastIterationEdge.start.x >= this.lastIterationEdge.end.x) {
 				this.lastIterationEdge = new Edge(this.lastIterationEdge.start, nextCorner);
 			} else {
 				this.lastIterationEdge = new Edge(this.lastIterationEdge.end, nextCorner);
@@ -122,10 +122,10 @@ public class TriangulationLayer extends ParallaxLayer {
 			float maxY = Float.NEGATIVE_INFINITY;
 
 			for (int i = 0; i < 3; i++) {
-				minX = Math.min(this.corners[i].getX(), minX);
-				maxX = Math.max(this.corners[i].getX(), maxX);
-				minY = Math.min(this.corners[i].getY(), minY);
-				maxY = Math.max(this.corners[i].getY(), maxY);
+				minX = Math.min(this.corners[i].x, minX);
+				maxX = Math.max(this.corners[i].x, maxX);
+				minY = Math.min(this.corners[i].y, minY);
+				maxY = Math.max(this.corners[i].y, maxY);
 			}
 			this.setPos(new Vec(minX + (maxX - minX) / 2f, minY + (maxY - minY) / 2f));
 			this.setSize(new Vec(maxX - minX, maxY - minY));

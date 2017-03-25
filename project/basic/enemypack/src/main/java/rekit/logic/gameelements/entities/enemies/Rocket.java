@@ -93,25 +93,25 @@ public final class Rocket extends Enemy implements Configurable {
 		// draw body
 		f.drawRectangle(this.getPos(), this.getSize().scalar(0.8f, 0.6f), Rocket.INNER_COLOR);
 		// draw spike at front
-		Vec startPt = this.getPos().addX(this.getXSignum() * this.getSize().scalar(0.5f).getX());
+		Vec startPt = this.getPos().addX(this.getXSignum() * this.getSize().scalar(0.5f).x);
 		Vec[] relPts = new Vec[] { //
-				new Vec(-this.getXSignum() * this.getSize().scalar(0.1f).getX(), -this.getSize().scalar(0.5f).getY()),
-				new Vec(-this.getXSignum() * this.getSize().scalar(0.1f).getX(), this.getSize().scalar(0.5f).getY()), //
+				new Vec(-this.getXSignum() * this.getSize().scalar(0.1f).x, -this.getSize().scalar(0.5f).y),
+				new Vec(-this.getXSignum() * this.getSize().scalar(0.1f).x, this.getSize().scalar(0.5f).y), //
 				new Vec() //
 		};
 		f.drawPolygon(new Polygon(startPt, relPts), Rocket.FRONT_COLOR, true);
 
 		// draw stripes
-		Vec stripeStart = this.getPos().addX(this.getSize().scalar(this.getXSignum() * (0.05f + 0.025f - 0.4f)).getX());
+		Vec stripeStart = this.getPos().addX(this.getSize().scalar(this.getXSignum() * (0.05f + 0.025f - 0.4f)).x);
 		for (int x = 0; x < 9; x++) {
 			f.drawRectangle(stripeStart.addX(this.getXSignum() * 0.15f * x), this.getSize().scalar(0.05f, 0.75f), Rocket.OUTER_COLOR);
 		}
 
 		// draw drive at back
-		startPt = this.getPos().addX(this.getSize().scalar(-this.getXSignum() * 0.5f).getX()).addY(-this.getSize().scalar(0.5f).getY());
+		startPt = this.getPos().addX(this.getSize().scalar(-this.getXSignum() * 0.5f).x).addY(-this.getSize().scalar(0.5f).y);
 		relPts = new Vec[] { //
-				new Vec(0, this.getSize().getY()), new Vec(this.getXSignum() * this.getSize().getX() * 0.1f, this.getSize().getY() * 0.8f),
-				new Vec(this.getXSignum() * this.getSize().getX() * 0.1f, this.getSize().getY() * 0.2f), //
+				new Vec(0, this.getSize().y), new Vec(this.getXSignum() * this.getSize().x * 0.1f, this.getSize().y * 0.8f),
+				new Vec(this.getXSignum() * this.getSize().x * 0.1f, this.getSize().y * 0.2f), //
 				new Vec() //
 		};
 		f.drawPolygon(new Polygon(startPt, relPts), Rocket.OUTER_COLOR, true);
@@ -127,7 +127,7 @@ public final class Rocket extends Enemy implements Configurable {
 		// this.paricleTimer.removeTime(this.deltaTime);
 		if (this.paricleTimer.timeUp()) {
 			this.paricleTimer.reset();
-			Rocket.sparkParticles.spawn(this.getScene(), this.getPos().addX(-this.getXSignum() * this.getSize().getX() / 2));
+			Rocket.sparkParticles.spawn(this.getScene(), this.getPos().addX(-this.getXSignum() * this.getSize().x / 2));
 		}
 	}
 

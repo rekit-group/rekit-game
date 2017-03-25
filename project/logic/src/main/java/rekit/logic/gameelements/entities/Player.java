@@ -92,9 +92,9 @@ public final class Player extends Entity implements CameraTarget {
 			return;
 		}
 		// determine if direction needs to be changed +- delta: 0.15
-		if (this.getVel().getX() > 0.15) {
+		if (this.getVel().x > 0.15) {
 			this.currentDirection = Direction.RIGHT;
-		} else if (this.getVel().getX() < -0.15) {
+		} else if (this.getVel().x < -0.15) {
 			this.currentDirection = Direction.LEFT;
 		}
 
@@ -102,7 +102,7 @@ public final class Player extends Entity implements CameraTarget {
 		String src = this.currentDirection == Direction.RIGHT //
 				? "mrRekt_glasses_right.png" // facing right
 				: "mrRekt_glasses_left.png"; // facing left
-		f.drawImage(this.getPos().addY(-0.025f * this.getVel().getY()), this.getSize(), src);
+		f.drawImage(this.getPos().addY(-0.025f * this.getVel().y), this.getSize(), src);
 
 	}
 
@@ -142,7 +142,7 @@ public final class Player extends Entity implements CameraTarget {
 	@Override
 	public final float getCameraOffset() {
 		// get maximum player x and adjust level offset
-		float offsetNow = this.getPos().getX() - GameConf.PLAYER_CAMERA_OFFSET;
+		float offsetNow = this.getPos().x - GameConf.PLAYER_CAMERA_OFFSET;
 		if (offsetNow > this.currentCameraOffset) {
 			this.currentCameraOffset = offsetNow;
 		}

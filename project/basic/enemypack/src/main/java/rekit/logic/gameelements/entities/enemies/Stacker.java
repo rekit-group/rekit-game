@@ -60,12 +60,12 @@ public final class Stacker extends Enemy implements Configurable {
 		this.elements = new LinkedList<>();
 
 		// This will be used to calculate positions recursively
-		Vec rel = new Vec(0, 0.5f - new StackerElement(new Vec(), 0).getSize().getY() / 2);
+		Vec rel = new Vec(0, 0.5f - new StackerElement(new Vec(), 0).getSize().y / 2);
 
 		// creation loop
 		for (int i = 0; i < Stacker.ITERATIONS; i++) {
 			StackerElement elem = new StackerElement(rel, i);
-			rel = rel.addY(-elem.getSize().getY() - 0.02f);
+			rel = rel.addY(-elem.getSize().y - 0.02f);
 			this.elements.add(elem);
 		}
 
@@ -124,7 +124,7 @@ public final class Stacker extends Enemy implements Configurable {
 				this.timeToDie.logicLoop();
 				// this.timeToDie.removeTime(this.deltaTime);
 				this.setSize(Stacker.dimensions.getNow(this.timeToDie.getProgress()));
-				this.setPos(this.getPos().addY((-this.getSize().getY() + Stacker.dimensions.getNow(0).getY()) / 2f));
+				this.setPos(this.getPos().addY((-this.getSize().y + Stacker.dimensions.getNow(0).y) / 2f));
 				if (this.timeToDie.timeUp()) {
 					this.addDamage(1);
 				}

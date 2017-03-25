@@ -102,9 +102,9 @@ public final class MovingBox extends DynamicInanimate {
 
 		// precalculate relative points for rocket polygon
 		Vec s = this.getSize();
-		this.rocketPolygonRelPts = new Vec[] { new Vec(s.getX() * (-2 / 16f), 0), new Vec(s.getX() * (-3 / 16f), s.getY() / 2f),
-				new Vec(s.getX() * (1 / 16f), s.getY() / 2f), new Vec() };
-		this.sizeX16 = this.getSize().getX() / 16;
+		this.rocketPolygonRelPts = new Vec[] { new Vec(s.x * (-2 / 16f), 0), new Vec(s.x * (-3 / 16f), s.y / 2f),
+				new Vec(s.x * (1 / 16f), s.y / 2f), new Vec() };
+		this.sizeX16 = this.getSize().x / 16;
 
 		// set starting and ending point
 		this.a = pos.addY(-dist);
@@ -128,7 +128,7 @@ public final class MovingBox extends DynamicInanimate {
 
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
-		if (element.getVel().getY() > 0 && dir != Direction.LEFT && dir != Direction.RIGHT) {
+		if (element.getVel().y > 0 && dir != Direction.LEFT && dir != Direction.RIGHT) {
 			super.reactToCollision(element, Direction.UP);
 		}
 	}
@@ -142,8 +142,8 @@ public final class MovingBox extends DynamicInanimate {
 		this.setPos(this.currentStart.add(this.relativeTarget.scalar(this.timer.getProgress())));
 
 		if (GameConf.PRNG.nextFloat() > 0.6f) {
-			MovingBox.sparkParticles.spawn(this.getScene(), this.getPos().addX(-5.5f * this.sizeX16).addY(this.getSize().getY() / 3));
-			MovingBox.sparkParticles.spawn(this.getScene(), this.getPos().addX(2.5f * this.sizeX16).addY(this.getSize().getY() / 3));
+			MovingBox.sparkParticles.spawn(this.getScene(), this.getPos().addX(-5.5f * this.sizeX16).addY(this.getSize().y / 3));
+			MovingBox.sparkParticles.spawn(this.getScene(), this.getPos().addX(2.5f * this.sizeX16).addY(this.getSize().y / 3));
 		}
 
 		if (this.timer.timeUp()) {
@@ -160,7 +160,7 @@ public final class MovingBox extends DynamicInanimate {
 
 	@Override
 	public void internalRender(GameGrid f) {
-		f.drawRectangle(this.getPos().addY(this.getSize().getY() / -4f), this.getSize().scalar(1, 1 / 2f), this.color);
+		f.drawRectangle(this.getPos().addY(this.getSize().y / -4f), this.getSize().scalar(1, 1 / 2f), this.color);
 
 		f.drawPolygon(new Polygon(this.getPos().addX(-3 * this.sizeX16), this.rocketPolygonRelPts), this.darkCol, true);
 		f.drawPolygon(new Polygon(this.getPos().addX(5 * this.sizeX16), this.rocketPolygonRelPts), this.darkCol, true);

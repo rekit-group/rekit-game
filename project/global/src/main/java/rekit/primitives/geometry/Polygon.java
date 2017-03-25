@@ -24,10 +24,10 @@ public final class Polygon implements Cloneable {
 	 * Create the polygon by start position and other points.
 	 *
 	 * @param startPoint
-	 *            the first point's position
+	 *            the first point's position <b>in units</b>
 	 * @param relPts
 	 *            the relative positions of the next points relative to
-	 *            {@link #startPoint}
+	 *            {@link #startPoint} <b>in units</b>
 	 */
 	public Polygon(Vec startPoint, Vec[] relPts) {
 		this.startPoint = startPoint;
@@ -41,10 +41,10 @@ public final class Polygon implements Cloneable {
 	 * Create the polygon by start position and other points (used for cloning).
 	 *
 	 * @param startPoint
-	 *            the first point's position
+	 *            the first point's position <b>in units</b>
 	 * @param relPts
 	 *            the relative positions of the next points relative to
-	 *            {@link #startPoint}
+	 *            {@link #startPoint} <b>in units</b>
 	 */
 	private Polygon(Vec startPoint, List<Vec> relPts) {
 		this.startPoint = startPoint;
@@ -59,7 +59,7 @@ public final class Polygon implements Cloneable {
 	 * {@link #rotate(float)} or {@link #rotate(float, Vec)}.
 	 *
 	 * @param startPoint
-	 *            the first point's position
+	 *            the first point's position <b>in units</b>
 	 */
 	private Polygon(Vec startPoint) {
 		this.startPoint = startPoint;
@@ -69,7 +69,7 @@ public final class Polygon implements Cloneable {
 	/**
 	 * Get the start point of the polygon.
 	 *
-	 * @return the start point
+	 * @return the start point <b>in units</b>
 	 */
 	public Vec getStartPoint() {
 		return this.startPoint;
@@ -84,7 +84,7 @@ public final class Polygon implements Cloneable {
 	 * Move a polygon to target location.
 	 *
 	 * @param targetLocation
-	 *            the target location
+	 *            the target location <b>in units</b>
 	 */
 	public void moveTo(Vec targetLocation) {
 		this.startPoint = targetLocation;
@@ -117,7 +117,7 @@ public final class Polygon implements Cloneable {
 	 * @param angle
 	 *            the angle
 	 * @param rotationAnchor
-	 *            the rotation anchor
+	 *            the rotation anchor <b>in units</b>
 	 * @return the rotated polygon
 	 */
 	public Polygon rotate(float angle, Vec rotationAnchor) {
@@ -138,21 +138,21 @@ public final class Polygon implements Cloneable {
 	/**
 	 * Get the absolute positions of all points.
 	 *
-	 * @return the points
+	 * @return the points <b>in units</b>
 	 */
 	public float[] getAbsoluteArray() {
 		// prepare actual array {x1, y1, x2, y2, ...}
 		float[] actualArray = new float[2 + this.relPts.size() * 2];
 
 		// save first (absolute) point x1, y1
-		actualArray[0] = this.startPoint.getX();
-		actualArray[1] = this.startPoint.getY();
+		actualArray[0] = this.startPoint.x;
+		actualArray[1] = this.startPoint.y;
 
 		// calculate rest of absolute points from relative points to start
 		int i = 0;
 		for (Vec relPt : this.relPts) {
-			actualArray[2 * i + 2] = this.startPoint.getX() + relPt.getX();
-			actualArray[2 * i + 3] = this.startPoint.getY() + relPt.getY();
+			actualArray[2 * i + 2] = this.startPoint.x + relPt.x;
+			actualArray[2 * i + 3] = this.startPoint.y + relPt.y;
 			i++;
 		}
 
@@ -161,7 +161,7 @@ public final class Polygon implements Cloneable {
 
 	/**
 	 * Scale this polygon.
-	 * 
+	 *
 	 * @param scale
 	 *            the factor
 	 * @return the result polygon

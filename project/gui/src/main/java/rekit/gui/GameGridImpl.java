@@ -21,6 +21,7 @@ import rekit.primitives.image.Filter;
 import rekit.primitives.image.RGBAColor;
 import rekit.util.CalcUtil;
 import rekit.util.TextOptions;
+import rekit.util.Triple;
 import rekit.util.Tuple;
 import rekit.util.Utils;
 
@@ -88,9 +89,9 @@ class GameGridImpl extends GameGrid {
 	private void drawCircleImpl(Vec pos, Vec size, Color col) {
 		this.graphics.setColor(col);
 		Ellipse2D.Float circle = new Ellipse2D.Float( //
-				(pos.getX() - size.getX() / 2f), //
-				(pos.getY() - size.getY() / 2f), //
-				size.getX(), size.getY());
+				(pos.x - size.x / 2f), //
+				(pos.y - size.y / 2f), //
+				size.x, size.y);
 
 		this.graphics.fill(circle);
 
@@ -109,9 +110,9 @@ class GameGridImpl extends GameGrid {
 	private void drawRectangleImpl(Vec pos, Vec size, Color col) {
 		this.graphics.setColor(col);
 		this.graphics.fillRect( //
-				(int) (pos.getX() - size.getX() / 2f), //
-				(int) (pos.getY() - size.getY() / 2f), //
-				(int) size.getX(), (int) size.getY());
+				(int) (pos.x - size.x / 2f), //
+				(int) (pos.y - size.y / 2f), //
+				(int) size.x, (int) size.y);
 
 	}
 
@@ -133,9 +134,9 @@ class GameGridImpl extends GameGrid {
 	private void drawRoundRectangleImpl(Vec pos, Vec size, Color col, int arcWidth, int arcHeight) {
 		this.graphics.setColor(col);
 		this.graphics.fillRoundRect( //
-				(int) (pos.getX() - size.getX() / 2f), // X
-				(int) (pos.getY() - size.getY() / 2f), // Y
-				(int) size.getX(), (int) size.getY(), // Size
+				(int) (pos.x - size.x / 2f), // X
+				(int) (pos.y - size.y / 2f), // Y
+				(int) size.x, (int) size.y, // Size
 				arcWidth, arcHeight); // arc
 
 	}
@@ -197,8 +198,8 @@ class GameGridImpl extends GameGrid {
 		}
 
 		this.graphics.drawImage(image, // image
-				(int) (pos.getX() - size.getX() / 2f), // dstX
-				(int) (pos.getY() - size.getY() / 2f), // dstY
+				(int) (pos.x - size.x / 2f), // dstX
+				(int) (pos.y - size.y / 2f), // dstY
 				null);
 
 	}
@@ -224,10 +225,10 @@ class GameGridImpl extends GameGrid {
 		this.graphics.setFont(font);
 		FontMetrics metrics = this.graphics.getFontMetrics(font);
 
-		float x = pos.getX(), y = pos.getY();
-		float xAlign = options.getAlignment().getX(), yAlign = options.getAlignment().getY();
+		float x = pos.x, y = pos.y;
+		float xAlign = options.getAlignment().x, yAlign = options.getAlignment().y;
 		for (String line : text.split("\n")) {
-			Dimension offset = this.getOffset(line, metrics);
+			Dimension offset = this.getTextOffset(line, metrics);
 			this.graphics.drawString(line, //
 					(x + xAlign * offset.width), //
 					(y += metrics.getHeight()) + yAlign * offset.height);
@@ -244,31 +245,13 @@ class GameGridImpl extends GameGrid {
 	 *            the metrics
 	 * @return the dimensions for the correction of positioning
 	 */
-	private Dimension getOffset(String text, FontMetrics metrics) {
-		// get the height of a line of text in this
-		// font and render context
+	private Dimension getTextOffset(String text, FontMetrics metrics) {
+		// get the height of a line of text in this font and render context
 		int hgt = metrics.getHeight();
-		// get the advance of my text in this font
-		// and render context
+		// get the advance of my text in this font and render context
 		int adv = metrics.stringWidth(text);
-		// calculate the size of a box to hold the
-		// text with some padding.
+		// calculate the size of a box to hold the text with some padding.
 		return new Dimension(adv + 2, hgt + 2);
-
-	}
-
-	/**
-	 * Translate a vec3D to a vec2D.
-	 *
-	 * @param vec3D
-	 *            the vec3D
-	 * @return the vec2D
-	 */
-	private Vec translate2D(Vec vec3D) {
-		if (vec3D.getZ() != 1) {
-			return vec3D.translate2D(this.cameraOffsetUnits);
-		}
-		return vec3D;
 	}
 
 	/**
@@ -302,40 +285,20 @@ class GameGridImpl extends GameGrid {
 
 	@Override
 	public void drawRectangle(Vec pos, Vec size, RGBAColor in, boolean inGame, boolean usefilter) {
-		RGBAColor col = (!usefilter || this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
-		if (!inGame) {
-			this.drawRectangleImpl(this.translate2D(pos), size, Utils.calcRGBA(col));
-		} else {
-			Vec newPos = this.translate2D(pos);
-			newPos = CalcUtil.units2pixel(newPos);
-			newPos = newPos.addX(this.cameraOffset);
-
-			Vec newSize = CalcUtil.units2pixel(size);
-
-			this.drawRectangleImpl(newPos, newSize, Utils.calcRGBA(col));
-		}
+		Triple<Vec, Vec, Color> preProcessing = this.preProcessing(pos, size, in, inGame, usefilter);
+		this.drawRectangleImpl(preProcessing.getT(), preProcessing.getU(), preProcessing.getV());
 	}
 
 	@Override
 	public void drawCircle(Vec pos, Vec size, RGBAColor in, boolean inGame, boolean usefilter) {
-		RGBAColor col = (!usefilter || this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
-		if (!inGame) {
-			this.drawCircleImpl(this.translate2D(pos), size, Utils.calcRGBA(col));
-		} else {
-			Vec newPos = this.translate2D(pos);
-			newPos = CalcUtil.units2pixel(newPos);
-			newPos = newPos.addX(this.cameraOffset);
-
-			Vec newSize = CalcUtil.units2pixel(size);
-
-			this.drawCircleImpl(newPos, newSize, Utils.calcRGBA(col));
-		}
+		Triple<Vec, Vec, Color> preProcessing = this.preProcessing(pos, size, in, inGame, usefilter);
+		this.drawCircleImpl(preProcessing.getT(), preProcessing.getU(), preProcessing.getV());
 	}
 
 	@Override
-	public void drawPolygon(Polygon polygon, RGBAColor in, boolean fill, boolean inGame, boolean usefilter) {
+	public void drawPolygon(Polygon polygon, RGBAColor in, boolean fill, boolean usefilter) {
 		RGBAColor col = (!usefilter || this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
-		polygon.moveTo(this.translate2D(polygon.getStartPoint()));
+		polygon.moveTo(this.translate2D(polygon.getStartPoint(), false));
 
 		float[] unitArray = polygon.getAbsoluteArray();
 		int[] pixelArray = new int[unitArray.length];
@@ -351,42 +314,21 @@ class GameGridImpl extends GameGrid {
 
 	@Override
 	public void drawImage(Vec pos, Vec size, String imagePath, boolean inGame, boolean usefilter) {
-		if (!inGame) {
-			this.drawImageImpl(pos, size, imagePath, usefilter);
-		} else {
-			Vec newPos = CalcUtil.units2pixel(pos);
-			newPos = newPos.addX(this.cameraOffset);
-			Vec newSize = CalcUtil.units2pixel(size);
-			this.drawImageImpl(newPos, newSize, imagePath, usefilter);
-		}
+		Triple<Vec, Vec, Color> preProcessing = this.preProcessing(pos, size, new RGBAColor(0), inGame, usefilter);
+		this.drawImageImpl(preProcessing.getT(), preProcessing.getU(), imagePath, usefilter);
 	}
 
 	@Override
 	public void drawText(Vec pos, String text, TextOptions options, boolean inGame) {
-		if (!inGame) {
-			this.drawTextImpl(pos, text, options);
-		} else {
-			Vec newPos = CalcUtil.units2pixel(pos);
-			newPos = newPos.addX(this.cameraOffset);
-			this.drawTextImpl(newPos, text, options);
-		}
+		this.drawTextImpl(this.translate2D(pos, inGame), text, options);
 	}
 
 	@Override
 	public void drawRoundRectangle(Vec pos, Vec size, RGBAColor in, float arcWidth, float arcHeight, boolean inGame, boolean usefilter) {
-		RGBAColor col = (!usefilter || this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
-		if (!inGame) {
-			this.drawRoundRectangleImpl(this.translate2D(pos), size, Utils.calcRGBA(col), (int) arcWidth, (int) arcHeight);
-		} else {
-			Vec newPos = this.translate2D(pos);
-			newPos = CalcUtil.units2pixel(newPos);
-			newPos = newPos.addX(this.cameraOffset);
-
-			Vec newSize = CalcUtil.units2pixel(size);
-
-			this.drawRoundRectangleImpl(newPos, newSize, Utils.calcRGBA(col), CalcUtil.units2pixel(arcWidth), CalcUtil.units2pixel(arcHeight));
-		}
-
+		Triple<Vec, Vec, Color> preProcessing = this.preProcessing(pos, size, in, inGame, usefilter);
+		int calcArcWidth = inGame ? CalcUtil.units2pixel(arcWidth) : (int) arcWidth;
+		int calcArcHeight = inGame ? CalcUtil.units2pixel(arcHeight) : (int) arcHeight;
+		this.drawRoundRectangleImpl(preProcessing.getT(), preProcessing.getU(), preProcessing.getV(), calcArcWidth, calcArcHeight);
 	}
 
 	@Override
@@ -396,22 +338,46 @@ class GameGridImpl extends GameGrid {
 		}
 
 		RGBAColor col = (!usefilter || this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
-
-		Vec newPos = this.translate2D(startPos);
-		newPos = CalcUtil.units2pixel(newPos);
-		newPos = newPos.addX(this.cameraOffset);
+		Vec calcPos = this.translate2D(startPos, true);
 
 		Iterator<Vec> it = pts.iterator();
 
-		Vec lastPt = newPos.add(CalcUtil.units2pixel(it.next()));
-
+		Vec lastPt = calcPos.add(CalcUtil.units2pixel(it.next()));
 		this.graphics.setColor(Utils.calcRGBA(col));
 		this.graphics.setStroke(new BasicStroke(lineWidth));
 		while (it.hasNext()) {
-			Vec pt = newPos.add(CalcUtil.units2pixel(it.next()));
-			this.graphics.drawLine((int) lastPt.getX(), (int) lastPt.getY(), (int) pt.getX(), (int) pt.getY());
+			Vec pt = calcPos.add(CalcUtil.units2pixel(it.next()));
+			this.graphics.drawLine((int) lastPt.x, (int) lastPt.y, (int) pt.x, (int) pt.y);
 			lastPt = pt;
 		}
 	}
 
+	private Triple<Vec, Vec, Color> preProcessing(Vec pos, Vec size, RGBAColor in, boolean inGame, boolean usefilter) {
+		Vec calcPos = this.translate2D(pos, inGame);
+		Vec calcSize = inGame ? CalcUtil.units2pixel(size) : size;
+		RGBAColor col = (!usefilter || this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
+		return Triple.create(calcPos, calcSize, Utils.calcRGBA(col));
+	}
+
+	/**
+	 * Translate a vec3D to a vec2D.
+	 *
+	 * @param vec3D
+	 *            the vec3D
+	 * @param ingame
+	 *            indicates whether it shall drawn as entity of the game
+	 *            (relative to current game progress) or relative to the
+	 *            surrounding frame
+	 * @return the vec2D
+	 */
+	private Vec translate2D(Vec vec3D, boolean ingame) {
+		Vec perspective = vec3D.z != 0 ? vec3D.translate2D(this.cameraOffsetUnits) : vec3D;
+
+		Vec newPos = perspective;
+		if (ingame) {
+			newPos = CalcUtil.units2pixel(newPos);
+			newPos = newPos.addX(this.cameraOffset);
+		}
+		return newPos;
+	}
 }

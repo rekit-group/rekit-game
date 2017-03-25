@@ -100,13 +100,13 @@ public final class RektSmasher extends Boss implements Configurable {
 		Direction newDir;
 
 		if (dir == Direction.UP || dir == Direction.DOWN) {
-			if (dif.getX() > 0) {
+			if (dif.x > 0) {
 				newDir = Direction.LEFT;
 			} else {
 				newDir = Direction.RIGHT;
 			}
 		} else {
-			if (dif.getY() > 0) {
+			if (dif.y > 0) {
 				newDir = Direction.UP;
 			} else {
 				newDir = Direction.DOWN;

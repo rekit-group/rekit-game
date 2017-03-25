@@ -27,23 +27,23 @@ public class Mouth {
 	}
 
 	public void logicLoop(float calcX, float deltaX) {
-		this.mouthCurvePos = this.parent.getPos().add(this.pos).addX(0.5f * this.size.getX()).addX(-calcX);
+		this.mouthCurvePos = this.parent.getPos().add(this.pos).addX(0.5f * this.size.x).addX(-calcX);
 		this.mouthCurveTimer.logicLoop();
-		float maxDelta = this.size.getY() * 0.5f * this.parent.getState().getMouthAmplitude();
+		float maxDelta = this.size.y * 0.5f * this.parent.getState().getMouthAmplitude();
 		while (this.mouthCurveTimer.timeUp()) {
 			this.mouthCurveTimer.reset();
 			Vec newVec = new Vec(calcX, (float) (Math.tan(calcX * 10) * Math.sin(calcX * 4) * Math.cos(calcX * 0.5f) * maxDelta));
-			if (newVec.getY() > maxDelta) {
+			if (newVec.y > maxDelta) {
 				newVec = newVec.setY(maxDelta);
 			}
-			if (newVec.getY() < -maxDelta) {
+			if (newVec.y < -maxDelta) {
 				newVec = newVec.setY(-maxDelta);
 			}
 			this.mouthCurve.add(newVec);
 		}
 		Iterator<Vec> it = this.mouthCurve.iterator();
 		while (it.hasNext()) {
-			if (it.next().getX() <= calcX - this.size.getX()) {
+			if (it.next().x <= calcX - this.size.x) {
 				it.remove();
 			} else {
 				break;

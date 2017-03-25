@@ -49,8 +49,8 @@ public class JumpState extends EntityState {
 		this.lastTime += deltaTime;
 		this.timeLeft -= deltaTime;
 
-		if (this.timeLeft > 0 && this.entity.getVel().getY() > GameConf.PLAYER_JUMP_BOOST) {
-			this.entity.setVel(new Vec(this.entity.getVel().getX(), GameConf.PLAYER_JUMP_BOOST));
+		if (this.timeLeft > 0 && this.entity.getVel().y > GameConf.PLAYER_JUMP_BOOST) {
+			this.entity.setVel(new Vec(this.entity.getVel().x, GameConf.PLAYER_JUMP_BOOST));
 		}
 	}
 }

@@ -67,8 +67,8 @@ public final class Slurp extends Enemy implements Configurable {
 	public Slurp(Vec startPos) {
 		super(startPos, new Vec(), new Vec(1));
 
-		float sizeX = this.getSize().getX();
-		float sizeY = this.getSize().getX();
+		float sizeX = this.getSize().x;
+		float sizeY = this.getSize().x;
 
 		this.slurpDurps = new ArrayList<>();
 		for (int i = 0; i < Slurp.SLURP_DURP_AMOUNT; i++) {
@@ -107,10 +107,10 @@ public final class Slurp extends Enemy implements Configurable {
 		// calculate velocity (by currentDirection)
 		if (this.currentDirection == Direction.LEFT || this.currentDirection == Direction.RIGHT) {
 			this.setVel(
-					new Vec(this.currentDirection.getVector().getX() * Slurp.SLURP_SPEED, this.currentDirection.getNextAntiClockwise().getVector().getY() * 3));
+					new Vec(this.currentDirection.getVector().x * Slurp.SLURP_SPEED, this.currentDirection.getNextAntiClockwise().getVector().y * 3));
 		} else {
 			this.setVel(
-					new Vec(this.currentDirection.getNextAntiClockwise().getVector().getX() * 3, this.currentDirection.getVector().getY() * Slurp.SLURP_SPEED));
+					new Vec(this.currentDirection.getNextAntiClockwise().getVector().x * 3, this.currentDirection.getVector().y * Slurp.SLURP_SPEED));
 		}
 
 		super.innerLogicLoop();

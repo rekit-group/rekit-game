@@ -36,9 +36,8 @@ public final class Frame {
 	 * @return {@code true} if collision detected, {@code false} otherwise
 	 */
 	public boolean collidesWith(Frame otherFrame) {
-		return this.upperLeftAnchor.getX() < otherFrame.bottomRightAnchor.getX() && this.upperLeftAnchor.getY() < otherFrame.bottomRightAnchor.getY()
-				&& this.bottomRightAnchor.getX() > otherFrame.upperLeftAnchor.getX()
-				&& this.bottomRightAnchor.getY() > otherFrame.upperLeftAnchor.getY();
+		return this.upperLeftAnchor.x < otherFrame.bottomRightAnchor.x && this.upperLeftAnchor.y < otherFrame.bottomRightAnchor.y
+				&& this.bottomRightAnchor.x > otherFrame.upperLeftAnchor.x && this.bottomRightAnchor.y > otherFrame.upperLeftAnchor.y;
 	}
 
 	/**
@@ -49,8 +48,8 @@ public final class Frame {
 	 * @return {@code true} if collision detected, {@code false} otherwise
 	 */
 	public boolean collidesWith(Vec position) {
-		return position.getX() > this.upperLeftAnchor.getX() && position.getX() < this.bottomRightAnchor.getX()
-				&& position.getY() > this.upperLeftAnchor.getY() && position.getY() < this.bottomRightAnchor.getY();
+		return position.x > this.upperLeftAnchor.x && position.x < this.bottomRightAnchor.x && position.y > this.upperLeftAnchor.y
+				&& position.y < this.bottomRightAnchor.y;
 	}
 
 	/**
@@ -65,16 +64,16 @@ public final class Frame {
 		switch (dir) {
 		case UP:
 			// In case we want the upper border: take highest y
-			return this.upperLeftAnchor.getY() > this.bottomRightAnchor.getY() ? this.upperLeftAnchor.getY() : this.bottomRightAnchor.getY();
+			return this.upperLeftAnchor.y > this.bottomRightAnchor.y ? this.upperLeftAnchor.y : this.bottomRightAnchor.y;
 		case RIGHT:
 			// In case we want the right border: take highest x
-			return this.upperLeftAnchor.getX() > this.bottomRightAnchor.getX() ? this.upperLeftAnchor.getX() : this.bottomRightAnchor.getX();
+			return this.upperLeftAnchor.x > this.bottomRightAnchor.x ? this.upperLeftAnchor.x : this.bottomRightAnchor.x;
 		case DOWN:
 			// In case we want the lower border: take lowest y
-			return this.upperLeftAnchor.getY() > this.bottomRightAnchor.getY() ? this.bottomRightAnchor.getY() : this.upperLeftAnchor.getY();
+			return this.upperLeftAnchor.y > this.bottomRightAnchor.y ? this.bottomRightAnchor.y : this.upperLeftAnchor.y;
 		case LEFT:
 			// In case we want the left border: take lowest x
-			return this.upperLeftAnchor.getX() > this.bottomRightAnchor.getX() ? this.bottomRightAnchor.getX() : this.upperLeftAnchor.getX();
+			return this.upperLeftAnchor.x > this.bottomRightAnchor.x ? this.bottomRightAnchor.x : this.upperLeftAnchor.x;
 		}
 		return -1;
 	}

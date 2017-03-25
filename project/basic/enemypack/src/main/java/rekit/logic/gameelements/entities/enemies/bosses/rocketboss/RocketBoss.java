@@ -331,7 +331,7 @@ public class RocketBoss extends Boss implements Configurable {
 
 		// calculate and update position
 		Vec scaleVec = new Vec( //
-				(float) Math.sin(RocketBoss.MOVEMENT_PERIOD.getX() * this.calcX), (float) Math.cos(RocketBoss.MOVEMENT_PERIOD.getY() * this.calcX));
+				(float) Math.sin(RocketBoss.MOVEMENT_PERIOD.x * this.calcX), (float) Math.cos(RocketBoss.MOVEMENT_PERIOD.y * this.calcX));
 		Vec scaledUnit = RocketBoss.MOVEMENT_RANGE.multiply(scaleVec);
 
 		this.setPos(this.getCurrentBasePos().add(scaledUnit));
@@ -344,7 +344,7 @@ public class RocketBoss extends Boss implements Configurable {
 		if (this.particleTimer.timeUp()) {
 			this.particleTimer.reset();
 			// RocketBoss.sparkParticles.spawn(this.getScene(),
-			// this.getPos().addX(-this.getXSignum() * this.getSize().getX() /
+			// this.getPos().addX(-this.getXSignum() * this.getSize().x /
 			// 2));
 
 			for (int i = -1; i <= 1; i += 2) {
@@ -384,7 +384,7 @@ public class RocketBoss extends Boss implements Configurable {
 
 		// Render head background image
 		Vec backgroundPos = this.getPos().add(RocketBoss.BRAIN_SIZE.scalar(-1 / 2f).setX(0));
-		f.drawImage(backgroundPos, this.getSize().addY(RocketBoss.BRAIN_SIZE.getY()), this.getState().getHeadImgSrc());
+		f.drawImage(backgroundPos, this.getSize().addY(RocketBoss.BRAIN_SIZE.y), this.getState().getHeadImgSrc());
 
 		// Render mouth
 		this.mouth.internalRender(f);

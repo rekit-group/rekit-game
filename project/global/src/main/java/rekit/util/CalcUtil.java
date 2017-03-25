@@ -33,7 +33,7 @@ public final class CalcUtil {
 	 * @return the position in units
 	 */
 	public static Vec units2pixel(Vec pos) {
-		return new Vec(pos.getX() * GameConf.PX_PER_UNIT, pos.getY() * GameConf.PX_PER_UNIT);
+		return new Vec(pos.x * GameConf.PX_PER_UNIT, pos.y * GameConf.PX_PER_UNIT);
 	}
 
 	/**

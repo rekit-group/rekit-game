@@ -17,15 +17,15 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	/**
 	 * The x-component of the vector.
 	 */
-	private float x;
+	public final float x;
 	/**
 	 * The y-component of the vector.
 	 */
-	private float y;
+	public final float y;
 	/**
 	 * The optional z-component of the vector.
 	 */
-	private float z;
+	public final float z;
 
 	/**
 	 * Constructor that takes the initial coordinates an saves them.
@@ -52,9 +52,7 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	 *            the initial y-component of the vector
 	 */
 	public Vec(float x, float y) {
-		this.x = x;
-		this.y = y;
-		this.z = 1;
+		this(x, y, 0);
 	}
 
 	/**
@@ -66,9 +64,7 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	 *            the initial y-component of the vector
 	 */
 	public Vec(int x, int y) {
-		this.x = x;
-		this.y = y;
-		this.z = 1;
+		this(x, y, 0);
 	}
 
 	/**
@@ -78,9 +74,7 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	 *            the initial x- and y-component of the vector
 	 */
 	public Vec(float xy) {
-		this.x = xy;
-		this.y = xy;
-		this.z = 1;
+		this(xy, xy, 0);
 	}
 
 	/**
@@ -100,7 +94,7 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	 * @return the vector with the new x-component
 	 */
 	public Vec setX(float x) {
-		return new Vec(x, this.getY(), this.z);
+		return new Vec(x, this.y, this.z);
 	}
 
 	/**
@@ -111,16 +105,7 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	 * @return the vector with the new x-component
 	 */
 	public Vec addX(float deltaX) {
-		return new Vec(this.getX() + deltaX, this.getY(), this.z);
-	}
-
-	/**
-	 * Getter for the x-component of the vector.
-	 *
-	 * @return the x-component
-	 */
-	public float getX() {
-		return this.x;
+		return new Vec(this.x + deltaX, this.y, this.z);
 	}
 
 	/**
@@ -131,7 +116,7 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	 * @return the vector with the new y-component
 	 */
 	public Vec setY(float y) {
-		return new Vec(this.getX(), y, this.z);
+		return new Vec(this.x, y, this.z);
 	}
 
 	/**
@@ -142,25 +127,7 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	 * @return the vector with the new y-component
 	 */
 	public Vec addY(float deltaY) {
-		return new Vec(this.getX(), this.getY() + deltaY, this.z);
-	}
-
-	/**
-	 * Getter for the y-component of the vector.
-	 *
-	 * @return the y-component
-	 */
-	public float getY() {
-		return this.y;
-	}
-
-	/**
-	 * Getter for the z-component of the vector.
-	 *
-	 * @return the z-component
-	 */
-	public float getZ() {
-		return this.z;
+		return new Vec(this.x, this.y + deltaY, this.z);
 	}
 
 	/**
@@ -172,7 +139,7 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	 */
 	@Override
 	public Vec add(Vec vec) {
-		return new Vec(this.getX() + vec.getX(), this.getY() + vec.getY(), this.z);
+		return new Vec(this.x + vec.x, this.y + vec.y, this.z);
 	}
 
 	@Override
@@ -186,7 +153,7 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	 * @return a new vector (sinx, siny)
 	 */
 	public Vec sin() {
-		return new Vec((float) Math.sin(this.getX()), (float) Math.sin(this.getY()));
+		return new Vec((float) Math.sin(this.x), (float) Math.sin(this.y));
 
 	}
 
@@ -213,7 +180,7 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	 * @return the resulting vector
 	 */
 	public Vec scalar(float scalarX, float scalarY) {
-		return new Vec(this.getX() * scalarX, this.getY() * scalarY, this.z);
+		return new Vec(this.x * scalarX, this.y * scalarY, this.z);
 	}
 
 	/**
@@ -227,7 +194,7 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	 */
 	@Override
 	public Vec multiply(Vec vec) {
-		return new Vec(this.getX() * vec.getX(), this.getY() * vec.getY(), this.z);
+		return new Vec(this.x * vec.x, this.y * vec.y, this.z);
 	}
 
 	/**
@@ -256,8 +223,8 @@ public final class Vec implements Cloneable, Operable<Vec> {
 
 		// rotate shifted vector
 		Vec rotated = new Vec();
-		rotated = rotated.setX((float) (shifted.getX() * Math.cos(angle) - shifted.getY() * Math.sin(angle)));
-		rotated = rotated.setY((float) (shifted.getX() * Math.sin(angle) + shifted.getY() * Math.cos(angle)));
+		rotated = rotated.setX((float) (shifted.x * Math.cos(angle) - shifted.y * Math.sin(angle)));
+		rotated = rotated.setY((float) (shifted.x * Math.sin(angle) + shifted.y * Math.cos(angle)));
 		rotated = rotated.setZ(this.z);
 
 		return rotated.add(relative);
@@ -276,12 +243,12 @@ public final class Vec implements Cloneable, Operable<Vec> {
 
 	@Override
 	public Vec clone() {
-		return new Vec(this.getX(), this.getY(), this.z);
+		return new Vec(this.x, this.y, this.z);
 	}
 
 	@Override
 	public String toString() {
-		return "(" + this.getX() + "|" + this.getY() + (this.getZ() != 0 ? "|" + this.getZ() : "") + ")";
+		return "(" + this.x + "|" + this.y + (this.z != 0 ? "|" + this.z : "") + ")";
 	}
 
 	/**
@@ -303,8 +270,8 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	 * @return the new vector
 	 */
 	public Vec translate2D(float offset) {
-		if (this.getZ() != 1) {
-			return new Vec(this.getX() + offset / this.getZ(), this.getY());
+		if (this.z != 0) {
+			return new Vec(this.x + offset / this.z, this.y);
 		}
 		return this;
 	}

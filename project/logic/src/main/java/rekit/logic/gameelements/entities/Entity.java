@@ -160,9 +160,9 @@ public abstract class Entity extends GameElement {
 		// apply gravity
 		newVel = newVel.addY(GameConf.G);
 		// apply slowing down walk
-		newVel = newVel.addX(-Math.signum(newVel.getX()) * GameConf.PLAYER_STOP_ACCEL);
+		newVel = newVel.addX(-Math.signum(newVel.x) * GameConf.PLAYER_STOP_ACCEL);
 		// we dont want weird floating point velocities
-		if (Math.abs(newVel.getX()) < 0.05) {
+		if (Math.abs(newVel.x) < 0.05) {
 			newVel = newVel.setX(0);
 		}
 		// save new velocity
@@ -186,7 +186,7 @@ public abstract class Entity extends GameElement {
 		case LEFT:
 		case RIGHT:
 			// move entities right side to collisions left side / vice versa
-			float newX = collision.getBorder(dir) + signum * this.getSize().getX() / 1.9f;
+			float newX = collision.getBorder(dir) + signum * this.getSize().x / 1.9f;
 			this.setPos(this.getPos().setX(newX));
 			// stop velocity in x dimension
 			this.setVel(this.getVel().setX(0));
@@ -194,7 +194,7 @@ public abstract class Entity extends GameElement {
 		case UP:
 		case DOWN:
 			// move entities lower side to collisions top side / vice versa
-			float newY = collision.getBorder(Direction.getOpposite(dir)) + signum * this.getSize().getY() / 1.9f;
+			float newY = collision.getBorder(Direction.getOpposite(dir)) + signum * this.getSize().y / 1.9f;
 			this.setPos(this.getPos().setY(newY));
 			// stop velocity in y dimension
 			this.setVel(this.getVel().setY(0));

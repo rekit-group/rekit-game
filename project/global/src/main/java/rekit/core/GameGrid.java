@@ -32,7 +32,7 @@ public abstract class GameGrid {
 	 * Draw a rectangle.<br>
 	 * invokes {@link #drawRectangle(Vec, Vec, RGBAColor, boolean, boolean)} and
 	 * set ingame and usefilter to {@code true}
-	 * 
+	 *
 	 * @param pos
 	 *            the position
 	 * @param size
@@ -46,7 +46,7 @@ public abstract class GameGrid {
 
 	/**
 	 * Draw a rectangle.
-	 * 
+	 *
 	 * @param pos
 	 *            the position
 	 * @param size
@@ -70,7 +70,7 @@ public abstract class GameGrid {
 	 * Draw a circle.<br>
 	 * invokes {@link #drawCircle(Vec, Vec, RGBAColor, boolean, boolean)} and
 	 * set ingame and usefilter to {@code true}
-	 * 
+	 *
 	 * @param pos
 	 *            the position
 	 * @param size
@@ -84,7 +84,7 @@ public abstract class GameGrid {
 
 	/**
 	 * Draw a circle.
-	 * 
+	 *
 	 * @param pos
 	 *            the position
 	 * @param size
@@ -108,7 +108,7 @@ public abstract class GameGrid {
 	 * Draw an image. <br>
 	 * invokes {@link #drawImage(Vec, Vec, String, boolean, boolean)} and set
 	 * ingame and usefilter to {@code true}
-	 * 
+	 *
 	 * @param pos
 	 *            the position
 	 * @param size
@@ -122,7 +122,7 @@ public abstract class GameGrid {
 
 	/**
 	 * Draw an image.
-	 * 
+	 *
 	 * @param pos
 	 *            the position
 	 * @param size
@@ -144,10 +144,9 @@ public abstract class GameGrid {
 	////////////////////////////////////////////////////////
 	/**
 	 * Draw a polygon.<br>
-	 * invokes
-	 * {@link #drawPolygon(Polygon, RGBAColor, boolean, boolean, boolean)} and
-	 * set ingame and usefilter to {@code true}
-	 * 
+	 * invokes {@link #drawPolygon(Polygon, RGBAColor, boolean, boolean)} and
+	 * set usefilter to {@code true}
+	 *
 	 * @param polygon
 	 *            the polygon
 	 * @param color
@@ -156,34 +155,30 @@ public abstract class GameGrid {
 	 *            indicates whether the polygon shall be filled
 	 */
 	public final void drawPolygon(Polygon polygon, RGBAColor color, boolean fill) {
-		this.drawPolygon(polygon, color, fill, true, true);
+		this.drawPolygon(polygon, color, fill, true);
 	}
 
 	/**
 	 * Draw a polygon.
-	 * 
+	 *
 	 * @param polygon
 	 *            the polygon
 	 * @param color
 	 *            the color
 	 * @param fill
 	 *            indicates whether the polygon shall be filled
-	 * @param ingame
-	 *            indicates whether it shall drawn as entity of the game
-	 *            (relative to current game progress) or relative to the
-	 *            surrounding frame
 	 * @param usefilter
 	 *            indicates whether a filter (if set) shall applied before
 	 *            drawing
 	 */
-	public abstract void drawPolygon(Polygon polygon, RGBAColor color, boolean fill, boolean ingame, boolean usefilter);
+	public abstract void drawPolygon(Polygon polygon, RGBAColor color, boolean fill, boolean usefilter);
 
 	/////////////////////////////////////////////////////////
 	// Draw Text
 	////////////////////////////////////////////////////////
 	/**
 	 * Draw a text element.
-	 * 
+	 *
 	 * @param pos
 	 *            the position
 	 * @param text
@@ -205,7 +200,7 @@ public abstract class GameGrid {
 	 * invokes
 	 * {@link #drawRoundRectangle(Vec, Vec, RGBAColor, float, float, boolean, boolean)}
 	 * and set ingame and usefilter to {@code true}
-	 * 
+	 *
 	 * @param pos
 	 *            the position
 	 * @param size
@@ -223,7 +218,7 @@ public abstract class GameGrid {
 
 	/**
 	 * Draw a rectangle with round corners.
-	 * 
+	 *
 	 * @param pos
 	 *            the position
 	 * @param size
@@ -251,7 +246,7 @@ public abstract class GameGrid {
 	 * Draw a path.<br>
 	 * invokes {@link #drawPath(Vec, List, RGBAColor, int, boolean)} and set
 	 * lineWidth to {@code 1}
-	 * 
+	 *
 	 * @param startPos
 	 *            the start position
 	 * @param pts
@@ -268,7 +263,7 @@ public abstract class GameGrid {
 
 	/**
 	 * Draw a path.
-	 * 
+	 *
 	 * @param startPos
 	 *            the start position
 	 * @param pts

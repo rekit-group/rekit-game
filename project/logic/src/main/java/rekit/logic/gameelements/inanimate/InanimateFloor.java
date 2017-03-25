@@ -209,20 +209,20 @@ public class InanimateFloor extends Inanimate {
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
 
-		if (Math.abs(element.getVel().getY()) > 6) {
+		if (Math.abs(element.getVel().y) > 6) {
 			InanimateFloor.dustParticles.angle = InanimateFloor.dustParticleAngleTop;
-			InanimateFloor.dustParticles.spawn(this.getScene(), this.getPos().addY(-this.getSize().getY() / 2));
+			InanimateFloor.dustParticles.spawn(this.getScene(), this.getPos().addY(-this.getSize().y / 2));
 		}
 		// if strong velocity in x direction
-		else if (Math.abs(element.getVel().getX()) > 5) {
+		else if (Math.abs(element.getVel().x) > 5) {
 			// if moving right
-			if (element.getVel().getX() > 0) {
+			if (element.getVel().x > 0) {
 				InanimateFloor.dustParticles.angle = InanimateFloor.dustParticleAngleLeft;
 			} else {
 				InanimateFloor.dustParticles.angle = InanimateFloor.dustParticleAngleRight;
 			}
 
-			Vec pos = this.getPos().addY(-this.getSize().getY() / 2).setX(element.getPos().getX());
+			Vec pos = this.getPos().addY(-this.getSize().y / 2).setX(element.getPos().x);
 
 			InanimateFloor.dustParticles.spawn(this.getScene(), pos);
 		}

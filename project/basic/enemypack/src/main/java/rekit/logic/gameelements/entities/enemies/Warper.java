@@ -101,10 +101,10 @@ public final class Warper extends Enemy implements Configurable {
 
 			// determine if x or y is greater in distance
 			Vec dif = this.getPos().add(target.scalar(-1));
-			if (Math.abs(dif.getX()) > Math.abs(dif.getY())) {
-				this.setPos(this.getPos().addX(-Math.signum(dif.getX())));
+			if (Math.abs(dif.x) > Math.abs(dif.y)) {
+				this.setPos(this.getPos().addX(-Math.signum(dif.x)));
 			} else {
-				this.setPos(this.getPos().addY(-Math.signum(dif.getY())));
+				this.setPos(this.getPos().addY(-Math.signum(dif.y)));
 			}
 		}
 	}

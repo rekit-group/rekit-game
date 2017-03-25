@@ -47,11 +47,11 @@ public class MenuList extends SubMenu {
 	@Override
 	protected void calcItemPos() {
 		// render menu as list
-		Vec offset = new Vec(0, -((this.menuItems.size() - 1) * this.itemSize.getY()) / 2);
+		Vec offset = new Vec(0, -((this.menuItems.size() - 1) * this.itemSize.y) / 2);
 
 		for (final MenuItem menuItem : this.menuItems) {
 			menuItem.setPos(this.getPos().add(offset));
-			offset = offset.addY(this.itemSize.getY());
+			offset = offset.addY(this.itemSize.y);
 		}
 	}
 

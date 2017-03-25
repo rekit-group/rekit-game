@@ -158,12 +158,12 @@ public final class EndTrigger extends InanimateTrigger implements Configurable {
 			this.currentSize = this.getSize().add(this.amplitude.multiply(this.phase.add(this.frequency.scalar(this.x)).sin()));
 
 			float randomAngle = (float) (GameConf.PRNG.nextDouble() * 2 * Math.PI);
-			float r = this.currentSize.getX() * 2;
+			float r = this.currentSize.x * 2;
 
 			float x = (float) (Math.cos(randomAngle) * r);
 			float y = (float) (Math.sin(randomAngle) * r);
 
-			y = (y / this.currentSize.getX()) * this.currentSize.getY();
+			y = (y / this.currentSize.x) * this.currentSize.y;
 
 			EndTrigger.PORTAL_PARTICLES.angle = new ParticleSpawnerOption((float) (randomAngle - Math.PI / 2));
 			EndTrigger.PORTAL_PARTICLES.colorR = new ParticleSpawnerOption((float) (this.color.red * 1.2));

@@ -71,9 +71,9 @@ public final class ReflectionBox extends DynamicInanimate {
 			// Calculate reflected velocity
 			Vec v = element.getVel();
 			if (dir == Direction.DOWN || dir == Direction.UP) {
-				v = new Vec(1f * v.getX(), -0.8f * v.getY());
+				v = new Vec(1f * v.x, -0.8f * v.y);
 			} else {
-				v = new Vec(dir.getVector().getX() * GameConf.PLAYER_WALK_MAX_SPEED, 0.8f * GameConf.PLAYER_JUMP_BOOST);
+				v = new Vec(dir.getVector().x * GameConf.PLAYER_WALK_MAX_SPEED, 0.8f * GameConf.PLAYER_JUMP_BOOST);
 			}
 
 			// use internal collision

@@ -193,7 +193,7 @@ public class Cannon extends Enemy implements Configurable {
 	 *            the attached side
 	 */
 	public Cannon(Vec pos, Direction attachedSide) {
-		super(pos.addY(-0.5f + Cannon.SIZE.getY() / 2f), new Vec(), Cannon.SIZE);
+		super(pos.addY(-0.5f + Cannon.SIZE.y / 2f), new Vec(), Cannon.SIZE);
 
 		this.innerStateMachine = new CannonStateMachine(this, new IdleState());
 
@@ -225,19 +225,19 @@ public class Cannon extends Enemy implements Configurable {
 		Vec pos;
 		switch (this.attachedSide) {
 		case UP:
-			pos = this.getPos().addY(-this.getSize().getY() / 4f);
+			pos = this.getPos().addY(-this.getSize().y / 4f);
 			size = this.getSize().scalar(1, 0.5f);
 			break;
 		case DOWN:
-			pos = this.getPos().addY(this.getSize().getY() / 4f);
+			pos = this.getPos().addY(this.getSize().y / 4f);
 			size = this.getSize().scalar(1, 0.5f);
 			break;
 		case LEFT:
-			pos = this.getPos().addX(-this.getSize().getY() / 4f);
+			pos = this.getPos().addX(-this.getSize().y / 4f);
 			size = this.getSize().scalar(0.5f, 1);
 			break;
 		case RIGHT:
-			pos = this.getPos().addX(this.getSize().getY() / 4f);
+			pos = this.getPos().addX(this.getSize().y / 4f);
 			size = this.getSize().scalar(0.5f, 1);
 			break;
 		default:

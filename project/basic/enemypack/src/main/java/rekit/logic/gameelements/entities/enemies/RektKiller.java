@@ -97,12 +97,12 @@ public final class RektKiller extends Enemy {
 		// calculate size dependent Polygon for spikes
 		this.spikePolygon = new Polygon(new Vec(),
 				new Vec[] { //
-						new Vec(0.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
-						new Vec(1.0f * ((this.getSize().getX() * 0.8f) / 3f), 0),
-						new Vec(1.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
-						new Vec(2.0f * ((this.getSize().getX() * 0.8f) / 3f), 0),
-						new Vec(2.5f * ((this.getSize().getX() * 0.8f) / 3f), -(this.getSize().getY() * 0.8f) / 3f),
-						new Vec(3.0f * ((this.getSize().getX() * 0.8f) / 3f), 0), //
+						new Vec(0.5f * ((this.getSize().x * 0.8f) / 3f), -(this.getSize().y * 0.8f) / 3f),
+						new Vec(1.0f * ((this.getSize().x * 0.8f) / 3f), 0),
+						new Vec(1.5f * ((this.getSize().x * 0.8f) / 3f), -(this.getSize().y * 0.8f) / 3f),
+						new Vec(2.0f * ((this.getSize().x * 0.8f) / 3f), 0),
+						new Vec(2.5f * ((this.getSize().x * 0.8f) / 3f), -(this.getSize().y * 0.8f) / 3f),
+						new Vec(3.0f * ((this.getSize().x * 0.8f) / 3f), 0), //
 						new Vec() //
 				});
 	}
@@ -160,10 +160,10 @@ public final class RektKiller extends Enemy {
 		// Do usual entity logic
 		super.innerLogicLoop();
 
-		if (this.getPos().getY() <= 0) {
+		if (this.getPos().y <= 0) {
 			this.collidedWith(new Frame(new Vec(0, 0), new Vec(0, 0)), Direction.DOWN);
 		}
-		if (this.getPos().getY() >= GameConf.GRID_H - 1) {
+		if (this.getPos().y >= GameConf.GRID_H - 1) {
 			this.collidedWith(new Frame(new Vec(0, GameConf.GRID_H - 1), new Vec(0, GameConf.GRID_H - 1)), Direction.UP);
 		}
 

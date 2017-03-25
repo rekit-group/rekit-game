@@ -113,7 +113,7 @@ public final class BossStructure extends Structure implements Configurable {
 		this.ended = false;
 		ILevelScene scene = this.door.getScene();
 		// calculate where to put camera
-		this.cameraTarget = this.levelX + 5 + GameConf.PLAYER_CAMERA_OFFSET + scene.getPlayer().getSize().getX() / 2;
+		this.cameraTarget = this.levelX + 5 + GameConf.PLAYER_CAMERA_OFFSET + scene.getPlayer().getSize().x / 2;
 
 		// Prepare boss
 		this.boss = (Boss) this.boss.create(this.boss.getStartPos().addX(this.levelX), new String[0]);
@@ -138,7 +138,7 @@ public final class BossStructure extends Structure implements Configurable {
 
 		GameElement player = scene.getPlayer();
 		// keep walking right to the right camera position
-		while (player.getPos().getX() < this.cameraTarget) {
+		while (player.getPos().x < this.cameraTarget) {
 			player.setVel(player.getVel().setX(1.8f));
 			Timer.sleep(GameConf.LOGIC_DELTA);
 		}
@@ -146,7 +146,7 @@ public final class BossStructure extends Structure implements Configurable {
 		// Spawn Boss
 		GameElementFactory.generate(this.boss);
 		// Close door
-		GameElementFactory.generateInanimate((int) this.triggerPos.getX(), (int) this.triggerPos.getY());
+		GameElementFactory.generateInanimate((int) this.triggerPos.x, (int) this.triggerPos.y);
 
 		// Boss text
 		TextOptions op = new TextOptions(new Vec(-0.5f, -0.5f), 30, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, 1);
@@ -188,13 +188,13 @@ public final class BossStructure extends Structure implements Configurable {
 		// Needed for animating camera movement
 		Progress cameraMover = new Progress( //
 				this.cameraTarget - GameConf.PLAYER_CAMERA_OFFSET, //
-				player.getPos().getX() - GameConf.PLAYER_CAMERA_OFFSET //
+				player.getPos().x - GameConf.PLAYER_CAMERA_OFFSET //
 		);
 
 		// Needed for animating door movement
 		Progress doorMover = new Progress( //
-				this.door.getPos().getY(), //
-				this.door.getPos().getY() - 10 //
+				this.door.getPos().y, //
+				this.door.getPos().y - 10 //
 		);
 		// save Players current velocity
 		Vec[] save = { player.getVel(), player.getPos(), this.boss.getPos() };

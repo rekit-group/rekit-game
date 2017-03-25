@@ -200,8 +200,11 @@ abstract class Scene implements CameraTarget, IScene {
 		}
 
 		e.logicLoop();
+		this.debug(e, timeBefore);
+	}
 
-		// Debug: Compare and save logicLoop Duration
+	// Debug: Compare and save logicLoop Duration
+	private void debug(GameElement e, long timeBefore) {
 		if (GameConf.DEBUG) {
 			try {
 				this.gameElementDurationsLock.lock();
@@ -218,6 +221,7 @@ abstract class Scene implements CameraTarget, IScene {
 				this.gameElementDurationsLock.unlock();
 			}
 		}
+
 	}
 
 	/**
