@@ -239,7 +239,7 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 	 *
 	 * @param won
 	 *            indicates whether successful or died
-	 * 
+	 *
 	 * @return delay delay (in ms) when to show the end menu. on -1 the endMenu
 	 *         will not be shown.
 	 *
@@ -335,10 +335,7 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 	@Override
 	public int getHighScore() {
 		Integer hs = (Integer) this.level.getDefinition().getData(DataKey.HIGH_SCORE);
-		if (hs == null) {
-			return 0;
-		}
-		return hs;
+		return hs == null ? 0 : hs;
 	}
 
 	/**
