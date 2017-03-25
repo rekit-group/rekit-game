@@ -14,7 +14,7 @@ import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Frame;
 import rekit.primitives.geometry.Polygon;
 import rekit.primitives.geometry.Vec;
-import rekit.primitives.image.RGBColor;
+import rekit.primitives.image.RGBAColor;
 import rekit.primitives.time.Timer;
 import rekit.util.ReflectUtils.LoadMe;
 
@@ -36,20 +36,20 @@ public final class Rocket extends Enemy implements Configurable {
 	/**
 	 * The inner color of the rocket.
 	 */
-	private static RGBColor INNER_COLOR;
+	private static RGBAColor INNER_COLOR;
 	/**
 	 * The color of the front.
 	 */
-	private static RGBColor FRONT_COLOR;
+	private static RGBAColor FRONT_COLOR;
 	/**
 	 * The outer color of the rocket.
 	 */
-	private static RGBColor OUTER_COLOR;
+	private static RGBAColor OUTER_COLOR;
 	/**
 	 * The Particles's spawn time.
 	 */
 	private static float PARTICLE_SPAWN_TIME;
-	
+
 	/**
 	 * The Rockets speed
 	 */
@@ -69,13 +69,13 @@ public final class Rocket extends Enemy implements Configurable {
 	 */
 	@NoSet
 	private Timer paricleTimer;
-	
+
 	@NoSet
 	private Direction direction;
-	
+
 	@NoSet
 	private float currentSpeed = Rocket.SPEED;
-	
+
 	/**
 	 * Create a rocket by start position.
 	 *
@@ -102,7 +102,7 @@ public final class Rocket extends Enemy implements Configurable {
 		f.drawPolygon(new Polygon(startPt, relPts), Rocket.FRONT_COLOR, true);
 
 		// draw stripes
-		Vec stripeStart = this.getPos().addX(this.getSize().scalar(this.getXSignum()*(0.05f + 0.025f - 0.4f)).getX());
+		Vec stripeStart = this.getPos().addX(this.getSize().scalar(this.getXSignum() * (0.05f + 0.025f - 0.4f)).getX());
 		for (int x = 0; x < 9; x++) {
 			f.drawRectangle(stripeStart.addX(this.getXSignum() * 0.15f * x), this.getSize().scalar(0.05f, 0.75f), Rocket.OUTER_COLOR);
 		}
@@ -130,16 +130,20 @@ public final class Rocket extends Enemy implements Configurable {
 			Rocket.sparkParticles.spawn(this.getScene(), this.getPos().addX(-this.getXSignum() * this.getSize().getX() / 2));
 		}
 	}
-	
+
 	/**
 	 * Sets the speed of the rocket
-	 * @param speed the new speed
+	 *
+	 * @param speed
+	 *            the new speed
 	 */
 	public void setSpeed(float speed) {
 		this.currentSpeed = speed;
 	}
+
 	/**
-	 * Resets the Rockets speed to the default speed as specified by configuration. 
+	 * Resets the Rockets speed to the default speed as specified by
+	 * configuration.
 	 */
 	public void resetSpeed() {
 		this.currentSpeed = Rocket.SPEED;
@@ -169,7 +173,7 @@ public final class Rocket extends Enemy implements Configurable {
 	@Override
 	public Entity create(Vec startPos, String[] options) {
 		Rocket inst = new Rocket(startPos);
-		
+
 		// if option 0 is given: set defined direction
 		if (options.length >= 1 && options[0] != null && options[0].matches("(\\+|-)?[0-3]+")) {
 			int opt = Integer.parseInt(options[0]);
@@ -179,11 +183,11 @@ public final class Rocket extends Enemy implements Configurable {
 				GameConf.GAME_LOGGER.error("RektKiller was supplied invalid option " + options[0] + " at index 0 for Direction");
 			}
 		}
-		
+
 		return inst;
 	}
-	
-	public float getXSignum() {	
+
+	public float getXSignum() {
 		return (this.direction == Direction.RIGHT) ? 1 : -1;
 	}
 

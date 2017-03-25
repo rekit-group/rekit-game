@@ -56,7 +56,7 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 		 * @return the type or {@code null} iff none found
 		 */
 		public static Type byString(String string) {
-			return LambdaTools.tryCatch((FunctionWithException<String, Type>) Type::valueOf).apply(string);
+			return LambdaTools.invoke((FunctionWithException<String, Type>) Type::valueOf, string);
 		}
 	}
 

@@ -6,7 +6,6 @@ import java.awt.Frame;
 import java.awt.Toolkit;
 
 import rekit.primitives.image.RGBAColor;
-import rekit.primitives.image.RGBColor;
 
 /**
  * This class contains several tools for working with Graphics.
@@ -19,17 +18,6 @@ public final class Utils {
 	 * Prevent instantiation.
 	 */
 	private Utils() {
-	}
-
-	/**
-	 * Convert a {@link RGBColor} to a {@link Color}.
-	 *
-	 * @param color
-	 *            the color
-	 * @return the converted color
-	 */
-	public static Color calcRGB(RGBColor color) {
-		return new Color(color.red, color.green, color.blue);
 	}
 
 	/**

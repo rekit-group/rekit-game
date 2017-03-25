@@ -24,12 +24,26 @@ public class LambdaTools {
 		void apply(I i) throws Exception;
 	}
 
+	public static final <I, O> O invoke(FunctionWithException<I, O> in, I i) {
+		return LambdaTools.tryCatch(in).apply(i);
+	}
+
+	public static final void invoke(RunnableWithException in) {
+		LambdaTools.tryCatch(in).run();
+
+	}
+
+	public static final <I> void invoke(ConsumerWithException<I> in, I i) {
+		LambdaTools.tryCatch(in).accept(i);
+
+	}
+
 	public static final <I, O> Function<I, O> tryCatch(FunctionWithException<I, O> in) {
 		return i -> {
 			try {
 				return in.apply(i);
 			} catch (Exception e) {
-				GameConf.GAME_LOGGER.error(e.getMessage());
+				GameConf.GAME_LOGGER.fatal(e.getMessage());
 				return null;
 			}
 		};
@@ -40,7 +54,7 @@ public class LambdaTools {
 			try {
 				in.apply();
 			} catch (Exception e) {
-				GameConf.GAME_LOGGER.error(e.getMessage());
+				GameConf.GAME_LOGGER.fatal(e.getMessage());
 			}
 		};
 
@@ -51,7 +65,7 @@ public class LambdaTools {
 			try {
 				in.apply(i);
 			} catch (Exception e) {
-				GameConf.GAME_LOGGER.error(e.getMessage());
+				GameConf.GAME_LOGGER.fatal(e.getMessage());
 			}
 		};
 

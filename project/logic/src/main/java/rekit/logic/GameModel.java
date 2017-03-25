@@ -112,8 +112,11 @@ public class GameModel implements Model {
 	 *            pass options to the scene (e.g. the arcade level id)
 	 */
 	public void switchScene(Scenes s, String... options) {
-		this.removeFilter();
 		IScene nextScene = s.getNewScene(this, options);
+		if (nextScene == null) {
+			return;
+		}
+		this.removeFilter();
 		nextScene.init();
 		nextScene.start();
 		this.curScene.stop();
@@ -134,10 +137,10 @@ public class GameModel implements Model {
 	 */
 	@Override
 	public Entity getPlayer() {
-		if (this.state != GameState.INGAME) {
+		if (!this.curScene.isLevelScene()) {
 			return null;
 		}
-		return this.curScene.getPlayer();
+		return ((ILevelScene) this.curScene).getPlayer();
 	}
 
 	@Override
@@ -147,8 +150,14 @@ public class GameModel implements Model {
 
 	@Override
 	public GameState getState() {
-		if (this.state == GameState.INGAME || this.state == GameState.INGAME_PAUSED) {
-			this.state = this.curScene.isPaused() ? GameState.INGAME_PAUSED : GameState.INGAME;
+		if (this.state != GameState.MENU) {
+			ILevelScene curLevelScene = (ILevelScene) this.curScene;
+			if (curLevelScene.hasEnded()) {
+				this.state = GameState.INGAME_END;
+			}
+			else {
+				this.state = curLevelScene.isPaused() ? GameState.INGAME_PAUSED : GameState.INGAME;
+			}
 		}
 		return this.state;
 	}

@@ -28,6 +28,9 @@ public class Level implements Comparable<Level> {
 	private final BossSetting bosssetting;
 
 	public Level(LevelDefinition definition) {
+		if (definition == null) {
+			throw new IllegalArgumentException("LevelDefinition invalid");
+		}
 		this.definition = definition;
 		this.random = new Random(definition.getSeed());
 		this.bosssetting = new BossSetting(this);

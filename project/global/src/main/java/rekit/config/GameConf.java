@@ -11,7 +11,7 @@ import org.fuchss.configuration.annotations.SetterInfo;
 import org.fuchss.configuration.parser.Parser;
 
 import rekit.primitives.geometry.Vec;
-import rekit.primitives.image.RGBColor;
+import rekit.primitives.image.RGBAColor;
 import rekit.util.ReflectUtils;
 import rekit.util.TextOptions;
 
@@ -149,23 +149,23 @@ public final class GameConf implements Configurable {
 	/**
 	 * The menu's background color.
 	 */
-	public static RGBColor MENU_BACKGROUND_COLOR;
+	public static RGBAColor MENU_BACKGROUND_COLOR;
 	/**
 	 * The menu's box color (default).
 	 */
-	public static RGBColor MENU_BOX_COLOR;
+	public static RGBAColor MENU_BOX_COLOR;
 	/**
 	 * The menu's box color (selected).
 	 */
-	public static RGBColor MENU_BOX_SELECT_COLOR;
+	public static RGBAColor MENU_BOX_SELECT_COLOR;
 	/**
 	 * The menu's box color (option).
 	 */
-	public static RGBColor MENU_BOX_OPTION_COLOR;
+	public static RGBAColor MENU_BOX_OPTION_COLOR;
 	/**
 	 * The menu's text color.
 	 */
-	public static RGBColor MENU_TEXT_COLOR;
+	public static RGBAColor MENU_TEXT_COLOR;
 	/**
 	 * The menu's text font.
 	 */
@@ -177,11 +177,11 @@ public final class GameConf implements Configurable {
 	/**
 	 * The game's background color.
 	 */
-	public static RGBColor GAME_BACKGROUD_COLOR;
+	public static RGBAColor GAME_BACKGROUD_COLOR;
 	/**
 	 * The game's text color.
 	 */
-	public static RGBColor GAME_TEXT_COLOR;
+	public static RGBAColor GAME_TEXT_COLOR;
 	/**
 	 * The game's text font.
 	 */
@@ -194,7 +194,7 @@ public final class GameConf implements Configurable {
 	 * The game's debug text color.
 	 */
 	@NoSet
-	public static RGBColor DEBUG_TEXT_COLOR;
+	public static RGBAColor DEBUG_TEXT_COLOR;
 	/**
 	 * The game's text options.
 	 */
@@ -226,7 +226,7 @@ public final class GameConf implements Configurable {
 
 		GameConf.DEFAULT_TEXT = new TextOptions(new Vec(-1, 0), GameConf.GAME_TEXT_SIZE, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, Font.PLAIN);
 		GameConf.MENU_TEXT = new TextOptions(new Vec(-0.5F, -0.65f), GameConf.MENU_TEXT_SIZE, GameConf.MENU_TEXT_COLOR, GameConf.MENU_TEXT_FONT, Font.PLAIN);
-		GameConf.DEBUG_TEXT_COLOR = new RGBColor(255, 255, 255);
+		GameConf.DEBUG_TEXT_COLOR = new RGBAColor(255, 255, 255);
 		GameConf.HINT_TEXT = GameConf.DEFAULT_TEXT.clone().setHeight(GameConf.GAME_TEXT_SIZE - 5).setColor(GameConf.DEBUG_TEXT_COLOR);
 		GameConf.ABOUT_TEXT = GameConf.HINT_TEXT.clone().setHeight(GameConf.GAME_TEXT_SIZE - 2).setAlignmentLeft(new Vec());
 	}

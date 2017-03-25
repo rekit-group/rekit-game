@@ -96,11 +96,15 @@ public interface Model {
 		 * This state indicates that currently a level is shown by the game.
 		 */
 		INGAME,
-
 		/**
-		 * This state indicates that currently a level is shown bd the game, and
+		 * This state indicates that currently a level is shown by the game and
 		 * it is paused. So a pause menu might be drawn.
 		 */
-		INGAME_PAUSED
+		INGAME_PAUSED,
+		/**
+		 * This state indicates that currently a level is show by the game and
+		 * it has ended. So a end menu might be drawn.
+		 */
+		INGAME_END
 	}
 }

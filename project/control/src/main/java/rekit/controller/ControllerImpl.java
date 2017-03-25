@@ -88,13 +88,20 @@ final class ControllerImpl implements Observer, Controller, CommandSupervisor {
 		this.mpCmd.put(Tuple.create(GameState.INGAME, InputHelper.ESCAPE), new PlayPauseCommand(this));
 		
 		// pause menu
-		this.mpCmd.put(Tuple.create(GameState.INGAME_PAUSED, InputHelper.ESCAPE), new MenuCommand(this, MenuDirection.BACK));
 		this.mpCmd.put(Tuple.create(GameState.INGAME_PAUSED, InputHelper.ENTER), new MenuCommand(this, MenuDirection.SELECT));
 		this.mpCmd.put(Tuple.create(GameState.INGAME_PAUSED, InputHelper.ARROW_UP), new MenuCommand(this, MenuDirection.UP));
 		this.mpCmd.put(Tuple.create(GameState.INGAME_PAUSED, InputHelper.ARROW_DOWN), new MenuCommand(this, MenuDirection.DOWN));
 		this.mpCmd.put(Tuple.create(GameState.INGAME_PAUSED, InputHelper.ARROW_LEFT), new MenuCommand(this, MenuDirection.LEFT));
 		this.mpCmd.put(Tuple.create(GameState.INGAME_PAUSED, InputHelper.ARROW_RIGHT), new MenuCommand(this, MenuDirection.RIGHT));
 		this.mpCmd.put(Tuple.create(GameState.INGAME_PAUSED, InputHelper.ESCAPE), new PlayPauseCommand(this));
+
+		// end menu
+		this.mpCmd.put(Tuple.create(GameState.INGAME_END, InputHelper.ESCAPE), new MenuCommand(this, MenuDirection.BACK));
+		this.mpCmd.put(Tuple.create(GameState.INGAME_END, InputHelper.ENTER), new MenuCommand(this, MenuDirection.SELECT));
+		this.mpCmd.put(Tuple.create(GameState.INGAME_END, InputHelper.ARROW_UP), new MenuCommand(this, MenuDirection.UP));
+		this.mpCmd.put(Tuple.create(GameState.INGAME_END, InputHelper.ARROW_DOWN), new MenuCommand(this, MenuDirection.DOWN));
+		this.mpCmd.put(Tuple.create(GameState.INGAME_END, InputHelper.ARROW_LEFT), new MenuCommand(this, MenuDirection.LEFT));
+		this.mpCmd.put(Tuple.create(GameState.INGAME_END, InputHelper.ARROW_RIGHT), new MenuCommand(this, MenuDirection.RIGHT));
 
 		// Filter Commands ... a test ('u', 'i', 'o' and 'p' key)
 		this.mpCmd.put(Tuple.create(null, KeyEvent.VK_U), new FilterCommand(true, this.model, RandomMode.INSTANCE));
@@ -160,7 +167,7 @@ final class ControllerImpl implements Observer, Controller, CommandSupervisor {
 
 	@Override
 	public IScene getScene() {
-		return this.model.getState() == GameState.INGAME || this.model.getState() == GameState.INGAME_PAUSED ? this.model.getScene() : null;
+		return this.model.getScene();
 	}
 
 	@Override

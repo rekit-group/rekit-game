@@ -3,6 +3,7 @@ package rekit.primitives.image;
 import org.fuchss.configuration.annotations.ClassParser;
 
 import rekit.parser.RGBAColorParser;
+import rekit.primitives.operable.Operable;
 
 /**
  * This class defines a Color with RGBA channels.
@@ -11,7 +12,7 @@ import rekit.parser.RGBAColorParser;
  *
  */
 @ClassParser(RGBAColorParser.class)
-public final class RGBAColor {
+public final class RGBAColor implements Cloneable, Operable<RGBAColor> {
 	/**
 	 * The red channel.
 	 */
@@ -46,6 +47,21 @@ public final class RGBAColor {
 		this.green = g;
 		this.blue = b;
 		this.alpha = a;
+	}
+
+	/**
+	 * Create a new RGBA Color (Alpha := 255).
+	 *
+	 * @param r
+	 *            the red channel
+	 * @param g
+	 *            the green channel
+	 * @param b
+	 *            the blue channel
+	 */
+	public RGBAColor(int r, int g, int b) {
+		this(r, g, b, 255);
+
 	}
 
 	/**
@@ -95,17 +111,38 @@ public final class RGBAColor {
 		return this.alpha == other.alpha && this.blue == other.blue && this.green == other.green && this.red == other.red;
 	}
 
-	/**
-	 * Convert to {@link RGBColor}, losing the alpha channel.
-	 *
-	 * @return the RGBColor
-	 */
-	public RGBColor toRGB() {
-		return new RGBColor(this.red, this.green, this.blue);
-	}
-
 	@Override
 	public String toString() {
 		return "RGBA: " + this.red + "," + this.green + "," + this.blue + "," + this.alpha;
+	}
+
+	@Override
+	public RGBAColor clone() {
+		return new RGBAColor(this.red, this.green, this.blue, this.alpha);
+	}
+
+	@Override
+	public RGBAColor scalar(float p) {
+		return new RGBAColor((int) (this.red * p), (int) (this.green * p), (int) (this.blue * p), (int) (this.alpha * p));
+	}
+
+	@Override
+	public RGBAColor multiply(RGBAColor other) {
+		return new RGBAColor(this.red * other.red, this.green * other.green, this.blue * other.blue, this.alpha * other.alpha);
+	}
+
+	@Override
+	public RGBAColor add(RGBAColor other) {
+		return new RGBAColor(this.red + other.red, this.green + other.green, this.blue + other.blue, this.alpha + other.alpha);
+	}
+
+	@Override
+	public RGBAColor sub(RGBAColor other) {
+		return new RGBAColor(this.red - other.red, this.green - other.green, this.blue - other.blue, this.alpha - other.alpha);
+	}
+
+	@Override
+	public RGBAColor get() {
+		return this;
 	}
 }

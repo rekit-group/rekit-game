@@ -5,7 +5,6 @@ import java.util.List;
 import rekit.primitives.geometry.Polygon;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBAColor;
-import rekit.primitives.image.RGBColor;
 import rekit.util.TextOptions;
 
 /**
@@ -25,9 +24,15 @@ public abstract class GameGrid {
 	 */
 	public abstract void setCurrentOffset(float cameraOffsetUnits);
 
+	/////////////////////////////////////////////////////////
+	// Draw Rectangle
+	////////////////////////////////////////////////////////
+
 	/**
-	 * Draw a rectangle.
-	 *
+	 * Draw a rectangle.<br>
+	 * invokes {@link #drawRectangle(Vec, Vec, RGBAColor, boolean, boolean)} and
+	 * set ingame and usefilter to {@code true}
+	 * 
 	 * @param pos
 	 *            the position
 	 * @param size
@@ -35,69 +40,41 @@ public abstract class GameGrid {
 	 * @param color
 	 *            the color
 	 */
-	public final void drawRectangle(Vec pos, Vec size, RGBColor color) {
-		this.drawRectangle(pos, size, color, true);
+	public final void drawRectangle(Vec pos, Vec size, RGBAColor color) {
+		this.drawRectangle(pos, size, color, true, true);
 	}
 
 	/**
 	 * Draw a rectangle.
-	 *
+	 * 
 	 * @param pos
 	 *            the position
 	 * @param size
 	 *            the size
 	 * @param color
 	 *            the color
-	 * @param inGame
-	 *            this indicates whether the drawing belongs to a GameElement
-	 *            (ingame -&gt; CameraDependend) or a GuiElement (not ingame
-	 *            -&gt; FrameDepenedend)
-	 *
-	 */
-	public final void drawRectangle(Vec pos, Vec size, RGBColor color, boolean inGame) {
-		this.drawRectangle(pos, size, color.toRGBA(), inGame, true);
-	}
-
-	/**
-	 * Draw a rectangle.
-	 *
-	 * @param pos
-	 *            the position
-	 * @param size
-	 *            the size
-	 * @param rgbaColor
-	 *            the color
-	 */
-	public final void drawRectangle(Vec pos, Vec size, RGBAColor rgbaColor) {
-		this.drawRectangle(pos, size, rgbaColor, true, true);
-	}
-
-	/**
-	 * Draw a rectangle.
-	 *
-	 * @param pos
-	 *            the position
-	 * @param size
-	 *            the size
-	 * @param rgbaColor
-	 *            the color
-	 * @param inGame
-	 *            this indicates whether the drawing belongs to a GameElement
-	 *            (ingame -&gt; CameraDependend) or a GuiElement (not ingame
-	 *            -&gt; FrameDepenedend)
+	 * @param ingame
+	 *            indicates whether it shall drawn as entity of the game
+	 *            (relative to current game progress) or relative to the
+	 *            surrounding frame
 	 * @param usefilter
-	 *            indicates whether a filter shall be used if set
-	 *
+	 *            indicates whether a filter (if set) shall applied before
+	 *            drawing
 	 */
-	public abstract void drawRectangle(Vec pos, Vec size, RGBAColor rgbaColor, boolean inGame, boolean usefilter);
+	public abstract void drawRectangle(Vec pos, Vec size, RGBAColor color, boolean ingame, boolean usefilter);
 
+	/////////////////////////////////////////////////////////
+	// Draw Circle
+	////////////////////////////////////////////////////////
 	/**
-	 * Draw a circle.
-	 *
+	 * Draw a circle.<br>
+	 * invokes {@link #drawCircle(Vec, Vec, RGBAColor, boolean, boolean)} and
+	 * set ingame and usefilter to {@code true}
+	 * 
 	 * @param pos
 	 *            the position
 	 * @param size
-	 *            the size
+	 *            the size (diameter)
 	 * @param color
 	 *            the color
 	 */
@@ -107,76 +84,31 @@ public abstract class GameGrid {
 
 	/**
 	 * Draw a circle.
-	 *
+	 * 
 	 * @param pos
 	 *            the position
 	 * @param size
-	 *            the size
+	 *            the size (diameter)
 	 * @param color
 	 *            the color
-	 * @param inGame
-	 *            this indicates whether the drawing belongs to a GameElement
-	 *            (ingame -&gt; CameraDependend) or a GuiElement (not ingame
-	 *            -&gt; FrameDepenedend)
-	 */
-	public final void drawCircle(Vec pos, Vec size, RGBColor color, boolean inGame) {
-		this.drawCircle(pos, size, color.toRGBA(), inGame, true);
-	}
-
-	/**
-	 * Draw a circle.
-	 *
-	 * @param pos
-	 *            the position
-	 * @param size
-	 *            the size
-	 * @param color
-	 *            the color
-	 */
-	public final void drawCircle(Vec pos, Vec size, RGBColor color) {
-		this.drawCircle(pos, size, color, true);
-	}
-
-	/**
-	 * Draw a circle.
-	 *
-	 * @param pos
-	 *            the position
-	 * @param size
-	 *            the size
-	 * @param color
-	 *            the color
-	 * @param inGame
-	 *            this indicates whether the drawing belongs to a GameElement
-	 *            (ingame -&gt; CameraDependend) or a GuiElement (not ingame
-	 *            -&gt; FrameDepenedend)
-	 */
-	public final void drawCircle(Vec pos, Vec size, RGBAColor color, boolean inGame) {
-		this.drawCircle(pos, size, color, inGame, true);
-	}
-
-	/**
-	 * Draw a circle.
-	 *
-	 * @param pos
-	 *            the position
-	 * @param size
-	 *            the size
-	 * @param color
-	 *            the color
-	 * @param inGame
-	 *            this indicates whether the drawing belongs to a GameElement
-	 *            (ingame -&gt; CameraDependend) or a GuiElement (not ingame
-	 *            -&gt; FrameDepenedend)
+	 * @param ingame
+	 *            indicates whether it shall drawn as entity of the game
+	 *            (relative to current game progress) or relative to the
+	 *            surrounding frame
 	 * @param usefilter
-	 *            indicates whether a filter shall be used if set
-	 *
+	 *            indicates whether a filter (if set) shall applied before
+	 *            drawing
 	 */
-	public abstract void drawCircle(Vec pos, Vec size, RGBAColor color, boolean inGame, boolean usefilter);
+	public abstract void drawCircle(Vec pos, Vec size, RGBAColor color, boolean ingame, boolean usefilter);
 
+	/////////////////////////////////////////////////////////
+	// Draw Image
+	////////////////////////////////////////////////////////
 	/**
-	 * Draw an image.
-	 *
+	 * Draw an image. <br>
+	 * invokes {@link #drawImage(Vec, Vec, String, boolean, boolean)} and set
+	 * ingame and usefilter to {@code true}
+	 * 
 	 * @param pos
 	 *            the position
 	 * @param size
@@ -190,65 +122,38 @@ public abstract class GameGrid {
 
 	/**
 	 * Draw an image.
-	 *
+	 * 
 	 * @param pos
 	 *            the position
 	 * @param size
 	 *            the size
 	 * @param imagePath
 	 *            the path to the image
-	 * @param inGame
-	 *            this indicates whether the drawing belongs to a GameElement
-	 *            (ingame -&gt; CameraDependend) or a GuiElement (not ingame
-	 *            -&gt; FrameDepenedend)
+	 * @param ingame
+	 *            indicates whether it shall drawn as entity of the game
+	 *            (relative to current game progress) or relative to the
+	 *            surrounding frame
 	 * @param usefilter
-	 *            indicates whether a filter shall be used if set
-	 *
+	 *            indicates whether a filter (if set) shall applied before
+	 *            drawing
 	 */
+	public abstract void drawImage(Vec pos, Vec size, String imagePath, boolean ingame, boolean usefilter);
 
-	public abstract void drawImage(Vec pos, Vec size, String imagePath, boolean inGame, boolean usefilter);
-
+	/////////////////////////////////////////////////////////
+	// Draw Polygon
+	////////////////////////////////////////////////////////
 	/**
-	 * Draw a polygon.
-	 *
+	 * Draw a polygon.<br>
+	 * invokes
+	 * {@link #drawPolygon(Polygon, RGBAColor, boolean, boolean, boolean)} and
+	 * set ingame and usefilter to {@code true}
+	 * 
 	 * @param polygon
 	 *            the polygon
 	 * @param color
 	 *            the color
 	 * @param fill
-	 *            indicates whether the polygon shall be filled or not
-	 */
-	public final void drawPolygon(Polygon polygon, RGBColor color, boolean fill) {
-		this.drawPolygon(polygon, color, fill, true);
-	}
-
-	/**
-	 * Draw a polygon.
-	 *
-	 * @param polygon
-	 *            the polygon
-	 * @param color
-	 *            the color
-	 * @param fill
-	 *            indicates whether the polygon shall be filled or not
-	 * @param inGame
-	 *            this indicates whether the drawing belongs to a GameElement
-	 *            (ingame -&gt; CameraDependend) or a GuiElement (not ingame
-	 *            -&gt; FrameDepenedend)
-	 */
-	public final void drawPolygon(Polygon polygon, RGBColor color, boolean fill, boolean inGame) {
-		this.drawPolygon(polygon, color.toRGBA(), fill, inGame, true);
-	}
-
-	/**
-	 * Draw a polygon.
-	 *
-	 * @param polygon
-	 *            the polygon
-	 * @param color
-	 *            the color
-	 * @param fill
-	 *            indicates whether the polygon shall be filled or not
+	 *            indicates whether the polygon shall be filled
 	 */
 	public final void drawPolygon(Polygon polygon, RGBAColor color, boolean fill) {
 		this.drawPolygon(polygon, color, fill, true, true);
@@ -256,160 +161,126 @@ public abstract class GameGrid {
 
 	/**
 	 * Draw a polygon.
-	 *
+	 * 
 	 * @param polygon
 	 *            the polygon
 	 * @param color
 	 *            the color
 	 * @param fill
-	 *            indicates whether the polygon shall be filled or not
-	 * @param inGame
-	 *            this indicates whether the drawing belongs to a GameElement
-	 *            (ingame -&gt; CameraDependend) or a GuiElement (not ingame
-	 *            -&gt; FrameDepenedend)
-	 */
-	public final void drawPolygon(Polygon polygon, RGBAColor color, boolean fill, boolean inGame) {
-		this.drawPolygon(polygon, color, fill, inGame, true);
-	}
-
-	/**
-	 * Draw a polygon.
-	 *
-	 * @param polygon
-	 *            the polygon
-	 * @param color
-	 *            the color
-	 * @param fill
-	 *            indicates whether the polygon shall be filled or not
-	 * @param inGame
-	 *            this indicates whether the drawing belongs to a GameElement
-	 *            (ingame -&gt; CameraDependend) or a GuiElement (not ingame
-	 *            -&gt; FrameDepenedend)
+	 *            indicates whether the polygon shall be filled
+	 * @param ingame
+	 *            indicates whether it shall drawn as entity of the game
+	 *            (relative to current game progress) or relative to the
+	 *            surrounding frame
 	 * @param usefilter
-	 *            indicates whether a filter shall be used if set
-	 *
+	 *            indicates whether a filter (if set) shall applied before
+	 *            drawing
 	 */
-	public abstract void drawPolygon(Polygon polygon, RGBAColor color, boolean fill, boolean inGame, boolean usefilter);
+	public abstract void drawPolygon(Polygon polygon, RGBAColor color, boolean fill, boolean ingame, boolean usefilter);
 
+	/////////////////////////////////////////////////////////
+	// Draw Text
+	////////////////////////////////////////////////////////
 	/**
-	 * Draw a text.
-	 *
+	 * Draw a text element.
+	 * 
 	 * @param pos
 	 *            the position
 	 * @param text
 	 *            the text
 	 * @param options
-	 *            the text's options
-	 * @param inGame
-	 *            this indicates whether the drawing belongs to a GameElement
-	 *            (ingame -&gt; CameraDependend) or a GuiElement (not ingame
-	 *            -&gt; FrameDepenedend)
-	 *
+	 *            options to customize appereance
+	 * @param ingame
+	 *            indicates whether it shall drawn as entity of the game
+	 *            (relative to current game progress) or relative to the
+	 *            surrounding frame
 	 */
-	public abstract void drawText(Vec pos, String text, TextOptions options, boolean inGame);
+	public abstract void drawText(Vec pos, String text, TextOptions options, boolean ingame);
 
+	/////////////////////////////////////////////////////////
+	// Draw Round Rectangle
+	////////////////////////////////////////////////////////
 	/**
-	 * Draw a rectangle with round edges.
-	 *
+	 * Draw a rectangle with round corners.<br>
+	 * invokes
+	 * {@link #drawRoundRectangle(Vec, Vec, RGBAColor, float, float, boolean, boolean)}
+	 * and set ingame and usefilter to {@code true}
+	 * 
 	 * @param pos
 	 *            the position
 	 * @param size
 	 *            the size
-	 * @param rgbColor
+	 * @param color
 	 *            the color
 	 * @param arcWidth
-	 *            the width of the arc
+	 *            the horizontal diameter of the arc at the four corners
 	 * @param arcHeight
-	 *            the height of the arc
-	 * @param inGame
-	 *            this indicates whether the drawing belongs to a GameElement
-	 *            (ingame -&gt; CameraDependend) or a GuiElement (not ingame
-	 *            -&gt; FrameDepenedend)
+	 *            the vertical diameter of the arc at the four corners
 	 */
-	public final void drawRoundRectangle(Vec pos, Vec size, RGBColor rgbColor, float arcWidth, float arcHeight, boolean inGame) {
-		this.drawRoundRectangle(pos, size, rgbColor.toRGBA(), arcWidth, arcHeight);
+	public final void drawRoundRectangle(Vec pos, Vec size, RGBAColor color, float arcWidth, float arcHeight) {
+		this.drawRoundRectangle(pos, size, color, arcWidth, arcHeight, true, true);
 	}
 
 	/**
-	 * Draw a rectangle with round edges.
-	 *
+	 * Draw a rectangle with round corners.
+	 * 
 	 * @param pos
 	 *            the position
 	 * @param size
 	 *            the size
-	 * @param rgbColor
+	 * @param color
 	 *            the color
 	 * @param arcWidth
-	 *            the width of the arc
+	 *            the horizontal diameter of the arc at the four corners
 	 * @param arcHeight
-	 *            the height of the arc
-	 */
-	public final void drawRoundRectangle(Vec pos, Vec size, RGBColor rgbColor, float arcWidth, float arcHeight) {
-		this.drawRoundRectangle(pos, size, rgbColor, arcWidth, arcHeight, true);
-	}
-
-	/**
-	 * Draw a rectangle with round edges.
-	 *
-	 * @param pos
-	 *            the position
-	 * @param size
-	 *            the size
-	 * @param rgbaColor
-	 *            the color
-	 * @param arcWidth
-	 *            the width of the arc
-	 * @param arcHeight
-	 *            the height of the arc
-	 */
-	public final void drawRoundRectangle(Vec pos, Vec size, RGBAColor rgbaColor, float arcWidth, float arcHeight) {
-		this.drawRoundRectangle(pos, size, rgbaColor, arcWidth, arcHeight, true, true);
-	}
-
-	/**
-	 * Draw a rectangle with round edges.
-	 *
-	 * @param pos
-	 *            the position
-	 * @param size
-	 *            the size
-	 * @param rgbaColor
-	 *            the color
-	 * @param arcWidth
-	 *            the width of the arc
-	 * @param arcHeight
-	 *            the height of the arc
-	 *
-	 * @param inGame
-	 *            this indicates whether the drawing belongs to a GameElement
-	 *            (ingame -&gt; CameraDependend) or a GuiElement (not ingame
-	 *            -&gt; FrameDepenedend)
+	 *            the vertical diameter of the arc at the four corners
+	 * @param ingame
+	 *            indicates whether it shall drawn as entity of the game
+	 *            (relative to current game progress) or relative to the
+	 *            surrounding frame
 	 * @param usefilter
-	 *            indicates whether a filter shall be used if set
+	 *            indicates whether a filter (if set) shall applied before
+	 *            drawing
 	 */
-	public abstract void drawRoundRectangle(Vec pos, Vec size, RGBAColor rgbaColor, float arcWidth, float arcHeight, boolean inGame, boolean usefilter);
+	public abstract void drawRoundRectangle(Vec pos, Vec size, RGBAColor color, float arcWidth, float arcHeight, boolean ingame, boolean usefilter);
+
+	/////////////////////////////////////////////////////////
+	// Draw Path
+	////////////////////////////////////////////////////////
+	/**
+	 * Draw a path.<br>
+	 * invokes {@link #drawPath(Vec, List, RGBAColor, int, boolean)} and set
+	 * lineWidth to {@code 1}
+	 * 
+	 * @param startPos
+	 *            the start position
+	 * @param pts
+	 *            the following points (relative to predecessor)
+	 * @param color
+	 *            the color
+	 * @param usefilter
+	 *            indicates whether a filter (if set) shall applied before
+	 *            drawing
+	 */
+	public final void drawPath(Vec startPos, List<Vec> pts, RGBAColor color, boolean usefilter) {
+		this.drawPath(startPos, pts, color, 1, usefilter);
+	}
 
 	/**
 	 * Draw a path.
-	 *
+	 * 
 	 * @param startPos
-	 *            the start point
+	 *            the start position
 	 * @param pts
-	 *            the next points (relative to startPos)
-	 * @param in
+	 *            the following points (relative to predecessor)
+	 * @param color
 	 *            the color
+	 * @param lineWidth
+	 *            the line width
+	 * @param usefilter
+	 *            indicates whether a filter (if set) shall applied before
+	 *            drawing
 	 */
-	// TODO Check JDoc
-	public abstract void drawPath(Vec startPos, List<Vec> pts, RGBColor in);
+	public abstract void drawPath(Vec startPos, List<Vec> pts, RGBAColor color, int lineWidth, boolean usefilter);
 
-
-	/**
-	 * Draw a path with a given lineWidth
-	 * @param startPos the start point
-	 * @param pts the next points (relative to startPos)
-	 * @param in the color
-	 * @param lineWidth the lineWidth in pixels
-	 */
-	public abstract void drawPath(Vec startPos, List<Vec> pts, RGBColor in, int lineWidth);
-	
 }

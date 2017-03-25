@@ -7,7 +7,7 @@ import rekit.config.GameConf;
 import rekit.core.GameGrid;
 import rekit.primitives.geometry.Polygon;
 import rekit.primitives.geometry.Vec;
-import rekit.primitives.image.RGBColor;
+import rekit.primitives.image.RGBAColor;
 
 public class TriangulationLayer extends ParallaxLayer {
 
@@ -105,8 +105,8 @@ public class TriangulationLayer extends ParallaxLayer {
 	private class Triangle extends BackgroundElement {
 		private Vec[] corners = new Vec[3];
 		private Polygon polygon;
-		private RGBColor col;
-		private RGBColor darkCol;
+		private RGBAColor col;
+		private RGBAColor darkCol;
 
 		public Triangle(Vec corner0, Vec corner1, Vec corner2) {
 			super(TriangulationLayer.this, new Vec());
@@ -134,7 +134,7 @@ public class TriangulationLayer extends ParallaxLayer {
 		}
 
 		public void initToRender() {
-			this.col = new RGBColor((int) HeapLayer.calcWithVariance(240, 15), (int) HeapLayer.calcWithVariance(206, 10),
+			this.col = new RGBAColor((int) HeapLayer.calcWithVariance(240, 15), (int) HeapLayer.calcWithVariance(206, 10),
 					(int) HeapLayer.calcWithVariance(140, 10));
 			this.darkCol = this.col.scalar(0.9f);
 			this.setPos(this.getPos().setZ(TriangulationLayer.this.perspectiveZ));

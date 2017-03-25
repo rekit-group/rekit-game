@@ -142,7 +142,11 @@ public final class LevelParser {
 	private void parseAlias(LevelDefinition definition) {
 		this.readToken(TokenType.ALIAS);
 		this.readToken(TokenType.DELIMITER);
+		Token mp = this.lookAhead;
 		String[] mapping = this.parseMapping();
+		if (!mapping[0].matches("(-|\\+)?[0-9]+")) {
+			throw new UnexpectedTokenException(mp, "alias must be a mapping from number");
+		}
 		definition.setAlias(mapping[0], mapping[1]);
 	}
 

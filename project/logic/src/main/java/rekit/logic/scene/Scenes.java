@@ -88,7 +88,8 @@ public enum Scenes {
 		try {
 			return (Scene) this.sceneClass.getDeclaredMethod("create", GameModel.class, String[].class).invoke(null, model, options);
 		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			throw new UnsupportedOperationException("Cant create a " + this.sceneClass.getName());
+			GameConf.GAME_LOGGER.fatal("Cannot load Scene for Level. See log for more info.");
+			return null;
 		}
 
 	}

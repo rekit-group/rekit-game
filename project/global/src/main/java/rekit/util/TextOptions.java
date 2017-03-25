@@ -1,7 +1,7 @@
 package rekit.util;
 
 import rekit.primitives.geometry.Vec;
-import rekit.primitives.image.RGBColor;
+import rekit.primitives.image.RGBAColor;
 
 /**
  *
@@ -20,7 +20,7 @@ public final class TextOptions implements Cloneable {
 	/**
 	 * The color.
 	 */
-	private RGBColor color;
+	private RGBAColor color;
 	/**
 	 * The font.
 	 */
@@ -69,7 +69,7 @@ public final class TextOptions implements Cloneable {
 	 *
 	 * @return the color
 	 */
-	public RGBColor getColor() {
+	public RGBAColor getColor() {
 		return this.color;
 	}
 
@@ -80,7 +80,7 @@ public final class TextOptions implements Cloneable {
 	 *            the color
 	 * @return the modified text-options (this)
 	 */
-	public TextOptions setColor(RGBColor color) {
+	public TextOptions setColor(RGBAColor color) {
 		this.color = color;
 		return this;
 	}
@@ -174,7 +174,7 @@ public final class TextOptions implements Cloneable {
 	 * @param fontOptions
 	 *            the font-options
 	 */
-	public TextOptions(Vec alignment, int height, RGBColor color, String font, int fontOptions) {
+	public TextOptions(Vec alignment, int height, RGBAColor color, String font, int fontOptions) {
 		this(alignment, height, color, font, fontOptions, true);
 	}
 
@@ -194,7 +194,7 @@ public final class TextOptions implements Cloneable {
 	 * @param usefilter
 	 *            indicates whether a filter shall used
 	 */
-	public TextOptions(Vec alignment, int height, RGBColor color, String font, int fontOptions, boolean usefilter) {
+	public TextOptions(Vec alignment, int height, RGBAColor color, String font, int fontOptions, boolean usefilter) {
 		this.alignment = alignment;
 		this.height = height;
 		this.color = color;

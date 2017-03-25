@@ -5,6 +5,7 @@ import rekit.core.GameGrid;
 import rekit.core.Team;
 import rekit.core.Team.Range;
 import rekit.logic.Collidable;
+import rekit.logic.ILevelScene;
 import rekit.logic.IScene;
 import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Frame;
@@ -91,10 +92,10 @@ public abstract class GameElement implements Collidable {
 	protected Team team;
 
 	/**
-	 * The {@link IScene} the {@link GameElement} is in and manages this and all
+	 * The {@link ILevelScene} the {@link GameElement} is in and manages this and all
 	 * other {@link GameElement GameElements}.
 	 */
-	private IScene scene;
+	private ILevelScene scene;
 
 	/**
 	 * Prototype constructor. Use the constructor <i>GameElement(Vec startPos,
@@ -128,6 +129,10 @@ public abstract class GameElement implements Collidable {
 		this.vel = vel;
 		this.size = size;
 		this.setPos(startPos);
+	}
+	
+	public void init() {
+		this.deleteMe = false;
 	}
 
 	/**
@@ -375,7 +380,18 @@ public abstract class GameElement implements Collidable {
 	 *            the new {@link IScene} the GameElement is in.
 	 */
 	public final void setScene(IScene value) {
-		this.scene = value;
+		/* TODO
+		 * Scene.addGameElements calls this function with (this :: Scene)
+		 * as argument, but we know the Scene is a LevelScene.
+		 * This cast is no what we want.
+		 * 
+		 * Currently all GameElements are part of an LevelScene but
+		 * in anticipation of a level editor we want GameElements
+		 * which are not part of a ILevelScene.
+		 * 
+		 * Proposal: Create LevelElemement which gets an ILevelScene.
+		 */
+		this.scene = (ILevelScene) value;
 	}
 
 	/**
@@ -383,7 +399,7 @@ public abstract class GameElement implements Collidable {
 	 *
 	 * @return the current scene
 	 */
-	public final IScene getScene() {
+	public final ILevelScene getScene() {
 		return this.scene;
 	}
 

@@ -19,7 +19,7 @@ import rekit.logic.gameelements.type.Enemy;
 import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Polygon;
 import rekit.primitives.geometry.Vec;
-import rekit.primitives.image.RGBColor;
+import rekit.primitives.image.RGBAColor;
 import rekit.util.ReflectUtils.LoadMe;
 
 /**
@@ -93,16 +93,16 @@ public class Cannon extends Enemy implements Configurable {
 	public static float ANGLE_SPEED;
 
 	/**
-	 * Configurable {@link RGBColor} that will be used as the color of the base
-	 * (the non-rotating part of the {@link Cannon}).
+	 * Configurable {@link } that will be used as the color of the base (the
+	 * non-rotating part of the {@link Cannon}).
 	 */
-	public static RGBColor COLOR_BASE;
+	public static RGBAColor COLOR_BASE;
 
 	/**
-	 * Configurable {@link RGBColor} that will be used as the color of the pipe
-	 * (the rotating part of the {@link Cannon}).
+	 * Configurable {@link } that will be used as the color of the pipe (the
+	 * rotating part of the {@link Cannon}).
 	 */
-	public static RGBColor COLOR_CANNON;
+	public static RGBAColor COLOR_CANNON;
 
 	/**
 	 * Configurable width of the {@link Cannon Cannons} pipe (the rotating part

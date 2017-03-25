@@ -13,7 +13,6 @@ import rekit.logic.gameelements.type.DynamicInanimate;
 import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBAColor;
-import rekit.primitives.image.RGBColor;
 import rekit.primitives.time.Timer;
 import rekit.util.ReflectUtils.LoadMe;
 
@@ -56,7 +55,7 @@ public final class ClimbUpBox extends DynamicInanimate implements Configurable {
 	/**
 	 * The energy's color.
 	 */
-	private static RGBColor ENERGY_COLOR;
+	private static RGBAColor ENERGY_COLOR;
 	/**
 	 * The timer (how long climb enables?).
 	 */

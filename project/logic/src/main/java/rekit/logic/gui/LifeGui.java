@@ -1,7 +1,7 @@
 package rekit.logic.gui;
 
 import rekit.core.GameGrid;
-import rekit.logic.IScene;
+import rekit.logic.ILevelScene;
 import rekit.logic.gameelements.entities.Player;
 import rekit.primitives.geometry.Vec;
 
@@ -11,7 +11,7 @@ import rekit.primitives.geometry.Vec;
  * Lives.
  *
  */
-public class LifeGui extends GuiElement {
+public class LifeGui extends LevelGuiElement {
 	/**
 	 * The image name.
 	 */
@@ -31,7 +31,7 @@ public class LifeGui extends GuiElement {
 	 * @param scene
 	 *            the scene
 	 */
-	public LifeGui(IScene scene) {
+	public LifeGui(ILevelScene scene) {
 		super(scene);
 	}
 
