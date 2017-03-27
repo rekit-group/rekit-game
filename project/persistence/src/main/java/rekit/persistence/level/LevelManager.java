@@ -34,7 +34,7 @@ import rekit.config.GameConf;
 import rekit.persistence.DirFileDefinitions;
 import rekit.persistence.level.LevelDefinition.Type;
 import rekit.persistence.level.token.UnexpectedTokenException;
-import rekit.util.LambdaTools;
+import rekit.util.LambdaUtil;
 
 /**
  *
@@ -73,7 +73,7 @@ public final class LevelManager {
 			return;
 		}
 		LevelManager.initialized = true;
-		LambdaTools.invoke(LevelManager::loadAllLevels);
+		LambdaUtil.invoke(LevelManager::loadAllLevels);
 		LevelManager.loadDataFromFile();
 
 	}
@@ -112,7 +112,7 @@ public final class LevelManager {
 		}
 		for (File lv : levels) {
 			if (lv.getName().startsWith("level")) {
-				LambdaTools.invoke(() -> LevelManager.addArcadeLevel(new FileInputStream(lv)));
+				LambdaUtil.invoke(() -> LevelManager.addArcadeLevel(new FileInputStream(lv)));
 			}
 		}
 
@@ -144,7 +144,7 @@ public final class LevelManager {
 	 *            the resource
 	 */
 	private static void addArcadeLevel(Resource level) {
-		LambdaTools.invoke(() -> LevelManager.addArcadeLevel(level.getInputStream()));
+		LambdaUtil.invoke(() -> LevelManager.addArcadeLevel(level.getInputStream()));
 	}
 
 	/**

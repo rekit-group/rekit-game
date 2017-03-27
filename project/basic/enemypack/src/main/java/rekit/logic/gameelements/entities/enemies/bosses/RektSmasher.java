@@ -18,7 +18,6 @@ import rekit.primitives.geometry.Frame;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.time.Timer;
 import rekit.util.ReflectUtils.LoadMe;
-import rekit.util.ThreadUtils;
 
 /**
  *
@@ -128,14 +127,7 @@ public final class RektSmasher extends Boss implements Configurable {
 		if (GameConf.PRNG.nextDouble() > 0.8 && this.innerRektKiller.hasSide(Direction.getOpposite(dir))) {
 			// remove side
 			this.innerRektKiller.setSide(Direction.getOpposite(dir), false);
-
-			// start thread to re-add spikes after time
-			ThreadUtils.runThread("RektSmasher-Spikes", () -> {
-				Timer.sleep(RektSmasher.SPIKE_TIME);
-				this.innerRektKiller.setSide(Direction.getOpposite(dir), true);
-
-			});
-
+			Timer.execute(RektSmasher.SPIKE_TIME, () -> this.innerRektKiller.setSide(Direction.getOpposite(dir), true));
 		}
 	}
 

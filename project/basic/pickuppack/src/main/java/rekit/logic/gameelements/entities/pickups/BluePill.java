@@ -84,7 +84,7 @@ public class BluePill extends Pickup implements Configurable {
 		if (collector.getClass() == Player.class) {
 			Player player = (Player) collector;
 			player.setInvincible(4000);
-			player.setTemporaryApperance((f) -> this.drawPlayer(f, player), 4000);
+			player.setTemporaryApperance(f -> this.drawPlayer(f, player), 4000);
 		}
 	}
 

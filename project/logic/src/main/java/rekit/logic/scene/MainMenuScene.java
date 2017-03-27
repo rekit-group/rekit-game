@@ -14,7 +14,7 @@ import rekit.logic.gui.menu.TextMenu;
 import rekit.persistence.DirFileDefinitions;
 import rekit.persistence.level.LevelManager;
 import rekit.primitives.geometry.Vec;
-import rekit.util.LambdaTools;
+import rekit.util.LambdaUtil;
 
 /**
  *
@@ -79,7 +79,7 @@ final class MainMenuScene extends Scene {
 		MenuList settings = new MenuList(this, "Settings");
 		settings.addItem( //
 				new BoolSetting(this, "Debug Mode", "DEBUG"), //
-				new MenuActionItem(this, "Open Config", LambdaTools.tryCatch(() -> Desktop.getDesktop().open(DirFileDefinitions.SYS_CONF))) //
+				new MenuActionItem(this, "Open Config", LambdaUtil.tryCatch(() -> Desktop.getDesktop().open(DirFileDefinitions.SYS_CONF))) //
 		);
 
 		MenuList about = new MenuList(this, "About");

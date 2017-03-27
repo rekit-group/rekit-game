@@ -103,7 +103,7 @@ public enum Scenes {
 	 */
 	private static class ConcurrentHelper {
 		/**
-		 * The mapping of IScene --> Scenes.
+		 * The mapping of IScene --&gt; Scenes.
 		 */
 		private static final ConcurrentHashMap<Class<? extends IScene>, Scenes> INSTANCES = new ConcurrentHashMap<>();
 	}

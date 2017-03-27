@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 import rekit.primitives.image.AbstractImage;
 import rekit.primitives.image.Filter;
 import rekit.primitives.image.RGBAColor;
-import rekit.util.LambdaTools;
+import rekit.util.LambdaUtil;
 import rekit.util.ReflectUtils.LoadMe;
 
 /**
@@ -66,7 +66,7 @@ public final class GrayScaleMode implements Filter {
 			executor.submit(() -> this.runIt(image.width, image.height, taskSize, task, threadNums, image.pixels, result));
 		}
 		executor.shutdown();
-		LambdaTools.invoke(() -> executor.awaitTermination(Long.MAX_VALUE, TimeUnit.HOURS));
+		LambdaUtil.invoke(() -> executor.awaitTermination(Long.MAX_VALUE, TimeUnit.HOURS));
 		return new AbstractImage(image.height, image.width, result);
 
 	}
