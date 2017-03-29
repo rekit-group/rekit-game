@@ -173,7 +173,7 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 		this.setData(key, value, true);
 	}
 
-	public void setData(DataKey key, Serializable value, boolean notify) {
+	void setData(DataKey key, Serializable value, boolean notify) {
 		this.data.put(key.getKey(), value);
 		if (notify) {
 			LevelManager.contentChanged();

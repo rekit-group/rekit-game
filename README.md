@@ -24,7 +24,7 @@ Here is a list what can be added via addons:
 ### Adding Levels
 #### Create a Level
 If you want to create your own levels, follow the steps:
-* Create a new text-file (the name has to start with *level*)
+* Create a new text-file (the name has to start with *level* and has to end with *.dat*)
 * Define the settings of the level. All possible settings can be found in the SettingKey-Enum. (The syntax should be easy to understand.) You could set the level's name by adding `#SETTING::name->My_Special_Name` (`_` will be replaced by space).
 * You can set a `#BOSS_SETTING::ATXXX->Boss` to create a Boss-Room at position `XXX` in your level (you can also specify a concrete Boss by its name)
 * In a further step you can create `aliases` to create `structures` easily. You can use specific Items or Groups (e.g. Coin: `#ALIAS::1->Coin`)

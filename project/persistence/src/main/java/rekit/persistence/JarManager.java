@@ -12,7 +12,7 @@ public class JarManager {
 	private JarManager() {
 	}
 
-	private static final URLClassLoader SYSLOADER = (URLClassLoader) ClassLoader.getSystemClassLoader();
+	public static final URLClassLoader SYSLOADER = (URLClassLoader) ClassLoader.getSystemClassLoader();
 	private static final Method ADD_METHOD = JarManager.getAddJarMethod();
 
 	public static final synchronized void loadMods() {

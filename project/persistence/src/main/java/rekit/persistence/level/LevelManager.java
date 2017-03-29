@@ -33,6 +33,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import rekit.config.GameConf;
 import rekit.persistence.DirFileDefinitions;
+import rekit.persistence.JarManager;
 import rekit.persistence.level.token.UnexpectedTokenException;
 import rekit.util.LambdaUtil;
 
@@ -84,8 +85,8 @@ public final class LevelManager {
 	 *             iff wrong path.
 	 */
 	private static void loadAllLevels() throws IOException {
-		PathMatchingResourcePatternResolver resolv = new PathMatchingResourcePatternResolver();
-		Resource[] res = resolv.getResources("/levels/level*");
+		PathMatchingResourcePatternResolver resolv = new PathMatchingResourcePatternResolver(JarManager.SYSLOADER);
+		Resource[] res = resolv.getResources("classpath*:/levels/level*.dat");
 		Stream<Resource> numbered = Arrays.stream(res).filter(r -> r.getFilename().matches("level_\\d+\\.dat"));
 		Stream<Resource> notNumbered = Arrays.stream(res).filter(r -> !r.getFilename().matches("level_\\d+\\.dat"));
 
@@ -115,7 +116,7 @@ public final class LevelManager {
 		for (File lv : dir) {
 			if (lv.exists() && lv.isDirectory()) {
 				LevelManager.loadCustomLevels(lv.listFiles(), lv.getName());
-			} else if (lv.getName().startsWith("level")) {
+			} else if (lv.getName().startsWith("level") && lv.getName().endsWith(".dat")) {
 				LambdaUtil.invoke(() -> LevelManager.addArcadeLevel(new FileInputStream(lv), group));
 			}
 		}
