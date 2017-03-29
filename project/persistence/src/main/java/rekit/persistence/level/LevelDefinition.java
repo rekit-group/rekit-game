@@ -93,7 +93,7 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 			name = this.type.toString().replace('_', ' ');
 		}
 		if (this.isSettingSet(SettingKey.NAME)) {
-			name = this.getSetting(SettingKey.NAME).replace('_', ' ');
+			name = this.getSetting(SettingKey.NAME);
 		}
 		return (name == null ? this.getID() : name);
 	}
@@ -132,7 +132,8 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 	}
 
 	public String getSetting(SettingKey key) {
-		return this.settings.get(key.getID());
+		String val = this.settings.get(key.getID());
+		return val == null ? null : val.replace('_', ' ');
 	}
 
 	public boolean isSettingSet(SettingKey key) {
