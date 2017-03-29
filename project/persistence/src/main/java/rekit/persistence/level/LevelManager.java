@@ -16,15 +16,15 @@ import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
-import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
@@ -47,8 +47,6 @@ public final class LevelManager {
 	 * All known levels (ID -> Level).
 	 */
 	private static final Map<String, LevelDefinition> LEVEL_MAP = new HashMap<>();
-
-	private static final Set<String> BANNED_IDS = new HashSet<>();
 
 	private static LevelDefinition INFINITE = null;
 	private static LevelDefinition LOTD = null;
@@ -89,7 +87,9 @@ public final class LevelManager {
 		PathMatchingResourcePatternResolver resolv = new PathMatchingResourcePatternResolver();
 		Resource[] unassigned = resolv.getResources("/levels/level*");
 		Resource[] assigned = resolv.getResources("/levels/*/level*");
-
+		Comparator<Resource> cmp = (c1, c2) -> c1.getFilename().compareToIgnoreCase(c2.getFilename());
+		Arrays.sort(unassigned, cmp);
+		Arrays.sort(assigned, cmp);
 		LevelManager.loadInfiniteLevels();
 
 		for (Resource un : unassigned) {
@@ -114,6 +114,7 @@ public final class LevelManager {
 		if (dir == null) {
 			return;
 		}
+		Arrays.sort(dir, (f1, f2) -> f1.getName().toLowerCase().compareTo(f2.getName().toLowerCase()));
 		for (File lv : dir) {
 			if (lv.exists() && lv.isDirectory()) {
 				LevelManager.loadCustomLevels(lv.listFiles(), lv.getName());
@@ -139,8 +140,6 @@ public final class LevelManager {
 		DateFormat levelOfTheDayFormat = new SimpleDateFormat("ddMMyyyy");
 		int seed = Integer.parseInt(levelOfTheDayFormat.format(Calendar.getInstance().getTime()));
 		LevelManager.addLevel(LevelManager.LOTD = new LevelDefinition(level.getInputStream(), Type.Level_of_the_Day, seed));
-		LevelManager.BANNED_IDS.add(LevelManager.INFINITE.getID());
-		LevelManager.BANNED_IDS.add(LevelManager.LOTD.getID());
 	}
 
 	/**

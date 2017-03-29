@@ -166,7 +166,8 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 		}
 
 		this.ended = true;
-
+		// TODO Maybe lastValue | won ?!
+		this.level.getDefinition().setData(DataKey.SUCCESS, won);
 		// create the end menu before actually populating and showing it
 		this.endMenu = new MenuList(this, "End Menu");
 		this.endMenu.setPos(new Vec(GameConf.PIXEL_W / 2f, GameConf.PIXEL_H / 2f));
