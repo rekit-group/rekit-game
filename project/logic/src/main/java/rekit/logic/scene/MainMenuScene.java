@@ -1,6 +1,8 @@
 package rekit.logic.scene;
 
 import java.awt.Desktop;
+import java.util.List;
+import java.util.Map.Entry;
 
 import rekit.config.GameConf;
 import rekit.logic.GameModel;
@@ -66,12 +68,10 @@ final class MainMenuScene extends Scene {
 		MenuList top3 = new MenuList(this, "TOP 3 Levels");
 		top3.addItem(inf, lod, bossRush);
 
-		MenuGrid arcade = new MenuGrid(this, "Arcade Mode", 6, 100, 100);
-		int i = 1;
-		for (String idx : LevelManager.getArcadeLevelIDs()) {
-			final String id = "" + idx;
-			MenuActionItem button = new MenuActionItem(this, new Vec(80, 80), String.valueOf(i++), () -> this.getModel().switchScene(Scenes.ARCADE, id));
-			arcade.addItem(button);
+		MenuList arcade = new MenuList(this, "Arcade");
+		for (Entry<String, List<String>> group : LevelManager.getArcadeLevelGroups().entrySet()) {
+			this.addGroup(arcade, group);
+
 		}
 
 		play.addItem(top3, arcade);
@@ -91,6 +91,18 @@ final class MainMenuScene extends Scene {
 
 		this.addGuiElement(this.menu);
 		this.menu.select();
+	}
+
+	private void addGroup(MenuList arcade, Entry<String, List<String>> group) {
+		MenuGrid groupGrid = new MenuGrid(this, group.getKey(), 5);
+		int i = 1;
+		for (String idx : group.getValue()) {
+			final String id = "" + idx;
+			MenuActionItem button = new MenuActionItem(this, new Vec(80, 80), String.valueOf(i++), () -> this.getModel().switchScene(Scenes.ARCADE, id));
+			// TODO set enabled iff LevelDefinition has DataKey#SUCCESS set.
+			groupGrid.addItem(button);
+		}
+		arcade.addItem(groupGrid);
 	}
 
 	@Override

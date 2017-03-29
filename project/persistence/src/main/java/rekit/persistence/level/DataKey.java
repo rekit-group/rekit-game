@@ -4,8 +4,7 @@ import java.io.Serializable;
 
 public enum DataKey {
 
-	HIGH_SCORE("highscore", 0);
-
+	HIGH_SCORE("highscore", 0), SUCCESS("success", false);
 	private final String key;
 	private final Serializable defaultVal;
 

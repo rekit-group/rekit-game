@@ -244,4 +244,13 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 		return 2 * this.type.compareTo(o.getType()) + Integer.compare(this.arcadeNum, o.getArcadeNum());
 	}
 
+	public static final String GROUP_UNKNOWN = "Unknown";
+
+	public String getGroup() {
+		if (this.type != Type.Arcade) {
+			return null;
+		}
+		return this.getSetting("group") == null ? LevelDefinition.GROUP_UNKNOWN : this.getSetting("group");
+	}
+
 }

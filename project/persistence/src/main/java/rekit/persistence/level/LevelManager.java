@@ -15,17 +15,18 @@ import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -86,33 +87,38 @@ public final class LevelManager {
 	 */
 	private static void loadAllLevels() throws IOException {
 		PathMatchingResourcePatternResolver resolv = new PathMatchingResourcePatternResolver();
-		Resource[] res = resolv.getResources("/levels/level*");
-		Stream<Resource> numbered = Arrays.stream(res).filter(r -> r.getFilename().matches("level_\\d+\\.dat"));
-		Stream<Resource> notNumbered = Arrays.stream(res).filter(r -> !r.getFilename().matches("level_\\d+\\.dat"));
+		Resource[] unassigned = resolv.getResources("/levels/level*");
+		Resource[] assigned = resolv.getResources("/levels/*/level*");
 
 		LevelManager.loadInfiniteLevels();
 
-		numbered.sorted((r1, r2) -> {
-			String n1 = r1.getFilename(), n2 = r2.getFilename();
-			n1 = n1.substring("level_".length()).split("\\.")[0];
-			n2 = n2.substring("level_".length()).split("\\.")[0];
-			return Integer.compare(Integer.parseInt(n1), Integer.parseInt(n2));
-		}).forEach(LevelManager::addArcadeLevel);
+		for (Resource un : unassigned) {
+			LevelManager.addArcadeLevel(un);
+		}
 
-		notNumbered.sorted((r1, r2) -> r1.toString().compareToIgnoreCase(r2.toString())).forEach(LevelManager::addArcadeLevel);
+		for (Resource as : assigned) {
+			String[] path = as.getFile().getAbsolutePath().split(File.separatorChar == '\\' ? "\\\\" : "/");
+			String group = path[path.length - 2];
+			LevelManager.addArcadeLevel(as, group);
+		}
 
 		LevelManager.loadCustomLevels();
 
 	}
 
 	private static final void loadCustomLevels() {
-		File[] levels = DirFileDefinitions.LEVEL_DIR.listFiles();
-		if (levels == null) {
+		LevelManager.loadCustomLevels(DirFileDefinitions.LEVEL_DIR.listFiles(), LevelDefinition.GROUP_UNKNOWN);
+	}
+
+	private static final void loadCustomLevels(File[] dir, String group) {
+		if (dir == null) {
 			return;
 		}
-		for (File lv : levels) {
-			if (lv.getName().startsWith("level")) {
-				LambdaUtil.invoke(() -> LevelManager.addArcadeLevel(new FileInputStream(lv)));
+		for (File lv : dir) {
+			if (lv.exists() && lv.isDirectory()) {
+				LevelManager.loadCustomLevels(lv.listFiles(), lv.getName());
+			} else if (lv.getName().startsWith("level")) {
+				LambdaUtil.invoke(() -> LevelManager.addArcadeLevel(new FileInputStream(lv), group));
 			}
 		}
 
@@ -144,7 +150,21 @@ public final class LevelManager {
 	 *            the resource
 	 */
 	private static void addArcadeLevel(Resource level) {
-		LambdaUtil.invoke(() -> LevelManager.addArcadeLevel(level.getInputStream()));
+		LambdaUtil.invoke(() -> LevelManager.addArcadeLevel(level, LevelDefinition.GROUP_UNKNOWN));
+	}
+
+	private static void addArcadeLevel(Resource as, String group) {
+		LevelDefinition def = null;
+		try {
+			def = new LevelDefinition(as.getInputStream(), ++LevelManager.ARCADE_NUM);
+		} catch (Exception e) {
+			GameConf.GAME_LOGGER.error(e.getMessage());
+			return;
+		}
+		if (!def.isSettingSet("group")) {
+			def.setSetting("group", group);
+		}
+		LevelManager.addLevel(def);
 	}
 
 	/**
@@ -161,7 +181,21 @@ public final class LevelManager {
 		if (!LevelManager.initialized) {
 			return;
 		}
-		LevelManager.addLevel(new LevelDefinition(levelStructure, ++LevelManager.ARCADE_NUM));
+		LevelManager.addArcadeLevel(levelStructure, LevelDefinition.GROUP_UNKNOWN);
+	}
+
+	private static void addArcadeLevel(InputStream is, String group) {
+		LevelDefinition def = null;
+		try {
+			def = new LevelDefinition(is, ++LevelManager.ARCADE_NUM);
+		} catch (Exception e) {
+			GameConf.GAME_LOGGER.error(e.getMessage());
+			return;
+		}
+		if (!def.isSettingSet("group")) {
+			def.setSetting("group", group);
+		}
+		LevelManager.addLevel(def);
 	}
 
 	/**
@@ -199,9 +233,22 @@ public final class LevelManager {
 		return LevelManager.LEVEL_MAP.get(id);
 	}
 
-	public static synchronized List<String> getArcadeLevelIDs() {
-		return LevelManager.LEVEL_MAP.entrySet().stream().filter(e -> !LevelManager.BANNED_IDS.contains(e.getKey()))
-				.sorted((e1, e2) -> e1.getValue().compareTo(e2.getValue())).map(e -> e.getKey()).collect(Collectors.toList());
+	public static synchronized Map<String, List<String>> getArcadeLevelGroups() {
+		Map<String, List<String>> groups = new TreeMap<>();
+		for (Entry<String, LevelDefinition> lv : LevelManager.LEVEL_MAP.entrySet()) {
+			if (lv.getValue().getType() != Type.Arcade) {
+				continue;
+			}
+			if (!groups.containsKey(lv.getValue().getGroup())) {
+				groups.put(lv.getValue().getGroup(), new ArrayList<>());
+			}
+			groups.get(lv.getValue().getGroup()).add(lv.getKey());
+
+		}
+		for (List<String> lvs : groups.values()) {
+			lvs.sort((l1, l2) -> LevelManager.LEVEL_MAP.get(l1).compareTo(LevelManager.LEVEL_MAP.get(l2)));
+		}
+		return groups;
 	}
 
 	/**
