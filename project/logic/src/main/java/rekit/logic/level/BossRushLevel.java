@@ -6,7 +6,7 @@ import java.util.List;
 
 import rekit.logic.gameelements.type.Boss;
 import rekit.persistence.level.LevelDefinition;
-import rekit.persistence.level.LevelDefinition.Type;
+import rekit.persistence.level.LevelType;
 
 /**
  * This class holds all necessary information about a level.
@@ -27,7 +27,7 @@ public final class BossRushLevel extends Level {
 		StringBuilder builder = new StringBuilder();
 		builder.append("#SETTING::infinite->true").append("\n");
 		ByteArrayInputStream is = new ByteArrayInputStream(builder.toString().getBytes());
-		return new LevelDefinition(is, Type.Boss_Rush);
+		return new LevelDefinition(is, LevelType.Boss_Rush);
 	}
 
 	@Override

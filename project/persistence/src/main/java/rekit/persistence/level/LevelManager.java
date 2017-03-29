@@ -33,7 +33,6 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import rekit.config.GameConf;
 import rekit.persistence.DirFileDefinitions;
-import rekit.persistence.level.LevelDefinition.Type;
 import rekit.persistence.level.token.UnexpectedTokenException;
 import rekit.util.LambdaUtil;
 
@@ -136,11 +135,11 @@ public final class LevelManager {
 		PathMatchingResourcePatternResolver resolv = new PathMatchingResourcePatternResolver();
 		Resource level = resolv.getResource("/levels/infinite.dat");
 		// Infinite
-		LevelManager.addLevel(LevelManager.INFINITE = new LevelDefinition(level.getInputStream(), Type.Infinite_Fun));
+		LevelManager.addLevel(LevelManager.INFINITE = new LevelDefinition(level.getInputStream(), LevelType.Infinite_Fun));
 		// LOTD
 		DateFormat levelOfTheDayFormat = new SimpleDateFormat("ddMMyyyy");
 		int seed = Integer.parseInt(levelOfTheDayFormat.format(Calendar.getInstance().getTime()));
-		LevelManager.addLevel(LevelManager.LOTD = new LevelDefinition(level.getInputStream(), Type.Level_of_the_Day, seed));
+		LevelManager.addLevel(LevelManager.LOTD = new LevelDefinition(level.getInputStream(), LevelType.Level_of_the_Day, seed));
 	}
 
 	/**
@@ -236,7 +235,7 @@ public final class LevelManager {
 	public static synchronized Map<String, List<String>> getArcadeLevelGroups() {
 		Map<String, List<String>> groups = new TreeMap<>();
 		for (Entry<String, LevelDefinition> lv : LevelManager.LEVEL_MAP.entrySet()) {
-			if (lv.getValue().getType() != Type.Arcade) {
+			if (lv.getValue().getType() != LevelType.Arcade) {
 				continue;
 			}
 			if (!groups.containsKey(lv.getValue().getSetting(SettingKey.GROUP))) {

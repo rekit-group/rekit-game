@@ -16,8 +16,6 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import rekit.config.GameConf;
-import rekit.util.LambdaUtil;
-import rekit.util.LambdaUtil.FunctionWithException;
 
 /**
  *
@@ -25,51 +23,17 @@ import rekit.util.LambdaUtil.FunctionWithException;
  *
  */
 public final class LevelDefinition implements Comparable<LevelDefinition> {
-	/**
-	 * The type of a level.
-	 *
-	 * @author Dominik Fuchss
-	 *
-	 */
-	public enum Type {
-		/**
-		 * Infinite level.
-		 */
-		Infinite_Fun,
-		/**
-		 * Level of the day.
-		 */
-		Level_of_the_Day,
-		/**
-		 * Arcade level.
-		 */
-		Arcade,
-		/**
-		 * Boss Rush Mode.
-		 */
-		Boss_Rush;
-		/**
-		 * Same as {@link #valueOf(String)}, but no exception.
-		 *
-		 * @param string
-		 *            the representing String
-		 * @return the type or {@code null} iff none found
-		 */
-		public static Type byString(String string) {
-			return LambdaUtil.invoke((FunctionWithException<String, Type>) Type::valueOf, string);
-		}
-	}
 
-	private final Type type;
+	private final LevelType type;
 	private final String name;
 	private final int seed;
 	private int arcadeNum;
 
-	public LevelDefinition(InputStream in, Type type) {
+	public LevelDefinition(InputStream in, LevelType type) {
 		this(in, type, GameConf.PRNG.nextInt());
 	}
 
-	public LevelDefinition(InputStream in, Type type, int seed) {
+	public LevelDefinition(InputStream in, LevelType type, int seed) {
 		this.type = type;
 		this.seed = seed;
 		Scanner scanner = new Scanner(in, Charset.defaultCharset().name());
@@ -83,13 +47,13 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 	}
 
 	LevelDefinition(InputStream inputStream, int arcadeNumber) {
-		this(inputStream, Type.Arcade);
+		this(inputStream, LevelType.Arcade);
 		this.arcadeNum = arcadeNumber;
 	}
 
 	private String calcName() {
 		String name = null;
-		if (this.type != Type.Arcade) {
+		if (this.type != LevelType.Arcade) {
 			name = this.type.toString().replace('_', ' ');
 		}
 		if (this.isSettingSet(SettingKey.NAME)) {
@@ -160,7 +124,7 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 		return this.bossSettings.get(key);
 	}
 
-	public Type getType() {
+	public LevelType getType() {
 		return this.type;
 	}
 
@@ -189,7 +153,7 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 		}
 		StringBuilder content = new StringBuilder();
 		content.append(this.type);
-		if (this.type == Type.Arcade) {
+		if (this.type == LevelType.Arcade) {
 			this.structures.forEach(struct -> Arrays.stream(struct).forEach(row -> Arrays.stream(row).forEach(elem -> content.append(elem.trim()))));
 			this.aliases.forEach((k, v) -> content.append(k).append(v));
 			this.settings.forEach((k, v) -> content.append(k).append(v));
