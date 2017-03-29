@@ -69,6 +69,7 @@ public final class Player extends Entity implements CameraTarget {
 	 * Initialize the player.
 	 */
 	public void init() {
+		this.deleteMe = false;
 		this.setPos(this.startPos);
 		this.lives = GameConf.PLAYER_LIVES;
 		this.points = 0;

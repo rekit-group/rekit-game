@@ -47,7 +47,7 @@ public abstract class GameElement implements Collidable {
 	 * Flag that is used to signal if the {@link GameElement} is supposed to be
 	 * deleted or not.
 	 */
-	private boolean deleteMe = false;
+	protected boolean deleteMe = false;
 
 	/**
 	 * The {@link GameElement GameElements} size that can be imagined as a box
