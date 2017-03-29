@@ -48,7 +48,7 @@ public enum Team {
 	 * @param max
 	 *            the max z-layer
 	 */
-	private Team(byte min, byte max) {
+	Team(byte min, byte max) {
 		this.zRange = new Range(min, max);
 	}
 
@@ -133,7 +133,7 @@ public enum Team {
 		 *            the expected z-layer.
 		 * @return the actual z-layer (trimmed to {@code this}
 		 */
-		public final byte normalize(int expected) {
+		public byte normalize(int expected) {
 			if (expected < this.min) {
 				return this.min;
 			}

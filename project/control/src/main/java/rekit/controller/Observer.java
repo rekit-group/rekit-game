@@ -10,6 +10,5 @@ public interface Observer {
 	/**
 	 * Will be invoked when the observer shall get it's update.
 	 */
-	public void update();
-
+	void update();
 }

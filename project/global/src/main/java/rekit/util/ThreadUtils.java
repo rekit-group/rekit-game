@@ -21,7 +21,7 @@ public final class ThreadUtils {
 	 * @return {@code true} if successfully sleeped the time, {@code false}
 	 *         otherwise
 	 */
-	public static final boolean sleep(long time) {
+	public static boolean sleep(long time) {
 		try {
 			Thread.sleep(time);
 		} catch (InterruptedException e) {
@@ -39,7 +39,7 @@ public final class ThreadUtils {
 	 *            the runnable
 	 * @return the thread
 	 */
-	public static final Thread runDaemon(String name, Runnable r) {
+	public static Thread runDaemon(String name, Runnable r) {
 		return ThreadUtils.runThread(name, r, true);
 	}
 
@@ -52,7 +52,7 @@ public final class ThreadUtils {
 	 *            the runnable
 	 * @return the thread
 	 */
-	public static final Thread runThread(String name, Runnable r) {
+	public static Thread runThread(String name, Runnable r) {
 		return ThreadUtils.runThread(name, r, false);
 	}
 
@@ -67,7 +67,7 @@ public final class ThreadUtils {
 	 *            daemon?
 	 * @return the thread
 	 */
-	private static final Thread runThread(String name, Runnable r, boolean daemon) {
+	private static Thread runThread(String name, Runnable r, boolean daemon) {
 		Thread t = new Thread(r);
 		t.setName(name);
 		t.setDaemon(daemon);

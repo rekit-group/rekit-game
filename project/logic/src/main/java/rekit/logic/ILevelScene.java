@@ -2,6 +2,13 @@ package rekit.logic;
 
 import rekit.logic.gameelements.entities.Player;
 
+/**
+ * This interface extends {@link IScene} and adds necessary methods to
+ * encapsulate Levels.
+ *
+ * @author Matthias Schmitt
+ *
+ */
 public interface ILevelScene extends IScene {
 	/**
 	 * Get the current player of {@code null} if none set.
@@ -23,7 +30,7 @@ public interface ILevelScene extends IScene {
 	 * @return the current high score or 0 if none available
 	 */
 	int getHighScore();
-	
+
 	/**
 	 * End a level.
 	 *
@@ -31,10 +38,10 @@ public interface ILevelScene extends IScene {
 	 *            indicates whether successful or died
 	 */
 	void end(boolean won);
-	
+
 	/**
 	 * Indicates whether the level has ended.
-	 * 
+	 *
 	 * @return {@code true} if ended, {@code false} otherwise
 	 */
 	boolean hasEnded();

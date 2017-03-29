@@ -68,9 +68,7 @@ public final class Player extends Entity implements CameraTarget {
 	/**
 	 * Initialize the player.
 	 */
-	@Override
 	public void init() {
-		super.init();
 		this.setPos(this.startPos);
 		this.lives = GameConf.PLAYER_LIVES;
 		this.points = 0;
@@ -136,12 +134,12 @@ public final class Player extends Entity implements CameraTarget {
 	/**
 	 * Reset current camera offset.
 	 */
-	public final void resetCameraOffset() {
+	public void resetCameraOffset() {
 		this.currentCameraOffset = 0;
 	}
 
 	@Override
-	public final float getCameraOffset() {
+	public float getCameraOffset() {
 		// get maximum player x and adjust level offset
 		float offsetNow = this.getPos().x - GameConf.PLAYER_CAMERA_OFFSET;
 		if (offsetNow > this.currentCameraOffset) {
@@ -169,7 +167,7 @@ public final class Player extends Entity implements CameraTarget {
 	 *
 	 * @return the current direction
 	 */
-	public final Direction getCurrentDirection() {
+	public Direction getCurrentDirection() {
 		return this.currentDirection;
 	}
 
@@ -179,7 +177,7 @@ public final class Player extends Entity implements CameraTarget {
 	 * @param points
 	 *            the points to add (or subtract, iff negative)
 	 */
-	public final void addPoints(int points) {
+	public void addPoints(int points) {
 		if (points < 0 && this.invincibility != null && !this.invincibility.timeUp()) {
 			return;
 		}
@@ -192,7 +190,7 @@ public final class Player extends Entity implements CameraTarget {
 	 *
 	 * @return the points of the Player
 	 */
-	public final int getPoints() {
+	public int getPoints() {
 		return this.points;
 	}
 }

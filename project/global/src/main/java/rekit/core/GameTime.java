@@ -42,7 +42,7 @@ public final class GameTime {
 	/**
 	 * Pause the game.
 	 */
-	public synchronized static void pause() {
+	public static synchronized void pause() {
 		if (GameTime.pause) {
 			return;
 		}
@@ -53,7 +53,7 @@ public final class GameTime {
 	/**
 	 * Resume from pause.
 	 */
-	public synchronized static void resume() {
+	public static synchronized void resume() {
 		if (!GameTime.pause) {
 			return;
 		}
@@ -64,7 +64,7 @@ public final class GameTime {
 
 	/**
 	 * Indicates whether the time has been stopped.
-	 * 
+	 *
 	 * @return {@code true} if stopped, {@code false} otherwise
 	 */
 	public static boolean isPaused() {

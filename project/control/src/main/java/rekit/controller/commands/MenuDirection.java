@@ -47,7 +47,7 @@ public enum MenuDirection implements Consumer<MenuItem> {
 	 * @param action
 	 *            the action
 	 */
-	private MenuDirection(Consumer<MenuItem> action) {
+	MenuDirection(Consumer<MenuItem> action) {
 		this.action = action;
 	}
 

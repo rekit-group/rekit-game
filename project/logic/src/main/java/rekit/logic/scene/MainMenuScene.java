@@ -77,9 +77,9 @@ final class MainMenuScene extends Scene {
 		play.addItem(top3, arcade);
 
 		MenuList settings = new MenuList(this, "Settings");
-		settings.addItem( //
+		settings.addItem(//
 				new BoolSetting(this, "Debug Mode", "DEBUG"), //
-				new MenuActionItem(this, "Open Config", LambdaUtil.tryCatch(() -> Desktop.getDesktop().open(DirFileDefinitions.SYS_CONF))) //
+				new MenuActionItem(this, "Open Config", LambdaUtil.tryCatch(() -> Desktop.getDesktop().open(DirFileDefinitions.BASE))) //
 		);
 
 		MenuList about = new MenuList(this, "About");

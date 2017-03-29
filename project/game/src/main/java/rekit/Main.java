@@ -69,7 +69,7 @@ public final class Main {
 	 * @param level
 	 *            the level
 	 */
-	private static final void setLogLevel(Level level) {
+	private static void setLogLevel(Level level) {
 		// Initialize Loggers ...
 
 		GameConf.GAME_LOGGER.setLevel(level);
@@ -85,7 +85,7 @@ public final class Main {
 	/**
 	 * Visit all Classes which shall be visited.
 	 */
-	private static final void applyAllConfigs() {
+	private static void applyAllConfigs() {
 		Main.applyAllConfigs(new ResourceBundleSetter());
 	}
 
@@ -95,7 +95,7 @@ public final class Main {
 	 * @param setter
 	 *            the setter
 	 */
-	private static final void applyAllConfigs(Setter setter) {
+	private static void applyAllConfigs(Setter setter) {
 		ReflectUtils.getClasses(GameConf.SEARCH_PATH, Configurable.class).forEach(c -> setter.setAttributes(c));
 	}
 }

@@ -22,7 +22,7 @@ import rekit.util.ReflectUtils.LoadMe;
  */
 @LoadMe
 @SetterInfo(res = "conf/bluepill")
-public class BluePill extends Pickup implements Configurable {
+public final class BluePill extends Pickup implements Configurable {
 	/**
 	 * The size of the pickup.
 	 */

@@ -44,7 +44,7 @@ public enum Direction {
 	 *            the angle
 	 *
 	 */
-	private Direction(Vec vec, double angle) {
+	Direction(Vec vec, double angle) {
 		this.vec = vec;
 		this.angle = angle;
 	}
@@ -109,6 +109,11 @@ public enum Direction {
 		return Direction.values()[(int) (GameConf.PRNG.nextDouble() * Direction.values().length)];
 	}
 
+	/**
+	 * Get the opposite direction.
+	 * 
+	 * @return the opposite direction
+	 */
 	public Direction getOpposite() {
 		return Direction.getOpposite(this);
 	}

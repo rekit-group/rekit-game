@@ -187,7 +187,7 @@ public final class Rocket extends Enemy implements Configurable {
 		return inst;
 	}
 
-	public float getXSignum() {
+	private int getXSignum() {
 		return (this.direction == Direction.RIGHT) ? 1 : -1;
 	}
 

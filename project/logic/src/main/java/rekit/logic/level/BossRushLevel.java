@@ -17,6 +17,9 @@ public final class BossRushLevel extends Level {
 	private final List<Boss> bosses;
 	private int next;
 
+	/**
+	 * Create the level.
+	 */
 	public BossRushLevel() {
 		super(BossRushLevel.getData());
 		this.bosses = new ArrayList<>();

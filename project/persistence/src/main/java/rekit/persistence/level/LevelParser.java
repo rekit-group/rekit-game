@@ -25,7 +25,7 @@ public final class LevelParser {
 	 * @param manager
 	 *            the manager of structure
 	 */
-	public static final void parseLevel(String input, LevelDefinition manager) {
+	public static void parseLevel(String input, LevelDefinition manager) {
 		new LevelParser(input).parse(manager);
 	}
 

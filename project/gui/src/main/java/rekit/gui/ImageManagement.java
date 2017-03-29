@@ -31,7 +31,7 @@ public final class ImageManagement {
 	/**
 	 * The cache.
 	 */
-	private final static Map<String, BufferedImage> CACHE = new HashMap<>();
+	private static final Map<String, BufferedImage> CACHE = new HashMap<>();
 
 	/**
 	 * The loader Object for the Resource loading.
@@ -46,7 +46,7 @@ public final class ImageManagement {
 	 *
 	 * @return the Image
 	 */
-	public static final Image get(String src) {
+	public static Image get(String src) {
 		if (!ImageManagement.CACHE.containsKey(src)) {
 			synchronized (ImageManagement.class) {
 				if (!ImageManagement.CACHE.containsKey(src)) {
@@ -70,7 +70,7 @@ public final class ImageManagement {
 	 *
 	 * @return the Image
 	 */
-	public static final AbstractImage getAsAbstractImage(String src) {
+	public static AbstractImage getAsAbstractImage(String src) {
 		BufferedImage image = (BufferedImage) ImageManagement.get(src);
 		if (image == null) {
 			return null;
@@ -107,7 +107,7 @@ public final class ImageManagement {
 	 *            the input image
 	 * @return the converted image
 	 */
-	public static final Image toImage(AbstractImage in) {
+	public static Image toImage(AbstractImage in) {
 		if (in == null) {
 			return null;
 		}
@@ -131,7 +131,7 @@ public final class ImageManagement {
 	 *            the image
 	 * @return the original image or the converted image
 	 */
-	private static final BufferedImage convertToRGB(BufferedImage image) {
+	private static BufferedImage convertToRGB(BufferedImage image) {
 		BufferedImage res = null;
 		try {
 			if (image.getType() == BufferedImage.TYPE_INT_RGB || image.getType() == BufferedImage.TYPE_INT_ARGB) {

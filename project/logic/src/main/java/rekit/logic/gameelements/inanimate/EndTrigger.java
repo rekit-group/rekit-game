@@ -140,7 +140,7 @@ public final class EndTrigger extends InanimateTrigger implements Configurable {
 		 * @param color
 		 *            the color
 		 */
-		public Portal(Vec pos, Vec size, Vec amplitude, Vec frequency, Vec phase, RGBAColor color) {
+		Portal(Vec pos, Vec size, Vec amplitude, Vec frequency, Vec phase, RGBAColor color) {
 			super(pos, new Vec(), size, Team.TRIGGER);
 			this.amplitude = amplitude;
 			this.frequency = frequency;
@@ -205,7 +205,7 @@ public final class EndTrigger extends InanimateTrigger implements Configurable {
 	 *
 	 * @return the prototype
 	 */
-	public synchronized static Inanimate getPrototype() {
+	public static synchronized Inanimate getPrototype() {
 		if (EndTrigger.instance == null) {
 			EndTrigger.instance = new EndTrigger(new Vec(), new Vec(1.5f, GameConf.GRID_H));
 		}

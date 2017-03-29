@@ -178,6 +178,12 @@ public interface IScene {
 	 */
 	void setPause(boolean pause);
 
+	/**
+	 * This method indicates whether the scene encapsulates a level.
+	 * 
+	 * @return {@code true} if this scene encapsulates a level, {@code false}
+	 *         otherwise
+	 */
 	default boolean isLevelScene() {
 		return false;
 	}

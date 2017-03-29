@@ -74,8 +74,10 @@ public final class Frame {
 		case LEFT:
 			// In case we want the left border: take lowest x
 			return this.upperLeftAnchor.x > this.bottomRightAnchor.x ? this.bottomRightAnchor.x : this.upperLeftAnchor.x;
+		default:
+			return -1;
 		}
-		return -1;
+
 	}
 
 	@Override

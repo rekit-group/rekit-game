@@ -20,6 +20,13 @@ import rekit.primitives.operable.OpProgress;
 import rekit.primitives.time.Timer;
 import rekit.util.ReflectUtils.LoadMe;
 
+/**
+ * This class realizes a Enemy called Stacker.<br>
+ * This enemy contains out of 3 faces which can take damage to the player.
+ *
+ * @author Angelo Aracri
+ *
+ */
 @LoadMe
 @SetterInfo(res = "conf/stacker")
 public final class Stacker extends Enemy implements Configurable {
@@ -52,7 +59,7 @@ public final class Stacker extends Enemy implements Configurable {
 		super();
 	}
 
-	public Stacker(Vec startPos) {
+	private Stacker(Vec startPos) {
 		// We dont need vel and size yet
 		super(startPos, new Vec(), new Vec());
 
@@ -93,7 +100,7 @@ public final class Stacker extends Enemy implements Configurable {
 		return new Stacker(startPos);
 	}
 
-	private class StackerElement extends Enemy {
+	private final class StackerElement extends Enemy {
 
 		private Vec relPos;
 		private final int offset;

@@ -199,6 +199,8 @@ public abstract class Entity extends GameElement {
 			// stop velocity in y dimension
 			this.setVel(this.getVel().setY(0));
 			break;
+		default:
+			throw new Error();
 		}
 
 		// resetting lastPos

@@ -21,10 +21,16 @@ import rekit.primitives.geometry.Vec;
  * @author Angelo Aracri
  * @version 1.0
  */
-public class BossSetting {
+class BossSetting {
 	private final Level level;
 
-	public BossSetting(Level level) {
+	/**
+	 * Create the BossSetting-Container.
+	 *
+	 * @param level
+	 *            the level
+	 */
+	BossSetting(Level level) {
 		this.level = level;
 	}
 

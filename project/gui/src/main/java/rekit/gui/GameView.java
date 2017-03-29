@@ -100,7 +100,7 @@ class GameView implements View {
 	 * @param model
 	 *            the model
 	 */
-	public GameView(Model model) {
+	GameView(Model model) {
 		this.model = model;
 		// Create window
 		this.frame = new JFrame(GameConf.NAME + " (" + GameConf.VERSION + ")");
@@ -133,12 +133,11 @@ class GameView implements View {
 	 * @param frame
 	 *            the frame
 	 */
-	private final void center(Frame frame) {
+	private void center(Frame frame) {
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 		int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
 		int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
 		frame.setLocation(x, y);
-
 	}
 
 	/**

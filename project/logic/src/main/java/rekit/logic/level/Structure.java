@@ -52,6 +52,14 @@ public class Structure {
 
 	private LevelDefinition definition;
 
+	/**
+	 * Create a new Structure by level definition and structure lines.
+	 * 
+	 * @param definition
+	 *            the definition
+	 * @param lines
+	 *            the lines for the structure
+	 */
 	public Structure(LevelDefinition definition, String[][] lines) {
 		this.definition = definition;
 		this.structure = new String[lines.length][];

@@ -26,7 +26,8 @@ public final class RGBAColorParser implements Parser {
 
 		Pattern patternRGB = Pattern.compile("([0-9]+),([0-9]+),([0-9]+)");
 		Matcher matcherRGB = patternRGB.matcher(definition);
-		boolean rgba = matcherRGBA.matches(), rgb = matcherRGB.matches();
+		boolean rgba = matcherRGBA.matches();
+		boolean rgb = matcherRGB.matches();
 		if (!rgba && !rgb) {
 			Parser.LOGGER.error(definition + " is not a RGB(A) color!");
 			return false;

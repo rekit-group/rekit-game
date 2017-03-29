@@ -97,12 +97,9 @@ public final class RektKiller extends Enemy {
 		// calculate size dependent Polygon for spikes
 		this.spikePolygon = new Polygon(new Vec(),
 				new Vec[] { //
-						new Vec(0.5f * ((this.getSize().x * 0.8f) / 3f), -(this.getSize().y * 0.8f) / 3f),
-						new Vec(1.0f * ((this.getSize().x * 0.8f) / 3f), 0),
-						new Vec(1.5f * ((this.getSize().x * 0.8f) / 3f), -(this.getSize().y * 0.8f) / 3f),
-						new Vec(2.0f * ((this.getSize().x * 0.8f) / 3f), 0),
-						new Vec(2.5f * ((this.getSize().x * 0.8f) / 3f), -(this.getSize().y * 0.8f) / 3f),
-						new Vec(3.0f * ((this.getSize().x * 0.8f) / 3f), 0), //
+						new Vec(0.5f * ((this.getSize().x * 0.8f) / 3f), -(this.getSize().y * 0.8f) / 3f), new Vec(1.0f * ((this.getSize().x * 0.8f) / 3f), 0),
+						new Vec(1.5f * ((this.getSize().x * 0.8f) / 3f), -(this.getSize().y * 0.8f) / 3f), new Vec(2.0f * ((this.getSize().x * 0.8f) / 3f), 0),
+						new Vec(2.5f * ((this.getSize().x * 0.8f) / 3f), -(this.getSize().y * 0.8f) / 3f), new Vec(3.0f * ((this.getSize().x * 0.8f) / 3f), 0), //
 						new Vec() //
 				});
 	}
@@ -184,9 +181,8 @@ public final class RektKiller extends Enemy {
 				}
 				// kill the enemy
 				this.addDamage(1);
-			}
-			// Touched dangerous side
-			else {
+			} else {
+				// Touched dangerous side
 				// Give player damage
 				element.addDamage(1);
 				// Kill the enemy itself

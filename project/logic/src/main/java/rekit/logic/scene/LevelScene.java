@@ -93,12 +93,20 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 	 * @param model
 	 *            the model
 	 * @param level
-	 *            the level
+	 *            the leveldefinition
 	 */
 	public LevelScene(GameModel model, LevelDefinition level) {
 		this(model, new Level(level));
 	}
 
+	/**
+	 * Create a new LevelScene.
+	 *
+	 * @param model
+	 *            the model
+	 * @param level
+	 *            the level
+	 */
 	public LevelScene(GameModel model, Level level) {
 		super(model);
 		this.level = level;

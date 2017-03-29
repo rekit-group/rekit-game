@@ -131,10 +131,6 @@ public abstract class GameElement implements Collidable {
 		this.setPos(startPos);
 	}
 
-	public void init() {
-		this.deleteMe = false;
-	}
-
 	/**
 	 * <p>
 	 * Template method that will be called periodically after being added to a
@@ -488,7 +484,7 @@ public abstract class GameElement implements Collidable {
 	 * @param e2lastPos
 	 *            the last pos of e2
 	 */
-	private final void checkCollision(GameElement e1, GameElement e2, Vec e1lastPos, Vec e2lastPos) {
+	private void checkCollision(GameElement e1, GameElement e2, Vec e1lastPos, Vec e2lastPos) {
 		// Return if one of the elements is about to be deleted.
 		if (e1.getDeleteMe() || e2.getDeleteMe()) {
 			return;
@@ -538,8 +534,8 @@ public abstract class GameElement implements Collidable {
 	 * @param e2lastYFrame
 	 *            e2 last y-frame
 	 */
-	private final void simulateCollision(Frame e1lastXFrame, Frame e2lastXFrame, GameElement e1, GameElement e2, Vec e1lastPos, Vec e2lastPos,
-			Frame e1lastYFrame, Frame e2lastYFrame) {
+	private void simulateCollision(Frame e1lastXFrame, Frame e2lastXFrame, GameElement e1, GameElement e2, Vec e1lastPos, Vec e2lastPos, Frame e1lastYFrame,
+			Frame e2lastYFrame) {
 		// If they still collide with the old x positions:
 		// it must be because of the y position
 		if (e1lastXFrame.collidesWith(e2lastXFrame)) {

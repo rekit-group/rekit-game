@@ -118,14 +118,14 @@ public final class GameElementFactory {
 	/**
 	 * Initialize GameElementFactory.
 	 */
-	public static final synchronized void initialize() {
+	public static synchronized void initialize() {
 		ThreadUtils.runDaemon("GameElementFactory", GameElementFactory::load);
 	}
 
 	/**
 	 * Load the factory.
 	 */
-	private final synchronized static void load() {
+	private static synchronized void load() {
 		if (GameElementFactory.loaded) {
 			return;
 		}
@@ -156,7 +156,7 @@ public final class GameElementFactory {
 	 * Load all groups.
 	 */
 	@SuppressWarnings("unchecked")
-	private static final void loadGroups() {
+	private static void loadGroups() {
 		for (Class<?> group : ReflectUtils.getClassesAnnotated(GameConf.SEARCH_PATH, Group.class)) {
 			try {
 				Group annotation = group.getAnnotation(Group.class);
@@ -179,7 +179,7 @@ public final class GameElementFactory {
 	 * @param name
 	 *            the name of the group
 	 */
-	public static final synchronized void createGroup(Set<? extends GameElement> prototypes, String name) {
+	public static synchronized void createGroup(Set<? extends GameElement> prototypes, String name) {
 		// Put Ts in collection and in separate array
 		GameElement[] collection = new GameElement[prototypes.size()];
 		int i = 0;

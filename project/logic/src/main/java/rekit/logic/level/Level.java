@@ -28,6 +28,12 @@ public class Level implements Comparable<Level> {
 
 	private final BossSetting bosssetting;
 
+	/**
+	 * Create a level by its definition.
+	 *
+	 * @param definition
+	 *            the definition
+	 */
 	public Level(LevelDefinition definition) {
 		if (definition == null) {
 			throw new IllegalArgumentException("LevelDefinition invalid");
@@ -37,6 +43,9 @@ public class Level implements Comparable<Level> {
 		this.bosssetting = new BossSetting(this);
 	}
 
+	/**
+	 * Reset the level.
+	 */
 	public final void reset() {
 		this.currentStructureId = -1;
 		this.unitsBuilt = 0;
@@ -53,13 +62,18 @@ public class Level implements Comparable<Level> {
 	 *            the lowest x position that must still be generated at.
 	 */
 	public void generate(int max) {
-		while (this.generatedUntil < max && this.hasNext()) {
+		while (this.generatedUntil < max && this.hasNextStructure()) {
 			// build structure
 			this.generatedUntil += this.next().build(this.generatedUntil + 1, this.definition.isSettingSet(SettingKey.AUTO_COIN_SPAWN));
 		}
 	}
 
-	public Structure next() {
+	/**
+	 * Get next structure.
+	 *
+	 * @return the next structure
+	 */
+	protected Structure next() {
 		// if this is level start: build initial Structure
 		if (this.unitsBuilt == 0) {
 			return this.getInitialStructure();
@@ -219,14 +233,31 @@ public class Level implements Comparable<Level> {
 		return this.definition.isSettingSet(SettingKey.DO_GAPS) ? this.random.nextInt(2) + 1 : 0;
 	}
 
-	public boolean hasNext() {
+	/**
+	 * Indicates whether the level has more structures to build.
+	 *
+	 * @return {@code true} if more structures can be build.
+	 */
+	private boolean hasNextStructure() {
 		return this.definition.isSettingSet(SettingKey.INFINITE) || this.currentStructureId < this.definition.amountOfStructures();
 	}
 
-	public void addUnitsBuild(int width) {
+	/**
+	 * Add amount of units which were build outside.
+	 * 
+	 * @param width
+	 *            the width of the built structures
+	 * @see BossSetting
+	 */
+	void addUnitsBuild(int width) {
 		this.unitsBuilt += width;
 	}
 
+	/**
+	 * Get the level definition.
+	 * 
+	 * @return the level definition
+	 */
 	public LevelDefinition getDefinition() {
 		return this.definition;
 	}

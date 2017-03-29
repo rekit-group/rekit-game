@@ -87,7 +87,7 @@ class GameGridImpl extends GameGrid {
 	 */
 	private void drawCircleImpl(Vec pos, Vec size, Color col) {
 		this.graphics.setColor(col);
-		Ellipse2D.Float circle = new Ellipse2D.Float( //
+		Ellipse2D.Float circle = new Ellipse2D.Float(//
 				(pos.x - size.x / 2f), //
 				(pos.y - size.y / 2f), //
 				size.x, size.y);
@@ -108,7 +108,7 @@ class GameGridImpl extends GameGrid {
 	 */
 	private void drawRectangleImpl(Vec pos, Vec size, Color col) {
 		this.graphics.setColor(col);
-		this.graphics.fillRect( //
+		this.graphics.fillRect(//
 				(int) (pos.x - size.x / 2f), //
 				(int) (pos.y - size.y / 2f), //
 				(int) size.x, (int) size.y);
@@ -132,7 +132,7 @@ class GameGridImpl extends GameGrid {
 	 */
 	private void drawRoundRectangleImpl(Vec pos, Vec size, Color col, int arcWidth, int arcHeight) {
 		this.graphics.setColor(col);
-		this.graphics.fillRoundRect( //
+		this.graphics.fillRoundRect(//
 				(int) (pos.x - size.x / 2f), // X
 				(int) (pos.y - size.y / 2f), // Y
 				(int) size.x, (int) size.y, // Size
@@ -224,8 +224,10 @@ class GameGridImpl extends GameGrid {
 		this.graphics.setFont(font);
 		FontMetrics metrics = this.graphics.getFontMetrics(font);
 
-		float x = pos.x, y = pos.y;
-		float xAlign = options.getAlignment().x, yAlign = options.getAlignment().y;
+		float x = pos.x;
+		float y = pos.y;
+		float xAlign = options.getAlignment().x;
+		float yAlign = options.getAlignment().y;
 		for (String line : text.split("\n")) {
 			Dimension offset = this.getTextOffset(line, metrics);
 			this.graphics.drawString(line, //
@@ -387,7 +389,7 @@ class GameGridImpl extends GameGrid {
 	 *            the color
 	 * @return the converted color
 	 */
-	private final Color calcRGBA(RGBAColor color) {
+	private Color calcRGBA(RGBAColor color) {
 		return new Color(color.red, color.green, color.blue, color.alpha);
 
 	}

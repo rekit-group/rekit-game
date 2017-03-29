@@ -26,7 +26,7 @@ public final class ParticleSpawnerOptionParser implements Parser {
 		if (definition.matches("(" + ParticleSpawnerOptionParser.FLOAT_REGEX + ",){3}" + ParticleSpawnerOptionParser.FLOAT_REGEX)) {
 			// 4 Params
 			String[] floats = definition.split(",");
-			opt = new ParticleSpawnerOption( //
+			opt = new ParticleSpawnerOption(//
 					Float.parseFloat(floats[0]), Float.parseFloat(floats[1]), //
 					Float.parseFloat(floats[2]), Float.parseFloat(floats[3]));
 		} else if (definition.matches(ParticleSpawnerOptionParser.FLOAT_REGEX + "," + ParticleSpawnerOptionParser.FLOAT_REGEX)) {

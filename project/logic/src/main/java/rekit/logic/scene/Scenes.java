@@ -48,7 +48,7 @@ public enum Scenes {
 	 * @param sceneClass
 	 *            the scene class
 	 */
-	private Scenes(Class<? extends IScene> sceneClass) {
+	Scenes(Class<? extends IScene> sceneClass) {
 		this.sceneClass = sceneClass;
 		if (ConcurrentHelper.INSTANCES.put(this.sceneClass, this) != null) {
 			GameConf.GAME_LOGGER.warn("Multiple Scenes for class " + this.sceneClass);

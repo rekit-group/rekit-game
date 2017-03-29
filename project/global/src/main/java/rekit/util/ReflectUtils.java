@@ -43,7 +43,7 @@ public final class ReflectUtils {
 	 * @return a set of instances of the found classes
 	 */
 	@SuppressWarnings("unchecked")
-	public static final <T> Set<T> loadInstances(String searchPath, Class<T> type) {
+	public static <T> Set<T> loadInstances(String searchPath, Class<T> type) {
 		Set<T> objects = new HashSet<>();
 		for (Class<?> clazz : ReflectUtils.getClasses(searchPath, type)) {
 			if (Modifier.isAbstract(clazz.getModifiers()) || clazz.getAnnotation(LoadMe.class) == null) {
@@ -72,7 +72,7 @@ public final class ReflectUtils {
 	 *            the class-type
 	 * @return a set of the found classes
 	 */
-	public static final <T> Set<Class<? extends T>> getClasses(String searchPath, Class<T> type) {
+	public static <T> Set<Class<? extends T>> getClasses(String searchPath, Class<T> type) {
 		return new Reflections(searchPath).getSubTypesOf(type);
 	}
 
@@ -87,7 +87,7 @@ public final class ReflectUtils {
 	 *            the class annotation
 	 * @return a set of the found classes
 	 */
-	public static final Set<Class<?>> getClassesAnnotated(String searchPath, Class<? extends Annotation> annotation) {
+	public static Set<Class<?>> getClassesAnnotated(String searchPath, Class<? extends Annotation> annotation) {
 		return new Reflections(searchPath).getTypesAnnotatedWith(annotation, true);
 	}
 

@@ -154,8 +154,7 @@ public class GameModel implements Model {
 			ILevelScene curLevelScene = (ILevelScene) this.curScene;
 			if (curLevelScene.hasEnded()) {
 				this.state = GameState.INGAME_END;
-			}
-			else {
+			} else {
 				this.state = curLevelScene.isPaused() ? GameState.INGAME_PAUSED : GameState.INGAME;
 			}
 		}

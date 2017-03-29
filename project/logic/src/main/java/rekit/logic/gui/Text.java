@@ -75,7 +75,7 @@ public final class Text extends GuiElement {
 	}
 
 	@Override
-	public final void internalRender(GameGrid f) {
+	public void internalRender(GameGrid f) {
 		f.drawText(this.getPos(), this.text, this.getOptions(), false);
 	}
 }

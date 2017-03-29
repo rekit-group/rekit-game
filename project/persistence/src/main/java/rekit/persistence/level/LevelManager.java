@@ -47,9 +47,17 @@ public final class LevelManager {
 	 * All known levels (ID -> Level).
 	 */
 	private static final Map<String, LevelDefinition> LEVEL_MAP = new HashMap<>();
+	/**
+	 * The default group name of unknown arcade levels.
+	 */
 	public static final String GROUP_UNKNOWN = "Unknown";
-
+	/**
+	 * The one and only infinite level.
+	 */
 	private static LevelDefinition INFINITE = null;
+	/**
+	 * The one and only level of the day.
+	 */
 	private static LevelDefinition LOTD = null;
 
 	/**
@@ -63,12 +71,12 @@ public final class LevelManager {
 	 */
 	private static boolean initialized = false;
 
-	private static int ARCADE_NUM = 0;
+	private static int arcadeNum = 0;
 
 	/**
 	 * Load levels.
 	 */
-	public static final synchronized void init() {
+	public static synchronized void init() {
 		if (LevelManager.initialized) {
 			return;
 		}
@@ -93,9 +101,8 @@ public final class LevelManager {
 		LevelManager.loadInfiniteLevels();
 
 		numbered.sorted((r1, r2) -> {
-			String n1 = r1.getFilename(), n2 = r2.getFilename();
-			n1 = n1.substring("level_".length()).split("\\.")[0];
-			n2 = n2.substring("level_".length()).split("\\.")[0];
+			String n1 = r1.getFilename().substring("level_".length()).split("\\.")[0];
+			String n2 = r2.getFilename().substring("level_".length()).split("\\.")[0];
 			return Integer.compare(Integer.parseInt(n1), Integer.parseInt(n2));
 		}).forEach(LevelManager::addArcadeLevel);
 		notNumbered.sorted((r1, r2) -> r1.toString().compareToIgnoreCase(r2.toString())).forEach(LevelManager::addArcadeLevel);
@@ -104,11 +111,11 @@ public final class LevelManager {
 
 	}
 
-	private static final void loadCustomLevels() {
+	private static void loadCustomLevels() {
 		LevelManager.loadCustomLevels(DirFileDefinitions.LEVEL_DIR.listFiles(), LevelManager.GROUP_UNKNOWN);
 	}
 
-	private static final void loadCustomLevels(File[] dir, String group) {
+	private static void loadCustomLevels(File[] dir, String group) {
 		if (dir == null) {
 			return;
 		}
@@ -153,7 +160,7 @@ public final class LevelManager {
 	private static void addArcadeLevel(Resource as, String group) {
 		LevelDefinition def = null;
 		try {
-			def = new LevelDefinition(as.getInputStream(), ++LevelManager.ARCADE_NUM);
+			def = new LevelDefinition(as.getInputStream(), ++LevelManager.arcadeNum);
 		} catch (Exception e) {
 			GameConf.GAME_LOGGER.error(e.getMessage());
 			return;
@@ -173,26 +180,27 @@ public final class LevelManager {
 	 *             will thrown if Resources are not accessible
 	 * @throws UnexpectedTokenException
 	 *             will thrown if syntax of Resources are wrong
+	 * @return the id of the level or {@code null} if error occurred
 	 */
-	public static synchronized void addArcadeLevel(InputStream levelStructure) throws UnexpectedTokenException, IOException {
+	public static synchronized String addArcadeLevel(InputStream levelStructure) throws UnexpectedTokenException, IOException {
 		if (!LevelManager.initialized) {
-			return;
+			return null;
 		}
-		LevelManager.addArcadeLevel(levelStructure, LevelManager.GROUP_UNKNOWN);
+		return LevelManager.addArcadeLevel(levelStructure, LevelManager.GROUP_UNKNOWN);
 	}
 
-	private static void addArcadeLevel(InputStream is, String group) {
+	private static String addArcadeLevel(InputStream is, String group) {
 		LevelDefinition def = null;
 		try {
-			def = new LevelDefinition(is, ++LevelManager.ARCADE_NUM);
+			def = new LevelDefinition(is, ++LevelManager.arcadeNum);
 		} catch (Exception e) {
 			GameConf.GAME_LOGGER.error(e.getMessage());
-			return;
+			return null;
 		}
 		if (!def.isSettingSet(SettingKey.GROUP)) {
 			def.setSetting(SettingKey.GROUP, group);
 		}
-		LevelManager.addLevel(def);
+		return LevelManager.addLevel(def);
 	}
 
 	/**
@@ -230,6 +238,11 @@ public final class LevelManager {
 		return LevelManager.LEVEL_MAP.get(id);
 	}
 
+	/**
+	 * Get a map of arcade levels (grouped).
+	 *
+	 * @return a grouped (map) of arcade levels
+	 */
 	public static synchronized Map<String, List<String>> getArcadeLevelGroups() {
 		Map<String, List<String>> groups = new TreeMap<>();
 		for (Entry<String, LevelDefinition> lv : LevelManager.LEVEL_MAP.entrySet()) {

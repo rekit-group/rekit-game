@@ -60,19 +60,19 @@ public class InanimateFloor extends Inanimate {
 	 * Holds the angle for the {@link ParticleSpawner} that is used when an
 	 * {@link Entity} walks fast to the right on the {@link InanimateFloor}.
 	 */
-	private static final ParticleSpawnerOption dustParticleAngleLeft;
+	private static final ParticleSpawnerOption DUST_PARTICLE_ANGLE_LEFT;
 
 	/**
 	 * Holds the angle for the {@link ParticleSpawner} that is used when an
 	 * {@link Entity} walks fast to the left on the {@link InanimateFloor}.
 	 */
-	private static final ParticleSpawnerOption dustParticleAngleRight;
+	private static final ParticleSpawnerOption DUST_PARTICLE_ANGLE_RIGHT;
 
 	/**
 	 * Holds the angle for the {@link ParticleSpawner} that is used when an
 	 * {@link Entity} lands on the {@link InanimateFloor}.
 	 */
-	private static final ParticleSpawnerOption dustParticleAngleTop;
+	private static final ParticleSpawnerOption DUST_PARTICLE_ANGLE_TOP;
 	// TODO: Config file.
 	static {
 		// define color range for blocks layers
@@ -103,9 +103,9 @@ public class InanimateFloor extends Inanimate {
 		InanimateFloor.dustParticles.colorG = new ParticleSpawnerOption(InanimateFloor.layerCols[0].green);
 		InanimateFloor.dustParticles.colorB = new ParticleSpawnerOption(InanimateFloor.layerCols[0].blue);
 		InanimateFloor.dustParticles.colorA = new ParticleSpawnerOption(255);
-		dustParticleAngleLeft = new ParticleSpawnerOption((float) ((7 / 4f) * Math.PI), (float) ((5 / 4f) * Math.PI), -(float) ((1 / 4f) * Math.PI), 0);
-		dustParticleAngleRight = new ParticleSpawnerOption((float) ((1 / 4f) * Math.PI), (float) ((3 / 4f) * Math.PI), 0, (float) ((1 / 4f) * Math.PI));
-		dustParticleAngleTop = new ParticleSpawnerOption((float) (-(1 / 2f) * Math.PI), (float) ((1 / 2f) * Math.PI), 0, 0);
+		DUST_PARTICLE_ANGLE_LEFT = new ParticleSpawnerOption((float) ((7 / 4f) * Math.PI), (float) ((5 / 4f) * Math.PI), -(float) ((1 / 4f) * Math.PI), 0);
+		DUST_PARTICLE_ANGLE_RIGHT = new ParticleSpawnerOption((float) ((1 / 4f) * Math.PI), (float) ((3 / 4f) * Math.PI), 0, (float) ((1 / 4f) * Math.PI));
+		DUST_PARTICLE_ANGLE_TOP = new ParticleSpawnerOption((float) (-(1 / 2f) * Math.PI), (float) ((1 / 2f) * Math.PI), 0, 0);
 		InanimateFloor.dustParticles.amountMin = 8;
 		InanimateFloor.dustParticles.amountMax = 15;
 
@@ -176,7 +176,7 @@ public class InanimateFloor extends Inanimate {
 		 * @param parentPos
 		 *            the position of the parenting {@link InanimateFloor}.
 		 */
-		public GrassStraw(Vec parentPos) {
+		GrassStraw(Vec parentPos) {
 			this.pos = parentPos.add(new Vec(GameConf.PRNG.nextFloat() * 0.9f - 0.45f, -0.3f - GameConf.PRNG.nextFloat() * 0.4f));
 			this.size = new Vec(0.06f, 0.3f + GameConf.PRNG.nextFloat() * 0.4f);
 			this.col = InanimateFloor.layerCols[GameConf.PRNG.nextInt(InanimateFloor.layerCols.length)];
@@ -210,16 +210,16 @@ public class InanimateFloor extends Inanimate {
 	public void reactToCollision(GameElement element, Direction dir) {
 
 		if (Math.abs(element.getVel().y) > 6) {
-			InanimateFloor.dustParticles.angle = InanimateFloor.dustParticleAngleTop;
+			InanimateFloor.dustParticles.angle = InanimateFloor.DUST_PARTICLE_ANGLE_TOP;
 			InanimateFloor.dustParticles.spawn(this.getScene(), this.getPos().addY(-this.getSize().y / 2));
-		}
-		// if strong velocity in x direction
-		else if (Math.abs(element.getVel().x) > 5) {
+		} else if (Math.abs(element.getVel().x) > 5) {
+			// if strong velocity in x direction
+
 			// if moving right
 			if (element.getVel().x > 0) {
-				InanimateFloor.dustParticles.angle = InanimateFloor.dustParticleAngleLeft;
+				InanimateFloor.dustParticles.angle = InanimateFloor.DUST_PARTICLE_ANGLE_LEFT;
 			} else {
-				InanimateFloor.dustParticles.angle = InanimateFloor.dustParticleAngleRight;
+				InanimateFloor.dustParticles.angle = InanimateFloor.DUST_PARTICLE_ANGLE_RIGHT;
 			}
 
 			Vec pos = this.getPos().addY(-this.getSize().y / 2).setX(element.getPos().x);

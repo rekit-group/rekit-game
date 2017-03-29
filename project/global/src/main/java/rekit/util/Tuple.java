@@ -33,7 +33,7 @@ public final class Tuple<T, U> {
 	 *            the second parameter
 	 * @return the tuple
 	 */
-	public static final <V, W> Tuple<V, W> create(V v, W w) {
+	public static <V, W> Tuple<V, W> create(V v, W w) {
 		return new Tuple<>(v, w);
 	}
 

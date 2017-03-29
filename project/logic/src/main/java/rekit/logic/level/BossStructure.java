@@ -178,7 +178,7 @@ public final class BossStructure extends Structure implements Configurable {
 	 * @param scene
 	 *            the scene
 	 */
-	private final void endAnimation(ILevelScene scene) {
+	private void endAnimation(ILevelScene scene) {
 		if (this.door == null) {
 			return;
 		}
@@ -186,13 +186,13 @@ public final class BossStructure extends Structure implements Configurable {
 		final Timer timer = new Timer(7000);
 
 		// Needed for animating camera movement
-		Progress cameraMover = new Progress( //
+		Progress cameraMover = new Progress(//
 				this.cameraTarget - GameConf.PLAYER_CAMERA_OFFSET, //
 				player.getPos().x - GameConf.PLAYER_CAMERA_OFFSET //
 		);
 
 		// Needed for animating door movement
-		Progress doorMover = new Progress( //
+		Progress doorMover = new Progress(//
 				this.door.getPos().y, //
 				this.door.getPos().y - 10 //
 		);
@@ -238,17 +238,15 @@ public final class BossStructure extends Structure implements Configurable {
 	 * @see #phase2(IScene, Timer, Progress)
 	 * @see #phase3(IScene, Timer, Progress)
 	 */
-	private final void phase(IScene scene, Timer timer, Progress doorMover, Progress cameraMover) {
-		// phase one: show explosions
+	private void phase(IScene scene, Timer timer, Progress doorMover, Progress cameraMover) {
 		if (timer.getProgress() < 0.4) {
+			// phase one: show explosions
 			this.phase1(scene);
-		}
-		// phase two: show fireworks
-		else if (timer.getProgress() < 0.9) {
+		} else if (timer.getProgress() < 0.9) {
+			// phase two: show fireworks
 			this.phase2(scene, timer, doorMover);
-		}
-		// phase three: re-move camera to player position
-		else {
+		} else {
+			// phase three: re-move camera to player position
 			this.phase3(scene, timer, cameraMover);
 		}
 	}
@@ -260,7 +258,7 @@ public final class BossStructure extends Structure implements Configurable {
 	 * @param scene
 	 *            the scene
 	 */
-	private final void phase1(IScene scene) {
+	private void phase1(IScene scene) {
 		if (GameConf.PRNG.nextDouble() > 0.9) {
 			Vec randPos = this.boss.getPos().add(new Vec((float) GameConf.PRNG.nextDouble() * 2 - 1, (float) GameConf.PRNG.nextDouble() * 2f - 1));
 			BossStructure.EXPLOSION_PARTICLES.spawn(scene, randPos);
@@ -278,7 +276,7 @@ public final class BossStructure extends Structure implements Configurable {
 	 * @param doorMover
 	 *            the door mover
 	 */
-	private final void phase2(IScene scene, Timer timer, Progress doorMover) {
+	private void phase2(IScene scene, Timer timer, Progress doorMover) {
 
 		// remove boss of last phase
 		scene.markForRemove(this.boss);
@@ -314,7 +312,7 @@ public final class BossStructure extends Structure implements Configurable {
 	 * @param cameraMover
 	 *            the camera mover
 	 */
-	private final void phase3(IScene scene, Timer timer, Progress cameraMover) {
+	private void phase3(IScene scene, Timer timer, Progress cameraMover) {
 		if (this.door != null) {
 			// remove door of last phase
 			this.door.destroy();

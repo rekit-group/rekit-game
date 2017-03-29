@@ -93,7 +93,7 @@ abstract class Scene implements CameraTarget, IScene {
 	 * @param model
 	 *            the model
 	 */
-	public Scene(GameModel model) {
+	Scene(GameModel model) {
 		this.model = model;
 	}
 
@@ -366,7 +366,7 @@ abstract class Scene implements CameraTarget, IScene {
 	 *            the zvalue
 	 * @return the index
 	 */
-	private static final int zToIndex(byte zvalue) {
+	private static int zToIndex(byte zvalue) {
 		return zvalue + 128;
 	}
 }

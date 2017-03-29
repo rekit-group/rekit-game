@@ -19,7 +19,7 @@ final class BossRushScene extends LevelScene {
 		super(model, BossRushScene.getBossRushLevel());
 	}
 
-	private static final Level getBossRushLevel() {
+	private static Level getBossRushLevel() {
 		BossRushLevel lv = new BossRushLevel();
 		LevelManager.addLevel(lv.getDefinition());
 		return lv;

@@ -87,7 +87,7 @@ public interface Model {
 	 * @author Dominik Fuchss
 	 *
 	 */
-	public enum GameState {
+	enum GameState {
 		/**
 		 * This state indicates that currently a menu is shown by the game.
 		 */

@@ -145,9 +145,8 @@ public final class RektSmasher extends Boss implements Configurable {
 				}
 				// kill the enemy
 				this.addDamage(1);
-			}
-			// Touched dangerous side
-			else {
+			} else {
+				// Touched dangerous side
 				// Give player damage
 				element.addDamage(1);
 			}

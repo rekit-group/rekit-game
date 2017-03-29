@@ -23,7 +23,7 @@ final class InputHelperImpl implements InputHelper {
 	/**
 	 * Instantiate the InputHelper.
 	 */
-	public InputHelperImpl() {
+	InputHelperImpl() {
 		ThreadUtils.runDaemon("InputHelper", this::run);
 	}
 
@@ -64,7 +64,7 @@ final class InputHelperImpl implements InputHelper {
 	 *            the keyCode of the just pressed key
 	 */
 	@Override
-	public final void press(int code) {
+	public void press(int code) {
 		try {
 			this.lock.lock();
 			this.pressedKeys.add(code);
@@ -81,7 +81,7 @@ final class InputHelperImpl implements InputHelper {
 	 *            the keyCode of the just released key
 	 */
 	@Override
-	public final void release(int code) {
+	public void release(int code) {
 		try {
 			this.lock.lock();
 			this.releasedKeys.add(code);
@@ -96,7 +96,7 @@ final class InputHelperImpl implements InputHelper {
 	 *
 	 * @return the Iterator for all pressed keyCodes
 	 */
-	public final Iterator<Integer> getPressedKeyIterator() {
+	public Iterator<Integer> getPressedKeyIterator() {
 		return this.pressedKeys.iterator();
 	}
 
@@ -105,7 +105,7 @@ final class InputHelperImpl implements InputHelper {
 	 *
 	 * @return the Iterator for all pressed keyCodes
 	 */
-	public final Iterator<Integer> getReleasedKeyIterator() {
+	public Iterator<Integer> getReleasedKeyIterator() {
 		return this.releasedKeys.iterator();
 	}
 

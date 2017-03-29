@@ -8,14 +8,29 @@ import java.util.Arrays;
 
 import rekit.config.GameConf;
 
-public class JarManager {
+/**
+ * This class handles the loading of additional Jars.
+ * 
+ * @author Dominik Fuchss
+ *
+ */
+public final class JarManager {
+	/**
+	 * Prevent instantiation.
+	 */
 	private JarManager() {
 	}
 
+	/**
+	 * The system class loader.
+	 */
 	public static final URLClassLoader SYSLOADER = (URLClassLoader) ClassLoader.getSystemClassLoader();
 	private static final Method ADD_METHOD = JarManager.getAddJarMethod();
 
-	public static final synchronized void loadMods() {
+	/**
+	 * Load all mods from {@link DirFileDefinitions#MODS_DIR}.
+	 */
+	public static synchronized void loadMods() {
 		if (JarManager.ADD_METHOD == null) {
 			return;
 		}
@@ -23,7 +38,7 @@ public class JarManager {
 
 	}
 
-	private static final void addJar(File jar) {
+	private static void addJar(File jar) {
 		try {
 			JarManager.ADD_METHOD.invoke(JarManager.SYSLOADER, (Object[]) new URL[] { jar.toURI().toURL() });
 			GameConf.GAME_LOGGER.info("Loaded Mod: " + jar.getName());

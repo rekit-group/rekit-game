@@ -27,7 +27,7 @@ public final class Triple<T, U, V> {
 	private final V v;
 
 	/**
-	 * Create a new Tuple.
+	 * Create a new Triple.
 	 *
 	 * @param <X>
 	 *            the type of the first parameter
@@ -35,7 +35,7 @@ public final class Triple<T, U, V> {
 	 *            the type of the second parameter
 	 * @param <Z>
 	 *            the type of the third parameter
-	 * 
+	 *
 	 * @param x
 	 *            the first parameter
 	 * @param y
@@ -44,12 +44,12 @@ public final class Triple<T, U, V> {
 	 *            the third parameter
 	 * @return the triple
 	 */
-	public static final <X, Y, Z> Triple<X, Y, Z> create(X x, Y y, Z z) {
+	public static <X, Y, Z> Triple<X, Y, Z> create(X x, Y y, Z z) {
 		return new Triple<>(x, y, z);
 	}
 
 	/**
-	 * Instantiate a new Tuple.
+	 * Instantiate a new Triple.
 	 *
 	 * @param t
 	 *            the first entry

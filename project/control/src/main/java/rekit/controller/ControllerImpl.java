@@ -61,7 +61,7 @@ final class ControllerImpl implements Observer, Controller, CommandSupervisor {
 	 * @param view
 	 *            the view
 	 */
-	public ControllerImpl(Model model, View view) {
+	ControllerImpl(Model model, View view) {
 		this.mpCmd = new HashMap<>();
 		this.helper = new InputHelperImpl();
 		this.model = model;

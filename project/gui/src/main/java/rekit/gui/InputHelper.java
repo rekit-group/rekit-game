@@ -12,37 +12,37 @@ public interface InputHelper {
 	/**
 	 * Key ID ArrowUp.
 	 */
-	public static final int ARROW_UP = KeyEvent.VK_UP;
+	int ARROW_UP = KeyEvent.VK_UP;
 
 	/**
 	 * Key ID ArrowUp.
 	 */
-	public static final int ARROW_DOWN = KeyEvent.VK_DOWN;
+	int ARROW_DOWN = KeyEvent.VK_DOWN;
 
 	/**
 	 * Key ID Arrow Left.
 	 */
-	public static final int ARROW_LEFT = KeyEvent.VK_LEFT;
+	int ARROW_LEFT = KeyEvent.VK_LEFT;
 
 	/**
 	 * Key ID Arrow Right.
 	 */
-	public static final int ARROW_RIGHT = KeyEvent.VK_RIGHT;
+	int ARROW_RIGHT = KeyEvent.VK_RIGHT;
 
 	/**
 	 * Key ID Space.
 	 */
-	public static final int SPACE = KeyEvent.VK_SPACE;
+	int SPACE = KeyEvent.VK_SPACE;
 
 	/**
 	 * Key ID Escape.
 	 */
-	public static final int ESCAPE = KeyEvent.VK_ESCAPE;
+	int ESCAPE = KeyEvent.VK_ESCAPE;
 
 	/**
 	 * Key ID Enter.
 	 */
-	public static final int ENTER = KeyEvent.VK_ENTER;
+	int ENTER = KeyEvent.VK_ENTER;
 
 	/**
 	 * Initialize the InputHelper.

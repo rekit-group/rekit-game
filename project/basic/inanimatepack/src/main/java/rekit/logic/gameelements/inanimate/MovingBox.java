@@ -26,7 +26,7 @@ public final class MovingBox extends DynamicInanimate {
 	/**
 	 * The movement speed.
 	 */
-	private final static float SPEED = 0.3f;
+	private static final float SPEED = 0.3f;
 	/**
 	 * The first movement anchor.
 	 */
@@ -102,8 +102,8 @@ public final class MovingBox extends DynamicInanimate {
 
 		// precalculate relative points for rocket polygon
 		Vec s = this.getSize();
-		this.rocketPolygonRelPts = new Vec[] { new Vec(s.x * (-2 / 16f), 0), new Vec(s.x * (-3 / 16f), s.y / 2f),
-				new Vec(s.x * (1 / 16f), s.y / 2f), new Vec() };
+		this.rocketPolygonRelPts = new Vec[] { new Vec(s.x * (-2 / 16f), 0), new Vec(s.x * (-3 / 16f), s.y / 2f), new Vec(s.x * (1 / 16f), s.y / 2f),
+				new Vec() };
 		this.sizeX16 = this.getSize().x / 16;
 
 		// set starting and ending point
