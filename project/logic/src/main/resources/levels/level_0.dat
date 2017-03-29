@@ -3,6 +3,7 @@
 #SETTING::doGaps->true
 #SETTING::infinite->false
 #SETTING::autoCoinSpawn->false
+#SETTING::group->Rekt_Killers
 
 #ALIAS::1->Inanimate
 #ALIAS::10->Coin

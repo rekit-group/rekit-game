@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Calendar;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +26,7 @@ import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -85,22 +85,19 @@ public final class LevelManager {
 	 */
 	private static void loadAllLevels() throws IOException {
 		PathMatchingResourcePatternResolver resolv = new PathMatchingResourcePatternResolver();
-		Resource[] unassigned = resolv.getResources("/levels/level*");
-		Resource[] assigned = resolv.getResources("/levels/*/level*");
-		Comparator<Resource> cmp = (c1, c2) -> c1.getFilename().compareToIgnoreCase(c2.getFilename());
-		Arrays.sort(unassigned, cmp);
-		Arrays.sort(assigned, cmp);
+		Resource[] res = resolv.getResources("/levels/level*");
+		Stream<Resource> numbered = Arrays.stream(res).filter(r -> r.getFilename().matches("level_\\d+\\.dat"));
+		Stream<Resource> notNumbered = Arrays.stream(res).filter(r -> !r.getFilename().matches("level_\\d+\\.dat"));
+
 		LevelManager.loadInfiniteLevels();
 
-		for (Resource un : unassigned) {
-			LevelManager.addArcadeLevel(un);
-		}
-
-		for (Resource as : assigned) {
-			String[] path = as.getFile().getAbsolutePath().split(File.separatorChar == '\\' ? "\\\\" : "/");
-			String group = path[path.length - 2];
-			LevelManager.addArcadeLevel(as, group);
-		}
+		numbered.sorted((r1, r2) -> {
+			String n1 = r1.getFilename(), n2 = r2.getFilename();
+			n1 = n1.substring("level_".length()).split("\\.")[0];
+			n2 = n2.substring("level_".length()).split("\\.")[0];
+			return Integer.compare(Integer.parseInt(n1), Integer.parseInt(n2));
+		}).forEach(LevelManager::addArcadeLevel);
+		notNumbered.sorted((r1, r2) -> r1.toString().compareToIgnoreCase(r2.toString())).forEach(LevelManager::addArcadeLevel);
 
 		LevelManager.loadCustomLevels();
 
