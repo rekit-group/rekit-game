@@ -31,6 +31,7 @@ import rekit.logic.gui.parallax.TriangulationLayer;
 import rekit.logic.level.Level;
 import rekit.persistence.level.DataKey;
 import rekit.persistence.level.LevelDefinition;
+import rekit.persistence.level.SettingKey;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.time.Timer;
 import rekit.util.CalcUtil;
@@ -181,7 +182,7 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 		// TODO not the proper place to do this????
 		// do this in an FinitLevelScene and InifinitLevelScene (not to current
 		// one a new one)
-		if (this.level.getDefinition().isSettingSet("infinite") || won) {
+		if (this.level.getDefinition().isSettingSet(SettingKey.INFINITE) || won) {
 			this.processScore();
 		}
 
@@ -205,7 +206,7 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 		MenuActionItem endBack;
 		MenuActionItem endExit = new MenuActionItem(this, "Exit to Desktop", () -> System.exit(0));
 
-		if (!this.level.getDefinition().isSettingSet("infinite") && won) {
+		if (!this.level.getDefinition().isSettingSet(SettingKey.INFINITE) && won) {
 			// TODO implement something like ArcadeLevelManager which also knows
 			// about finished
 			// arcade levels and has a nextLevel() method
@@ -216,7 +217,7 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 			this.endMenu.addItem(endRestart);
 		}
 
-		if (!this.level.getDefinition().isSettingSet("infinite")) {
+		if (!this.level.getDefinition().isSettingSet(SettingKey.INFINITE)) {
 			// TODO go directly to level selection
 			// maybe via an argument passed to MainMenueScene
 			endBack = new MenuActionItem(this, "Back to level selection", () -> this.getModel().switchScene(Scenes.MENU));

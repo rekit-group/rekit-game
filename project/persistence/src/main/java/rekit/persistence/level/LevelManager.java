@@ -47,6 +47,7 @@ public final class LevelManager {
 	 * All known levels (ID -> Level).
 	 */
 	private static final Map<String, LevelDefinition> LEVEL_MAP = new HashMap<>();
+	public static final String GROUP_UNKNOWN = "Unknown";
 
 	private static LevelDefinition INFINITE = null;
 	private static LevelDefinition LOTD = null;
@@ -107,7 +108,7 @@ public final class LevelManager {
 	}
 
 	private static final void loadCustomLevels() {
-		LevelManager.loadCustomLevels(DirFileDefinitions.LEVEL_DIR.listFiles(), LevelDefinition.GROUP_UNKNOWN);
+		LevelManager.loadCustomLevels(DirFileDefinitions.LEVEL_DIR.listFiles(), LevelManager.GROUP_UNKNOWN);
 	}
 
 	private static final void loadCustomLevels(File[] dir, String group) {
@@ -149,7 +150,7 @@ public final class LevelManager {
 	 *            the resource
 	 */
 	private static void addArcadeLevel(Resource level) {
-		LambdaUtil.invoke(() -> LevelManager.addArcadeLevel(level, LevelDefinition.GROUP_UNKNOWN));
+		LambdaUtil.invoke(() -> LevelManager.addArcadeLevel(level, LevelManager.GROUP_UNKNOWN));
 	}
 
 	private static void addArcadeLevel(Resource as, String group) {
@@ -160,8 +161,8 @@ public final class LevelManager {
 			GameConf.GAME_LOGGER.error(e.getMessage());
 			return;
 		}
-		if (!def.isSettingSet("group")) {
-			def.setSetting("group", group);
+		if (!def.isSettingSet(SettingKey.GROUP)) {
+			def.setSetting(SettingKey.GROUP, group);
 		}
 		LevelManager.addLevel(def);
 	}
@@ -180,7 +181,7 @@ public final class LevelManager {
 		if (!LevelManager.initialized) {
 			return;
 		}
-		LevelManager.addArcadeLevel(levelStructure, LevelDefinition.GROUP_UNKNOWN);
+		LevelManager.addArcadeLevel(levelStructure, LevelManager.GROUP_UNKNOWN);
 	}
 
 	private static void addArcadeLevel(InputStream is, String group) {
@@ -191,8 +192,8 @@ public final class LevelManager {
 			GameConf.GAME_LOGGER.error(e.getMessage());
 			return;
 		}
-		if (!def.isSettingSet("group")) {
-			def.setSetting("group", group);
+		if (!def.isSettingSet(SettingKey.GROUP)) {
+			def.setSetting(SettingKey.GROUP, group);
 		}
 		LevelManager.addLevel(def);
 	}
@@ -238,10 +239,10 @@ public final class LevelManager {
 			if (lv.getValue().getType() != Type.Arcade) {
 				continue;
 			}
-			if (!groups.containsKey(lv.getValue().getGroup())) {
-				groups.put(lv.getValue().getGroup(), new ArrayList<>());
+			if (!groups.containsKey(lv.getValue().getSetting(SettingKey.GROUP))) {
+				groups.put(lv.getValue().getSetting(SettingKey.GROUP), new ArrayList<>());
 			}
-			groups.get(lv.getValue().getGroup()).add(lv.getKey());
+			groups.get(lv.getValue().getSetting(SettingKey.GROUP)).add(lv.getKey());
 
 		}
 		for (List<String> lvs : groups.values()) {

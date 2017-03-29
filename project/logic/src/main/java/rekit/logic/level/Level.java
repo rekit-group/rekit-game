@@ -8,6 +8,7 @@ import rekit.logic.gameelements.inanimate.Inanimate;
 import rekit.logic.gameelements.inanimate.InanimateTrigger;
 import rekit.logic.gameelements.type.Enemy;
 import rekit.persistence.level.LevelDefinition;
+import rekit.persistence.level.SettingKey;
 
 /**
  *
@@ -54,7 +55,7 @@ public class Level implements Comparable<Level> {
 	public void generate(int max) {
 		while (this.generatedUntil < max && this.hasNext()) {
 			// build structure
-			this.generatedUntil += this.next().build(this.generatedUntil + 1, this.definition.isSettingSet("autoCoinSpawn"));
+			this.generatedUntil += this.next().build(this.generatedUntil + 1, this.definition.isSettingSet(SettingKey.AUTO_COIN_SPAWN));
 		}
 	}
 
@@ -68,7 +69,7 @@ public class Level implements Comparable<Level> {
 		this.currentStructureId++;
 		// if end of sequence reached: Determine if to repeat or end level
 		if (this.currentStructureId >= this.definition.amountOfStructures()) {
-			if (this.definition.isSettingSet("infinite")) {
+			if (this.definition.isSettingSet(SettingKey.INFINITE)) {
 				this.currentStructureId = 0;
 			} else {
 				return this.getEndStructure();
@@ -84,7 +85,7 @@ public class Level implements Comparable<Level> {
 			return boss;
 		}
 
-		if (this.definition.isSettingSet("shuffle")) {
+		if (this.definition.isSettingSet(SettingKey.SHUFFLE)) {
 			return this.nextShuffeled();
 		} else {
 			return this.nextInOrder();
@@ -215,11 +216,11 @@ public class Level implements Comparable<Level> {
 	 * @return the random gapWidth between 1 and 2.
 	 */
 	private int nextGapWidth() {
-		return this.definition.isSettingSet("doGaps") ? this.random.nextInt(2) + 1 : 0;
+		return this.definition.isSettingSet(SettingKey.DO_GAPS) ? this.random.nextInt(2) + 1 : 0;
 	}
 
 	public boolean hasNext() {
-		return this.definition.isSettingSet("infinite") || this.currentStructureId < this.definition.amountOfStructures();
+		return this.definition.isSettingSet(SettingKey.INFINITE) || this.currentStructureId < this.definition.amountOfStructures();
 	}
 
 	public void addUnitsBuild(int width) {

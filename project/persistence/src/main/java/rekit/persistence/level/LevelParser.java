@@ -159,8 +159,13 @@ public final class LevelParser {
 	private void parseSetting(LevelDefinition definition) {
 		this.readToken(TokenType.SETTING);
 		this.readToken(TokenType.DELIMITER);
+		Token tk = this.lookAhead;
 		String[] mapping = this.parseMapping();
-		definition.setSetting(mapping[0], mapping[1]);
+		SettingKey key = SettingKey.getByString(mapping[0]);
+		if (key == null) {
+			throw new UnexpectedTokenException(tk, "Unknown SettingKey");
+		}
+		definition.setSetting(key, mapping[1]);
 	}
 
 	/**

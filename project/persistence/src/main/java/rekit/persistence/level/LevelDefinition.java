@@ -92,8 +92,8 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 		if (this.type != Type.Arcade) {
 			name = this.type.toString().replace('_', ' ');
 		}
-		if (this.isSettingSet("name")) {
-			name = this.getSetting("name").replace('_', ' ');
+		if (this.isSettingSet(SettingKey.NAME)) {
+			name = this.getSetting(SettingKey.NAME).replace('_', ' ');
 		}
 		return (name == null ? this.getID() : name);
 	}
@@ -124,26 +124,26 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 
 	private SortedMap<String, String> settings = new TreeMap<>();
 
-	void setSetting(String key, String value) {
-		if (this.settings.put(key, value) != null) {
+	void setSetting(SettingKey key, String value) {
+		if (this.settings.put(key.getID(), value) != null) {
 			GameConf.GAME_LOGGER.warn("Multiple definitions (settings) for " + key);
 		}
 
 	}
 
-	public String getSetting(String key) {
-		return this.settings.get(key);
+	public String getSetting(SettingKey key) {
+		return this.settings.get(key.getID());
 	}
 
-	public boolean isSettingSet(String key) {
-		if (!this.settings.containsKey(key)) {
+	public boolean isSettingSet(SettingKey key) {
+		if (!this.settings.containsKey(key.getID())) {
 			return false;
 		}
-		String setting = this.settings.get(key);
+		String setting = this.settings.get(key.getID());
 		if (setting.toLowerCase(Locale.ENGLISH).matches("(true|false)")) {
 			return setting.equalsIgnoreCase("true");
 		}
-		return this.settings.get(key) != null;
+		return this.settings.get(key.getID()) != null;
 	}
 
 	private SortedMap<String, String> bossSettings = new TreeMap<>();
@@ -242,15 +242,6 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 	@Override
 	public int compareTo(LevelDefinition o) {
 		return 2 * this.type.compareTo(o.getType()) + Integer.compare(this.arcadeNum, o.getArcadeNum());
-	}
-
-	public static final String GROUP_UNKNOWN = "Unknown";
-
-	public String getGroup() {
-		if (this.type != Type.Arcade) {
-			return null;
-		}
-		return this.getSetting("group") == null ? LevelDefinition.GROUP_UNKNOWN : this.getSetting("group");
 	}
 
 }
