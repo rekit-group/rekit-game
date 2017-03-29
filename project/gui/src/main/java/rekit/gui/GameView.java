@@ -3,8 +3,10 @@ package rekit.gui;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
@@ -29,9 +31,7 @@ import rekit.logic.Model;
 import rekit.logic.gameelements.GameElement;
 import rekit.logic.gui.GuiElement;
 import rekit.primitives.geometry.Vec;
-import rekit.util.InputHelper;
 import rekit.util.ThreadUtils;
-import rekit.util.Utils;
 
 /**
  * Main class of the View. Manages the window and a canvas an periodically
@@ -109,14 +109,13 @@ class GameView implements View {
 
 		this.frame.setResizable(false);
 		this.frame.setSize(GameConf.PIXEL_W, GameConf.PIXEL_H);
-		Utils.center(this.frame);
+		this.center(this.frame);
 		this.frame.setLayout(new BorderLayout());
 
 		// Create and position a canvas
 		this.canvas = new Canvas();
 		this.canvas.setPreferredSize(new Dimension(GameConf.PIXEL_W, GameConf.PIXEL_H));
 		this.canvas.setIgnoreRepaint(true);
-		this.canvas.setBackground(Utils.calcRGBA(GameConf.GAME_BACKGROUD_COLOR));
 		this.frame.add(this.canvas, BorderLayout.CENTER);
 		this.frame.pack();
 
@@ -126,6 +125,20 @@ class GameView implements View {
 
 		// Create Graphic context
 		this.grid = new GameGridImpl();
+	}
+
+	/**
+	 * Center {@link Frame} relative to monitor.
+	 *
+	 * @param frame
+	 *            the frame
+	 */
+	private final void center(Frame frame) {
+		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+		int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
+		int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
+		frame.setLocation(x, y);
+
 	}
 
 	/**

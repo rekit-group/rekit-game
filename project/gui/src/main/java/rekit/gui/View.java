@@ -1,7 +1,6 @@
 package rekit.gui;
 
 import rekit.logic.Model;
-import rekit.util.InputHelper;
 
 /**
  * This Interface defines the View for the MVC.

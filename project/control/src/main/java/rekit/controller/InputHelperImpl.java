@@ -8,7 +8,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import rekit.config.GameConf;
-import rekit.util.InputHelper;
+import rekit.gui.InputHelper;
 import rekit.util.ThreadUtils;
 
 /**

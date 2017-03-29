@@ -111,7 +111,7 @@ public final class LevelManager {
 		if (dir == null) {
 			return;
 		}
-		Arrays.sort(dir, (f1, f2) -> f1.getName().toLowerCase().compareTo(f2.getName().toLowerCase()));
+		Arrays.sort(dir, (f1, f2) -> f1.getName().compareToIgnoreCase(f2.getName()));
 		for (File lv : dir) {
 			if (lv.exists() && lv.isDirectory()) {
 				LevelManager.loadCustomLevels(lv.listFiles(), lv.getName());

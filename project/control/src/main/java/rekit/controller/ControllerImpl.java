@@ -15,6 +15,7 @@ import rekit.controller.commands.MenuCommand;
 import rekit.controller.commands.MenuDirection;
 import rekit.controller.commands.PlayPauseCommand;
 import rekit.controller.commands.WalkCommand;
+import rekit.gui.InputHelper;
 import rekit.gui.View;
 import rekit.logic.IScene;
 import rekit.logic.Model;
@@ -25,7 +26,6 @@ import rekit.logic.filters.RandomMode;
 import rekit.logic.gameelements.entities.Entity;
 import rekit.logic.gui.menu.MenuItem;
 import rekit.primitives.geometry.Direction;
-import rekit.util.InputHelper;
 import rekit.util.Tuple;
 
 /**

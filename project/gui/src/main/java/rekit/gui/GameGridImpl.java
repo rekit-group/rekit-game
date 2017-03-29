@@ -23,7 +23,6 @@ import rekit.util.CalcUtil;
 import rekit.util.TextOptions;
 import rekit.util.Triple;
 import rekit.util.Tuple;
-import rekit.util.Utils;
 
 /**
  * This class represents a {@link GameGrid} of the {@link GameView}.
@@ -219,7 +218,7 @@ class GameGridImpl extends GameGrid {
 		// Set color to red and set font
 		RGBAColor in = options.getColor();
 		RGBAColor col = (!options.getUseFilter() || this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
-		this.graphics.setColor(Utils.calcRGBA(col));
+		this.graphics.setColor(this.calcRGBA(col));
 
 		Font font = new Font(options.getFont(), options.getFontOptions(), options.getHeight());
 		this.graphics.setFont(font);
@@ -276,7 +275,7 @@ class GameGridImpl extends GameGrid {
 	 */
 	public void setBackground(RGBAColor in) {
 		RGBAColor col = (this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
-		this.graphics.setColor(Utils.calcRGBA(col));
+		this.graphics.setColor(this.calcRGBA(col));
 		this.graphics.fillRect(0, 0, GameConf.PIXEL_W, GameConf.PIXEL_H);
 
 	}
@@ -309,7 +308,7 @@ class GameGridImpl extends GameGrid {
 			pixelArray[i + 1] = CalcUtil.units2pixel(unitArray[i + 1]);
 		}
 
-		this.drawPolygonImpl(pixelArray, Utils.calcRGBA(col), fill);
+		this.drawPolygonImpl(pixelArray, this.calcRGBA(col), fill);
 	}
 
 	@Override
@@ -343,7 +342,7 @@ class GameGridImpl extends GameGrid {
 		Iterator<Vec> it = pts.iterator();
 
 		Vec lastPt = calcPos.add(CalcUtil.units2pixel(it.next()));
-		this.graphics.setColor(Utils.calcRGBA(col));
+		this.graphics.setColor(this.calcRGBA(col));
 		this.graphics.setStroke(new BasicStroke(lineWidth));
 		while (it.hasNext()) {
 			Vec pt = calcPos.add(CalcUtil.units2pixel(it.next()));
@@ -356,7 +355,7 @@ class GameGridImpl extends GameGrid {
 		Vec calcPos = this.translate2D(pos, inGame);
 		Vec calcSize = inGame ? CalcUtil.units2pixel(size) : size;
 		RGBAColor col = (!usefilter || this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
-		return Triple.create(calcPos, calcSize, Utils.calcRGBA(col));
+		return Triple.create(calcPos, calcSize, this.calcRGBA(col));
 	}
 
 	/**
@@ -379,5 +378,17 @@ class GameGridImpl extends GameGrid {
 			newPos = newPos.addX(this.cameraOffset);
 		}
 		return newPos;
+	}
+
+	/**
+	 * Convert a {@link RGBAColor} to a {@link Color}.
+	 *
+	 * @param color
+	 *            the color
+	 * @return the converted color
+	 */
+	private final Color calcRGBA(RGBAColor color) {
+		return new Color(color.red, color.green, color.blue, color.alpha);
+
 	}
 }

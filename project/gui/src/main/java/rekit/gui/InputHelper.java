@@ -1,8 +1,6 @@
-package rekit.util;
+package rekit.gui;
 
 import java.awt.event.KeyEvent;
-
-import rekit.gui.View;
 
 /**
  * This interface establishes a Listener to Components of the View.<br>
