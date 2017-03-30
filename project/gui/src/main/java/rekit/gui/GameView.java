@@ -191,7 +191,8 @@ class GameView implements View {
 	private void update() {
 		while (this.frame.isVisible()) {
 			this.renderLoop();
-			ThreadUtils.sleep(GameConf.RENDER_DELTA);
+			Thread.yield();
+			// ThreadUtils.sleep(GameConf.RENDER_DELTA);
 		}
 	}
 

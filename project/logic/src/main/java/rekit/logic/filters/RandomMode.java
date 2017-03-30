@@ -5,6 +5,7 @@ import java.util.Arrays;
 import rekit.config.GameConf;
 import rekit.primitives.image.Filter;
 import rekit.primitives.image.RGBAColor;
+import rekit.util.ROContainer;
 import rekit.util.ReflectUtils.LoadMe;
 import rekit.util.ThreadUtils;
 
@@ -19,7 +20,7 @@ public final class RandomMode implements Filter {
 	/**
 	 * The one and only instance of {@link RandomMode}.
 	 */
-	public static final RandomMode INSTANCE = new RandomMode();
+	public static final ROContainer<RandomMode> INSTANCE = new ROContainer<>();
 
 	/**
 	 * The mapping for all colors.
@@ -35,6 +36,7 @@ public final class RandomMode implements Filter {
 	 */
 	private RandomMode() {
 		ThreadUtils.runDaemon(RandomMode.class.getSimpleName(), this::periodicallyReset);
+		RandomMode.INSTANCE.setE(this);
 	}
 
 	/**

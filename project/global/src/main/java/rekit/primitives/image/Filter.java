@@ -18,6 +18,23 @@ public interface Filter {
 	Set<Filter> ALL_FILTERS = ReflectUtils.loadInstances(GameConf.SEARCH_PATH, Filter.class);
 
 	/**
+	 * Search for filter instance by class.
+	 * 
+	 * @param filter
+	 *            the filter class
+	 * @return the filter or {@code null} if not found
+	 * @see #ALL_FILTERS
+	 */
+	static Filter get(Class<? extends Filter> filter) {
+		for (Filter f : Filter.ALL_FILTERS) {
+			if (f.getClass() == filter) {
+				return f;
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * This boolean indicates whether this filter can be applied pixel per pixel
 	 * (fast).
 	 *
@@ -64,5 +81,4 @@ public interface Filter {
 	default AbstractImage apply(final AbstractImage imageData) {
 		throw new UnsupportedOperationException("Not supported by " + this.getClass().getSimpleName());
 	}
-
 }
