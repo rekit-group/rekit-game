@@ -82,7 +82,7 @@ public final class BossStructure extends Structure implements Configurable {
 	}
 
 	@Override
-	protected String alias(String string) {
+	protected String[] applyAlias(String src) {
 		// No alias needed as LevelDefinition is not set.
 		return null;
 	}

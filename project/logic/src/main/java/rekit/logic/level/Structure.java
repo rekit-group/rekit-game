@@ -54,7 +54,7 @@ public class Structure {
 
 	/**
 	 * Create a new Structure by level definition and structure lines.
-	 * 
+	 *
 	 * @param definition
 	 *            the definition
 	 * @param lines
@@ -112,10 +112,8 @@ public class Structure {
 					continue;
 				}
 
-				String[] splitted = elemInfo.split(":");
-				if (splitted[0].matches("(-|\\+)?[0-9]+")) {
-					splitted[0] = this.alias(splitted[0]);
-				}
+				String[] splitted = this.applyAlias(elemInfo);
+
 				// if id != 0 => there is something to build here:
 				if (splitted[0] != null) {
 					// let GameElementFactory handle the rest
@@ -142,16 +140,26 @@ public class Structure {
 	/**
 	 * Get alias.
 	 *
-	 * @param string
+	 * @param src
 	 *            the source string
-	 * @return the alias or {@code null} if none found
+	 * @return the splitted definition for
+	 *         {@link GameElementFactory#generate(String, int, int, String...)}
 	 */
-	protected String alias(String string) {
-		String alias = this.definition.getAlias(string);
-		if (alias == null && !"0".equals(string)) {
-			GameConf.GAME_LOGGER.warn("No alias found for ID " + string);
+	protected String[] applyAlias(String src) {
+		String[] splitted = src.split(":");
+		if (!splitted[0].matches("(-|\\+)?[0-9]+")) {
+			return splitted;
 		}
-		return alias;
+		String alias = this.definition.getAlias(splitted[0]);
+		if (alias == null && !"0".equals(src)) {
+			GameConf.GAME_LOGGER.warn("No alias found for ID " + src);
+		}
+
+		String[] newHead = alias == null ? new String[1] : alias.split(":");
+		String[] res = new String[splitted.length - 1 + newHead.length];
+		System.arraycopy(newHead, 0, res, 0, newHead.length);
+		System.arraycopy(splitted, 1, res, newHead.length, splitted.length - 1);
+		return res;
 	}
 
 	/**

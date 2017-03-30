@@ -12,15 +12,10 @@ import rekit.util.ReflectUtils;
  *
  */
 public interface Filter {
-
 	/**
-	 * Get all dynamic filters.
-	 *
-	 * @return the set of all filters
+	 * All filters which was found at init time.
 	 */
-	static Set<Filter> getAllFilters() {
-		return ReflectUtils.loadInstances(GameConf.SEARCH_PATH, Filter.class);
-	}
+	Set<Filter> ALL_FILTERS = ReflectUtils.loadInstances(GameConf.SEARCH_PATH, Filter.class);
 
 	/**
 	 * This boolean indicates whether this filter can be applied pixel per pixel

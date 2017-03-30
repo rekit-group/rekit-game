@@ -4,10 +4,10 @@
 #SETTING::autoCoinSpawn->true
 
 #ALIAS::1->Inanimate
-#ALIAS::2->GrayBox
-#ALIAS::3->ResetBox
-#ALIAS::4->InvertBox
-#ALIAS::5->CrazyBox
+#ALIAS::2->FilterBox:GrayScaleMode
+#ALIAS::3->FilterBox:None
+#ALIAS::4->FilterBox:InvertedMode
+#ALIAS::5->FilterBox:RandomMode
 
 { 
 {0	0	0	0	0	0	0}
