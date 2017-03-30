@@ -1,8 +1,7 @@
-package rekit.logic.gameelements.inanimate.filters;
+package rekit.logic.gameelements.inanimate;
 
 import rekit.core.GameGrid;
 import rekit.logic.gameelements.GameElement;
-import rekit.logic.gameelements.inanimate.Inanimate;
 import rekit.logic.gameelements.type.DynamicInanimate;
 import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Vec;
@@ -32,9 +31,6 @@ public final class FilterBox extends DynamicInanimate {
 
 	/**
 	 * Prototype Constructor.
-	 *
-	 * @param filter
-	 *            the filter
 	 */
 	public FilterBox() {
 		super();
