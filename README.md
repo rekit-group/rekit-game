@@ -32,8 +32,8 @@ If you want to create your own levels, follow the steps:
 
 #### Load Levels
 To load a level you have two options:
-* You can add the level to a Mod (jar) and add it to the subfolder `levels`. If the `group`-Setting is not set, the level will be placed in the default group.
-* You can add the level to the `levels`-Directory (Windows: `%APPDATA%/rekit`, Unix/Mac: `~/.config/rekit`). If you place the level into a subdirectory of the `levels`-Directory and won't set the `group`-Setting, the level will be placed into a group named like the subdirectory.
+* You can add the level to a Mod (jar) and add it to the subfolder `levels` (or a subfolder of `levels`). If the `group`-Setting is not set, the level will be placed in the default group.
+* You can add the level to the `levels`-Directory (Windows: `%APPDATA%/rekit`, Unix/Mac: `~/.config/rekit`). If you place the level into a subdirectory of the `levels`-Directory and won't set the `group`-Setting, the level will be placed into a group named like the subdirectory (this also applies if you place the level into a Mod).
 
 
 Check out this [example project on GitHub](https://github.com/fuchss-dominik/rekit-sample-mod) to see to create an addon. More detailed information will follow in future.

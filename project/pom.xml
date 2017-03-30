@@ -200,6 +200,11 @@
 				<version>${rekit.version}</version>
 			</dependency>
 			<dependency>
+				<groupId>rekit</groupId>
+				<artifactId>basic</artifactId>
+				<version>${rekit.version}</version>
+			</dependency>
+			<dependency>
 				<groupId>log4j</groupId>
 				<artifactId>log4j</artifactId>
 				<version>1.2.17</version>

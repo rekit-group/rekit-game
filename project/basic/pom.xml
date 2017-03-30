@@ -7,18 +7,12 @@
 		<version>0.5.5-beta</version>
 	</parent>
 	<artifactId>basic</artifactId>
-	<packaging>pom</packaging>
 	<name>Basic Pack</name>
-	<description>Contains several Entities</description>
+	<description>Contains several Entities as a base set</description>
 	<dependencies>
 		<dependency>
 			<groupId>rekit</groupId>
 			<artifactId>logic</artifactId>
 		</dependency>
 	</dependencies>
-	<modules>
-		<module>enemypack</module>
-		<module>inanimatepack</module>
-		<module>pickuppack</module>
-	</modules>
 </project>

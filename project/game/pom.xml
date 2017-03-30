@@ -35,18 +35,7 @@
 		</dependency>
 		<dependency>
 			<groupId>rekit</groupId>
-			<artifactId>basic.pickuppack</artifactId>
-			<version>${rekit.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>rekit</groupId>
-			<artifactId>basic.enemypack</artifactId>
-			<version>${rekit.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>rekit</groupId>
-			<artifactId>basic.inanimatepack</artifactId>
-			<version>${rekit.version}</version>
+			<artifactId>basic</artifactId>
 		</dependency>
 	</dependencies>
 </project>

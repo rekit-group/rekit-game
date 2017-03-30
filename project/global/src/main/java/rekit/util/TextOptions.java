@@ -155,7 +155,7 @@ public final class TextOptions implements Cloneable {
 	 *            the usefilter-option
 	 * @return the modified text-options (this)
 	 */
-	public TextOptions setFontOptions(boolean usefilter) {
+	public TextOptions setUseFilter(boolean usefilter) {
 		this.usefilter = usefilter;
 		return this;
 	}

@@ -35,6 +35,7 @@ import rekit.config.GameConf;
 import rekit.persistence.DirFileDefinitions;
 import rekit.persistence.JarManager;
 import rekit.persistence.level.token.UnexpectedTokenException;
+import rekit.util.Container;
 import rekit.util.LambdaUtil;
 
 /**
@@ -94,7 +95,12 @@ public final class LevelManager {
 	 */
 	private static void loadAllLevels() throws IOException {
 		PathMatchingResourcePatternResolver resolv = new PathMatchingResourcePatternResolver(JarManager.SYSLOADER);
-		Resource[] res = resolv.getResources("classpath*:/levels/level*.dat");
+		Resource[] unknown = resolv.getResources("classpath*:/levels/level*.dat");
+		Resource[] subdirs = resolv.getResources("classpath*:/levels/*/level*.dat");
+		Resource[] res = new Resource[unknown.length + subdirs.length];
+		System.arraycopy(unknown, 0, res, 0, unknown.length);
+		System.arraycopy(subdirs, 0, res, unknown.length, subdirs.length);
+
 		Stream<Resource> numbered = Arrays.stream(res).filter(r -> r.getFilename().matches("level_\\d+\\.dat"));
 		Stream<Resource> notNumbered = Arrays.stream(res).filter(r -> !r.getFilename().matches("level_\\d+\\.dat"));
 
@@ -154,7 +160,16 @@ public final class LevelManager {
 	 *            the resource
 	 */
 	private static void addArcadeLevel(Resource level) {
-		LambdaUtil.invoke(() -> LevelManager.addArcadeLevel(level, LevelManager.GROUP_UNKNOWN));
+		Container<String> path = new Container<>();
+		LambdaUtil.invoke(() -> path.setE(level.getURL().getPath()));
+		System.out.println(path);
+		String[] split = null;
+		if (path.getE() == null || (split = path.getE().split("/")) == null || split[split.length - 2].equals("levels")) {
+			LambdaUtil.invoke(() -> LevelManager.addArcadeLevel(level, LevelManager.GROUP_UNKNOWN));
+		} else {
+			final String group = split[split.length - 2];
+			LambdaUtil.invoke(() -> LevelManager.addArcadeLevel(level, group));
+		}
 	}
 
 	private static void addArcadeLevel(Resource as, String group) {
