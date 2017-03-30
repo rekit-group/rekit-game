@@ -10,7 +10,7 @@ import rekit.config.GameConf;
 
 /**
  * This class handles the loading of additional Jars.
- * 
+ *
  * @author Dominik Fuchss
  *
  */
@@ -34,13 +34,13 @@ public final class JarManager {
 		if (JarManager.ADD_METHOD == null) {
 			return;
 		}
-		Arrays.stream(DirFileDefinitions.MODS_DIR.listFiles()).filter(f -> f.getName().endsWith("jar")).forEach(JarManager::addJar);
+		Arrays.stream(DirFileDefinitions.MODS_DIR.listFiles()).filter(f -> f.getName().endsWith("jar") && f.isFile()).forEach(JarManager::addJar);
 
 	}
 
 	private static void addJar(File jar) {
 		try {
-			JarManager.ADD_METHOD.invoke(JarManager.SYSLOADER, (Object[]) new URL[] { jar.toURI().toURL() });
+			JarManager.ADD_METHOD.invoke(JarManager.SYSLOADER, jar.toURI().toURL());
 			GameConf.GAME_LOGGER.info("Loaded Mod: " + jar.getName());
 		} catch (Exception e) {
 			GameConf.GAME_LOGGER.fatal(e.getMessage());
@@ -51,7 +51,7 @@ public final class JarManager {
 
 		try {
 			final Class<URLClassLoader> sysclass = URLClassLoader.class;
-			Method method = sysclass.getDeclaredMethod("addURL", new Class[] { URL.class });
+			Method method = sysclass.getDeclaredMethod("addURL", URL.class);
 			method.setAccessible(true);
 			return method;
 		} catch (Exception e) {

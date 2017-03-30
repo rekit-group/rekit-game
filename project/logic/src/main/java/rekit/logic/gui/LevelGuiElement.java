@@ -3,16 +3,12 @@ package rekit.logic.gui;
 import rekit.logic.ILevelScene;
 
 public abstract class LevelGuiElement extends GuiElement {
-	
-	private ILevelScene levelScene;
-
-	public LevelGuiElement(ILevelScene levelScene) {
-		super(levelScene);
-		this.levelScene = levelScene;
+	public LevelGuiElement(ILevelScene scene) {
+		super(scene);
 	}
-	
+
 	@Override
 	public ILevelScene getScene() {
-		return this.levelScene;
+		return (ILevelScene) super.getScene();
 	}
 }
