@@ -40,7 +40,9 @@ import rekit.util.LambdaUtil;
 
 /**
  *
- * This class manages all Level depended stuff as highscores etc.
+ * This class manages all Level depended stuff as defined in {@link DataKey}.
+ * 
+ * @author Dominik Fuchss
  *
  */
 public final class LevelManager {
@@ -162,7 +164,6 @@ public final class LevelManager {
 	private static void addArcadeLevel(Resource level) {
 		Container<String> path = new Container<>();
 		LambdaUtil.invoke(() -> path.setE(level.getURL().getPath()));
-		System.out.println(path);
 		String[] split = null;
 		if (path.getE() == null || (split = path.getE().split("/")) == null || split[split.length - 2].equals("levels")) {
 			LambdaUtil.invoke(() -> LevelManager.addArcadeLevel(level, LevelManager.GROUP_UNKNOWN));

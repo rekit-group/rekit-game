@@ -269,7 +269,7 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 		return res.toString();
 	}
 
-	private Map<String, Serializable> data = new HashMap<>();
+	private Map<DataKey, Serializable> data = new HashMap<>();
 
 	/**
 	 * Set data of the level and notify the {@link LevelManager} about the
@@ -296,7 +296,7 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 	 *            indicated whether the {@link LevelManager} shall be informed
 	 */
 	void setData(DataKey key, Serializable value, boolean notify) {
-		this.data.put(key.getId(), value);
+		this.data.put(key, value);
 		if (notify) {
 			LevelManager.contentChanged();
 		}
@@ -311,7 +311,7 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 	 *         if not set
 	 */
 	public Serializable getData(DataKey key) {
-		Serializable data = this.data.get(key.getId());
+		Serializable data = this.data.get(key);
 		if (data == null) {
 			return key.getDefaultVal();
 		}
