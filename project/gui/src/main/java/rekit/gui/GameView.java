@@ -171,7 +171,7 @@ class GameView implements View {
 			// Read data to local buffer.
 			ByteArrayInputStream is = new ByteArrayInputStream(IOUtils.toByteArray(icon.getInputStream()));
 			return ImageIO.read(is);
-		} catch (IOException e) {
+		} catch (IOException | NullPointerException e) {
 			GameConf.GAME_LOGGER.debug(e + ", Icon does not exist. Try " + nTry);
 			return this.getGameIcon(nTry + 1);
 		}

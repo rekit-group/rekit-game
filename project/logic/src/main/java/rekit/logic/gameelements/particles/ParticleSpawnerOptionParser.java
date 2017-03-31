@@ -1,8 +1,5 @@
 package rekit.logic.gameelements.particles;
 
-import java.lang.reflect.Field;
-
-import org.fuchss.configuration.Configurable;
 import org.fuchss.configuration.parser.Parser;
 
 /**
@@ -18,10 +15,7 @@ public final class ParticleSpawnerOptionParser implements Parser {
 	private static final String FLOAT_REGEX = "(-|\\+)?[0-9]+\\.[0-9]+(f|F)";
 
 	@Override
-	public synchronized boolean parse(Configurable obj, Field field, String definition, String[] path) throws Exception {
-		if (!Parser.super.parse(obj, field, definition, path)) {
-			return false;
-		}
+	public synchronized Object parseIt(String definition, String[] path) throws Exception {
 		ParticleSpawnerOption opt = null;
 		if (definition.matches("(" + ParticleSpawnerOptionParser.FLOAT_REGEX + ",){3}" + ParticleSpawnerOptionParser.FLOAT_REGEX)) {
 			// 4 Params
@@ -38,10 +32,7 @@ public final class ParticleSpawnerOptionParser implements Parser {
 			opt = new ParticleSpawnerOption(Float.parseFloat(definition));
 		}
 
-		if (opt != null) {
-			field.set(obj, opt);
-		}
-		return opt != null;
+		return opt;
 	}
 
 }

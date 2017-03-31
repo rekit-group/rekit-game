@@ -1,10 +1,8 @@
 package rekit.parser;
 
-import java.lang.reflect.Field;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.fuchss.configuration.Configurable;
 import org.fuchss.configuration.parser.Parser;
 
 import rekit.config.GameConf;
@@ -18,21 +16,19 @@ import rekit.primitives.geometry.Vec;
  */
 public final class VecParser implements Parser {
 	@Override
-	public boolean parse(Configurable obj, Field field, String definition, String[] path) throws Exception {
-		if (!Parser.super.parse(obj, field, definition, path)) {
-			return false;
-		}
+	public Object parseIt(String definition, String[] path) throws Exception {
+
 		Pattern pattern = Pattern.compile("[-|\\+]?([0-9]+\\.[0-9]+[f|F]),[-|\\+]?([0-9]+\\.[0-9]+[f|F])");
 		Matcher matcher = pattern.matcher(definition);
 		if (!matcher.find()) {
 			GameConf.GAME_LOGGER.error("BundleHelper: " + definition + " is no Vec");
-			return false;
+			return null;
 		}
 
 		float x = Float.parseFloat(matcher.group(1));
 		float y = Float.parseFloat(matcher.group(2));
 
-		field.set(obj, new Vec(x, y));
-		return true;
+		return new Vec(x, y);
+
 	}
 }

@@ -1,10 +1,8 @@
 package rekit.parser;
 
-import java.lang.reflect.Field;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.fuchss.configuration.Configurable;
 import org.fuchss.configuration.parser.Parser;
 
 import rekit.primitives.image.RGBAColor;
@@ -17,10 +15,7 @@ import rekit.primitives.image.RGBAColor;
  */
 public final class RGBAColorParser implements Parser {
 	@Override
-	public boolean parse(Configurable obj, Field field, String definition, String[] path) throws Exception {
-		if (!Parser.super.parse(obj, field, definition, path)) {
-			return false;
-		}
+	public Object parseIt(String definition, String[] path) throws Exception {
 		Pattern patternRGBA = Pattern.compile("([0-9]+),([0-9]+),([0-9]+),([0-9]+)");
 		Matcher matcherRGBA = patternRGBA.matcher(definition);
 
@@ -30,7 +25,7 @@ public final class RGBAColorParser implements Parser {
 		boolean rgb = matcherRGB.matches();
 		if (!rgba && !rgb) {
 			Parser.LOGGER.error(definition + " is not a RGB(A) color!");
-			return false;
+			return null;
 		}
 		Matcher matcher = rgba ? matcherRGBA : matcherRGB;
 
@@ -39,7 +34,6 @@ public final class RGBAColorParser implements Parser {
 		int b = Integer.parseInt(matcher.group(3));
 		int a = rgba ? Integer.parseInt(matcher.group(4)) : 255;
 
-		field.set(obj, new RGBAColor(r, g, b, a));
-		return true;
+		return new RGBAColor(r, g, b, a);
 	}
 }
