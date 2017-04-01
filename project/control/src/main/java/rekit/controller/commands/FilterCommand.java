@@ -2,7 +2,7 @@ package rekit.controller.commands;
 
 import rekit.gui.View;
 import rekit.logic.Model;
-import rekit.primitives.image.Filter;
+import rekit.logic.filters.Filter;
 
 /**
  * This Command Type is used for attaching and/or detaching {@link Filter

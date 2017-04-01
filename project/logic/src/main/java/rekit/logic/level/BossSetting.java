@@ -19,7 +19,6 @@ import rekit.primitives.geometry.Vec;
  * or not.
  *
  * @author Angelo Aracri
- * @version 1.0
  */
 class BossSetting {
 	private final Level level;

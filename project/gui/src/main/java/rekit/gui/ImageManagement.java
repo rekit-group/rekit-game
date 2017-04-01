@@ -6,13 +6,16 @@ import java.awt.image.ColorConvertOp;
 import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
 
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+
 import rekit.config.GameConf;
+import rekit.persistence.JarManager;
 import rekit.primitives.image.AbstractImage;
 
 /**
@@ -36,7 +39,7 @@ public final class ImageManagement {
 	/**
 	 * The loader Object for the Resource loading.
 	 */
-	private static final Object LOADER = new Object();
+	private static final PathMatchingResourcePatternResolver LOAD = new PathMatchingResourcePatternResolver(JarManager.SYSLOADER);
 
 	/**
 	 * Get the {@link Image} from the resources by name.<br>
@@ -50,9 +53,12 @@ public final class ImageManagement {
 		if (!ImageManagement.CACHE.containsKey(src)) {
 			synchronized (ImageManagement.class) {
 				if (!ImageManagement.CACHE.containsKey(src)) {
-					InputStream res = ImageManagement.LOADER.getClass().getResourceAsStream("/images/" + src);
+					Resource res = ImageManagement.LOAD.getResource("/images/" + src);
+					if (res == null) {
+						return null;
+					}
 					try {
-						ImageManagement.CACHE.put(src, ImageManagement.convertToRGB(ImageIO.read(res)));
+						ImageManagement.CACHE.put(src, ImageManagement.convertToRGB(ImageIO.read(res.getInputStream())));
 					} catch (IOException e) {
 						GameConf.GAME_LOGGER.warn("Image " + src + " not found!");
 					}

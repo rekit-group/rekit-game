@@ -1,11 +1,11 @@
 package rekit.logic.gameelements.inanimate;
 
 import rekit.core.GameGrid;
+import rekit.logic.filters.Filter;
 import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.type.DynamicInanimate;
 import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Vec;
-import rekit.primitives.image.Filter;
 import rekit.primitives.image.RGBAColor;
 import rekit.util.ReflectUtils.LoadMe;
 

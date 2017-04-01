@@ -41,7 +41,7 @@ import rekit.util.LambdaUtil;
 /**
  *
  * This class manages all Level depended stuff as defined in {@link DataKey}.
- * 
+ *
  * @author Dominik Fuchss
  *
  */

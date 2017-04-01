@@ -10,7 +10,6 @@ import rekit.primitives.geometry.Vec;
  * state where a player can not jump anymore.
  *
  * @author Angelo Aracri
- * @version 1.0
  */
 public class JumpState extends EntityState {
 	/**

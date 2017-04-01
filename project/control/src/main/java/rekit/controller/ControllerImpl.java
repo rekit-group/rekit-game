@@ -20,13 +20,13 @@ import rekit.gui.View;
 import rekit.logic.IScene;
 import rekit.logic.Model;
 import rekit.logic.Model.GameState;
+import rekit.logic.filters.Filter;
 import rekit.logic.filters.GrayScaleMode;
 import rekit.logic.filters.InvertedMode;
 import rekit.logic.filters.RandomMode;
 import rekit.logic.gameelements.entities.Entity;
 import rekit.logic.gui.menu.MenuItem;
 import rekit.primitives.geometry.Direction;
-import rekit.primitives.image.Filter;
 import rekit.util.Tuple;
 
 /**

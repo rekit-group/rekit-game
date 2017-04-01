@@ -1,8 +1,8 @@
 package rekit.logic;
 
+import rekit.logic.filters.Filter;
 import rekit.logic.gameelements.entities.Entity;
 import rekit.logic.gui.menu.MenuItem;
-import rekit.primitives.image.Filter;
 
 /**
  * This Interface defines the Model for the MVC.

@@ -8,6 +8,7 @@ import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.entities.Entity;
 import rekit.logic.gameelements.inanimate.Inanimate;
 import rekit.logic.level.BossStructure;
+import rekit.persistence.JarManager;
 import rekit.primitives.geometry.Vec;
 import rekit.util.ReflectUtils;
 import rekit.util.ReflectUtils.LoadMe;
@@ -39,7 +40,7 @@ public abstract class Boss extends Entity {
 	 * @see LoadMe
 	 */
 	public static final Set<? extends GameElement> getPrototypes() {
-		return ReflectUtils.loadInstances(GameConf.SEARCH_PATH, Boss.class);
+		return ReflectUtils.loadInstances(GameConf.SEARCH_PATH, JarManager.SYSLOADER, Boss.class);
 	}
 
 	/**
@@ -62,7 +63,7 @@ public abstract class Boss extends Entity {
 	protected Boss(Vec startPos, Vec vel, Vec size) {
 		super(startPos, vel, size, Team.ENEMY);
 	}
-	
+
 	@Override
 	protected void innerLogicLoop() {
 		// if no invincibility or invincibility time is up
@@ -77,10 +78,10 @@ public abstract class Boss extends Entity {
 		if (this.getLives() <= 0) {
 			this.isHarmless = true;
 		}
-		
+
 		super.innerLogicLoop();
 	}
-	
+
 	/**
 	 * Get the BossName.
 	 *

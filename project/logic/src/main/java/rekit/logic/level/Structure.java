@@ -32,7 +32,6 @@ import rekit.persistence.level.LevelDefinition;
  *
  * @author Angelo Aracri
  * @author Dominik Fuchss
- * @version 1.1
  */
 public class Structure {
 

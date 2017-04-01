@@ -5,7 +5,6 @@ package rekit.persistence.level.token;
  * This exception will thrown when an Unexpected Token reached
  *
  * @author Dominik Fuchss
- * @version 1
  */
 public class UnexpectedTokenException extends RuntimeException {
 
@@ -28,7 +27,7 @@ public class UnexpectedTokenException extends RuntimeException {
 
 	/**
 	 * Instantiates a new unexpected token execption.
-	 * 
+	 *
 	 * @param foundToken
 	 *            the unexpected Token
 	 * @param comment

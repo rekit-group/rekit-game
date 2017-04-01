@@ -24,7 +24,6 @@ import rekit.util.ReflectUtils.LoadMe;
  * </p>
  *
  * @author Angelo Aracri
- * @version 1.0
  */
 @LoadMe
 public final class RektKiller extends Enemy {

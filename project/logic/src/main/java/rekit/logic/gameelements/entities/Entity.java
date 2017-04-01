@@ -147,7 +147,6 @@ public abstract class Entity extends GameElement {
 	protected void innerLogicLoop() {
 		if (this.invincibility != null) {
 			this.invincibility.logicLoop();
-			// this.invincibility.removeTime(this.deltaTime);
 		}
 
 		this.getEntityState().logicLoop();
@@ -161,7 +160,7 @@ public abstract class Entity extends GameElement {
 		newVel = newVel.addY(GameConf.G);
 		// apply slowing down walk
 		newVel = newVel.addX(-Math.signum(newVel.x) * GameConf.PLAYER_STOP_ACCEL);
-		// we dont want weird floating point velocities
+		// we don't want weird floating point velocities
 		if (Math.abs(newVel.x) < 0.05) {
 			newVel = newVel.setX(0);
 		}

@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.reflections.Reflections;
+import org.reflections.util.ClasspathHelper;
 
 import rekit.config.GameConf;
 
@@ -36,6 +37,8 @@ public final class ReflectUtils {
 	 *
 	 * @param searchPath
 	 *            the search path (e.g. java.lang)
+	 * @param loader
+	 *            the class loader
 	 * @param type
 	 *            the class
 	 * @param <T>
@@ -43,9 +46,9 @@ public final class ReflectUtils {
 	 * @return a set of instances of the found classes
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> Set<T> loadInstances(String searchPath, Class<T> type) {
+	public static <T> Set<T> loadInstances(String searchPath, ClassLoader loader, Class<T> type) {
 		Set<T> objects = new HashSet<>();
-		for (Class<?> clazz : ReflectUtils.getClasses(searchPath, type)) {
+		for (Class<?> clazz : ReflectUtils.getClasses(searchPath, loader, type)) {
 			if (Modifier.isAbstract(clazz.getModifiers()) || clazz.getAnnotation(LoadMe.class) == null) {
 				continue;
 			}
@@ -66,14 +69,16 @@ public final class ReflectUtils {
 	 *
 	 * @param searchPath
 	 *            the search path (e.g. java.lang)
+	 * @param loader
+	 *            the class loader
 	 * @param type
 	 *            the class
 	 * @param <T>
 	 *            the class-type
 	 * @return a set of the found classes
 	 */
-	public static <T> Set<Class<? extends T>> getClasses(String searchPath, Class<T> type) {
-		return new Reflections(searchPath).getSubTypesOf(type);
+	public static <T> Set<Class<? extends T>> getClasses(String searchPath, ClassLoader loader, Class<T> type) {
+		return new Reflections(searchPath, ClasspathHelper.classLoaders(loader)).getSubTypesOf(type);
 	}
 
 	/**
@@ -98,7 +103,7 @@ public final class ReflectUtils {
 	 * constructor</b>
 	 *
 	 * @author Dominik Fuchss
-	 * @see ReflectUtils#loadInstances(String, Class)
+	 * @see ReflectUtils#loadInstances(String, ClassLoader, Class)
 	 *
 	 */
 	@Retention(RetentionPolicy.RUNTIME)

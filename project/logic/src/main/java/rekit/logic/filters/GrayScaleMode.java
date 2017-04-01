@@ -6,7 +6,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import rekit.primitives.image.AbstractImage;
-import rekit.primitives.image.Filter;
 import rekit.primitives.image.RGBAColor;
 import rekit.util.LambdaUtil;
 import rekit.util.ReflectUtils.LoadMe;

@@ -7,7 +7,6 @@ import rekit.logic.gameelements.entities.Entity;
  * where a player can jump
  *
  * @author Angelo Aracri
- * @version 1.0
  */
 public class DefaultState extends EntityState {
 	/**

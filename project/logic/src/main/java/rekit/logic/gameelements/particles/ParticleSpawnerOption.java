@@ -16,7 +16,6 @@ import rekit.primitives.time.Progress;
  * direction is desired you must supply a negative delta.
  *
  * @author Angelo Aracri
- * @version 1.0
  */
 @ClassParser(ParticleSpawnerOptionParser.class)
 public class ParticleSpawnerOption {

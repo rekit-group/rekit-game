@@ -24,7 +24,6 @@ import rekit.util.ThreadUtils;
  *
  * @author Angelo Aracri
  * @author Dominik Fuchss
- * @version 1.0
  */
 public final class Main {
 	/**
@@ -42,7 +41,7 @@ public final class Main {
 	public static void main(String[] args) {
 		Thread.currentThread().setName("Startup");
 		Main.setLogLevel(GameConf.DEBUG ? Level.ALL : Level.FATAL);
-		JarManager.loadMods();
+		GameConf.GAME_LOGGER.debug(JarManager.SYSLOADER.getClass().getSimpleName() + " (Sysloader loaded.)");
 		Main.applyAllConfigs();
 		LevelManager.init();
 
@@ -86,7 +85,8 @@ public final class Main {
 	 * Visit all Classes which shall be visited.
 	 */
 	private static void applyAllConfigs() {
-		Main.applyAllConfigs(new ResourceBundleSetter());
+		ResourceBundleSetter setter = new ResourceBundleSetter(JarManager.SYSLOADER);
+		Main.applyAllConfigs(setter);
 	}
 
 	/**
@@ -96,6 +96,6 @@ public final class Main {
 	 *            the setter
 	 */
 	private static void applyAllConfigs(Setter setter) {
-		ReflectUtils.getClasses(GameConf.SEARCH_PATH, Configurable.class).forEach(c -> setter.setAttributes(c));
+		ReflectUtils.getClasses(GameConf.SEARCH_PATH, JarManager.SYSLOADER, Configurable.class).forEach(c -> setter.setAttributes(c));
 	}
 }

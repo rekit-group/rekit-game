@@ -6,6 +6,7 @@ import rekit.config.GameConf;
 import rekit.core.Team;
 import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.entities.Entity;
+import rekit.persistence.JarManager;
 import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Vec;
 import rekit.util.ReflectUtils;
@@ -23,7 +24,7 @@ public abstract class Pickup extends Entity {
 	 * @see LoadMe
 	 */
 	public static Set<? extends GameElement> getPrototypes() {
-		return ReflectUtils.loadInstances(GameConf.SEARCH_PATH, Pickup.class);
+		return ReflectUtils.loadInstances(GameConf.SEARCH_PATH, JarManager.SYSLOADER, Pickup.class);
 	}
 
 	/**

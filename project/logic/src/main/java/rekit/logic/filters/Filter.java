@@ -1,8 +1,11 @@
-package rekit.primitives.image;
+package rekit.logic.filters;
 
 import java.util.Set;
 
 import rekit.config.GameConf;
+import rekit.persistence.JarManager;
+import rekit.primitives.image.AbstractImage;
+import rekit.primitives.image.RGBAColor;
 import rekit.util.ReflectUtils;
 
 /**
@@ -15,11 +18,11 @@ public interface Filter {
 	/**
 	 * All filters which was found at init time.
 	 */
-	Set<Filter> ALL_FILTERS = ReflectUtils.loadInstances(GameConf.SEARCH_PATH, Filter.class);
+	Set<Filter> ALL_FILTERS = ReflectUtils.loadInstances(GameConf.SEARCH_PATH, JarManager.SYSLOADER, Filter.class);
 
 	/**
 	 * Search for filter instance by class.
-	 * 
+	 *
 	 * @param filter
 	 *            the filter class
 	 * @return the filter or {@code null} if not found

@@ -7,7 +7,6 @@ import rekit.logic.gameelements.entities.Entity;
  * <i>Entities</i> jumping behavior.
  *
  * @author Angelo Aracri
- * @version 1.0
  */
 public abstract class EntityState {
 	/**

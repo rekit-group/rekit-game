@@ -5,6 +5,7 @@ import java.util.Set;
 import rekit.config.GameConf;
 import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.inanimate.Inanimate;
+import rekit.persistence.JarManager;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBAColor;
 import rekit.util.ReflectUtils;
@@ -45,7 +46,7 @@ public abstract class DynamicInanimate extends Inanimate {
 	 * @see LoadMe
 	 */
 	public static Set<? extends GameElement> getPrototypes() {
-		return ReflectUtils.loadInstances(GameConf.SEARCH_PATH, DynamicInanimate.class);
+		return ReflectUtils.loadInstances(GameConf.SEARCH_PATH, JarManager.SYSLOADER, DynamicInanimate.class);
 	}
 
 }

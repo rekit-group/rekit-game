@@ -15,9 +15,9 @@ import java.util.Map;
 
 import rekit.config.GameConf;
 import rekit.core.GameGrid;
+import rekit.logic.filters.Filter;
 import rekit.primitives.geometry.Polygon;
 import rekit.primitives.geometry.Vec;
-import rekit.primitives.image.Filter;
 import rekit.primitives.image.RGBAColor;
 import rekit.util.CalcUtil;
 import rekit.util.TextOptions;

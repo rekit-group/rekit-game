@@ -121,12 +121,6 @@ public interface IScene {
 	}
 
 	/**
-	 * Stop the scene. End drawing and Player/Enemies will end to move.
-	 */
-	default void stop() {
-	}
-
-	/**
 	 * Restart the scene.
 	 */
 	default void restart() {
@@ -180,7 +174,7 @@ public interface IScene {
 
 	/**
 	 * This method indicates whether the scene encapsulates a level.
-	 * 
+	 *
 	 * @return {@code true} if this scene encapsulates a level, {@code false}
 	 *         otherwise
 	 */

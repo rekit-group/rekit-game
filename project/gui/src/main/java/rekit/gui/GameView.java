@@ -40,7 +40,6 @@ import rekit.util.ThreadUtils;
  * @author Angelo Aracri
  * @author Dominik Fuchss
  *
- * @version 1.1
  */
 class GameView implements View {
 

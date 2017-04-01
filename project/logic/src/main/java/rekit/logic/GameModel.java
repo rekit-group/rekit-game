@@ -2,11 +2,11 @@ package rekit.logic;
 
 import rekit.config.GameConf;
 import rekit.core.GameTime;
+import rekit.logic.filters.Filter;
 import rekit.logic.gameelements.GameElementFactory;
 import rekit.logic.gameelements.entities.Entity;
 import rekit.logic.gui.menu.MenuItem;
 import rekit.logic.scene.Scenes;
-import rekit.primitives.image.Filter;
 import rekit.util.ThreadUtils;
 
 /**
@@ -14,8 +14,6 @@ import rekit.util.ThreadUtils;
  *
  * @author Angelo Aracri
  * @author Dominik Fuchss
- *
- * @version 1.1
  */
 public class GameModel implements Model {
 
@@ -119,7 +117,6 @@ public class GameModel implements Model {
 		this.removeFilter();
 		nextScene.init();
 		nextScene.start();
-		this.curScene.stop();
 		this.curScene = nextScene;
 		this.state = Scenes.getByInstance(this.curScene).isMenu() ? GameState.MENU : GameState.INGAME;
 		GameTime.resume();

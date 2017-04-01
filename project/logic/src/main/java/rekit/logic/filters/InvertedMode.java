@@ -1,6 +1,5 @@
 package rekit.logic.filters;
 
-import rekit.primitives.image.Filter;
 import rekit.primitives.image.RGBAColor;
 import rekit.util.ReflectUtils.LoadMe;
 

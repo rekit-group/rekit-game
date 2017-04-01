@@ -177,13 +177,11 @@ public abstract class GameElement implements Collidable {
 	 * @param f
 	 *            the {@link GameGrid} that represents the games field and
 	 *            supplies primitive drawing operations.
-	 * @return {@code null} (for lambda usage)
 	 */
-	public final Void render(GameGrid f) {
+	public final void render(GameGrid f) {
 		if (this.isVisible()) {
 			this.internalRender(f);
 		}
-		return null;
 	}
 
 	/**

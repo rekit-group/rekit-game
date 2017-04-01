@@ -41,7 +41,6 @@ import rekit.logic.gui.GuiElement;
  *
  * @author Matthias Schmitt
  *
- * @version 1.0
  */
 abstract class Scene implements CameraTarget, IScene {
 

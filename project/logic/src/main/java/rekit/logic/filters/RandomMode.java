@@ -3,7 +3,6 @@ package rekit.logic.filters;
 import java.util.Arrays;
 
 import rekit.config.GameConf;
-import rekit.primitives.image.Filter;
 import rekit.primitives.image.RGBAColor;
 import rekit.util.ROContainer;
 import rekit.util.ReflectUtils.LoadMe;

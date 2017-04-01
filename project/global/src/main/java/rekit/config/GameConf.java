@@ -20,7 +20,6 @@ import rekit.util.TextOptions;
  *
  * @author Angelo Aracri
  * @author Dominik Fuchss
- * @version 1.1
  */
 @SetterInfo(res = "conf/game")
 public final class GameConf implements Configurable {
@@ -96,7 +95,7 @@ public final class GameConf implements Configurable {
 	/**
 	 * Time in milliseconds to wait after each renderLoop, that refreshes all
 	 * graphical elements.
-	 * 
+	 *
 	 * @deprecated maybe we will use {@link Thread#yield()} next time.
 	 */
 	@Deprecated

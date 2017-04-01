@@ -8,7 +8,6 @@ import rekit.primitives.geometry.Frame;
  * Defines the interface that every GameElement that can collide must have.
  *
  * @author Angelo Aracri
- * @version 1.0
  */
 public interface Collidable {
 

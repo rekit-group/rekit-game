@@ -21,7 +21,6 @@ import rekit.primitives.time.Timer;
  * these options over time.
  *
  * @author Angelo Aracri
- * @version 1.0
  */
 public class Particle extends GameElement {
 	/**
@@ -117,8 +116,8 @@ public class Particle extends GameElement {
 	 * @param rotation
 	 *            the <i>ProgressDendency</i> for the polygons rotation
 	 */
-	public void setProperties(Polygon polygon, Vec pos, long lifeTime, Progress scale, Progress speed, Progress rotation, Progress angle,
-			Progress colorR, Progress colorG, Progress colorB, Progress colorA) {
+	public void setProperties(Polygon polygon, Vec pos, long lifeTime, Progress scale, Progress speed, Progress rotation, Progress angle, Progress colorR,
+			Progress colorG, Progress colorB, Progress colorA) {
 		// clone polygon so we can work with it
 		this.polygon = this.initialPolygon = polygon.clone();
 
