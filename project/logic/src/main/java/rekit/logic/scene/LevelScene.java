@@ -215,11 +215,13 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 		MenuActionItem endExit = new MenuActionItem(this, "Exit to Desktop", () -> System.exit(0));
 
 		if (!this.level.getDefinition().isSettingSet(SettingKey.INFINITE) && won) {
-			// TODO implement something like ArcadeLevelManager which also knows
-			// about finished
-			// arcade levels and has a nextLevel() method
-			MenuActionItem endNext = new MenuActionItem(this, "Next Level", () -> this.restart());
-			this.endMenu.addItem(endNext);
+
+			String nextLevel = this.level.getNextLevel();
+			if (nextLevel != null) {
+				MenuActionItem endNext = new MenuActionItem(this, "Next Level", () -> this.getModel().switchScene(Scenes.ARCADE, nextLevel));
+				this.endMenu.addItem(endNext);
+			}
+
 		} else {
 			MenuActionItem endRestart = new MenuActionItem(this, "Restart", () -> this.restart());
 			this.endMenu.addItem(endRestart);

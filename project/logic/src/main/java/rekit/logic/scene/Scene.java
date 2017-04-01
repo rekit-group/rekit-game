@@ -99,7 +99,7 @@ abstract class Scene implements CameraTarget, IScene {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public void init() {
+	public synchronized void init() {
 		// Byte: [-128, 127]
 		final int length = 256;
 		this.guiElements = new ConcurrentLinkedDeque<>();
@@ -333,7 +333,7 @@ abstract class Scene implements CameraTarget, IScene {
 	}
 
 	@Override
-	public int getGameElementCount() {
+	public synchronized int getGameElementCount() {
 		int size = 0;
 		for (Queue<GameElement> queue : this.gameElements) {
 			size += queue.size();

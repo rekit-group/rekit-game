@@ -352,4 +352,24 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 		return 2 * this.type.compareTo(o.getType()) + Integer.compare(this.arcadeNum, o.arcadeNum);
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null || this.getClass() != obj.getClass()) {
+			return false;
+		}
+		LevelDefinition other = (LevelDefinition) obj;
+		return this.id == null ? other.id == null : this.id.equals(other.id);
+	}
+
 }
