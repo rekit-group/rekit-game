@@ -1,7 +1,7 @@
 package rekit.logic.scene;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiFunction;
 
 import rekit.config.GameConf;
 import rekit.logic.GameModel;
@@ -16,31 +16,35 @@ public enum Scenes {
 	/**
 	 * A placeholder scene.
 	 */
-	NULL(NullScene.class),
+	NULL(NullScene.class, NullScene::create),
 	/**
 	 * A Menu.
 	 */
-	MENU(MainMenuScene.class),
+	MENU(MainMenuScene.class, MainMenuScene::create),
 	/**
 	 * An infinite level.
 	 */
-	INFINITE(InfiniteLevelScene.class),
+	INFINITE(InfiniteLevelScene.class, InfiniteLevelScene::create),
 	/**
 	 * A level of the day.
 	 */
-	LOD(LevelOfTheDayScene.class),
+	LOD(LevelOfTheDayScene.class, LevelOfTheDayScene::create),
 	/**
 	 * An arcade level.
 	 */
-	ARCADE(ArcadeLevelScene.class),
+	ARCADE(ArcadeLevelScene.class, ArcadeLevelScene::create),
 	/**
 	 * An boss rush level.
 	 */
-	BOSS_RUSH(BossRushScene.class);
+	BOSS_RUSH(BossRushScene.class, BossRushScene::create);
 	/**
 	 * The scene class.
 	 */
-	private final Class<? extends IScene> sceneClass;
+	private Class<? extends Scene> clazz;
+	/**
+	 * The constructor of the scene.
+	 */
+	private final BiFunction<GameModel, String[], IScene> sceneConstructor;
 
 	/**
 	 * Create a scene type by class.
@@ -48,10 +52,11 @@ public enum Scenes {
 	 * @param sceneClass
 	 *            the scene class
 	 */
-	Scenes(Class<? extends IScene> sceneClass) {
-		this.sceneClass = sceneClass;
-		if (ConcurrentHelper.INSTANCES.put(this.sceneClass, this) != null) {
-			GameConf.GAME_LOGGER.warn("Multiple Scenes for class " + this.sceneClass);
+	Scenes(Class<? extends Scene> clazz, BiFunction<GameModel, String[], IScene> constructor) {
+		this.clazz = clazz;
+		this.sceneConstructor = constructor;
+		if (ConcurrentHelper.INSTANCES.put(this.clazz, this) != null) {
+			GameConf.GAME_LOGGER.warn("Multiple Scenes for class " + this.clazz);
 		}
 	}
 
@@ -72,7 +77,7 @@ public enum Scenes {
 	 * @return {@code true} if it is a menu, {@code false} otherwise
 	 */
 	public boolean isMenu() {
-		return this.sceneClass.isAssignableFrom(MainMenuScene.class);
+		return this.clazz.isAssignableFrom(MainMenuScene.class);
 	}
 
 	/**
@@ -84,11 +89,11 @@ public enum Scenes {
 	 *            the options
 	 * @return the scene
 	 */
-	public Scene getNewScene(GameModel model, String... options) {
+	public IScene getNewScene(GameModel model, String... options) {
 		try {
-			return (Scene) this.sceneClass.getDeclaredMethod("create", GameModel.class, String[].class).invoke(null, model, options);
-		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			GameConf.GAME_LOGGER.fatal("Cannot load Scene for Level. See log for more info.");
+			return this.sceneConstructor.apply(model, options);
+		} catch (Exception e) {
+			GameConf.GAME_LOGGER.fatal("Cannot load Scene for Level. Error: " + e.getMessage());
 			return null;
 		}
 
