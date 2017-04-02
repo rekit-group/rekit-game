@@ -17,13 +17,13 @@ public enum Scenes {
 	 */
 	NULL(NullScene.class, NullScene::create),
 	/**
-	 * A Menu.
+	 * The Main Menu.
 	 */
-	MENU(MainMenuScene.class, MainMenuScene::create),
+	MAIN_MENU(MainMenuScene.class, MainMenuScene::create),
 	/**
 	 * An infinite level.
 	 */
-	INFINITE(InfiniteLevelScene.class, InfiniteLevelScene::create),
+	INFINITE_FUN(InfiniteLevelScene.class, InfiniteLevelScene::create),
 	/**
 	 * A level of the day.
 	 */
@@ -80,7 +80,7 @@ public enum Scenes {
 	 * @return {@code true} if it is a menu, {@code false} otherwise
 	 */
 	public boolean isMenu() {
-		return this == MENU;
+		return this == MAIN_MENU;
 	}
 
 	/**

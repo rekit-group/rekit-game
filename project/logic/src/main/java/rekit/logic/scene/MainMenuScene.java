@@ -61,7 +61,7 @@ final class MainMenuScene extends Scene {
 
 		MenuList play = new MenuList(this, "Play");
 
-		MenuActionItem inf = new MenuActionItem(this, "Infinite Fun", () -> this.getModel().switchScene(Scenes.INFINITE));
+		MenuActionItem inf = new MenuActionItem(this, "Infinite Fun", () -> this.getModel().switchScene(Scenes.INFINITE_FUN));
 		MenuActionItem lod = new MenuActionItem(this, "Level of the Day", () -> this.getModel().switchScene(Scenes.LOD));
 		MenuActionItem bossRush = new MenuActionItem(this, "Boss Rush", () -> this.getModel().switchScene(Scenes.BOSS_RUSH));
 

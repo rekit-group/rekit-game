@@ -145,7 +145,7 @@ public interface IScene {
 	/**
 	 * Get the associated Root-MenuItem.
 	 *
-	 * @return the root-menuItem or {@code null} if no {@link Scenes#MENU}
+	 * @return the root-menuItem or {@code null} if no {@link Scenes#MAIN_MENU}
 	 */
 	MenuItem getMenu();
 

@@ -1,5 +1,8 @@
 package rekit.logic;
 
+import java.util.logging.Level;
+
+import rekit.core.GameTime;
 import rekit.logic.filters.Filter;
 import rekit.logic.gameelements.entities.Entity;
 import rekit.logic.gui.menu.MenuItem;
@@ -105,6 +108,28 @@ public interface Model {
 		 * This state indicates that currently a level is show by the game and
 		 * it has ended. So a end menu might be drawn.
 		 */
-		INGAME_END
+		INGAME_END;
+		/**
+		 * Calculate the real {@link GameState} based on {@link GameTime} and
+		 * {@link Level} data.
+		 * 
+		 * @param model
+		 *            the model
+		 * @return the real gamestate
+		 */
+		public GameState calcState(GameModel model) {
+			if (this == MENU) {
+				return MENU;
+			}
+
+			boolean hasEnded = ((ILevelScene) model.getScene()).hasEnded();
+			if (hasEnded) {
+				return INGAME_END;
+			}
+
+			boolean paused = model.getScene().isPaused();
+			return paused ? GameState.INGAME_PAUSED : INGAME;
+
+		}
 	}
 }

@@ -151,7 +151,7 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 
 		MenuActionItem resume = new MenuActionItem(this, "Resume", () -> this.togglePause());
 		MenuActionItem restart = new MenuActionItem(this, "Restart", () -> this.restart());
-		MenuActionItem back = new MenuActionItem(this, "Back to Main Menu", () -> this.getModel().switchScene(Scenes.MENU));
+		MenuActionItem back = new MenuActionItem(this, "Back to Main Menu", () -> this.getModel().switchScene(Scenes.MAIN_MENU));
 		MenuActionItem desktop = new MenuActionItem(this, "Exit to Desktop", () -> System.exit(0));
 
 		this.pauseMenu.addItem(resume, restart, back, desktop);
@@ -230,10 +230,10 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 		if (!this.level.getDefinition().isSettingSet(SettingKey.INFINITE)) {
 			// TODO go directly to level selection
 			// maybe via an argument passed to MainMenueScene
-			endBack = new MenuActionItem(this, "Back to level selection", () -> this.getModel().switchScene(Scenes.MENU));
+			endBack = new MenuActionItem(this, "Back to level selection", () -> this.getModel().switchScene(Scenes.MAIN_MENU));
 		} else {
 
-			endBack = new MenuActionItem(this, "Back to Main Menu", () -> this.getModel().switchScene(Scenes.MENU));
+			endBack = new MenuActionItem(this, "Back to Main Menu", () -> this.getModel().switchScene(Scenes.MAIN_MENU));
 		}
 
 		this.endMenu.addItem(endBack, endExit);

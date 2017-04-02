@@ -22,6 +22,9 @@ public final class ThreadUtils {
 	 *         otherwise
 	 */
 	public static boolean sleep(long time) {
+		if (time <= 0) {
+			return true;
+		}
 		try {
 			Thread.sleep(time);
 		} catch (InterruptedException e) {

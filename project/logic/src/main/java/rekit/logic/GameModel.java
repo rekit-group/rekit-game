@@ -1,5 +1,7 @@
 package rekit.logic;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 import rekit.config.GameConf;
 import rekit.core.GameTime;
 import rekit.logic.filters.Filter;
@@ -20,11 +22,11 @@ public class GameModel implements Model {
 	/**
 	 * The current scene.
 	 */
-	private IScene curScene;
+	private IScene scene;
 	/**
 	 * Indicates the end of a game.
 	 */
-	private boolean endGame;
+	private boolean end;
 	/**
 	 * The current state of the game.
 	 */
@@ -42,16 +44,9 @@ public class GameModel implements Model {
 	 * Get a new model.
 	 */
 	public GameModel() {
-		this.endGame = false;
-		this.curScene = Scenes.NULL.getNewScene(this);
+		this.end = false;
+		this.scene = Scenes.NULL.getNewScene(this);
 		GameElementFactory.initialize();
-	}
-
-	/**
-	 * Init game.
-	 */
-	private void init() {
-		this.switchScene(Scenes.MENU);
 	}
 
 	/**
@@ -63,7 +58,7 @@ public class GameModel implements Model {
 
 	@Override
 	public void start() {
-		this.init();
+		this.switchScene(Scenes.MAIN_MENU);
 		ThreadUtils.runDaemon("GameModel", this::playGame);
 	}
 
@@ -72,20 +67,13 @@ public class GameModel implements Model {
 	 */
 	private void playGame() {
 		// repeat until player is dead
-		while (!this.endGame) {
-			this.logicLoop();
-			ThreadUtils.sleep(GameConf.LOGIC_DELTA);
+		while (!this.end) {
+			long before = System.currentTimeMillis();
+			this.scene.logicLoop();
+			long after = System.currentTimeMillis();
+			ThreadUtils.sleep(GameConf.LOGIC_DELTA - (after - before));
 		}
 		this.end();
-	}
-
-	/**
-	 * Calculate DeltaTime Get Collisions .. and Invoke ReactCollision Iterate
-	 * over Elements --&gt; invoke GameElement:logicLoop()
-	 *
-	 */
-	public void logicLoop() {
-		this.curScene.logicLoop();
 	}
 
 	/**
@@ -117,14 +105,14 @@ public class GameModel implements Model {
 		this.removeFilter();
 		nextScene.init();
 		nextScene.start();
-		this.curScene = nextScene;
-		this.state = Scenes.getByInstance(this.curScene).isMenu() ? GameState.MENU : GameState.INGAME;
+		this.scene = nextScene;
+		this.state = Scenes.getByInstance(this.scene).isMenu() ? GameState.MENU : GameState.INGAME;
 		GameTime.resume();
 	}
 
 	@Override
 	public IScene getScene() {
-		return this.curScene;
+		return this.scene;
 	}
 
 	/**
@@ -134,64 +122,69 @@ public class GameModel implements Model {
 	 */
 	@Override
 	public Entity getPlayer() {
-		if (!this.curScene.isLevelScene()) {
+		if (!this.scene.isLevelScene()) {
 			return null;
 		}
-		return ((ILevelScene) this.curScene).getPlayer();
+		return ((ILevelScene) this.scene).getPlayer();
 	}
 
 	@Override
 	public MenuItem getMenu() {
-		return this.curScene.getMenu();
+		return this.scene.getMenu();
 	}
 
 	@Override
 	public GameState getState() {
-		if (this.state != GameState.MENU) {
-			ILevelScene curLevelScene = (ILevelScene) this.curScene;
-			if (curLevelScene.hasEnded()) {
-				this.state = GameState.INGAME_END;
-			} else {
-				this.state = curLevelScene.isPaused() ? GameState.INGAME_PAUSED : GameState.INGAME;
-			}
-		}
-		return this.state;
+		return this.state.calcState(this);
 	}
 
-	/**
-	 * Synchronize objects for filters.
-	 */
-	private static final Object FILTER_SYNC = new Object();
+	private final ReentrantLock filterLock = new ReentrantLock();
 
 	@Override
 	public void setFilter(Filter f) {
-		synchronized (GameModel.FILTER_SYNC) {
+		try {
+			this.filterLock.lock();
 			this.filter = f;
 			this.filterChange = true;
+		} finally {
+			this.filterLock.unlock();
 		}
+
 	}
 
 	@Override
 	public void removeFilter() {
-		synchronized (GameModel.FILTER_SYNC) {
+		try {
+			this.filterLock.lock();
 			this.filter = null;
 			this.filterChange = true;
+		} finally {
+			this.filterLock.unlock();
 		}
+
 	}
 
 	@Override
 	public boolean filterChanged() {
-		synchronized (GameModel.FILTER_SYNC) {
+		try {
+			this.filterLock.lock();
 			return this.filterChange;
+		} finally {
+			this.filterLock.unlock();
 		}
+
 	}
 
 	@Override
 	public Filter getFilter() {
-		synchronized (GameModel.FILTER_SYNC) {
+		try {
+			this.filterLock.lock();
 			this.filterChange = false;
 			return this.filter;
+		} finally {
+			this.filterLock.unlock();
 		}
+
 	}
 
 }
