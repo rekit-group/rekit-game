@@ -1,6 +1,5 @@
 package rekit.logic.scene;
 
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiFunction;
 
 import rekit.config.GameConf;
@@ -49,15 +48,14 @@ public enum Scenes {
 	/**
 	 * Create a scene type by class.
 	 *
-	 * @param sceneClass
+	 * @param clazz
 	 *            the scene class
+	 * @param constructor
+	 *            a constructor method of the scene class
 	 */
 	Scenes(Class<? extends Scene> clazz, BiFunction<GameModel, String[], IScene> constructor) {
 		this.clazz = clazz;
 		this.sceneConstructor = constructor;
-		if (ConcurrentHelper.INSTANCES.put(this.clazz, this) != null) {
-			GameConf.GAME_LOGGER.warn("Multiple Scenes for class " + this.clazz);
-		}
 	}
 
 	/**
@@ -68,7 +66,12 @@ public enum Scenes {
 	 * @return the Scenes Type
 	 */
 	public static Scenes getByInstance(IScene scene) {
-		return ConcurrentHelper.INSTANCES.get(scene.getClass());
+		for (Scenes scenes : Scenes.values()) {
+			if (scenes.clazz == scene.getClass()) {
+				return scenes;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -99,17 +102,4 @@ public enum Scenes {
 
 	}
 
-	/**
-	 * Static context in constructor of enums is quite difficult so we use a
-	 * helper class.
-	 *
-	 * @author Dominik Fuchss
-	 *
-	 */
-	private static class ConcurrentHelper {
-		/**
-		 * The mapping of IScene --&gt; Scenes.
-		 */
-		private static final ConcurrentHashMap<Class<? extends IScene>, Scenes> INSTANCES = new ConcurrentHashMap<>();
-	}
 }
