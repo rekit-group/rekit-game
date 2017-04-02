@@ -10,10 +10,10 @@ import org.fuchss.configuration.annotations.NoSet;
 import org.fuchss.configuration.annotations.SetterInfo;
 import org.fuchss.configuration.parser.Parser;
 
+import rekit.primitives.TextOptions;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBAColor;
 import rekit.util.ReflectUtils;
-import rekit.util.TextOptions;
 
 /**
  * Configuration class that holds static options.

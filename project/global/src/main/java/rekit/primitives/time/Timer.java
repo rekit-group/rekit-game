@@ -8,7 +8,7 @@ import rekit.util.ThreadUtils;
  * Data class that holds an duration time.
  *
  * @author Angelo Aracri
- * @version 1.0
+ * 
  */
 public final class Timer {
 
@@ -117,7 +117,7 @@ public final class Timer {
 	 *            the job
 	 */
 	public static void execute(int offset, Runnable r) {
-		ThreadUtils.runDaemon(r.toString(), () -> {
+		ThreadUtils.runDaemon("" + r, () -> {
 			Timer.sleep(offset);
 			r.run();
 		});

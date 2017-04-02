@@ -16,13 +16,13 @@ import java.util.Map;
 import rekit.config.GameConf;
 import rekit.core.GameGrid;
 import rekit.logic.filters.Filter;
+import rekit.primitives.TextOptions;
 import rekit.primitives.geometry.Polygon;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBAColor;
 import rekit.util.CalcUtil;
-import rekit.util.TextOptions;
-import rekit.util.Triple;
-import rekit.util.Tuple;
+import rekit.util.tuple.Triple;
+import rekit.util.tuple.Tuple;
 
 /**
  * This class represents a {@link GameGrid} of the {@link GameView}.

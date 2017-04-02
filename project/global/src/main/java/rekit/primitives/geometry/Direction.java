@@ -6,7 +6,6 @@ import rekit.config.GameConf;
  * Representation of the 4 directions there are.
  *
  * @author Angelo Aracri
- * @version 1.0
  */
 public enum Direction {
 
@@ -111,7 +110,7 @@ public enum Direction {
 
 	/**
 	 * Get the opposite direction.
-	 * 
+	 *
 	 * @return the opposite direction
 	 */
 	public Direction getOpposite() {

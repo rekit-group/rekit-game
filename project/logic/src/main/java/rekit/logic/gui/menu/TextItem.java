@@ -12,7 +12,7 @@ import rekit.primitives.image.RGBAColor;
  * @author Dominik Fuchss
  *
  */
-public class TextMenu extends MenuItem {
+public class TextItem extends MenuItem {
 	/**
 	 * Vector for spacing.
 	 */
@@ -26,7 +26,7 @@ public class TextMenu extends MenuItem {
 	 * @param text
 	 *            the text
 	 */
-	public TextMenu(IScene scene, String text) {
+	public TextItem(IScene scene, String text) {
 		super(scene, text, new Vec(GameConf.PIXEL_W * 0.95F, GameConf.PIXEL_H * 0.9F));
 	}
 

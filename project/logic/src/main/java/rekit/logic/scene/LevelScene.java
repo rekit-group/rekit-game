@@ -32,10 +32,10 @@ import rekit.logic.level.Level;
 import rekit.persistence.level.DataKey;
 import rekit.persistence.level.LevelDefinition;
 import rekit.persistence.level.SettingKey;
+import rekit.primitives.TextOptions;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.time.Timer;
 import rekit.util.CalcUtil;
-import rekit.util.TextOptions;
 
 /**
  * Scene that holds a playable Level created by a LevelCreator. Different Levels

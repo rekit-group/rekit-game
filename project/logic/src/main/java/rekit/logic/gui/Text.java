@@ -2,7 +2,7 @@ package rekit.logic.gui;
 
 import rekit.core.GameGrid;
 import rekit.logic.IScene;
-import rekit.util.TextOptions;
+import rekit.primitives.TextOptions;
 
 /**
  *

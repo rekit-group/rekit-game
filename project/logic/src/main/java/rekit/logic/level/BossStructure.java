@@ -17,11 +17,11 @@ import rekit.logic.gameelements.particles.ParticleSpawner;
 import rekit.logic.gameelements.type.Boss;
 import rekit.logic.gui.Text;
 import rekit.logic.gui.TimeDecorator;
+import rekit.primitives.TextOptions;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.time.Progress;
 import rekit.primitives.time.Timer;
 import rekit.util.CalcUtil;
-import rekit.util.TextOptions;
 import rekit.util.ThreadUtils;
 
 /**

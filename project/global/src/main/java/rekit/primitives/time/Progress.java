@@ -6,7 +6,7 @@ package rekit.primitives.time;
  * <i>progress</i> to 0 and 1.
  *
  * @author Angelo Aracri
- * @version 1.0
+ * 
  */
 public final class Progress {
 

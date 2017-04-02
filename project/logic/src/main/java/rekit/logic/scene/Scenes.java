@@ -80,7 +80,7 @@ public enum Scenes {
 	 * @return {@code true} if it is a menu, {@code false} otherwise
 	 */
 	public boolean isMenu() {
-		return this.clazz.isAssignableFrom(MainMenuScene.class);
+		return this == MENU;
 	}
 
 	/**

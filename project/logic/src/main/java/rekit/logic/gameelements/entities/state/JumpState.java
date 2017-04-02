@@ -1,9 +1,9 @@
 package rekit.logic.gameelements.entities.state;
 
 import rekit.config.GameConf;
-import rekit.core.GameTime;
 import rekit.logic.gameelements.entities.Entity;
 import rekit.primitives.geometry.Vec;
+import rekit.primitives.time.Timer;
 
 /**
  * The jumping state a entity is in upon jumping until landing Represents the
@@ -12,14 +12,7 @@ import rekit.primitives.geometry.Vec;
  * @author Angelo Aracri
  */
 public class JumpState extends EntityState {
-	/**
-	 * The time left for the jump.
-	 */
-	private long timeLeft = 0;
-	/**
-	 * Last time of invoking {@link #logicLoop()}.
-	 */
-	private long lastTime = GameTime.getTime();
+	private Timer timer;
 
 	/**
 	 * Create State.
@@ -29,7 +22,7 @@ public class JumpState extends EntityState {
 	 */
 	public JumpState(Entity entity) {
 		super(entity);
-		this.timeLeft = GameConf.PLAYER_JUMP_TIME;
+		this.timer = new Timer(GameConf.PLAYER_JUMP_TIME);
 	}
 
 	@Override
@@ -44,12 +37,11 @@ public class JumpState extends EntityState {
 
 	@Override
 	public void logicLoop() {
-		long deltaTime = GameTime.getTime() - this.lastTime;
-		this.lastTime += deltaTime;
-		this.timeLeft -= deltaTime;
-
-		if (this.timeLeft > 0 && this.entity.getVel().y > GameConf.PLAYER_JUMP_BOOST) {
+		this.timer.logicLoop();
+		if (!this.timer.timeUp() && this.entity.getVel().y > GameConf.PLAYER_JUMP_BOOST) {
 			this.entity.setVel(new Vec(this.entity.getVel().x, GameConf.PLAYER_JUMP_BOOST));
+		} else if (this.timer.timeUp()) {
+			this.entity.setEntityState(new FallState(this.entity));
 		}
 	}
 }

@@ -12,7 +12,7 @@ import rekit.logic.gui.menu.MenuGrid;
 import rekit.logic.gui.menu.MenuItem;
 import rekit.logic.gui.menu.MenuList;
 import rekit.logic.gui.menu.SubMenu;
-import rekit.logic.gui.menu.TextMenu;
+import rekit.logic.gui.menu.TextItem;
 import rekit.persistence.DirFileDefinitions;
 import rekit.persistence.level.LevelManager;
 import rekit.primitives.geometry.Vec;
@@ -83,7 +83,7 @@ final class MainMenuScene extends Scene {
 		);
 
 		MenuList about = new MenuList(this, "About");
-		about.addItem(new TextMenu(this, GameConf.ABOUT));
+		about.addItem(new TextItem(this, GameConf.ABOUT));
 
 		MenuActionItem exit = new MenuActionItem(this, "Exit", () -> System.exit(0));
 

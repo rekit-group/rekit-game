@@ -82,7 +82,7 @@ public final class Frame {
 
 	@Override
 	public String toString() {
-		return "(" + this.upperLeftAnchor.toString() + ", " + this.bottomRightAnchor.toString() + ")";
+		return "(" + this.upperLeftAnchor + ", " + this.bottomRightAnchor + ")";
 	}
 
 }

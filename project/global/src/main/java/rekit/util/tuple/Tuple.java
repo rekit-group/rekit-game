@@ -1,4 +1,4 @@
-package rekit.util;
+package rekit.util.tuple;
 
 /**
  * This class defines a tuple.

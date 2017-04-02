@@ -27,17 +27,6 @@ import rekit.logic.gui.GuiElement;
  * obstacles, and decorations, essentially designing and building your game in
  * pieces." <a href="https://docs.unity3d.com/Manual/CreatingScenes.html">Unity
  * Manual</a>
- * <p>
- * A new Scene needs an entry in {@link Scenes} and a method with the Signature:
- * {@code public static Scene create(GameModel, String[])}, for the GameModel to
- * be able to start that Scene.<br>
- * For Scene switching take a look at
- * {@link GameModel#switchScene(Scenes, String[])} <br>
- * <br>
- * <b>IMPORTANT:</b> all {@link Scene Scenes} must provide a static method <br>
- * <b><em>public static Scene create(GameModel model, String[]
- * options)</em></b><br>
- * so that {@link Scenes#getNewScene(GameModel, String[])} can work
  *
  * @author Matthias Schmitt
  *

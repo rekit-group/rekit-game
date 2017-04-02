@@ -1,16 +1,17 @@
-package rekit.util;
+package rekit.util.container;
 
 /**
  * This class represents a container or pointer, which can be used to set
- * variables in lambdas.
- * 
+ * variables in lambdas and can only set one time to a value not equal to
+ * {@code null}.
+ *
  * @author Dominik Fuchss
  *
  * @param <E>
  *            the element type
  */
 
-public final class Container<E> {
+public final class ROContainer<E> {
 	/**
 	 * The element.
 	 */
@@ -18,20 +19,23 @@ public final class Container<E> {
 
 	/**
 	 * Set the element.
-	 * 
+	 *
 	 * @param e
 	 *            the element
 	 */
-	public void setE(E e) {
+	public void set(E e) {
+		if (this.e != null) {
+			return;
+		}
 		this.e = e;
 	}
 
 	/**
 	 * Get the element
-	 * 
+	 *
 	 * @return the element
 	 */
-	public E getE() {
+	public E get() {
 		return this.e;
 	}
 

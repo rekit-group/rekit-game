@@ -9,7 +9,7 @@ import rekit.primitives.operable.Operable;
  * A three dimensional Vector with operations.
  *
  * @author Angelo Aracri
- * @version 1.0
+ * 
  */
 @ClassParser(VecParser.class)
 public final class Vec implements Cloneable, Operable<Vec> {

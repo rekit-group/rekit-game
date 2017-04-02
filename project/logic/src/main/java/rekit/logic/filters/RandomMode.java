@@ -4,8 +4,8 @@ import java.util.Arrays;
 
 import rekit.config.GameConf;
 import rekit.primitives.image.RGBAColor;
-import rekit.util.ROContainer;
 import rekit.util.ReflectUtils.LoadMe;
+import rekit.util.container.ROContainer;
 import rekit.util.ThreadUtils;
 
 /**
@@ -35,7 +35,7 @@ public final class RandomMode implements Filter {
 	 */
 	private RandomMode() {
 		ThreadUtils.runDaemon(RandomMode.class.getSimpleName(), this::periodicallyReset);
-		RandomMode.INSTANCE.setE(this);
+		RandomMode.INSTANCE.set(this);
 	}
 
 	/**

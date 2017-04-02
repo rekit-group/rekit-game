@@ -27,7 +27,7 @@ import rekit.logic.filters.RandomMode;
 import rekit.logic.gameelements.entities.Entity;
 import rekit.logic.gui.menu.MenuItem;
 import rekit.primitives.geometry.Direction;
-import rekit.util.Tuple;
+import rekit.util.tuple.Tuple;
 
 /**
  * This is an implementation of an {@link Controller} of the MVC <br>

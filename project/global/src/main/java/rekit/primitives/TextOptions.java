@@ -1,4 +1,4 @@
-package rekit.util;
+package rekit.primitives;
 
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBAColor;

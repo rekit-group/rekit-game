@@ -7,10 +7,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.util.List;
 
+import rekit.primitives.TextOptions;
 import rekit.primitives.geometry.Polygon;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBAColor;
-import rekit.util.TextOptions;
 
 /**
  * This class defines all necessary methods for drawing GameElements etc. on a
@@ -200,7 +200,7 @@ public abstract class GameGrid {
 	 * @param text
 	 *            the text
 	 * @param options
-	 *            options to customize appereance
+	 *            options to customize appearance
 	 * @param ingame
 	 *            indicates whether it shall drawn as entity of the game
 	 *            (relative to current game progress) or relative to the

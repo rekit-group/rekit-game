@@ -4,8 +4,8 @@ import rekit.config.GameConf;
 import rekit.core.GameGrid;
 import rekit.logic.ILevelScene;
 import rekit.logic.gameelements.entities.Player;
+import rekit.primitives.TextOptions;
 import rekit.primitives.geometry.Vec;
-import rekit.util.TextOptions;
 
 /**
  *

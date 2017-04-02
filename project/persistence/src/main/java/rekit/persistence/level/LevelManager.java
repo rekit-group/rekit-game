@@ -35,8 +35,8 @@ import rekit.config.GameConf;
 import rekit.persistence.DirFileDefinitions;
 import rekit.persistence.JarManager;
 import rekit.persistence.level.token.UnexpectedTokenException;
-import rekit.util.Container;
 import rekit.util.LambdaUtil;
+import rekit.util.container.RWContainer;
 
 /**
  *
@@ -162,10 +162,10 @@ public final class LevelManager {
 	 *            the resource
 	 */
 	private static void addArcadeLevel(Resource level) {
-		Container<String> path = new Container<>();
-		LambdaUtil.invoke(() -> path.setE(level.getURL().getPath()));
+		RWContainer<String> path = new RWContainer<>();
+		LambdaUtil.invoke(() -> path.set(level.getURL().getPath()));
 		String[] split = null;
-		if (path.getE() == null || (split = path.getE().split("/")) == null || split[split.length - 2].equals("levels")) {
+		if (path.get() == null || (split = path.get().split("/")) == null || split[split.length - 2].equals("levels")) {
 			LambdaUtil.invoke(() -> LevelManager.addArcadeLevel(level, LevelManager.GROUP_UNKNOWN));
 		} else {
 			final String group = split[split.length - 2];
@@ -308,7 +308,7 @@ public final class LevelManager {
 	 */
 	private static void loadDataFromFile() {
 		try {
-			Scanner scanner = new Scanner(DirFileDefinitions.USER_DATA, Charset.defaultCharset().name());
+			Scanner scanner = new Scanner(DirFileDefinitions.USER_DATA, Charset.forName("UTF-8").name());
 			while (scanner.hasNextLine()) {
 				String[] levelinfo = scanner.nextLine().split(":");
 				if (levelinfo.length != DataKey.values().length + 1) {
@@ -406,7 +406,7 @@ public final class LevelManager {
 			GameConf.GAME_LOGGER.error("Error while opening " + DirFileDefinitions.USER_DATA.getAbsolutePath() + " for saving scores and saves: FileNotFound");
 			return;
 		}
-		byte[] bytes = LevelManager.convertToString().getBytes(Charset.defaultCharset());
+		byte[] bytes = LevelManager.convertToString().getBytes(Charset.forName("UTF-8"));
 		try {
 			levelStream.write(bytes);
 			levelStream.flush();
