@@ -15,7 +15,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import rekit.config.GameConf;
-import rekit.persistence.JarManager;
+import rekit.persistence.ModManager;
 import rekit.primitives.image.AbstractImage;
 
 /**
@@ -39,7 +39,7 @@ public final class ImageManagement {
 	/**
 	 * The loader Object for the Resource loading.
 	 */
-	private static final PathMatchingResourcePatternResolver LOAD = new PathMatchingResourcePatternResolver(JarManager.SYSLOADER);
+	private static final PathMatchingResourcePatternResolver LOAD = new PathMatchingResourcePatternResolver(ModManager.SYSLOADER);
 
 	/**
 	 * Get the {@link Image} from the resources by name.<br>

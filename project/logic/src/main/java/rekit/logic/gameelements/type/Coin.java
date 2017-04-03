@@ -5,7 +5,7 @@ import java.util.Set;
 import rekit.config.GameConf;
 import rekit.core.GameGrid;
 import rekit.logic.gameelements.GameElement;
-import rekit.persistence.JarManager;
+import rekit.persistence.ModManager;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBAColor;
 import rekit.util.ReflectUtils;
@@ -24,7 +24,7 @@ public abstract class Coin extends Pickup {
 	 * @return a set of prototypes
 	 */
 	public static final Set<? extends GameElement> getPrototypes() {
-		return ReflectUtils.loadInstances(GameConf.SEARCH_PATH, JarManager.SYSLOADER, Coin.class);
+		return ReflectUtils.loadInstances(GameConf.SEARCH_PATH, ModManager.SYSLOADER, Coin.class);
 	}
 
 	/**

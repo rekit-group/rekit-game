@@ -13,7 +13,7 @@ import rekit.config.GameConf;
 import rekit.controller.Controller;
 import rekit.gui.View;
 import rekit.logic.Model;
-import rekit.persistence.JarManager;
+import rekit.persistence.ModManager;
 import rekit.persistence.level.LevelManager;
 import rekit.util.ReflectUtils;
 import rekit.util.ThreadUtils;
@@ -41,7 +41,7 @@ public final class Main {
 	public static void main(String[] args) {
 		Thread.currentThread().setName("Startup");
 		Main.setLogLevel(GameConf.DEBUG ? Level.ALL : Level.FATAL);
-		GameConf.GAME_LOGGER.debug(JarManager.SYSLOADER.getClass().getSimpleName() + " (Sysloader loaded.)");
+		GameConf.GAME_LOGGER.debug(ModManager.SYSLOADER.getClass().getSimpleName() + " (Sysloader loaded.)");
 		Main.applyAllConfigs();
 		LevelManager.init();
 
@@ -85,7 +85,7 @@ public final class Main {
 	 * Visit all Classes which shall be visited.
 	 */
 	private static void applyAllConfigs() {
-		ResourceBundleSetter setter = new ResourceBundleSetter(JarManager.SYSLOADER);
+		ResourceBundleSetter setter = new ResourceBundleSetter(ModManager.SYSLOADER);
 		Main.applyAllConfigs(setter);
 	}
 
@@ -96,6 +96,6 @@ public final class Main {
 	 *            the setter
 	 */
 	private static void applyAllConfigs(Setter setter) {
-		ReflectUtils.getClasses(GameConf.SEARCH_PATH, JarManager.SYSLOADER, Configurable.class).forEach(c -> setter.setAttributes(c));
+		ReflectUtils.getClasses(GameConf.SEARCH_PATH, ModManager.SYSLOADER, Configurable.class).forEach(c -> setter.setAttributes(c));
 	}
 }

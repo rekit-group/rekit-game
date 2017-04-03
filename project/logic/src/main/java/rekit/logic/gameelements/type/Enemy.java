@@ -6,7 +6,7 @@ import rekit.config.GameConf;
 import rekit.core.Team;
 import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.entities.Entity;
-import rekit.persistence.JarManager;
+import rekit.persistence.ModManager;
 import rekit.primitives.geometry.Vec;
 import rekit.util.ReflectUtils;
 import rekit.util.ReflectUtils.LoadMe;
@@ -23,7 +23,7 @@ public abstract class Enemy extends Entity {
 	 * @see LoadMe
 	 */
 	public static final Set<? extends GameElement> getPrototypes() {
-		return ReflectUtils.loadInstances(GameConf.SEARCH_PATH, JarManager.SYSLOADER, Enemy.class);
+		return ReflectUtils.loadInstances(GameConf.SEARCH_PATH, ModManager.SYSLOADER, Enemy.class);
 	}
 
 	/**

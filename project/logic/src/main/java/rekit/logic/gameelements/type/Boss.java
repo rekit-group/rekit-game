@@ -8,7 +8,7 @@ import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.entities.Entity;
 import rekit.logic.gameelements.inanimate.Inanimate;
 import rekit.logic.level.BossStructure;
-import rekit.persistence.JarManager;
+import rekit.persistence.ModManager;
 import rekit.primitives.geometry.Vec;
 import rekit.util.ReflectUtils;
 import rekit.util.ReflectUtils.LoadMe;
@@ -40,7 +40,7 @@ public abstract class Boss extends Entity {
 	 * @see LoadMe
 	 */
 	public static final Set<? extends GameElement> getPrototypes() {
-		return ReflectUtils.loadInstances(GameConf.SEARCH_PATH, JarManager.SYSLOADER, Boss.class);
+		return ReflectUtils.loadInstances(GameConf.SEARCH_PATH, ModManager.SYSLOADER, Boss.class);
 	}
 
 	/**

@@ -13,10 +13,6 @@ import rekit.logic.IScene;
  */
 public enum Scenes {
 	/**
-	 * A placeholder scene.
-	 */
-	NULL(NullScene.class, NullScene::create),
-	/**
 	 * The Main Menu.
 	 */
 	MAIN_MENU(MainMenuScene.class, MainMenuScene::create),

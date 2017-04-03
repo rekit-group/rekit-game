@@ -33,7 +33,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import rekit.config.GameConf;
 import rekit.persistence.DirFileDefinitions;
-import rekit.persistence.JarManager;
+import rekit.persistence.ModManager;
 import rekit.persistence.level.token.UnexpectedTokenException;
 import rekit.util.LambdaUtil;
 import rekit.util.container.RWContainer;
@@ -96,7 +96,7 @@ public final class LevelManager {
 	 *             iff wrong path.
 	 */
 	private static void loadAllLevels() throws IOException {
-		PathMatchingResourcePatternResolver resolv = new PathMatchingResourcePatternResolver(JarManager.SYSLOADER);
+		PathMatchingResourcePatternResolver resolv = new PathMatchingResourcePatternResolver(ModManager.SYSLOADER);
 		Resource[] unknown = resolv.getResources("classpath*:/levels/level*.dat");
 		Resource[] subdirs = resolv.getResources("classpath*:/levels/*/level*.dat");
 		Resource[] res = new Resource[unknown.length + subdirs.length];

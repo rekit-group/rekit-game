@@ -45,7 +45,6 @@ public class GameModel implements Model {
 	 */
 	public GameModel() {
 		this.end = false;
-		this.scene = Scenes.NULL.getNewScene(this);
 		GameElementFactory.initialize();
 	}
 
