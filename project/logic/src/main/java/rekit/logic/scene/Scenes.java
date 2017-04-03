@@ -35,7 +35,7 @@ public enum Scenes {
 	/**
 	 * The scene class.
 	 */
-	private Class<? extends Scene> clazz;
+	private Class<? extends IScene> clazz;
 	/**
 	 * The constructor of the scene.
 	 */
@@ -49,7 +49,7 @@ public enum Scenes {
 	 * @param constructor
 	 *            a constructor method of the scene class
 	 */
-	Scenes(Class<? extends Scene> clazz, BiFunction<GameModel, String[], IScene> constructor) {
+	Scenes(Class<? extends IScene> clazz, BiFunction<GameModel, String[], IScene> constructor) {
 		this.clazz = clazz;
 		this.sceneConstructor = constructor;
 	}
