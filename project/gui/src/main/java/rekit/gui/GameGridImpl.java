@@ -36,11 +36,11 @@ class GameGridImpl extends GameGrid {
 	/**
 	 * The current camera offset.
 	 */
-	private int cameraOffset = 0;
+	private Vec cameraOffset = new Vec();
 	/**
 	 * The current camera offset in units.
 	 */
-	private float cameraOffsetUnits = 0;
+	private Vec cameraOffsetUnits = new Vec();
 	/**
 	 * The current filter.
 	 */
@@ -67,12 +67,12 @@ class GameGridImpl extends GameGrid {
 	/**
 	 * Offset correction value, estimated by tests.
 	 */
-	private static final float CORRECTION = 0.1F;
+	private static final Vec CORRECTION = new Vec(0.1f, 0.5f);
 
 	@Override
 	public void setCurrentOffset(float cameraOffsetUnits) {
-		this.cameraOffsetUnits = cameraOffsetUnits + GameGridImpl.CORRECTION;
-		this.cameraOffset = -CalcUtil.units2pixel(cameraOffsetUnits + GameGridImpl.CORRECTION);
+		this.cameraOffsetUnits = GameGridImpl.CORRECTION.addX(cameraOffsetUnits);
+		this.cameraOffset = CalcUtil.units2pixel(this.cameraOffsetUnits).scalar(-1, 1);
 	}
 
 	/**
@@ -306,8 +306,8 @@ class GameGridImpl extends GameGrid {
 
 		// calculate to pixels and add level scrolling offset
 		for (int i = 0; i < unitArray.length; i += 2) {
-			pixelArray[i] = this.cameraOffset + CalcUtil.units2pixel(unitArray[i]);
-			pixelArray[i + 1] = CalcUtil.units2pixel(unitArray[i + 1]);
+			pixelArray[i] = (int) (this.cameraOffset.x + CalcUtil.units2pixel(unitArray[i]));
+			pixelArray[i + 1] = (int) (this.cameraOffset.y + CalcUtil.units2pixel(unitArray[i + 1]));
 		}
 
 		this.drawPolygonImpl(pixelArray, this.calcRGBA(col), fill);
@@ -372,12 +372,12 @@ class GameGridImpl extends GameGrid {
 	 * @return the vec2D
 	 */
 	private Vec translate2D(Vec vec3D, boolean ingame) {
-		Vec perspective = vec3D.z != 0 ? vec3D.translate2D(this.cameraOffsetUnits) : vec3D;
+		Vec perspective = vec3D.z != 0 ? vec3D.translate2D(this.cameraOffsetUnits.x) : vec3D;
 
 		Vec newPos = perspective;
 		if (ingame) {
 			newPos = CalcUtil.units2pixel(newPos);
-			newPos = newPos.addX(this.cameraOffset);
+			newPos = newPos.add(this.cameraOffset);
 		}
 		return newPos;
 	}
