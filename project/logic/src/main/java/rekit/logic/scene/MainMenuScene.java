@@ -109,4 +109,5 @@ final class MainMenuScene extends Scene {
 	public MenuItem getMenu() {
 		return this.menu;
 	}
+
 }

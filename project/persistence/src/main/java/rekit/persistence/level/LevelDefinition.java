@@ -281,7 +281,7 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 	 *            the new value
 	 * @see LevelManager#contentChanged()
 	 */
-	public void setData(DataKey key, Serializable value) {
+	void setData(DataKey key, Serializable value) {
 		this.setData(key, value, true);
 	}
 

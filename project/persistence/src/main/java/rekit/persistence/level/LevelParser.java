@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import rekit.persistence.level.token.Token;
-import rekit.persistence.level.token.TokenType;
-import rekit.persistence.level.token.Tokenizer;
-import rekit.persistence.level.token.UnexpectedTokenException;
+import rekit.persistence.level.parser.Token;
+import rekit.persistence.level.parser.TokenType;
+import rekit.persistence.level.parser.Tokenizer;
+import rekit.persistence.level.parser.UnexpectedTokenException;
 
 /**
  * This class shall be implemented from all classes which want to parse a

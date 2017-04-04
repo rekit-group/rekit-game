@@ -1,4 +1,4 @@
-package rekit.persistence.level.token;
+package rekit.persistence.level.parser;
 
 /**
  * The Class UnexpectedTokenExecption.<br>

@@ -1,4 +1,4 @@
-package rekit.persistence.level.token;
+package rekit.persistence.level.parser;
 
 /**
  * This class defines the different TokenTypes which exist in the LevelLanguage.

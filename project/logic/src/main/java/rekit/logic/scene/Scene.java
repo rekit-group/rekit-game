@@ -357,4 +357,5 @@ abstract class Scene implements CameraTarget, IScene {
 	private static int zToIndex(byte zvalue) {
 		return zvalue + 128;
 	}
+
 }

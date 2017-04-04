@@ -30,6 +30,7 @@ import rekit.logic.gui.parallax.ParallaxContainer;
 import rekit.logic.gui.parallax.TriangulationLayer;
 import rekit.logic.level.Level;
 import rekit.persistence.level.DataKey;
+import rekit.persistence.level.DataKeySetter;
 import rekit.persistence.level.LevelDefinition;
 import rekit.persistence.level.SettingKey;
 import rekit.primitives.TextOptions;
@@ -44,7 +45,7 @@ import rekit.util.CalcUtil;
  * @author matze
  *
  */
-public abstract class LevelScene extends Scene implements ILevelScene {
+public abstract class LevelScene extends Scene implements ILevelScene, DataKeySetter {
 
 	/**
 	 * Menu than will be displayed when the game is paused.
@@ -53,7 +54,7 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 
 	/**
 	 * Menu that will be displayed when the game has ended. Shows options
-	 * dependent on whether the player won or lost and wether its an arcade
+	 * dependent on whether the player won or lost and whether its an arcade
 	 * level or not.
 	 */
 	protected SubMenu endMenu;
@@ -86,6 +87,10 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 	 * Indicates whether the level has ended.
 	 */
 	private boolean ended = false;
+	/**
+	 * Indicates whether the level was successful (INFINITE || won).
+	 */
+	private boolean success = false;
 
 	/**
 	 * Create a new LevelScene.
@@ -173,10 +178,12 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 		if (this.ended) {
 			return;
 		}
-
 		this.ended = true;
-		// TODO Maybe lastValue | won ?!
-		this.level.getDefinition().setData(DataKey.SUCCESS, won);
+		this.success = won || this.level.getDefinition().isSettingSet(SettingKey.INFINITE);
+
+		// Update DataKeys
+		DataKey.atEnd(this);
+
 		// create the end menu before actually populating and showing it
 		this.endMenu = new MenuList(this, "End Menu");
 		this.endMenu.setPos(new Vec(GameConf.PIXEL_W / 2f, GameConf.PIXEL_H / 2f));
@@ -184,15 +191,6 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 		this.addGuiElement(this.endMenu);
 
 		int delay = this.performEndTasks(won);
-		// only save score if the level is infinite or the player has won
-		// don't save it upon losing in finite level
-
-		// TODO not the proper place to do this????
-		// do this in an FinitLevelScene and InifinitLevelScene (not to current
-		// one a new one)
-		if (this.level.getDefinition().isSettingSet(SettingKey.INFINITE) || won) {
-			this.processScore();
-		}
 
 		// show end menu after the specified time
 		if (delay >= 0) {
@@ -265,9 +263,6 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 		if (won) {
 			this.getModel().removeFilter();
 		} else {
-			// TODO don't affect GuiElements (or at least the end menu)
-			// EDIT: @All draw methods: It's possible to disable filter while
-			// drawing: via bool or TextOptions
 			this.getModel().setFilter(new GrayScaleMode());
 		}
 		// show menu short after the winning text has faded out
@@ -340,38 +335,9 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 	}
 
 	@Override
-	public int getScore() {
-		return (int) (this.player.getCameraOffset() + this.getPlayer().getPoints());
-	}
-
-	@Override
 	public int getHighScore() {
 		Integer hs = (Integer) this.level.getDefinition().getData(DataKey.HIGH_SCORE);
 		return hs == null ? 0 : hs;
-	}
-
-	/**
-	 * Set the highscore of the level.
-	 *
-	 * @param highScore
-	 *            the highscore
-	 */
-	protected void setHighScore(int highScore) {
-		this.level.getDefinition().setData(DataKey.HIGH_SCORE, highScore);
-	}
-
-	/**
-	 * Tries to save the current score as new highscore if it is higher than the
-	 * current highscore.
-	 *
-	 * @return true if the highscore changed
-	 */
-	public boolean processScore() {
-		if (this.getScore() > this.getHighScore()) {
-			this.setHighScore(this.getScore());
-			return true;
-		}
-		return false;
 	}
 
 	@Override
@@ -388,5 +354,21 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 	@Override
 	public boolean isLevelScene() {
 		return true;
+	}
+
+	@Override
+	public final LevelDefinition getDefinition() {
+		return this.level.getDefinition();
+
+	}
+
+	@Override
+	public final int getScore() {
+		return (int) (this.player.getCameraOffset() + this.player.getPoints());
+	}
+
+	@Override
+	public final boolean getSuccess() {
+		return this.success;
 	}
 }

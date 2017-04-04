@@ -34,7 +34,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import rekit.config.GameConf;
 import rekit.persistence.DirFileDefinitions;
 import rekit.persistence.ModManager;
-import rekit.persistence.level.token.UnexpectedTokenException;
+import rekit.persistence.level.parser.UnexpectedTokenException;
 import rekit.util.LambdaUtil;
 import rekit.util.container.RWContainer;
 
