@@ -4,6 +4,7 @@ import rekit.config.GameConf;
 import rekit.core.GameGrid;
 import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.entities.Entity;
+import rekit.logic.gameelements.entities.Player;
 import rekit.logic.gameelements.type.Enemy;
 import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Frame;
@@ -164,7 +165,7 @@ public final class RektKiller extends Enemy {
 		}
 
 		// We dont want this guy to fall
-		this.setVel(this.getCurrentDirection().getVector().scalar(GameConf.PLAYER_WALK_MAX_SPEED));
+		this.setVel(this.getCurrentDirection().getVector().scalar(Player.WALK_MAX_SPEED));
 	}
 
 	@Override
@@ -176,7 +177,7 @@ public final class RektKiller extends Enemy {
 				this.getScene().getPlayer().addPoints(40);
 				// Let the player jump if he landed on top
 				if (dir == Direction.UP) {
-					element.setVel(element.getVel().setY(GameConf.PLAYER_KILL_BOOST));
+					element.killBoost();
 				}
 				// kill the enemy
 				this.addDamage(1);

@@ -2,7 +2,10 @@ package rekit.logic.gameelements.entities;
 
 import java.util.function.Consumer;
 
-import rekit.config.GameConf;
+import org.fuchss.configuration.Configurable;
+import org.fuchss.configuration.annotations.NoSet;
+import org.fuchss.configuration.annotations.SetterInfo;
+
 import rekit.core.CameraTarget;
 import rekit.core.GameGrid;
 import rekit.core.Team;
@@ -22,35 +25,79 @@ import rekit.primitives.time.Timer;
  * @author Angelo Aracri
  *
  */
-public final class Player extends Entity implements CameraTarget {
+@SetterInfo(res = "conf/player")
+public final class Player extends Entity implements CameraTarget, Configurable {
+	/**
+	 * The default camera offset for a player.
+	 */
+	public static float CAMERA_OFFSET;
+	/**
+	 * The player's walk acceleration.
+	 */
+	public static float WALK_ACCEL;
+	/**
+	 * The player's stop acceleration.
+	 */
+	public static float STOP_ACCEL;
+	/**
+	 * The player's walk max speed.
+	 */
+	public static float WALK_MAX_SPEED;
+	/**
+	 * The player's jump boost.
+	 */
+	public static float JUMP_BOOST;
+	/**
+	 * The player's boost upon jumping on an enemy.
+	 */
+	public static float KILL_BOOST;
+	/**
+	 * The player's maximum jump time in millis.
+	 */
+	public static long JUMP_TIME;
+	/**
+	 * The player's bottom boost (used when colliding from bottom).
+	 */
+	public static float FLOOR_BOOST;
+	/**
+	 * The player's default amount of lives.
+	 */
+	public static int LIVES;
 	/**
 	 * The start position.
 	 */
+	@NoSet
 	private Vec startPos;
 	/**
 	 * The particle spawner for taking damage.
 	 */
+	@NoSet
 	private ParticleSpawner damageParticles;
 	/**
 	 * The current walk direction.
 	 */
+	@NoSet
 	private Direction currentDirection;
 	/**
 	 * The player's camera offset.
 	 */
+	@NoSet
 	private float currentCameraOffset;
 
 	/**
 	 * A temporary renderer.
 	 */
+	@NoSet
 	private Consumer<GameGrid> tmpRenderer;
 	/**
 	 * The temporary renderer's time.
 	 */
+	@NoSet
 	private Timer renderTimer;
 	/**
 	 * The points of the player.
 	 */
+	@NoSet
 	private int points;
 
 	/**
@@ -71,7 +118,7 @@ public final class Player extends Entity implements CameraTarget {
 	public void init() {
 		this.deleteMe = false;
 		this.setPos(this.startPos);
-		this.lives = GameConf.PLAYER_LIVES;
+		this.lives = Player.LIVES;
 		this.points = 0;
 		this.currentDirection = Direction.RIGHT;
 		this.setVel(new Vec(0, 0));
@@ -93,6 +140,7 @@ public final class Player extends Entity implements CameraTarget {
 			this.renderTimer.logicLoop();
 			return;
 		}
+		
 		// determine if direction needs to be changed +- delta: 0.15
 		if (this.getVel().x > 0.15) {
 			this.currentDirection = Direction.RIGHT;
@@ -112,7 +160,7 @@ public final class Player extends Entity implements CameraTarget {
 	public void collidedWith(Frame collision, Direction dir) {
 		super.collidedWith(collision, dir);
 		if (dir == Direction.UP) {
-			this.setVel(this.getVel().setY(GameConf.PLAYER_BOTTOM_BOOST));
+			this.setVel(this.getVel().setY(Player.FLOOR_BOOST));
 		}
 	}
 
@@ -145,8 +193,9 @@ public final class Player extends Entity implements CameraTarget {
 
 	@Override
 	public float getCameraOffset() {
+		
 		// get maximum player x and adjust level offset
-		float offsetNow = this.getPos().x - GameConf.PLAYER_CAMERA_OFFSET;
+		float offsetNow = this.getPos().x - Player.CAMERA_OFFSET;
 		if (offsetNow > this.currentCameraOffset) {
 			this.currentCameraOffset = offsetNow;
 		}
@@ -197,5 +246,10 @@ public final class Player extends Entity implements CameraTarget {
 	 */
 	public int getPoints() {
 		return this.points;
+	}
+	
+	@Override
+	public void killBoost() {
+		this.setVel(this.getVel().setY(Player.KILL_BOOST));
 	}
 }

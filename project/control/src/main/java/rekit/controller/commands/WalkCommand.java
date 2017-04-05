@@ -1,7 +1,7 @@
 package rekit.controller.commands;
 
-import rekit.config.GameConf;
 import rekit.logic.gameelements.entities.Entity;
+import rekit.logic.gameelements.entities.Player;
 import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Vec;
 
@@ -39,11 +39,11 @@ public class WalkCommand extends EntityCommand {
 		Entity entity = this.supervisor.getEntity(this);
 
 		// Update x velocity with corresponding direction and acceleration
-		Vec newVel = entity.getVel().addX(this.dir.getVector().x * GameConf.PLAYER_WALK_ACCEL);
+		Vec newVel = entity.getVel().addX(this.dir.getVector().x * Player.WALK_ACCEL);
 
 		// check if max speed achieved
-		if (Math.abs(newVel.x) > GameConf.PLAYER_WALK_MAX_SPEED) {
-			newVel = newVel.setX(Math.signum(newVel.x) * GameConf.PLAYER_WALK_MAX_SPEED);
+		if (Math.abs(newVel.x) > Player.WALK_MAX_SPEED) {
+			newVel = newVel.setX(Math.signum(newVel.x) * Player.WALK_MAX_SPEED);
 		}
 
 		// Save new velocity

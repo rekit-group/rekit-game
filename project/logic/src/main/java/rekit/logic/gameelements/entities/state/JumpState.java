@@ -1,7 +1,7 @@
 package rekit.logic.gameelements.entities.state;
 
-import rekit.config.GameConf;
 import rekit.logic.gameelements.entities.Entity;
+import rekit.logic.gameelements.entities.Player;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.time.Timer;
 
@@ -22,7 +22,7 @@ public class JumpState extends EntityState {
 	 */
 	public JumpState(Entity entity) {
 		super(entity);
-		this.timer = new Timer(GameConf.PLAYER_JUMP_TIME);
+		this.timer = new Timer(Player.JUMP_TIME);
 	}
 
 	@Override
@@ -38,8 +38,8 @@ public class JumpState extends EntityState {
 	@Override
 	public void logicLoop() {
 		this.timer.logicLoop();
-		if (!this.timer.timeUp() && this.entity.getVel().y > GameConf.PLAYER_JUMP_BOOST) {
-			this.entity.setVel(new Vec(this.entity.getVel().x, GameConf.PLAYER_JUMP_BOOST));
+		if (!this.timer.timeUp() && this.entity.getVel().y > Player.JUMP_BOOST) {
+			this.entity.setVel(new Vec(this.entity.getVel().x, Player.JUMP_BOOST));
 		} else if (this.timer.timeUp()) {
 			this.entity.setEntityState(new FallState(this.entity));
 		}

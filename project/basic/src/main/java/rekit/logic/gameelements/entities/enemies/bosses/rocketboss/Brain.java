@@ -1,8 +1,8 @@
 package rekit.logic.gameelements.entities.enemies.bosses.rocketboss;
 
-import rekit.config.GameConf;
 import rekit.core.Team;
 import rekit.logic.gameelements.GameElement;
+import rekit.logic.gameelements.entities.Player;
 import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Vec;;
 
@@ -27,7 +27,7 @@ public class Brain extends GameElement {
 			element.collidedWith(this.getCollisionFrame(), dir);
 			
 			// Bounce Player off
-			element.setVel(new Vec(GameConf.PLAYER_KILL_BOOST, GameConf.PLAYER_KILL_BOOST));
+			element.setVel(new Vec(Player.KILL_BOOST, Player.KILL_BOOST));
 			
 			if (this.parent.getLives() == 0) {
 				element.setVel(new Vec(0, 0));

@@ -570,5 +570,11 @@ public abstract class GameElement implements Collidable {
 		}
 
 	}
-
+	
+	/**
+	 * Behavior after this GameElement hit an enemy  
+	 */
+	public void killBoost() {
+		// Do nothing
+	}
 }

@@ -111,42 +111,6 @@ public final class GameConf implements Configurable {
 	 * accelerates upon falling.
 	 */
 	public static float G;
-	/**
-	 * The default camera offset for a player.
-	 */
-	public static float PLAYER_CAMERA_OFFSET;
-	/**
-	 * The player's walk acceleration.
-	 */
-	public static float PLAYER_WALK_ACCEL;
-	/**
-	 * The player's stop acceleration.
-	 */
-	public static float PLAYER_STOP_ACCEL;
-	/**
-	 * The player's walk max speed.
-	 */
-	public static float PLAYER_WALK_MAX_SPEED;
-	/**
-	 * The player's jump boost.
-	 */
-	public static float PLAYER_JUMP_BOOST;
-	/**
-	 * The player's boost upon jumping on an enemy.
-	 */
-	public static float PLAYER_KILL_BOOST;
-	/**
-	 * The player's maximum jump time in millis.
-	 */
-	public static long PLAYER_JUMP_TIME;
-	/**
-	 * The player's bottom boost (used when colliding from bottom).
-	 */
-	public static float PLAYER_BOTTOM_BOOST;
-	/**
-	 * The player's default amount of lives.
-	 */
-	public static int PLAYER_LIVES;
 
 	/**
 	 * The menu's background color.

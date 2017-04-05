@@ -11,6 +11,7 @@ import org.fuchss.configuration.annotations.SetterInfo;
 import rekit.config.GameConf;
 import rekit.core.GameGrid;
 import rekit.logic.gameelements.GameElement;
+import rekit.logic.gameelements.entities.Player;
 import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm.Arm;
 import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.damagestate.DamageState;
 import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.damagestate.State3;
@@ -435,7 +436,7 @@ public class RocketBoss extends Boss implements Configurable {
 		if (this.getTeam().isHostile(element.getTeam())) {
 			element.addDamage(1);
 			element.collidedWith(this.getCollisionFrame(), dir.getOpposite());
-			element.setVel(element.getVel().add(Direction.DOWN.getVector().scalar(-GameConf.PLAYER_KILL_BOOST)));
+			element.setVel(element.getVel().add(Direction.DOWN.getVector().scalar(-Player.KILL_BOOST)));
 		}
 	}
 

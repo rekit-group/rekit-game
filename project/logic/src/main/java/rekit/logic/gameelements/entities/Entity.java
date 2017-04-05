@@ -159,7 +159,7 @@ public abstract class Entity extends GameElement {
 		// apply gravity
 		newVel = newVel.addY(GameConf.G);
 		// apply slowing down walk
-		newVel = newVel.addX(-Math.signum(newVel.x) * GameConf.PLAYER_STOP_ACCEL);
+		newVel = newVel.addX(-Math.signum(newVel.x) * Player.STOP_ACCEL);
 		// we don't want weird floating point velocities
 		if (Math.abs(newVel.x) < 0.05) {
 			newVel = newVel.setX(0);

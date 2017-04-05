@@ -153,7 +153,7 @@ public final class Rocket extends Enemy implements Configurable {
 	public void reactToCollision(GameElement element, Direction dir) {
 		if (this.getTeam().isHostile(element.getTeam())) {
 			if (dir == Direction.UP) {
-				element.setVel(element.getVel().setY(GameConf.PLAYER_KILL_BOOST));
+				element.killBoost();
 				this.getScene().getPlayer().addPoints(20);
 			} else {
 				// Give player damage

@@ -112,7 +112,7 @@ public final class BossStructure extends Structure implements Configurable {
 		this.ended = false;
 		ILevelScene scene = this.door.getScene();
 		// calculate where to put camera
-		this.cameraTarget = this.levelX + 5 + GameConf.PLAYER_CAMERA_OFFSET + scene.getPlayer().getSize().x / 2;
+		this.cameraTarget = this.levelX + 5 + Player.CAMERA_OFFSET + scene.getPlayer().getSize().x / 2;
 
 		// Prepare boss
 		this.boss = (Boss) this.boss.create(this.boss.getStartPos().addX(this.levelX), new String[0]);
@@ -141,7 +141,7 @@ public final class BossStructure extends Structure implements Configurable {
 			player.setVel(player.getVel().setX(1.8f));
 			Timer.sleep(GameConf.LOGIC_DELTA);
 		}
-		scene.setCameraTarget(new FixedCameraTarget(this.cameraTarget - GameConf.PLAYER_CAMERA_OFFSET));
+		scene.setCameraTarget(new FixedCameraTarget(this.cameraTarget - Player.CAMERA_OFFSET));
 		// Spawn Boss
 		GameElementFactory.generate(this.boss);
 		// Close door
@@ -186,8 +186,8 @@ public final class BossStructure extends Structure implements Configurable {
 
 		// Needed for animating camera movement
 		Progress cameraMover = new Progress(//
-				this.cameraTarget - GameConf.PLAYER_CAMERA_OFFSET, //
-				player.getPos().x - GameConf.PLAYER_CAMERA_OFFSET //
+				this.cameraTarget - Player.CAMERA_OFFSET, //
+				player.getPos().x - Player.CAMERA_OFFSET //
 		);
 
 		// Needed for animating door movement
@@ -213,8 +213,8 @@ public final class BossStructure extends Structure implements Configurable {
 		// re-apply velocity to Player
 		player.setVel(save[0]);
 		// give player full health
-		if (player.getLives() < GameConf.PLAYER_LIVES) {
-			player.setLives(GameConf.PLAYER_LIVES);
+		if (player.getLives() < Player.LIVES) {
+			player.setLives(Player.LIVES);
 		}
 		// set camera back to player
 		player.resetCameraOffset();

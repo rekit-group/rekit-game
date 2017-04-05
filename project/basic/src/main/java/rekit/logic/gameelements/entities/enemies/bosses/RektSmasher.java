@@ -141,7 +141,7 @@ public final class RektSmasher extends Boss implements Configurable {
 			if (!this.innerRektKiller.hasSide(dir)) {
 				// Let the player jump if he landed on top
 				if (dir == Direction.UP) {
-					element.setVel(element.getVel().setY(GameConf.PLAYER_KILL_BOOST));
+					element.killBoost();
 				}
 				// kill the enemy
 				this.addDamage(1);
@@ -158,7 +158,7 @@ public final class RektSmasher extends Boss implements Configurable {
 	protected void innerLogicLoop() {
 		super.innerLogicLoop();
 		float speed = RektSmasher.BASE_SPEED + (RektSmasher.LIVES - this.getLives()) * 0.25f;
-		this.setVel(this.innerRektKiller.getCurrentDirection().getVector().scalar(speed * GameConf.PLAYER_WALK_MAX_SPEED));
+		this.setVel(this.innerRektKiller.getCurrentDirection().getVector().scalar(speed * Player.WALK_MAX_SPEED));
 	}
 
 	@Override

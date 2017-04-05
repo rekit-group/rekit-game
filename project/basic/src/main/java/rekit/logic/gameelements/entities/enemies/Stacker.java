@@ -154,7 +154,7 @@ public final class Stacker extends Enemy implements Configurable {
 				if (dir == Direction.DOWN || dir == Direction.UP) {
 					if (this.timeToDie == null) {
 						element.collidedWith(this.getCollisionFrame(), dir);
-						element.setVel(element.getVel().setY(GameConf.PLAYER_KILL_BOOST));
+						element.killBoost();
 						this.customDie();
 					} else {
 						element.collidedWith(this.getCollisionFrame(), dir);
