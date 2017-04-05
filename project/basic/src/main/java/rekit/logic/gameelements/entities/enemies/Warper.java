@@ -26,10 +26,13 @@ import rekit.util.ReflectUtils.LoadMe;
 @LoadMe
 @SetterInfo(res = "conf/warper")
 public final class Warper extends Enemy implements Configurable {
+
 	/**
 	 * The delta time between position changes.
 	 */
 	private static float WARPER_WARP_DELTA;
+	
+	private static int WARPS;
 
 	/**
 	 * The time between the next jump (to next position).
@@ -62,13 +65,15 @@ public final class Warper extends Enemy implements Configurable {
 	 */
 	public Warper(Vec startPos) {
 		super(startPos, new Vec(), Warper.SIZE);
+		this.lives = Warper.WARPS;
 	}
 
 	@Override
 	public void internalRender(GameGrid f) {
 		float progress = this.warpAction.getProgress();
+		int alpha = (int) (255 * (this.lives / (float) Warper.WARPS));
 		for (float i = 1; i >= 0.2; i -= 0.1) {
-			RGBAColor innerColor = new RGBAColor((int) (250 * i), (int) (250 * (1 - progress)), (150));
+			RGBAColor innerColor = new RGBAColor((int) (250 * i), (int) (250 * (1 - progress)), 150, alpha);
 			// draw body
 			f.drawCircle(this.getPos(), this.getSize().scalar(i), innerColor);
 		}
@@ -106,6 +111,9 @@ public final class Warper extends Enemy implements Configurable {
 			} else {
 				this.setPos(this.getPos().addY(-Math.signum(dif.y)));
 			}
+			
+			this.addDamage(1);
+			this.invincibility = null;
 		}
 	}
 
