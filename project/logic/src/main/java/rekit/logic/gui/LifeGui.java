@@ -15,7 +15,7 @@ public class LifeGui extends LevelGuiElement {
 	/**
 	 * The image name.
 	 */
-	private String image = "mrRekt_glasses_right.png";
+	private String image = "life.png";
 	/**
 	 * The image size.
 	 */
