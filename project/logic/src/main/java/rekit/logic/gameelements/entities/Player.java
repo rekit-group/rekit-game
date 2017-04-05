@@ -77,6 +77,8 @@ public final class Player extends Entity implements CameraTarget {
 		this.setVel(new Vec(0, 0));
 		this.currentCameraOffset = 0;
 		this.damageParticles = new ParticleSpawner();
+		this.damageParticles.amountMin = 30;
+		this.damageParticles.amountMax = 40;
 		this.damageParticles.colorR = new ParticleSpawnerOption(222, 242, -10, 10);
 		this.damageParticles.colorG = new ParticleSpawnerOption(138, 158, -10, 10);
 		this.damageParticles.colorB = new ParticleSpawnerOption(6, 26, -10, 10);
@@ -116,8 +118,10 @@ public final class Player extends Entity implements CameraTarget {
 
 	@Override
 	public void addDamage(int damage) {
-		// spawn particles
-		this.damageParticles.spawn(this.getScene(), this.getPos());
+		if (this.invincibility == null || this.invincibility.timeUp()) {
+			// spawn particles
+			this.damageParticles.spawn(this.getScene(), this.getPos());
+		}
 		// Do usual life logic
 		super.addDamage(damage);
 	}
