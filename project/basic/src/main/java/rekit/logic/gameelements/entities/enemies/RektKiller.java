@@ -1,5 +1,9 @@
 package rekit.logic.gameelements.entities.enemies;
 
+import org.fuchss.configuration.Configurable;
+import org.fuchss.configuration.annotations.NoSet;
+import org.fuchss.configuration.annotations.SetterInfo;
+
 import rekit.config.GameConf;
 import rekit.core.GameGrid;
 import rekit.logic.gameelements.GameElement;
@@ -26,24 +30,33 @@ import rekit.util.ReflectUtils.LoadMe;
  *
  * @author Angelo Aracri
  */
+@SetterInfo(res = "conf/rektkiller")
 @LoadMe
-public final class RektKiller extends Enemy {
-
+public final class RektKiller extends Enemy implements Configurable {
+	
+	/**
+	 * The score the {@link Player} receives upon killing this {@link Enemy}
+	 */
+	public static int POINTS;
+	
 	/**
 	 * Number whose first 4 bits are used as booleans for the spike at each
 	 * side. First bit represents UP, the rest is clockwise.
 	 */
+	@NoSet
 	private int sides;
 
 	/**
 	 * Cache the Polygon of the visualization of spikes that will later on be
 	 * rotated and rendered.
 	 */
+	@NoSet
 	private Polygon spikePolygon;
 
 	/**
 	 * Holds the Direction the RektKiller is currently moving to.
 	 */
+	@NoSet
 	private Direction currentDirection;
 
 	/**
@@ -173,8 +186,8 @@ public final class RektKiller extends Enemy {
 		if (this.getTeam().isHostile(element.getTeam())) {
 			// Touched harmless side
 			if (!this.hasSide(dir)) {
-				// give the player 40 points
-				this.getScene().getPlayer().addPoints(40);
+				// give the player points
+				this.getScene().getPlayer().addPoints(RektKiller.POINTS);
 				// Let the player jump if he landed on top
 				if (dir == Direction.UP) {
 					element.killBoost();

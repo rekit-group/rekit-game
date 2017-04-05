@@ -54,7 +54,7 @@ public final class Rocket extends Enemy implements Configurable {
 	 * The Rockets speed
 	 */
 	private static float SPEED;
-
+	
 	/**
 	 * The particle spawner for the rocket's flight.
 	 */
@@ -63,7 +63,12 @@ public final class Rocket extends Enemy implements Configurable {
 	 * The particle spawner for the rocket's explosion.
 	 */
 	private static ParticleSpawner explosionParticles;
-
+	
+	/**
+	 * The score the {@link Player} receives upon killing this {@link Enemy}
+	 */
+	public static int POINTS;
+	
 	/**
 	 * The timer of the particles.
 	 */
@@ -154,7 +159,8 @@ public final class Rocket extends Enemy implements Configurable {
 		if (this.getTeam().isHostile(element.getTeam())) {
 			if (dir == Direction.UP) {
 				element.killBoost();
-				this.getScene().getPlayer().addPoints(20);
+				// give the player points
+				this.getScene().getPlayer().addPoints(Rocket.POINTS);
 			} else {
 				// Give player damage
 				element.addDamage(1);

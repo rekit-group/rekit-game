@@ -51,6 +51,11 @@ public final class Stacker extends Enemy implements Configurable {
 	private static Vec SIZE_DYING;
 
 	private static float DIE_ANIMATION_TIME;
+	
+	/**
+	 * The score the {@link Player} receives upon killing this {@link Enemy}
+	 */
+	public static int POINTS;
 
 	/**
 	 * Prototype Constructor.
@@ -155,6 +160,8 @@ public final class Stacker extends Enemy implements Configurable {
 					if (this.timeToDie == null) {
 						element.collidedWith(this.getCollisionFrame(), dir);
 						element.killBoost();
+						// give the player points
+						this.getScene().getPlayer().addPoints(Stacker.POINTS);
 						this.customDie();
 					} else {
 						element.collidedWith(this.getCollisionFrame(), dir);
