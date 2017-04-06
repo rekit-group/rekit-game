@@ -1,6 +1,5 @@
 package rekit.logic.gameelements.inanimate;
 
-import rekit.config.GameConf;
 import rekit.core.GameGrid;
 import rekit.core.Team;
 import rekit.logic.gameelements.GameElement;

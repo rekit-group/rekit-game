@@ -3,6 +3,8 @@ package rekit.persistence;
 import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +26,17 @@ public final class ModManager {
 	/**
 	 * The system class loader.
 	 */
-	public static final URLClassLoader SYSLOADER = new URLClassLoader(ModManager.loadMods(), ClassLoader.getSystemClassLoader());
+
+	public static final URLClassLoader SYSLOADER = ModManager.loadIt();
+
+	private static synchronized URLClassLoader loadIt() {
+		if (ModManager.SYSLOADER != null) {
+			return ModManager.SYSLOADER;
+		}
+		return AccessController.doPrivileged((PrivilegedAction<URLClassLoader>) () -> {
+			return new URLClassLoader(ModManager.loadMods(), ClassLoader.getSystemClassLoader());
+		});
+	}
 
 	/**
 	 * Load all mods from {@link DirFileDefinitions#MODS_DIR}.

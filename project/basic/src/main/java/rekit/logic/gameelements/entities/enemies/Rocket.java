@@ -8,6 +8,7 @@ import rekit.config.GameConf;
 import rekit.core.GameGrid;
 import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.entities.Entity;
+import rekit.logic.gameelements.entities.Player;
 import rekit.logic.gameelements.particles.ParticleSpawner;
 import rekit.logic.gameelements.type.Enemy;
 import rekit.primitives.geometry.Direction;
@@ -54,7 +55,7 @@ public final class Rocket extends Enemy implements Configurable {
 	 * The Rockets speed
 	 */
 	private static float SPEED;
-	
+
 	/**
 	 * The particle spawner for the rocket's flight.
 	 */
@@ -63,12 +64,12 @@ public final class Rocket extends Enemy implements Configurable {
 	 * The particle spawner for the rocket's explosion.
 	 */
 	private static ParticleSpawner explosionParticles;
-	
+
 	/**
 	 * The score the {@link Player} receives upon killing this {@link Enemy}
 	 */
 	public static int POINTS;
-	
+
 	/**
 	 * The timer of the particles.
 	 */

@@ -48,17 +48,15 @@ public class GameModel implements Model {
 		GameElementFactory.initialize();
 	}
 
-	/**
-	 * End game.
-	 */
-	private void end() {
-
-	}
-
 	@Override
 	public void start() {
 		this.switchScene(Scenes.MAIN_MENU);
 		ThreadUtils.runDaemon("GameModel", this::playGame);
+	}
+
+	@Override
+	public void end() {
+		this.end = true;
 	}
 
 	/**
@@ -72,7 +70,6 @@ public class GameModel implements Model {
 			long after = System.currentTimeMillis();
 			ThreadUtils.sleep(GameConf.LOGIC_DELTA - (after - before));
 		}
-		this.end();
 	}
 
 	/**
@@ -82,7 +79,7 @@ public class GameModel implements Model {
 	 *            the new scene.
 	 */
 	public void switchScene(Scenes s) {
-		this.switchScene(s, new String[] {});
+		this.switchScene(s, new String[0]);
 	}
 
 	/**

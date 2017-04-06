@@ -44,6 +44,11 @@ public interface Model {
 	void start();
 
 	/**
+	 * End the model.
+	 */
+	void end();
+
+	/**
 	 * Get the current scene. The scene to be drawn.
 	 *
 	 * @return the currently active scene
@@ -112,7 +117,7 @@ public interface Model {
 		/**
 		 * Calculate the real {@link GameState} based on {@link GameTime} and
 		 * {@link Level} data.
-		 * 
+		 *
 		 * @param model
 		 *            the model
 		 * @return the real gamestate
@@ -132,4 +137,5 @@ public interface Model {
 
 		}
 	}
+
 }

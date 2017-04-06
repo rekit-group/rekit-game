@@ -12,6 +12,7 @@ import rekit.config.GameConf;
 import rekit.core.GameGrid;
 import rekit.core.GameTime;
 import rekit.logic.gameelements.GameElement;
+import rekit.logic.gameelements.entities.Player;
 import rekit.logic.gameelements.type.Enemy;
 import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Vec;
@@ -41,7 +42,7 @@ public final class Stacker extends Enemy implements Configurable {
 	private static OpProgress<Vec> dimensions;
 
 	@NoSet
-	protected int highestOffset;
+	private int highestOffset;
 
 	private static int ITERATIONS;
 	private static RGBAColor COLOR;
@@ -51,7 +52,7 @@ public final class Stacker extends Enemy implements Configurable {
 	private static Vec SIZE_DYING;
 
 	private static float DIE_ANIMATION_TIME;
-	
+
 	/**
 	 * The score the {@link Player} receives upon killing this {@link Enemy}
 	 */

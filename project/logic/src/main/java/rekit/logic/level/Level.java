@@ -285,6 +285,26 @@ public class Level implements Comparable<Level> {
 	}
 
 	@Override
+	public final int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((this.definition == null) ? 0 : this.definition.getID().hashCode());
+		return result;
+	}
+
+	@Override
+	public final boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null || !(obj instanceof Level)) {
+			return false;
+		}
+		Level other = (Level) obj;
+		return this.definition.getID().equals(other.getDefinition().getID());
+	}
+
+	@Override
 	public final int compareTo(Level o) {
 		return this.definition.compareTo(o.definition);
 	}

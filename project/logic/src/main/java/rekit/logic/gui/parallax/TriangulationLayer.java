@@ -108,7 +108,7 @@ public class TriangulationLayer extends ParallaxLayer {
 		private RGBAColor col;
 		private RGBAColor darkCol;
 
-		public Triangle(Vec corner0, Vec corner1, Vec corner2) {
+		Triangle(Vec corner0, Vec corner1, Vec corner2) {
 			super(TriangulationLayer.this, new Vec());
 
 			this.corners[0] = corner0.setZ(TriangulationLayer.this.perspectiveZ);
@@ -167,7 +167,7 @@ public class TriangulationLayer extends ParallaxLayer {
 		private Vec start;
 		private Vec end;
 
-		public Edge(Vec start, Vec end) {
+		Edge(Vec start, Vec end) {
 			this.start = start;
 			this.end = end;
 		}
