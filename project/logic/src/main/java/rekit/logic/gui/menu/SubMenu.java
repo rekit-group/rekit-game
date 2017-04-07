@@ -6,6 +6,8 @@ import java.util.List;
 import rekit.core.GameGrid;
 import rekit.logic.IScene;
 import rekit.primitives.geometry.Vec;
+import rekit.util.LambdaUtil;
+import rekit.util.container.ROContainer;
 
 /**
  *
@@ -188,7 +190,12 @@ public abstract class SubMenu extends MenuItem {
 
 	@Override
 	public void select() {
-		MenuItem currentItem = this.menuItems.get(this.index);
+		ROContainer<MenuItem> ptr = new ROContainer<>();
+		LambdaUtil.invoke(() -> ptr.set(this.menuItems.get(this.index)));
+		if (ptr.get() == null) {
+			return;
+		}
+		MenuItem currentItem = ptr.get();
 		if (this.selected && currentItem.isSelectable()) {
 			// select a MenuItem && unselect me
 			this.selected = false;

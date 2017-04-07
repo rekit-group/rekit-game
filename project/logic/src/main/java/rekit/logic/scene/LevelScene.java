@@ -169,7 +169,6 @@ public abstract class LevelScene extends Scene implements ILevelScene, DataKeySe
 	@Override
 	public void start() {
 		this.ended = false;
-
 		this.getModel().removeFilter();
 	}
 
