@@ -22,7 +22,7 @@ public class ParticleSpawner implements Configurable {
 	 * The particle prototype.
 	 */
 	@NoSet
-	private Particle particlePrototype;
+	protected Particle particlePrototype;
 
 	/**
 	 * The current polygon.

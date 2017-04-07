@@ -11,6 +11,7 @@ import rekit.core.GameGrid;
 import rekit.core.Team;
 import rekit.logic.gameelements.particles.ParticleSpawner;
 import rekit.logic.gameelements.particles.ParticleSpawnerOption;
+import rekit.logic.gameelements.particles.TextParticleSpawner;
 import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Frame;
 import rekit.primitives.geometry.Vec;
@@ -83,7 +84,6 @@ public final class Player extends Entity implements CameraTarget, Configurable {
 	 */
 	@NoSet
 	private float currentCameraOffset;
-
 	/**
 	 * A temporary renderer.
 	 */
@@ -99,7 +99,13 @@ public final class Player extends Entity implements CameraTarget, Configurable {
 	 */
 	@NoSet
 	private int points;
-
+	
+	/**
+	 * The custom {@link ParticleSpawner} that will be used to indicate getting points.
+	 */
+	@NoSet
+	private TextParticleSpawner scoreParticleSpawner;
+	
 	/**
 	 * Create a player by start position.
 	 *
@@ -123,6 +129,7 @@ public final class Player extends Entity implements CameraTarget, Configurable {
 		this.currentDirection = Direction.RIGHT;
 		this.setVel(new Vec(0, 0));
 		this.currentCameraOffset = 0;
+		
 		this.damageParticles = new ParticleSpawner();
 		this.damageParticles.amountMin = 30;
 		this.damageParticles.amountMax = 40;
@@ -130,7 +137,8 @@ public final class Player extends Entity implements CameraTarget, Configurable {
 		this.damageParticles.colorG = new ParticleSpawnerOption(138, 158, -10, 10);
 		this.damageParticles.colorB = new ParticleSpawnerOption(6, 26, -10, 10);
 		this.damageParticles.colorA = new ParticleSpawnerOption(255, 255, -255, -255);
-
+		
+		this.scoreParticleSpawner = new TextParticleSpawner();
 	}
 
 	@Override
@@ -234,6 +242,10 @@ public final class Player extends Entity implements CameraTarget, Configurable {
 	public void addPoints(int points) {
 		if (points < 0 && this.invincibility != null && !this.invincibility.timeUp()) {
 			return;
+		}
+		if (points != 0) {
+			scoreParticleSpawner.setText(points > 0 ? "+" + points : Integer.toString(points));
+			scoreParticleSpawner.spawn(this.getScene(), this.getPos().addY(-0.4f));
 		}
 
 		this.points += points;

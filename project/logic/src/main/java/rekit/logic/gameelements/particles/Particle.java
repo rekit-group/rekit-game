@@ -70,7 +70,7 @@ public class Particle extends GameElement {
 	/**
 	 * The current color.
 	 */
-	private RGBAColor currentCol = new RGBAColor(0, 0, 0, 0);
+	protected RGBAColor currentCol = new RGBAColor(0, 0, 0, 0);
 	/**
 	 * The current movement vector.
 	 */
