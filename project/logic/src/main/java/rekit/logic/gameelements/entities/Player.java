@@ -210,7 +210,7 @@ public final class Player extends Entity implements CameraTarget, Configurable {
 	 * @param millis
 	 *            the time
 	 */
-	public void setTemporaryApperance(Consumer<GameGrid> r, long millis) {
+	public void setTemporaryAppearance(Consumer<GameGrid> r, long millis) {
 		this.tmpRenderer = r;
 		this.renderTimer = new Timer(millis);
 

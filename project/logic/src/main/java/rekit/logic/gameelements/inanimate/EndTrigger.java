@@ -191,7 +191,7 @@ public final class EndTrigger extends InanimateTrigger implements Configurable {
 	@Override
 	public void perform() {
 		// Make player invisible
-		this.getScene().getPlayer().setTemporaryApperance(LambdaUtil.destroy(), 3000);
+		this.getScene().getPlayer().setTemporaryAppearance(LambdaUtil.destroy(), 3000);
 		this.getScene().end(true);
 	}
 
