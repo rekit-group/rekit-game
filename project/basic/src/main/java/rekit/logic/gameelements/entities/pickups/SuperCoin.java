@@ -7,27 +7,28 @@ import rekit.primitives.image.RGBAColor;
 import rekit.util.ReflectUtils.LoadMe;
 
 /**
- * This class defines a simple {@link Pickup}; a <b>GhostCoin</b> which will
- * give the player points and is nearly invisible.
+ * This class defines a simple {@link Pickup}; a <b>SuperCoin</b> which will
+ * give the player more points than the {@link DefaultCoin}
  *
  * @author Dominik Fuchss
+ * @author Angelo Aracri
  *
  */
 @LoadMe
-public final class GhostCoin extends Coin {
+public final class SuperCoin extends Coin {
 	/**
 	 * The default color of the coin.
 	 */
-	private static RGBAColor color = new RGBAColor(30, 100, 216, 7);
+	private static RGBAColor color = new RGBAColor(232, 50, 16);
 	/**
 	 * The shadow color of the coin.
 	 */
-	private static RGBAColor darkColor = new RGBAColor(50, 25, 156, 7);
+	private static RGBAColor darkColor = new RGBAColor(192, 25, 6);
 
 	/**
 	 * Prototype constructor.
 	 */
-	public GhostCoin() {
+	public SuperCoin() {
 		super();
 	}
 
@@ -37,23 +38,23 @@ public final class GhostCoin extends Coin {
 	 * @param startPos
 	 *            the position.
 	 */
-	protected GhostCoin(Vec startPos) {
+	protected SuperCoin(Vec startPos) {
 		super(startPos);
 	}
 
 	@Override
 	protected RGBAColor getColor() {
-		return GhostCoin.color;
+		return SuperCoin.color;
 	}
 
 	@Override
 	protected RGBAColor getDarkerColor() {
-		return GhostCoin.darkColor;
+		return SuperCoin.darkColor;
 	}
 
 	@Override
 	public Coin create(Vec startPos, String[] options) {
-		return new GhostCoin(startPos);
+		return new SuperCoin(startPos);
 	}
 
 	@Override

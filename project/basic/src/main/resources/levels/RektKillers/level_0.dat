@@ -5,7 +5,7 @@
 #SETTING::autoCoinSpawn->false
 
 #ALIAS::1->Inanimate
-#ALIAS::10->Coin
+#ALIAS::10->DefaultCoin
 #ALIAS::2->RektKiller
 
 {

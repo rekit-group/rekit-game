@@ -1,5 +1,6 @@
 package rekit.logic.gameelements.entities.pickups;
 
+import rekit.core.GameGrid;
 import rekit.logic.gameelements.type.Coin;
 import rekit.logic.gameelements.type.Pickup;
 import rekit.primitives.geometry.Vec;
@@ -7,22 +8,15 @@ import rekit.primitives.image.RGBAColor;
 import rekit.util.ReflectUtils.LoadMe;
 
 /**
- * This class defines a simple {@link Pickup}; a <b>EvilCoin</b> which will give
+ * This class defines a simple {@link Pickup}; an <b>EvilCoin</b> which will give
  * the player negative points.
  *
  * @author Dominik Fuchss
+ * @author Angelo Aracri
  *
  */
 @LoadMe
 public final class EvilCoin extends Coin {
-	/**
-	 * The default color of the coin.
-	 */
-	private static RGBAColor color = new RGBAColor(232, 50, 16);
-	/**
-	 * The shadow color of the coin.
-	 */
-	private static RGBAColor darkColor = new RGBAColor(192, 25, 6);
 
 	/**
 	 * Prototype constructor.
@@ -43,12 +37,17 @@ public final class EvilCoin extends Coin {
 
 	@Override
 	protected RGBAColor getColor() {
-		return EvilCoin.color;
+		return null;
 	}
 
 	@Override
 	protected RGBAColor getDarkerColor() {
-		return EvilCoin.darkColor;
+		return null;
+	}
+	
+	@Override
+	public void internalRender(GameGrid f) {
+		f.drawImage(this.getPos().addY((float) (this.sin * 0.1)), new Vec(1,1), "evilCoin.png");
 	}
 
 	@Override
@@ -58,7 +57,7 @@ public final class EvilCoin extends Coin {
 
 	@Override
 	protected int getValue() {
-		return -25;
+		return -30;
 	}
 
 }

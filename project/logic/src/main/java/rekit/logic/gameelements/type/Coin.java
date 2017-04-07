@@ -41,7 +41,7 @@ public abstract class Coin extends Pickup {
 	/**
 	 * Sin(X) for spinning coin.
 	 */
-	private double sin = 0;
+	protected double sin = 0;
 
 	/**
 	 * Instantiate a Coin by position.
