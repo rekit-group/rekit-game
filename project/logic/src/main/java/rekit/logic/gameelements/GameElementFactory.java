@@ -7,11 +7,11 @@ import java.util.Set;
 
 import rekit.config.GameConf;
 import rekit.logic.IScene;
+import rekit.logic.gameelements.entities.pickups.DefaultCoin;
 import rekit.logic.gameelements.inanimate.EndTrigger;
 import rekit.logic.gameelements.inanimate.Inanimate;
 import rekit.logic.gameelements.inanimate.InanimateBox;
 import rekit.logic.gameelements.type.Boss;
-import rekit.logic.gameelements.type.Coin;
 import rekit.logic.gameelements.type.DynamicInanimate;
 import rekit.logic.gameelements.type.Group;
 import rekit.primitives.geometry.Vec;
@@ -191,20 +191,20 @@ public final class GameElementFactory {
 	}
 
 	/**
-	 * Generate coin at position.
+	 * Generate a {@link DefaultCoin} at position.
 	 *
 	 * @param x
 	 *            the x pos
 	 * @param y
 	 *            the y pos
 	 */
-	public static void generateCoin(int x, int y) {
-		GameElementFactory.generate(Coin.class.getSimpleName(), x, y);
+	public static void generateDefaultCoin(int x, int y) {
+		GameElementFactory.generate(DefaultCoin.class.getSimpleName(), x, y);
 
 	}
 
 	/**
-	 * Generate inanimate at position.
+	 * Generate {@link Inanimate} at position.
 	 *
 	 * @param x
 	 *            the x pos
