@@ -7,9 +7,9 @@
 1. Easy platform jumping
 2. More demanding platform jumping
 3. *ToggleBoxes*
-4. **TODO** *MovingBoxes*, *Stackers*, some *ToggleBoxes*
+4. **TODO CREATE** *MovingBoxes*, *Stackers*, some *ToggleBoxes*
 5. **Bonus Level:** Many *Coins*, *Warpers*, *FilterBoxes*
-5. **Boss:** *RektSmasher*
+5. **Boss:** **TODO CREATE** *RektSmasher*
 
 ### Enemies
 * RektKiller
@@ -30,12 +30,12 @@
 
 ### Levels
 
-1. **TODO** *TimedGateEnemies*
-2. **TODO** *AccelerationFloors* , some *TimedGateEnemies*
-3. **TODO**  *ClimbUpBox*, some *MovingBox*
-4. **TODO** ??
-5. **Bonus Level:** Many *Coins*, *ReflectionBox*, *Rockets*
-6. **Boss:** *RocketBoss*
+1. **TODO CREATE** *TimedGateEnemies*
+2. **TODO CREATE** *AccelerationFloors* , some *TimedGateEnemies*
+3. **TODO CREATE**  *ClimbUpBox*, some *MovingBox*
+4. **TODO CHANGE** *Cannon*, *BluePill*
+5. **Bonus Level:** **TODO CHANGE** Many *Coins*, *ReflectionBox*, *Rockets*
+6. **Boss:** **TODO CREATE** *RocketBoss*
 
 ### Enemies
 * Rocket
