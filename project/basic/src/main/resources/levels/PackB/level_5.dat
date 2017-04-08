@@ -7,7 +7,6 @@
 #ALIAS::2->RektKiller
 #ALIAS::10->Coin
 #ALIAS::80->ToggleBox
-#ALIAS::81->MovingBox
 #ALIAS::86->ClimbUpBox
 #ALIAS::87->ReflectionBox
 
