@@ -1,3 +1,4 @@
+#SETTING::name->Boss
 #SETTING::shuffle->false
 #SETTING::doGaps->false
 #SETTING::infinite->false

@@ -5,7 +5,7 @@
 
 #ALIAS::1->Inanimate
 #ALIAS::10->Coin
-#ALIAS::11->Life
+#ALIAS::13->Life
 #ALIAS::80->ToggleBox
 #ALIAS::85->BoostBox
 #ALIAS::86->ClimbUpBox
