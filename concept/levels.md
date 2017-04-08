@@ -6,10 +6,10 @@
 
 1. Easy platform jumping
 2. More demanding platform jumping
-3. *ToggleBoxes*
+3. *ToggleBoxes*, Stackers
 4. **TODO CREATE** *MovingBoxes*, *Stackers*, some *ToggleBoxes*
 5. **Bonus Level:** Many *Coins*, *Warpers*, *FilterBoxes*
-5. **Boss:** **TODO CREATE** *RektSmasher*
+6. **Boss:** *RektSmasher*
 
 ### Enemies
 * RektKiller

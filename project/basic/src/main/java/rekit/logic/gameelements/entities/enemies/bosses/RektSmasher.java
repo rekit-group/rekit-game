@@ -170,17 +170,16 @@ public final class RektSmasher extends Boss implements Configurable {
 	public BossStructure getBossStructure() {
 		String i = Inanimate.class.getSimpleName();
 		String n = null;
-		String r = RektKiller.class.getSimpleName();
 		String[][] struct = new String[][] { //
-				{ i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i },
-				{ i, r, n, n, n, r, i, n, n, n, n, n, i, n, n, n, i, i, n, n, n, i, n, n, n, n, n, n },
-				{ i, n, r, n, r, n, i, n, n, n, n, n, i, n, n, n, n, n, n, n, n, i, n, n, n, n, n, n },
-				{ i, n, n, r, n, n, i, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, i, n },
-				{ i, n, r, n, r, n, i, i, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, i, i, n },
-				{ i, r, n, n, n, r, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n },
-				{ i, i, i, i, i, i, i, n, n, n, n, n, n, i, n, i, i, i, i, n, i, n, n, n, n, n, n, n },
-				{ n, n, n, n, n, n, n, n, n, n, n, n, n, i, n, i, i, i, i, n, i, n, n, n, n, n, n, n },
-				{ i, i, i, i, i, i, i, i, i, i, i, i, i, i, n, i, i, i, i, n, i, i, i, i, i, i, i, i } //
+			{ i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i },
+			{ i, n, n, n, n, n, i, n, n, n, i, i, n, n, n, i, n, n, n, n, n, n },
+			{ i, n, n, n, n, n, i, n, n, n, n, n, n, n, n, i, n, n, n, n, n, n },
+			{ i, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, i, n },
+			{ i, i, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, i, i, n },
+			{ n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n },
+			{ n, n, n, n, n, n, n, i, n, i, i, i, i, n, i, n, n, n, n, n, n, n },
+			{ n, n, n, n, n, n, n, i, n, i, i, i, i, n, i, n, n, n, n, n, n, n },
+			{ i, i, i, i, i, i, i, i, n, i, i, i, i, n, i, i, i, i, i, i, i, i }
 		};
 
 		BossStructure structure = new BossStructure(struct, this);
@@ -190,7 +189,7 @@ public final class RektSmasher extends Boss implements Configurable {
 
 	@Override
 	public Vec getStartPos() {
-		return new Vec(16, GameConf.GRID_H / 2 + 1);
+		return new Vec(10, GameConf.GRID_H / 2 + 0.2f);
 	}
 
 	@Override

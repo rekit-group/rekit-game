@@ -94,10 +94,14 @@ public final class BossStructure extends Structure implements Configurable {
 		// generate and add door after room
 		this.door = new InanimateDoor(new Vec(levelX + width - 1, GameConf.GRID_H / 2));
 		GameElementFactory.generate(this.door);
-
+		
 		// generate trigger at door entrance
-		this.triggerPos = new Vec(levelX + 6, GameConf.GRID_H - 2);
-		InanimateTrigger.createTrigger(this.triggerPos, new Vec(1), this::startBattle);
+		this.triggerPos = new Vec(levelX, GameConf.GRID_H - 2);
+		for (int y = 0; y < 3; ++y) {
+			// this is straight out disgusting
+			InanimateTrigger.createTrigger(this.triggerPos.addY(-y), new Vec(1), this::startBattle);
+		}
+		
 		return width;
 	}
 
@@ -112,7 +116,7 @@ public final class BossStructure extends Structure implements Configurable {
 		this.ended = false;
 		ILevelScene scene = this.door.getScene();
 		// calculate where to put camera
-		this.cameraTarget = this.levelX + 5 + Player.CAMERA_OFFSET + scene.getPlayer().getSize().x / 2;
+		this.cameraTarget = this.levelX - 1 + Player.CAMERA_OFFSET + scene.getPlayer().getSize().x / 2;
 
 		// Prepare boss
 		this.boss = (Boss) this.boss.create(this.boss.getStartPos().addX(this.levelX), new String[0]);
@@ -144,8 +148,11 @@ public final class BossStructure extends Structure implements Configurable {
 		scene.setCameraTarget(new FixedCameraTarget(this.cameraTarget - Player.CAMERA_OFFSET));
 		// Spawn Boss
 		GameElementFactory.generate(this.boss);
-		// Close door
-		GameElementFactory.generateInanimate((int) this.triggerPos.x, (int) this.triggerPos.y);
+		
+		for (int y = 0; y < 3; ++y) {
+			// Close door
+			GameElementFactory.generateInanimate((int) this.triggerPos.x, (int) this.triggerPos.y - y);
+		}
 
 		// Boss text
 		TextOptions op = new TextOptions(new Vec(-0.5f, -0.5f), 30, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, 1);
