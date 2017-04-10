@@ -1,0 +1,31 @@
+#SETTING::shuffle->false
+#SETTING::doGaps->false
+#SETTING::infinite->false
+#SETTING::autoCoinSpawn->false
+
+#ALIAS::1->Inanimate
+
+
+
+#ALIAS::10->Coin
+#ALIAS::13->Life
+#ALIAS::80->ToggleBox
+#ALIAS::85->BoostBox
+#ALIAS::86->ClimbUpBox
+
+
+#ALIAS::20->Cannon
+#ALIAS::21->RektKiller
+#ALIAS::22->Piston
+
+{
+{0	0	0	0	0	0	0}
+{0	0	0	0	0	0	0}
+{0	0	0	0	0	0	0}
+{0	0	0	0	0	0	0}
+{0	0	1	1	0	0	0}
+{0	0	1	1	0	0	0}
+{0	0	22	22	0	0	0}
+{0	0	0	0	0	0	0}
+{1	1	1	1	1	1	1}
+}

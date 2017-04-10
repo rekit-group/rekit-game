@@ -122,19 +122,19 @@ public final class Piston extends Enemy implements Configurable {
 		this.expansionLength = expansionLength;
 		
 		// calculate base position (determined by Direction and BASE_HEIGHT)
-		Vec basePos = new Vec(0.5f - Piston.BASE_HEIGHT/2f, 0); // case upwards
+		Vec basePos = new Vec(0, 0.5f - Piston.BASE_HEIGHT/2f); // case upwards
 		basePos = basePos.rotate(direction.getAngle());
-		this.setPos(basePos);
+		this.setPos(startPos.add(basePos));
 		
 		// set size (determined by Direction and BASE_HEIGHT)
-		Vec size = new Vec(Piston.BASE_HEIGHT, 1);
+		Vec size = new Vec(1, Piston.BASE_HEIGHT);
 		this.setSize(size);
 		
 		// calculate all durations
 		long calcTimeOpen = (long) Piston.OPEN_TIME.getNow(timeOpen);
 		long calcTimeClosed = (long) Piston.OPEN_TIME.getNow(timeClosed);
-		long calcTimeClosing = (long) Piston.MOVEMENT_SPEED.getNow(movementSpeed);
-		
+		long calcTimeClosing = (long) (1000 * expansionLength / Piston.MOVEMENT_SPEED.getNow(movementSpeed));
+
 		// Create TimeStateMachine for opening/closing behavior.
 		PistonState firstState = new OpenState(calcTimeOpen, new ClosingState(calcTimeClosing, new ClosedState(calcTimeClosed, new OpeningState(calcTimeClosing, null))));
 		((PistonState)firstState.getNextState().getNextState().getNextState()).setNextState(firstState);
@@ -157,6 +157,9 @@ public final class Piston extends Enemy implements Configurable {
 	@Override
 	protected void innerLogicLoop() {
 		
+		// Let the machine work...
+		this.machine.logicLoop();
+		//System.out.println(((PistonState)this.machine.getState()).getCurrentHeight());
 	}
 
 	@Override
@@ -177,7 +180,7 @@ public final class Piston extends Enemy implements Configurable {
 		float timeOpen = 0.5f;
 		float timeClosed = 0.5f;
 		float movementSpeed = 0.5f;
-		float startPhaseId = 0;
+		int startPhaseId = 0;
 		
 		return new Piston(
 				startPos,

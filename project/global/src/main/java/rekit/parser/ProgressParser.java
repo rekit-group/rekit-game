@@ -20,7 +20,7 @@ public final class ProgressParser implements Parser {
 		Pattern pattern = Pattern.compile("[-|\\+]?([0-9]+\\.[0-9]+[f|F]),[-|\\+]?([0-9]+\\.[0-9]+[f|F])");
 		Matcher matcher = pattern.matcher(definition);
 		if (!matcher.find()) {
-			GameConf.GAME_LOGGER.error("BundleHelper: " + definition + " is no Vec");
+			GameConf.GAME_LOGGER.error("BundleHelper: " + definition + " is no Progress");
 			return null;
 		}
 
