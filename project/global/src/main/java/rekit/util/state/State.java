@@ -40,7 +40,8 @@ public abstract class State {
 	 * The time of the last invoke of {@link #logicLoop()}.
 	 */
 	// private long lastTime = GameTime.getTime();
-
+	
+	
 	/**
 	 * Constructor that initializes the {@link #timer} using
 	 * {@link #getTimerTime()}.

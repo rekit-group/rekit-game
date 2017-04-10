@@ -1,4 +1,4 @@
-package rekit.logic.gameelements.entities.enemies;
+package rekit.logic.gameelements.entities.enemies.piston;
 
 import org.fuchss.configuration.Configurable;
 import org.fuchss.configuration.annotations.NoSet;
@@ -9,6 +9,11 @@ import rekit.core.GameGrid;
 import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.entities.Entity;
 import rekit.logic.gameelements.entities.Player;
+import rekit.logic.gameelements.entities.enemies.piston.state.ClosedState;
+import rekit.logic.gameelements.entities.enemies.piston.state.ClosingState;
+import rekit.logic.gameelements.entities.enemies.piston.state.OpenState;
+import rekit.logic.gameelements.entities.enemies.piston.state.OpeningState;
+import rekit.logic.gameelements.entities.enemies.piston.state.PistonState;
 import rekit.logic.gameelements.particles.ParticleSpawner;
 import rekit.logic.gameelements.type.Enemy;
 import rekit.primitives.geometry.Direction;
@@ -19,6 +24,8 @@ import rekit.primitives.image.RGBAColor;
 import rekit.primitives.time.Progress;
 import rekit.primitives.time.Timer;
 import rekit.util.ReflectUtils.LoadMe;
+import rekit.util.state.State;
+import rekit.util.state.TimeStateMachine;
 
 /**
  *
@@ -31,21 +38,26 @@ import rekit.util.ReflectUtils.LoadMe;
 public final class Piston extends Enemy implements Configurable {
 	
 	/**
-	 * The height of the non-moving base of the piston
+	 * The height of the non-moving base of the piston.
 	 */
 	private static float BASE_HEIGHT;
 	/**
-	 * The short distance between piston tip and the actual defined {@link Piston.expansionLength}
+	 * The width of the moving part of the piston.
+	 */
+	private static float PISTON_WIDTH;
+	
+	/**
+	 * The short distance between piston tip and the actual defined {@link Piston.expansionLength}.
 	 */
 	private static float LOWER_MARGIN;
 
 	/**
-	 * The color of the non-moving base of the piston
+	 * The color of the non-moving base of the piston.
 	 */
 	private static RGBAColor BASE_COLOR;
 	
 	/**
-	 * The color of the moving part of the piston
+	 * The color of the moving part of the piston.
 	 */
 	private static RGBAColor PISTON_COLOR;
 
@@ -71,32 +83,27 @@ public final class Piston extends Enemy implements Configurable {
 	 * The length in units, the piston expands.
 	 * The actual size varies by optical means such as BASE_HEIGHT and LOWER_MARGIN. 
 	 */
+	@NoSet
 	private int expansionLength;
 	
 	/**
 	 * The direction that piston is directed to.
 	 */
+	@NoSet
 	private Direction direction;
 	
-	/**
-	 * The actual time the piston stays still while being open in milliseconds 
-	 */
-	private long openTime;
-	
-	/**
-	 * The actual time the piston stays still while being closed in milliseconds 
-	 */
-	private long closedTime;
-	
-	/**
-	 * The movement speed while opening and closing the piston in units per second.
-	 */
-	private long movementSpeed;
-	
+
 	/**
 	 * The id of the phase to start with.
 	 */
-	private int startPhase;
+	@NoSet
+	private int startPhaseId;
+	
+	/**
+	 * The internal StateMachine that handles everything time related. 
+	 */
+	@NoSet
+	private TimeStateMachine machine;
 	
 	
 	/**
@@ -107,14 +114,44 @@ public final class Piston extends Enemy implements Configurable {
 	}
 
 	
-	public Piston(Vec startPos) {
-		super(startPos, new Vec(), new Vec(1.8f, 0.5f));
+	public Piston(Vec startPos, int expansionLength, Direction direction, float timeOpen, float timeClosed, float movementSpeed, float startPhaseId) {
+		super(startPos, new Vec(), new Vec(Piston.BASE_HEIGHT, 1));
 		
+		// save trivial parameters
+		this.direction = direction;
+		this.expansionLength = expansionLength;
+		
+		// calculate base position (determined by Direction and BASE_HEIGHT)
+		Vec basePos = new Vec(0.5f - Piston.BASE_HEIGHT/2f, 0); // case upwards
+		basePos = basePos.rotate(direction.getAngle());
+		this.setPos(basePos);
+		
+		// set size (determined by Direction and BASE_HEIGHT)
+		Vec size = new Vec(Piston.BASE_HEIGHT, 1);
+		this.setSize(size);
+		
+		// calculate all durations
+		long calcTimeOpen = (long) Piston.OPEN_TIME.getNow(timeOpen);
+		long calcTimeClosed = (long) Piston.OPEN_TIME.getNow(timeClosed);
+		long calcTimeClosing = (long) Piston.MOVEMENT_SPEED.getNow(movementSpeed);
+		
+		// Create TimeStateMachine for opening/closing behavior.
+		PistonState firstState = new OpenState(calcTimeOpen, new ClosingState(calcTimeClosing, new ClosedState(calcTimeClosed, new OpeningState(calcTimeClosing, null))));
+		((PistonState)firstState.getNextState().getNextState().getNextState()).setNextState(firstState);
+		this.machine = new TimeStateMachine(
+				firstState
+		); 
+		
+		// go the right start phase
+		for (int i = 0; i < startPhaseId % 4; i++) {
+			this.machine.nextState();
+		}
 	}
 
 	@Override
 	public void internalRender(GameGrid f) {
-		
+		// Draw base part of Piston
+		f.drawRectangle(this.getPos(), this.getSize(), Piston.BASE_COLOR);
 	}
 
 	@Override
@@ -134,8 +171,23 @@ public final class Piston extends Enemy implements Configurable {
 
 	@Override
 	public Entity create(Vec startPos, String[] options) {
-		Piston inst = new Piston(startPos);
-
+		int expansionLength = 1;
+		Direction direction = Direction.DOWN;
+		
+		float timeOpen = 0.5f;
+		float timeClosed = 0.5f;
+		float movementSpeed = 0.5f;
+		float startPhaseId = 0;
+		
+		return new Piston(
+				startPos,
+				expansionLength,
+				direction,
+				timeOpen,
+				timeClosed,
+				movementSpeed,
+				startPhaseId);
+		/*
 		// if option 0 is given: set defined direction
 		if (options.length >= 1 && options[0] != null && options[0].matches("(\\+|-)?[0-3]+")) {
 			int opt = Integer.parseInt(options[0]);
@@ -145,8 +197,7 @@ public final class Piston extends Enemy implements Configurable {
 				GameConf.GAME_LOGGER.error("");
 			}
 		}
-
-		return inst;
+		*/
 	}
 
 
