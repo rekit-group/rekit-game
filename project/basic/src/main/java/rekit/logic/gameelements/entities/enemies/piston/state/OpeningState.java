@@ -1,23 +1,38 @@
 package rekit.logic.gameelements.entities.enemies.piston.state;
 
+import rekit.logic.gameelements.entities.enemies.piston.IPistonForState;
 import rekit.util.state.State;
 
 public class OpeningState extends PistonState {
 	
 	private float currentHeight;
 	
-	public OpeningState(long duration, State nextState) {
-		super(duration, nextState);
+	public OpeningState(IPistonForState piston) {
+		super(piston);
 	}
 	
 	@Override
-	public void logicLoop() {
+	public void internalLogicLoop() {
 		this.currentHeight = 1 - this.timer.getProgress();
 	}
 	
 	@Override
 	public float getCurrentHeight() {
 		return currentHeight;
+	}
+
+	@Override
+	public State getNextState() {
+		return new OpenState(this.piston);
+	}
+
+	@Override
+	public long getTimerTime() {
+		// if the reference to piston has not been set yet
+		if (this.piston == null) {
+			return 0;
+		} 
+		return this.piston.getCalcTimeTransistion();
 	}
 	
 	

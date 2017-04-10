@@ -60,6 +60,7 @@ public abstract class State {
 	 */
 	public void enter(TimeStateMachine parent) {
 		this.parent = parent;
+		this.timer.reset();
 	}
 
 	/**

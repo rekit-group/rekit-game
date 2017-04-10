@@ -4,27 +4,21 @@ import org.fuchss.configuration.Configurable;
 import org.fuchss.configuration.annotations.NoSet;
 import org.fuchss.configuration.annotations.SetterInfo;
 
-import rekit.config.GameConf;
 import rekit.core.GameGrid;
+import rekit.core.Team;
 import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.entities.Entity;
-import rekit.logic.gameelements.entities.Player;
 import rekit.logic.gameelements.entities.enemies.piston.state.ClosedState;
 import rekit.logic.gameelements.entities.enemies.piston.state.ClosingState;
 import rekit.logic.gameelements.entities.enemies.piston.state.OpenState;
 import rekit.logic.gameelements.entities.enemies.piston.state.OpeningState;
 import rekit.logic.gameelements.entities.enemies.piston.state.PistonState;
-import rekit.logic.gameelements.particles.ParticleSpawner;
 import rekit.logic.gameelements.type.Enemy;
 import rekit.primitives.geometry.Direction;
-import rekit.primitives.geometry.Frame;
-import rekit.primitives.geometry.Polygon;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBAColor;
 import rekit.primitives.time.Progress;
-import rekit.primitives.time.Timer;
 import rekit.util.ReflectUtils.LoadMe;
-import rekit.util.state.State;
 import rekit.util.state.TimeStateMachine;
 
 /**
@@ -35,21 +29,21 @@ import rekit.util.state.TimeStateMachine;
  */
 @LoadMe
 @SetterInfo(res = "conf/piston")
-public final class Piston extends Enemy implements Configurable {
+public final class Piston extends Enemy implements Configurable, IPistonForState {
 	
 	/**
 	 * The height of the non-moving base of the piston.
 	 */
-	private static float BASE_HEIGHT;
+	protected static float BASE_HEIGHT;
 	/**
 	 * The width of the moving part of the piston.
 	 */
-	private static float PISTON_WIDTH;
+	protected static float PISTON_WIDTH;
 	
 	/**
 	 * The short distance between piston tip and the actual defined {@link Piston.expansionLength}.
 	 */
-	private static float LOWER_MARGIN;
+	protected static float LOWER_MARGIN;
 
 	/**
 	 * The color of the non-moving base of the piston.
@@ -59,7 +53,7 @@ public final class Piston extends Enemy implements Configurable {
 	/**
 	 * The color of the moving part of the piston.
 	 */
-	private static RGBAColor PISTON_COLOR;
+	protected static RGBAColor PISTON_COLOR;
 
 	/**
 	 * The minimum and maximum time the piston stays still in open state in milliseconds.
@@ -78,6 +72,12 @@ public final class Piston extends Enemy implements Configurable {
 	 * See how the actual speed can be defined in the parameters of the {@link Piston.Piston constructor}.
 	 */
 	private static Progress MOVEMENT_SPEED;
+	
+	/**
+	 * The reference to the inner, moving part of the piston.
+	 */
+	@NoSet
+	private PistonInner inner;
 	
 	/**
 	 * The length in units, the piston expands.
@@ -105,6 +105,14 @@ public final class Piston extends Enemy implements Configurable {
 	@NoSet
 	private TimeStateMachine machine;
 	
+	@NoSet
+	private long calcTimeOpen;
+	
+	@NoSet
+	private long calcTimeClosed;
+	
+	@NoSet
+	private long calcTimeTransition;
 	
 	/**
 	 * Prototype Constructor.
@@ -131,18 +139,14 @@ public final class Piston extends Enemy implements Configurable {
 		this.setSize(size);
 		
 		// calculate all durations
-		long calcTimeOpen = (long) Piston.OPEN_TIME.getNow(timeOpen);
-		long calcTimeClosed = (long) Piston.OPEN_TIME.getNow(timeClosed);
-		long calcTimeClosing = (long) (1000 * expansionLength / Piston.MOVEMENT_SPEED.getNow(movementSpeed));
+		this.calcTimeOpen = (long) Piston.OPEN_TIME.getNow(timeOpen);
+		this.calcTimeClosed = (long) Piston.CLOSED_TIME.getNow(timeClosed);
+		this.calcTimeTransition = (long) (1000 * expansionLength / Piston.MOVEMENT_SPEED.getNow(movementSpeed));
 
 		// Create TimeStateMachine for opening/closing behavior.
-		PistonState firstState = new OpenState(calcTimeOpen, new ClosingState(calcTimeClosing, new ClosedState(calcTimeClosed, new OpeningState(calcTimeClosing, null))));
-		((PistonState)firstState.getNextState().getNextState().getNextState()).setNextState(firstState);
-		this.machine = new TimeStateMachine(
-				firstState
-		); 
+		this.machine = new TimeStateMachine(new OpenState((IPistonForState)this)); 
 		
-		// go the right start phase
+		// go to the right start phase
 		for (int i = 0; i < startPhaseId % 4; i++) {
 			this.machine.nextState();
 		}
@@ -157,9 +161,14 @@ public final class Piston extends Enemy implements Configurable {
 	@Override
 	protected void innerLogicLoop() {
 		
+		if (this.inner == null && this.getScene() != null) {
+			this.inner = new PistonInner();
+			this.getScene().addGameElement(this.inner);
+		}
+		
 		// Let the machine work...
 		this.machine.logicLoop();
-		//System.out.println(((PistonState)this.machine.getState()).getCurrentHeight());
+	
 	}
 
 	@Override
@@ -201,6 +210,62 @@ public final class Piston extends Enemy implements Configurable {
 			}
 		}
 		*/
+	}
+	
+	public class PistonInner extends Enemy {
+		
+		PistonInner() {
+			super(new Vec(), new Vec(), new Vec());
+		}
+		
+		public void innerLogicLoop() {
+			PistonState currentState = (PistonState) Piston.this.machine.getState();
+			
+			// calculate middle pos and size
+			Vec btmPos = new Vec(0, 0.5f - Piston.BASE_HEIGHT);
+			Vec topPos = btmPos.add(new Vec(0, -currentState.getCurrentHeight() * Piston.this.expansionLength));
+			Vec middlePos = btmPos.add(topPos).scalar(0.5f);
+			Vec size = new Vec(Piston.PISTON_WIDTH, btmPos.y - topPos.y);
+			
+			// setting values for rendering and collision frame
+			this.setPos(Piston.this.getPos().add(middlePos.rotate(Piston.this.direction.getAngle())));
+			this.setSize(size.rotate(Piston.this.direction.getAngle()));
+		}
+		
+		@Override
+		public void internalRender(GameGrid f) {
+			
+			
+			
+			
+			
+			f.drawRectangle(this.getPos(), this.getSize(), Piston.PISTON_COLOR);
+			
+			//Piston.this.getPos()
+		}
+		
+		@Override
+		public GameElement create(Vec startPos, String[] options) {
+			return null;
+		}
+
+	}
+
+	@Override
+	public long getCalcTimeOpen() {
+		return this.calcTimeOpen;
+	}
+
+
+	@Override
+	public long getCalcTimeClosed() {
+		return this.calcTimeClosed;
+	}
+
+
+	@Override
+	public long getCalcTimeTransistion() {
+		return this.calcTimeTransition;
 	}
 
 
