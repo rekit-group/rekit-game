@@ -1,5 +1,9 @@
 package rekit.primitives.time;
 
+import org.fuchss.configuration.annotations.ClassParser;
+
+import rekit.parser.ProgressParser;
+
 /**
  * Data class that holds an <i>start</i> and an <i>end</i> float. It can return
  * the corresponding value in between in the same ratio as a given number
@@ -8,6 +12,7 @@ package rekit.primitives.time;
  * @author Angelo Aracri
  * 
  */
+@ClassParser(ProgressParser.class)
 public final class Progress {
 
 	/**
