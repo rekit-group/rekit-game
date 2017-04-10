@@ -192,11 +192,10 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 				}
 			}
 		}
-		System.out.println(params.size());
-		Iterator<Float> it = params.iterator();
+		Iterator<Float> it = params.iterator();		
 		
 		// Now iterate through params or start taking default values if not specified.
-		int expansionLength = (int) ((it.hasNext()) ? it.next() : 1); 
+		int expansionLength = (int) ((it.hasNext()) ? it.next().intValue() : 1); 
 		Direction direction = ((it.hasNext()) ? Direction.values()[it.next().intValue()] : Direction.DOWN); 
 		float timeOpen = (it.hasNext()) ? it.next() : 0.5f;
 		float timeClosed = (it.hasNext()) ? it.next() : 0.5f;
@@ -238,7 +237,6 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 			// Note: these position Vecs are relative to the middle of the Pistons Base!
 			// Also: in direction UP
 			Vec btmPos = new Vec(0, -Piston.BASE_HEIGHT / 2f);
-			
 			
 			Vec topPos = btmPos
 				// Move current length up
