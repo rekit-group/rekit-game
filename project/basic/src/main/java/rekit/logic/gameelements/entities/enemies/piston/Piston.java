@@ -1,17 +1,18 @@
 package rekit.logic.gameelements.entities.enemies.piston;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.fuchss.configuration.Configurable;
 import org.fuchss.configuration.annotations.NoSet;
 import org.fuchss.configuration.annotations.SetterInfo;
 
+import rekit.config.GameConf;
 import rekit.core.GameGrid;
-import rekit.core.Team;
 import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.entities.Entity;
-import rekit.logic.gameelements.entities.enemies.piston.state.ClosedState;
-import rekit.logic.gameelements.entities.enemies.piston.state.ClosingState;
 import rekit.logic.gameelements.entities.enemies.piston.state.OpenState;
-import rekit.logic.gameelements.entities.enemies.piston.state.OpeningState;
 import rekit.logic.gameelements.entities.enemies.piston.state.PistonState;
 import rekit.logic.gameelements.type.Enemy;
 import rekit.primitives.geometry.Direction;
@@ -72,6 +73,11 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 	 * See how the actual speed can be defined in the parameters of the {@link Piston.Piston constructor}.
 	 */
 	private static Progress MOVEMENT_SPEED;
+	
+	/**
+	 * The minimum and maximum shaking while opening or closing the {@link Piston#InnerPiston}
+	 */
+	private static Progress SHAKING;
 	
 	/**
 	 * The reference to the inner, moving part of the piston.
@@ -171,26 +177,33 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 	
 	}
 
-	@Override
-	public void reactToCollision(GameElement element, Direction dir) {
-		if (this.getTeam().isHostile(element.getTeam())) {
-			
-			// Give player damage
-			element.addDamage(1);
-		}
-	}
-
 
 	@Override
 	public Entity create(Vec startPos, String[] options) {
-		int expansionLength = 1;
-		Direction direction = Direction.DOWN;
 		
-		float timeOpen = 0.5f;
-		float timeClosed = 0.5f;
-		float movementSpeed = 0.5f;
-		int startPhaseId = 0;
+		// Create a list and iterator of all given options
+		List<Float> params = new LinkedList<Float>();
+		for (String option : options) {
+			if (option != null) {
+				if (option.matches("(\\+|-)?[0-9].[0-9]F+")) {
+					params.add(Float.parseFloat(option));
+				} else {
+					GameConf.GAME_LOGGER.error("Could not parse parameter of Piston to float: \"" + option + "\", must be in format: [-]0.0F");
+				}
+			}
+		}
+		System.out.println(params.size());
+		Iterator<Float> it = params.iterator();
 		
+		// Now iterate through params or start taking default values if not specified.
+		int expansionLength = (int) ((it.hasNext()) ? it.next() : 1); 
+		Direction direction = ((it.hasNext()) ? Direction.values()[it.next().intValue()] : Direction.DOWN); 
+		float timeOpen = (it.hasNext()) ? it.next() : 0.5f;
+		float timeClosed = (it.hasNext()) ? it.next() : 0.5f;
+		float movementSpeed = (it.hasNext()) ? it.next() : 0.5f;
+		int startPhaseId = (it.hasNext()) ? it.next().intValue() : 0;
+		
+		// return fully populated instance of Piston
 		return new Piston(
 				startPos,
 				expansionLength,
@@ -199,17 +212,6 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 				timeClosed,
 				movementSpeed,
 				startPhaseId);
-		/*
-		// if option 0 is given: set defined direction
-		if (options.length >= 1 && options[0] != null && options[0].matches("(\\+|-)?[0-3]+")) {
-			int opt = Integer.parseInt(options[0]);
-			if (opt >= 0 && opt < Direction.values().length) {
-				// Do sth
-			} else {
-				GameConf.GAME_LOGGER.error("");
-			}
-		}
-		*/
 	}
 	
 	public class PistonInner extends Enemy {
@@ -218,30 +220,47 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 			super(new Vec(), new Vec(), new Vec());
 		}
 		
+		@Override
+		public void reactToCollision(GameElement element, Direction dir) {
+			if (this.getTeam().isHostile(element.getTeam())) {
+				// Give player damage
+				element.addDamage(1);
+			}
+		}
+		
 		public void innerLogicLoop() {
 			PistonState currentState = (PistonState) Piston.this.machine.getState();
 			
+			// angle to rotate the piston by direction of Piston
+			double angle = Piston.this.direction.getAngle();
+			
 			// calculate middle pos and size
-			Vec btmPos = new Vec(0, 0.5f - Piston.BASE_HEIGHT);
-			Vec topPos = btmPos.add(new Vec(0, -currentState.getCurrentHeight() * Piston.this.expansionLength));
+			// Note: these position Vecs are relative to the middle of the Pistons Base!
+			// Also: in direction UP
+			Vec btmPos = new Vec(0, -Piston.BASE_HEIGHT / 2f);
+			
+			
+			Vec topPos = btmPos
+				// Move current length up
+				.addY(-currentState.getCurrentHeight() * Piston.this.expansionLength)
+				// Remove margin
+				.addY(Piston.LOWER_MARGIN)
+				// Add shaking upwards
+				.addY(-Piston.SHAKING.getNow(GameConf.PRNG.nextFloat()));
+			
+			topPos = topPos.setY((topPos.y > btmPos.y) ? btmPos.y : topPos.y); 
+			
 			Vec middlePos = btmPos.add(topPos).scalar(0.5f);
 			Vec size = new Vec(Piston.PISTON_WIDTH, btmPos.y - topPos.y);
 			
 			// setting values for rendering and collision frame
-			this.setPos(Piston.this.getPos().add(middlePos.rotate(Piston.this.direction.getAngle())));
-			this.setSize(size.rotate(Piston.this.direction.getAngle()));
+			this.setPos(Piston.this.getPos().add(middlePos.rotate(angle)));
+			this.setSize(size.rotate(angle));
 		}
 		
 		@Override
 		public void internalRender(GameGrid f) {
-			
-			
-			
-			
-			
 			f.drawRectangle(this.getPos(), this.getSize(), Piston.PISTON_COLOR);
-			
-			//Piston.this.getPos()
 		}
 		
 		@Override

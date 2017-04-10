@@ -20,7 +20,6 @@ public abstract class PistonState extends State {
 	
 	public void logicLoop() {
 		super.logicLoop();
-		System.out.println(this.getClass().getSimpleName() + "(" + this.getTimerTime() + "): " + this.timer.getProgress() +" -> " + ((PistonState)this).getCurrentHeight());
 	}
 
 	/**

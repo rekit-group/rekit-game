@@ -1,7 +1,6 @@
 package rekit.logic.gameelements.entities.enemies.piston.state;
 
 import rekit.logic.gameelements.entities.enemies.piston.IPistonForState;
-import rekit.primitives.time.Timer;
 import rekit.util.state.State;
 
 public class ClosedState extends PistonState {
