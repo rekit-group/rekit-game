@@ -216,7 +216,11 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 		this.machine.logicLoop();
 	
 	}
-
+	
+	@Override
+	public void reactToCollision(GameElement element, Direction dir) {
+		// Do nth.
+	}
 
 	@Override
 	public Entity create(Vec startPos, String[] options) {
@@ -265,8 +269,10 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 		@Override
 		public void reactToCollision(GameElement element, Direction dir) {
 			if (this.getTeam().isHostile(element.getTeam())) {
-				// Give player damage
-				element.addDamage(1);
+				if (((PistonState) Piston.this.machine.getState()).getCurrentHeight() > 0) {
+					// if piston is currently open, do damage
+					element.addDamage(1);
+				}
 			}
 		}
 		
