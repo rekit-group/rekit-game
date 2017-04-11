@@ -176,10 +176,21 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 		}
 	}
 	
+	/**
+	 * Rotate a give relative position to the current {@link Piston#direction}.
+	 * Add {@link GameElement#getPos} for the concrete position.
+	 * @param relPos the relative position to rotate
+	 * @return the rotated relative position
+	 */
 	public Vec rotatePosToDir(Vec relPos) {
 		return relPos.rotate(this.direction.getAngle());
 	}
 	
+	/**
+	 * Rotate a give size vector to the current {@link Piston#direction}.
+	 * @param size the size vector to rotate
+	 * @return the rotated size vector
+	 */
 	public Vec rotateSizeToDir(Vec size) {
 		return (this.direction == Direction.LEFT || this.direction == Direction.RIGHT)
 				? size.setX(size.y).setY(size.x)
@@ -259,6 +270,9 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 	
 	public class PistonInner extends Enemy {
 		
+		/**
+		 * The {@link OpProgress} to switch between {@link Piston#PISTON_COLOR_1} and {@link Piston#PISTON_COLOR_2}. 
+		 */
 		private OpProgress<RGBAColor> colorProgress;
 		
 		PistonInner() {
@@ -276,6 +290,7 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 			}
 		}
 		
+		@Override
 		public void innerLogicLoop() {
 			PistonState currentState = (PistonState) Piston.this.machine.getState();
 			
@@ -333,17 +348,13 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 		return this.calcTimeOpen;
 	}
 
-
 	@Override
 	public long getCalcTimeClosed() {
 		return this.calcTimeClosed;
 	}
 
-
 	@Override
 	public long getCalcTimeTransistion() {
 		return this.calcTimeTransition;
 	}
-
-
 }
