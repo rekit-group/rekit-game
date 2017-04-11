@@ -18,6 +18,7 @@ import rekit.logic.gameelements.type.Enemy;
 import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBAColor;
+import rekit.primitives.operable.OpProgress;
 import rekit.primitives.time.Progress;
 import rekit.util.ReflectUtils.LoadMe;
 import rekit.util.state.TimeStateMachine;
@@ -36,10 +37,6 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 	 * The height of the non-moving base of the piston.
 	 */
 	protected static float BASE_HEIGHT;
-	/**
-	 * The width of the moving part of the piston.
-	 */
-	protected static float PISTON_WIDTH;
 	
 	/**
 	 * The short distance between piston tip and the actual defined {@link Piston.expansionLength}.
@@ -47,14 +44,35 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 	protected static float LOWER_MARGIN;
 
 	/**
-	 * The color of the non-moving base of the piston.
+	 * The amount of segments to draw for the Pistons base in colors {@link Piston#BASE_COLOR_1} and {@link Piston#BASE_COLOR_2}
 	 */
-	private static RGBAColor BASE_COLOR;
+	private static int BASE_SEGMENTS;
 	
 	/**
-	 * The color of the moving part of the piston.
+	 * The first color of the segments of the non-moving base of the piston.
 	 */
-	protected static RGBAColor PISTON_COLOR;
+	private static RGBAColor BASE_COLOR_1;
+	
+	/**
+	 * The second color of the segments of the non-moving base of the piston.
+	 */
+	private static RGBAColor BASE_COLOR_2;
+	
+	/**
+	 * The first, outer color of the moving part of the piston.
+	 */
+	protected static RGBAColor PISTON_COLOR_1;
+	
+	/**
+	 * The second, inner color of the moving part of the piston.
+	 */
+	protected static RGBAColor PISTON_COLOR_2;
+	
+	/**
+	 * The width in units of the pistons inner graphic elements.
+	 */
+	@NoSet
+	protected static float[] PISTON_CIRCLE_WIDTHS = new float[]{0.62f, 0.54f, 0.46f, 0.38f, 0.3f, 0.22f, 0.14f, 0.06f};
 
 	/**
 	 * The minimum and maximum time the piston stays still in open state in milliseconds.
@@ -142,7 +160,7 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 		
 		// set size (determined by Direction and BASE_HEIGHT)
 		Vec size = new Vec(1, Piston.BASE_HEIGHT);
-		this.setSize(size);
+		this.setSize(size.rotate(direction.getAngle()));
 		
 		// calculate all durations
 		this.calcTimeOpen = (long) Piston.OPEN_TIME.getNow(timeOpen);
@@ -157,11 +175,33 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 			this.machine.nextState();
 		}
 	}
+	
+	public Vec rotatePosToDir(Vec relPos) {
+		return relPos.rotate(this.direction.getAngle());
+	}
+	
+	public Vec rotateSizeToDir(Vec size) {
+		return (this.direction == Direction.LEFT || this.direction == Direction.RIGHT)
+				? size.setX(size.y).setY(size.x)
+				: size;
+	}
 
 	@Override
 	public void internalRender(GameGrid f) {
-		// Draw base part of Piston
-		f.drawRectangle(this.getPos(), this.getSize(), Piston.BASE_COLOR);
+		
+		// paint background in color 1
+		f.drawRectangle(this.getPos(), this.getSize(), Piston.BASE_COLOR_1);
+		
+		// paint half of the segments in color 2
+		float segmentWidth = 1f / (float) Piston.BASE_SEGMENTS;
+		
+		float relX = segmentWidth / 2f - this.rotateSizeToDir(this.getSize()).x / 2f;
+		for (int x = 1; x < Piston.BASE_SEGMENTS; x+=2) {
+			Vec relPos = new Vec(relX + x * segmentWidth, 0);
+			Vec relSize = new Vec(segmentWidth, 1);
+			f.drawRectangle(this.getPos().add(rotatePosToDir(relPos)), this.getSize().multiply(rotateSizeToDir(relSize)), Piston.BASE_COLOR_2);
+		}
+		
 	}
 
 	@Override
@@ -215,8 +255,11 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 	
 	public class PistonInner extends Enemy {
 		
+		private OpProgress<RGBAColor> colorProgress;
+		
 		PistonInner() {
 			super(new Vec(), new Vec(), new Vec());
+			this.colorProgress = new OpProgress<RGBAColor>(Piston.PISTON_COLOR_1, Piston.PISTON_COLOR_2);
 		}
 		
 		@Override
@@ -229,9 +272,6 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 		
 		public void innerLogicLoop() {
 			PistonState currentState = (PistonState) Piston.this.machine.getState();
-			
-			// angle to rotate the piston by direction of Piston
-			double angle = Piston.this.direction.getAngle();
 			
 			// calculate middle pos and size
 			// Note: these position Vecs are relative to the middle of the Pistons Base!
@@ -249,16 +289,30 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 			topPos = topPos.setY((topPos.y > btmPos.y) ? btmPos.y : topPos.y); 
 			
 			Vec middlePos = btmPos.add(topPos).scalar(0.5f);
-			Vec size = new Vec(Piston.PISTON_WIDTH, btmPos.y - topPos.y);
+			Vec size = new Vec(Piston.PISTON_CIRCLE_WIDTHS[0], btmPos.y - topPos.y);
 			
 			// setting values for rendering and collision frame
-			this.setPos(Piston.this.getPos().add(middlePos.rotate(angle)));
-			this.setSize(size.rotate(angle));
+			this.setPos(Piston.this.getPos().add(Piston.this.rotatePosToDir(middlePos)));
+			this.setSize(Piston.this.rotateSizeToDir(size));
 		}
 		
 		@Override
 		public void internalRender(GameGrid f) {
-			f.drawRectangle(this.getPos(), this.getSize(), Piston.PISTON_COLOR);
+			
+			int num = Piston.PISTON_CIRCLE_WIDTHS.length;
+			for (int i = 0; i < num; ++i) {
+				RGBAColor col = this.colorProgress.getNow(i / (float) num);
+				
+				// Draw Rectangle for beam
+				Vec size = this.getSize();
+				if (Piston.this.direction == Direction.LEFT || Piston.this.direction == Direction.RIGHT) {
+					size = size.setY(Piston.PISTON_CIRCLE_WIDTHS[i] / 1.5f);
+				} else {
+					size = size.setX(Piston.PISTON_CIRCLE_WIDTHS[i] / 1.5f);
+				}
+				f.drawRectangle(this.getPos(), size, col);
+			}
+			
 		}
 		
 		@Override
