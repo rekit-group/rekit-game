@@ -233,7 +233,7 @@ public abstract class SubMenu extends MenuItem {
 	}
 
 	@Override
-	protected final void internalRender(GameGrid f) {
+	protected void internalRender(GameGrid f) {
 		if (this.selected) {
 			// render this menu as complete Menu
 			this.renderMenu(f);

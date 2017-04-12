@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import rekit.config.GameConf;
 import rekit.logic.GameModel;
 import rekit.logic.gui.menu.BoolSetting;
+import rekit.logic.gui.menu.MainMenuGrid;
 import rekit.logic.gui.menu.MenuActionItem;
 import rekit.logic.gui.menu.MenuGrid;
 import rekit.logic.gui.menu.MenuItem;
@@ -56,15 +57,14 @@ final class MainMenuScene extends Scene {
 	public void init() {
 		super.init();
 
-		this.menu = new MenuList(this, "Main Menu");
-		this.menu.setPos(new Vec(GameConf.PIXEL_W / 2f, GameConf.PIXEL_H / 2f));
+		this.menu = new MainMenuGrid(this, "Main Menu", 2);
+		this.menu.setPos(new Vec(GameConf.PIXEL_W / 2f, 0.855f * GameConf.PIXEL_H));
 
+		// Create play menu
 		MenuList play = new MenuList(this, "Play");
-
 		MenuActionItem inf = new MenuActionItem(this, "Infinite Fun", () -> this.getModel().switchScene(Scenes.INFINITE_FUN));
 		MenuActionItem lod = new MenuActionItem(this, "Level of the Day", () -> this.getModel().switchScene(Scenes.LOD));
 		MenuActionItem bossRush = new MenuActionItem(this, "Boss Rush", () -> this.getModel().switchScene(Scenes.BOSS_RUSH));
-
 		MenuList arcade = new MenuList(this, "Arcade");
 		for (Entry<String, List<String>> group : LevelManager.getArcadeLevelGroups().entrySet()) {
 			this.addGroup(arcade, group);
@@ -72,20 +72,24 @@ final class MainMenuScene extends Scene {
 		}
 		play.addItem(arcade, inf, lod, bossRush);
 		
-
+		// Create settings menu
 		MenuList settings = new MenuList(this, "Settings");
 		settings.addItem(//
 				new BoolSetting(this, "Debug Mode", "DEBUG"), //
 				new MenuActionItem(this, "Open Config", LambdaUtil.tryCatch(() -> Desktop.getDesktop().open(DirFileDefinitions.BASE))) //
 		);
 
+		// Create about text
 		MenuList about = new MenuList(this, "About");
 		about.addItem(new TextItem(this, GameConf.ABOUT));
-
+		
+		// Create exit button
 		MenuActionItem exit = new MenuActionItem(this, "Exit", () -> System.exit(0));
-
+		
+		
+		//MenuActionItem button = new MenuActionItem(this, new Vec(80, 80), String.valueOf(i++), () -> this.getModel().switchScene(Scenes.ARCADE, id));
+		// Add all elements to menu and focus
 		this.menu.addItem(play, settings, about, exit);
-
 		this.addGuiElement(this.menu);
 		this.menu.select();
 	}
