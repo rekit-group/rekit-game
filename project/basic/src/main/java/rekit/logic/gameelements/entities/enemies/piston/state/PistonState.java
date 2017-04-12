@@ -6,26 +6,25 @@ import rekit.util.state.State;
 
 /**
  * Encapsules all timing and phase-depending information in a timeable State.
- * See {@link PistonState.getCurrentHeight} for the actual intrinsic value.
+ * See {@link PistonState#getCurrentHeight()} for the actual intrinsic value.
+ *
  * @author Angelo Aracri
  */
 public abstract class PistonState extends State {
-	
-	protected IPistonForState piston;
-	
+
+	protected final IPistonForState piston;
+
 	public PistonState(IPistonForState piston) {
 		this.piston = piston;
 		this.timer = new Timer(this.getTimerTime());
 	}
-	
-	public void logicLoop() {
-		super.logicLoop();
-	}
 
 	/**
-	 * The intrinsic state of the State, the current height of the piston between 0 and 1.
+	 * The intrinsic state of the State, the current height of the piston
+	 * between 0 and 1.
+	 *
 	 * @return the height of the piston in 0 to 1.
 	 */
 	public abstract float getCurrentHeight();
-	
+
 }
