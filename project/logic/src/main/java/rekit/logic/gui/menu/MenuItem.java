@@ -5,6 +5,7 @@ import rekit.core.GameGrid;
 import rekit.logic.IScene;
 import rekit.logic.gui.GuiElement;
 import rekit.primitives.geometry.Vec;
+import rekit.primitives.image.RGBAColor;
 
 /**
  * This class realizes an Item of a menu.
@@ -150,7 +151,18 @@ public abstract class MenuItem extends GuiElement {
 	 *            the field
 	 */
 	protected void renderItem(GameGrid f) {
-		f.drawRectangle(this.getPos(), this.getSize(), this.hover ? GameConf.MENU_BOX_SELECT_COLOR : GameConf.MENU_BOX_COLOR, false, false);
+		RGBAColor col = this.hover ? GameConf.MENU_BOX_SELECT_COLOR : GameConf.MENU_BOX_COLOR;
+		RGBAColor darkCol = col.darken(0.8f);
+
+		float borderWidth = 10;
+
+		f.drawRectangle(this.getPos(), this.getSize(), col, false, false);
+		
+		f.drawRectangle(this.getPos().addX((+ this.getSize().x - borderWidth) / 2f), this.getSize().setX(borderWidth), darkCol, false, false);
+		f.drawRectangle(this.getPos().addX((- this.getSize().x + borderWidth) / 2f), this.getSize().setX(borderWidth), darkCol, false, false);
+		f.drawRectangle(this.getPos().addY((+ this.getSize().y - borderWidth) / 2f), this.getSize().setY(borderWidth), darkCol, false, false);
+		f.drawRectangle(this.getPos().addY((- this.getSize().y + borderWidth) / 2f), this.getSize().setY(borderWidth), darkCol, false, false);
+		
 		f.drawText(this.getPos(), this.getText(), GameConf.MENU_TEXT, false);
 	}
 
