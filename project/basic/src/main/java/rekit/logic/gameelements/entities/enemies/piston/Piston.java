@@ -26,7 +26,7 @@ import rekit.util.state.TimeStateMachine;
 /**
  *
  * This enemy is a piston that periodically smashes towards direction.
- * Its extension length, open & closed times, movement speed and phase offset can be cofigured. 
+ * Its extension length, open & closed times, movement speed and phase offset can be configured. 
  *
  */
 @LoadMe
