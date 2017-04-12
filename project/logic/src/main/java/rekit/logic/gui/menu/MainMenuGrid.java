@@ -41,7 +41,7 @@ public class MainMenuGrid extends MenuGrid {
 	@Override
 	protected void internalRender(GameGrid f) {
 		super.internalRender(f);
-		if (this.isVisible()) {
+		if (this.selected) {
 			f.drawImage(new Vec(GameConf.GRID_W / 2f, 2.2f), new Vec(8, 5), "logo_" + this.currentFrame + ".png");
 		}
 	}
