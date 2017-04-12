@@ -32,7 +32,7 @@
 
 1. **TODO CREATE** *TimedGateEnemies*
 2. **TODO CREATE** *AccelerationFloors* , some *TimedGateEnemies*
-3. **TODO CREATE**  *ClimbUpBox*, some *MovingBox*
+3. **TODO CHANGE**  *ClimbUpBox*, some *MovingBox*
 4. **TODO CHANGE** *Cannon*, *BluePill*
 5. **Bonus Level:** **TODO CHANGE** Many *Coins*, *ReflectionBox*, *Rockets*
 6. **Boss:** **TODO CREATE** *RocketBoss*

@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 
 import rekit.config.GameConf;
 import rekit.logic.GameModel;
+import rekit.logic.gui.BackgroundElement;
 import rekit.logic.gui.menu.BoolSetting;
 import rekit.logic.gui.menu.MainMenuGrid;
 import rekit.logic.gui.menu.MenuActionItem;
@@ -74,7 +75,7 @@ final class MainMenuScene extends Scene {
 		
 		// Create settings menu
 		MenuList settings = new MenuList(this, "Settings");
-		settings.addItem(//
+		settings.addItem( //
 				new BoolSetting(this, "Debug Mode", "DEBUG"), //
 				new MenuActionItem(this, "Open Config", LambdaUtil.tryCatch(() -> Desktop.getDesktop().open(DirFileDefinitions.BASE))) //
 		);
@@ -86,10 +87,10 @@ final class MainMenuScene extends Scene {
 		// Create exit button
 		MenuActionItem exit = new MenuActionItem(this, "Exit", () -> System.exit(0));
 		
-		
-		//MenuActionItem button = new MenuActionItem(this, new Vec(80, 80), String.valueOf(i++), () -> this.getModel().switchScene(Scenes.ARCADE, id));
 		// Add all elements to menu and focus
 		this.menu.addItem(play, settings, about, exit);
+		
+		this.addGuiElement(new BackgroundElement(this, "mainmenu.png"));
 		this.addGuiElement(this.menu);
 		this.menu.select();
 	}
