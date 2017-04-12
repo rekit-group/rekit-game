@@ -27,7 +27,7 @@ public final class LevelFactory {
 	 *            the definition
 	 * @return the level
 	 */
-	public static final Level createLevel(LevelDefinition definition) {
+	public static Level createLevel(LevelDefinition definition) {
 		Objects.requireNonNull(definition);
 		LevelMtx mtx = new LevelMtx(definition);
 		StructurePart struct = new StructurePart(mtx);
@@ -41,7 +41,7 @@ public final class LevelFactory {
 	 *
 	 * @return the BossRush Level
 	 */
-	public static final Level createBossRushLevel() {
+	public static Level createBossRushLevel() {
 		LevelMtx mtx = LevelFactory.getBossRushLevelMtx();
 		StructurePart sp = new BossRushStructurePart(mtx);
 		LogicalPart lp = new LogicalPart(mtx);

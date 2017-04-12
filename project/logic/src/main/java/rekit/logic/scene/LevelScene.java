@@ -38,7 +38,7 @@ import rekit.util.CalcUtil;
  * Scene that holds a playable Level created by a LevelCreator. Different Levels
  * are possible by changing the LevelCreator in the constructor.
  *
- * @author matze
+ * @author Matthias Schmitt
  *
  */
 public abstract class LevelScene extends Scene implements ILevelScene {
@@ -326,6 +326,7 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 		return true;
 	}
 
+	@Override
 	public Level getLevel() {
 		return this.level;
 	}

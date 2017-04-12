@@ -20,7 +20,7 @@ public final class LogicalPart {
 
 	/**
 	 * Get the player of the level.
-	 * 
+	 *
 	 * @return the player
 	 */
 	public Player getPlayer() {
@@ -46,7 +46,7 @@ public final class LogicalPart {
 		return levels.get(thatIdx + 1);
 	}
 
-	public void reset() {
+	void reset() {
 		this.player.init();
 	}
 

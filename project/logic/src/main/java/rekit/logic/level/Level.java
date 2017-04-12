@@ -29,7 +29,7 @@ public final class Level implements Comparable<Level>, DataKeySetter {
 	/**
 	 * This method shall be invoked when {@link ILevelScene} ends. This will
 	 * save all data like highscore.
-	 * 
+	 *
 	 * @param won
 	 *            indicates whether the level has been completed successfully
 	 */
@@ -85,7 +85,7 @@ public final class Level implements Comparable<Level>, DataKeySetter {
 
 	/**
 	 * Indicates whether the level is infinite.
-	 * 
+	 *
 	 * @return {@code true} iff infinite, {@code false} otherwise
 	 * @see SettingKey#INFINITE
 	 */
@@ -94,13 +94,13 @@ public final class Level implements Comparable<Level>, DataKeySetter {
 	}
 
 	@Override
-	public final int getScore() {
+	public int getScore() {
 		Player player = this.lp.getPlayer();
 		return (int) (player.getCameraOffset() + player.getPoints());
 	}
 
 	@Override
-	public final boolean getSuccess() {
+	public boolean getSuccess() {
 		return this.success;
 	}
 
@@ -110,7 +110,7 @@ public final class Level implements Comparable<Level>, DataKeySetter {
 	}
 
 	@Override
-	public final int hashCode() {
+	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((this.definition == null) ? 0 : this.definition.getID().hashCode());
@@ -118,7 +118,7 @@ public final class Level implements Comparable<Level>, DataKeySetter {
 	}
 
 	@Override
-	public final boolean equals(Object obj) {
+	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
 		}
@@ -130,7 +130,7 @@ public final class Level implements Comparable<Level>, DataKeySetter {
 	}
 
 	@Override
-	public final int compareTo(Level o) {
+	public int compareTo(Level o) {
 		return this.definition.compareTo(o.definition);
 	}
 

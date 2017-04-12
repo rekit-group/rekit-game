@@ -53,7 +53,7 @@ public class StructurePart {
 	/**
 	 * Reset the level.
 	 */
-	public final void reset() {
+	final void reset() {
 		this.currentStructureId = -1;
 		this.unitsBuilt = 0;
 		this.generatedUntil = 0;

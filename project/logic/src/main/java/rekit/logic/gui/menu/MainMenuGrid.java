@@ -16,28 +16,38 @@ public class MainMenuGrid extends MenuGrid {
 	 * The timer to switch between the different logo images.
 	 */
 	private Timer frameTimer;
-	
+
 	/**
 	 * The number of the currently shown logo image.
 	 */
 	private int currentFrame;
-	
+
+	/**
+	 * Create a new MainMenuGrid.
+	 * 
+	 * @param scene
+	 *            the scene
+	 * @param text
+	 *            the text (name)
+	 * @param colCount
+	 *            the amount of columns
+	 */
 	public MainMenuGrid(IScene scene, String text, int colCount) {
 		super(scene, text, colCount, 425, 100);
 		this.setItemSize(new Vec(425, 100));
 		this.frameTimer = new Timer(120);
 	}
-	
+
 	@Override
 	public void logicLoop() {
 		super.logicLoop();
 		this.frameTimer.logicLoop();
 		if (this.frameTimer.timeUp()) {
 			this.frameTimer.reset();
-			currentFrame = (currentFrame + 1) % 3;
+			this.currentFrame = (this.currentFrame + 1) % 3;
 		}
 	}
-	
+
 	@Override
 	protected void internalRender(GameGrid f) {
 		super.internalRender(f);
