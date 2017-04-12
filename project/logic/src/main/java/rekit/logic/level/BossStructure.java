@@ -94,14 +94,14 @@ public final class BossStructure extends Structure implements Configurable {
 		// generate and add door after room
 		this.door = new InanimateDoor(new Vec(levelX + width - 1, GameConf.GRID_H / 2));
 		GameElementFactory.generate(this.door);
-		
+
 		// generate trigger at door entrance
 		this.triggerPos = new Vec(levelX, GameConf.GRID_H - 2);
 		for (int y = 0; y < 3; ++y) {
 			// this is straight out disgusting
 			InanimateTrigger.createTrigger(this.triggerPos.addY(-y), new Vec(1), this::startBattle);
 		}
-		
+
 		return width;
 	}
 
@@ -148,7 +148,7 @@ public final class BossStructure extends Structure implements Configurable {
 		scene.setCameraTarget(new FixedCameraTarget(this.cameraTarget - Player.CAMERA_OFFSET));
 		// Spawn Boss
 		GameElementFactory.generate(this.boss);
-		
+
 		for (int y = 0; y < 3; ++y) {
 			// Close door
 			GameElementFactory.generateInanimate((int) this.triggerPos.x, (int) this.triggerPos.y - y);

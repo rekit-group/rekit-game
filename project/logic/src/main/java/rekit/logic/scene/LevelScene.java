@@ -29,10 +29,6 @@ import rekit.logic.gui.parallax.HeapLayer;
 import rekit.logic.gui.parallax.ParallaxContainer;
 import rekit.logic.gui.parallax.TriangulationLayer;
 import rekit.logic.level.Level;
-import rekit.persistence.level.DataKey;
-import rekit.persistence.level.DataKeySetter;
-import rekit.persistence.level.LevelDefinition;
-import rekit.persistence.level.SettingKey;
 import rekit.primitives.TextOptions;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.time.Timer;
@@ -45,7 +41,7 @@ import rekit.util.CalcUtil;
  * @author matze
  *
  */
-public abstract class LevelScene extends Scene implements ILevelScene, DataKeySetter {
+public abstract class LevelScene extends Scene implements ILevelScene {
 
 	/**
 	 * Menu than will be displayed when the game is paused.
@@ -62,11 +58,11 @@ public abstract class LevelScene extends Scene implements ILevelScene, DataKeySe
 	/**
 	 * The player in the scene.
 	 */
-	private Player player = new Player(new Vec(6, 5));
+	private final Player player;
 	/**
 	 * The level in the scene.
 	 */
-	private Level level;
+	private final Level level;
 	/**
 	 * The current camera target.
 	 */
@@ -86,23 +82,7 @@ public abstract class LevelScene extends Scene implements ILevelScene, DataKeySe
 	/**
 	 * Indicates whether the level has ended.
 	 */
-	private boolean ended = false;
-	/**
-	 * Indicates whether the level was successful (INFINITE || won).
-	 */
-	private boolean success = false;
-
-	/**
-	 * Create a new LevelScene.
-	 *
-	 * @param model
-	 *            the model
-	 * @param level
-	 *            the leveldefinition
-	 */
-	public LevelScene(GameModel model, LevelDefinition level) {
-		this(model, new Level(level));
-	}
+	private boolean ended;
 
 	/**
 	 * Create a new LevelScene.
@@ -115,15 +95,16 @@ public abstract class LevelScene extends Scene implements ILevelScene, DataKeySe
 	public LevelScene(GameModel model, Level level) {
 		super(model);
 		this.level = level;
+		this.player = this.level.getLp().getPlayer();
 		this.ended = true;
 	}
 
 	@Override
 	public void init() {
 		super.init();
+		this.level.reset();
 
 		// Create Player and add him to game
-		this.player.init();
 		this.cameraTarget = this.player;
 		this.addGameElement(this.player);
 
@@ -146,7 +127,7 @@ public abstract class LevelScene extends Scene implements ILevelScene, DataKeySe
 		this.addGuiElement(this.lifeGui);
 
 		TextOptions op = new TextOptions(new Vec(-0.5f, -0.5f), 40, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, Font.BOLD);
-		Text levelText = new Text(this, op).setText(this.level.getDefinition().getName());
+		Text levelText = new Text(this, op).setText(this.level.getName());
 		levelText.setPos(CalcUtil.units2pixel(new Vec(GameConf.GRID_W / 2f, GameConf.GRID_H / 2f)));
 		this.addGuiElement(new TimeDecorator(this, levelText, new Timer(5000)));
 
@@ -178,11 +159,7 @@ public abstract class LevelScene extends Scene implements ILevelScene, DataKeySe
 			return;
 		}
 		this.ended = true;
-		this.success = won || this.level.getDefinition().isSettingSet(SettingKey.INFINITE);
-
-		// Update DataKeys
-		DataKey.atEnd(this);
-
+		this.level.end(won);
 		// create the end menu before actually populating and showing it
 		this.endMenu = new MenuList(this, "End Menu");
 		this.endMenu.setPos(new Vec(GameConf.PIXEL_W / 2f, GameConf.PIXEL_H / 2f));
@@ -211,9 +188,9 @@ public abstract class LevelScene extends Scene implements ILevelScene, DataKeySe
 		MenuActionItem endBack;
 		MenuActionItem endExit = new MenuActionItem(this, "Exit to Desktop", () -> System.exit(0));
 
-		if (!this.level.getDefinition().isSettingSet(SettingKey.INFINITE) && won) {
+		if (!this.level.isInfinite() && won) {
 
-			String nextLevel = this.level.getNextLevel();
+			String nextLevel = this.level.getLp().getNextLevel();
 			if (nextLevel != null) {
 				MenuActionItem endNext = new MenuActionItem(this, "Next Level", () -> this.getModel().switchScene(Scenes.ARCADE, nextLevel));
 				this.endMenu.addItem(endNext);
@@ -224,7 +201,7 @@ public abstract class LevelScene extends Scene implements ILevelScene, DataKeySe
 			this.endMenu.addItem(endRestart);
 		}
 
-		if (!this.level.getDefinition().isSettingSet(SettingKey.INFINITE)) {
+		if (!this.level.isInfinite()) {
 			// TODO go directly to level selection
 			// maybe via an argument passed to MainMenueScene
 			endBack = new MenuActionItem(this, "Back to level selection", () -> this.getModel().switchScene(Scenes.MAIN_MENU));
@@ -286,7 +263,7 @@ public abstract class LevelScene extends Scene implements ILevelScene, DataKeySe
 
 	@Override
 	protected void logicLoopPre() {
-		this.level.generate((int) (this.getCameraOffset() + GameConf.GRID_W + 1));
+		this.level.getSp().generate((int) (this.getCameraOffset() + GameConf.GRID_W + 1));
 
 		// dont allow player to go behind currentOffset
 		float minX = this.getCameraOffset() + this.player.getSize().x / 2f;
@@ -334,12 +311,6 @@ public abstract class LevelScene extends Scene implements ILevelScene, DataKeySe
 	}
 
 	@Override
-	public int getHighScore() {
-		Integer hs = (Integer) this.level.getDefinition().getData(DataKey.HIGH_SCORE);
-		return hs == null ? 0 : hs;
-	}
-
-	@Override
 	public final MenuItem getMenu() {
 		if (this.isPaused()) {
 			return this.pauseMenu;
@@ -351,23 +322,11 @@ public abstract class LevelScene extends Scene implements ILevelScene, DataKeySe
 	}
 
 	@Override
-	public boolean isLevelScene() {
+	public final boolean isLevelScene() {
 		return true;
 	}
 
-	@Override
-	public final LevelDefinition getDefinition() {
-		return this.level.getDefinition();
-
-	}
-
-	@Override
-	public final int getScore() {
-		return (int) (this.player.getCameraOffset() + this.player.getPoints());
-	}
-
-	@Override
-	public final boolean getSuccess() {
-		return this.success;
+	public Level getLevel() {
+		return this.level;
 	}
 }
