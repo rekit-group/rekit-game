@@ -156,8 +156,8 @@ public abstract class LevelScene extends Scene implements ILevelScene, DataKeySe
 
 		MenuActionItem resume = new MenuActionItem(this, "Resume", () -> this.togglePause());
 		MenuActionItem restart = new MenuActionItem(this, "Restart", () -> this.restart());
-		MenuActionItem back = new MenuActionItem(this, "Back to Main Menu", () -> this.getModel().switchScene(Scenes.MAIN_MENU));
-		MenuActionItem desktop = new MenuActionItem(this, "Exit to Desktop", () -> System.exit(0));
+		MenuActionItem back = new MenuActionItem(this, "Main Menu", () -> this.getModel().switchScene(Scenes.MAIN_MENU));
+		MenuActionItem desktop = new MenuActionItem(this, "Exit Game", () -> System.exit(0));
 
 		this.pauseMenu.addItem(resume, restart, back, desktop);
 		this.pauseMenu.setVisible(false);
@@ -209,7 +209,7 @@ public abstract class LevelScene extends Scene implements ILevelScene, DataKeySe
 		// do this in an FinitLevelScene and InifinitLevelScene (not to current
 		// one a new one)
 		MenuActionItem endBack;
-		MenuActionItem endExit = new MenuActionItem(this, "Exit to Desktop", () -> System.exit(0));
+		MenuActionItem endExit = new MenuActionItem(this, "Exit Game", () -> System.exit(0));
 
 		if (!this.level.getDefinition().isSettingSet(SettingKey.INFINITE) && won) {
 
@@ -227,10 +227,10 @@ public abstract class LevelScene extends Scene implements ILevelScene, DataKeySe
 		if (!this.level.getDefinition().isSettingSet(SettingKey.INFINITE)) {
 			// TODO go directly to level selection
 			// maybe via an argument passed to MainMenueScene
-			endBack = new MenuActionItem(this, "Back to level selection", () -> this.getModel().switchScene(Scenes.MAIN_MENU));
+			endBack = new MenuActionItem(this, "Level selection", () -> this.getModel().switchScene(Scenes.MAIN_MENU));
 		} else {
 
-			endBack = new MenuActionItem(this, "Back to Main Menu", () -> this.getModel().switchScene(Scenes.MAIN_MENU));
+			endBack = new MenuActionItem(this, "Main Menu", () -> this.getModel().switchScene(Scenes.MAIN_MENU));
 		}
 
 		this.endMenu.addItem(endBack, endExit);
