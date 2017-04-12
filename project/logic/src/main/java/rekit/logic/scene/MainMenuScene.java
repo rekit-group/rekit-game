@@ -65,9 +65,6 @@ final class MainMenuScene extends Scene {
 		MenuActionItem lod = new MenuActionItem(this, "Level of the Day", () -> this.getModel().switchScene(Scenes.LOD));
 		MenuActionItem bossRush = new MenuActionItem(this, "Boss Rush", () -> this.getModel().switchScene(Scenes.BOSS_RUSH));
 
-		//MenuList top3 = new MenuList(this, "TOP 3 Levels");
-		
-
 		MenuList arcade = new MenuList(this, "Arcade");
 		for (Entry<String, List<String>> group : LevelManager.getArcadeLevelGroups().entrySet()) {
 			this.addGroup(arcade, group);
@@ -94,7 +91,7 @@ final class MainMenuScene extends Scene {
 	}
 
 	private void addGroup(MenuList arcade, Entry<String, List<String>> group) {
-		MenuGrid groupGrid = new MenuGrid(this, group.getKey(), 5);
+		MenuGrid groupGrid = new MenuGrid(this, group.getKey(), 6);
 		int i = 1;
 		for (String idx : group.getValue()) {
 			final String id = "" + idx;
