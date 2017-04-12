@@ -70,7 +70,7 @@ final class MainMenuScene extends Scene {
 			this.addGroup(arcade, group);
 
 		}
-		play.addItem(inf, lod, bossRush, arcade);
+		play.addItem(arcade, inf, lod, bossRush);
 		
 
 		MenuList settings = new MenuList(this, "Settings");
