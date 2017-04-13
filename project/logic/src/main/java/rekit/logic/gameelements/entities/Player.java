@@ -99,13 +99,14 @@ public final class Player extends Entity implements CameraTarget, Configurable {
 	 */
 	@NoSet
 	private int points;
-	
+
 	/**
-	 * The custom {@link ParticleSpawner} that will be used to indicate getting points.
+	 * The custom {@link ParticleSpawner} that will be used to indicate getting
+	 * points.
 	 */
 	@NoSet
 	private TextParticleSpawner scoreParticleSpawner;
-	
+
 	/**
 	 * Create a player by start position.
 	 *
@@ -129,7 +130,7 @@ public final class Player extends Entity implements CameraTarget, Configurable {
 		this.currentDirection = Direction.RIGHT;
 		this.setVel(new Vec(0, 0));
 		this.currentCameraOffset = 0;
-		
+
 		this.damageParticles = new ParticleSpawner();
 		this.damageParticles.amountMin = 30;
 		this.damageParticles.amountMax = 40;
@@ -137,7 +138,7 @@ public final class Player extends Entity implements CameraTarget, Configurable {
 		this.damageParticles.colorG = new ParticleSpawnerOption(138, 158, -10, 10);
 		this.damageParticles.colorB = new ParticleSpawnerOption(6, 26, -10, 10);
 		this.damageParticles.colorA = new ParticleSpawnerOption(255, 255, -255, -255);
-		
+
 		this.scoreParticleSpawner = new TextParticleSpawner();
 	}
 
@@ -148,7 +149,7 @@ public final class Player extends Entity implements CameraTarget, Configurable {
 			this.renderTimer.logicLoop();
 			return;
 		}
-		
+
 		// determine if direction needs to be changed +- delta: 0.15
 		if (this.getVel().x > 0.15) {
 			this.currentDirection = Direction.RIGHT;
@@ -201,10 +202,9 @@ public final class Player extends Entity implements CameraTarget, Configurable {
 
 	@Override
 	public float getCameraOffset() {
-		
 		// get maximum player x and adjust level offset
 		float offsetNow = this.getPos().x - Player.CAMERA_OFFSET;
-		if (offsetNow > this.currentCameraOffset) {
+		if (offsetNow > this.currentCameraOffset || (this.getScene() != null && this.getScene().isOffsetWildCard())) {
 			this.currentCameraOffset = offsetNow;
 		}
 		return this.currentCameraOffset;
@@ -244,8 +244,8 @@ public final class Player extends Entity implements CameraTarget, Configurable {
 			return;
 		}
 		if (points != 0) {
-			scoreParticleSpawner.setText(points > 0 ? "+" + points : Integer.toString(points));
-			scoreParticleSpawner.spawn(this.getScene(), this.getPos().addY(-0.4f));
+			this.scoreParticleSpawner.setText(points > 0 ? "+" + points : Integer.toString(points));
+			this.scoreParticleSpawner.spawn(this.getScene(), this.getPos().addY(-0.4f));
 		}
 
 		this.points += points;
@@ -259,7 +259,7 @@ public final class Player extends Entity implements CameraTarget, Configurable {
 	public int getPoints() {
 		return this.points;
 	}
-	
+
 	@Override
 	public void killBoost() {
 		this.setVel(this.getVel().setY(Player.KILL_BOOST));

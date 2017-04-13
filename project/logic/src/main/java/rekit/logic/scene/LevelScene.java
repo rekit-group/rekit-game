@@ -83,6 +83,10 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 	 * Indicates whether the level has ended.
 	 */
 	private boolean ended;
+	/**
+	 * Return value of {@link #isOffsetWildCard()}.
+	 */
+	private boolean offsetWildCard;
 
 	/**
 	 * Create a new LevelScene.
@@ -327,7 +331,18 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 	}
 
 	@Override
-	public Level getLevel() {
+	public final Level getLevel() {
 		return this.level;
 	}
+
+	@Override
+	public final boolean isOffsetWildCard() {
+		return this.offsetWildCard;
+	}
+
+	@Override
+	public final void setOffsetWildCard(boolean wildcard) {
+		this.offsetWildCard = wildcard;
+	}
+
 }

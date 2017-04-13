@@ -158,7 +158,7 @@ public abstract class GameElement implements Collidable {
 		}
 		float relX = realPos.x + this.getSize().x;
 		float offset = this.getScene().getCameraOffset();
-		if (offset > relX + GameConf.GRID_W) {
+		if (offset > relX + GameConf.GRID_W && !this.getScene().isOffsetWildCard()) {
 			this.destroy();
 			return;
 		}
@@ -570,9 +570,9 @@ public abstract class GameElement implements Collidable {
 		}
 
 	}
-	
+
 	/**
-	 * Behavior after this GameElement hit an enemy  
+	 * Behavior after this GameElement hit an enemy
 	 */
 	public void killBoost() {
 		// Do nothing

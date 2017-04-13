@@ -40,4 +40,20 @@ public interface ILevelScene extends IScene {
 	 */
 	boolean hasEnded();
 
+	/**
+	 * This method indicates whether the offset is set to wildcard (any position
+	 * is allowed / no elements will be deleted (because of their position))
+	 *
+	 * @return {@code true} if activated, {@code false} otherwise
+	 */
+	boolean isOffsetWildCard();
+
+	/**
+	 * Set return value of {@link #isOffsetWildCard()}.
+	 * 
+	 * @param wildcard
+	 *            the value
+	 */
+	void setOffsetWildCard(boolean wildcard);
+
 }

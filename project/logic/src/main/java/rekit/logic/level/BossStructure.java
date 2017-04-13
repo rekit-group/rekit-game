@@ -146,7 +146,6 @@ public final class BossStructure extends Structure implements Configurable {
 			Timer.sleep(GameConf.LOGIC_DELTA);
 		}
 
-		// TODO Player must be able to go more left
 		RangeCameraTarget tgt = new RangeCameraTarget( //
 				this.cameraTarget - Player.CAMERA_OFFSET, //
 				this.cameraTarget - Player.CAMERA_OFFSET + (this.getWidth() - 22), //
@@ -154,6 +153,7 @@ public final class BossStructure extends Structure implements Configurable {
 		);
 		// new FixedCameraTarget(this.cameraTarget - Player.CAMERA_OFFSET)
 		scene.setCameraTarget(tgt);
+		scene.setOffsetWildCard(true);
 		// Spawn Boss
 		GameElementFactory.generate(this.boss);
 
@@ -234,7 +234,7 @@ public final class BossStructure extends Structure implements Configurable {
 		// set camera back to player
 		player.resetCameraOffset();
 		scene.setCameraTarget(player);
-
+		scene.setOffsetWildCard(false);
 	}
 
 	/**
