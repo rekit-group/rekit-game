@@ -19,6 +19,7 @@ import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBAColor;
 import rekit.primitives.operable.OpProgress;
 import rekit.primitives.time.Timer;
+import rekit.util.Math;
 import rekit.util.ReflectUtils.LoadMe;
 
 /**

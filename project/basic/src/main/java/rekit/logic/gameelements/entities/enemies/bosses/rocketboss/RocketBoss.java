@@ -25,6 +25,7 @@ import rekit.primitives.image.RGBAColor;
 import rekit.primitives.operable.OpProgress;
 import rekit.primitives.time.Timer;
 import rekit.util.CalcUtil;
+import rekit.util.Math;
 import rekit.util.ReflectUtils.LoadMe;
 import rekit.util.state.TimeStateMachine;
 
@@ -285,7 +286,7 @@ public class RocketBoss extends Boss implements Configurable {
 	 * Moves to the next position of the RocketBoss. The current positions can
 	 * be accessed via the OpProgress nextPosProgress and the Timer
 	 * nextPosTimer.
-	 * 
+	 *
 	 * @param i
 	 *            the id of the position to start moving to. Can be the old
 	 *            position id too.

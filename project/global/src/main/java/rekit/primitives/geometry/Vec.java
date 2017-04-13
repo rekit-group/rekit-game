@@ -4,12 +4,13 @@ import org.fuchss.configuration.annotations.ClassParser;
 
 import rekit.parser.VecParser;
 import rekit.primitives.operable.Operable;
+import rekit.util.Math;
 
 /**
  * A three dimensional Vector with operations.
  *
  * @author Angelo Aracri
- * 
+ *
  */
 @ClassParser(VecParser.class)
 public final class Vec implements Cloneable, Operable<Vec> {

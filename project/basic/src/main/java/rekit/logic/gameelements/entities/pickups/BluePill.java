@@ -11,6 +11,7 @@ import rekit.logic.gameelements.type.Pickup;
 import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBAColor;
+import rekit.util.Math;
 import rekit.util.ReflectUtils.LoadMe;
 
 /**

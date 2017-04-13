@@ -8,6 +8,7 @@ import rekit.core.GameGrid;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBAColor;
 import rekit.primitives.time.Timer;
+import rekit.util.Math;
 
 public class Mouth {
 

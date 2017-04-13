@@ -8,6 +8,7 @@ import rekit.logic.gameelements.GameElement;
 import rekit.persistence.ModManager;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBAColor;
+import rekit.util.Math;
 import rekit.util.ReflectUtils;
 
 /**

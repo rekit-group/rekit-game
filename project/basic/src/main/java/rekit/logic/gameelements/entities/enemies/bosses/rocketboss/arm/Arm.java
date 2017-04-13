@@ -9,6 +9,7 @@ import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm.armstate.
 import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm.armstate.ArmState;
 import rekit.primitives.geometry.Vec;
 import rekit.util.CalcUtil;
+import rekit.util.Math;
 import rekit.util.state.TimeStateMachine;
 
 public class Arm extends RocketBossChild {
@@ -49,7 +50,7 @@ public class Arm extends RocketBossChild {
 
 	/**
 	 * Getter for when to trigger the arms action during the ArmActionState
-	 * 
+	 *
 	 * @return the number between 0 and 1, representing when to perform an
 	 *         action.
 	 */

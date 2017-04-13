@@ -14,6 +14,7 @@ import rekit.logic.gameelements.particles.ParticleSpawnerOption;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBAColor;
 import rekit.util.LambdaUtil;
+import rekit.util.Math;
 
 /**
  *

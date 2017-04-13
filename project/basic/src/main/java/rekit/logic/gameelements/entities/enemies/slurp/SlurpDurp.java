@@ -9,6 +9,7 @@ import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBAColor;
 import rekit.primitives.operable.OpProgress;
+import rekit.util.Math;
 
 /**
  *
