@@ -7,9 +7,9 @@ import org.fuchss.configuration.annotations.SetterInfo;
 import rekit.config.GameConf;
 import rekit.logic.ILevelScene;
 import rekit.logic.IScene;
-import rekit.logic.gameelements.GameElement;
+import rekit.logic.gameelements.FixedCameraTarget;
 import rekit.logic.gameelements.GameElementFactory;
-import rekit.logic.gameelements.entities.FixedCameraTarget;
+import rekit.logic.gameelements.RangeCameraTarget;
 import rekit.logic.gameelements.entities.Player;
 import rekit.logic.gameelements.inanimate.InanimateDoor;
 import rekit.logic.gameelements.inanimate.InanimateTrigger;
@@ -139,13 +139,21 @@ public final class BossStructure extends Structure implements Configurable {
 			return;
 		}
 
-		GameElement player = scene.getPlayer();
+		Player player = scene.getPlayer();
 		// keep walking right to the right camera position
 		while (player.getPos().x < this.cameraTarget) {
 			player.setVel(player.getVel().setX(1.8f));
 			Timer.sleep(GameConf.LOGIC_DELTA);
 		}
-		scene.setCameraTarget(new FixedCameraTarget(this.cameraTarget - Player.CAMERA_OFFSET));
+
+		// TODO Player must be able to go more left
+		RangeCameraTarget tgt = new RangeCameraTarget( //
+				this.cameraTarget - Player.CAMERA_OFFSET, //
+				this.cameraTarget - Player.CAMERA_OFFSET + (this.getWidth() - 22), //
+				player //
+		);
+		// new FixedCameraTarget(this.cameraTarget - Player.CAMERA_OFFSET)
+		scene.setCameraTarget(tgt);
 		// Spawn Boss
 		GameElementFactory.generate(this.boss);
 
