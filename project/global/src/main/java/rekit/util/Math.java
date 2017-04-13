@@ -27,11 +27,19 @@ public final class Math {
 	 */
 	public static double sin(double in) {
 		double x = in;
+		int ctr = 0;
 		while (x < -3.14159265) {
 			x += 6.28318531;
+			if (++ctr > 10) {
+				break;
+			}
 		}
+		ctr = 0;
 		while (x > 3.14159265) {
 			x -= 6.28318531;
+			if (++ctr > 10) {
+				break;
+			}
 		}
 
 		if (x < 0) {
