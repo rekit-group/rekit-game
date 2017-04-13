@@ -2,9 +2,9 @@ package rekit.primitives.geometry;
 
 import org.fuchss.configuration.annotations.ClassParser;
 
+import net.jafama.FastMath;
 import rekit.parser.VecParser;
 import rekit.primitives.operable.Operable;
-import rekit.util.Math;
 
 /**
  * A three dimensional Vector with operations.
@@ -154,7 +154,7 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	 * @return a new vector (sinx, siny)
 	 */
 	public Vec sin() {
-		return new Vec((float) Math.sin(this.x), (float) Math.sin(this.y));
+		return new Vec((float) FastMath.sinQuick(this.x), (float) FastMath.sinQuick(this.y));
 
 	}
 
@@ -206,7 +206,7 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	 * @return the angle (rad)
 	 */
 	public float getAngleTo(Vec other) {
-		return (float) Math.atan2(other.x - this.x, other.y - this.y);
+		return (float) FastMath.atan2(other.x - this.x, other.y - this.y);
 	}
 
 	/**
@@ -224,8 +224,8 @@ public final class Vec implements Cloneable, Operable<Vec> {
 
 		// rotate shifted vector
 		Vec rotated = new Vec();
-		rotated = rotated.setX((float) (shifted.x * Math.cos(angle) - shifted.y * Math.sin(angle)));
-		rotated = rotated.setY((float) (shifted.x * Math.sin(angle) + shifted.y * Math.cos(angle)));
+		rotated = rotated.setX((float) (shifted.x * FastMath.cosQuick(angle) - shifted.y * FastMath.sinQuick(angle)));
+		rotated = rotated.setY((float) (shifted.x * FastMath.sinQuick(angle) + shifted.y * FastMath.cosQuick(angle)));
 		rotated = rotated.setZ(this.z);
 
 		return rotated.add(relative);
@@ -288,7 +288,7 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	 * @return the resulting vector
 	 */
 	public Vec abs() {
-		return new Vec(Math.abs(this.x), Math.abs(this.y), this.z);
+		return new Vec(FastMath.abs(this.x), FastMath.abs(this.y), this.z);
 	}
 
 }

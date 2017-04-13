@@ -4,6 +4,7 @@ import org.fuchss.configuration.Configurable;
 import org.fuchss.configuration.annotations.NoSet;
 import org.fuchss.configuration.annotations.SetterInfo;
 
+import net.jafama.FastMath;
 import rekit.core.GameGrid;
 import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.entities.Player;
@@ -11,7 +12,6 @@ import rekit.logic.gameelements.type.Pickup;
 import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBAColor;
-import rekit.util.Math;
 import rekit.util.ReflectUtils.LoadMe;
 
 /**
@@ -62,7 +62,7 @@ public final class BluePill extends Pickup implements Configurable {
 	@Override
 	protected void innerLogicLoop() {
 		this.x += this.deltaTime / 1000F;
-		this.sin = Math.sin(this.x * 6);
+		this.sin = FastMath.sinQuick(this.x * 6);
 		this.setSize(BluePill.SIZE.scalar((float) this.sin));
 	}
 

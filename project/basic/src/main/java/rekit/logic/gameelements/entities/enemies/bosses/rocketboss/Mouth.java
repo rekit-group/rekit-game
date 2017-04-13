@@ -4,11 +4,11 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.jafama.FastMath;
 import rekit.core.GameGrid;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBAColor;
 import rekit.primitives.time.Timer;
-import rekit.util.Math;
 
 public class Mouth {
 
@@ -33,7 +33,7 @@ public class Mouth {
 		float maxDelta = this.size.y * 0.5f * this.parent.getState().getMouthAmplitude();
 		while (this.mouthCurveTimer.timeUp()) {
 			this.mouthCurveTimer.reset();
-			Vec newVec = new Vec(calcX, (float) (Math.tan(calcX * 10) * Math.sin(calcX * 4) * Math.cos(calcX * 0.5f) * maxDelta));
+			Vec newVec = new Vec(calcX, (float) (FastMath.tan(calcX * 10) * FastMath.sinQuick(calcX * 4) * FastMath.cosQuick(calcX * 0.5f) * maxDelta));
 			if (newVec.y > maxDelta) {
 				newVec = newVec.setY(maxDelta);
 			}

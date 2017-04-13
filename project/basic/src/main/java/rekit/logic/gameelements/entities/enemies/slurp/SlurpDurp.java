@@ -1,5 +1,6 @@
 package rekit.logic.gameelements.entities.enemies.slurp;
 
+import net.jafama.FastMath;
 import rekit.core.GameGrid;
 import rekit.core.Team;
 import rekit.logic.gameelements.GameElement;
@@ -9,7 +10,6 @@ import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBAColor;
 import rekit.primitives.operable.OpProgress;
-import rekit.util.Math;
 
 /**
  *
@@ -121,7 +121,7 @@ public final class SlurpDurp extends Entity {
 	@Override
 	protected void innerLogicLoop() {
 		this.currentX += this.deltaTime / 1000F;
-		this.setSize(new Vec(this.baseSize + (float) (this.amplitude * Math.sin(this.currentX * this.frequency + this.phase))));
+		this.setSize(new Vec(this.baseSize + (float) (this.amplitude * FastMath.sinQuick(this.currentX * this.frequency + this.phase))));
 		this.setPos(this.parentPos.add(this.innerPos));
 	}
 

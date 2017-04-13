@@ -2,6 +2,7 @@ package rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm;
 
 import java.util.LinkedList;
 
+import net.jafama.FastMath;
 import rekit.core.GameGrid;
 import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.RocketBoss;
 import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm.armaction.ArmAction;
@@ -9,7 +10,6 @@ import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm.armstate.
 import rekit.logic.gameelements.entities.enemies.bosses.rocketboss.arm.armstate.ArmState;
 import rekit.primitives.geometry.Vec;
 import rekit.util.CalcUtil;
-import rekit.util.Math;
 import rekit.util.state.TimeStateMachine;
 
 public class Arm extends RocketBossChild {
@@ -65,7 +65,7 @@ public class Arm extends RocketBossChild {
 		for (float dy = 0; dy <= this.maxLengthY; dy += RocketBoss.ARM_SEGMENT_DIST) {
 			// calculate angle
 			float dxdy = this.fndy(dy);
-			float angle = (float) (2.0 * Math.atan(dxdy));
+			float angle = (float) (2.0 * FastMath.atan(dxdy));
 
 			ArmSegment segment = new ArmSegment(this, this.fnVec(dy), angle);
 
@@ -126,11 +126,13 @@ public class Arm extends RocketBossChild {
 	}
 
 	private float fn(float y) {
-		return this.parent.getXSignum() * this.curveA * (float) Math.sin(this.getParent().getState().getTimeFactor() * (y / this.maxLengthY) * (2 * Math.PI));
+		return this.parent.getXSignum() * this.curveA
+				* (float) FastMath.sinQuick(this.getParent().getState().getTimeFactor() * (y / this.maxLengthY) * (2 * Math.PI));
 	}
 
 	private float fndy(float y) {
-		return this.parent.getXSignum() * this.curveA * (float) Math.cos(this.getParent().getState().getTimeFactor() * (y / this.maxLengthY) * (2 * Math.PI));
+		return this.parent.getXSignum() * this.curveA
+				* (float) FastMath.cosQuick(this.getParent().getState().getTimeFactor() * (y / this.maxLengthY) * (2 * Math.PI));
 	}
 
 	private Vec getHandPos() {

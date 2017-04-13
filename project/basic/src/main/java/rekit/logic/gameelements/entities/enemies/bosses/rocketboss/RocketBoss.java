@@ -8,6 +8,7 @@ import org.fuchss.configuration.Configurable;
 import org.fuchss.configuration.annotations.NoSet;
 import org.fuchss.configuration.annotations.SetterInfo;
 
+import net.jafama.FastMath;
 import rekit.config.GameConf;
 import rekit.core.GameGrid;
 import rekit.logic.gameelements.GameElement;
@@ -25,7 +26,6 @@ import rekit.primitives.image.RGBAColor;
 import rekit.primitives.operable.OpProgress;
 import rekit.primitives.time.Timer;
 import rekit.util.CalcUtil;
-import rekit.util.Math;
 import rekit.util.ReflectUtils.LoadMe;
 import rekit.util.state.TimeStateMachine;
 
@@ -332,8 +332,8 @@ public class RocketBoss extends Boss implements Configurable {
 		this.calcX += deltaX;
 
 		// calculate and update position
-		Vec scaleVec = new Vec( //
-				(float) Math.sin(RocketBoss.MOVEMENT_PERIOD.x * this.calcX), (float) Math.cos(RocketBoss.MOVEMENT_PERIOD.y * this.calcX));
+		Vec scaleVec = new Vec(//
+				(float) FastMath.sinQuick(RocketBoss.MOVEMENT_PERIOD.x * this.calcX), (float) FastMath.cosQuick(RocketBoss.MOVEMENT_PERIOD.y * this.calcX));
 		Vec scaledUnit = RocketBoss.MOVEMENT_RANGE.multiply(scaleVec);
 
 		this.setPos(this.getCurrentBasePos().add(scaledUnit));
