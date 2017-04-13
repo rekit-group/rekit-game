@@ -1,6 +1,7 @@
 package rekit.logic;
 
 import rekit.logic.gameelements.entities.Player;
+import rekit.logic.level.Level;
 
 /**
  * This interface extends {@link IScene} and adds necessary methods to
@@ -18,18 +19,11 @@ public interface ILevelScene extends IScene {
 	Player getPlayer();
 
 	/**
-	 * Get the current score of the player.
+	 * Get the associated level.
 	 *
-	 * @return the current score or 0 if none available
+	 * @return the level
 	 */
-	int getScore();
-
-	/**
-	 * Get the current high score for the current level.
-	 *
-	 * @return the current high score or 0 if none available
-	 */
-	int getHighScore();
+	Level getLevel();
 
 	/**
 	 * End a level.
@@ -45,5 +39,21 @@ public interface ILevelScene extends IScene {
 	 * @return {@code true} if ended, {@code false} otherwise
 	 */
 	boolean hasEnded();
+
+	/**
+	 * This method indicates whether the offset is set to wildcard (any position
+	 * is allowed / no elements will be deleted (because of their position))
+	 *
+	 * @return {@code true} if activated, {@code false} otherwise
+	 */
+	boolean isOffsetWildCard();
+
+	/**
+	 * Set return value of {@link #isOffsetWildCard()}.
+	 * 
+	 * @param wildcard
+	 *            the value
+	 */
+	void setOffsetWildCard(boolean wildcard);
 
 }

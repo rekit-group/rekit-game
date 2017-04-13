@@ -2,6 +2,7 @@ package rekit.logic.gameelements.type;
 
 import java.util.Set;
 
+import net.jafama.FastMath;
 import rekit.config.GameConf;
 import rekit.core.GameGrid;
 import rekit.logic.gameelements.GameElement;
@@ -62,7 +63,7 @@ public abstract class Coin extends Pickup {
 	@Override
 	protected void innerLogicLoop() {
 		this.x += this.deltaTime / 1000F;
-		this.sin = Math.sin(this.x * 3);
+		this.sin = FastMath.sinQuick(this.x * 3);
 		this.setSize(new Vec((float) (0.7f * this.sin), 0.7f));
 	}
 

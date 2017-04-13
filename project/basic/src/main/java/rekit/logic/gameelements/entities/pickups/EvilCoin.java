@@ -8,8 +8,8 @@ import rekit.primitives.image.RGBAColor;
 import rekit.util.ReflectUtils.LoadMe;
 
 /**
- * This class defines a simple {@link Pickup}; an <b>EvilCoin</b> which will give
- * the player negative points.
+ * This class defines a simple {@link Pickup}; an <b>EvilCoin</b> which will
+ * give the player negative points.
  *
  * @author Dominik Fuchss
  * @author Angelo Aracri
@@ -44,10 +44,10 @@ public final class EvilCoin extends Coin {
 	protected RGBAColor getDarkerColor() {
 		return null;
 	}
-	
+
 	@Override
 	public void internalRender(GameGrid f) {
-		f.drawImage(this.getPos().addY((float) (this.sin * 0.1)), new Vec(1,1), "evilCoin.png");
+		f.drawImage(this.getPos().addY((float) (this.sin * 0.1)), new Vec(1, 1), "evilCoin.png");
 	}
 
 	@Override

@@ -19,7 +19,7 @@ public class ScoreGui extends LevelGuiElement {
 	 */
 	private int score;
 	/**
-	 * The Highscore of the current Level.
+	 * The highscore of the current Level.
 	 */
 	private int highscore;
 	/**
@@ -27,7 +27,7 @@ public class ScoreGui extends LevelGuiElement {
 	 */
 	private Text scoreText;
 	/**
-	 * Text thas prints the highscore on the GUI.
+	 * Text that prints the highscore on the GUI.
 	 */
 	private Text highscoreText;
 	/**
@@ -48,12 +48,12 @@ public class ScoreGui extends LevelGuiElement {
 		this.highscoreText = new Text(scene, this.op);
 		this.scoreText.setPos(new Vec(GameConf.PIXEL_W - 10, 10));
 		this.highscoreText.setPos(new Vec(GameConf.PIXEL_W - 10, 50));
-		this.highscore = this.getScene().getHighScore();
+		this.highscore = this.getScene().getLevel().getHighScore();
 	}
 
 	@Override
 	public void logicLoop() {
-		this.score = this.getScene().getScore();
+		this.score = this.getScene().getLevel().getScore();
 		this.scoreText.setText(String.format("%d Points", this.score));
 		this.highscoreText.setText(String.format("%d Highscore", this.highscore));
 	}

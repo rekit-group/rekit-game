@@ -1,6 +1,7 @@
 package rekit.logic.scene;
 
 import rekit.logic.GameModel;
+import rekit.logic.level.LevelFactory;
 import rekit.persistence.level.LevelManager;
 
 /**
@@ -17,7 +18,7 @@ final class ArcadeLevelScene extends LevelScene {
 	 *            the arcade level's id
 	 */
 	private ArcadeLevelScene(GameModel model, String id) {
-		super(model, LevelManager.getLevelById(id));
+		super(model, LevelFactory.createLevel(LevelManager.getLevelById(id)));
 	}
 
 	/**

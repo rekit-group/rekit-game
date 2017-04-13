@@ -56,7 +56,7 @@ public final class FilterBox extends DynamicInanimate {
 	}
 
 	@Override
-	public final void reactToCollision(GameElement element, Direction dir) {
+	public void reactToCollision(GameElement element, Direction dir) {
 		if (this.filter != null) {
 			this.getScene().getModel().setFilter(this.filter);
 		} else {
@@ -67,12 +67,12 @@ public final class FilterBox extends DynamicInanimate {
 	}
 
 	@Override
-	public final void internalRender(GameGrid f) {
+	public void internalRender(GameGrid f) {
 		this.innerBox.internalRender(f);
 	}
 
 	@Override
-	public final FilterBox create(Vec startPos, String[] options) {
+	public FilterBox create(Vec startPos, String[] options) {
 		Filter filter = null;
 		if (options.length == 1 && !"none".equalsIgnoreCase(options[0])) {
 			filter = this.searchFilterByName(options[0]);

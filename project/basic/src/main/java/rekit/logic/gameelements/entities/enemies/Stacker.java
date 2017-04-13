@@ -8,6 +8,7 @@ import org.fuchss.configuration.annotations.AfterSetting;
 import org.fuchss.configuration.annotations.NoSet;
 import org.fuchss.configuration.annotations.SetterInfo;
 
+import net.jafama.FastMath;
 import rekit.config.GameConf;
 import rekit.core.GameGrid;
 import rekit.core.GameTime;
@@ -131,7 +132,7 @@ public final class Stacker extends Enemy implements Configurable {
 
 		@Override
 		protected void innerLogicLoop() {
-			this.setPos(Stacker.this.getPos().add(this.relPos).addX((float) (0.1 * Math.sin(0.1 * GameTime.getTime() / 30 + this.offset))));
+			this.setPos(Stacker.this.getPos().add(this.relPos).addX((float) (0.1 * FastMath.sinQuick(0.1 * GameTime.getTime() / 30 + this.offset))));
 
 			if (this.timeToDie != null) {
 				this.timeToDie.logicLoop();

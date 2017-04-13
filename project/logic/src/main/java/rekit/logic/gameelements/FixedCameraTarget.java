@@ -1,4 +1,4 @@
-package rekit.logic.gameelements.entities;
+package rekit.logic.gameelements;
 
 import rekit.core.CameraTarget;
 

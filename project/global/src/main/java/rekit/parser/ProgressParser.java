@@ -9,8 +9,8 @@ import rekit.config.GameConf;
 import rekit.primitives.time.Progress;
 
 /**
- * This {@link Parser} is used for parsing {@link Progress Progress} objects.
- * It has the same code as {@link VectorParser}, duh.
+ * This {@link Parser} is used for parsing {@link Progress} objects.
+ *
  * @author Angelo Aracri
  */
 public final class ProgressParser implements Parser {

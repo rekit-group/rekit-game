@@ -7,9 +7,9 @@ import org.fuchss.configuration.annotations.SetterInfo;
 import rekit.config.GameConf;
 import rekit.logic.ILevelScene;
 import rekit.logic.IScene;
-import rekit.logic.gameelements.GameElement;
+import rekit.logic.gameelements.FixedCameraTarget;
 import rekit.logic.gameelements.GameElementFactory;
-import rekit.logic.gameelements.entities.FixedCameraTarget;
+import rekit.logic.gameelements.RangeCameraTarget;
 import rekit.logic.gameelements.entities.Player;
 import rekit.logic.gameelements.inanimate.InanimateDoor;
 import rekit.logic.gameelements.inanimate.InanimateTrigger;
@@ -94,14 +94,14 @@ public final class BossStructure extends Structure implements Configurable {
 		// generate and add door after room
 		this.door = new InanimateDoor(new Vec(levelX + width - 1, GameConf.GRID_H / 2));
 		GameElementFactory.generate(this.door);
-		
+
 		// generate trigger at door entrance
 		this.triggerPos = new Vec(levelX, GameConf.GRID_H - 2);
 		for (int y = 0; y < 3; ++y) {
 			// this is straight out disgusting
 			InanimateTrigger.createTrigger(this.triggerPos.addY(-y), new Vec(1), this::startBattle);
 		}
-		
+
 		return width;
 	}
 
@@ -139,16 +139,24 @@ public final class BossStructure extends Structure implements Configurable {
 			return;
 		}
 
-		GameElement player = scene.getPlayer();
+		Player player = scene.getPlayer();
 		// keep walking right to the right camera position
 		while (player.getPos().x < this.cameraTarget) {
 			player.setVel(player.getVel().setX(1.8f));
 			Timer.sleep(GameConf.LOGIC_DELTA);
 		}
-		scene.setCameraTarget(new FixedCameraTarget(this.cameraTarget - Player.CAMERA_OFFSET));
+
+		RangeCameraTarget tgt = new RangeCameraTarget( //
+				this.cameraTarget - Player.CAMERA_OFFSET, //
+				this.cameraTarget - Player.CAMERA_OFFSET + (this.getWidth() - 22), //
+				player //
+		);
+		// new FixedCameraTarget(this.cameraTarget - Player.CAMERA_OFFSET)
+		scene.setCameraTarget(tgt);
+		scene.setOffsetWildCard(true);
 		// Spawn Boss
 		GameElementFactory.generate(this.boss);
-		
+
 		for (int y = 0; y < 3; ++y) {
 			// Close door
 			GameElementFactory.generateInanimate((int) this.triggerPos.x, (int) this.triggerPos.y - y);
@@ -226,7 +234,7 @@ public final class BossStructure extends Structure implements Configurable {
 		// set camera back to player
 		player.resetCameraOffset();
 		scene.setCameraTarget(player);
-
+		scene.setOffsetWildCard(false);
 	}
 
 	/**

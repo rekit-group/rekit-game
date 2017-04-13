@@ -4,12 +4,11 @@ import rekit.logic.gameelements.entities.enemies.piston.IPistonForState;
 import rekit.util.state.State;
 
 public class OpenState extends PistonState {
-	
-	
+
 	public OpenState(IPistonForState piston) {
 		super(piston);
 	}
-	
+
 	@Override
 	public float getCurrentHeight() {
 		return 0;
@@ -25,9 +24,8 @@ public class OpenState extends PistonState {
 		// if the reference to piston has not been set yet
 		if (this.piston == null) {
 			return 0;
-		} 
+		}
 		return this.piston.getCalcTimeOpen();
 	}
-	
-	
+
 }

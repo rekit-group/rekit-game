@@ -4,6 +4,7 @@ import org.fuchss.configuration.Configurable;
 import org.fuchss.configuration.annotations.NoSet;
 import org.fuchss.configuration.annotations.SetterInfo;
 
+import net.jafama.FastMath;
 import rekit.config.GameConf;
 import rekit.core.GameGrid;
 import rekit.core.GameTime;
@@ -161,8 +162,8 @@ public final class EndTrigger extends InanimateTrigger implements Configurable {
 			float randomAngle = (float) (GameConf.PRNG.nextDouble() * 2 * Math.PI);
 			float r = this.currentSize.x * 2;
 
-			float x = (float) (Math.cos(randomAngle) * r);
-			float y = (float) (Math.sin(randomAngle) * r);
+			float x = (float) (FastMath.cosQuick(randomAngle) * r);
+			float y = (float) (FastMath.sinQuick(randomAngle) * r);
 
 			y = (y / this.currentSize.x) * this.currentSize.y;
 

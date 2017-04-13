@@ -1,6 +1,7 @@
 package rekit.logic.scene;
 
 import rekit.logic.GameModel;
+import rekit.logic.level.LevelFactory;
 import rekit.persistence.level.LevelManager;
 
 /**
@@ -14,7 +15,7 @@ final class LevelOfTheDayScene extends LevelScene {
 	 *            the model
 	 */
 	private LevelOfTheDayScene(GameModel model) {
-		super(model, LevelManager.getLOTDLevel());
+		super(model, LevelFactory.createLevel(LevelManager.getLOTDLevel()));
 	}
 
 	/**
