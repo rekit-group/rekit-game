@@ -107,7 +107,7 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 	public void init() {
 		super.init();
 		this.level.reset();
-
+		this.offsetWildCard = false;
 		// Create Player and add him to game
 		this.cameraTarget = this.player;
 		this.addGameElement(this.player);
