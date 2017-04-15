@@ -155,8 +155,8 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 	}
 
 	public Piston(Vec startPos, int expansionLength, Direction direction, float timeOpen, float timeClosed, float movementSpeed, float startPhaseId) {
-		super(startPos, new Vec(), new Vec(Piston.BASE_HEIGHT, 1));
-
+		super(startPos, new Vec(), new Vec());
+		
 		// save trivial parameters
 		this.direction = direction;
 		this.expansionLength = expansionLength;
@@ -164,12 +164,12 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 		// calculate base position (determined by Direction and BASE_HEIGHT)
 		Vec basePos = new Vec(0, 0.5f - Piston.BASE_HEIGHT / 2f); // case
 																	// upwards
-		basePos = basePos.rotate(direction.getAngle());
+		basePos = this.rotatePosToDir(basePos);
 		this.setPos(startPos.add(basePos));
 
 		// set size (determined by Direction and BASE_HEIGHT)
 		Vec size = new Vec(1, Piston.BASE_HEIGHT);
-		this.setSize(size.rotate(direction.getAngle()));
+		this.setSize(this.rotateSizeToDir(size));
 
 		// calculate all durations
 		this.calcTimeOpen = (long) Piston.OPEN_TIME.getNow(timeOpen);
@@ -179,10 +179,12 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 		// Create TimeStateMachine for opening/closing behavior.
 		this.machine = new TimeStateMachine(new OpenState(this));
 
+		this.inner = new PistonInner();
+		
 		// go to the right start phase
 		for (int i = 0; i < startPhaseId % 4; i++) {
 			this.machine.nextState();
-		}
+		}		
 	}
 
 	/**
@@ -223,17 +225,13 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 			Vec relSize = new Vec(segmentWidth, 1);
 			f.drawRectangle(this.getPos().add(this.rotatePosToDir(relPos)), this.getSize().multiply(this.rotateSizeToDir(relSize)), Piston.BASE_COLOR_2);
 		}
-
+		
+		this.inner.internalRender(f);
 	}
 
 	@Override
 	protected void innerLogicLoop() {
-
-		if (this.inner == null && this.getScene() != null) {
-			this.inner = new PistonInner();
-			this.getScene().addGameElement(this.inner);
-		}
-
+		this.inner.innerLogicLoop();
 		// Let the machine work...
 		this.machine.logicLoop();
 
@@ -246,7 +244,6 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 
 	@Override
 	public Entity create(Vec startPos, String[] options) {
-
 		// Create a list and iterator of all given options
 		List<Float> params = new LinkedList<Float>();
 		for (String option : options) {
