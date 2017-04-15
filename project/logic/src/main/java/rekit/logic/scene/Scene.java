@@ -311,16 +311,6 @@ abstract class Scene implements CameraTarget, IScene {
 	}
 
 	@Override
-	public float getCameraOffset() {
-		return 0;
-	}
-
-	@Override
-	public void setCameraTarget(CameraTarget cameraTarget) {
-		return;
-	}
-
-	@Override
 	public synchronized int getGameElementCount() {
 		int size = 0;
 		for (Queue<GameElement> queue : this.gameElements) {

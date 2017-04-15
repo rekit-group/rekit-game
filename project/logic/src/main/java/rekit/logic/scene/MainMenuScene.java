@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import rekit.config.GameConf;
+import rekit.core.CameraTarget;
 import rekit.logic.GameModel;
 import rekit.logic.gui.BackgroundElement;
 import rekit.logic.gui.menu.BoolSetting;
@@ -72,7 +73,7 @@ final class MainMenuScene extends Scene {
 
 		}
 		play.addItem(arcade, inf, lod, bossRush);
-		
+
 		// Create settings menu
 		MenuList settings = new MenuList(this, "Settings");
 		settings.addItem( //
@@ -83,13 +84,13 @@ final class MainMenuScene extends Scene {
 		// Create about text
 		MenuList about = new MenuList(this, "About");
 		about.addItem(new TextItem(this, GameConf.ABOUT));
-		
+
 		// Create exit button
 		MenuActionItem exit = new MenuActionItem(this, "Exit", () -> System.exit(0));
-		
+
 		// Add all elements to menu and focus
 		this.menu.addItem(play, settings, about, exit);
-		
+
 		this.addGuiElement(new BackgroundElement(this, "mainmenu.png"));
 		this.addGuiElement(this.menu);
 		this.menu.select();
@@ -110,6 +111,16 @@ final class MainMenuScene extends Scene {
 	@Override
 	public MenuItem getMenu() {
 		return this.menu;
+	}
+
+	@Override
+	public void setCameraTarget(CameraTarget cameraTarget) {
+		return;
+	}
+
+	@Override
+	public float getCameraOffset() {
+		return 0;
 	}
 
 }

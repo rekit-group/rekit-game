@@ -33,9 +33,8 @@ public final class ModManager {
 		if (ModManager.SYSLOADER != null) {
 			return ModManager.SYSLOADER;
 		}
-		return AccessController.doPrivileged((PrivilegedAction<URLClassLoader>) () -> {
-			return new URLClassLoader(ModManager.loadMods(), ClassLoader.getSystemClassLoader());
-		});
+		return AccessController
+				.doPrivileged((PrivilegedAction<URLClassLoader>) () -> new URLClassLoader(ModManager.loadMods(), ClassLoader.getSystemClassLoader()));
 	}
 
 	/**
