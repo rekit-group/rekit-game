@@ -15,9 +15,12 @@ import rekit.config.GameConf;
 import rekit.core.CameraTarget;
 import rekit.core.GameTime;
 import rekit.logic.GameModel;
+import rekit.logic.ILevelScene;
 import rekit.logic.IScene;
 import rekit.logic.gameelements.GameElement;
 import rekit.logic.gui.GuiElement;
+import rekit.util.LambdaUtil;
+import rekit.util.Once;
 
 /**
  * Based on the concept of scenes in Unity. <br>
@@ -74,6 +77,15 @@ abstract class Scene implements CameraTarget, IScene {
 	 * The latest deltaTime in {@link #logicLoop()}.
 	 */
 	protected long deltaTime;
+	/**
+	 * This indicates whether this scene is a ILevelScene.
+	 */
+	private final boolean isLevelScene = this instanceof ILevelScene;
+	/**
+	 * Once object to create warning only once.
+	 */
+	private final Once isNoLevelSceneMsg = new Once(
+			() -> GameConf.GAME_LOGGER.debug("This scene (" + this.getClass().getSimpleName() + ") is not a ILevelScene. You can't add GameElements!"));
 
 	/**
 	 * Create the scene.
@@ -234,12 +246,16 @@ abstract class Scene implements CameraTarget, IScene {
 	 * more info.
 	 */
 	private void addGameElements() {
+		if (!this.isLevelScene) {
+			LambdaUtil.invoke(this.isNoLevelSceneMsg);
+			return;
+		}
 		synchronized (this.gameElementAddQueue) {
 			Iterator<GameElement> it = this.gameElementAddQueue.iterator();
 			while (it.hasNext()) {
 				GameElement element = it.next();
 				this.gameElements[Scene.zToIndex(element.getZ())].add(element);
-				element.setScene(this);
+				element.setScene((ILevelScene) this);
 			}
 			this.gameElementAddQueue.clear();
 		}

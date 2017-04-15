@@ -373,19 +373,8 @@ public abstract class GameElement implements Collidable {
 	 * @param value
 	 *            the new {@link IScene} the GameElement is in.
 	 */
-	public final void setScene(IScene value) {
-		/*
-		 * TODO Scene.addGameElements calls this function with (this :: Scene)
-		 * as argument, but we know the Scene is a LevelScene. This cast is no
-		 * what we want.
-		 *
-		 * Currently all GameElements are part of an LevelScene but in
-		 * anticipation of a level editor we want GameElements which are not
-		 * part of a ILevelScene.
-		 *
-		 * Proposal: Create LevelElemement which gets an ILevelScene.
-		 */
-		this.scene = (ILevelScene) value;
+	public final void setScene(ILevelScene value) {
+		this.scene = value;
 	}
 
 	/**

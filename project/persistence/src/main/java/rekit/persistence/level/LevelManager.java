@@ -413,6 +413,7 @@ public final class LevelManager {
 			levelStream.close();
 		} catch (IOException e) {
 			GameConf.GAME_LOGGER.error("Error while saving " + DirFileDefinitions.USER_DATA.getAbsolutePath() + " for scores and saves: IOException");
+			LambdaUtil.invoke(levelStream::close);
 		}
 	}
 
