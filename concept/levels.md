@@ -30,8 +30,8 @@
 
 ### Levels
 
-1. **TODO CREATE** *TimedGateEnemies*
-2. **TODO CREATE** *AccelerationFloors* , some *TimedGateEnemies*
+1. *Piston*
+2. **TODO CREATE** *AccelerationFloors* , some *Pistons*
 3. **TODO CHANGE**  *ClimbUpBox*, some *MovingBox*
 4. **TODO CHANGE** *Cannon*, *BluePill*
 5. **Bonus Level:** **TODO CHANGE** Many *Coins*, *ReflectionBox*, *Rockets*
