@@ -94,12 +94,11 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 	private static Progress CLOSED_TIME;
 
 	/**
-	 * The minimum and maximum movement speed while opening and closing the
-	 * piston in units per second. See how the actual speed can be defined in
-	 * the parameters of the
+	 * The minimum and maximum time the piston stays still in closing and opening state
+	 * in milliseconds. See how the actual time can be defined in the parameters of the
 	 * {@link Piston#Piston(Vec, int, Direction, float, float, float, float)}.
 	 */
-	private static Progress MOVEMENT_SPEED;
+	private static Progress TRANSITION_TIME;
 
 	/**
 	 * The minimum and maximum shaking while opening or closing the
@@ -154,7 +153,7 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 		super();
 	}
 
-	public Piston(Vec startPos, int expansionLength, Direction direction, float timeOpen, float timeClosed, float movementSpeed, float startPhaseId) {
+	public Piston(Vec startPos, int expansionLength, Direction direction, float timeOpen, float timeClosed, float timeTransition, float startPhaseId) {
 		super(startPos, new Vec(), new Vec());
 		
 		// save trivial parameters
@@ -174,7 +173,7 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 		// calculate all durations
 		this.calcTimeOpen = (long) Piston.OPEN_TIME.getNow(timeOpen);
 		this.calcTimeClosed = (long) Piston.CLOSED_TIME.getNow(timeClosed);
-		this.calcTimeTransition = (long) (1000 * expansionLength / Piston.MOVEMENT_SPEED.getNow(movementSpeed));
+		this.calcTimeTransition = (long) Piston.TRANSITION_TIME.getNow(timeTransition);
 
 		// Create TimeStateMachine for opening/closing behavior.
 		this.machine = new TimeStateMachine(new OpenState(this));
