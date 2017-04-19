@@ -13,12 +13,10 @@ import rekit.core.GameGrid;
 import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.entities.Entity;
 import rekit.logic.gameelements.entities.enemies.piston.state.OpenState;
-import rekit.logic.gameelements.entities.enemies.piston.state.PistonState;
 import rekit.logic.gameelements.type.Enemy;
 import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBAColor;
-import rekit.primitives.operable.OpProgress;
 import rekit.primitives.time.Progress;
 import rekit.util.ReflectUtils.LoadMe;
 import rekit.util.state.TimeStateMachine;
@@ -104,7 +102,7 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 	 * The minimum and maximum shaking while opening or closing the
 	 * {@link Piston#inner InnerPiston}
 	 */
-	private static Progress SHAKING;
+	protected static Progress SHAKING;
 
 	/**
 	 * The reference to the inner, moving part of the piston.
@@ -117,13 +115,13 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 	 * optical means such as BASE_HEIGHT and LOWER_MARGIN.
 	 */
 	@NoSet
-	private int expansionLength;
+	protected int expansionLength;
 
 	/**
 	 * The direction that piston is directed to.
 	 */
 	@NoSet
-	private Direction direction;
+	protected Direction direction;
 
 	/**
 	 * The id of the phase to start with.
@@ -135,7 +133,7 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 	 * The internal StateMachine that handles everything time related.
 	 */
 	@NoSet
-	private TimeStateMachine machine;
+	protected TimeStateMachine machine;
 
 	@NoSet
 	private long calcTimeOpen;
@@ -177,8 +175,6 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 
 		// Create TimeStateMachine for opening/closing behavior.
 		this.machine = new TimeStateMachine(new OpenState(this));
-
-		this.inner = new PistonInner();
 		
 		// go to the right start phase
 		for (int i = 0; i < startPhaseId % 4; i++) {
@@ -224,13 +220,15 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 			Vec relSize = new Vec(segmentWidth, 1);
 			f.drawRectangle(this.getPos().add(this.rotatePosToDir(relPos)), this.getSize().multiply(this.rotateSizeToDir(relSize)), Piston.BASE_COLOR_2);
 		}
-		
-		this.inner.internalRender(f);
 	}
 
 	@Override
 	protected void innerLogicLoop() {
-		this.inner.innerLogicLoop();
+		if (this.inner == null && this.getScene() != null) {
+			this.inner = new PistonInner(this);
+			this.getScene().addGameElement(this.inner);
+		}
+		
 		// Let the machine work...
 		this.machine.logicLoop();
 
@@ -267,83 +265,6 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 
 		// return fully populated instance of Piston
 		return new Piston(startPos, expansionLength, direction, timeOpen, timeClosed, movementSpeed, startPhaseId);
-	}
-
-	public class PistonInner extends Enemy {
-
-		/**
-		 * The {@link OpProgress} to switch between
-		 * {@link Piston#PISTON_COLOR_1} and {@link Piston#PISTON_COLOR_2}.
-		 */
-		private OpProgress<RGBAColor> colorProgress;
-
-		PistonInner() {
-			super(new Vec(), new Vec(), new Vec());
-			this.colorProgress = new OpProgress<RGBAColor>(Piston.PISTON_COLOR_1, Piston.PISTON_COLOR_2);
-		}
-
-		@Override
-		public void reactToCollision(GameElement element, Direction dir) {
-			if (this.getTeam().isHostile(element.getTeam())) {
-				if (((PistonState) Piston.this.machine.getState()).getCurrentHeight() > 0) {
-					// if piston is currently open, do damage
-					element.addDamage(1);
-				}
-			}
-		}
-
-		@Override
-		public void innerLogicLoop() {
-			PistonState currentState = (PistonState) Piston.this.machine.getState();
-
-			// calculate middle pos and size
-			// Note: these position Vecs are relative to the middle of the
-			// Pistons Base!
-			// Also: in direction UP
-			Vec btmPos = new Vec(0, -Piston.BASE_HEIGHT / 2f);
-
-			Vec topPos = btmPos
-					// Move current length up
-					.addY(-currentState.getCurrentHeight() * Piston.this.expansionLength)
-					// Remove margin
-					.addY(Piston.LOWER_MARGIN)
-					// Add shaking upwards
-					.addY(-Piston.SHAKING.getNow(GameConf.PRNG.nextFloat()));
-
-			topPos = topPos.setY((topPos.y > btmPos.y) ? btmPos.y : topPos.y);
-
-			Vec middlePos = btmPos.add(topPos).scalar(0.5f);
-			Vec size = new Vec(Piston.PISTON_CIRCLE_WIDTHS[0], btmPos.y - topPos.y);
-
-			// setting values for rendering and collision frame
-			this.setPos(Piston.this.getPos().add(Piston.this.rotatePosToDir(middlePos)));
-			this.setSize(Piston.this.rotateSizeToDir(size));
-		}
-
-		@Override
-		public void internalRender(GameGrid f) {
-
-			int num = Piston.PISTON_CIRCLE_WIDTHS.length;
-			for (int i = 0; i < num; ++i) {
-				RGBAColor col = this.colorProgress.getNow(i / (float) num);
-
-				// Draw Rectangle for beam
-				Vec size = this.getSize();
-				if (Piston.this.direction == Direction.LEFT || Piston.this.direction == Direction.RIGHT) {
-					size = size.setY(Piston.PISTON_CIRCLE_WIDTHS[i] / 1.5f);
-				} else {
-					size = size.setX(Piston.PISTON_CIRCLE_WIDTHS[i] / 1.5f);
-				}
-				f.drawRectangle(this.getPos(), size, col);
-			}
-
-		}
-
-		@Override
-		public GameElement create(Vec startPos, String[] options) {
-			return null;
-		}
-
 	}
 
 	@Override
