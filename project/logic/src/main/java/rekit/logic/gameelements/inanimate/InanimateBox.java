@@ -30,17 +30,11 @@ public class InanimateBox extends Inanimate {
 		f.drawRectangle(this.getPos(), this.getSize(), this.color);
 
 		RGBAColor darkColor = new RGBAColor(this.color.red - 30, this.color.green - 30, this.color.blue - 30, this.color.alpha);
-		float plateThickness = 0.10f;
+		float sizeDiff = -0.2f;
+		
+		f.drawRectangle(this.getPos(), this.getSize(), darkColor);
+		f.drawRectangle(this.getPos(), this.getSize().add(new Vec(sizeDiff)), this.color);
 
-		f.drawRectangle(this.getPos().add(new Vec(0, this.getSize().y / 2f - plateThickness / 2f)), this.getSize().setY(plateThickness),
-				darkColor);
-		f.drawRectangle(this.getPos().add(new Vec(0, -this.getSize().y / 2f + plateThickness / 2f)), this.getSize().setY(plateThickness),
-				darkColor);
-
-		f.drawRectangle(this.getPos().add(new Vec(this.getSize().x / 2f - plateThickness / 2f, 0)), this.getSize().setX(plateThickness),
-				darkColor);
-		f.drawRectangle(this.getPos().add(new Vec(-this.getSize().x / 2f + plateThickness / 2f, 0)), this.getSize().setX(plateThickness),
-				darkColor);
 		f.drawRectangle(this.getPos(), this.getSize().scalar(0.5f), darkColor);
 	}
 
