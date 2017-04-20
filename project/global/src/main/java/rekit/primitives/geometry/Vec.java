@@ -55,6 +55,19 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	public Vec(float x, float y) {
 		this(x, y, 0);
 	}
+	
+	/**
+	 * Constructor that takes the initial coordinates an saves them.
+	 * Note that only floats are used internally.
+	 *
+	 * @param x
+	 *            the initial x-component of the vector
+	 * @param y
+	 *            the initial y-component of the vector
+	 */
+	public Vec(double x, double y) {
+		this((float) x, (float) y, 0);
+	}
 
 	/**
 	 * Constructor that takes the initial coordinates an saves them.

@@ -22,7 +22,14 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 
 	private static RGBAColor COL_1;
 	private static RGBAColor COL_2;
-
+	
+	private static RGBAColor ANGLE_BOUND_COLOR;
+	private static RGBAColor ANGLE_CURRENT_COLOR;
+	// px
+	private static int ANGLE_LINE_WIDTH;
+	// units
+	private static int ANGLE_LINE_LENGTH;
+			
 	private static float ANGLE_RANGE_FACTOR;
 
 	private static float BOOST;
@@ -51,6 +58,9 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 	private double angleRight;
 	
 	@NoSet
+	private double angleCurrent;
+	
+	@NoSet
 	private Vec catchPos;
 			
 	/**
@@ -75,15 +85,20 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 		super.reactToCollision(element, dir);
 	}
 	
+	/**
+	 * Method that holds a player in aiming mode, so he can aim and jump  
+	 * @param dir
+	 */
 	private void catchPlayer(Direction dir) {
 		
 		this.playerCaught = true;
 		
 		// NOTE: Everything is for case UP and rotated in the end
-		// assuming UP is 0 degrees
-		this.angleLeft = Direction.LEFT.getAngle() * AcceleratorBox.ANGLE_RANGE_FACTOR;
-		this.angleRight = Direction.RIGHT.getAngle() * AcceleratorBox.ANGLE_RANGE_FACTOR;
+		// assuming UP is 0 degrees and angles go clockwise
 		
+		// Calc bounds of possible angles
+		this.angleLeft = (Math.PI / 4f) * AcceleratorBox.ANGLE_RANGE_FACTOR;
+		this.angleRight = (2 * Math.PI) - (Math.PI / 4f) * AcceleratorBox.ANGLE_RANGE_FACTOR;
 		// If hit from right, set left angle to 0
 		if (this.direction.getNextClockwise() == dir) {
 			this.angleLeft = 0;
@@ -93,6 +108,12 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 			this.angleRight = 0;
 		}
 				
+		// Calc middle between the bounds
+		this.angleCurrent = ((this.angleLeft + this.angleRight) % 2 * Math.PI) / 2f;
+		double pi = Math.PI;
+		double delta = ((this.angleLeft - this.angleRight + 3*pi ) % (2*pi)) - pi;
+		this.angleCurrent = (2*pi + this.angleRight + (delta / 2)) % (2*pi);
+
 		this.catchPos = this.getPos().add(dir.getVector());
 	}
 	
@@ -100,7 +121,6 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 		if (this.playerCaught) {
 			this.getScene().getPlayer().setPos(catchPos);
 			this.getScene().getPlayer().setVel(new Vec());
-			
 		}
 		super.logicLoop();
 	}
@@ -113,6 +133,30 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 		
 		this.innerPolygon.moveTo(this.getPos());
 		f.drawPolygon(this.innerPolygon, COL_2, true, true);
+		
+		if (this.playerCaught) {
+			this.drawAngleLineTo(f, this.angleLeft, AcceleratorBox.ANGLE_BOUND_COLOR);
+			this.drawAngleLineTo(f, this.angleRight, AcceleratorBox.ANGLE_BOUND_COLOR);
+			this.drawAngleLineTo(f, this.angleCurrent, AcceleratorBox.ANGLE_CURRENT_COLOR);
+		}
+	}
+	
+	/**
+	 * Helper method for drawing a line to show visual feedback of the angles.
+	 * Note that this method will do nothing while {@link AcceleratorBox#playerCaught} is false.
+	 * @param f the {@link GameGrid} to draw on.
+	 * @param angle the angle to visualize
+	 * @param color the color of the angle
+	 */
+	private void drawAngleLineTo(GameGrid f, double angle, RGBAColor color) {
+		if (!this.playerCaught) {
+			return;
+		}
+		
+		Vec unitVec = new Vec(-Math.sin(angle), -Math.cos(angle));
+		Vec otherPos = this.catchPos.add(unitVec.scalar(AcceleratorBox.ANGLE_LINE_LENGTH));
+		
+		f.drawLine(this.catchPos, otherPos, AcceleratorBox.ANGLE_LINE_WIDTH, color, true, false);
 	}
 
 	@Override

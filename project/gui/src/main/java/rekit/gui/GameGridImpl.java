@@ -399,8 +399,8 @@ class GameGridImpl extends GameGrid {
 	public void drawLine(Vec a, Vec b, int lineWidth, RGBAColor color, boolean ingame, boolean usefilter) {
 		// calc col and position
 		RGBAColor col = (!usefilter || this.filter == null || !this.filter.isApplyPixel()) ? color : this.filter.apply(color);
-		Vec calcA = CalcUtil.units2pixel(this.translate2D(a, true));
-		Vec calcB = CalcUtil.units2pixel(this.translate2D(b, true));
+		Vec calcA = this.translate2D(a, true);
+		Vec calcB = this.translate2D(b, true);
 	
 		// set parameters for drawing
 		this.graphics.setColor(this.calcRGBA(col));
