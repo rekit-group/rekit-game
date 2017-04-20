@@ -21,25 +21,72 @@ import rekit.util.ReflectUtils.LoadMe;
 @SetterInfo(res = "conf/acceleratorBox")
 public final class AcceleratorBox extends DynamicInanimate implements Configurable {
 	
+	/**
+	 * The size of the actual block in units
+	 */
 	private static Vec SIZE;
 
+	/**
+	 * The primary color of the main part of the block  
+	 */
 	private static RGBAColor COL_1;
+	
+	/**
+	 * The secondary, accent color of the block
+	 */
 	private static RGBAColor COL_2;
 	
+	/**
+	 * The color that will be used to visualize the boundary angle
+	 * for the selection while {@link AcceleratorBox#playerCaught} is true.
+	 */
 	private static RGBAColor ANGLE_BOUND_COLOR;
+	
+	/**
+	 * The color that will be used to visualize the current angle
+	 * of the selection while {@link AcceleratorBox#playerCaught} is true.
+	 */
 	private static RGBAColor ANGLE_CURRENT_COLOR;
-	// px
+	
+	/**
+	 * The line width in pixels that will be used to visualize angles while
+	 * {@link AcceleratorBox#playerCaught} is true.
+	 */
 	private static int ANGLE_LINE_WIDTH;
-	// units
+	
+	/**
+	 * The line length in units that will be used to visualize angles while
+	 * {@link AcceleratorBox#playerCaught} is true.
+	 */
 	private static int ANGLE_LINE_LENGTH;
-			
+	
+	/**
+	 * The factor of angle range where
+	 * <ul>
+	 * 	<li>0 is angle 0</li>
+	 * 	<li>1 is angle 45</li>
+	 * 	<li>2 is angle 90</li> 
+	 */
 	private static float ANGLE_RANGE_FACTOR;
 
+	/**
+	 * The boost in units that the player will be given.
+	 */
 	private static float BOOST;
 	
+	/**
+	 * The width of the blocks border in units.
+	 */
 	private static float BORDER_WIDTH;
+	
+	/**
+	 * The inner radius of the visual arrow on the block.
+	 */
 	private static float INNER_RADIUS;
 	
+	/**
+	 * The Polygon of the inner arrow of the block 
+	 */
 	@NoSet
 	private Polygon innerPolygon = new Polygon(new Vec(), new Vec[]{
 			new Vec(-INNER_RADIUS, INNER_RADIUS), //
@@ -48,21 +95,44 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 			new Vec(0, 0), //
 	});
 	
+	/**
+	 * The direction this block is facing.
+	 */
 	@NoSet
 	private Direction direction;
 	
+	/**
+	 * Indicates whether the player is currently in aiming mode of not.
+	 * This changes most behavior of the block and activates the aiming sequence.  
+	 */
 	@NoSet
 	private boolean playerCaught = false;
 	
+	/**
+	 * The left-most boundary angle to aim at while
+	 * {@link AcceleratorBox#playerCaught} is true.  
+	 */
 	@NoSet
 	private double angleLeft;
 	
+	/**
+	 * The right-most boundary angle to aim at while
+	 * {@link AcceleratorBox#playerCaught} is true.  
+	 */
 	@NoSet
 	private double angleRight;
 	
+	/**
+	 * The angle that is currently aimed on while
+	 * {@link AcceleratorBox#playerCaught} is true.  
+	 */
 	@NoSet
 	private double angleCurrent;
 	
+	/**
+	 * The position in units where to hold the player at,
+	 * relative to the blocks center and for case {@link Direction#UP}.
+	 */
 	@NoSet
 	private Vec catchPos;
 			
@@ -73,6 +143,12 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 		super();
 	}
 
+	/**
+	 * Actual Constructor that takes a start position and a direction to face.
+	 * This Direction will determine where to accelerate the player to. 
+	 * @param startPos
+	 * @param dir
+	 */
 	protected AcceleratorBox(Vec startPos, Direction dir) {
 		super(startPos, AcceleratorBox.SIZE, null);
 		this.direction = dir;
@@ -88,6 +164,11 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 		super.reactToCollision(element, dir);
 	}
 	
+	/**
+	 * Adds an angle to the {@link AcceleratorBox#angleCurrent} keeping track of
+	 * overflow between 2*pi and 0.
+	 * @param add the angle to add in radians
+	 */
 	public void addToCurrentAngle(double add) {
 		
 		this.angleCurrent = normAngle(this.angleCurrent);
@@ -98,17 +179,11 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 		// update angle
 		this.angleCurrent += add;
 		
-		
-		double pi = Math.PI;
-		
 		// might cause errors if difference is exactly doing overflow from 2pi to 0
 		if (add > 0 && this.angleLeft - this.angleCurrent < 0) {
-			System.out.println("L");
 			this.angleCurrent = this.angleLeft;
 		}
 		if (add < 0 && this.angleRight - this.angleCurrent > 0) {
-			System.out.println("R");
-			System.out.println(this.angleRight + " - " + this.angleCurrent + " = " + (this.angleRight - this.angleCurrent));
 			this.angleCurrent = this.angleRight;
 		}			
 	}
@@ -119,8 +194,13 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 	}
 	
 	/**
-	 * Method that holds a player in aiming mode, so he can aim and jump  
-	 * @param dir
+	 * Method that activates the aiming mode by setting {@link AcceleratorBox#playerCaught}
+	 * to true.
+	 * Afterwards, the {@link Player} will be hold still and the velocity of the Player
+	 * is used to control the angle of current aim.
+	 * A {@link Direction} can be specified to determine on which side (relative to the block)
+	 * to hold the {@link Player}.  
+	 * @param dir the {@link Direction} relative to the block where to hold the player
 	 */
 	private void catchPlayer(Direction dir) {
 		
@@ -183,9 +263,20 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 		super.logicLoop();
 	}
 	
-	
+	/**
+	 * Shoots the {@link Player} to the {@link AcceleratorBox#angleCurrent} with
+	 * the boost {@link AcceleratorBox#BOOST}.
+	 * Will have no effect if {@link AcceleratorBox#playerCaught} is false and sets it
+	 * to false afterwards.
+	 */
 	private void shootPlayer() {
+		if (!this.playerCaught) {
+			return;
+		}
+		
 		System.out.println("SHOT");
+		
+		this.playerCaught = false;
 	}
 
 	@Override
