@@ -40,6 +40,18 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 	
 	@NoSet
 	private Direction direction;
+	
+	@NoSet
+	private boolean playerCaught = false;
+	
+	@NoSet
+	private double angleLeft;
+	
+	@NoSet
+	private double angleRight;
+	
+	@NoSet
+	private Vec catchPos;
 			
 	/**
 	 * Prototype Constructor.
@@ -55,9 +67,45 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
-		
-	}
 
+		if (this.direction.getOpposite() != dir) {
+			this.catchPlayer(dir);
+		}
+		
+		super.reactToCollision(element, dir);
+	}
+	
+	private void catchPlayer(Direction dir) {
+		
+		this.playerCaught = true;
+		
+		// NOTE: Everything is for case UP and rotated in the end
+		// assuming UP is 0 degrees
+		this.angleLeft = Direction.LEFT.getAngle() * AcceleratorBox.ANGLE_RANGE_FACTOR;
+		this.angleRight = Direction.RIGHT.getAngle() * AcceleratorBox.ANGLE_RANGE_FACTOR;
+		
+		// If hit from right, set left angle to 0
+		if (this.direction.getNextClockwise() == dir) {
+			this.angleLeft = 0;
+		} else
+		// If hit from left, set right angle to 0
+		if (this.direction.getNextAntiClockwise() == dir) {
+			this.angleRight = 0;
+		}
+				
+		this.catchPos = this.getPos().add(dir.getVector());
+	}
+	
+	public void logicLoop() {
+		if (this.playerCaught) {
+			this.getScene().getPlayer().setPos(catchPos);
+			this.getScene().getPlayer().setVel(new Vec());
+			
+		}
+		super.logicLoop();
+	}
+	
+	
 	@Override
 	public void internalRender(GameGrid f) {
 		f.drawRectangle(this.getPos(), this.getSize(), AcceleratorBox.COL_2);
