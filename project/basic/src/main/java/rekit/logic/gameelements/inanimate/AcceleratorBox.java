@@ -14,6 +14,7 @@ import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Polygon;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBAColor;
+import rekit.primitives.time.Timer;
 import rekit.util.ReflectUtils.LoadMe;
 
 
@@ -135,7 +136,24 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 	 */
 	@NoSet
 	private Vec catchPos;
-			
+	
+	/**
+	 * The time in ms for the warmUp of the aiming.
+	 */
+	private static long WARM_UP_TIME;
+	
+	/**
+	 * The last time when {@link #logicLoop(float)} was invoked.
+	 */
+	@NoSet
+	private long lastTime = GameTime.getTime();
+	
+	/**
+	 * The timer for the warmUp of the aiming.
+	 */
+	@NoSet
+	private Timer warmUp;
+	
 	/**
 	 * Prototype Constructor.
 	 */
@@ -175,7 +193,6 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 		this.angleLeft = normAngle(this.angleLeft);
 		this.angleRight = normAngle(this.angleRight);
 		
-		System.out.println(this.angleCurrent + " + " + add);
 		// update angle
 		this.angleCurrent += add;
 		
@@ -203,9 +220,15 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 	 * @param dir the {@link Direction} relative to the block where to hold the player
 	 */
 	private void catchPlayer(Direction dir) {
+		if (this.playerCaught) {
+			return;
+		}
 		
-		// set player velocity to 0 to prevent false commands  
+		// Set player velocity to 0 to prevent false commands  
 		this.getScene().getPlayer().setVel(new Vec());
+		
+		// Initialize warmUp timer
+		this.warmUp = new Timer(AcceleratorBox.WARM_UP_TIME);
 		
 		this.playerCaught = true;
 		
@@ -232,34 +255,41 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 
 		this.catchPos = this.getPos().add(dir.getVector());
 	}
-	
-	/**
-	 * The last time when {@link #logicLoop(float)} was invoked.
-	 */
-	@NoSet
-	private long lastTime = GameTime.getTime();
+
 	
 	@Override
 	public void logicLoop() {
+		if (this.warmUp != null) {
+			this.warmUp.logicLoop();
+		}
+		
+		Player player = this.getScene().getPlayer();
+		
 		if (this.playerCaught) {
-			
-			long deltaTime = GameTime.getTime() - this.lastTime;
-			
-			Player player = this.getScene().getPlayer();
-			
-			Vec vel = player.getVel();
-			if (vel.y < GameConf.G - 0.1) {
-				this.shootPlayer();
+			// if aiming is already activated:
+			if (this.warmUp != null && this.warmUp.timeUp()) {
+				long deltaTime = GameTime.getTime() - this.lastTime;
+				Vec vel = player.getVel();
+	
+				if (vel.y < GameConf.G - 0.1) { // JUMP
+					this.shootPlayer();
+					return;
+				}
+				if (vel.x < -0.1) { // LEFT
+					this.addToCurrentAngle(0.000002 * deltaTime);
+				}
+				if (vel.x > 0.1) { // RIGHT
+					this.addToCurrentAngle(-0.000002 * deltaTime);
+				}
 			}
-			if (vel.x < -0.1) {
-				this.addToCurrentAngle(0.000002 * deltaTime);
-			}
-			if (vel.x > 0.1) {
-				this.addToCurrentAngle(-0.000002 * deltaTime);
-			}
+			
+			// holds player still
 			player.setPos(catchPos);
 			player.setVel(new Vec());
 		}
+		
+		
+		
 		super.logicLoop();
 	}
 	
@@ -274,7 +304,8 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 			return;
 		}
 		
-		System.out.println("SHOT");
+		Vec unitVec = new Vec(-Math.sin(this.angleCurrent), -Math.cos(angleCurrent));
+		this.getScene().getPlayer().setVel(unitVec.scalar(AcceleratorBox.BOOST));
 		
 		this.playerCaught = false;
 	}
@@ -314,6 +345,19 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 
 	@Override
 	public AcceleratorBox create(Vec startPos, String[] options) {
-		return new AcceleratorBox(startPos, Direction.UP);
+		
+		Direction dir = Direction.UP;
+		
+		// if option 0 is given: set defined direction
+		if (options.length >= 1 && options[0] != null && options[0].matches("(\\+|-)?[0-3]+")) {
+			int opt = Integer.parseInt(options[0]);
+			if (opt >= 0 && opt < Direction.values().length) {
+				dir = Direction.values()[opt];
+			} else {
+				GameConf.GAME_LOGGER.error("RektKiller was supplied invalid option " + options[0] + " at index 0 for Direction");
+			}
+		}
+				
+		return new AcceleratorBox(startPos, dir);
 	}
 }
