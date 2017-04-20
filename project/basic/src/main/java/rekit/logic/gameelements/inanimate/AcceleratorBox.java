@@ -4,8 +4,11 @@ import org.fuchss.configuration.Configurable;
 import org.fuchss.configuration.annotations.NoSet;
 import org.fuchss.configuration.annotations.SetterInfo;
 
+import rekit.config.GameConf;
 import rekit.core.GameGrid;
+import rekit.core.GameTime;
 import rekit.logic.gameelements.GameElement;
+import rekit.logic.gameelements.entities.Player;
 import rekit.logic.gameelements.type.DynamicInanimate;
 import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Polygon;
@@ -85,20 +88,54 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 		super.reactToCollision(element, dir);
 	}
 	
+	public void addToCurrentAngle(double add) {
+		
+		this.angleCurrent = normAngle(this.angleCurrent);
+		this.angleLeft = normAngle(this.angleLeft);
+		this.angleRight = normAngle(this.angleRight);
+		
+		System.out.println(this.angleCurrent + " + " + add);
+		// update angle
+		this.angleCurrent += add;
+		
+		
+		double pi = Math.PI;
+		
+		// might cause errors if difference is exactly doing overflow from 2pi to 0
+		if (add > 0 && this.angleLeft - this.angleCurrent < 0) {
+			System.out.println("L");
+			this.angleCurrent = this.angleLeft;
+		}
+		if (add < 0 && this.angleRight - this.angleCurrent > 0) {
+			System.out.println("R");
+			System.out.println(this.angleRight + " - " + this.angleCurrent + " = " + (this.angleRight - this.angleCurrent));
+			this.angleCurrent = this.angleRight;
+		}			
+	}
+	
+	private double normAngle(double angle) {
+		double pi = Math.PI;
+		return ((angle + 3*pi ) % (2*pi)) - pi;
+	}
+	
 	/**
 	 * Method that holds a player in aiming mode, so he can aim and jump  
 	 * @param dir
 	 */
 	private void catchPlayer(Direction dir) {
 		
+		// set player velocity to 0 to prevent false commands  
+		this.getScene().getPlayer().setVel(new Vec());
+		
 		this.playerCaught = true;
+		
+		double pi = Math.PI;
 		
 		// NOTE: Everything is for case UP and rotated in the end
 		// assuming UP is 0 degrees and angles go clockwise
-		
 		// Calc bounds of possible angles
-		this.angleLeft = (Math.PI / 4f) * AcceleratorBox.ANGLE_RANGE_FACTOR;
-		this.angleRight = (2 * Math.PI) - (Math.PI / 4f) * AcceleratorBox.ANGLE_RANGE_FACTOR;
+		this.angleLeft = (pi / 4f) * AcceleratorBox.ANGLE_RANGE_FACTOR;
+		this.angleRight = (2 * pi) - (pi / 4f) * AcceleratorBox.ANGLE_RANGE_FACTOR;
 		// If hit from right, set left angle to 0
 		if (this.direction.getNextClockwise() == dir) {
 			this.angleLeft = 0;
@@ -110,22 +147,47 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 				
 		// Calc middle between the bounds
 		this.angleCurrent = ((this.angleLeft + this.angleRight) % 2 * Math.PI) / 2f;
-		double pi = Math.PI;
 		double delta = ((this.angleLeft - this.angleRight + 3*pi ) % (2*pi)) - pi;
 		this.angleCurrent = (2*pi + this.angleRight + (delta / 2)) % (2*pi);
 
 		this.catchPos = this.getPos().add(dir.getVector());
 	}
 	
+	/**
+	 * The last time when {@link #logicLoop(float)} was invoked.
+	 */
+	@NoSet
+	private long lastTime = GameTime.getTime();
+	
+	@Override
 	public void logicLoop() {
 		if (this.playerCaught) {
-			this.getScene().getPlayer().setPos(catchPos);
-			this.getScene().getPlayer().setVel(new Vec());
+			
+			long deltaTime = GameTime.getTime() - this.lastTime;
+			
+			Player player = this.getScene().getPlayer();
+			
+			Vec vel = player.getVel();
+			if (vel.y < GameConf.G - 0.1) {
+				this.shootPlayer();
+			}
+			if (vel.x < -0.1) {
+				this.addToCurrentAngle(0.000002 * deltaTime);
+			}
+			if (vel.x > 0.1) {
+				this.addToCurrentAngle(-0.000002 * deltaTime);
+			}
+			player.setPos(catchPos);
+			player.setVel(new Vec());
 		}
 		super.logicLoop();
 	}
 	
 	
+	private void shootPlayer() {
+		System.out.println("SHOT");
+	}
+
 	@Override
 	public void internalRender(GameGrid f) {
 		f.drawRectangle(this.getPos(), this.getSize(), AcceleratorBox.COL_2);
