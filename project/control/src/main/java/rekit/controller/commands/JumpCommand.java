@@ -1,6 +1,7 @@
 package rekit.controller.commands;
 
 import rekit.logic.gameelements.entities.Entity;
+import rekit.logic.gameelements.entities.StateEntity;
 import rekit.logic.gameelements.entities.state.FallState;
 import rekit.logic.gameelements.entities.state.JumpState;
 
@@ -24,7 +25,7 @@ public class JumpCommand extends EntityCommand {
 
 	@Override
 	public void execute(InputMethod inputMethod) {
-		Entity entity = this.supervisor.getEntity(this);
+		StateEntity entity = this.supervisor.getEntity(this);
 		if (inputMethod == InputMethod.PRESS) {
 			if (entity.getEntityState().canJump()) {
 				entity.setEntityState(new JumpState(entity));

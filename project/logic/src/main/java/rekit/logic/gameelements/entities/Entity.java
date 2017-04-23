@@ -4,9 +4,6 @@ import rekit.config.GameConf;
 import rekit.core.GameTime;
 import rekit.core.Team;
 import rekit.logic.gameelements.GameElement;
-import rekit.logic.gameelements.entities.state.DefaultState;
-import rekit.logic.gameelements.entities.state.EntityState;
-import rekit.logic.gameelements.entities.state.NotInitializedState;
 import rekit.logic.gameelements.type.Enemy;
 import rekit.logic.gameelements.type.Pickup;
 import rekit.primitives.geometry.Direction;
@@ -30,10 +27,6 @@ public abstract class Entity extends GameElement {
 	 */
 	protected int lives = 1;
 
-	/**
-	 * The current State the Entity is in and determines the jump behavior.
-	 */
-	protected EntityState entityState;
 	/**
 	 * This {@link Timer} defines invincibility of an {@link Entity}.
 	 * ({@code null} --&gt; not invincible)
@@ -60,7 +53,6 @@ public abstract class Entity extends GameElement {
 		this.setPos(new Vec());
 		this.setSize(new Vec());
 		this.setVel(new Vec());
-		this.setEntityState(new NotInitializedState(this));
 	}
 
 	/**
@@ -77,28 +69,6 @@ public abstract class Entity extends GameElement {
 	 */
 	protected Entity(Vec startPos, Vec vel, Vec size, Team team) {
 		super(startPos, vel, size, team);
-		// Set to default state
-		this.setEntityState(new DefaultState(this));
-	}
-
-	/**
-	 * Set the Entities <i>EntitiyState</i> that determines its jump behavior.
-	 *
-	 * @param value
-	 *            the new EntityState
-	 */
-	public final void setEntityState(EntityState value) {
-		this.entityState = value;
-	}
-
-	/**
-	 * Return the Entities current <i>EntitiyState</i> that determines its jump
-	 * behavior.
-	 *
-	 * @return the state
-	 */
-	public final EntityState getEntityState() {
-		return this.entityState;
 	}
 
 	@Override
@@ -149,8 +119,6 @@ public abstract class Entity extends GameElement {
 			this.invincibility.logicLoop();
 		}
 
-		this.getEntityState().logicLoop();
-
 		// calculate new position
 		// s1 = s0 + v*t because physics, thats why!
 		this.setPos(this.getPos().add(this.getVel().scalar(this.deltaTime / 1000F)));
@@ -178,9 +146,7 @@ public abstract class Entity extends GameElement {
 		Vec lastPos = this.getLastPos();
 
 		int signum = dir == Direction.LEFT || dir == Direction.UP ? -1 : 1;
-		if (dir == Direction.UP) {
-			this.getEntityState().floorCollision();
-		}
+
 		switch (dir) {
 		case LEFT:
 		case RIGHT:

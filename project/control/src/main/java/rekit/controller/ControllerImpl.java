@@ -24,7 +24,7 @@ import rekit.logic.filters.Filter;
 import rekit.logic.filters.GrayScaleMode;
 import rekit.logic.filters.InvertedMode;
 import rekit.logic.filters.RandomMode;
-import rekit.logic.gameelements.entities.Entity;
+import rekit.logic.gameelements.entities.StateEntity;
 import rekit.logic.gui.menu.MenuItem;
 import rekit.primitives.geometry.Direction;
 import rekit.util.tuple.Tuple;
@@ -157,7 +157,7 @@ final class ControllerImpl implements Observer, Controller, CommandSupervisor {
 	}
 
 	@Override
-	public Entity getEntity(Command command) {
+	public StateEntity getEntity(Command command) {
 		return this.model.getPlayer();
 	}
 

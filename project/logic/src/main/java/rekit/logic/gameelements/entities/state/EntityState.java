@@ -1,6 +1,6 @@
 package rekit.logic.gameelements.entities.state;
 
-import rekit.logic.gameelements.entities.Entity;
+import rekit.logic.gameelements.entities.StateEntity;
 
 /**
  * The abstract state an entity can be in. <i>EntityStates</i> determine the
@@ -12,7 +12,7 @@ public abstract class EntityState {
 	/**
 	 * The entity.
 	 */
-	protected final Entity entity;
+	protected final StateEntity entity;
 
 	/**
 	 * Create State.
@@ -20,7 +20,7 @@ public abstract class EntityState {
 	 * @param entity
 	 *            the entity
 	 */
-	public EntityState(Entity entity) {
+	public EntityState(StateEntity entity) {
 		this.entity = entity;
 	}
 

@@ -1,6 +1,6 @@
 package rekit.logic.gameelements.entities.state;
 
-import rekit.logic.gameelements.entities.Entity;
+import rekit.logic.gameelements.entities.StateEntity;
 
 /**
  * The default state a entity is in after initialization. Represents the state
@@ -15,7 +15,7 @@ public class DefaultState extends EntityState {
 	 * @param entitiy
 	 *            the entity
 	 */
-	public DefaultState(Entity entitiy) {
+	public DefaultState(StateEntity entitiy) {
 		super(entitiy);
 	}
 

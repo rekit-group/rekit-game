@@ -4,7 +4,7 @@ import java.util.logging.Level;
 
 import rekit.core.GameTime;
 import rekit.logic.filters.Filter;
-import rekit.logic.gameelements.entities.Entity;
+import rekit.logic.gameelements.entities.Player;
 import rekit.logic.gui.menu.MenuItem;
 
 /**
@@ -28,7 +28,7 @@ public interface Model {
 	 *
 	 * @return the player or {@code null} when not in {@link GameState#INGAME}
 	 */
-	Entity getPlayer();
+	Player getPlayer();
 
 	/**
 	 * Get the Menu.

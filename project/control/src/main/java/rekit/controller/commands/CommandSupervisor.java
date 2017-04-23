@@ -2,7 +2,7 @@ package rekit.controller.commands;
 
 import rekit.logic.IScene;
 import rekit.logic.Model;
-import rekit.logic.gameelements.entities.Entity;
+import rekit.logic.gameelements.entities.StateEntity;
 import rekit.logic.gui.menu.MenuItem;
 
 /**
@@ -20,7 +20,7 @@ public interface CommandSupervisor {
 	 *            the command
 	 * @return the entity for the command or {@code null} if none assigned
 	 */
-	Entity getEntity(Command command);
+	StateEntity getEntity(Command command);
 
 	/**
 	 * Get the menu the Command is assigned to.

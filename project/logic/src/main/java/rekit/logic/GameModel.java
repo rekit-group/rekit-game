@@ -6,7 +6,7 @@ import rekit.config.GameConf;
 import rekit.core.GameTime;
 import rekit.logic.filters.Filter;
 import rekit.logic.gameelements.GameElementFactory;
-import rekit.logic.gameelements.entities.Entity;
+import rekit.logic.gameelements.entities.Player;
 import rekit.logic.gui.menu.MenuItem;
 import rekit.logic.scene.Scenes;
 import rekit.util.ThreadUtils;
@@ -117,7 +117,7 @@ public class GameModel implements Model {
 	 * @return the player
 	 */
 	@Override
-	public Entity getPlayer() {
+	public Player getPlayer() {
 		if (!this.scene.isLevelScene()) {
 			return null;
 		}
