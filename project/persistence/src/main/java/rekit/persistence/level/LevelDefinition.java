@@ -4,7 +4,6 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -16,6 +15,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import rekit.config.GameConf;
+import rekit.util.LambdaUtil;
 
 /**
  *
@@ -247,12 +247,8 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 
 	private String calcID() {
 		MessageDigest cs = null;
-		try {
-			cs = MessageDigest.getInstance("SHA-512");
-		} catch (NoSuchAlgorithmException e) {
-			GameConf.GAME_LOGGER.fatal(e.getMessage());
-			return null;
-		}
+		cs = LambdaUtil.invoke(() -> MessageDigest.getInstance("SHA-512"));
+
 		StringBuilder content = new StringBuilder();
 		content.append(this.type);
 		if (this.type == LevelType.Arcade) {

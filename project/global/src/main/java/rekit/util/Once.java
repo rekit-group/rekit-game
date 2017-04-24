@@ -5,7 +5,7 @@ import rekit.util.LambdaUtil.RunnableWithException;
 /**
  * This class realized a {@link RunnableWithException} which can executed once.
  * (After that execution the invocation has no effect anymore.)
- * 
+ *
  * @author Dominik Fuchss
  *
  */
@@ -15,7 +15,7 @@ public final class Once implements RunnableWithException {
 
 	/**
 	 * Create a Once-Object.
-	 * 
+	 *
 	 * @param run
 	 *            the command which shall executed once
 	 */
@@ -24,11 +24,11 @@ public final class Once implements RunnableWithException {
 	}
 
 	@Override
-	public void apply() throws Exception {
+	public void run() throws Exception {
 		if (this.invoked || this.run == null) {
 			return;
 		}
 		this.invoked = true;
-		this.run.apply();
+		this.run.run();
 	}
 }
