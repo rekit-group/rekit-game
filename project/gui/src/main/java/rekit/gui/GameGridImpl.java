@@ -318,7 +318,6 @@ class GameGridImpl extends GameGrid {
 		Triple<Vec, Vec, Color> preProcessing = this.preProcessing(pos, size, new RGBAColor(0), inGame, usefilter);
 		this.drawImageImpl(preProcessing.getT(), preProcessing.getU(), imagePath, usefilter);
 	}
-	
 
 	@Override
 	public void drawText(Vec pos, String text, TextOptions options, boolean inGame) {
@@ -401,13 +400,13 @@ class GameGridImpl extends GameGrid {
 		RGBAColor col = (!usefilter || this.filter == null || !this.filter.isApplyPixel()) ? color : this.filter.apply(color);
 		Vec calcA = this.translate2D(a, true);
 		Vec calcB = this.translate2D(b, true);
-	
+
 		// set parameters for drawing
 		this.graphics.setColor(this.calcRGBA(col));
 		this.graphics.setStroke(new BasicStroke(lineWidth));
-		
+
 		// draw line
-		this.graphics.drawLine((int)calcA.x, (int)calcA.y, (int)calcB.x, (int)calcB.y);
+		this.graphics.drawLine((int) calcA.x, (int) calcA.y, (int) calcB.x, (int) calcB.y);
 	}
 
 }
