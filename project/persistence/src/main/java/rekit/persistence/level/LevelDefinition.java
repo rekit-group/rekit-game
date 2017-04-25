@@ -246,8 +246,10 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 	}
 
 	private String calcID() {
-		MessageDigest cs = null;
-		cs = LambdaUtil.invoke(() -> MessageDigest.getInstance("SHA-512"));
+		MessageDigest cs = LambdaUtil.invoke(() -> MessageDigest.getInstance("SHA-512"));
+		if (cs == null) {
+			return null;
+		}
 
 		StringBuilder content = new StringBuilder();
 		content.append(this.type);
