@@ -18,7 +18,7 @@ import rekit.primitives.time.Timer;
 import rekit.util.ReflectUtils.LoadMe;
 
 @LoadMe
-@SetterInfo(res = "conf/acceleratorBox")
+@SetterInfo(res = "conf/acceleratorbox")
 public final class AcceleratorBox extends DynamicInanimate implements Configurable {
 
 	/**
