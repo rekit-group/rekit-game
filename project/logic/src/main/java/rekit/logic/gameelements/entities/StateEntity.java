@@ -3,7 +3,6 @@ package rekit.logic.gameelements.entities;
 import rekit.core.Team;
 import rekit.logic.gameelements.entities.state.DefaultState;
 import rekit.logic.gameelements.entities.state.EntityState;
-import rekit.logic.gameelements.entities.state.NotInitializedState;
 import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Frame;
 import rekit.primitives.geometry.Vec;
@@ -21,19 +20,7 @@ public abstract class StateEntity extends Entity {
 	/**
 	 * The current State the Entity is in and determines the jump behavior.
 	 */
-	protected EntityState entityState;
-
-	/**
-	 * Minimal Constructor by {@link Team} used for prototype constructors. The
-	 * element will not be initialized
-	 *
-	 * @param team
-	 *            the team
-	 */
-	protected StateEntity(Team team) {
-		super(team);
-		this.setEntityState(new NotInitializedState(this));
-	}
+	private EntityState entityState;
 
 	/**
 	 * Constructor that initializes attributes and takes a start position.

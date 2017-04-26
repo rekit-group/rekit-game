@@ -37,15 +37,13 @@ public abstract class ParallaxLayer {
 		return fieldX / this.perspectiveZ;
 	}
 
-	protected float layerXtoFieldX(float layerX) {
-		return layerX * this.perspectiveZ;
-	}
+	// TODO Remove unused code
+	// protected float layerXtoFieldX(float layerX) {
+	// return layerX * this.perspectiveZ;
+	// }
 
 	public void setScene(IScene scene) {
 		this.scene = scene;
 	}
 
-	public Object synchronize() {
-		return this.sync;
-	}
 }

@@ -186,7 +186,7 @@ public final class GameConf implements Configurable {
 	 * Set values which cannot be loaded by {@link Parser Parsers}.
 	 */
 	@AfterSetting
-	public static void afterVisit() {
+	public static void afterVisit() { // NO_UCD (unused code)
 		GameConf.PIXEL_W = GameConf.GRID_W * GameConf.PX_PER_UNIT;
 		GameConf.PIXEL_H = GameConf.GRID_H * GameConf.PX_PER_UNIT;
 

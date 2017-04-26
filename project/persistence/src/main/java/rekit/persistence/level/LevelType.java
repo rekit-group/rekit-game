@@ -1,8 +1,5 @@
 package rekit.persistence.level;
 
-import rekit.util.LambdaUtil;
-import rekit.util.LambdaUtil.FunctionWithException;
-
 /**
  * The type of a level.
  *
@@ -26,14 +23,4 @@ public enum LevelType {
 	 * Boss Rush Mode.
 	 */
 	Boss_Rush;
-	/**
-	 * Same as {@link #valueOf(String)}, but no exception.
-	 *
-	 * @param string
-	 *            the representing String
-	 * @return the type or {@code null} iff none found
-	 */
-	public static LevelType byString(String string) {
-		return LambdaUtil.invoke((FunctionWithException<String, LevelType>) LevelType::valueOf, string);
-	}
 }
