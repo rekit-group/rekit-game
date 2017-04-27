@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 import rekit.config.GameConf;
 import rekit.core.GameGrid;
 import rekit.logic.IScene;
+import rekit.primitives.image.RGBAColor;
 
 /**
  *
@@ -74,7 +75,18 @@ public final class BoolSetting extends MenuItem {
 		if (!this.selected) {
 			super.renderItem(f);
 		} else {
-			f.drawRectangle(this.getPos(), this.getSize(), GameConf.MENU_BOX_OPTION_COLOR, false, true);
+			RGBAColor col = GameConf.MENU_BOX_OPTION_COLOR;
+			RGBAColor darkCol = col.darken(0.8f);
+
+			float borderWidth = 10;
+
+			f.drawRectangle(this.getPos(), this.getSize(), col, false, false);
+
+			f.drawRectangle(this.getPos().addX((+this.getSize().x - borderWidth) / 2f), this.getSize().setX(borderWidth), darkCol, false, false);
+			f.drawRectangle(this.getPos().addX((-this.getSize().x + borderWidth) / 2f), this.getSize().setX(borderWidth), darkCol, false, false);
+			f.drawRectangle(this.getPos().addY((+this.getSize().y - borderWidth) / 2f), this.getSize().setY(borderWidth), darkCol, false, false);
+			f.drawRectangle(this.getPos().addY((-this.getSize().y + borderWidth) / 2f), this.getSize().setY(borderWidth), darkCol, false, false);
+
 			f.drawText(this.getPos(), this.getText(), GameConf.MENU_TEXT, false);
 		}
 	}
