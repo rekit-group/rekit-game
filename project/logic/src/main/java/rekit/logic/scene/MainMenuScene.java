@@ -31,6 +31,8 @@ final class MainMenuScene extends Scene {
 	 * The menu.
 	 */
 	private SubMenu menu;
+	
+	private String selectOption;
 
 	/**
 	 * Create the main menu.
@@ -38,9 +40,12 @@ final class MainMenuScene extends Scene {
 	 * @param model
 	 *            the model
 	 */
-	private MainMenuScene(GameModel model) {
+	private MainMenuScene(GameModel model, String selectedMenu) {
 		super(model);
+		this.selectOption = selectedMenu;
 	}
+	
+
 
 	/**
 	 * Create method of the scene.
@@ -49,10 +54,15 @@ final class MainMenuScene extends Scene {
 	 *            the model
 	 * @param options
 	 *            the options
+	 * first option: menuSelection the indices which should be selected separadet by a dot ('.').
+	 * 			default is 0 for the main menu.
 	 * @return a new arcade scene.
 	 */
 	public static Scene create(GameModel model, String[] options) {
-		return new MainMenuScene(model);
+		if (options == null || options.length < 1) {
+			options = new String[] {"0"};
+		}
+		return new MainMenuScene(model, options[0]);
 	}
 
 	@Override
@@ -93,7 +103,14 @@ final class MainMenuScene extends Scene {
 
 		this.addGuiElement(new BackgroundElement(this, "mainmenu.png"));
 		this.addGuiElement(this.menu);
-		this.menu.select();
+		
+		// select the right menu
+		String[] test = this.selectOption.split("\\.");
+		for (String str : test) {
+			int index = Integer.parseInt(str);
+			this.menu.setIndex(index);
+			this.menu.select();
+		}
 	}
 
 	private void addGroup(MenuList arcade, Entry<String, List<String>> group) {
