@@ -12,7 +12,7 @@ import rekit.primitives.geometry.Vec;
 
 /**
  *
- * This class realizes a {@link MenuItem} with an attached Action.
+ * This class realizes a {@link MenuItem} with contains an arcade level (switch to).
  *
  */
 public final class ArcadeLevelItem extends MenuActionItem {
