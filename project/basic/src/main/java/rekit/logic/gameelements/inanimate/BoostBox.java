@@ -103,11 +103,7 @@ public final class BoostBox extends DynamicInanimate implements Configurable {
 		this.lastTime += deltaTime;
 		this.offset += deltaTime;
 
-		if (this.offset > BoostBox.PERIOD - 750) {
-			this.sparkling = true;
-		} else {
-			this.sparkling = false;
-		}
+        this.sparkling = this.offset > BoostBox.PERIOD - 750;
 		if (this.offset < BoostBox.PERIOD) {
 			return;
 		}

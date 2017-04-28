@@ -4,7 +4,7 @@ import rekit.core.Team;
 import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.entities.Player;
 import rekit.primitives.geometry.Direction;
-import rekit.primitives.geometry.Vec;;
+import rekit.primitives.geometry.Vec;
 
 public class Brain extends GameElement {
 
