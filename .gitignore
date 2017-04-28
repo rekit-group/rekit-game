@@ -20,3 +20,5 @@ project/game/docs/
 project/basic/pickuppack/docs/
 gh-pages
 .ucdetector_reports/
+.idea/
+*.iml
