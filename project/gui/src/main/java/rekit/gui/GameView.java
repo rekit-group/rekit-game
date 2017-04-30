@@ -5,24 +5,16 @@ import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.Map;
 import java.util.Queue;
 import java.util.TreeMap;
 
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
-
-import org.apache.commons.io.IOUtils;
-import org.springframework.core.io.DefaultResourceLoader;
-import org.springframework.core.io.Resource;
 
 import rekit.config.GameConf;
 import rekit.core.GameTime;
@@ -46,7 +38,7 @@ class GameView implements View {
 	/**
 	 * The location of the icon of the game.
 	 */
-	private static final String ICON_LOCATION = "/images/icon.png";
+	private static final String ICON_LOCATION = "icon.png";
 
 	/**
 	 * Reference to the model, that holds all information that are required for
@@ -70,10 +62,6 @@ class GameView implements View {
 	 * Amount of points in time to calculate FPS.
 	 */
 	private static final int FPS_COUNTER = 500;
-	/**
-	 * Max tries of {@link #getGameIcon(int)}.
-	 */
-	private static final int MAX_TRIES = 5;
 
 	/**
 	 * The Field that manages the graphic context.
@@ -103,7 +91,7 @@ class GameView implements View {
 		this.model = model;
 		// Create window
 		this.frame = new JFrame(GameConf.NAME + " (" + GameConf.VERSION + ")");
-		this.frame.setIconImage(this.getGameIcon());
+		this.frame.setIconImage(ImageManagement.get(GameView.ICON_LOCATION));
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		this.frame.setResizable(false);
@@ -139,42 +127,6 @@ class GameView implements View {
 		frame.setLocation(x, y);
 	}
 
-	/**
-	 * Get the game icon.
-	 *
-	 * @return the game icon
-	 */
-	private Image getGameIcon() {
-		return this.getGameIcon(0);
-	}
-
-	/**
-	 * Try to get icon multiple times, as sometimes stream will closes (don't
-	 * know why).
-	 *
-	 * @param nTry
-	 *            the number of the try
-	 * @return hopefully the game icon
-	 */
-	private Image getGameIcon(final int nTry) {
-		if (nTry > GameView.MAX_TRIES) {
-			return null;
-		}
-		DefaultResourceLoader resolv = new DefaultResourceLoader();
-		try {
-			Resource icon = resolv.getResource(GameView.ICON_LOCATION);
-			if (!icon.exists()) {
-				GameConf.GAME_LOGGER.error("Icon does not exist.");
-				return null;
-			}
-			// Read data to local buffer.
-			ByteArrayInputStream is = new ByteArrayInputStream(IOUtils.toByteArray(icon.getInputStream()));
-			return ImageIO.read(is);
-		} catch (IOException | NullPointerException e) {
-			GameConf.GAME_LOGGER.debug(e + ", Icon does not exist. Try " + nTry);
-			return this.getGameIcon(nTry + 1);
-		}
-	}
 
 	/**
 	 * Starts the View by periodically invoking renderLoop().
@@ -200,7 +152,7 @@ class GameView implements View {
 	 * by iterating over all GameElements that GameMode.getGameElementIterator()
 	 * supplies and invoking each render()
 	 */
-	public void renderLoop() {
+	private void renderLoop() {
 		IScene scene = this.model.getScene();
 		if (this.model.filterChanged()) {
 			this.grid.setFilter(this.model.getFilter());

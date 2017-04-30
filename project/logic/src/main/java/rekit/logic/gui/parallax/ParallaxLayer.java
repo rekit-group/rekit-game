@@ -10,8 +10,6 @@ public abstract class ParallaxLayer {
 
 	protected float generateUntil = 0;
 
-	private final Object sync = new Object();
-
 	protected IScene scene = null;
 
 	protected float currentlyGeneratedUntil = 0;
