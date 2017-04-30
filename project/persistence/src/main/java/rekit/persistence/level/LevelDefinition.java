@@ -259,7 +259,7 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 			this.settings.forEach((k, v) -> content.append(k).append(v));
 			this.bossSettings.forEach((k, v) -> content.append(k).append(v));
 		}
-		cs.update(content.toString().getBytes());
+		cs.update(content.toString().getBytes(Charset.forName("UTF-8")));
 		StringBuffer res = new StringBuffer();
 		for (byte bytes : cs.digest()) {
 			res.append(String.format("%02x", bytes & 0xff));
