@@ -281,4 +281,10 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 	public long getCalcTimeTransistion() {
 		return this.calcTimeTransition;
 	}
+	
+	@Override
+	public Integer getZHint() {
+		return (int) this.team.zRange.normalize(this.team.zRange.min + 1);
+	}
+
 }

@@ -1,6 +1,5 @@
 package rekit.logic.gameelements.entities.enemies.piston;
 
-import rekit.config.GameConf;
 import rekit.core.GameGrid;
 import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.entities.enemies.piston.state.PistonState;
@@ -47,15 +46,15 @@ public class PistonInner extends Enemy {
 		// Note: these position Vecs are relative to the middle of the
 		// Pistons Base!
 		// Also: in direction UP
-		Vec btmPos = new Vec(0, -Piston.BASE_HEIGHT / 2f);
+		Vec btmPos = new Vec(0, -Piston.BASE_HEIGHT / 2f + 0.01);
 
 		Vec topPos = btmPos
 				// Move current length up
 				.addY(-currentState.getCurrentHeight() * this.parent.expansionLength)
 				// Remove margin
-				.addY(Piston.LOWER_MARGIN)
+				.addY(Piston.LOWER_MARGIN);
 				// Add shaking upwards
-				.addY(-Piston.SHAKING.getNow(GameConf.PRNG.nextFloat()));
+				//.addY(-Piston.SHAKING.getNow(GameConf.PRNG.nextFloat()));
 
 		topPos = topPos.setY((topPos.y > btmPos.y) ? btmPos.y : topPos.y);
 
@@ -89,6 +88,11 @@ public class PistonInner extends Enemy {
 	@Override
 	public GameElement create(Vec startPos, String[] options) {
 		return null;
+	}
+	
+	@Override
+	public Integer getZHint() {
+		return (int) this.team.zRange.normalize(this.team.zRange.min);
 	}
 
 }
