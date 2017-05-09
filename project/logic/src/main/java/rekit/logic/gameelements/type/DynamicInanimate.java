@@ -1,6 +1,7 @@
 package rekit.logic.gameelements.type;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import rekit.config.GameConf;
 import rekit.logic.gameelements.GameElement;
@@ -46,7 +47,9 @@ public abstract class DynamicInanimate extends Inanimate {
 	 * @see LoadMe
 	 */
 	public static Set<? extends GameElement> getPrototypes() {
-		return ReflectUtils.loadInstances(GameConf.SEARCH_PATH, ModManager.SYSLOADER, DynamicInanimate.class);
+		return ReflectUtils.loadInstances(GameConf.SEARCH_PATH, ModManager.SYSLOADER, DynamicInanimate.class).stream().filter(GameElement::isAddableToGroup)
+				.collect(Collectors.toSet());
+
 	}
 
 }

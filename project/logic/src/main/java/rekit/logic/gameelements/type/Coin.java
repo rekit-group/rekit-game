@@ -1,6 +1,7 @@
 package rekit.logic.gameelements.type;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import net.jafama.FastMath;
 import rekit.config.GameConf;
@@ -25,7 +26,8 @@ public abstract class Coin extends Pickup {
 	 * @return a set of prototypes
 	 */
 	public static final Set<? extends GameElement> getPrototypes() {
-		return ReflectUtils.loadInstances(GameConf.SEARCH_PATH, ModManager.SYSLOADER, Coin.class);
+		return ReflectUtils.loadInstances(GameConf.SEARCH_PATH, ModManager.SYSLOADER, Coin.class).stream().filter(GameElement::isAddableToGroup)
+				.collect(Collectors.toSet());
 	}
 
 	/**

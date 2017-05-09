@@ -90,7 +90,7 @@ class GameView implements View {
 	GameView(Model model) {
 		this.model = model;
 		// Create window
-		this.frame = new JFrame(GameConf.NAME + " (" + GameConf.VERSION + ")");
+		this.frame = new JFrame(GameConf.NAME + " (v." + GameConf.VERSION + ")");
 		this.frame.setIconImage(ImageManagement.get(GameView.ICON_LOCATION));
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

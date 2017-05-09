@@ -1,6 +1,7 @@
 package rekit.logic.gameelements.type;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import rekit.config.GameConf;
 import rekit.core.Team;
@@ -40,7 +41,8 @@ public abstract class Boss extends Entity {
 	 * @see LoadMe
 	 */
 	public static final Set<? extends GameElement> getPrototypes() {
-		return ReflectUtils.loadInstances(GameConf.SEARCH_PATH, ModManager.SYSLOADER, Boss.class);
+		return ReflectUtils.loadInstances(GameConf.SEARCH_PATH, ModManager.SYSLOADER, Boss.class).stream().filter(GameElement::isAddableToGroup)
+				.collect(Collectors.toSet());
 	}
 
 	/**

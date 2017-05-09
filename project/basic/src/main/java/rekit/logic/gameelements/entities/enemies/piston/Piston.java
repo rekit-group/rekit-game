@@ -153,14 +153,14 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 
 	public Piston(Vec startPos, int expansionLength, Direction direction, float timeOpen, float timeClosed, float timeTransition, float startPhaseId) {
 		super(startPos, new Vec(), new Vec());
-		
+
 		// save trivial parameters
 		this.direction = direction;
 		this.expansionLength = expansionLength;
 
 		// calculate base position (determined by Direction and BASE_HEIGHT)
 		Vec basePos = new Vec(0, 0.5f - Piston.BASE_HEIGHT / 2f); // case
-																	// upwards
+		// upwards
 		basePos = this.rotatePosToDir(basePos);
 		this.setPos(startPos.add(basePos));
 
@@ -175,11 +175,11 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 
 		// Create TimeStateMachine for opening/closing behavior.
 		this.machine = new TimeStateMachine(new OpenState(this));
-		
+
 		// go to the right start phase
 		for (int i = 0; i < startPhaseId % 4; i++) {
 			this.machine.nextState();
-		}		
+		}
 	}
 
 	/**
@@ -228,7 +228,7 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 			this.inner = new PistonInner(this);
 			this.getScene().addGameElement(this.inner);
 		}
-		
+
 		// Let the machine work...
 		this.machine.logicLoop();
 
@@ -281,10 +281,15 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 	public long getCalcTimeTransistion() {
 		return this.calcTimeTransition;
 	}
-	
+
 	@Override
 	public Integer getZHint() {
 		return (int) this.team.zRange.normalize(this.team.zRange.min + 1);
+	}
+
+	@Override
+	public boolean isAddableToGroup() {
+		return false;
 	}
 
 }

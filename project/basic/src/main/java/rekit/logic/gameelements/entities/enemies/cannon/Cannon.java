@@ -284,4 +284,9 @@ public class Cannon extends Enemy implements Configurable {
 		this.innerStateMachine.getState().hitSomething();
 	}
 
+	@Override
+	public boolean isAddableToGroup() {
+		return false;
+	}
+
 }

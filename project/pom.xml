@@ -2,14 +2,14 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>parent</artifactId>
-	<version>0.6</version>
+	<version>1.0</version>
 	<packaging>pom</packaging>
 	<name>ReKiT</name>
 	<prerequisites>
 		<maven>3.0</maven>
 	</prerequisites>
 	<properties> 
-		<rekit.version>0.6</rekit.version>
+		<rekit.version>1.0</rekit.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
