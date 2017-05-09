@@ -58,10 +58,7 @@ final class MainMenuScene extends Scene {
 	 * @return a new arcade scene.
 	 */
 	public static Scene create(GameModel model, String[] options) {
-		if (options == null || options.length < 1) {
-			options = new String[] { "0" };
-		}
-		return new MainMenuScene(model, options[0]);
+		return new MainMenuScene(model, ((options == null || options.length < 1) ? "0" : options[0]));
 	}
 
 	@Override
