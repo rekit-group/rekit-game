@@ -22,6 +22,14 @@ public interface DataKeySetter {
 	 * @see DataKey#SUCCESS
 	 */
 	boolean getSuccess();
+	
+	/**
+	 * Get whether the game was won.
+	 *
+	 * @return {@code true} if won
+	 * @see DataKey#WON
+	 */
+	boolean getWon();
 
 	/**
 	 * Get the current level's definition.
@@ -29,5 +37,6 @@ public interface DataKeySetter {
 	 * @return the definition
 	 */
 	LevelDefinition getDefinition();
+
 
 }

@@ -19,7 +19,7 @@ public final class Level implements Comparable<Level>, DataKeySetter {
 	private final LogicalPart lp;
 	private final LevelDefinition definition;
 	private boolean success;
-
+	private boolean won;
 	Level(LevelMtx mtx, StructurePart sp, LogicalPart lp) {
 		this.sp = sp;
 		this.lp = lp;
@@ -35,6 +35,7 @@ public final class Level implements Comparable<Level>, DataKeySetter {
 	 */
 	public void end(boolean won) {
 		this.success = won || this.isInfinite();
+		this.won = won;
 		DataKey.atEnd(this);
 	}
 
@@ -102,6 +103,11 @@ public final class Level implements Comparable<Level>, DataKeySetter {
 	@Override
 	public boolean getSuccess() {
 		return this.success;
+	}
+
+	@Override
+	public boolean getWon() {
+		return this.won;
 	}
 
 	@Override

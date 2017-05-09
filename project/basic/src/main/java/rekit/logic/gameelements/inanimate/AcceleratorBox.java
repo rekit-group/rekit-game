@@ -93,7 +93,7 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 					new Vec(0, -AcceleratorBox.INNER_RADIUS), //
 					new Vec(AcceleratorBox.INNER_RADIUS, AcceleratorBox.INNER_RADIUS), //
 					new Vec(0, 0), //
-			});
+	});
 
 	/**
 	 * The direction this block is facing.
@@ -231,7 +231,7 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 		if (this.playerCaught) {
 			return;
 		}
-
+		this.getScene().getPlayer().getEntityState().floorCollision();
 		// Set player velocity to 0 to prevent false commands
 		this.getScene().getPlayer().setVel(new Vec());
 
@@ -251,10 +251,10 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 		if (this.direction.getNextClockwise() == dir) {
 			this.angleLeft = 0;
 		} else
-		// If hit from left, set right angle to 0
-		if (this.direction.getNextAntiClockwise() == dir) {
-			this.angleRight = 0;
-		}
+			// If hit from left, set right angle to 0
+			if (this.direction.getNextAntiClockwise() == dir) {
+				this.angleRight = 0;
+			}
 
 		// Calc middle between the bounds
 		this.angleCurrent = ((this.angleLeft + this.angleRight) % 2 * Math.PI) / 2f;

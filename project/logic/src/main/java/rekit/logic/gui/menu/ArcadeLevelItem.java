@@ -2,6 +2,7 @@ package rekit.logic.gui.menu;
 
 import java.util.List;
 
+import rekit.config.GameConf;
 import rekit.core.GameGrid;
 import rekit.logic.GameModel;
 import rekit.logic.IScene;
@@ -37,7 +38,7 @@ public final class ArcadeLevelItem extends MenuActionItem {
 	 */
 	public ArcadeLevelItem(IScene scene, Vec size, String text, List<String> arcadeGroup, String id, GameModel model) {
 		super(scene, size, text, () -> model.switchScene(Scenes.ARCADE, id));
-		this.possible = this.checkEnable(arcadeGroup, id);
+		this.possible = GameConf.DEBUG || this.checkEnable(arcadeGroup, id);
 	}
 
 	private boolean checkEnable(List<String> arcadeGroup, String id) {
@@ -46,7 +47,7 @@ public final class ArcadeLevelItem extends MenuActionItem {
 			return true;
 		}
 		String prev = arcadeGroup.get(idx - 1);
-		return (boolean) LevelManager.getLevelById(prev).getData(DataKey.SUCCESS);
+		return (boolean) LevelManager.getLevelById(prev).getData(DataKey.WON);
 
 	}
 

@@ -23,7 +23,11 @@ public enum DataKey {
 	/**
 	 * Indicates whether the last try was successful.
 	 */
-	SUCCESS(false, HelperMethods::setSuccess);
+	SUCCESS(false, HelperMethods::setSuccess),
+	/**
+	 * Indicates whether any try was successful.
+	 */
+	WON(false, HelperMethods::setWon);
 
 	/**
 	 * Invoke after a level has ended.
@@ -93,6 +97,14 @@ public enum DataKey {
 		static void setSuccess(DataKeySetter dks) {
 			boolean won = dks.getSuccess();
 			dks.getDefinition().setData(DataKey.SUCCESS, won);
+		}
+
+		/**
+		 * Set the new won.
+		 */
+		static void setWon(DataKeySetter dks) {
+			boolean won = dks.getWon();
+			dks.getDefinition().setData(DataKey.WON, won || (boolean) dks.getDefinition().getData(DataKey.WON));
 		}
 	}
 }
