@@ -11,40 +11,41 @@ The project is aiming to educate about software design and was created by studen
 
 There are [auto-generated API-Docs](https://fuchss-dominik.github.io/rekit-game/) available.
 
+## Setup and Installation
+
+### Simple
+To simply play the game download a version of the [releases](https://github.com/fuchss-dominik/rekit-game/releases) and start it by either double clicking the jar-file or by using the command `java -jar <JAR-FILE>`.
+
+### Development
+To setup your workspace for view or altering the code follow these steps:
+- Have [eclipse](https://www.eclipse.org/downloads/?) with the [Maven Eclipse plugin](http://www.eclipse.org/m2e/) installed
+- Clone the repository
+- Switch workspace to the main directory (File -> Switch Workspace)
+- Import every maven module in this directory (File -> Import -> Maven -> Existing Maven Projects)
+- To compile the project click the run button after opening Main.java in the game module
+
 ## Mods / Addons
 
 Addons are an easy way to add functionality without understanding the whole code.
 
+Check out this [example project on GitHub](https://github.com/fuchss-dominik/rekit-sample-mod) on how to create an addon.
+
+Also, see this detailed instruction on [adding levels](https://github.com/fuchss-dominik/rekit-game/blob/master/documentation/LEVEL.md).
+
 Here is a list what can be added via addons:
-- levels (arcade-like or randomly generated)
-- enemies
-- bosses
-- items
-
-### Adding Levels
-#### Create a Level
-If you want to create your own levels, follow the steps:
-* Create a new text-file (the name has to start with *level* and has to end with *.dat*)
-* Define the settings of the level. All possible settings can be found in the SettingKey-Enum. (The syntax should be easy to understand.) You could set the level's name by adding `#SETTING::name->My_Special_Name` (`_` will be replaced by space).
-* You can set a `#BOSS_SETTING::ATXXX->Boss` to create a Boss-Room at position `XXX` in your level (you can also specify a concrete Boss by its name)
-* In a further step you can create `aliases` to create `structures` easily. You can use specific Items or Groups (e.g. Coin: `#ALIAS::1->Coin`)
-* In a last step you can create `structures`. A structure contains one or more logical row: The structure begins with `{` and ends with `}`. In a structure you can define several rows. They begin with `{` and end with `}`. A row contains the Elements of itself seperated by spaces (or tabs etc.). You can use an alias or name. You can also provide additional Info to the Element by adding `:INFO1:INFO2` to the name or alias. these info will be sent to the create method of the Element.
-
-#### Load Levels
-To load a level you have two options:
-* You can add the level to a Mod (jar) and add it to the subfolder `levels` (or a subfolder of `levels`). If the `group`-Setting is not set, the level will be placed in the default group.
-* You can add the level to the `levels`-Directory (Windows: `%APPDATA%/rekit`, Unix/Mac: `~/.config/rekit`). If you place the level into a subdirectory of the `levels`-Directory and won't set the `group`-Setting, the level will be placed into a group named like the subdirectory (this also applies if you place the level into a Mod).
-
-
-Check out this [example project on GitHub](https://github.com/fuchss-dominik/rekit-sample-mod) to see to create an addon. More detailed information will follow in future.
+- levels (see link above)
+- enemies (extending the `Enemy` class)
+- special blocks (extending the `DynamicInanimate` class)
+- bosses (extending the `Boss` class)
+- items (extending the `PickUp` class)
 
 ## Game Modes
 
 Currently, the game features
-- 11 blocks
+- 7 special blocks
 - 12 arcade levels, infinite mode, boss rush mode
-- 4 collectable items
-- 6 enemies
+- 5 collectable items
+- 8 enemies
 - 2 bosses
 
 ### Infinite Mode
