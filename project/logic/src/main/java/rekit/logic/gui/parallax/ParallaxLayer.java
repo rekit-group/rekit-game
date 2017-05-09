@@ -10,8 +10,6 @@ public abstract class ParallaxLayer {
 
 	protected float generateUntil = 0;
 
-	private final Object sync = new Object();
-
 	protected IScene scene = null;
 
 	protected float currentlyGeneratedUntil = 0;
@@ -37,15 +35,8 @@ public abstract class ParallaxLayer {
 		return fieldX / this.perspectiveZ;
 	}
 
-	protected float layerXtoFieldX(float layerX) {
-		return layerX * this.perspectiveZ;
-	}
-
 	public void setScene(IScene scene) {
 		this.scene = scene;
 	}
 
-	public Object synchronize() {
-		return this.sync;
-	}
 }

@@ -5,12 +5,14 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ColorConvertOp;
 import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
@@ -53,21 +55,49 @@ public final class ImageManagement {
 		if (!ImageManagement.CACHE.containsKey(src)) {
 			synchronized (ImageManagement.class) {
 				if (!ImageManagement.CACHE.containsKey(src)) {
-					Resource res = ImageManagement.LOAD.getResource("/images/" + src);
-					if (res == null) {
+					BufferedImage img = ImageManagement.get("/images/" + src, 0);
+					if (img == null) {
 						return null;
 					}
-					try {
-						ImageManagement.CACHE.put(src, ImageManagement.convertToRGB(ImageIO.read(res.getInputStream())));
-					} catch (IOException e) {
-						GameConf.GAME_LOGGER.warn("Image " + src + " not found!");
-					}
+					ImageManagement.CACHE.put(src, ImageManagement.convertToRGB(img));
 				}
 			}
 		}
 		return ImageManagement.CACHE.get(src);
 	}
 
+	/**
+	 * Max tries of {@link #get(String, int)}
+	 */
+	private static final int MAX_TRIES = 5;
+
+	/**
+	 * Try to get image multiple times, as sometimes stream will closes (don't
+	 * know why).
+	 *
+	 * @param nTry
+	 *            the number of the try
+	 * @param path the path
+	 * @return hopefully the image
+	 */
+	private static BufferedImage get(final String path, final int nTry) {
+		if (nTry > ImageManagement.MAX_TRIES) {
+			return null;
+		}
+		try {
+			Resource icon = ImageManagement.LOAD.getResource(path);
+			if (!icon.exists()) {
+				GameConf.GAME_LOGGER.error("Icon does not exist.");
+				return null;
+			}
+			// Read data to local buffer.
+			ByteArrayInputStream is = new ByteArrayInputStream(IOUtils.toByteArray(icon.getInputStream()));
+			return ImageIO.read(is);
+		} catch (IOException | NullPointerException e) {
+			GameConf.GAME_LOGGER.debug(e + " (" + path + "), Image does not exist. Try " + nTry);
+			return ImageManagement.get(path, nTry + 1);
+		}
+	}
 	/**
 	 * Get the {@link AbstractImage} from the resources by name.<br>
 	 *

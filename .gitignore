@@ -19,3 +19,6 @@ project/basic/inanimatepack/docs/
 project/game/docs/
 project/basic/pickuppack/docs/
 gh-pages
+.ucdetector_reports/
+.idea/
+*.iml

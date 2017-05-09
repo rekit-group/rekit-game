@@ -1,6 +1,6 @@
 package rekit.logic.gameelements.entities.state;
 
-import rekit.logic.gameelements.entities.Entity;
+import rekit.logic.gameelements.entities.StateEntity;
 
 /**
  * The default state a entity is in after jumping. Represents the state where a
@@ -14,7 +14,7 @@ public class FallState extends EntityState {
 	 * @param entity
 	 *            the entity
 	 */
-	public FallState(Entity entity) {
+	public FallState(StateEntity entity) {
 		super(entity);
 	}
 

@@ -131,13 +131,18 @@ public abstract class GameGrid {
 	public final void drawImage(Vec pos, Vec size, String imagePath) {
 		this.drawImage(pos, size, imagePath, true, true);
 	}
-	
+
 	/**
 	 * Draw a line between two given points with a given lineWidth and a color.
-	 * @param a one end point of the line
-	 * @param b the other end point of the line
-	 * @param lineWidth the line width of the line
-	 * @param color the color of the line
+	 *
+	 * @param a
+	 *            one end point of the line
+	 * @param b
+	 *            the other end point of the line
+	 * @param lineWidth
+	 *            the line width of the line
+	 * @param color
+	 *            the color of the line
 	 * @param ingame
 	 *            indicates whether it shall drawn as entity of the game
 	 *            (relative to current game progress) or relative to the
@@ -148,14 +153,18 @@ public abstract class GameGrid {
 	 */
 	@Ingame
 	public abstract void drawLine(Vec a, Vec b, int lineWidth, RGBAColor color, boolean ingame, boolean usefilter);
-	
-	
+
 	/**
-	 * Draw a line between two given points with a given lineWidth in black.
-	 * See {@link GameGrid#drawLine(Vec, Vec, int, RGBAColor, boolean, boolean)} for more options.
-	 * @param a one end point of the line
-	 * @param b the other end point of the line
-	 * @param lineWidth the line width of the line
+	 * Draw a line between two given points with a given lineWidth in black. See
+	 * {@link GameGrid#drawLine(Vec, Vec, int, RGBAColor, boolean, boolean)} for
+	 * more options.
+	 *
+	 * @param a
+	 *            one end point of the line
+	 * @param b
+	 *            the other end point of the line
+	 * @param lineWidth
+	 *            the line width of the line
 	 * @param ingame
 	 *            indicates whether it shall drawn as entity of the game
 	 *            (relative to current game progress) or relative to the
@@ -168,12 +177,16 @@ public abstract class GameGrid {
 	public final void drawLine(Vec a, Vec b, int lineWidth, boolean ingame, boolean usefilter) {
 		this.drawLine(a, b, lineWidth, new RGBAColor(0, 0, 0, 255), ingame, usefilter);
 	}
-	
+
 	/**
-	 * Draw a line between two given points with line width 1px in black.
-	 * See {@link GameGrid#drawLine(Vec, Vec, int, RGBAColor, boolean, boolean)} for more options.
-	 * @param a one end point of the line
-	 * @param b the other end point of the line
+	 * Draw a line between two given points with line width 1px in black. See
+	 * {@link GameGrid#drawLine(Vec, Vec, int, RGBAColor, boolean, boolean)} for
+	 * more options.
+	 *
+	 * @param a
+	 *            one end point of the line
+	 * @param b
+	 *            the other end point of the line
 	 * @param ingame
 	 *            indicates whether it shall drawn as entity of the game
 	 *            (relative to current game progress) or relative to the
@@ -366,7 +379,7 @@ public abstract class GameGrid {
 	@Retention(RetentionPolicy.SOURCE)
 	@Target(ElementType.METHOD)
 	@Documented
-	public @interface Ingame {
+	private @interface Ingame {
 	}
 
 	/**
@@ -379,7 +392,7 @@ public abstract class GameGrid {
 	@Retention(RetentionPolicy.SOURCE)
 	@Target(ElementType.METHOD)
 	@Documented
-	public @interface NonIngame {
+	private @interface NonIngame {
 	}
 
 }

@@ -146,7 +146,7 @@ public final class BossStructure extends Structure implements Configurable {
 			Timer.sleep(GameConf.LOGIC_DELTA);
 		}
 
-		RangeCameraTarget tgt = new RangeCameraTarget( //
+		RangeCameraTarget tgt = new RangeCameraTarget(//
 				this.cameraTarget - Player.CAMERA_OFFSET, //
 				this.cameraTarget - Player.CAMERA_OFFSET + (this.getWidth() - 22), //
 				player //

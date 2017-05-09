@@ -2,6 +2,7 @@ package rekit.util;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import rekit.config.GameConf;
 
@@ -32,7 +33,7 @@ public final class LambdaUtil {
 		 * @throws Exception
 		 *             may thrown
 		 */
-		void apply() throws Exception;
+		void run() throws Exception;
 	}
 
 	/**
@@ -77,7 +78,27 @@ public final class LambdaUtil {
 		 * @throws Exception
 		 *             may thrown
 		 */
-		void apply(I i) throws Exception;
+		void accept(I i) throws Exception;
+	}
+
+	/**
+	 * This interface represents a {@link Supplier} with {@link Exception}.
+	 *
+	 * @author Dominik Fuchss
+	 *
+	 * @param <O>
+	 *            the out type
+	 */
+	@FunctionalInterface
+	public interface SupplierWithException<O> {
+		/**
+		 * Gets a result.
+		 *
+		 * @return a result
+		 * @throws Exception
+		 *             may thrown
+		 */
+		O get() throws Exception;
 	}
 
 	/**
@@ -125,6 +146,19 @@ public final class LambdaUtil {
 	}
 
 	/**
+	 * Invoke a {@link SupplierWithException}.
+	 *
+	 * @param in
+	 *            the function
+	 * @param <O>
+	 *            the out type
+	 * @return the return value of the Supplier or {@code null} on failure
+	 */
+	public static <O> O invoke(SupplierWithException<O> in) {
+		return LambdaUtil.tryCatch(in).get();
+	}
+
+	/**
 	 * Surround a function with try-catch.
 	 *
 	 * @param in
@@ -157,7 +191,7 @@ public final class LambdaUtil {
 	public static Runnable tryCatch(RunnableWithException in) {
 		return () -> {
 			try {
-				in.apply();
+				in.run();
 			} catch (Exception e) {
 				GameConf.GAME_LOGGER.fatal(e.getMessage());
 			}
@@ -177,7 +211,7 @@ public final class LambdaUtil {
 	public static <I> Consumer<I> tryCatch(ConsumerWithException<I> in) {
 		return i -> {
 			try {
-				in.apply(i);
+				in.accept(i);
 			} catch (Exception e) {
 				GameConf.GAME_LOGGER.fatal(e.getMessage());
 			}
@@ -186,8 +220,29 @@ public final class LambdaUtil {
 	}
 
 	/**
+	 * Surround a supplier with try-catch.
+	 *
+	 * @param in
+	 *            the {@link SupplierWithException}
+	 * @param <O>
+	 *            the out type
+	 * @return a new {@link Supplier} which returns {@code null} on failure
+	 */
+	public static <O> Supplier<O> tryCatch(SupplierWithException<O> in) {
+		return () -> {
+			try {
+				return in.get();
+			} catch (Exception e) {
+				GameConf.GAME_LOGGER.fatal(e.getMessage());
+				return null;
+			}
+		};
+
+	}
+
+	/**
 	 * Get a {@link Consumer} which sends all to the void.
-	 * 
+	 *
 	 * @param <I>
 	 *            the input type
 	 * @return a {@link Consumer} which sends all to the void

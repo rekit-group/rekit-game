@@ -132,7 +132,7 @@ public final class Stacker extends Enemy implements Configurable {
 
 		@Override
 		protected void innerLogicLoop() {
-			this.setPos(Stacker.this.getPos().add(this.relPos).addX((float) (0.1 * FastMath.sinQuick(0.1 * GameTime.getTime() / 30 + this.offset))));
+			this.setPos(Stacker.this.getPos().add(this.relPos).addX((float) (0.1 * FastMath.sin(0.1 * GameTime.getTime() / 30 + this.offset))));
 
 			if (this.timeToDie != null) {
 				this.timeToDie.logicLoop();

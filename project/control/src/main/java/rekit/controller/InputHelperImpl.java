@@ -9,6 +9,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import rekit.config.GameConf;
 import rekit.gui.InputHelper;
+import rekit.util.LambdaUtil;
 import rekit.util.ThreadUtils;
 
 /**
@@ -127,8 +128,7 @@ final class InputHelperImpl implements InputHelper {
 		} finally {
 			this.observerLock.unlock();
 		}
-		obs.forEach(o -> o.update());
-
+		LambdaUtil.invoke(() -> obs.forEach(o -> o.update()));
 	}
 
 	/**

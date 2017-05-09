@@ -4,7 +4,6 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -16,6 +15,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import rekit.config.GameConf;
+import rekit.util.LambdaUtil;
 
 /**
  *
@@ -246,13 +246,11 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 	}
 
 	private String calcID() {
-		MessageDigest cs = null;
-		try {
-			cs = MessageDigest.getInstance("SHA-512");
-		} catch (NoSuchAlgorithmException e) {
-			GameConf.GAME_LOGGER.fatal(e.getMessage());
+		MessageDigest cs = LambdaUtil.invoke(() -> MessageDigest.getInstance("SHA-512"));
+		if (cs == null) {
 			return null;
 		}
+
 		StringBuilder content = new StringBuilder();
 		content.append(this.type);
 		if (this.type == LevelType.Arcade) {
@@ -261,7 +259,7 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 			this.settings.forEach((k, v) -> content.append(k).append(v));
 			this.bossSettings.forEach((k, v) -> content.append(k).append(v));
 		}
-		cs.update(content.toString().getBytes());
+		cs.update(content.toString().getBytes(Charset.forName("UTF-8")));
 		StringBuffer res = new StringBuffer();
 		for (byte bytes : cs.digest()) {
 			res.append(String.format("%02x", bytes & 0xff));

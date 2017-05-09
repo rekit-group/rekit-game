@@ -18,18 +18,18 @@ public interface Collidable {
 	 *            the amount of lifes to remove
 	 */
 	default void addDamage(int damage) {
-	};
+	}
 
-	/**
+    /**
 	 * Getter for the current lifes of the GameElement.
 	 *
 	 * @return the amount of lifes of the GameElement
 	 */
 	default int getLives() {
 		return 0;
-	};
+	}
 
-	/**
+    /**
 	 * Optional reaction to a collision that can be invoked in other
 	 * GameElements reactToCollision(). Notification that this GameElement has
 	 * collided with another GameElement with the CollisionFrame
@@ -43,9 +43,9 @@ public interface Collidable {
 	 *            place
 	 */
 	default void collidedWith(Frame collision, Direction dir) {
-	};
+	}
 
-	/**
+    /**
 	 * <p>
 	 * Notification that this GameElement has been collided with from another
 	 * GameElement <i>element</i> from the given direction <i>dir</i>.
@@ -61,6 +61,6 @@ public interface Collidable {
 	 *            the Direction this GameElement has been collided from.
 	 */
 	default void reactToCollision(GameElement element, Direction dir) {
-	};
+	}
 
 }

@@ -27,7 +27,7 @@ import rekit.primitives.time.Timer;
  *
  */
 @SetterInfo(res = "conf/player")
-public final class Player extends Entity implements CameraTarget, Configurable {
+public final class Player extends StateEntity implements CameraTarget, Configurable {
 	/**
 	 * The default camera offset for a player.
 	 */

@@ -1,6 +1,7 @@
 package rekit.logic.level;
 
 import java.io.ByteArrayInputStream;
+import java.nio.charset.Charset;
 import java.util.Objects;
 
 import rekit.persistence.level.LevelDefinition;
@@ -52,7 +53,7 @@ public final class LevelFactory {
 	private static LevelMtx getBossRushLevelMtx() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("#SETTING::").append(SettingKey.INFINITE).append("->true").append("\n");
-		ByteArrayInputStream is = new ByteArrayInputStream(builder.toString().getBytes());
+		ByteArrayInputStream is = new ByteArrayInputStream(builder.toString().getBytes(Charset.forName("UTF-8")));
 		return new LevelMtx(new LevelDefinition(is, LevelType.Boss_Rush));
 	}
 

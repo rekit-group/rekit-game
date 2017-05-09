@@ -1,7 +1,7 @@
 package rekit.logic.gameelements.entities.state;
 
-import rekit.logic.gameelements.entities.Entity;
 import rekit.logic.gameelements.entities.Player;
+import rekit.logic.gameelements.entities.StateEntity;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.time.Timer;
 
@@ -20,7 +20,7 @@ public class JumpState extends EntityState {
 	 * @param entity
 	 *            the entity
 	 */
-	public JumpState(Entity entity) {
+	public JumpState(StateEntity entity) {
 		super(entity);
 		this.timer = new Timer(Player.JUMP_TIME);
 	}

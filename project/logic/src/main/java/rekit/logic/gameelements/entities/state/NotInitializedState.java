@@ -3,6 +3,7 @@ package rekit.logic.gameelements.entities.state;
 import rekit.config.GameConf;
 import rekit.core.Team;
 import rekit.logic.gameelements.entities.Entity;
+import rekit.logic.gameelements.entities.StateEntity;
 
 /**
  * This state is used for all prototypes of {@link Entity}.<br>
@@ -19,7 +20,7 @@ public class NotInitializedState extends EntityState {
 	 * @param entity
 	 *            the entity
 	 */
-	public NotInitializedState(Entity entity) {
+	public NotInitializedState(StateEntity entity) {
 		super(entity);
 	}
 
@@ -35,8 +36,8 @@ public class NotInitializedState extends EntityState {
 		}
 		this.done = true;
 		GameConf.GAME_LOGGER.error("Entity " + this.entity.getClass().getSimpleName() + ": State: NotInitializedState");
-		GameConf.GAME_LOGGER.error("Entity of type " + this.entity.getClass().getSimpleName()
-				+ " is not initialized; maybe you have used the wrong constructor of Entity!");
+		GameConf.GAME_LOGGER.error(
+				"Entity of type " + this.entity.getClass().getSimpleName() + " is not initialized; maybe you have used the wrong constructor of Entity!");
 	}
 
 	@Override
@@ -46,8 +47,8 @@ public class NotInitializedState extends EntityState {
 		}
 		this.done = true;
 		GameConf.GAME_LOGGER.error("Entity " + this.entity.getClass().getSimpleName() + ": State: NotInitializedState");
-		GameConf.GAME_LOGGER.error("Entity of type " + this.entity.getClass().getSimpleName()
-				+ " is not initialized; maybe you have used the wrong constructor of Entity!");
+		GameConf.GAME_LOGGER.error(
+				"Entity of type " + this.entity.getClass().getSimpleName() + " is not initialized; maybe you have used the wrong constructor of Entity!");
 
 	}
 }

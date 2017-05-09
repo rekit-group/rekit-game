@@ -8,6 +8,7 @@ import rekit.config.GameConf;
 import rekit.core.CameraTarget;
 import rekit.logic.GameModel;
 import rekit.logic.gui.BackgroundElement;
+import rekit.logic.gui.menu.ArcadeLevelItem;
 import rekit.logic.gui.menu.BoolSetting;
 import rekit.logic.gui.menu.MainMenuGrid;
 import rekit.logic.gui.menu.MenuActionItem;
@@ -32,14 +33,17 @@ final class MainMenuScene extends Scene {
 	 */
 	private SubMenu menu;
 
+	private String selectOption;
+
 	/**
 	 * Create the main menu.
 	 *
 	 * @param model
 	 *            the model
 	 */
-	private MainMenuScene(GameModel model) {
+	private MainMenuScene(GameModel model, String selectedMenu) {
 		super(model);
+		this.selectOption = selectedMenu;
 	}
 
 	/**
@@ -48,11 +52,16 @@ final class MainMenuScene extends Scene {
 	 * @param model
 	 *            the model
 	 * @param options
-	 *            the options
+	 *            the options first option: menuSelection the indices which
+	 *            should be selected separadet by a dot ('.'). default is 0 for
+	 *            the main menu.
 	 * @return a new arcade scene.
 	 */
 	public static Scene create(GameModel model, String[] options) {
-		return new MainMenuScene(model);
+		if (options == null || options.length < 1) {
+			options = new String[] { "0" };
+		}
+		return new MainMenuScene(model, options[0]);
 	}
 
 	@Override
@@ -93,16 +102,21 @@ final class MainMenuScene extends Scene {
 
 		this.addGuiElement(new BackgroundElement(this, "mainmenu.png"));
 		this.addGuiElement(this.menu);
-		this.menu.select();
+
+		// select the right menu
+		String[] test = this.selectOption.split("\\.");
+		for (String str : test) {
+			int index = Integer.parseInt(str);
+			this.menu.setIndex(index);
+			this.menu.select();
+		}
 	}
 
 	private void addGroup(MenuList arcade, Entry<String, List<String>> group) {
 		MenuGrid groupGrid = new MenuGrid(this, group.getKey(), 6);
 		int i = 1;
 		for (String idx : group.getValue()) {
-			final String id = "" + idx;
-			MenuActionItem button = new MenuActionItem(this, new Vec(80, 80), String.valueOf(i++), () -> this.getModel().switchScene(Scenes.ARCADE, id));
-			// TODO set enabled iff LevelDefinition has DataKey#SUCCESS set.
+			MenuActionItem button = new ArcadeLevelItem(this, new Vec(80, 80), String.valueOf(i++), group.getValue(), idx, this.getModel());
 			groupGrid.addItem(button);
 		}
 		arcade.addItem(groupGrid);

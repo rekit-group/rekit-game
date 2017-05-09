@@ -1,8 +1,8 @@
 package rekit.primitives.operable;
 
-// TODO JDoc
 /**
- *
+ * Dynamically scale (linear) an {@link Operable}.
+ * 
  * @param <T>
  *            the class / the {@link Operable}
  */
