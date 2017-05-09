@@ -130,7 +130,8 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 		this.addGuiElement(this.scoreGui);
 		this.addGuiElement(this.lifeGui);
 
-		TextOptions op = new TextOptions(new Vec(-0.5f, -0.5f), 40, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, Font.BOLD);
+		TextOptions op = new TextOptions(new Vec(-0.5f, -0.5f), 40, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT,
+				Font.BOLD);
 		Text levelText = new Text(this, op).setText(this.level.getName());
 		levelText.setPos(CalcUtil.units2pixel(new Vec(GameConf.GRID_W / 2f, GameConf.GRID_H / 2f)));
 		this.addGuiElement(new TimeDecorator(this, levelText, new Timer(5000)));
@@ -141,7 +142,8 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 
 		MenuActionItem resume = new MenuActionItem(this, "Resume", () -> this.togglePause());
 		MenuActionItem restart = new MenuActionItem(this, "Restart", () -> this.restart());
-		MenuActionItem back = new MenuActionItem(this, "Main Menu", () -> this.getModel().switchScene(Scenes.MAIN_MENU, "0.0"));
+		MenuActionItem back = new MenuActionItem(this, "Main Menu",
+				() -> this.getModel().switchScene(Scenes.MAIN_MENU, "0.0"));
 		MenuActionItem desktop = new MenuActionItem(this, "Exit Game", () -> System.exit(0));
 
 		this.pauseMenu.addItem(resume, restart, back, desktop);
@@ -196,7 +198,8 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 
 			String nextLevel = this.level.getLp().getNextLevel();
 			if (nextLevel != null) {
-				MenuActionItem endNext = new MenuActionItem(this, "Next Level", () -> this.getModel().switchScene(Scenes.ARCADE, nextLevel));
+				MenuActionItem endNext = new MenuActionItem(this, "Next Level",
+						() -> this.getModel().switchScene(Scenes.ARCADE, nextLevel));
 				this.endMenu.addItem(endNext);
 			}
 
@@ -206,10 +209,9 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 		}
 
 		if (!this.level.isInfinite()) {
-			// TODO go directly to the sublevel or what ever
-			endBack = new MenuActionItem(this, "Level selection", () -> this.getModel().switchScene(Scenes.MAIN_MENU, "0.0.0"));
+			endBack = new MenuActionItem(this, "Level selection",
+					() -> this.getModel().switchScene(Scenes.MAIN_MENU, "0.0.0"));
 		} else {
-
 			endBack = new MenuActionItem(this, "Main Menu", () -> this.getModel().switchScene(Scenes.MAIN_MENU));
 		}
 
@@ -234,7 +236,8 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 	 *
 	 */
 	protected int performEndTasks(boolean won) {
-		TextOptions op = new TextOptions(new Vec(-0.5f, -0.5f), 50, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, Font.BOLD, false);
+		TextOptions op = new TextOptions(new Vec(-0.5f, -0.5f), 50, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT,
+				Font.BOLD, false);
 
 		Text levelText = new Text(this, op).setText("You" + (won ? " win!" : " have lost!"));
 		levelText.setPos(CalcUtil.units2pixel(new Vec(GameConf.GRID_W / 2f, GameConf.GRID_H / 2f)));

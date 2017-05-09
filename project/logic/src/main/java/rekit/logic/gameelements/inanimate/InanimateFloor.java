@@ -103,9 +103,12 @@ public class InanimateFloor extends Inanimate {
 		InanimateFloor.dustParticles.colorG = new ParticleSpawnerOption(InanimateFloor.layerCols[0].green);
 		InanimateFloor.dustParticles.colorB = new ParticleSpawnerOption(InanimateFloor.layerCols[0].blue);
 		InanimateFloor.dustParticles.colorA = new ParticleSpawnerOption(255);
-		DUST_PARTICLE_ANGLE_LEFT = new ParticleSpawnerOption((float) ((7 / 4f) * Math.PI), (float) ((5 / 4f) * Math.PI), -(float) ((1 / 4f) * Math.PI), 0);
-		DUST_PARTICLE_ANGLE_RIGHT = new ParticleSpawnerOption((float) ((1 / 4f) * Math.PI), (float) ((3 / 4f) * Math.PI), 0, (float) ((1 / 4f) * Math.PI));
-		DUST_PARTICLE_ANGLE_TOP = new ParticleSpawnerOption((float) (-(1 / 2f) * Math.PI), (float) ((1 / 2f) * Math.PI), 0, 0);
+		DUST_PARTICLE_ANGLE_LEFT = new ParticleSpawnerOption((float) ((7 / 4f) * Math.PI), (float) ((5 / 4f) * Math.PI),
+				-(float) ((1 / 4f) * Math.PI), 0);
+		DUST_PARTICLE_ANGLE_RIGHT = new ParticleSpawnerOption((float) ((1 / 4f) * Math.PI),
+				(float) ((3 / 4f) * Math.PI), 0, (float) ((1 / 4f) * Math.PI));
+		DUST_PARTICLE_ANGLE_TOP = new ParticleSpawnerOption((float) (-(1 / 2f) * Math.PI), (float) ((1 / 2f) * Math.PI),
+				0, 0);
 		InanimateFloor.dustParticles.amountMin = 8;
 		InanimateFloor.dustParticles.amountMax = 15;
 
@@ -177,7 +180,8 @@ public class InanimateFloor extends Inanimate {
 		 *            the position of the parenting {@link InanimateFloor}.
 		 */
 		GrassStraw(Vec parentPos) {
-			this.pos = parentPos.add(new Vec(GameConf.PRNG.nextFloat() * 0.9f - 0.45f, -0.3f - GameConf.PRNG.nextFloat() * 0.4f));
+			this.pos = parentPos
+					.add(new Vec(GameConf.PRNG.nextFloat() * 0.9f - 0.45f, -0.3f - GameConf.PRNG.nextFloat() * 0.4f));
 			this.size = new Vec(0.06f, 0.3f + GameConf.PRNG.nextFloat() * 0.4f);
 			this.col = InanimateFloor.layerCols[GameConf.PRNG.nextInt(InanimateFloor.layerCols.length)];
 		}
@@ -197,8 +201,8 @@ public class InanimateFloor extends Inanimate {
 	public void internalRender(GameGrid f) {
 		// Draw rectangles that this Floor is composed of
 		for (int i = 0; i < InanimateFloor.LAYERS; i++) {
-			f.drawRectangle(this.getPos().add(InanimateFloor.layerVecs[i]), this.getSize().setY(1 / (float) InanimateFloor.LAYERS),
-					InanimateFloor.layerCols[i]);
+			f.drawRectangle(this.getPos().add(InanimateFloor.layerVecs[i]),
+					this.getSize().setY(1 / (float) InanimateFloor.LAYERS), InanimateFloor.layerCols[i]);
 		}
 		// Draw GrassStraws
 		for (GrassStraw straw : this.straws) {

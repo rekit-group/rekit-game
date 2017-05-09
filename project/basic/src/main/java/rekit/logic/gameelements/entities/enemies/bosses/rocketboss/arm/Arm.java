@@ -33,7 +33,6 @@ public class Arm extends RocketBossChild {
 	public Arm(RocketBoss parent, Vec relPos, float[] shapeSettings, float actionProgressThreshold) {
 		super(parent, relPos);
 
-		// TODO passing float arrays is not exactly best practice
 		this.curveAMu = shapeSettings[0];
 		this.curveASigma = shapeSettings[1];
 		this.maxLengthYMu = shapeSettings[2];
@@ -45,7 +44,8 @@ public class Arm extends RocketBossChild {
 	}
 
 	public void nextArmAction() {
-		this.armAction = (ArmAction) ArmAction.getRandomArmAction().create(this.parent, this.getHandPos().sub(this.parent.getPos()));
+		this.armAction = (ArmAction) ArmAction.getRandomArmAction().create(this.parent,
+				this.getHandPos().sub(this.parent.getPos()));
 	}
 
 	/**
@@ -126,13 +126,13 @@ public class Arm extends RocketBossChild {
 	}
 
 	private float fn(float y) {
-		return this.parent.getXSignum() * this.curveA
-				* (float) FastMath.sinQuick(this.getParent().getState().getTimeFactor() * (y / this.maxLengthY) * (2 * Math.PI));
+		return this.parent.getXSignum() * this.curveA * (float) FastMath
+				.sinQuick(this.getParent().getState().getTimeFactor() * (y / this.maxLengthY) * (2 * Math.PI));
 	}
 
 	private float fndy(float y) {
-		return this.parent.getXSignum() * this.curveA
-				* (float) FastMath.cosQuick(this.getParent().getState().getTimeFactor() * (y / this.maxLengthY) * (2 * Math.PI));
+		return this.parent.getXSignum() * this.curveA * (float) FastMath
+				.cosQuick(this.getParent().getState().getTimeFactor() * (y / this.maxLengthY) * (2 * Math.PI));
 	}
 
 	private Vec getHandPos() {

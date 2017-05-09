@@ -127,7 +127,6 @@ public class Cannon extends Enemy implements Configurable {
 	 */
 	public static float MAX_SHAKING;
 
-	// TODO write parser for damage particle!
 	public static int PARTICLE_AMOUNT_MIN;
 	public static int PARTICLE_AMOUNT_MAX;
 	public static ParticleSpawnerOption PARTICLE_COLOR_R;
@@ -201,8 +200,9 @@ public class Cannon extends Enemy implements Configurable {
 
 		this.attachedSide = attachedSide;
 
-		this.pipePolygon = new Polygon(new Vec(), new Vec[] { new Vec(Cannon.PIPE_W / 2, 0), new Vec(Cannon.PIPE_W / 2, Cannon.PIPE_H),
-				new Vec(-Cannon.PIPE_W / 2, Cannon.PIPE_H), new Vec(-Cannon.PIPE_W / 2, 0), new Vec(0, 0) });
+		this.pipePolygon = new Polygon(new Vec(),
+				new Vec[] { new Vec(Cannon.PIPE_W / 2, 0), new Vec(Cannon.PIPE_W / 2, Cannon.PIPE_H),
+						new Vec(-Cannon.PIPE_W / 2, Cannon.PIPE_H), new Vec(-Cannon.PIPE_W / 2, 0), new Vec(0, 0) });
 	}
 
 	@Override
@@ -258,9 +258,11 @@ public class Cannon extends Enemy implements Configurable {
 		this.innerStateMachine.logicLoop();
 
 		// move angle in right direction
-		this.currentAngle += Math.signum(this.innerStateMachine.getState().getTargetAngle() - this.currentAngle) * this.deltaTime / 1000F * Cannon.ANGLE_SPEED;
+		this.currentAngle += Math.signum(this.innerStateMachine.getState().getTargetAngle() - this.currentAngle)
+				* this.deltaTime / 1000F * Cannon.ANGLE_SPEED;
 
-		if (Math.abs(this.innerStateMachine.getState().getTargetAngle() - this.currentAngle) < Cannon.ANGLE_SPEED / 20) {
+		if (Math.abs(this.innerStateMachine.getState().getTargetAngle() - this.currentAngle) < Cannon.ANGLE_SPEED
+				/ 20) {
 			this.currentAngle = this.innerStateMachine.getState().getTargetAngle();
 		}
 	}
