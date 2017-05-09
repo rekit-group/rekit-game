@@ -9,17 +9,16 @@ R&#949;​KiT is a platform jumper game in Java and [AWT](https://docs.oracle.co
 
 The project is aiming to educate about software design and was created by students of the [Karlsruher Institut für Technologie](https://www.kit.edu/).
 
-There are [auto-generated API-Docs](https://fuchss-dominik.github.io/rekit-game/) available.
-
 ## Getting Started
-To simply play the game download a version of the [releases](https://github.com/fuchss-dominik/rekit-game/releases) and start it by either double clicking the jar-file or by using the command `java -jar <JAR-FILE>`.
+To simply play the game download the latest **ReKiT.jar** on the [releases page](https://github.com/fuchss-dominik/rekit-game/releases) and start it by **double clicking** the jar-file.
+If double clicking doesn't work open a terminal and run the command `java -jar <JAR-FILE>` in the correct folder.
 
 ## GameModes
 
 ### Infinite Mode
 The infinite level is constructed of small components that [can be modified](https://github.com/fuchss-dominik/rekit-game/blob/master/project/logic/src/main/resources/levels/infinite.dat) The more varieties through structures and enemies there is, the more random this level becomes!
 
-![Randomly generated levels and many different enemies and varieties](https://github.com/fuchss-dominik/rekit-game/blob/master/graphix/rekitScreenshotInfinite.png)
+![Randomly generated levels and many different enemies and varieties](./graphix/rekitScreenshotInfinite.png)
 
 ### Arcade Mode
 In contrast to the random infinite mode, there is also a set of predesigned levels to master.
@@ -27,12 +26,12 @@ They will introduce one special block and feature at a time but always be challe
 
 Levels can also be added via modding as shown in [the example](https://github.com/fuchss-dominik/rekit-sample-mod).
 
-![New challenges special blocks](https://github.com/fuchss-dominik/rekit-game/blob/master/graphix/rekitScreenshotArcade.png)
+![New challenges special blocks](./graphix/rekitScreenshotArcade.png)
 
 ### Boss Rush
 The Boss Rush is a quick way to challenge the games bosses.
 
-![Unique bosses](https://github.com/fuchss-dominik/rekit-game/blob/master/graphix/rekitScreenshotBossRush.png)
+![Unique bosses](./graphix/rekitScreenshotBossRush.png)
 
 ## Features
 Currently, the game features
@@ -49,6 +48,9 @@ To setup your workspace for view or altering the code follow these steps:
 - Switch workspace to the main directory (File -> Switch Workspace)
 - Import every maven module in this directory (File -> Import -> Maven -> Existing Maven Projects)
 - To compile the project click the run button after opening Main.java in the game module
+
+There are [auto-generated API-Docs](https://fuchss-dominik.github.io/rekit-game/) available.
+
 
 ## Mods / Addons
 Addons are an easy way to add functionality without understanding the whole code.
