@@ -9,6 +9,7 @@ import rekit.core.GameGrid;
 import rekit.core.GameTime;
 import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.entities.Player;
+import rekit.logic.gameelements.entities.state.DefaultState;
 import rekit.logic.gameelements.type.DynamicInanimate;
 import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Polygon;
@@ -35,6 +36,11 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 	 * The secondary, accent color of the block
 	 */
 	private static RGBAColor COL_2;
+	
+	/**
+	 * The secondary, accent color of the block while being active
+	 */
+	private static RGBAColor COL_2_ACTIVE;
 
 	/**
 	 * The color that will be used to visualize the boundary angle for the
@@ -172,6 +178,8 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 	protected AcceleratorBox(Vec startPos, Direction dir) {
 		super(startPos, AcceleratorBox.SIZE, null);
 		this.direction = dir;
+		
+		this.innerPolygon = innerPolygon.rotate((float) this.direction.getAngle());
 	}
 
 	@Override
@@ -231,10 +239,13 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 		if (this.playerCaught) {
 			return;
 		}
-		this.getScene().getPlayer().getEntityState().floorCollision();
+		
 		// Set player velocity to 0 to prevent false commands
 		this.getScene().getPlayer().setVel(new Vec());
-
+		
+		// Prevent application of gravity 
+		this.getScene().getPlayer().getEntityState().floorCollision();
+		
 		// Initialize warmUp timer
 		this.warmUp = new Timer(AcceleratorBox.WARM_UP_TIME);
 
@@ -243,19 +254,24 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 		double pi = Math.PI;
 
 		// NOTE: Everything is for case UP and rotated in the end
-		// assuming UP is 0 degrees and angles go clockwise
+		// assuming UP is 0 degrees and angles go anti-clockwise
 		// Calc bounds of possible angles
 		this.angleLeft = (pi / 4f) * AcceleratorBox.ANGLE_RANGE_FACTOR;
 		this.angleRight = (2 * pi) - (pi / 4f) * AcceleratorBox.ANGLE_RANGE_FACTOR;
+		
 		// If hit from right, set left angle to 0
 		if (this.direction.getNextClockwise() == dir) {
 			this.angleLeft = 0;
-		} else
+		} else {
 			// If hit from left, set right angle to 0
 			if (this.direction.getNextAntiClockwise() == dir) {
 				this.angleRight = 0;
 			}
-
+		}
+		
+		this.angleLeft = this.normAngle(this.angleLeft - this.direction.getAngle());
+		this.angleRight = this.normAngle(this.angleRight - this.direction.getAngle());
+		
 		// Calc middle between the bounds
 		this.angleCurrent = ((this.angleLeft + this.angleRight) % 2 * Math.PI) / 2f;
 		double delta = ((this.angleLeft - this.angleRight + 3 * pi) % (2 * pi)) - pi;
@@ -272,13 +288,13 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 
 		Player player = this.getScene().getPlayer();
 
-		if (this.playerCaught) {
+		if (this.playerCaught) {			
 			// if aiming is already activated:
 			if (this.warmUp != null && this.warmUp.timeUp()) {
 				long deltaTime = GameTime.getTime() - this.lastTime;
 				Vec vel = player.getVel();
-
-				if (vel.y < GameConf.G - 0.1) { // JUMP
+				
+				if (!player.getEntityState().canJump()) { // JUMP
 					this.shootPlayer();
 					return;
 				}
@@ -289,10 +305,12 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 					this.addToCurrentAngle(-0.000002 * deltaTime);
 				}
 			}
+			
+			this.getScene().getPlayer().getEntityState().floorCollision();
 
 			// holds player still
 			player.setPos(this.catchPos);
-			player.setVel(new Vec());
+			player.setVel(new Vec());			
 		}
 
 		super.logicLoop();
@@ -308,20 +326,22 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 		if (!this.playerCaught) {
 			return;
 		}
-
+		
 		Vec unitVec = new Vec(-Math.sin(this.angleCurrent), -Math.cos(this.angleCurrent));
 		this.getScene().getPlayer().setVel(unitVec.scalar(AcceleratorBox.BOOST));
-
+				
 		this.playerCaught = false;
 	}
 
 	@Override
 	public void internalRender(GameGrid f) {
-		f.drawRectangle(this.getPos(), this.getSize(), AcceleratorBox.COL_2);
+		RGBAColor col2 = this.playerCaught ? AcceleratorBox.COL_2_ACTIVE : AcceleratorBox.COL_2;
+		
+		f.drawRectangle(this.getPos(), this.getSize(), col2);
 		f.drawRectangle(this.getPos(), this.getSize().add(new Vec(-2 * AcceleratorBox.BORDER_WIDTH)), AcceleratorBox.COL_1);
 
 		this.innerPolygon.moveTo(this.getPos());
-		f.drawPolygon(this.innerPolygon, AcceleratorBox.COL_2, true, true);
+		f.drawPolygon(this.innerPolygon, col2, true, true);
 
 		if (this.playerCaught) {
 			this.drawAngleLineTo(f, this.angleLeft, AcceleratorBox.ANGLE_BOUND_COLOR);
