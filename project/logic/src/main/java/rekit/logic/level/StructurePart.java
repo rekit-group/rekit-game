@@ -20,7 +20,7 @@ import rekit.primitives.geometry.Vec;
 public class StructurePart {
 	private int generatedUntil;
 
-	private int unitsBuilt;
+	protected int unitsBuilt;
 	private int lastUnitsBuilt;
 
 	private int currentStructureId;

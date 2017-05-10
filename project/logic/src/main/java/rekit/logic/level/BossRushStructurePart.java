@@ -18,7 +18,7 @@ final class BossRushStructurePart extends StructurePart {
 
 	@Override
 	public Structure next() {
-		if (this.next == this.bosses.size()) {
+		if (this.next == this.bosses.size() || this.unitsBuilt == 0) {
 			this.next = 0;
 			this.shuffle();
 			return this.getInitialStructure();

@@ -333,6 +333,20 @@ class GameGridImpl extends GameGrid {
 	}
 
 	@Override
+	public void drawLine(Vec a, Vec b, int lineWidth, RGBAColor color, boolean ingame, boolean usefilter) {
+		// calc col and position
+		RGBAColor col = (!usefilter || this.filter == null || !this.filter.isApplyPixel()) ? color : this.filter.apply(color);
+		Vec calcA = this.translate2D(a, ingame);
+		Vec calcB = this.translate2D(b, ingame);
+
+		// set parameters for drawing
+		this.graphics.setColor(this.calcRGBA(col));
+		this.graphics.setStroke(new BasicStroke(lineWidth));
+
+		// draw line
+		this.graphics.drawLine((int) calcA.x, (int) calcA.y, (int) calcB.x, (int) calcB.y);
+	}
+	@Override
 	public void drawPath(Vec startPos, List<Vec> pts, RGBAColor in, int lineWidth, boolean usefilter) {
 		if (pts.size() == 0) {
 			return;
@@ -394,19 +408,6 @@ class GameGridImpl extends GameGrid {
 
 	}
 
-	@Override
-	public void drawLine(Vec a, Vec b, int lineWidth, RGBAColor color, boolean ingame, boolean usefilter) {
-		// calc col and position
-		RGBAColor col = (!usefilter || this.filter == null || !this.filter.isApplyPixel()) ? color : this.filter.apply(color);
-		Vec calcA = this.translate2D(a, true);
-		Vec calcB = this.translate2D(b, true);
 
-		// set parameters for drawing
-		this.graphics.setColor(this.calcRGBA(col));
-		this.graphics.setStroke(new BasicStroke(lineWidth));
-
-		// draw line
-		this.graphics.drawLine((int) calcA.x, (int) calcA.y, (int) calcB.x, (int) calcB.y);
-	}
 
 }
