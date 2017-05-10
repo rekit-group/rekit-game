@@ -126,7 +126,7 @@ public final class BoostBox extends DynamicInanimate implements Configurable {
 	}
 
 	@Override
-	public BoostBox create(Vec startPos, String[] options) {
+	public BoostBox create(Vec startPos, String... options) {
 		return new BoostBox(startPos, new Vec(1), new RGBAColor(80, 80, 255, 255));
 	}
 

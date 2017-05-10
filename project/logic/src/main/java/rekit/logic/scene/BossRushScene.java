@@ -26,7 +26,7 @@ final class BossRushScene extends LevelScene {
 	 *            the options
 	 * @return a new arcade scene.
 	 */
-	public static Scene create(GameModel model, String[] options) {
+	public static Scene create(GameModel model, String... options) {
 		return new BossRushScene(model);
 	}
 

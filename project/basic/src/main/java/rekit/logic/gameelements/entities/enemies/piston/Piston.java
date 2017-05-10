@@ -11,7 +11,6 @@ import org.fuchss.configuration.annotations.SetterInfo;
 import rekit.config.GameConf;
 import rekit.core.GameGrid;
 import rekit.logic.gameelements.GameElement;
-import rekit.logic.gameelements.entities.Entity;
 import rekit.logic.gameelements.entities.enemies.piston.state.OpenState;
 import rekit.logic.gameelements.type.Enemy;
 import rekit.primitives.geometry.Direction;
@@ -240,7 +239,7 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 	}
 
 	@Override
-	public Entity create(Vec startPos, String[] options) {
+	public Piston create(Vec startPos, String... options) {
 		// Create a list and iterator of all given options
 		List<Float> params = new LinkedList<Float>();
 		for (String option : options) {

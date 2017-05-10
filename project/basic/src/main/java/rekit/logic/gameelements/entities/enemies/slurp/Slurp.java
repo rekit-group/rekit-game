@@ -10,7 +10,6 @@ import org.fuchss.configuration.annotations.SetterInfo;
 import rekit.config.GameConf;
 import rekit.core.GameGrid;
 import rekit.logic.gameelements.GameElement;
-import rekit.logic.gameelements.entities.Entity;
 import rekit.logic.gameelements.entities.Player;
 import rekit.logic.gameelements.type.Enemy;
 import rekit.primitives.geometry.Direction;
@@ -172,7 +171,7 @@ public final class Slurp extends Enemy implements Configurable {
 	}
 
 	@Override
-	public Entity create(Vec startPos, String[] options) {
+	public Slurp create(Vec startPos, String... options) {
 		return new Slurp(startPos);
 	}
 

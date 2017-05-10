@@ -72,7 +72,7 @@ public final class FilterBox extends DynamicInanimate {
 	}
 
 	@Override
-	public FilterBox create(Vec startPos, String[] options) {
+	public FilterBox create(Vec startPos, String... options) {
 		Filter filter = null;
 		if (options.length == 1 && !"none".equalsIgnoreCase(options[0])) {
 			filter = this.searchFilterByName(options[0]);

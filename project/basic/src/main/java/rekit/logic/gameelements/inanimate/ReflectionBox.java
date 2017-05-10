@@ -99,7 +99,7 @@ public final class ReflectionBox extends DynamicInanimate {
 	}
 
 	@Override
-	public ReflectionBox create(Vec startPos, String[] options) {
+	public ReflectionBox create(Vec startPos, String... options) {
 		return new ReflectionBox(startPos, new Vec(1, 1));
 	}
 }

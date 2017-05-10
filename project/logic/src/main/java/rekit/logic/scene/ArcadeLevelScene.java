@@ -31,7 +31,7 @@ final class ArcadeLevelScene extends LevelScene {
 	 *            arcadeLevelId
 	 * @return a new arcade scene.
 	 */
-	public static Scene create(GameModel model, String[] options) {
+	public static Scene create(GameModel model, String... options) {
 		if (options == null || options.length < 1) {
 			throw new IllegalArgumentException("cant switch to unspecified arcade level");
 		}

@@ -7,7 +7,6 @@ import org.fuchss.configuration.annotations.SetterInfo;
 import rekit.config.GameConf;
 import rekit.core.GameGrid;
 import rekit.logic.gameelements.GameElement;
-import rekit.logic.gameelements.entities.Entity;
 import rekit.logic.gameelements.entities.Player;
 import rekit.logic.gameelements.type.Enemy;
 import rekit.primitives.geometry.Direction;
@@ -33,12 +32,12 @@ import rekit.util.ReflectUtils.LoadMe;
 @SetterInfo(res = "conf/rektkiller")
 @LoadMe
 public final class RektKiller extends Enemy implements Configurable {
-	
+
 	/**
 	 * The score the {@link Player} receives upon killing this {@link Enemy}
 	 */
 	public static int POINTS;
-	
+
 	/**
 	 * Number whose first 4 bits are used as booleans for the spike at each
 	 * side. First bit represents UP, the rest is clockwise.
@@ -114,7 +113,7 @@ public final class RektKiller extends Enemy implements Configurable {
 						new Vec(1.5f * ((this.getSize().x * 0.8f) / 3f), -(this.getSize().y * 0.8f) / 3f), new Vec(2.0f * ((this.getSize().x * 0.8f) / 3f), 0),
 						new Vec(2.5f * ((this.getSize().x * 0.8f) / 3f), -(this.getSize().y * 0.8f) / 3f), new Vec(3.0f * ((this.getSize().x * 0.8f) / 3f), 0), //
 						new Vec() //
-				});
+		});
 	}
 
 	/**
@@ -211,7 +210,7 @@ public final class RektKiller extends Enemy implements Configurable {
 	}
 
 	@Override
-	public Entity create(Vec startPos, String[] options) {
+	public RektKiller create(Vec startPos, String... options) {
 		RektKiller inst = new RektKiller(startPos, GameConf.PRNG.nextInt(16));
 
 		// if option 0 is given: set defined direction

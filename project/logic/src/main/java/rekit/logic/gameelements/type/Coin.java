@@ -105,6 +105,6 @@ public abstract class Coin extends Pickup {
 	protected abstract int getValue();
 
 	@Override
-	public abstract Coin create(Vec startPos, String[] options);
+	public abstract Coin create(Vec startPos, String... options);
 
 }

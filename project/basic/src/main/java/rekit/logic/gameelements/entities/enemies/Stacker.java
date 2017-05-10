@@ -103,7 +103,7 @@ public final class Stacker extends Enemy implements Configurable {
 	}
 
 	@Override
-	public GameElement create(Vec startPos, String[] options) {
+	public Stacker create(Vec startPos, String... options) {
 		return new Stacker(startPos);
 	}
 
@@ -125,9 +125,9 @@ public final class Stacker extends Enemy implements Configurable {
 		}
 
 		@Override
-		public GameElement create(Vec startPos, String[] options) {
+		public Enemy create(Vec startPos, String... options) {
 			// Not required since Stacker handles StackerElement instantiation .
-			return null;
+			throw new UnsupportedOperationException();
 		}
 
 		@Override

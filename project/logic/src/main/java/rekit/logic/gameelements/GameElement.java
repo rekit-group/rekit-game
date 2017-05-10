@@ -221,12 +221,12 @@ public abstract class GameElement implements Collidable {
 	 *
 	 * @param startPos
 	 *            the initial position of the new {@link GameElement}.
-	 * @param modifiers
+	 * @param options
 	 *            optional parameters that may determine additional behavior of
 	 *            the {@link GameElement}.
 	 * @return the newly created {@link GameElement}.
 	 */
-	public GameElement create(Vec startPos, String[] modifiers) {
+	public GameElement create(Vec startPos, String... options) {
 		throw new UnsupportedOperationException("Create not supported for " + this.getClass().getSimpleName());
 	}
 
@@ -531,32 +531,32 @@ public abstract class GameElement implements Collidable {
 			if (relMovement > 0) {
 				e1.reactToCollision(e2, Direction.UP);
 			} else
-			// If relative movement is in negative y direction (up)
-			if (relMovement < 0) {
-				e1.reactToCollision(e2, Direction.DOWN);
-			} else {
-				return;
-			}
+				// If relative movement is in negative y direction (up)
+				if (relMovement < 0) {
+					e1.reactToCollision(e2, Direction.DOWN);
+				} else {
+					return;
+				}
 			// check if he is still colliding even with last x position
 			this.checkCollision(e1, e2, new Vec(e1lastPos.x, e1.getPos().y), new Vec(e2lastPos.x, e2.getPos().y));
 		} else
-		// If they still collide with the old y positions:
-		// it must be because of the x position
-		if (e1lastYFrame.collidesWith(e2lastYFrame)) {
-			// If he moved in positive x direction (right)
-			float relMovement = (e2.getPos().x - e2lastPos.x) - (e1.getPos().x - e1lastPos.x);
-			if (relMovement > 0) {
-				e1.reactToCollision(e2, Direction.LEFT);
-			} else
-			// If he moved in negative x direction (left)
-			if (relMovement < 0) {
-				e1.reactToCollision(e2, Direction.RIGHT);
-			} else {
-				return;
+			// If they still collide with the old y positions:
+			// it must be because of the x position
+			if (e1lastYFrame.collidesWith(e2lastYFrame)) {
+				// If he moved in positive x direction (right)
+				float relMovement = (e2.getPos().x - e2lastPos.x) - (e1.getPos().x - e1lastPos.x);
+				if (relMovement > 0) {
+					e1.reactToCollision(e2, Direction.LEFT);
+				} else
+					// If he moved in negative x direction (left)
+					if (relMovement < 0) {
+						e1.reactToCollision(e2, Direction.RIGHT);
+					} else {
+						return;
+					}
+				// check if he is still colliding even with last x position
+				this.checkCollision(e1, e2, new Vec(e1.getPos().x, e1lastPos.y), new Vec(e2.getPos().x, e2lastPos.y));
 			}
-			// check if he is still colliding even with last x position
-			this.checkCollision(e1, e2, new Vec(e1.getPos().x, e1lastPos.y), new Vec(e2.getPos().x, e2lastPos.y));
-		}
 
 	}
 

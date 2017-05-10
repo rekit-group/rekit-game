@@ -54,7 +54,7 @@ public final class BluePill extends Pickup implements Configurable {
 	 * @param options
 	 *            the options
 	 */
-	private BluePill(Vec startPos, String[] options) {
+	private BluePill(Vec startPos, String... options) {
 		super(startPos, new Vec(), BluePill.SIZE);
 
 	}
@@ -75,7 +75,7 @@ public final class BluePill extends Pickup implements Configurable {
 	}
 
 	@Override
-	public GameElement create(Vec startPos, String[] options) {
+	public BluePill create(Vec startPos, String... options) {
 		return new BluePill(startPos, options);
 	}
 
@@ -106,7 +106,7 @@ public final class BluePill extends Pickup implements Configurable {
 		f.drawRoundRectangle(p.getPos(), p.getSize(), new RGBAColor(148, 172, 236, 180), 0.45F, 0.45F);
 		String src = dir == Direction.RIGHT //
 				? "mrRekt_glasses_right.png" // facing right
-				: "mrRekt_glasses_left.png"; // facing left
+						: "mrRekt_glasses_left.png"; // facing left
 		f.drawImage(p.getPos().addY(-0.025f * p.getVel().y), p.getSize(), src);
 	}
 }

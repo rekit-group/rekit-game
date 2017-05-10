@@ -54,7 +54,7 @@ public class DefaultCoin extends Coin {
 	}
 
 	@Override
-	public Coin create(Vec startPos, String[] options) {
+	public DefaultCoin create(Vec startPos, String... options) {
 		return new DefaultCoin(startPos);
 	}
 }

@@ -6,7 +6,6 @@ import org.fuchss.configuration.annotations.SetterInfo;
 
 import rekit.core.GameGrid;
 import rekit.logic.gameelements.GameElement;
-import rekit.logic.gameelements.entities.Entity;
 import rekit.logic.gameelements.particles.ParticleSpawner;
 import rekit.logic.gameelements.type.Enemy;
 import rekit.primitives.geometry.Direction;
@@ -31,7 +30,7 @@ public final class Warper extends Enemy implements Configurable {
 	 * The delta time between position changes.
 	 */
 	private static float WARPER_WARP_DELTA;
-	
+
 	private static int WARPS;
 
 	/**
@@ -111,7 +110,7 @@ public final class Warper extends Enemy implements Configurable {
 			} else {
 				this.setPos(this.getPos().addY(-Math.signum(dif.y)));
 			}
-			
+
 			this.addDamage(1);
 			this.invincibility = null;
 		}
@@ -135,7 +134,7 @@ public final class Warper extends Enemy implements Configurable {
 	}
 
 	@Override
-	public Entity create(Vec startPos, String[] options) {
+	public Warper create(Vec startPos, String... options) {
 		return new Warper(startPos);
 	}
 

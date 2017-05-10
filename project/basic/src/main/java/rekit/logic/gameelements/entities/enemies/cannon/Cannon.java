@@ -5,7 +5,6 @@ import org.fuchss.configuration.annotations.NoSet;
 import org.fuchss.configuration.annotations.SetterInfo;
 
 import rekit.core.GameGrid;
-import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.entities.Player;
 import rekit.logic.gameelements.entities.enemies.cannon.state.AimingState;
 import rekit.logic.gameelements.entities.enemies.cannon.state.CannonState;
@@ -206,7 +205,7 @@ public class Cannon extends Enemy implements Configurable {
 	}
 
 	@Override
-	public GameElement create(Vec startPos, String[] options) {
+	public Cannon create(Vec startPos, String... options) {
 		Direction attachedSide = Direction.UP;
 		if (options.length >= 1 && options[0] != null && options[0].matches("[0-3]+")) {
 			attachedSide = Direction.values()[Integer.parseInt(options[0])];

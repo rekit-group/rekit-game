@@ -387,7 +387,7 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 	}
 
 	@Override
-	public AcceleratorBox create(Vec startPos, String[] options) {
+	public AcceleratorBox create(Vec startPos, String... options) {
 
 		Direction dir = Direction.UP;
 

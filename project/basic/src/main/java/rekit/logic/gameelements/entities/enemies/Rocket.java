@@ -7,7 +7,6 @@ import org.fuchss.configuration.annotations.SetterInfo;
 import rekit.config.GameConf;
 import rekit.core.GameGrid;
 import rekit.logic.gameelements.GameElement;
-import rekit.logic.gameelements.entities.Entity;
 import rekit.logic.gameelements.entities.Player;
 import rekit.logic.gameelements.particles.ParticleSpawner;
 import rekit.logic.gameelements.type.Enemy;
@@ -178,7 +177,7 @@ public final class Rocket extends Enemy implements Configurable {
 	}
 
 	@Override
-	public Entity create(Vec startPos, String[] options) {
+	public Rocket create(Vec startPos, String... options) {
 		Rocket inst = new Rocket(startPos);
 
 		// if option 0 is given: set defined direction

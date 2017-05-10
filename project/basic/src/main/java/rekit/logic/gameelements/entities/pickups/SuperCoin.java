@@ -53,7 +53,7 @@ public final class SuperCoin extends Coin {
 	}
 
 	@Override
-	public Coin create(Vec startPos, String[] options) {
+	public SuperCoin create(Vec startPos, String... options) {
 		return new SuperCoin(startPos);
 	}
 

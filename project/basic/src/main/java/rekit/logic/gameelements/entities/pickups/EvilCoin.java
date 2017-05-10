@@ -51,7 +51,7 @@ public final class EvilCoin extends Coin {
 	}
 
 	@Override
-	public Coin create(Vec startPos, String[] options) {
+	public EvilCoin create(Vec startPos, String... options) {
 		return new EvilCoin(startPos);
 	}
 

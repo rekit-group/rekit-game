@@ -2,7 +2,6 @@ package rekit.logic.gameelements.entities.pickups;
 
 import rekit.core.GameGrid;
 import rekit.logic.gameelements.GameElement;
-import rekit.logic.gameelements.entities.Entity;
 import rekit.logic.gameelements.type.Pickup;
 import rekit.primitives.geometry.Vec;
 import rekit.util.ReflectUtils.LoadMe;
@@ -42,7 +41,7 @@ public final class Life extends Pickup {
 	}
 
 	@Override
-	public Entity create(Vec startPos, String[] options) {
+	public Life create(Vec startPos, String... options) {
 		return new Life(startPos);
 	}
 

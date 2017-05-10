@@ -167,7 +167,7 @@ public final class MovingBox extends DynamicInanimate {
 	}
 
 	@Override
-	public MovingBox create(Vec startPos, String[] options) {
+	public MovingBox create(Vec startPos, String... options) {
 		int dist = 1;
 		boolean offset = false;
 		if (options.length >= 1 && options[0] != null && options[0].matches("(\\+|-)?[0-9]+")) {

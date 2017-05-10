@@ -18,12 +18,12 @@ public class PistonInner extends Enemy {
 	private OpProgress<RGBAColor> colorProgress;
 
 	private Piston parent;
-	
+
 	PistonInner(Piston parent) {
 		super(new Vec(), new Vec(), new Vec());
 		this.parent = parent;
 		this.colorProgress = new OpProgress<RGBAColor>(Piston.PISTON_COLOR_1, Piston.PISTON_COLOR_2);
-		
+
 		// this sets initial position and prevents deletion
 		this.innerLogicLoop();
 	}
@@ -37,11 +37,11 @@ public class PistonInner extends Enemy {
 			}
 		}
 	}
-	
+
 	@Override
 	public void innerLogicLoop() {
 		PistonState currentState = (PistonState) this.parent.machine.getState();
-		
+
 		// calculate middle pos and size
 		// Note: these position Vecs are relative to the middle of the
 		// Pistons Base!
@@ -53,8 +53,8 @@ public class PistonInner extends Enemy {
 				.addY(-currentState.getCurrentHeight() * this.parent.expansionLength)
 				// Remove margin
 				.addY(Piston.LOWER_MARGIN);
-				// Add shaking upwards
-				//.addY(-Piston.SHAKING.getNow(GameConf.PRNG.nextFloat()));
+		// Add shaking upwards
+		//.addY(-Piston.SHAKING.getNow(GameConf.PRNG.nextFloat()));
 
 		topPos = topPos.setY((topPos.y > btmPos.y) ? btmPos.y : topPos.y);
 
@@ -86,10 +86,10 @@ public class PistonInner extends Enemy {
 	}
 
 	@Override
-	public GameElement create(Vec startPos, String[] options) {
-		return null;
+	public PistonInner create(Vec startPos, String... options) {
+		throw new UnsupportedOperationException();
 	}
-	
+
 	@Override
 	public Integer getZHint() {
 		return (int) this.team.zRange.normalize(this.team.zRange.min);

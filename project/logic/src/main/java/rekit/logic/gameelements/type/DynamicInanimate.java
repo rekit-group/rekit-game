@@ -47,7 +47,8 @@ public abstract class DynamicInanimate extends Inanimate {
 	 */
 	public static Set<? extends GameElement> getPrototypes() {
 		return ReflectUtils.loadInstances(GameConf.SEARCH_PATH, ModManager.SYSLOADER, DynamicInanimate.class);
-
 	}
 
+	@Override
+	public abstract DynamicInanimate create(Vec startPos, String... options);
 }

@@ -27,7 +27,7 @@ final class InfiniteLevelScene extends LevelScene {
 	 *            the options
 	 * @return a new infinite scene.
 	 */
-	public static Scene create(GameModel model, String[] options) {
+	public static Scene create(GameModel model, String... options) {
 		return new InfiniteLevelScene(model);
 	}
 

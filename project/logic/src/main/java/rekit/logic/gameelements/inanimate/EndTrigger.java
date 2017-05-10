@@ -197,7 +197,7 @@ public final class EndTrigger extends InanimateTrigger implements Configurable {
 	}
 
 	@Override
-	public EndTrigger create(Vec startPos, String[] options) {
+	public EndTrigger create(Vec startPos, String... options) {
 		return new EndTrigger(startPos, this.getSize());
 	}
 

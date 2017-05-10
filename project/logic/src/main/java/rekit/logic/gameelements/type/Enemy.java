@@ -34,7 +34,7 @@ public abstract class Enemy extends Entity {
 	}
 
 	@Override
-	public abstract GameElement create(Vec startPos, String[] options);
+	public abstract Enemy create(Vec startPos, String... options);
 
 	/**
 	 * Create an Enemy.
