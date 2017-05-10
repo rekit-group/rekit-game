@@ -30,7 +30,7 @@ public class ArmActionRocketLauncher extends ArmAction {
 		super(parent, relPos);
 		
 		// Create option string to send rocket in right direction
-		String[] opts = new String[]{Integer.toString(this.parent.getDirection().ordinal())};
+		String[] opts = new String[]{Integer.toString(this.parent.getDirection().ordinal()), "0.8F"};
 		
 		// Instantiate Rocket by prototype
 		this.rocket = (Rocket) new Rocket().create(this.getRocketPos(), opts);

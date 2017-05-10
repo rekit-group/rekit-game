@@ -98,7 +98,7 @@ public class RocketBoss extends Boss implements Configurable {
 	 * </ul>
 	 */
 	@NoSet
-	public static float[][] ARM_SHAPE_SETTINGS = new float[][] { new float[] { 0.3f, 0.2f, 2f, 0.3f }, new float[] { 0.15f, 0.08f, 0.65f, 0.2f } };
+	public static float[][] ARM_SHAPE_SETTINGS = new float[][] { new float[] { 0.3f, 0.2f, 2f, 0.3f }, new float[] { 0.15f, 0.08f, 0.45f, 0.1f } };
 
 	/**
 	 * A list of thresholds in time, when to trigger an Arms Action during its
@@ -106,7 +106,7 @@ public class RocketBoss extends Boss implements Configurable {
 	 * duration and should be smaller than or equal to 1
 	 */
 	@NoSet
-	public static float[] ARM_ACTION_PROGRESS_THRESHOLDS = new float[] { 0.1f, 0.4f };
+	public static float[] ARM_ACTION_PROGRESS_THRESHOLDS = new float[] { 0.1f, 0.6f };
 
 	/**
 	 * The rocket launchers size

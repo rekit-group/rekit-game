@@ -14,7 +14,8 @@ public class ArmSegment extends GameElement {
 
 	private Arm parent;
 	private Vec relPos;
-
+	
+	
 	private Polygon shape;
 	private List<Vec> pathLeft;
 	private List<Vec> pathRight;

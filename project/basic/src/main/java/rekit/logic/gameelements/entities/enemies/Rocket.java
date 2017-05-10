@@ -77,9 +77,12 @@ public final class Rocket extends Enemy implements Configurable {
 
 	@NoSet
 	private Direction direction;
-
+	
 	@NoSet
-	private float currentSpeed = Rocket.SPEED;
+	private float initialSpeed = Rocket.SPEED;
+	
+	@NoSet
+	private float currentSpeed;
 
 	/**
 	 * Create a rocket by start position.
@@ -91,6 +94,7 @@ public final class Rocket extends Enemy implements Configurable {
 		super(startPos, new Vec(), new Vec(1.8f, 0.5f));
 		this.direction = Direction.LEFT;
 		this.paricleTimer = new Timer((long) (1000 * Rocket.PARTICLE_SPAWN_TIME));
+		this.currentSpeed = this.initialSpeed; 
 	}
 
 	@Override
@@ -151,7 +155,7 @@ public final class Rocket extends Enemy implements Configurable {
 	 * configuration.
 	 */
 	public void resetSpeed() {
-		this.currentSpeed = Rocket.SPEED;
+		this.currentSpeed = this.initialSpeed;
 	}
 
 	@Override
@@ -186,7 +190,17 @@ public final class Rocket extends Enemy implements Configurable {
 			if (opt >= 0 && opt < Direction.values().length) {
 				inst.setDirection(Direction.values()[opt]);
 			} else {
-				GameConf.GAME_LOGGER.error("RektKiller was supplied invalid option " + options[0] + " at index 0 for Direction");
+				GameConf.GAME_LOGGER.error("Rocket was supplied invalid option " + options[0] + " at index 0 for Direction");
+			}
+		}
+		
+		// if option 1 is given: set defined speedFactor
+		if (options.length >= 2 && options[1] != null && options[1].matches("(\\+|-)?[0-9].[0-9]F+")) {
+			float opt = Float.parseFloat(options[1]);
+			if (opt >= 0 && opt < Direction.values().length) {
+				inst.initialSpeed *= opt;
+			} else {
+				GameConf.GAME_LOGGER.error("Rocket was supplied invalid option " + options[1] + " at index 1 for speedFactor");
 			}
 		}
 

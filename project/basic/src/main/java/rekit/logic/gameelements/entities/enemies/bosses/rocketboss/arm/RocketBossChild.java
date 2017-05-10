@@ -8,7 +8,7 @@ import rekit.primitives.geometry.Vec;
  * Represents any visual child of the RocketBoss, whose position is relative to
  * a parent.
  *
- * @author angeloaracri
+ * @author Angelo Aracri
  */
 public abstract class RocketBossChild {
 
