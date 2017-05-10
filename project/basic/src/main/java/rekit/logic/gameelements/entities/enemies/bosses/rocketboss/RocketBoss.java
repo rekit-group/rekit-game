@@ -452,7 +452,7 @@ public class RocketBoss extends Boss implements Configurable {
 	}
 
 	@Override
-	public GameElement create(Vec startPos, String[] options) {
+	public Boss create(Vec startPos, String[] options) {
 		return new RocketBoss(startPos);
 	}
 }

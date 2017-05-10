@@ -7,7 +7,6 @@ import org.fuchss.configuration.annotations.SetterInfo;
 import rekit.config.GameConf;
 import rekit.core.GameGrid;
 import rekit.logic.gameelements.GameElement;
-import rekit.logic.gameelements.entities.Entity;
 import rekit.logic.gameelements.entities.Player;
 import rekit.logic.gameelements.entities.enemies.RektKiller;
 import rekit.logic.gameelements.inanimate.Inanimate;
@@ -193,7 +192,7 @@ public final class RektSmasher extends Boss implements Configurable {
 	}
 
 	@Override
-	public Entity create(Vec startPos, String[] options) {
+	public Boss create(Vec startPos, String[] options) {
 		return new RektSmasher(startPos);
 	}
 

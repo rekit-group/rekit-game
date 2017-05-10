@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rekit.logic.gameelements.type.Boss;
+import rekit.primitives.geometry.Vec;
 
 final class BossRushStructurePart extends StructurePart {
 	private final List<Boss> bosses;
@@ -23,7 +24,7 @@ final class BossRushStructurePart extends StructurePart {
 			this.shuffle();
 			return this.getInitialStructure();
 		}
-		return this.bosses.get(this.next++).getBossStructure();
+		return this.bosses.get(this.next++).create(new Vec(), new String[] {}).getBossStructure();
 	}
 
 	private void shuffle() {
