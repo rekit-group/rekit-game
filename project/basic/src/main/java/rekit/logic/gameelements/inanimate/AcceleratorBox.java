@@ -9,6 +9,7 @@ import rekit.core.GameGrid;
 import rekit.core.GameTime;
 import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.entities.Player;
+import rekit.logic.gameelements.entities.state.FallState;
 import rekit.logic.gameelements.type.DynamicInanimate;
 import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Polygon;
@@ -339,6 +340,8 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 		
 		Vec unitVec = new Vec(-Math.sin(this.angleCurrent), -Math.cos(this.angleCurrent));
 		this.getScene().getPlayer().setVel(unitVec.scalar(AcceleratorBox.BOOST));
+		
+		this.getScene().getPlayer().setEntityState(new FallState(this.getScene().getPlayer()));
 				
 		this.playerCaught = false;
 	}
