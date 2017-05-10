@@ -403,4 +403,9 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 
 		return new AcceleratorBox(startPos, dir);
 	}
+	
+	@Override
+	public Integer getZHint() {
+		return (int) this.team.zRange.normalize(this.team.zRange.max);
+	}
 }
