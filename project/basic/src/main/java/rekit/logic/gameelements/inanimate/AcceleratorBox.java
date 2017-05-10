@@ -9,7 +9,6 @@ import rekit.core.GameGrid;
 import rekit.core.GameTime;
 import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.entities.Player;
-import rekit.logic.gameelements.entities.state.DefaultState;
 import rekit.logic.gameelements.type.DynamicInanimate;
 import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Polygon;
@@ -158,12 +157,20 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 	 */
 	@NoSet
 	private Timer warmUp;
+	
+	/**
+	 * Is multiplied to every direction-related control.
+	 * Should be -1 or 1 to rotate the controls.
+	 */
+	@NoSet
+	private final int invertControls;
 
 	/**
 	 * Prototype Constructor.
 	 */
 	public AcceleratorBox() {
 		super();
+		this.invertControls = 1;
 	}
 
 	/**
@@ -180,6 +187,9 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 		this.direction = dir;
 		
 		this.innerPolygon = innerPolygon.rotate((float) this.direction.getAngle());
+		
+		// Make controls more natural for case DOWN
+		this.invertControls = (dir == Direction.DOWN) ? -1 : 1;
 	}
 
 	@Override
@@ -200,7 +210,6 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 	 *            the angle to add in radians
 	 */
 	public void addToCurrentAngle(double add) {
-
 		this.angleCurrent = this.normAngle(this.angleCurrent);
 		this.angleLeft = this.normAngle(this.angleLeft);
 		this.angleRight = this.normAngle(this.angleRight);
@@ -208,12 +217,12 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 		// update angle
 		this.angleCurrent += add;
 
-		// might cause errors if difference is exactly doing overflow from 2pi
-		// to 0
-		if (add > 0 && this.angleLeft - this.angleCurrent < 0) {
+		double diff = this.angleLeft - this.angleCurrent;
+		if (add > 0 && diff < 0 && diff > -Math.PI) {
 			this.angleCurrent = this.angleLeft;
 		}
-		if (add < 0 && this.angleRight - this.angleCurrent > 0) {
+		diff = this.angleRight - this.angleCurrent;
+		if (add < 0 && diff > 0 && diff < Math.PI) {
 			this.angleCurrent = this.angleRight;
 		}
 	}
@@ -269,8 +278,8 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 			}
 		}
 		
-		this.angleLeft = this.normAngle(this.angleLeft - this.direction.getAngle());
-		this.angleRight = this.normAngle(this.angleRight - this.direction.getAngle());
+		this.angleLeft = this.angleLeft - this.direction.getAngle();
+		this.angleRight = this.angleRight - this.direction.getAngle();
 		
 		// Calc middle between the bounds
 		this.angleCurrent = ((this.angleLeft + this.angleRight) % 2 * Math.PI) / 2f;
@@ -298,11 +307,12 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 					this.shootPlayer();
 					return;
 				}
+				
 				if (vel.x < -0.1) { // LEFT
-					this.addToCurrentAngle(0.000002 * deltaTime);
+					this.addToCurrentAngle(this.invertControls * 0.000002 * deltaTime);
 				}
 				if (vel.x > 0.1) { // RIGHT
-					this.addToCurrentAngle(-0.000002 * deltaTime);
+					this.addToCurrentAngle(this.invertControls * -0.000002 * deltaTime);
 				}
 			}
 			
