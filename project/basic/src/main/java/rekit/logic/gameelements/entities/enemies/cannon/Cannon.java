@@ -203,6 +203,14 @@ public class Cannon extends Enemy implements Configurable {
 				new Vec[] { new Vec(Cannon.PIPE_W / 2, 0), new Vec(Cannon.PIPE_W / 2, Cannon.PIPE_H),
 						new Vec(-Cannon.PIPE_W / 2, Cannon.PIPE_H), new Vec(-Cannon.PIPE_W / 2, 0), new Vec(0, 0) });
 	}
+	
+	/**
+	 * Getter for the angle, the {@link Cannon} is currently rotated to.
+	 * @return the {@link Cannon#currentAngle}
+	 */
+	public float getCurrentAngle() {
+		return this.currentAngle;
+	}
 
 	@Override
 	public Cannon create(Vec startPos, String... options) {

@@ -38,7 +38,7 @@ public class AimingState extends CannonState {
 
 	@Override
 	public CannonState getNextState() {
-		return new ChargingState(this.getTargetAngle());
+		return new ChargingState(this.parentCannon.getCurrentAngle());
 	}
 
 	@Override
