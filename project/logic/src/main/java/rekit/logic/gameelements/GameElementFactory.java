@@ -185,9 +185,13 @@ public final class GameElementFactory {
 		int i = 0;
 		for (GameElement e : prototypes) {
 			GameElementFactory.elements.put(e.getClass().getSimpleName(), e);
-			collection[i++] = e;
+			if (e.isAddableToGroup()) {
+				collection[i++] = e;
+			}
 		}
-		GameElementFactory.groups.put(name, collection);
+		GameElement[] group = new GameElement[i];
+		System.arraycopy(collection, 0, group, 0, i);
+		GameElementFactory.groups.put(name, group);
 	}
 
 	/**
