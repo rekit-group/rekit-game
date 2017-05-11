@@ -37,7 +37,14 @@ public class WalkCommand extends EntityCommand {
 			return;
 		}
 		Entity entity = this.supervisor.getEntity(this);
-
+		
+		// if entity is faster than maximum BEFORE applying speed, then abort
+		if (Math.abs(entity.getVel().x) > Player.WALK_MAX_SPEED) {
+			if (Math.signum(this.dir.getVector().x) == Math.signum(entity.getVel().x)) {
+				return;
+			}
+		}
+		
 		// Update x velocity with corresponding direction and acceleration
 		Vec newVel = entity.getVel().addX(this.dir.getVector().x * Player.WALK_ACCEL);
 
