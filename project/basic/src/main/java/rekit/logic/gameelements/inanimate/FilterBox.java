@@ -51,7 +51,7 @@ public final class FilterBox extends DynamicInanimate {
 	private FilterBox(Vec pos, Vec size, RGBAColor color, Filter filter) {
 		super(pos, size, color);
 		// create inner InanimateBox with given position
-		this.innerBox = Inanimate.getPrototype().create(pos, null);
+		this.innerBox = Inanimate.getPrototype().create(pos);
 		this.filter = filter;
 	}
 

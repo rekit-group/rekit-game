@@ -413,15 +413,15 @@ public class RocketBoss extends Boss implements Configurable {
 		String i = Inanimate.class.getSimpleName();
 		String n = null;
 		String[][] struct = new String[][] { //
-			{ i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i },
-			{ i, n, n, n, n, n, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n },
-			{ i, n, n, n, n, n, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n },
-			{ i, n, n, n, n, n, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n },
-			{ i, n, n, n, n, n, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n },
-			{ i, n, n, n, n, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n },
-			{ i, i, i, i, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n },
-			{ n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n },
-			{ i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i } //
+				{ i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i }, //
+				{ i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n }, //
+				{ i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n }, //
+				{ i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n }, //
+				{ i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n }, //
+				{ n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n }, //
+				{ n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n }, //
+				{ n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n }, //
+				{ i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i } //
 		};
 
 		BossStructure structure = new BossStructure(struct, this);
@@ -443,7 +443,7 @@ public class RocketBoss extends Boss implements Configurable {
 
 	@Override
 	public Vec getStartPos() {
-		return new Vec(22, 3.5f);
+		return new Vec(16, 3.5f);
 	}
 
 	@Override

@@ -20,6 +20,7 @@ import rekit.util.ReflectUtils.LoadMe;
  * This Box realizes an {@link Inanimate} which the Player can climb up.
  *
  * @author Dominik Fuchss
+ * @author Angelo Aracri
  *
  */
 @LoadMe
@@ -162,6 +163,7 @@ public final class ClimbUpBox extends DynamicInanimate implements Configurable {
 	 * {@link ClimbUpBox}.
 	 *
 	 * @author Dominik Fuchss
+	 * @author Angelo Aracri
 	 *
 	 */
 	private abstract class ClimbBoxStrategy {
@@ -225,6 +227,7 @@ public final class ClimbUpBox extends DynamicInanimate implements Configurable {
 	 * The default strategy: A normal {@link InanimateBox}.
 	 *
 	 * @author Dominik Fuchss
+	 * @author Angelo Aracri
 	 *
 	 */
 	private class NoClimb extends ClimbBoxStrategy {
@@ -253,6 +256,7 @@ public final class ClimbUpBox extends DynamicInanimate implements Configurable {
 	 * The boost strategy: A Climbing is possible.
 	 *
 	 * @author Dominik Fuchss
+	 * @author Angelo Aracri
 	 *
 	 */
 	private class BoostClimb extends ClimbBoxStrategy {

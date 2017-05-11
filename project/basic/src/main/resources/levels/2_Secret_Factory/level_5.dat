@@ -1,3 +1,4 @@
+#SETTING::name->Bounce_Bounce
 #SETTING::shuffle->false
 #SETTING::doGaps->false
 #SETTING::infinite->false
