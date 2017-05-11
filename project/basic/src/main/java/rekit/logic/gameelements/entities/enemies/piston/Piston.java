@@ -244,7 +244,7 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 		List<Float> params = new LinkedList<Float>();
 		for (String option : options) {
 			if (option != null) {
-				if (option.matches("(\\+|-)?[0-9].[0-9]F+")) {
+				if (option.matches("(\\+|-)?[0-9].[0-9]F+") || option.matches("(\\+|-)?[0-9]")) {
 					params.add(Float.parseFloat(option));
 				} else {
 					GameConf.GAME_LOGGER.error("Could not parse parameter of Piston to float: \"" + option + "\", must be in format: [-]0.0F");

@@ -8,7 +8,6 @@ import rekit.config.GameConf;
 import rekit.core.GameGrid;
 import rekit.core.Team;
 import rekit.logic.gameelements.GameElement;
-import rekit.logic.gameelements.entities.Player;
 import rekit.logic.gameelements.particles.ParticleSpawner;
 import rekit.logic.gameelements.type.DynamicInanimate;
 import rekit.primitives.geometry.Direction;
@@ -57,6 +56,10 @@ public final class ClimbUpBox extends DynamicInanimate implements Configurable {
 	 * The energy's color.
 	 */
 	private static RGBAColor ENERGY_COLOR;
+	/**
+	 * The boost to apply to the player
+	 */
+	public static float BOOST;
 	/**
 	 * The timer (how long climb enables?).
 	 */
@@ -277,7 +280,7 @@ public final class ClimbUpBox extends DynamicInanimate implements Configurable {
 		public void reactToCollision(GameElement element, Direction dir) {
 			element.collidedWith(this.parent.getCollisionFrame(), dir);
 			if (element.getTeam() == Team.PLAYER && dir == Direction.DOWN) {
-				element.setVel(element.getVel().addY(4 * Player.FLOOR_BOOST));
+				element.setVel(element.getVel().setY(ClimbUpBox.BOOST));
 			}
 
 		}
