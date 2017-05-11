@@ -35,7 +35,7 @@ public final class Level implements Comparable<Level>, DataKeySetter {
 	 */
 	public void end(boolean won) {
 		this.success = won || this.isInfinite();
-		this.won = won;
+		this.won = won || this.isInfinite();
 		DataKey.atEnd(this);
 	}
 
