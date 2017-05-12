@@ -175,7 +175,7 @@ public final class Player extends StateEntity implements CameraTarget, Configura
 
 	@Override
 	public void addDamage(int damage) {
-		if (this.invincibility == null || this.invincibility.timeUp()) {
+		if ((this.invincibility == null || this.invincibility.timeUp()) && damage > 0) {
 			// spawn particles
 			this.damageParticles.spawn(this.getScene(), this.getPos());
 		}

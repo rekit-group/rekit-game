@@ -80,6 +80,12 @@ public final class GameConf implements Configurable {
 	public static int GRID_H;
 
 	/**
+	 * Height in units that {@link GameElement GameElements} are tolerated to
+	 * fall below the screens border before they will be deleted.
+	 */
+	public static float GRID_TOLERANCE_BELOW;
+
+	/**
 	 * Width of the window.<br>
 	 * Calculated by {@link GameConf#GRID_W} * {@link GameConf#PX_PER_UNIT}.
 	 */

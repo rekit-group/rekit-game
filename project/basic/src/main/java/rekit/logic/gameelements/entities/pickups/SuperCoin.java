@@ -19,11 +19,11 @@ public final class SuperCoin extends Coin {
 	/**
 	 * The default color of the coin.
 	 */
-	private static RGBAColor color = new RGBAColor(232, 50, 16);
+	private static RGBAColor color = new RGBAColor(252, 80, 36);
 	/**
 	 * The shadow color of the coin.
 	 */
-	private static RGBAColor darkColor = new RGBAColor(192, 25, 6);
+	private static RGBAColor darkColor = new RGBAColor(212, 55, 26);
 
 	/**
 	 * Prototype constructor.
