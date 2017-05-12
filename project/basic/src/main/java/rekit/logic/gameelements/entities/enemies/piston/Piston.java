@@ -72,7 +72,7 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 	 * The width in units of the pistons inner graphic elements.
 	 */
 	@NoSet
-	protected static float[] PISTON_CIRCLE_WIDTHS = new float[] { 0.62f, 0.54f, 0.46f, 0.38f, 0.3f, 0.22f, 0.14f, 0.06f };
+	protected static float[] PISTON_INNER_WIDTHS = new float[] { 0.42f, 0.36f, 0.36f, 0.3f, 0.24f, 0.18f, 0.12f, 0.06f };
 
 	/**
 	 * The minimum and maximum time the piston stays still in open state in
@@ -91,17 +91,17 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 	private static Progress CLOSED_TIME;
 
 	/**
-	 * The minimum and maximum time the piston stays still in closing and opening state
-	 * in milliseconds. See how the actual time can be defined in the parameters of the
+	 * The minimum and maximum time the piston stays still in closing and
+	 * opening state in milliseconds. See how the actual time can be defined in
+	 * the parameters of the
 	 * {@link Piston#Piston(Vec, int, Direction, float, float, float, float)}.
 	 */
 	private static Progress TRANSITION_TIME;
 
 	/**
-	 * The minimum and maximum shaking while opening or closing the
-	 * {@link Piston#inner InnerPiston}
+	 * The minimum height of the piston in units to cause damage to the Player
 	 */
-	protected static Progress SHAKING;
+	protected static float NO_DAMAGE_TOLERANCE_HEIGHT;
 
 	/**
 	 * The reference to the inner, moving part of the piston.

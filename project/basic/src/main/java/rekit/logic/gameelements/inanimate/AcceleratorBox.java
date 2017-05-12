@@ -7,6 +7,7 @@ import org.fuchss.configuration.annotations.SetterInfo;
 import rekit.config.GameConf;
 import rekit.core.GameGrid;
 import rekit.core.GameTime;
+import rekit.core.Team;
 import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.entities.Player;
 import rekit.logic.gameelements.entities.state.FallState;
@@ -36,7 +37,7 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 	 * The secondary, accent color of the block
 	 */
 	private static RGBAColor COL_2;
-	
+
 	/**
 	 * The secondary, accent color of the block while being active
 	 */
@@ -99,7 +100,7 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 					new Vec(0, -AcceleratorBox.INNER_RADIUS), //
 					new Vec(AcceleratorBox.INNER_RADIUS, AcceleratorBox.INNER_RADIUS), //
 					new Vec(0, 0), //
-	});
+			});
 
 	/**
 	 * The direction this block is facing.
@@ -158,10 +159,10 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 	 */
 	@NoSet
 	private Timer warmUp;
-	
+
 	/**
-	 * Is multiplied to every direction-related control.
-	 * Should be -1 or 1 to rotate the controls.
+	 * Is multiplied to every direction-related control. Should be -1 or 1 to
+	 * rotate the controls.
 	 */
 	@NoSet
 	private final int invertControls;
@@ -186,17 +187,17 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 	protected AcceleratorBox(Vec startPos, Direction dir) {
 		super(startPos, AcceleratorBox.SIZE, null);
 		this.direction = dir;
-		
+
 		this.innerPolygon = innerPolygon.rotate((float) this.direction.getAngle());
-		
+
 		// Make controls more natural for case DOWN
 		this.invertControls = (dir == Direction.DOWN) ? -1 : 1;
 	}
 
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
-
-		if (this.direction.getOpposite() != dir) {
+		// If Player touches any side but the backside
+		if (element.getTeam() == Team.PLAYER && this.direction.getOpposite() != dir) {
 			this.catchPlayer(dir);
 		}
 
@@ -249,13 +250,13 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 		if (this.playerCaught) {
 			return;
 		}
-		
+
 		// Set player velocity to 0 to prevent false commands
 		this.getScene().getPlayer().setVel(new Vec());
-		
-		// Prevent application of gravity 
+
+		// Prevent application of gravity
 		this.getScene().getPlayer().getEntityState().floorCollision();
-		
+
 		// Initialize warmUp timer
 		this.warmUp = new Timer(AcceleratorBox.WARM_UP_TIME);
 
@@ -268,7 +269,7 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 		// Calc bounds of possible angles
 		this.angleLeft = (pi / 4f) * AcceleratorBox.ANGLE_RANGE_FACTOR;
 		this.angleRight = (2 * pi) - (pi / 4f) * AcceleratorBox.ANGLE_RANGE_FACTOR;
-		
+
 		// If hit from right, set left angle to 0
 		if (this.direction.getNextClockwise() == dir) {
 			this.angleLeft = 0;
@@ -278,10 +279,10 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 				this.angleRight = 0;
 			}
 		}
-		
+
 		this.angleLeft = this.angleLeft - this.direction.getAngle();
 		this.angleRight = this.angleRight - this.direction.getAngle();
-		
+
 		// Calc middle between the bounds
 		this.angleCurrent = ((this.angleLeft + this.angleRight) % 2 * Math.PI) / 2f;
 		double delta = ((this.angleLeft - this.angleRight + 3 * pi) % (2 * pi)) - pi;
@@ -298,17 +299,17 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 
 		Player player = this.getScene().getPlayer();
 
-		if (this.playerCaught) {			
+		if (this.playerCaught) {
 			// if aiming is already activated:
 			if (this.warmUp != null && this.warmUp.timeUp()) {
 				long deltaTime = GameTime.getTime() - this.lastTime;
 				Vec vel = player.getVel();
-				
+
 				if (!player.getEntityState().canJump()) { // JUMP
 					this.shootPlayer();
 					return;
 				}
-				
+
 				if (vel.x < -0.1) { // LEFT
 					this.addToCurrentAngle(this.invertControls * 0.000002 * deltaTime);
 				}
@@ -316,12 +317,12 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 					this.addToCurrentAngle(this.invertControls * -0.000002 * deltaTime);
 				}
 			}
-			
+
 			this.getScene().getPlayer().getEntityState().floorCollision();
 
 			// holds player still
 			player.setPos(this.catchPos);
-			player.setVel(new Vec());			
+			player.setVel(new Vec());
 		}
 
 		super.logicLoop();
@@ -337,19 +338,19 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 		if (!this.playerCaught) {
 			return;
 		}
-		
+
 		Vec unitVec = new Vec(-Math.sin(this.angleCurrent), -Math.cos(this.angleCurrent));
 		this.getScene().getPlayer().setVel(unitVec.scalar(AcceleratorBox.BOOST));
-		
+
 		this.getScene().getPlayer().setEntityState(new FallState(this.getScene().getPlayer()));
-				
+
 		this.playerCaught = false;
 	}
 
 	@Override
 	public void internalRender(GameGrid f) {
 		RGBAColor col2 = this.playerCaught ? AcceleratorBox.COL_2_ACTIVE : AcceleratorBox.COL_2;
-		
+
 		f.drawRectangle(this.getPos(), this.getSize(), col2);
 		f.drawRectangle(this.getPos(), this.getSize().add(new Vec(-2 * AcceleratorBox.BORDER_WIDTH)), AcceleratorBox.COL_1);
 
@@ -403,7 +404,7 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 
 		return new AcceleratorBox(startPos, dir);
 	}
-	
+
 	@Override
 	public Integer getZHint() {
 		return (int) this.team.zRange.normalize(this.team.zRange.max);

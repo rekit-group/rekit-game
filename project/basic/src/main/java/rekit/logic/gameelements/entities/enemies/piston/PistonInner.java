@@ -12,8 +12,8 @@ import rekit.primitives.operable.OpProgress;
 public class PistonInner extends Enemy {
 
 	/**
-	 * The {@link OpProgress} to switch between
-	 * {@link Piston#PISTON_COLOR_1} and {@link Piston#PISTON_COLOR_2}.
+	 * The {@link OpProgress} to switch between {@link Piston#PISTON_COLOR_1}
+	 * and {@link Piston#PISTON_COLOR_2}.
 	 */
 	private OpProgress<RGBAColor> colorProgress;
 
@@ -31,7 +31,7 @@ public class PistonInner extends Enemy {
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
 		if (this.getTeam().isHostile(element.getTeam())) {
-			if (((PistonState) this.parent.machine.getState()).getCurrentHeight() > 0) {
+			if (((PistonState) this.parent.machine.getState()).getCurrentHeight() > Piston.NO_DAMAGE_TOLERANCE_HEIGHT) {
 				// if piston is currently open, do damage
 				element.addDamage(1);
 			}
@@ -53,13 +53,11 @@ public class PistonInner extends Enemy {
 				.addY(-currentState.getCurrentHeight() * this.parent.expansionLength)
 				// Remove margin
 				.addY(Piston.LOWER_MARGIN);
-		// Add shaking upwards
-		//.addY(-Piston.SHAKING.getNow(GameConf.PRNG.nextFloat()));
 
 		topPos = topPos.setY((topPos.y > btmPos.y) ? btmPos.y : topPos.y);
 
 		Vec middlePos = btmPos.add(topPos).scalar(0.5f);
-		Vec size = new Vec(Piston.PISTON_CIRCLE_WIDTHS[0], btmPos.y - topPos.y);
+		Vec size = new Vec(Piston.PISTON_INNER_WIDTHS[0], btmPos.y - topPos.y);
 
 		// setting values for rendering and collision frame
 		this.setPos(this.parent.getPos().add(this.parent.rotatePosToDir(middlePos)));
@@ -69,18 +67,25 @@ public class PistonInner extends Enemy {
 	@Override
 	public void internalRender(GameGrid f) {
 
-		int num = Piston.PISTON_CIRCLE_WIDTHS.length;
+		int num = Piston.PISTON_INNER_WIDTHS.length;
 		for (int i = 0; i < num; ++i) {
 			RGBAColor col = this.colorProgress.getNow(i / (float) num);
 
 			// Draw Rectangle for beam
 			Vec size = this.getSize();
+			Vec pos = this.getPos();
+			float spikeDelta = 0.4f * (1 - (i / (float) num));
 			if (this.parent.direction == Direction.LEFT || this.parent.direction == Direction.RIGHT) {
-				size = size.setY(Piston.PISTON_CIRCLE_WIDTHS[i] / 1.5f);
+				size = size.setY(Piston.PISTON_INNER_WIDTHS[i] / 1.5f);
+				size = size.addX(-spikeDelta);
+				pos = pos.addX(((this.parent.direction == Direction.LEFT) ? 1 : -1) * (spikeDelta / 2f));
+
 			} else {
-				size = size.setX(Piston.PISTON_CIRCLE_WIDTHS[i] / 1.5f);
+				size = size.setX(Piston.PISTON_INNER_WIDTHS[i] / 1.5f);
+				size = size.addY(-spikeDelta);
+				pos = pos.addY(((this.parent.direction == Direction.UP) ? 1 : -1) * (spikeDelta / 2f));
 			}
-			f.drawRectangle(this.getPos(), size, col);
+			f.drawRectangle(pos, size, col);
 		}
 
 	}
