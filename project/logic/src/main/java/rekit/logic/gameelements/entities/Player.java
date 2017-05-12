@@ -245,6 +245,8 @@ public final class Player extends StateEntity implements CameraTarget, Configura
 		}
 		if (points != 0) {
 			this.scoreParticleSpawner.setText(points > 0 ? "+" + points : Integer.toString(points));
+			int fontSize = (int) (16 + Math.abs(points) / 3f);
+			this.scoreParticleSpawner.setSize(fontSize);
 			this.scoreParticleSpawner.spawn(this.getScene(), this.getPos().addY(-0.4f));
 		}
 

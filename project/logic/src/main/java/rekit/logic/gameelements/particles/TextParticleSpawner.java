@@ -25,12 +25,22 @@ public final class TextParticleSpawner extends ParticleSpawner {
 	}
 
 	/**
-	 * Sets the text of the {@link Particle}.
+	 * Sets the text of the {@link TextParticle}.
 	 *
 	 * @param text
 	 *            the text
 	 */
 	public void setText(String text) {
 		((TextParticle) this.particlePrototype).setText(text);
+	}
+
+	/**
+	 * Sets the text size of the {@link TextParticle}.
+	 *
+	 * @param size
+	 *            the size
+	 */
+	public void setSize(int size) {
+		((TextParticle) this.particlePrototype).setSize(size);
 	}
 }
