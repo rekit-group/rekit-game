@@ -247,11 +247,14 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 	}
 
 	@Override
-	public void togglePause() {
-		super.togglePause();
+	public boolean togglePause() {
+		if (!super.togglePause()) {
+			return false;
+		}
 		// toggle visibility of pause menu
 		this.pauseMenu.setVisible(!this.pauseMenu.isVisible());
 		this.pauseMenu.setIndex(0);
+		return true;
 	}
 
 	@Override

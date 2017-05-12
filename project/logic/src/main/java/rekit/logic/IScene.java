@@ -151,8 +151,18 @@ public interface IScene {
 
 	/**
 	 * Toggle pause for the scene. See {@link IScene#setPause(boolean)}.
+	 *
+	 * @return {@code true} iff operation is possible, {@code false} otherwise
 	 */
-	void togglePause();
+	boolean togglePause();
+
+	/**
+	 * Set whether the game can paused
+	 *
+	 * @param canPause
+	 *            {@code true} iff pausable
+	 */
+	void setCanPause(boolean canPause);
 
 	/**
 	 * Indicates whether the scene is paused.

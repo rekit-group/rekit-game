@@ -70,6 +70,10 @@ abstract class Scene implements CameraTarget, IScene {
 	 */
 	private boolean paused = false;
 	/**
+	 * Indicates whether pause is possible in the current state.
+	 */
+	protected boolean canPause = true;
+	/**
 	 * Last time of invoking {@link #logicLoop()}.
 	 */
 	private long lastTime = GameTime.getTime();
@@ -117,13 +121,17 @@ abstract class Scene implements CameraTarget, IScene {
 	}
 
 	@Override
-	public void togglePause() {
+	public boolean togglePause() {
+		if (!this.canPause) {
+			return false;
+		}
 		if (this.paused) {
 			GameTime.resume();
 		} else {
 			GameTime.pause();
 		}
 		this.paused = !this.paused;
+		return true;
 	}
 
 	@Override
@@ -351,6 +359,11 @@ abstract class Scene implements CameraTarget, IScene {
 	@Override
 	public final GameModel getModel() {
 		return this.model;
+	}
+
+	@Override
+	public void setCanPause(boolean canPause) {
+		this.canPause = canPause;
 	}
 
 	/**

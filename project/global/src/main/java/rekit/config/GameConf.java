@@ -180,7 +180,7 @@ public final class GameConf implements Configurable {
 	 * The Global GAME_LOGGER.
 	 */
 	@NoSet
-	public static final Logger GAME_LOGGER = Logger.getLogger(GameConf.class);
+	public static final Logger GAME_LOGGER = Logger.getLogger("@ReKiT");
 
 	/**
 	 * Set values which cannot be loaded by {@link Parser Parsers}.

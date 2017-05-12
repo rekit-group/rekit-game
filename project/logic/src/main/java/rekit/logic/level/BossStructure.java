@@ -115,11 +115,12 @@ public final class BossStructure extends Structure implements Configurable {
 		}
 		this.ended = false;
 		ILevelScene scene = this.door.getScene();
+		scene.setCanPause(false);
 		// calculate where to put camera
 		this.cameraTarget = this.levelX - 1 + Player.CAMERA_OFFSET + scene.getPlayer().getSize().x / 2;
 
 		// Prepare boss
-		this.boss = (Boss) this.boss.create(this.boss.getStartPos().addX(this.levelX), new String[0]);
+		this.boss = this.boss.create(this.boss.getStartPos().addX(this.levelX), new String[0]);
 		this.boss.setBossStructure(this);
 		this.boss.setTarget(scene.getPlayer());
 
@@ -150,7 +151,7 @@ public final class BossStructure extends Structure implements Configurable {
 				this.cameraTarget - Player.CAMERA_OFFSET, //
 				this.cameraTarget - Player.CAMERA_OFFSET + (this.getWidth() - 22), //
 				player //
-		);
+				);
 		// new FixedCameraTarget(this.cameraTarget - Player.CAMERA_OFFSET)
 		scene.setCameraTarget(tgt);
 		scene.setOffsetWildCard(true);
@@ -167,7 +168,7 @@ public final class BossStructure extends Structure implements Configurable {
 		Text bossText = new Text(scene, op).setText(this.boss.getName());
 		bossText.setPos(CalcUtil.units2pixel(new Vec(GameConf.GRID_W / 2f, GameConf.GRID_H / 2f)));
 		scene.addGuiElement(new TimeDecorator(scene, bossText, new Timer(3000)));
-
+		scene.setCanPause(true);
 	}
 
 	/**
@@ -203,13 +204,13 @@ public final class BossStructure extends Structure implements Configurable {
 		Progress cameraMover = new Progress(//
 				this.cameraTarget - Player.CAMERA_OFFSET, //
 				player.getPos().x - Player.CAMERA_OFFSET //
-		);
+				);
 
 		// Needed for animating door movement
 		Progress doorMover = new Progress(//
 				this.door.getPos().y, //
 				this.door.getPos().y - 10 //
-		);
+				);
 		// save Players current velocity
 		Vec[] save = { player.getVel(), player.getPos(), this.boss.getPos() };
 		// while timer has time left...
