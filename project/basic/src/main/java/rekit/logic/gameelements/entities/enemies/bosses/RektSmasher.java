@@ -170,15 +170,15 @@ public final class RektSmasher extends Boss implements Configurable {
 		String i = Inanimate.class.getSimpleName();
 		String n = null;
 		String[][] struct = new String[][] { //
-			{ i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i }, //
-			{ i, n, n, n, n, n, i, n, n, n, i, i, n, n, n, i, n, n, n, n, n, n }, //
-			{ i, n, n, n, n, n, i, n, n, n, n, n, n, n, n, i, n, n, n, n, n, n }, //
-			{ i, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, i, n }, //
-			{ i, i, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, i, i, n }, //
-			{ n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n }, //
-			{ n, n, n, n, n, n, n, i, n, i, i, i, i, n, i, n, n, n, n, n, n, n }, //
-			{ n, n, n, n, n, n, n, i, n, i, i, i, i, n, i, n, n, n, n, n, n, n }, //
-			{ i, i, i, i, i, i, i, i, n, i, i, i, i, n, i, i, i, i, i, i, i, i }//
+				{ i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i, i }, //
+				{ i, n, n, n, n, n, i, n, n, n, i, i, n, n, n, i, n, n, n, n, n, n }, //
+				{ i, n, n, n, n, n, i, n, n, n, n, n, n, n, n, i, n, n, n, n, n, n }, //
+				{ i, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, i, n }, //
+				{ i, i, i, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, i, i, n }, //
+				{ n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n }, //
+				{ n, n, n, n, n, n, n, i, n, i, i, i, i, n, i, n, n, n, n, n, n, n }, //
+				{ n, n, n, n, n, n, n, i, n, i, i, i, i, n, i, n, n, n, n, n, n, n }, //
+				{ i, i, i, i, i, i, i, i, n, i, i, i, i, n, i, i, i, i, i, i, i, i }//
 		};
 
 		BossStructure structure = new BossStructure(struct, this);
@@ -188,7 +188,7 @@ public final class RektSmasher extends Boss implements Configurable {
 
 	@Override
 	public Vec getStartPos() {
-		return new Vec(10, GameConf.GRID_H / 2 + 0.2f);
+		return new Vec(10, GameConf.GRID_H / 2 + 0.3f);
 	}
 
 	@Override
