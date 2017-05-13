@@ -10,26 +10,26 @@ R&#949;​KiT is a platform jumper game in Java and [AWT](https://docs.oracle.co
 The project is aiming to educate about software design and was created by students of the [Karlsruher Institut für Technologie](https://www.kit.edu/).
 
 ## Getting Started
-To simply play the game download the latest **ReKiT.jar** on the [releases page](https://github.com/fuchss-dominik/rekit-game/releases) and start it by **double clicking** the jar-file.
-If double clicking doesn't work open a terminal and run the command `java -jar <JAR-FILE>` in the correct folder.
+To simply play the game, download the latest **ReKiT.jar** on the [releases page](https://github.com/fuchss-dominik/rekit-game/releases) and launch by **double clicking** the jar-file.
+If double clicking doesn't work, open a terminal and run the command `java -jar <JAR-FILE>` in the correct folder.
 
 ## GameModes
 
 ### Infinite Mode
-The infinite level is constructed of small components that [can be modified](https://github.com/fuchss-dominik/rekit-game/blob/master/project/logic/src/main/resources/levels/infinite.dat) The more varieties through structures and enemies there is, the more random this level becomes!
+The infinite level is randomly assembled from small components that [can be modified](https://github.com/fuchss-dominik/rekit-game/blob/master/project/logic/src/main/resources/levels/infinite.dat) The more varieties through structures and enemies there is, the more random this level becomes!
 
 ![Randomly generated levels and many different enemies and varieties](./graphix/rekitScreenshotInfinite.png)
 
 ### Arcade Mode
 In contrast to the random infinite mode, there is also a set of predesigned levels to master.
-They will introduce one special block and feature at a time but always be challenging!
+They introduce one special block and feature at a time but will always be challenging!
 
 Levels can also be added via modding as shown in [the example](https://github.com/fuchss-dominik/rekit-sample-mod).
 
 ![New challenges special blocks](./graphix/rekitScreenshotArcade.png)
 
 ### Boss Rush
-The Boss Rush is a quick way to challenge the games bosses.
+The Boss Rush is a quick way to challenge the games bosses, that have [more complex movement and attack patterns](https://github.com/fuchss-dominik/rekit-game/tree/master/project/basic/src/main/java/rekit/logic/gameelements/entities/enemies/bosses/rocketboss) than usual Enemies.
 
 ![Unique bosses](./graphix/rekitScreenshotBossRush.png)
 
@@ -42,7 +42,7 @@ Currently, the game features
 - 2 bosses
 
 ## Development
-To setup your workspace for view or altering the code follow these steps:
+To setup your workspace for viewing or altering the code follow these steps:
 - Have [eclipse](https://www.eclipse.org/downloads/?) with the [Maven Eclipse plugin](http://www.eclipse.org/m2e/) installed
 - Clone the repository
 - Switch workspace to the main directory (File -> Switch Workspace)
@@ -60,8 +60,11 @@ Check out this [example project on GitHub](https://github.com/fuchss-dominik/rek
 Also, see this detailed instruction on [adding levels](https://github.com/fuchss-dominik/rekit-game/blob/master/documentation/LEVEL.md).
 
 Here is a list what can be added via addons:
-- levels (see link above)
-- enemies (extending the `Enemy` class)
-- special blocks (extending the `DynamicInanimate` class)
-- bosses (extending the `Boss` class)
-- items (extending the `PickUp` class)
+
+| Addable Feature | Super class and documentation | Example |
+| ----- | ----- | ----- |
+| Level | - | [Adding levels](https://github.com/fuchss-dominik/rekit-game/blob/master/documentation/LEVEL.md) |
+| Enemies | [rekit.logic.gameelements.type.Enemy](https://fuchss-dominik.github.io/rekit-game/rekit/logic/gameelements/type/Enemy.html) | [Cannon](https://github.com/fuchss-dominik/rekit-game/blob/master/project/basic/src/main/java/rekit/logic/gameelements/entities/enemies/cannon/Cannon.java) |
+| Special blocks | [rekit.logic.gameelements.type.DynamicInanimate](https://fuchss-dominik.github.io/rekit-game/rekit/logic/gameelements/type/DynamicInanimate.html) | [ClimbUpBox](https://github.com/fuchss-dominik/rekit-game/blob/master/project/basic/src/main/java/rekit/logic/gameelements/inanimate/ClimbUpBox.java) |
+| Bosses | [rekit.logic.gameelements.type.Boss](https://fuchss-dominik.github.io/rekit-game/rekit/logic/gameelements/type/Boss.html) | [RocketBoss](https://github.com/fuchss-dominik/rekit-game/blob/master/project/basic/src/main/java/rekit/logic/gameelements/entities/enemies/bosses/rocketboss/RocketBoss.java) |
+| Items | [rekit.logic.gameelements.type.Pickup](https://fuchss-dominik.github.io/rekit-game/rekit/logic/gameelements/type/Pickup.html) | [BluePill](https://github.com/fuchss-dominik/rekit-game/blob/master/project/basic/src/main/java/rekit/logic/gameelements/entities/pickups/BluePill.java) |
