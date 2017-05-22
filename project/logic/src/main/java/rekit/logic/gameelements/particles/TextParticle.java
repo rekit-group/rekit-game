@@ -4,7 +4,6 @@ import java.awt.Font;
 
 import rekit.config.GameConf;
 import rekit.core.GameGrid;
-import rekit.core.Team;
 import rekit.primitives.TextOptions;
 import rekit.primitives.geometry.Vec;
 
@@ -30,10 +29,7 @@ public class TextParticle extends Particle {
 		this(19);
 	}
 
-	/**
-	 * Constructor that sets the {@link TextParticle DamageParticles}
-	 * {@link Team} to {@link Team#ENEMY}.
-	 */
+
 	public TextParticle(int fontSize) {
 		super();
 		this.options = new TextOptions(new Vec(-0.6f, 0), fontSize, null, GameConf.GAME_TEXT_FONT, Font.BOLD);
@@ -42,7 +38,7 @@ public class TextParticle extends Particle {
 	/**
 	 * Setter for the internally used {@link TextParticle#text} that will be
 	 * rendered.
-	 * 
+	 *
 	 * @param text
 	 *            the text.
 	 */
@@ -52,8 +48,8 @@ public class TextParticle extends Particle {
 
 	/**
 	 * Setter for the internally used font size.
-	 * 
-	 * @param text
+	 *
+	 * @param size
 	 *            the font size.
 	 */
 	public void setSize(int size) {

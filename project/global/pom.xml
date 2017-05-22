@@ -13,7 +13,7 @@
 			<artifactId>reflections</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.github.fuchss-dominik</groupId>
+			<groupId>org.fuchss</groupId>
 			<artifactId>configuration-parser</artifactId>
 		</dependency>
 		<dependency>

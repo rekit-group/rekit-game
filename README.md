@@ -1,7 +1,6 @@
 # R&#949;​KiT
 
 [![Build Status](https://travis-ci.org/fuchss-dominik/rekit-game.svg?branch=master)](https://travis-ci.org/fuchss-dominik/rekit-game)
-[![](https://jitpack.io/v/fuchss-dominik/rekit-game.svg)](https://jitpack.io/#fuchss-dominik/rekit-game)
 [![GitHub issues](https://img.shields.io/github/issues/fuchss-dominik/rekit-game.svg?style=square)](https://github.com/fuchss-dominik/rekit-game/issues)
 [![GitHub license](https://img.shields.io/badge/license-GPLv3-blue.svg?style=square)](https://github.com/fuchss-dominik/rekit-game/blob/master/LICENSE.md)
 
