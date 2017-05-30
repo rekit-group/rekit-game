@@ -143,7 +143,7 @@ public abstract class Entity extends GameElement {
 	@Override
 	public void collidedWith(Frame collision, Direction dir) {
 		// saving last position
-		Vec lastPos = this.getLastPos();
+		// Vec lastPos = this.getLastPos();
 
 		int signum = dir == Direction.LEFT || dir == Direction.UP ? -1 : 1;
 
@@ -169,7 +169,7 @@ public abstract class Entity extends GameElement {
 		}
 
 		// resetting lastPos
-		this.setLastPos(lastPos);
+		// this.setLastPos(lastPos);
 	}
 
 	@Override

@@ -72,18 +72,20 @@ public abstract class GameElement implements Collidable {
 	 */
 	private Vec pos;
 
-	/**
-	 * <p>
-	 * The {@link GameElement GameElements} last absolute position in the level.
-	 * This position is saved upon every call of <i>setPos(Vec value)</i> and is
-	 * mainly used for collision detection.
-	 * </p>
-	 * <p>
-	 * <b>Note:</b> the position points to the center of the
-	 * {@link GameElement}.
-	 * </p>
-	 */
-	private Vec lastPos;
+	// /**
+	// * <p>
+	// * The {@link GameElement GameElements} last absolute position in the
+	// level.
+	// * This position is saved upon every call of <i>setPos(Vec value)</i> and
+	// is
+	// * mainly used for collision detection.
+	// * </p>
+	// * <p>
+	// * <b>Note:</b> the position points to the center of the
+	// * {@link GameElement}.
+	// * </p>
+	// */
+	// private Vec lastPos;
 
 	/**
 	 * The {@link Team} the {@link GameElement} is in that mainly specifies
@@ -269,41 +271,42 @@ public abstract class GameElement implements Collidable {
 	 *            the new position the {@link GameElement} is supposed to have.
 	 */
 	public final void setPos(Vec value) {
-		if (this.pos == null) {
-			this.lastPos = value;
-		} else {
-			this.lastPos = this.pos;
-		}
+		// if (this.pos == null) {
+		// this.lastPos = value;
+		// } else {
+		// this.lastPos = this.pos;
+		// }
 
 		this.pos = value;
 	}
 
-	/**
-	 * <p>
-	 * Getter for the {@link GameElement GameElements} last absolute position.
-	 * This position is saved upon every call of <i>setPos(Vec value)</i> and is
-	 * mainly used for collision detection.
-	 * </p>
-	 * <p>
-	 * <b>Note:</b> the position points to the center of the
-	 * {@link GameElement}.
-	 * </p>
-	 *
-	 * @return the last position of the {@link GameElement}.
-	 */
-	public final Vec getLastPos() {
-		return this.lastPos;
-	}
+	// /**
+	// * <p>
+	// * Getter for the {@link GameElement GameElements} last absolute position.
+	// * This position is saved upon every call of <i>setPos(Vec value)</i> and
+	// is
+	// * mainly used for collision detection.
+	// * </p>
+	// * <p>
+	// * <b>Note:</b> the position points to the center of the
+	// * {@link GameElement}.
+	// * </p>
+	// *
+	// * @return the last position of the {@link GameElement}.
+	// */
+	// public final Vec getLastPos() {
+	// return this.lastPos;
+	// }
 
-	/**
-	 * Set the last valid position.
-	 *
-	 * @param lastPos
-	 *            the last valid position
-	 */
-	protected final void setLastPos(Vec lastPos) {
-		this.lastPos = lastPos;
-	}
+	// /**
+	// * Set the last valid position.
+	// *
+	// * @param lastPos
+	// * the last valid position
+	// */
+	// protected final void setLastPos(Vec lastPos) {
+	// this.lastPos = lastPos;
+	// }
 
 	/**
 	 * <p>
@@ -456,106 +459,26 @@ public abstract class GameElement implements Collidable {
 	 *            the other element
 	 */
 	public final void checkCollision(GameElement e2) {
-		this.checkCollision(this, e2, this.getLastPos(), e2.getLastPos());
-	}
+		float w = 0.5F * (this.size.x + e2.size.x);
+		float h = 0.5F * (this.size.y + e2.size.y);
+		Vec dxy = this.pos.sub(e2.pos);
+		float dx = dxy.x;
+		float dy = dxy.y;
+		if (Math.abs(dx) <= w && Math.abs(dy) <= h) {
+			float wy = w * dy;
+			float hx = h * dx;
 
-	/**
-	 * Check for collision between two elements and invoke necessary methods.
-	 *
-	 * @param e1
-	 *            the first element
-	 * @param e2
-	 *            the second element
-	 * @param e1lastPos
-	 *            the last pos of e1
-	 * @param e2lastPos
-	 *            the last pos of e2
-	 */
-	private void checkCollision(GameElement e1, GameElement e2, Vec e1lastPos, Vec e2lastPos) {
-		// Return if one of the elements is about to be deleted.
-		if (e1.getDeleteMe() || e2.getDeleteMe()) {
-			return;
-		}
-
-		// Return if there is no collision
-		if (!e1.getCollisionFrame().collidesWith(e2.getCollisionFrame())) {
-			return;
-		}
-
-		// Simulate CollisionFrame with last Y position
-		Vec e1lastYVec = new Vec(e1.getPos().x, e1lastPos.y);
-		Frame e1lastYFrame = new Frame(e1lastYVec.add(e1.getSize().scalar(-0.5f)), e1lastYVec.add(e1.getSize().scalar(0.5f)));
-
-		// Simulate CollisionFrame with last X position
-		Vec e1lastXVec = new Vec(e1lastPos.x, e1.getPos().y);
-		Frame e1lastXFrame = new Frame(e1lastXVec.add(e1.getSize().scalar(-0.5f)), e1lastXVec.add(e1.getSize().scalar(0.5f)));
-
-		// Simulate CollisionFrame with last Y position
-		Vec e2lastYVec = new Vec(e2.getPos().x, e2lastPos.y);
-		Frame e2lastYFrame = new Frame(e2lastYVec.add(e2.getSize().scalar(-0.5f)), e2lastYVec.add(e2.getSize().scalar(0.5f)));
-
-		// Simulate CollisionFrame with last X position
-		Vec e2lastXVec = new Vec(e2lastPos.x, e2.getPos().y);
-		Frame e2lastXFrame = new Frame(e2lastXVec.add(e2.getSize().scalar(-0.5f)), e2lastXVec.add(e2.getSize().scalar(0.5f)));
-
-		this.simulateCollision(e1lastXFrame, e2lastXFrame, e1, e2, e1lastPos, e2lastPos, e1lastYFrame, e2lastYFrame);
-	}
-
-	/**
-	 * Simulate collision between e1 and e2.
-	 *
-	 * @param e1lastXFrame
-	 *            e1 last x-frame
-	 * @param e2lastXFrame
-	 *            e2 last x-frame
-	 * @param e1
-	 *            the object e1
-	 * @param e2
-	 *            the object e2
-	 * @param e1lastPos
-	 *            the last pos of e1
-	 * @param e2lastPos
-	 *            the last pos of e2
-	 * @param e1lastYFrame
-	 *            e1 last y-frame
-	 * @param e2lastYFrame
-	 *            e2 last y-frame
-	 */
-	private void simulateCollision(Frame e1lastXFrame, Frame e2lastXFrame, GameElement e1, GameElement e2, Vec e1lastPos, Vec e2lastPos, Frame e1lastYFrame,
-			Frame e2lastYFrame) {
-		// If they still collide with the old x positions:
-		// it must be because of the y position
-		if (e1lastXFrame.collidesWith(e2lastXFrame)) {
-			// If relative movement is in positive y direction (down)
-			float relMovement = (e2.getPos().y - e2lastPos.y) - (e1.getPos().y - e1lastPos.y);
-			if (relMovement > 0) {
-				e1.reactToCollision(e2, Direction.UP);
-			} else
-			// If relative movement is in negative y direction (up)
-			if (relMovement < 0) {
-				e1.reactToCollision(e2, Direction.DOWN);
+			if (wy > hx) {
+				if (wy > -hx) {
+					this.reactToCollision(e2, Direction.UP);
+				} else {
+					this.reactToCollision(e2, Direction.RIGHT);
+				}
+			} else if (wy > -hx) {
+				this.reactToCollision(e2, Direction.LEFT);
 			} else {
-				return;
+				this.reactToCollision(e2, Direction.DOWN);
 			}
-			// check if he is still colliding even with last x position
-			this.checkCollision(e1, e2, new Vec(e1lastPos.x, e1.getPos().y), new Vec(e2lastPos.x, e2.getPos().y));
-		} else
-		// If they still collide with the old y positions:
-		// it must be because of the x position
-		if (e1lastYFrame.collidesWith(e2lastYFrame)) {
-			// If he moved in positive x direction (right)
-			float relMovement = (e2.getPos().x - e2lastPos.x) - (e1.getPos().x - e1lastPos.x);
-			if (relMovement > 0) {
-				e1.reactToCollision(e2, Direction.LEFT);
-			} else
-			// If he moved in negative x direction (left)
-			if (relMovement < 0) {
-				e1.reactToCollision(e2, Direction.RIGHT);
-			} else {
-				return;
-			}
-			// check if he is still colliding even with last x position
-			this.checkCollision(e1, e2, new Vec(e1.getPos().x, e1lastPos.y), new Vec(e2.getPos().x, e2lastPos.y));
 		}
 
 	}
