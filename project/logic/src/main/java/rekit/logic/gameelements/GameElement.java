@@ -7,6 +7,7 @@ import rekit.core.Team.Range;
 import rekit.logic.Collidable;
 import rekit.logic.ILevelScene;
 import rekit.logic.IScene;
+import rekit.logic.gameelements.entities.Player;
 import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Frame;
 import rekit.primitives.geometry.Vec;
@@ -354,7 +355,10 @@ public abstract class GameElement implements Collidable {
 
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
-		// Do nothing
+		if (this.getClass() == Player.class) {
+			System.out.println(dir);
+			// Do nothing
+		}
 	}
 
 	/**
@@ -453,21 +457,31 @@ public abstract class GameElement implements Collidable {
 	}
 
 	/**
+	 * Epsilon for {@link #checkCollision(GameElement)}.
+	 */
+	private static final float EPS = 1E-4F;
+
+	/**
 	 * Check for collision with another element and invoke necessary methods.
 	 *
 	 * @param e2
 	 *            the other element
 	 */
 	public final void checkCollision(GameElement e2) {
-		if (this == e2) {
+		if (this == e2 || !this.getCollisionFrame().collidesWith(e2.getCollisionFrame())) {
 			return;
 		}
+
 		float w = 0.5F * (this.size.x + e2.size.x);
 		float h = 0.5F * (this.size.y + e2.size.y);
 		Vec dxy = this.pos.sub(e2.pos);
 		float dx = dxy.x;
+		float adx = dx < 0 ? -dx : dx;
+
 		float dy = dxy.y;
-		if (Math.abs(dx) < w && Math.abs(dy) < h) {
+		float ady = dy < 0 ? -dy : dy;
+
+		if (adx < w && ady < h && Math.abs(adx - w) > GameElement.EPS && Math.abs(ady - h) > GameElement.EPS) {
 			float wy = w * dy;
 			float hx = h * dx;
 
