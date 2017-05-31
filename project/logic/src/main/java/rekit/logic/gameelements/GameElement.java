@@ -459,12 +459,15 @@ public abstract class GameElement implements Collidable {
 	 *            the other element
 	 */
 	public final void checkCollision(GameElement e2) {
+		if (this == e2) {
+			return;
+		}
 		float w = 0.5F * (this.size.x + e2.size.x);
 		float h = 0.5F * (this.size.y + e2.size.y);
 		Vec dxy = this.pos.sub(e2.pos);
 		float dx = dxy.x;
 		float dy = dxy.y;
-		if (Math.abs(dx) <= w && Math.abs(dy) <= h) {
+		if (Math.abs(dx) < w && Math.abs(dy) < h) {
 			float wy = w * dy;
 			float hx = h * dx;
 
@@ -474,10 +477,12 @@ public abstract class GameElement implements Collidable {
 				} else {
 					this.reactToCollision(e2, Direction.RIGHT);
 				}
-			} else if (wy > -hx) {
-				this.reactToCollision(e2, Direction.LEFT);
 			} else {
-				this.reactToCollision(e2, Direction.DOWN);
+				if (wy > -hx) {
+					this.reactToCollision(e2, Direction.LEFT);
+				} else {
+					this.reactToCollision(e2, Direction.DOWN);
+				}
 			}
 		}
 
