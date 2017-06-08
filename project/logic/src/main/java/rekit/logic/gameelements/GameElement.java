@@ -419,7 +419,7 @@ public abstract class GameElement implements Collidable {
 	 *            the other element
 	 */
 	public final void checkCollision(GameElement e2) {
-		if (this == e2 || !this.team.isHostile(e2.team) || !this.getCollisionFrame().collidesWith(e2.getCollisionFrame())) {
+		if (this == e2 /*|| !this.team.isHostile(e2.team)*/ || !this.getCollisionFrame().collidesWith(e2.getCollisionFrame())) {
 			return;
 		}
 
