@@ -61,9 +61,9 @@ public enum Team {
 	 */
 	public final boolean isHostile(Team t) {
 		if (this == PLAYER) {
-			return t == ENEMY || t == PICKUP || this == TRIGGER;
+			return t == ENEMY || t == PICKUP || this == TRIGGER || this == INANIMATE;
 		}
-		if (this == ENEMY || this == PICKUP || this == TRIGGER) {
+		if (this == ENEMY || this == PICKUP || this == TRIGGER || this == INANIMATE) {
 			return t == PLAYER;
 		}
 		return false;

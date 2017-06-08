@@ -73,21 +73,6 @@ public abstract class GameElement implements Collidable {
 	 */
 	private Vec pos;
 
-	// /**
-	// * <p>
-	// * The {@link GameElement GameElements} last absolute position in the
-	// level.
-	// * This position is saved upon every call of <i>setPos(Vec value)</i> and
-	// is
-	// * mainly used for collision detection.
-	// * </p>
-	// * <p>
-	// * <b>Note:</b> the position points to the center of the
-	// * {@link GameElement}.
-	// * </p>
-	// */
-	// private Vec lastPos;
-
 	/**
 	 * The {@link Team} the {@link GameElement} is in that mainly specifies
 	 * behavior upon collision.
@@ -272,42 +257,8 @@ public abstract class GameElement implements Collidable {
 	 *            the new position the {@link GameElement} is supposed to have.
 	 */
 	public final void setPos(Vec value) {
-		// if (this.pos == null) {
-		// this.lastPos = value;
-		// } else {
-		// this.lastPos = this.pos;
-		// }
-
 		this.pos = value;
 	}
-
-	// /**
-	// * <p>
-	// * Getter for the {@link GameElement GameElements} last absolute position.
-	// * This position is saved upon every call of <i>setPos(Vec value)</i> and
-	// is
-	// * mainly used for collision detection.
-	// * </p>
-	// * <p>
-	// * <b>Note:</b> the position points to the center of the
-	// * {@link GameElement}.
-	// * </p>
-	// *
-	// * @return the last position of the {@link GameElement}.
-	// */
-	// public final Vec getLastPos() {
-	// return this.lastPos;
-	// }
-
-	// /**
-	// * Set the last valid position.
-	// *
-	// * @param lastPos
-	// * the last valid position
-	// */
-	// protected final void setLastPos(Vec lastPos) {
-	// this.lastPos = lastPos;
-	// }
 
 	/**
 	 * <p>
@@ -468,7 +419,7 @@ public abstract class GameElement implements Collidable {
 	 *            the other element
 	 */
 	public final void checkCollision(GameElement e2) {
-		if (this == e2 || !this.getCollisionFrame().collidesWith(e2.getCollisionFrame())) {
+		if (this == e2 || !this.team.isHostile(e2.team) || !this.getCollisionFrame().collidesWith(e2.getCollisionFrame())) {
 			return;
 		}
 
