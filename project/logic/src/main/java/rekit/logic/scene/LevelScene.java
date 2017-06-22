@@ -29,6 +29,7 @@ import rekit.logic.gui.parallax.HeapLayer;
 import rekit.logic.gui.parallax.ParallaxContainer;
 import rekit.logic.gui.parallax.TriangulationLayer;
 import rekit.logic.level.Level;
+import rekit.persistence.level.LevelType;
 import rekit.primitives.TextOptions;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.time.Timer;
@@ -192,20 +193,17 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 		MenuActionItem endBack;
 		MenuActionItem endExit = new MenuActionItem(this, "Exit Game", () -> System.exit(0));
 
-		if (!this.level.isInfinite() && won) {
-
+		if (won || this.level.isInfinite()) {
 			String nextLevel = this.level.getLp().getNextLevel();
 			if (nextLevel != null) {
 				MenuActionItem endNext = new MenuActionItem(this, "Next Level", () -> this.getModel().switchScene(Scenes.ARCADE, nextLevel));
 				this.endMenu.addItem(endNext);
 			}
-
-		} else {
-			MenuActionItem endRestart = new MenuActionItem(this, "Restart", () -> this.restart());
-			this.endMenu.addItem(endRestart);
 		}
+		MenuActionItem endRestart = new MenuActionItem(this, "Restart", () -> this.restart());
+		this.endMenu.addItem(endRestart);
 
-		if (!this.level.isInfinite()) {
+		if (this.level.getDefinition().getType() == LevelType.Arcade) {
 			endBack = new MenuActionItem(this, "Level selection", () -> this.getModel().switchScene(Scenes.MAIN_MENU, "0.0.0"));
 		} else {
 			endBack = new MenuActionItem(this, "Main Menu", () -> this.getModel().switchScene(Scenes.MAIN_MENU));
