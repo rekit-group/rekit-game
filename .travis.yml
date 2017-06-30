@@ -1,6 +1,8 @@
-language: java
-jdk:
-- oraclejdk9
+sudo: required
+dist: trusty
+group: edge
+jdk: oraclejdk9
+
 before_script: sh -c 'chmod +x scripts/gh-pages.sh'
 script: sh -c 'cd project && mvn test -B && cd ..'
 after_success:
