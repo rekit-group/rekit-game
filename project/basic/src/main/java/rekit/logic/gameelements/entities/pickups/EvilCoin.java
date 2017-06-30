@@ -47,7 +47,7 @@ public final class EvilCoin extends Coin {
 
 	@Override
 	public void internalRender(GameGrid f) {
-		f.drawImage(this.getPos().addY((float) (this.sin * 0.1)), new Vec(1, 1), "evilCoin.png");
+		f.drawImage(this.getPos().addY((float) (Coin.SIN * 0.1)), new Vec(1, 1), "evilCoin.png");
 	}
 
 	@Override

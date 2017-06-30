@@ -42,7 +42,12 @@ public abstract class Coin extends Pickup {
 	/**
 	 * Sin(X) for spinning coin.
 	 */
-	protected double sin = 0;
+	private double sin = 0;
+
+	/**
+	 * The global SIN value for coins.
+	 */
+	protected static double SIN = 0;
 
 	/**
 	 * Instantiate a Coin by position.
@@ -63,7 +68,13 @@ public abstract class Coin extends Pickup {
 	@Override
 	protected void innerLogicLoop() {
 		this.x += this.deltaTime / 1000F;
-		this.sin = FastMath.sinQuick(this.x * 3);
+		if (Coin.SIN != this.sin) {
+			this.sin = Coin.SIN;
+			this.setSize(new Vec((float) (0.7f * this.sin), 0.7f));
+			return;
+		}
+
+		Coin.SIN = this.sin = FastMath.sinQuick(this.x * 3);
 		this.setSize(new Vec((float) (0.7f * this.sin), 0.7f));
 	}
 
