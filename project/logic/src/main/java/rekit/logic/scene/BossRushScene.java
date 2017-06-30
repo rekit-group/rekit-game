@@ -14,7 +14,7 @@ final class BossRushScene extends LevelScene {
 	 *            the model
 	 */
 	private BossRushScene(GameModel model) {
-		super(model, LevelFactory.createBossRushLevel());
+		super(model, LevelFactory.getBossRushLevel());
 	}
 
 	/**

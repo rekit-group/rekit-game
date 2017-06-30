@@ -132,7 +132,7 @@ public final class LevelManager {
 			if (lv.exists() && lv.isDirectory()) {
 				LevelManager.loadCustomLevels(lv.listFiles(), lv.getName());
 			} else if (lv.getName().startsWith("level") && lv.getName().endsWith(".dat")) {
-				LambdaUtil.invoke(() -> LevelManager.addArcadeLevel(new FileInputStream(lv), group));
+				LambdaUtil.invoke(() -> LevelManager.addArcadeLevel(new FileInputStream(lv), group, false));
 			}
 		}
 
@@ -148,11 +148,11 @@ public final class LevelManager {
 		PathMatchingResourcePatternResolver resolv = new PathMatchingResourcePatternResolver();
 		Resource level = resolv.getResource("/levels/infinite.dat");
 		// Infinite
-		LevelManager.addLevel(LevelManager.INFINITE = new LevelDefinition(level.getInputStream(), LevelType.Infinite_Fun));
+		LevelManager.addLevel(LevelManager.INFINITE = new LevelDefinition(level.getInputStream(), LevelType.Infinite_Fun), false);
 		// LOTD
 		DateFormat levelOfTheDayFormat = new SimpleDateFormat("ddMMyyyy");
 		int seed = Integer.parseInt(levelOfTheDayFormat.format(Calendar.getInstance().getTime()));
-		LevelManager.addLevel(LevelManager.LOTD = new LevelDefinition(level.getInputStream(), LevelType.Level_of_the_Day, seed));
+		LevelManager.addLevel(LevelManager.LOTD = new LevelDefinition(level.getInputStream(), LevelType.Level_of_the_Day, seed), false);
 	}
 
 	/**
@@ -184,7 +184,7 @@ public final class LevelManager {
 		if (!def.isSettingSet(SettingKey.GROUP)) {
 			def.setSetting(SettingKey.GROUP, group);
 		}
-		LevelManager.addLevel(def);
+		LevelManager.addLevel(def, false);
 	}
 
 	/**
@@ -194,18 +194,21 @@ public final class LevelManager {
 	 *            the level structure
 	 * @throws IOException
 	 *             will thrown if Resources are not accessible
+	 * @param reloadUserData
+	 *            indicates whether userdata file shall be reloaded for
+	 *            highscore etc.
 	 * @throws UnexpectedTokenException
 	 *             will thrown if syntax of Resources are wrong
 	 * @return the id of the level or {@code null} if error occurred
 	 */
-	public static synchronized String addArcadeLevel(InputStream levelStructure) throws UnexpectedTokenException, IOException {
+	public static synchronized String addArcadeLevel(InputStream levelStructure, boolean reloadUserData) throws UnexpectedTokenException, IOException {
 		if (!LevelManager.initialized) {
 			return null;
 		}
-		return LevelManager.addArcadeLevel(levelStructure, LevelManager.GROUP_UNKNOWN);
+		return LevelManager.addArcadeLevel(levelStructure, LevelManager.GROUP_UNKNOWN, reloadUserData);
 	}
 
-	private static String addArcadeLevel(InputStream is, String group) {
+	private static String addArcadeLevel(InputStream is, String group, boolean reloadUserData) {
 		LevelDefinition def = null;
 		try {
 			def = new LevelDefinition(is, ++LevelManager.arcadeNum);
@@ -216,7 +219,7 @@ public final class LevelManager {
 		if (!def.isSettingSet(SettingKey.GROUP)) {
 			def.setSetting(SettingKey.GROUP, group);
 		}
-		return LevelManager.addLevel(def);
+		return LevelManager.addLevel(def, reloadUserData);
 	}
 
 	/**
@@ -282,14 +285,19 @@ public final class LevelManager {
 	 *
 	 * @param level
 	 *            the level
+	 * @param reloadUserData
+	 *            indicates whether userdata file shall be reloaded for
+	 *            highscore etc.
 	 * @return the id of the level
 	 */
-	public static synchronized String addLevel(LevelDefinition level) {
+	public static synchronized String addLevel(LevelDefinition level, boolean reloadUserData) {
 		if (level == null) {
 			return null;
 		}
 		LevelManager.LEVEL_MAP.put(level.getID(), level);
-		LevelManager.loadDataFromFile();
+		if (reloadUserData) {
+			LevelManager.loadDataFromFile();
+		}
 		return level.getID();
 	}
 
