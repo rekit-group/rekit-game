@@ -12,14 +12,12 @@ import java.util.Map;
 public class Token {
 
 	/** Map for Special Identifiers to Special TokenType. */
-	private static final Map<String, TokenType> SPECIAL_ID_MAP_TO_TYPES = new HashMap<String, TokenType>() {
+	private static final Map<String, TokenType> SPECIAL_ID_MAP_TO_TYPES = new HashMap<>() {
 		private static final long serialVersionUID = -7109095209912302200L;
-
 		{
 			this.put("{", TokenType.BEGIN);
 			this.put("}", TokenType.END);
 			this.put("::", TokenType.DELIMITER);
-
 		}
 	};
 

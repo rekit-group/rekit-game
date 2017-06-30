@@ -11,8 +11,8 @@
 	<properties>
 		<rekit.version>1.0</rekit.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>9</maven.compiler.source>
+		<maven.compiler.target>9</maven.compiler.target>
 		<main.class>rekit.Main</main.class>
 		<singlejar.name>ReKiT</singlejar.name>
 	</properties>
