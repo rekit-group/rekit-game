@@ -2,14 +2,14 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>parent</artifactId>
-	<version>1.0</version>
+	<version>1.1</version>
 	<packaging>pom</packaging>
 	<name>ReKiT</name>
 	<prerequisites>
 		<maven>3.0</maven>
 	</prerequisites>
 	<properties>
-		<rekit.version>1.0</rekit.version>
+		<rekit.version>1.1</rekit.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
@@ -286,7 +286,7 @@
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-core</artifactId>
-				<version>4.3.8.RELEASE</version>
+				<version>4.3.9.RELEASE</version>
 			</dependency>
 			<dependency>
 				<groupId>net.jafama</groupId>
