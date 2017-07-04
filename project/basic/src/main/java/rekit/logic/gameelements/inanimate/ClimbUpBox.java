@@ -58,10 +58,6 @@ public final class ClimbUpBox extends DynamicInanimate implements Configurable {
 	 */
 	private static RGBAColor ENERGY_COLOR;
 	/**
-	 * The boost to apply to the player
-	 */
-	public static float BOOST;
-	/**
 	 * The timer (how long climb enables?).
 	 */
 	@NoSet
@@ -282,11 +278,9 @@ public final class ClimbUpBox extends DynamicInanimate implements Configurable {
 
 		@Override
 		public void reactToCollision(GameElement element, Direction dir) {
-			element.collidedWithSolid(this.parent.getFrame(), dir);
 			if (element.getTeam() == Team.PLAYER && dir == Direction.DOWN) {
-				element.setVel(element.getVel().setY(ClimbUpBox.BOOST));
+				element.setVel(new Vec(element.getVel().x, 0));
 			}
-
 		}
 
 		@Override
