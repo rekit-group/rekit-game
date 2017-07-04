@@ -141,10 +141,8 @@ public abstract class Entity extends GameElement {
 	 * the ground or into another Object.
 	 */
 	@Override
-	public void collidedWith(Frame collision, Direction dir) {
-		// saving last position
-		// Vec lastPos = this.getLastPos();
-
+	@Optional
+	public void collidedWithSolid(Frame collision, Direction dir) {
 		int signum = dir == Direction.LEFT || dir == Direction.UP ? -1 : 1;
 
 		switch (dir) {
@@ -167,9 +165,6 @@ public abstract class Entity extends GameElement {
 		default:
 			throw new Error();
 		}
-
-		// resetting lastPos
-		// this.setLastPos(lastPos);
 	}
 
 	@Override

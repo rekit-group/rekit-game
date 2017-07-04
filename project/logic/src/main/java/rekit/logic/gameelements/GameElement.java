@@ -7,7 +7,6 @@ import rekit.core.Team.Range;
 import rekit.logic.Collidable;
 import rekit.logic.ILevelScene;
 import rekit.logic.IScene;
-import rekit.logic.gameelements.entities.Player;
 import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Frame;
 import rekit.primitives.geometry.Vec;
@@ -306,10 +305,7 @@ public abstract class GameElement implements Collidable {
 
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
-		if (this.getClass() == Player.class) {
-			System.out.println(dir);
-			// Do nothing
-		}
+		// Do nothing
 	}
 
 	/**
@@ -319,7 +315,7 @@ public abstract class GameElement implements Collidable {
 	 *
 	 * @return the {@link GameElement GameElements} collision box
 	 */
-	public Frame getCollisionFrame() {
+	public Frame getFrame() {
 		Vec v1 = this.getPos().add(this.getSize().scalar(-0.5f));
 		Vec v2 = this.getPos().add(this.getSize().scalar(0.5f));
 		return new Frame(v1, v2);
@@ -419,7 +415,7 @@ public abstract class GameElement implements Collidable {
 	 *            the other element
 	 */
 	public final void checkCollision(GameElement e2) {
-		if (this == e2 /*|| !this.team.isHostile(e2.team)*/ || !this.getCollisionFrame().collidesWith(e2.getCollisionFrame())) {
+		if (this == e2 || !this.getFrame().intersects(e2.getFrame())) {
 			return;
 		}
 

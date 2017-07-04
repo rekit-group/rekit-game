@@ -35,7 +35,7 @@ public final class Frame {
 	 *            the other frame
 	 * @return {@code true} if collision detected, {@code false} otherwise
 	 */
-	public boolean collidesWith(Frame otherFrame) {
+	public boolean intersects(Frame otherFrame) {
 		return this.upperLeftAnchor.x < otherFrame.bottomRightAnchor.x && this.upperLeftAnchor.y < otherFrame.bottomRightAnchor.y
 				&& this.bottomRightAnchor.x > otherFrame.upperLeftAnchor.x && this.bottomRightAnchor.y > otherFrame.upperLeftAnchor.y;
 	}
@@ -47,7 +47,7 @@ public final class Frame {
 	 *            of the object
 	 * @return {@code true} if collision detected, {@code false} otherwise
 	 */
-	public boolean collidesWith(Vec position) {
+	public boolean intersects(Vec position) {
 		return position.x > this.upperLeftAnchor.x && position.x < this.bottomRightAnchor.x && position.y > this.upperLeftAnchor.y
 				&& position.y < this.bottomRightAnchor.y;
 	}

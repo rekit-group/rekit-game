@@ -71,8 +71,8 @@ public abstract class StateEntity extends Entity {
 	}
 
 	@Override
-	public void collidedWith(Frame collision, Direction dir) {
-		super.collidedWith(collision, dir);
+	public void collidedWithSolid(Frame collision, Direction dir) {
+		super.collidedWithSolid(collision, dir);
 		if (dir == Direction.UP) {
 			this.getEntityState().floorCollision();
 		}

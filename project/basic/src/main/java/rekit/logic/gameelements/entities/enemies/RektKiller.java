@@ -170,10 +170,10 @@ public final class RektKiller extends Enemy implements Configurable {
 		super.innerLogicLoop();
 
 		if (this.getPos().y <= 0) {
-			this.collidedWith(new Frame(new Vec(0, 0), new Vec(0, 0)), Direction.DOWN);
+			this.collidedWithSolid(new Frame(new Vec(0, 0), new Vec(0, 0)), Direction.DOWN);
 		}
 		if (this.getPos().y >= GameConf.GRID_H - 1) {
-			this.collidedWith(new Frame(new Vec(0, GameConf.GRID_H - 1), new Vec(0, GameConf.GRID_H - 1)), Direction.UP);
+			this.collidedWithSolid(new Frame(new Vec(0, GameConf.GRID_H - 1), new Vec(0, GameConf.GRID_H - 1)), Direction.UP);
 		}
 
 		// We dont want this guy to fall
@@ -204,8 +204,8 @@ public final class RektKiller extends Enemy implements Configurable {
 	}
 
 	@Override
-	public void collidedWith(Frame collision, Direction dir) {
-		super.collidedWith(collision, dir);
+	public void collidedWithSolid(Frame collision, Direction dir) {
+		super.collidedWithSolid(collision, dir);
 		this.setCurrentDirection(Direction.getOpposite(this.getCurrentDirection()));
 	}
 

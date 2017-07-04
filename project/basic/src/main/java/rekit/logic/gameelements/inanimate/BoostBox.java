@@ -209,7 +209,7 @@ public final class BoostBox extends DynamicInanimate implements Configurable {
 
 		@Override
 		public void reactToCollision(GameElement element, Direction dir) {
-			element.collidedWith(this.parent.getCollisionFrame(), dir);
+			element.collidedWithSolid(this.parent.getFrame(), dir);
 		}
 
 	}
@@ -238,7 +238,7 @@ public final class BoostBox extends DynamicInanimate implements Configurable {
 
 		@Override
 		public void reactToCollision(GameElement element, Direction dir) {
-			element.collidedWith(this.parent.getCollisionFrame(), dir);
+			element.collidedWithSolid(this.parent.getFrame(), dir);
 
 			if (element.getTeam() == Team.PLAYER && dir == Direction.UP) {
 				element.setVel(element.getVel().addY(Player.FLOOR_BOOST));
@@ -266,7 +266,7 @@ public final class BoostBox extends DynamicInanimate implements Configurable {
 
 		@Override
 		public void reactToCollision(GameElement element, Direction dir) {
-			element.collidedWith(this.parent.getCollisionFrame(), dir);
+			element.collidedWithSolid(this.parent.getFrame(), dir);
 			if (element.getTeam() == Team.PLAYER && dir == Direction.UP) {
 				element.setVel(element.getVel().addY(4 * Player.FLOOR_BOOST));
 			}

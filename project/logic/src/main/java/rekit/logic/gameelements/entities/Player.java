@@ -166,8 +166,8 @@ public final class Player extends StateEntity implements CameraTarget, Configura
 	}
 
 	@Override
-	public void collidedWith(Frame collision, Direction dir) {
-		super.collidedWith(collision, dir);
+	public void collidedWithSolid(Frame collision, Direction dir) {
+		super.collidedWithSolid(collision, dir);
 		if (dir == Direction.UP) {
 			this.setVel(this.getVel().setY(Player.FLOOR_BOOST));
 		}

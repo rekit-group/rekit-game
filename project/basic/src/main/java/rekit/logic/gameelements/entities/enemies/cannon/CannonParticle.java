@@ -41,7 +41,7 @@ public final class CannonParticle extends DamageParticle {
 	}
 
 	@Override
-	public void collidedWith(Frame collision, Direction dir) {
+	public void collidedWithSolid(Frame collision, Direction dir) {
 		this.parent.hitSomething();
 	}
 }

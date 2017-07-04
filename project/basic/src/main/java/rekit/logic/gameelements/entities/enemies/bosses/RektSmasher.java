@@ -91,9 +91,9 @@ public final class RektSmasher extends Boss implements Configurable {
 	}
 
 	@Override
-	public void collidedWith(Frame collision, final Direction dir) {
+	public void collidedWithSolid(Frame collision, final Direction dir) {
 		Vec dif = this.getPos().add(this.target.getPos().scalar(-1));
-		super.collidedWith(collision, dir);
+		super.collidedWithSolid(collision, dir);
 
 		Direction newDir;
 

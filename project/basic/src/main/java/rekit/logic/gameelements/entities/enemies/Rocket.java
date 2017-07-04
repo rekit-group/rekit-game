@@ -176,7 +176,7 @@ public final class Rocket extends Enemy implements Configurable {
 	}
 
 	@Override
-	public void collidedWith(Frame collision, Direction dir) {
+	public void collidedWithSolid(Frame collision, Direction dir) {
 		// Do nothing, pass right through everything
 	}
 

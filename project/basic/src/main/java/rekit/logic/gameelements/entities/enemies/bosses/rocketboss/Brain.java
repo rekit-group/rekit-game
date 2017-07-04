@@ -24,7 +24,7 @@ public class Brain extends GameElement {
 		if (this.parent.getTeam().isHostile(element.getTeam())) {
 			this.parent.addDamage(1);
 			// Let Player collide
-			element.collidedWith(this.getCollisionFrame(), dir);
+			element.collidedWithSolid(this.getFrame(), dir);
 
 			// Bounce Player off
 			element.setVel(new Vec(Player.KILL_BOOST, Player.KILL_BOOST));

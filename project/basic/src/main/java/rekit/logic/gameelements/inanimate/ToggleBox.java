@@ -175,7 +175,7 @@ public final class ToggleBox extends DynamicInanimate {
 
 		@Override
 		public void reactToCollision(GameElement element, Direction dir) {
-			element.collidedWith(this.parent.getCollisionFrame(), dir);
+			element.collidedWithSolid(this.parent.getFrame(), dir);
 		}
 
 		@Override

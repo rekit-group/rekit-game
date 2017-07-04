@@ -282,7 +282,7 @@ public final class ClimbUpBox extends DynamicInanimate implements Configurable {
 
 		@Override
 		public void reactToCollision(GameElement element, Direction dir) {
-			element.collidedWith(this.parent.getCollisionFrame(), dir);
+			element.collidedWithSolid(this.parent.getFrame(), dir);
 			if (element.getTeam() == Team.PLAYER && dir == Direction.DOWN) {
 				element.setVel(element.getVel().setY(ClimbUpBox.BOOST));
 			}

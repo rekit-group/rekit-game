@@ -141,7 +141,7 @@ public final class Slurp extends Enemy implements Configurable {
 	}
 
 	@Override
-	public void collidedWith(Frame collision, Direction dir) {
+	public void collidedWithSolid(Frame collision, Direction dir) {
 		// If slurp collides against wall, orthogonal to direction
 		if (this.currentDirection == dir.getNextAntiClockwise()) {
 			// He sticks to a wall
@@ -153,7 +153,7 @@ public final class Slurp extends Enemy implements Configurable {
 			this.currentDirection = this.currentDirection.getNextClockwise();
 			this.hasWallContact = true;
 		}
-		super.collidedWith(collision, dir);
+		super.collidedWithSolid(collision, dir);
 	}
 
 	@Override

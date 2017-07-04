@@ -160,17 +160,17 @@ public final class Stacker extends Enemy implements Configurable {
 			if (this.getTeam().isHostile(element.getTeam())) {
 				if (dir == Direction.DOWN || dir == Direction.UP) {
 					if (this.timeToDie == null) {
-						element.collidedWith(this.getCollisionFrame(), dir);
+						element.collidedWithSolid(this.getFrame(), dir);
 						element.killBoost();
 						// give the player points
 						this.getScene().getPlayer().addPoints(Stacker.POINTS);
 						this.customDie();
 					} else {
-						element.collidedWith(this.getCollisionFrame(), dir);
+						element.collidedWithSolid(this.getFrame(), dir);
 					}
 				} else {
 					element.addDamage(1);
-					element.collidedWith(this.getCollisionFrame(), dir);
+					element.collidedWithSolid(this.getFrame(), dir);
 				}
 			}
 		}

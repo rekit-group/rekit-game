@@ -436,7 +436,7 @@ public class RocketBoss extends Boss implements Configurable {
 		}
 		if (this.getTeam().isHostile(element.getTeam())) {
 			element.addDamage(1);
-			element.collidedWith(this.getCollisionFrame(), dir.getOpposite());
+			element.collidedWithSolid(this.getFrame(), dir.getOpposite());
 			element.setVel(element.getVel().add(Direction.DOWN.getVector().scalar(-Player.KILL_BOOST)));
 		}
 	}

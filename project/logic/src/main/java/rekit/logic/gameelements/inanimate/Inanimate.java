@@ -62,11 +62,11 @@ public class Inanimate extends GameElement {
 
 	@Override
 	public void reactToCollision(GameElement element, Direction dir) {
-		element.collidedWith(this.getCollisionFrame(), dir);
+		element.collidedWithSolid(this.getFrame(), dir);
 	}
 
 	@Override
-	public void collidedWith(Frame collision, Direction dir) {
+	public void collidedWithSolid(Frame collision, Direction dir) {
 		// Do nothing, blocks cannot collide
 	}
 

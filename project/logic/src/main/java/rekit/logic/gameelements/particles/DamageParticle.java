@@ -34,7 +34,7 @@ public abstract class DamageParticle extends Particle {
 	public abstract DamageParticle create();
 
 	@Override
-	public Frame getCollisionFrame() {
+	public Frame getFrame() {
 		Vec v1 = this.getPos().add(this.getSize().scalar(-0.2f));
 		Vec v2 = this.getPos().add(this.getSize().scalar(0.2f));
 		return new Frame(v1, v2);

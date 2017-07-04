@@ -1,5 +1,11 @@
 package rekit.logic;
 
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 import rekit.logic.gameelements.GameElement;
 import rekit.primitives.geometry.Direction;
 import rekit.primitives.geometry.Frame;
@@ -20,7 +26,7 @@ public interface Collidable {
 	default void addDamage(int damage) {
 	}
 
-    /**
+	/**
 	 * Getter for the current lifes of the GameElement.
 	 *
 	 * @return the amount of lifes of the GameElement
@@ -29,7 +35,7 @@ public interface Collidable {
 		return 0;
 	}
 
-    /**
+	/**
 	 * Optional reaction to a collision that can be invoked in other
 	 * GameElements reactToCollision(). Notification that this GameElement has
 	 * collided with another GameElement with the CollisionFrame
@@ -42,10 +48,11 @@ public interface Collidable {
 	 *            the direction of this GameElement where the collision took
 	 *            place
 	 */
-	default void collidedWith(Frame collision, Direction dir) {
+	@Optional
+	default void collidedWithSolid(Frame collision, Direction dir) {
 	}
 
-    /**
+	/**
 	 * <p>
 	 * Notification that this GameElement has been collided with from another
 	 * GameElement <i>element</i> from the given direction <i>dir</i>.
@@ -63,4 +70,16 @@ public interface Collidable {
 	default void reactToCollision(GameElement element, Direction dir) {
 	}
 
+	/**
+	 * Methods which are annotated with this annotation, are optional methods
+	 * for special behavior.
+	 *
+	 * @author Dominik Fuchss
+	 *
+	 */
+	@Retention(RetentionPolicy.SOURCE)
+	@Target(ElementType.METHOD)
+	@Documented
+	public @interface Optional {
+	}
 }

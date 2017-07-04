@@ -52,7 +52,7 @@ public abstract class BackgroundElement extends GameElement {
 	}
 
 	@Override
-	public void collidedWith(Frame collision, Direction dir) {
+	public void collidedWithSolid(Frame collision, Direction dir) {
 		// Do nothing
 	}
 
