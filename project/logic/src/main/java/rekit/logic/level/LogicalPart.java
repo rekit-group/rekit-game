@@ -9,10 +9,22 @@ import rekit.persistence.level.LevelType;
 import rekit.persistence.level.SettingKey;
 import rekit.primitives.geometry.Vec;
 
+/**
+ * The logical part of a {@link Level}.
+ *
+ * @author Dominik Fuchss
+ *
+ */
 public final class LogicalPart {
 	private final LevelDefinition definition;
 	private final Player player;
 
+	/**
+	 * Create LogicalPart by interlink (LevelMtx).
+	 *
+	 * @param mtx
+	 *            the interlink
+	 */
 	LogicalPart(LevelMtx mtx) {
 		this.definition = mtx.getDefinition();
 		this.player = new Player(new Vec(6, 5));
@@ -46,6 +58,9 @@ public final class LogicalPart {
 		return levels.get(thatIdx + 1);
 	}
 
+	/**
+	 * Reset the logic of the {@link Level}.
+	 */
 	void reset() {
 		this.player.init();
 	}

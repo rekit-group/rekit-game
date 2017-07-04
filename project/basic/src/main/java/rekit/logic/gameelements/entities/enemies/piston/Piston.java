@@ -150,7 +150,7 @@ public final class Piston extends Enemy implements Configurable, IPistonForState
 		super();
 	}
 
-	public Piston(Vec startPos, int expansionLength, Direction direction, float timeOpen, float timeClosed, float timeTransition, float startPhaseId) {
+	private Piston(Vec startPos, int expansionLength, Direction direction, float timeOpen, float timeClosed, float timeTransition, float startPhaseId) {
 		super(startPos, new Vec(), new Vec());
 
 		// save trivial parameters

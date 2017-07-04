@@ -25,11 +25,19 @@ public class TextParticle extends Particle {
 	 */
 	private TextOptions options;
 
+	/**
+	 * Create a TextParticle with standard font.
+	 */
 	public TextParticle() {
 		this(19);
 	}
 
-
+	/**
+	 * Create a TextParticle and set font size.
+	 * 
+	 * @param fontSize
+	 *            the font size
+	 */
 	public TextParticle(int fontSize) {
 		super();
 		this.options = new TextOptions(new Vec(-0.6f, 0), fontSize, null, GameConf.GAME_TEXT_FONT, Font.BOLD);

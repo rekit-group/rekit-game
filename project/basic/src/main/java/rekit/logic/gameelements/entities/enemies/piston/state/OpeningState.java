@@ -3,10 +3,21 @@ package rekit.logic.gameelements.entities.enemies.piston.state;
 import rekit.logic.gameelements.entities.enemies.piston.IPistonForState;
 import rekit.util.state.State;
 
+/**
+ *
+ * The opening state of a piston.
+ *
+ */
 public class OpeningState extends PistonState {
 
 	private float currentHeight;
 
+	/**
+	 * Create opening state by piston
+	 *
+	 * @param piston
+	 *            the piston
+	 */
 	public OpeningState(IPistonForState piston) {
 		super(piston);
 	}

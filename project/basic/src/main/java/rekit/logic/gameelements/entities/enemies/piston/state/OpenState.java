@@ -3,8 +3,18 @@ package rekit.logic.gameelements.entities.enemies.piston.state;
 import rekit.logic.gameelements.entities.enemies.piston.IPistonForState;
 import rekit.util.state.State;
 
+/**
+ *
+ * The open state of a piston.
+ *
+ */
 public class OpenState extends PistonState {
-
+	/**
+	 * Create open state by piston
+	 * 
+	 * @param piston
+	 *            the piston
+	 */
 	public OpenState(IPistonForState piston) {
 		super(piston);
 	}

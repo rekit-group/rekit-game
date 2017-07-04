@@ -4,12 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rekit.logic.gameelements.type.Boss;
+import rekit.persistence.level.LevelType;
 import rekit.primitives.geometry.Vec;
 
+/**
+ * A special type of structure for a BossRush level.
+ *
+ * @author Dominik Fuchss
+ *
+ * @see LevelType#Boss_Rush
+ *
+ */
 final class BossRushStructurePart extends StructurePart {
 	private final List<Boss> bosses;
 	private int next;
 
+	/**
+	 * Create StructurePart by interlink (LevelMtx).
+	 *
+	 * @param mtx
+	 *            the interlink
+	 */
 	BossRushStructurePart(LevelMtx mtx) {
 		super(mtx);
 		this.bosses = new ArrayList<>();

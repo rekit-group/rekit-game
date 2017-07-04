@@ -20,6 +20,18 @@ public final class Level implements Comparable<Level>, DataKeySetter {
 	private final LevelDefinition definition;
 	private boolean success;
 	private boolean won;
+
+	/**
+	 * Create Level by its connector (LevelMtx), its {@link StructurePart} and
+	 * {@link LogicalPart}.
+	 * 
+	 * @param mtx
+	 *            the connector
+	 * @param sp
+	 *            the structure
+	 * @param lp
+	 *            the logic
+	 */
 	Level(LevelMtx mtx, StructurePart sp, LogicalPart lp) {
 		this.sp = sp;
 		this.lp = lp;

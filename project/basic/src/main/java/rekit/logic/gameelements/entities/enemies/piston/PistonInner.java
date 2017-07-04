@@ -9,7 +9,12 @@ import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBAColor;
 import rekit.primitives.operable.OpProgress;
 
-public class PistonInner extends Enemy {
+/**
+ *
+ * The inner part of a {@link Piston}.
+ *
+ */
+class PistonInner extends Enemy {
 
 	/**
 	 * The {@link OpProgress} to switch between {@link Piston#PISTON_COLOR_1}
@@ -19,6 +24,12 @@ public class PistonInner extends Enemy {
 
 	private Piston parent;
 
+	/**
+	 * Create the inner part by piston.
+	 * 
+	 * @param parent
+	 *            the piston
+	 */
 	PistonInner(Piston parent) {
 		super(new Vec(), new Vec(), new Vec());
 		this.parent = parent;

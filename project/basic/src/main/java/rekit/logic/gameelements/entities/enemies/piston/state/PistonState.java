@@ -14,6 +14,12 @@ public abstract class PistonState extends State {
 
 	protected final IPistonForState piston;
 
+	/**
+	 * Create PistonState by Piston
+	 * 
+	 * @param piston
+	 *            the piston
+	 */
 	public PistonState(IPistonForState piston) {
 		this.piston = piston;
 		this.timer = new Timer(this.getTimerTime());

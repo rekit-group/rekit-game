@@ -3,9 +3,20 @@ package rekit.logic.gameelements.entities.enemies.piston.state;
 import rekit.logic.gameelements.entities.enemies.piston.IPistonForState;
 import rekit.util.state.State;
 
+/**
+ *
+ * The closing state of a piston.
+ *
+ */
 public class ClosingState extends PistonState {
 	private float currentHeight;
 
+	/**
+	 * Create closing state by piston
+	 *
+	 * @param piston
+	 *            the piston
+	 */
 	public ClosingState(IPistonForState piston) {
 		super(piston);
 	}

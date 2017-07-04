@@ -19,6 +19,13 @@ import rekit.primitives.image.RGBAColor;
 import rekit.primitives.time.Timer;
 import rekit.util.ReflectUtils.LoadMe;
 
+/**
+ * This {@link DynamicInanimate} realizes a box which can "shoot" the player
+ * towards a direction which can be adjusted by the human Player.
+ * 
+ * @author Angelo Aracri
+ *
+ */
 @LoadMe
 @SetterInfo(res = "conf/acceleratorbox")
 public final class AcceleratorBox extends DynamicInanimate implements Configurable {
@@ -95,12 +102,11 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 	 * The Polygon of the inner arrow of the block
 	 */
 	@NoSet
-	private Polygon innerPolygon = new Polygon(new Vec(),
-			new Vec[] { new Vec(-AcceleratorBox.INNER_RADIUS, AcceleratorBox.INNER_RADIUS), //
-					new Vec(0, -AcceleratorBox.INNER_RADIUS), //
-					new Vec(AcceleratorBox.INNER_RADIUS, AcceleratorBox.INNER_RADIUS), //
-					new Vec(0, 0), //
-			});
+	private Polygon innerPolygon = new Polygon(new Vec(), new Vec[] { new Vec(-AcceleratorBox.INNER_RADIUS, AcceleratorBox.INNER_RADIUS), //
+			new Vec(0, -AcceleratorBox.INNER_RADIUS), //
+			new Vec(AcceleratorBox.INNER_RADIUS, AcceleratorBox.INNER_RADIUS), //
+			new Vec(0, 0), //
+	});
 
 	/**
 	 * The direction this block is facing.
@@ -188,7 +194,7 @@ public final class AcceleratorBox extends DynamicInanimate implements Configurab
 		super(startPos, AcceleratorBox.SIZE, null);
 		this.direction = dir;
 
-		this.innerPolygon = innerPolygon.rotate((float) this.direction.getAngle());
+		this.innerPolygon = this.innerPolygon.rotate((float) this.direction.getAngle());
 
 		// Make controls more natural for case DOWN
 		this.invertControls = (dir == Direction.DOWN) ? -1 : 1;

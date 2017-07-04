@@ -17,6 +17,12 @@ import rekit.persistence.level.LevelDefinition;
 import rekit.persistence.level.SettingKey;
 import rekit.primitives.geometry.Vec;
 
+/**
+ * The structure part of a {@link Level}.
+ *
+ * @author Dominik Fuchss
+ *
+ */
 public class StructurePart {
 	private int generatedUntil;
 
@@ -28,6 +34,12 @@ public class StructurePart {
 
 	private final LevelDefinition definition;
 
+	/**
+	 * Create StructurePart by interlink (LevelMtx).
+	 *
+	 * @param mtx
+	 *            the interlink
+	 */
 	StructurePart(LevelMtx mtx) {
 		this.definition = mtx.getDefinition();
 		this.random = mtx.getRandom();
