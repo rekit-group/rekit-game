@@ -58,7 +58,12 @@ public final class ClimbUpBox extends DynamicInanimate implements Configurable {
 	 */
 	private static RGBAColor ENERGY_COLOR;
 	/**
-	 * The timer (how long climb enables?).
+	 * The boost to apply to the player
+	 */
+	public static float BOOST;
+	/**
+	 * 
+	 * /** The timer (how long climb enables?).
 	 */
 	@NoSet
 	private Timer timer;
@@ -89,7 +94,7 @@ public final class ClimbUpBox extends DynamicInanimate implements Configurable {
 		this.innerBox = (InanimateBox) InanimateBox.staticCreate(pos);
 
 		// instantiate the two strategies
-		this.strategies = new ClimbBoxStrategy[] { new NoClimb(this), new BoostClimb(this) };
+		this.strategies = new ClimbBoxStrategy[] { new NoClimb(), new BoostClimb() };
 
 		this.timer = new Timer(ClimbUpBox.PERIOD);
 		this.timer.offset(offset);
@@ -163,20 +168,6 @@ public final class ClimbUpBox extends DynamicInanimate implements Configurable {
 	 *
 	 */
 	private abstract class ClimbBoxStrategy {
-		/**
-		 * The parent.
-		 */
-		protected ClimbUpBox parent;
-
-		/**
-		 * Create strategy by parent.
-		 *
-		 * @param parent
-		 *            the parent
-		 */
-		ClimbBoxStrategy(ClimbUpBox parent) {
-			this.parent = parent;
-		}
 
 		/**
 		 * Same as {@link ClimbUpBox#reactToCollision(GameElement, Direction)}.
@@ -227,15 +218,6 @@ public final class ClimbUpBox extends DynamicInanimate implements Configurable {
 	 *
 	 */
 	private class NoClimb extends ClimbBoxStrategy {
-		/**
-		 * Create strategy by parent.
-		 *
-		 * @param parent
-		 *            the parent
-		 */
-		NoClimb(ClimbUpBox parent) {
-			super(parent);
-		}
 
 		@Override
 		public float getEnergyStart(float progress) {
@@ -256,31 +238,30 @@ public final class ClimbUpBox extends DynamicInanimate implements Configurable {
 	 *
 	 */
 	private class BoostClimb extends ClimbBoxStrategy {
-		/**
-		 * Create strategy by parent.
-		 *
-		 * @param parent
-		 *            the parent
-		 */
-		BoostClimb(ClimbUpBox parent) {
-			super(parent);
-		}
 
 		@Override
 		public void internalRender(GameGrid f) {
 			f.drawRectangle(ClimbUpBox.this.getPos().addY(0.4f), ClimbUpBox.this.getSize().scalar(1, 0.2f), ClimbUpBox.ENERGY_COLOR);
 
-			Vec pos = this.parent.getPos().addY(this.parent.getSize().y / 2f + 1).addX(-0.5f);
-			pos = pos.addX(this.parent.getSize().x * GameConf.PRNG.nextFloat());
+			Vec pos = ClimbUpBox.this.getPos().addY(ClimbUpBox.this.getSize().y / 2f + 1).addX(-0.5f);
+			pos = pos.addX(ClimbUpBox.this.getSize().x * GameConf.PRNG.nextFloat());
 
-			ClimbUpBox.PARTICLES.spawn(this.parent.getScene(), pos);
+			ClimbUpBox.PARTICLES.spawn(ClimbUpBox.this.getScene(), pos);
 		}
 
 		@Override
 		public void reactToCollision(GameElement element, Direction dir) {
-			if (element.getTeam() == Team.PLAYER && dir == Direction.DOWN) {
-				element.setVel(new Vec(element.getVel().x, 0));
+
+			if (dir == Direction.DOWN || dir == Direction.UP) {
+				element.collidedWithSolid(ClimbUpBox.this.getFrame(), dir);
 			}
+
+			if (element.getTeam() == Team.PLAYER && dir == Direction.DOWN) {
+				element.setPos(element.getPos().addY(0.1f));
+				element.setVel(element.getVel().setY(ClimbUpBox.BOOST));
+
+			}
+
 		}
 
 		@Override
