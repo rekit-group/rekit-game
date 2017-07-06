@@ -57,7 +57,7 @@ public class Structure {
 	 */
 	protected boolean autoCoinSpawn = true;
 
-	private static final float coinSpawsChance = 0.08f;
+	private static final float COIN_SPAWN_PROBABILITY = 0.08f;
 
 	/**
 	 * Create a new Structure by level definition and structure lines.
@@ -137,7 +137,7 @@ public class Structure {
 	}
 
 	private void trySpawnCoin(int x, int y) {
-		if (this.autoCoinSpawn && GameConf.PRNG.nextDouble() < Structure.coinSpawsChance) {
+		if (this.autoCoinSpawn && GameConf.PRNG.nextDouble() < Structure.COIN_SPAWN_PROBABILITY) {
 			GameElementFactory.generateDefaultCoin(x, y);
 		}
 	}

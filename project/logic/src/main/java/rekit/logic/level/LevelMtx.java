@@ -49,6 +49,9 @@ class LevelMtx {
 		this.random.setSeed(this.definition.getSeed());
 	}
 
+	/**
+	 * Reset the LevelMtx.
+	 */
 	public void reset() {
 		this.resetRandom();
 	}

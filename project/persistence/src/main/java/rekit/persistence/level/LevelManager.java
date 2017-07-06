@@ -116,7 +116,8 @@ public final class LevelManager {
 		notNumbered.sorted((r1, r2) -> r1.toString().compareToIgnoreCase(r2.toString())).forEach(LevelManager::addArcadeLevel);
 
 		LevelManager.loadInfiniteLevels();
-		// LevelManager.loadCustomLevels();
+		LevelManager.loadCustomLevels();
+		// A debug level.
 		LevelManager.loadTestLevel();
 	}
 
@@ -258,6 +259,12 @@ public final class LevelManager {
 		return LevelManager.LOTD;
 	}
 
+	/**
+	 * Get test level for developing new levels.
+	 *
+	 * @return the test level
+	 *
+	 */
 	public static synchronized LevelDefinition getTestLevel() {
 		if (!LevelManager.initialized) {
 			return null;
@@ -285,7 +292,7 @@ public final class LevelManager {
 		Map<String, List<String>> groups = new TreeMap<>();
 		for (Entry<String, LevelDefinition> lv : LevelManager.LEVEL_MAP.entrySet()) {
 			String group = lv.getValue().getSetting(SettingKey.GROUP);
-			if (lv.getValue().getType() != LevelType.Arcade || group == null || group == GROUP_UNKNOWN) {
+			if (lv.getValue().getType() != LevelType.Arcade) {
 				continue;
 			}
 			if (!groups.containsKey(group)) {

@@ -28,7 +28,7 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 	private final String name;
 	/**
 	 * the seed of the level, if null the seed will be randomly chosen on every
-	 * call to {@link getSeed()}
+	 * call to {@link #getSeed()}
 	 */
 	private Long seed = null;
 	private int arcadeNum;
