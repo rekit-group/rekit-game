@@ -60,7 +60,7 @@ public class StructurePart {
 	public final void generate(int max) {
 		while (this.generatedUntil < max && this.hasNextStructure()) {
 			// build structure
-			this.generatedUntil += this.next().build(this.generatedUntil + 1, this.definition.isSettingSet(SettingKey.AUTO_COIN_SPAWN));
+			this.generatedUntil += this.next().build(this.generatedUntil + 1);
 		}
 	}
 

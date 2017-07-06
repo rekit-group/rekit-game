@@ -5,6 +5,7 @@ import java.util.Arrays;
 import rekit.config.GameConf;
 import rekit.logic.gameelements.GameElementFactory;
 import rekit.persistence.level.LevelDefinition;
+import rekit.persistence.level.SettingKey;
 
 /**
  * <p>
@@ -52,6 +53,13 @@ public class Structure {
 	private LevelDefinition definition;
 
 	/**
+	 * Whether to spawn Coins on empty positions or not.
+	 */
+	protected boolean autoCoinSpawn = true;
+
+	private static final float coinSpawsChance = 0.08f;
+
+	/**
 	 * Create a new Structure by level definition and structure lines.
 	 *
 	 * @param definition
@@ -61,6 +69,7 @@ public class Structure {
 	 */
 	public Structure(LevelDefinition definition, String[][] lines) {
 		this.definition = definition;
+		this.autoCoinSpawn = definition.isSettingSet(SettingKey.AUTO_COIN_SPAWN);
 		this.structure = new String[lines.length][];
 		int i = 0;
 		for (String[] line : lines) {
@@ -90,11 +99,9 @@ public class Structure {
 	 * @param levelX
 	 *            the x position in the level where to build this Structure to
 	 *            (inclusively)
-	 * @param autoCoinSpawn
-	 *            option to add automated coin spawning into the structure.
 	 * @return the width of the build structure plus the gapWidth.
 	 */
-	public int build(int levelX, boolean autoCoinSpawn) {
+	public int build(int levelX) {
 		// iterate template structureArray
 		for (int y = 0; y < this.getHeight(); y++) {
 			for (int x = 0; x < this.getWidth(); x++) {
@@ -103,11 +110,7 @@ public class Structure {
 
 				String elemInfo = this.structure[y][x];
 				if (elemInfo == null) {
-					// Nothing set here:
-					// check if we must generate random coins
-					if (autoCoinSpawn && GameConf.PRNG.nextDouble() > 0.92f) {
-						GameElementFactory.generateDefaultCoin(levelX + x, aY);
-					}
+					this.trySpawnCoin(levelX + x, aY);
 					continue;
 				}
 
@@ -118,10 +121,7 @@ public class Structure {
 					// let GameElementFactory handle the rest
 					GameElementFactory.generate(splitted[0], levelX + x, aY, Arrays.copyOfRange(splitted, 1, splitted.length));
 				} else {
-					// otherwise check if we must generate random coins
-					if (autoCoinSpawn && GameConf.PRNG.nextDouble() > 0.92f) {
-						GameElementFactory.generateDefaultCoin(levelX + x, aY);
-					}
+					this.trySpawnCoin(levelX + x, aY);
 				}
 			}
 		}
@@ -134,6 +134,12 @@ public class Structure {
 
 		// return structure width plus gapWidth
 		return this.getWidth() + this.gapWidth;
+	}
+
+	private void trySpawnCoin(int x, int y) {
+		if (this.autoCoinSpawn && GameConf.PRNG.nextDouble() < Structure.coinSpawsChance) {
+			GameElementFactory.generateDefaultCoin(x, y);
+		}
 	}
 
 	/**

@@ -78,6 +78,7 @@ public final class BossStructure extends Structure implements Configurable {
 	 */
 	public BossStructure(String[][] structure, Boss boss) {
 		super(null, structure);
+		this.autoCoinSpawn = false;
 		this.boss = boss;
 	}
 
@@ -87,8 +88,8 @@ public final class BossStructure extends Structure implements Configurable {
 	}
 
 	@Override
-	public int build(int levelX, boolean autoCoinSpawn) {
-		int width = super.build(levelX, false);
+	public int build(int levelX) {
+		int width = super.build(levelX);
 		this.levelX = levelX;
 
 		// generate and add door after room
@@ -151,7 +152,7 @@ public final class BossStructure extends Structure implements Configurable {
 				this.cameraTarget - Player.CAMERA_OFFSET, //
 				this.cameraTarget - Player.CAMERA_OFFSET + (this.getWidth() - 22), //
 				player //
-				);
+		);
 		// new FixedCameraTarget(this.cameraTarget - Player.CAMERA_OFFSET)
 		scene.setCameraTarget(tgt);
 		scene.setOffsetWildCard(true);
@@ -204,13 +205,13 @@ public final class BossStructure extends Structure implements Configurable {
 		Progress cameraMover = new Progress(//
 				this.cameraTarget - Player.CAMERA_OFFSET, //
 				player.getPos().x - Player.CAMERA_OFFSET //
-				);
+		);
 
 		// Needed for animating door movement
 		Progress doorMover = new Progress(//
 				this.door.getPos().y, //
 				this.door.getPos().y - 10 //
-				);
+		);
 		// save Players current velocity
 		Vec[] save = { player.getVel(), player.getPos(), this.boss.getPos() };
 		// while timer has time left...
