@@ -31,7 +31,9 @@ public enum Scenes {
 	/**
 	 * An boss rush level.
 	 */
-	BOSS_RUSH(BossRushScene.class, BossRushScene::create);
+	BOSS_RUSH(BossRushScene.class, BossRushScene::create),
+
+	TEST(TestScene.class, TestScene::create);
 	/**
 	 * The scene class.
 	 */

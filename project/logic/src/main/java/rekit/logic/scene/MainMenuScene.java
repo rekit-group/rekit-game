@@ -76,8 +76,13 @@ final class MainMenuScene extends Scene {
 		MenuList arcade = new MenuList(this, "Arcade");
 		for (Entry<String, List<String>> group : LevelManager.getArcadeLevelGroups().entrySet()) {
 			this.addGroup(arcade, group);
-
 		}
+
+		if (GameConf.DEBUG) {
+			MenuActionItem debugScene = new MenuActionItem(this, "TestLevel", () -> this.getModel().switchScene(Scenes.TEST));
+			play.addItem(debugScene);
+		}
+
 		play.addItem(arcade, inf, lod, bossRush);
 
 		// Create settings menu
@@ -101,8 +106,8 @@ final class MainMenuScene extends Scene {
 		this.addGuiElement(this.menu);
 
 		// select the right menu
-		String[] test = this.selectOption.split("\\.");
-		for (String str : test) {
+		String[] optionLevels = this.selectOption.split("\\.");
+		for (String str : optionLevels) {
 			int index = Integer.parseInt(str);
 			this.menu.setIndex(index);
 			this.menu.select();

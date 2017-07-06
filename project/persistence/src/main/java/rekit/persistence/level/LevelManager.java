@@ -63,6 +63,8 @@ public final class LevelManager {
 	 */
 	private static LevelDefinition LOTD = null;
 
+	private static LevelDefinition TEST = null;
+
 	/**
 	 * Prevent instantiation.
 	 */
@@ -106,8 +108,6 @@ public final class LevelManager {
 		Stream<Resource> numbered = Arrays.stream(res).filter(r -> r.getFilename().matches("level_\\d+\\.dat"));
 		Stream<Resource> notNumbered = Arrays.stream(res).filter(r -> !r.getFilename().matches("level_\\d+\\.dat"));
 
-		LevelManager.loadInfiniteLevels();
-
 		numbered.sorted((r1, r2) -> {
 			String n1 = r1.getFilename().substring("level_".length()).split("\\.")[0];
 			String n2 = r2.getFilename().substring("level_".length()).split("\\.")[0];
@@ -115,8 +115,9 @@ public final class LevelManager {
 		}).forEach(LevelManager::addArcadeLevel);
 		notNumbered.sorted((r1, r2) -> r1.toString().compareToIgnoreCase(r2.toString())).forEach(LevelManager::addArcadeLevel);
 
-		LevelManager.loadCustomLevels();
-
+		LevelManager.loadInfiniteLevels();
+		// LevelManager.loadCustomLevels();
+		LevelManager.loadTestLevel();
 	}
 
 	private static void loadCustomLevels() {
@@ -146,13 +147,24 @@ public final class LevelManager {
 	 */
 	private static void loadInfiniteLevels() throws IOException {
 		PathMatchingResourcePatternResolver resolv = new PathMatchingResourcePatternResolver();
-		Resource level = resolv.getResource("/levels/infinite.dat");
+		Resource res = resolv.getResource("/levels/infinite.dat");
 		// Infinite
-		LevelManager.addLevel(LevelManager.INFINITE = new LevelDefinition(level.getInputStream(), LevelType.Infinite_Fun), false);
+		LevelManager.INFINITE = new LevelDefinition(res.getInputStream(), LevelType.Infinite_Fun);
+		LevelManager.addLevel(LevelManager.INFINITE, false);
+
 		// LOTD
 		DateFormat levelOfTheDayFormat = new SimpleDateFormat("ddMMyyyy");
 		int seed = Integer.parseInt(levelOfTheDayFormat.format(Calendar.getInstance().getTime()));
-		LevelManager.addLevel(LevelManager.LOTD = new LevelDefinition(level.getInputStream(), LevelType.Level_of_the_Day, seed), false);
+		LevelManager.LOTD = new LevelDefinition(res.getInputStream(), LevelType.Level_of_the_Day, seed);
+		LevelManager.addLevel(LevelManager.LOTD, false);
+	}
+
+	private static void loadTestLevel() throws IOException {
+		PathMatchingResourcePatternResolver resolv = new PathMatchingResourcePatternResolver();
+		Resource res = resolv.getResource("/levels/test.dat");
+
+		LevelManager.TEST = new LevelDefinition(res.getInputStream(), LevelType.Infinite_Fun);
+		LevelManager.addLevel(LevelManager.TEST, false);
 	}
 
 	/**
@@ -246,6 +258,13 @@ public final class LevelManager {
 		return LevelManager.LOTD;
 	}
 
+	public static synchronized LevelDefinition getTestLevel() {
+		if (!LevelManager.initialized) {
+			return null;
+		}
+		return LevelManager.TEST;
+	}
+
 	/**
 	 * Load a level by id.
 	 *
@@ -265,13 +284,14 @@ public final class LevelManager {
 	public static synchronized Map<String, List<String>> getArcadeLevelGroups() {
 		Map<String, List<String>> groups = new TreeMap<>();
 		for (Entry<String, LevelDefinition> lv : LevelManager.LEVEL_MAP.entrySet()) {
-			if (lv.getValue().getType() != LevelType.Arcade) {
+			String group = lv.getValue().getSetting(SettingKey.GROUP);
+			if (lv.getValue().getType() != LevelType.Arcade || group == null || group == GROUP_UNKNOWN) {
 				continue;
 			}
-			if (!groups.containsKey(lv.getValue().getSetting(SettingKey.GROUP))) {
-				groups.put(lv.getValue().getSetting(SettingKey.GROUP), new ArrayList<>());
+			if (!groups.containsKey(group)) {
+				groups.put(group, new ArrayList<>());
 			}
-			groups.get(lv.getValue().getSetting(SettingKey.GROUP)).add(lv.getKey());
+			groups.get(group).add(lv.getKey());
 
 		}
 		for (List<String> lvs : groups.values()) {

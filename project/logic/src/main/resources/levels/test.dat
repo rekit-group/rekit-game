@@ -1,0 +1,43 @@
+#SETTING::name->EmptyTestLevel
+#SETTING::shuffle->false
+#SETTING::doGaps->false
+#SETTING::infinite->false
+#SETTING::autoCoinSpawn->false
+
+#ALIAS::1->Inanimate
+
+#ALIAS::10->DefaultCoin
+#ALIAS::11->SuperCoin
+#ALIAS::12->EvilCoin
+
+#ALIAS::2->RektKiller
+#ALIAS::3->Warper
+#ALIAS::4->Rocket
+#ALIAS::5->Slurp
+#ALIAS::6->Stacker
+#ALIAS::7->Cannon
+#ALIAS::8->Piston
+
+{
+{0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0}
+{0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0}
+{0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0}
+{0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0}
+{0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0}
+{0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0}
+{0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0}
+{0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0}
+{1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1}
+}
+
+{
+{0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0}
+{0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0}
+{0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0}
+{0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0}
+{0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0}
+{0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0}
+{0  0  0  0  0  0  0  1  0  0  0  0  0  0  0  0  0}
+{0  0  0  0  0  0  1  1  1  0  0  0  0  0  0  0  0}
+{1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1}
+}
