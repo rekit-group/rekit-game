@@ -116,27 +116,20 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 		// Init EnemyFactory with model
 		GameElementFactory.setScene(this);
 		this.level.reset();
-		// Create parallax background
-		this.parallax = new ParallaxContainer(this);
+		this.createBackground();
 
-		this.parallax.addLayer(new TriangulationLayer(1.5f));
-		this.parallax.addLayer(new HeapLayer(new HeapElementCloud(null, new Vec(), null, null), 1.1f));
-		this.parallax.addLayer(new HeapLayer(new HeapElementMountain(null, new Vec(), null, null), 1.3f));
-
-		// Create Gui
-		this.scoreGui = new ScoreGui(this);
-		this.scoreGui.setPos(new Vec(10, 10));
-		this.lifeGui = new LifeGui(this);
-		this.lifeGui.setPos(new Vec(10));
-		this.addGuiElement(this.scoreGui);
-		this.addGuiElement(this.lifeGui);
+		this.createGui();
 
 		TextOptions op = new TextOptions(new Vec(-0.5f, -0.5f), 40, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, Font.BOLD);
 		Text levelText = new Text(this, op).setText(this.level.getName());
 		levelText.setPos(CalcUtil.units2pixel(new Vec(GameConf.GRID_W / 2f, GameConf.GRID_H / 2f)));
 		this.addGuiElement(new TimeDecorator(this, levelText, new Timer(5000)));
 
-		// create pause menu
+		this.createPauseMenu();
+
+	}
+
+	private void createPauseMenu() {
 		this.pauseMenu = new MenuList(this, "Pause Menu");
 		this.pauseMenu.setPos(new Vec(GameConf.PIXEL_W / 2f, GameConf.PIXEL_H / 2f));
 
@@ -149,7 +142,25 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 		this.pauseMenu.setVisible(false);
 		this.pauseMenu.select();
 		this.addGuiElement(this.pauseMenu);
+	}
 
+	private void createGui() {
+		// Create Gui
+		this.scoreGui = new ScoreGui(this);
+		this.scoreGui.setPos(new Vec(10, 10));
+		this.lifeGui = new LifeGui(this);
+		this.lifeGui.setPos(new Vec(10));
+		this.addGuiElement(this.scoreGui);
+		this.addGuiElement(this.lifeGui);
+	}
+
+	private void createBackground() {
+		// Create parallax background
+		this.parallax = new ParallaxContainer(this);
+
+		this.parallax.addLayer(new TriangulationLayer(1.5f));
+		this.parallax.addLayer(new HeapLayer(new HeapElementCloud(null, new Vec(), null, null), 1.1f));
+		this.parallax.addLayer(new HeapLayer(new HeapElementMountain(null, new Vec(), null, null), 1.3f));
 	}
 
 	@Override
