@@ -45,4 +45,12 @@ class LevelMtx {
 		return this.random;
 	}
 
+	private void resetRandom() {
+		this.random.setSeed(this.definition.getSeed());
+	}
+
+	public void reset() {
+		this.resetRandom();
+	}
+
 }

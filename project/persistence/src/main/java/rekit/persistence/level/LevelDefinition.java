@@ -26,7 +26,11 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 
 	private final LevelType type;
 	private final String name;
-	private final long seed;
+	/**
+	 * the seed of the level, if null the seed will be randomly chosen on every
+	 * call to {@link getSeed()}
+	 */
+	private Long seed = null;
 	private int arcadeNum;
 	private List<String[][]> structures = new LinkedList<>();
 	private SortedMap<String, String> aliases = new TreeMap<>();
@@ -44,7 +48,15 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 	 *            the type of the level
 	 */
 	public LevelDefinition(InputStream in, LevelType type) {
-		this(in, type, GameConf.PRNG.nextLong());
+		this.type = type;
+		Scanner scanner = new Scanner(in, Charset.defaultCharset().name());
+		scanner.useDelimiter("\\A");
+		String input = scanner.hasNext() ? scanner.next() : "";
+		scanner.close();
+
+		LevelParser.parseLevel(input, this);
+		this.name = this.calcName();
+		this.arcadeNum = -1;
 	}
 
 	/**
@@ -58,16 +70,8 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 	 *            the random seed for the level
 	 */
 	public LevelDefinition(InputStream in, LevelType type, long seed) {
-		this.type = type;
+		this(in, type);
 		this.seed = seed;
-		Scanner scanner = new Scanner(in, Charset.defaultCharset().name());
-		scanner.useDelimiter("\\A");
-		String input = scanner.hasNext() ? scanner.next() : "";
-		scanner.close();
-
-		LevelParser.parseLevel(input, this);
-		this.name = this.calcName();
-		this.arcadeNum = -1;
 	}
 
 	/**
@@ -316,7 +320,10 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 	 * @return the seed
 	 */
 	public long getSeed() {
-		return this.seed;
+		if (this.seed != null) {
+			return this.seed.longValue();
+		}
+		return GameConf.PRNG.nextLong();
 	}
 
 	/**

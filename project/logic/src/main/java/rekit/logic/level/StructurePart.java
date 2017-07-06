@@ -34,6 +34,8 @@ public class StructurePart {
 
 	private final LevelDefinition definition;
 
+	private final LevelMtx mtx;
+
 	/**
 	 * Create StructurePart by interlink (LevelMtx).
 	 *
@@ -41,9 +43,9 @@ public class StructurePart {
 	 *            the interlink
 	 */
 	StructurePart(LevelMtx mtx) {
+		this.mtx = mtx;
 		this.definition = mtx.getDefinition();
 		this.random = mtx.getRandom();
-
 	}
 
 	/**
@@ -66,6 +68,7 @@ public class StructurePart {
 	 * Reset the level.
 	 */
 	final void reset() {
+		this.mtx.reset();
 		this.currentStructureId = -1;
 		this.unitsBuilt = 0;
 		this.generatedUntil = 0;
