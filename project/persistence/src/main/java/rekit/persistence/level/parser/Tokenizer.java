@@ -40,8 +40,7 @@ public class Tokenizer {
 	 */
 	public Token nextToken() {
 		if (!this.scanner.hasMoreTokens()) {
-			// return EOS Token
-			return new Token();
+			return Token.getEOSToken();
 		}
 		return new Token(this.scanner.nextToken());
 	}

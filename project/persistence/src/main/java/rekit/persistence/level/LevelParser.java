@@ -44,6 +44,11 @@ public final class LevelParser {
 	private Token lookAhead;
 
 	/**
+	 * Used to build a real Level from a representation in a file
+	 */
+	private LevelDefinition levelDef;
+
+	/**
 	 * Instantiate the parser by the input string.
 	 *
 	 * @param input
@@ -67,8 +72,9 @@ public final class LevelParser {
 		if (definition == null) {
 			throw new IllegalArgumentException("manager cannot be null");
 		}
+		this.levelDef = definition;
 		this.lookAhead = this.tokenizer.nextToken();
-		this.parseLevel(definition);
+		this.parseLevel();
 		this.readToken(TokenType.EOS);
 		this.reset();
 	}
@@ -79,21 +85,21 @@ public final class LevelParser {
 	 * @param definition
 	 *            LevelDefinitionImpl
 	 */
-	private void parseLevel(LevelDefinition definition) {
+	private void parseLevel() {
 		if (this.isToken(TokenType.ALIAS)) {
-			this.parseAlias(definition);
+			this.parseAlias();
 		}
 		if (this.isToken(TokenType.SETTING)) {
-			this.parseSetting(definition);
+			this.parseSetting();
 		}
 		if (this.isToken(TokenType.BOSS_SETTING)) {
-			this.parseBossSetting(definition);
+			this.parseBossSetting();
 		}
 		if (this.isToken(TokenType.BEGIN)) {
-			this.parseStructure(definition);
+			this.parseStructure();
 		}
 		if (this.isToken(TokenType.ALIAS, TokenType.SETTING, TokenType.BOSS_SETTING, TokenType.BEGIN)) {
-			this.parseLevel(definition);
+			this.parseLevel();
 		}
 	}
 
@@ -103,34 +109,34 @@ public final class LevelParser {
 	 * @param definition
 	 *            the LevelDefinitionImpl
 	 */
-	private void parseStructure(LevelDefinition definition) {
+	private void parseStructure() {
 		this.readToken(TokenType.BEGIN);
 		List<String[]> lines = new LinkedList<>();
 		while (this.isToken(TokenType.BEGIN)) {
-			this.readLevelLine(lines);
+			String[] line = this.readLevelLine();
+			lines.add(line);
 		}
 		this.readToken(TokenType.END);
-		definition.addStructure(lines);
+		this.levelDef.addStructure(lines);
 	}
 
 	/**
 	 * Read / Parse level lines.
 	 *
-	 * @param lines
-	 *            the lines
+	 * @return a line of a level represented as a String[]
+	 *
 	 */
-	private void readLevelLine(List<String[]> lines) {
-		this.readToken(TokenType.BEGIN);
-
+	private String[] readLevelLine() {
 		List<String> line = new ArrayList<>();
 
+		this.readToken(TokenType.BEGIN);
 		while (!this.isToken(TokenType.END)) {
 			line.add(this.readToken(TokenType.RAW).getValue());
 		}
 		this.readToken(TokenType.END);
+
 		String[] res = new String[line.size()];
-		line.toArray(res);
-		lines.add(res);
+		return line.toArray(res);
 	}
 
 	/**
@@ -139,7 +145,7 @@ public final class LevelParser {
 	 * @param definition
 	 *            the LevelDefinitionImpl
 	 */
-	private void parseAlias(LevelDefinition definition) {
+	private void parseAlias() {
 		this.readToken(TokenType.ALIAS);
 		this.readToken(TokenType.DELIMITER);
 		Token mp = this.lookAhead;
@@ -147,7 +153,7 @@ public final class LevelParser {
 		if (!mapping[0].matches("(-|\\+)?[0-9]+")) {
 			throw new UnexpectedTokenException(mp, "alias must be a mapping from number");
 		}
-		definition.setAlias(mapping[0], mapping[1]);
+		this.levelDef.setAlias(mapping[0], mapping[1]);
 	}
 
 	/**
@@ -156,7 +162,7 @@ public final class LevelParser {
 	 * @param definition
 	 *            the LevelDefinitionImpl
 	 */
-	private void parseSetting(LevelDefinition definition) {
+	private void parseSetting() {
 		this.readToken(TokenType.SETTING);
 		this.readToken(TokenType.DELIMITER);
 		Token tk = this.lookAhead;
@@ -165,7 +171,7 @@ public final class LevelParser {
 		if (key == null) {
 			throw new UnexpectedTokenException(tk, "Unknown SettingKey");
 		}
-		definition.setSetting(key, mapping[1]);
+		this.levelDef.setSetting(key, mapping[1]);
 	}
 
 	/**
@@ -174,11 +180,11 @@ public final class LevelParser {
 	 * @param definition
 	 *            the LevelDefinitionImpl
 	 */
-	private void parseBossSetting(LevelDefinition definition) {
+	private void parseBossSetting() {
 		this.readToken(TokenType.BOSS_SETTING);
 		this.readToken(TokenType.DELIMITER);
 		String[] mapping = this.parseMapping();
-		definition.setBossSetting(mapping[0], mapping[1]);
+		this.levelDef.setBossSetting(mapping[0], mapping[1]);
 	}
 
 	/**

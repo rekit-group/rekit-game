@@ -28,6 +28,12 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 	private final String name;
 	private final long seed;
 	private int arcadeNum;
+	private List<String[][]> structures = new LinkedList<>();
+	private SortedMap<String, String> aliases = new TreeMap<>();
+	private SortedMap<String, String> settings = new TreeMap<>();
+	private SortedMap<String, String> bossSettings = new TreeMap<>();
+	private Map<DataKey, Serializable> data = new HashMap<>();
+	private String id = null;
 
 	/**
 	 * Create a new LevelDefinition by data and type.
@@ -88,8 +94,6 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 		return (name == null ? this.getID() : name);
 	}
 
-	private List<String[][]> structures = new LinkedList<>();
-
 	/**
 	 * Add a new structure to the level.
 	 *
@@ -104,8 +108,6 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 		}
 		this.structures.add(structure);
 	}
-
-	private SortedMap<String, String> aliases = new TreeMap<>();
 
 	/**
 	 * Set a new alias.
@@ -132,8 +134,6 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 	public String getAlias(String key) {
 		return this.aliases.get(key);
 	}
-
-	private SortedMap<String, String> settings = new TreeMap<>();
 
 	/**
 	 * Set a new setting.
@@ -182,8 +182,6 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 		return this.settings.get(key.getID()) != null;
 	}
 
-	private SortedMap<String, String> bossSettings = new TreeMap<>();
-
 	/**
 	 * Set a new boss-setting.
 	 *
@@ -229,8 +227,6 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 		return this.name;
 	}
 
-	private String id = null;
-
 	/**
 	 * Get the id of the level.
 	 *
@@ -266,8 +262,6 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 		}
 		return res.toString();
 	}
-
-	private Map<DataKey, Serializable> data = new HashMap<>();
 
 	/**
 	 * Set data of the level and notify the {@link LevelManager} about the
