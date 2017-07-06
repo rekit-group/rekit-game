@@ -29,8 +29,12 @@ public class Tokenizer {
 		if (input == null) {
 			throw new IllegalArgumentException("Null is no input!");
 		}
-		this.input = "" + input;
-		this.scanner = new StringTokenizer(this.input.replace("::", " :: ").replace("{", " { ").replace("}", " } "), " \t\n\r");
+		String modIn = "" + input;
+		for (String k : TokenType.SPECIAL_ID_MAP_TO_TYPES.keySet()) {
+			modIn = modIn.replace(k, " " + k + " ");
+		}
+		this.input = modIn;
+		this.scanner = new StringTokenizer(this.input, " \t\n\r");
 	}
 
 	/**
@@ -40,8 +44,7 @@ public class Tokenizer {
 	 */
 	public Token nextToken() {
 		if (!this.scanner.hasMoreTokens()) {
-			// return EOS Token
-			return new Token();
+			return Token.getEOSToken();
 		}
 		return new Token(this.scanner.nextToken());
 	}
