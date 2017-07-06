@@ -86,7 +86,7 @@ public enum DataKey {
 		static void setHighScore(DataKeySetter dks) {
 			int newScore = dks.getScore();
 			int oldScore = (Integer) dks.getDefinition().getData(DataKey.HIGH_SCORE);
-			if (oldScore < newScore) {
+			if (oldScore < newScore && dks.getWon()) {
 				dks.getDefinition().setData(DataKey.HIGH_SCORE, newScore);
 			}
 		}
