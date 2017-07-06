@@ -32,6 +32,8 @@ public class Token {
 
 	/**
 	 * This creates an EOS token.
+	 * 
+	 * @return an EOS token
 	 */
 	public static Token getEOSToken() {
 		return new Token(null, TokenType.EOS);
