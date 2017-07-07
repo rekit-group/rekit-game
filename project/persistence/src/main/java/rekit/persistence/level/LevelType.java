@@ -22,5 +22,9 @@ public enum LevelType {
 	/**
 	 * Boss Rush Mode.
 	 */
-	Boss_Rush
+	Boss_Rush,
+	/**
+	 * Type for tests.
+	 */
+	Test
 }

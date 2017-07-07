@@ -63,8 +63,6 @@ public final class LevelManager {
 	 */
 	private static LevelDefinition LOTD = null;
 
-	private static LevelDefinition TEST = null;
-
 	/**
 	 * Prevent instantiation.
 	 */
@@ -117,8 +115,6 @@ public final class LevelManager {
 
 		LevelManager.loadInfiniteLevels();
 		LevelManager.loadCustomLevels();
-		// A debug level.
-		LevelManager.loadTestLevel();
 	}
 
 	private static void loadCustomLevels() {
@@ -158,14 +154,6 @@ public final class LevelManager {
 		int seed = Integer.parseInt(levelOfTheDayFormat.format(Calendar.getInstance().getTime()));
 		LevelManager.LOTD = new LevelDefinition(res.getInputStream(), LevelType.Level_of_the_Day, seed);
 		LevelManager.addLevel(LevelManager.LOTD, false);
-	}
-
-	private static void loadTestLevel() throws IOException {
-		PathMatchingResourcePatternResolver resolv = new PathMatchingResourcePatternResolver();
-		Resource res = resolv.getResource("/levels/test.dat");
-
-		LevelManager.TEST = new LevelDefinition(res.getInputStream(), LevelType.Infinite_Fun);
-		LevelManager.addLevel(LevelManager.TEST, false);
 	}
 
 	/**
@@ -257,19 +245,6 @@ public final class LevelManager {
 			return null;
 		}
 		return LevelManager.LOTD;
-	}
-
-	/**
-	 * Get test level for developing new levels.
-	 *
-	 * @return the test level
-	 *
-	 */
-	public static synchronized LevelDefinition getTestLevel() {
-		if (!LevelManager.initialized) {
-			return null;
-		}
-		return LevelManager.TEST;
 	}
 
 	/**
