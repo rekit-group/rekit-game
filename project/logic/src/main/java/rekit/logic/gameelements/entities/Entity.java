@@ -32,14 +32,7 @@ public abstract class Entity extends GameElement {
 	 * ({@code null} --&gt; not invincible)
 	 */
 	protected Timer invincibility = null;
-	/**
-	 * Last time of invoking {@link #logicLoop()}.
-	 */
-	private long lastTime = GameTime.getTime();
-	/**
-	 * The latest deltaTime in {@link #logicLoop()}.
-	 */
-	protected long deltaTime;
+
 
 	/**
 	 * Minimal Constructor by {@link Team} used for prototype constructors. The
@@ -105,8 +98,6 @@ public abstract class Entity extends GameElement {
 	@Override
 	public final void logicLoop() {
 		super.logicLoop();
-		this.deltaTime = GameTime.getTime() - this.lastTime;
-		this.lastTime += this.deltaTime;
 		this.innerLogicLoop();
 	}
 

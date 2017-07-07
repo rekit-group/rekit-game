@@ -2,6 +2,7 @@ package rekit.logic.gameelements;
 
 import rekit.config.GameConf;
 import rekit.core.GameGrid;
+import rekit.core.GameTime;
 import rekit.core.Team;
 import rekit.core.Team.Range;
 import rekit.logic.Collidable;
@@ -85,6 +86,16 @@ public abstract class GameElement implements Collidable {
 	private ILevelScene scene;
 
 	/**
+	 * The latest deltaTime in {@link #logicLoop()}.
+	 */
+	protected long deltaTime;
+
+	/**
+	 * Last time of invoking {@link #logicLoop()}.
+	 */
+	private long lastTime = GameTime.getTime();
+
+	/**
 	 * Prototype constructor. Use the constructor <i>GameElement(Vec startPos,
 	 * Vec vel, Vec size, Team team)</i> for regular use and extending.
 	 *
@@ -131,6 +142,8 @@ public abstract class GameElement implements Collidable {
 	 */
 	public void logicLoop() {
 		// check if entity fell out of the world
+		this.deltaTime = GameTime.getTime() - this.lastTime;
+		this.lastTime += this.deltaTime;
 		this.checkForDelete();
 	}
 
