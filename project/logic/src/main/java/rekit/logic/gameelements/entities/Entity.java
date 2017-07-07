@@ -1,7 +1,6 @@
 package rekit.logic.gameelements.entities;
 
 import rekit.config.GameConf;
-import rekit.core.GameTime;
 import rekit.core.Team;
 import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.type.Enemy;
@@ -32,7 +31,6 @@ public abstract class Entity extends GameElement {
 	 * ({@code null} --&gt; not invincible)
 	 */
 	protected Timer invincibility = null;
-
 
 	/**
 	 * Minimal Constructor by {@link Team} used for prototype constructors. The
