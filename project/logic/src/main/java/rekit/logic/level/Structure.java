@@ -69,7 +69,7 @@ public class Structure {
 	 */
 	public Structure(LevelDefinition definition, String[][] lines) {
 		this.definition = definition;
-		this.autoCoinSpawn = definition.isSettingSet(SettingKey.AUTO_COIN_SPAWN);
+		this.autoCoinSpawn = definition == null ? false : definition.isSettingSet(SettingKey.AUTO_COIN_SPAWN);
 		this.structure = new String[lines.length][];
 		int i = 0;
 		for (String[] line : lines) {
