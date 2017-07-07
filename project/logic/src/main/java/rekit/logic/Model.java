@@ -1,5 +1,6 @@
 package rekit.logic;
 
+import java.util.function.Function;
 import java.util.logging.Level;
 
 import rekit.core.GameTime;
@@ -88,6 +89,21 @@ public interface Model {
 	 * @return {@code true} if changed, {@code false} otherwise
 	 */
 	boolean filterChanged();
+
+	/**
+	 * Register a special testscene for debugging.
+	 *
+	 * @param constructor
+	 *            the constructor
+	 */
+	void registerTestScene(Function<GameModel, ILevelScene> constructor);
+
+	/**
+	 * Get the special testscene's constructor.
+	 *
+	 * @return the constructor if set
+	 */
+	Function<GameModel, ILevelScene> getTestSceneConstructor();
 
 	/**
 	 * This enum defines the different states of the game.

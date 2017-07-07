@@ -252,6 +252,11 @@
 				<artifactId>basic</artifactId>
 				<version>${rekit.version}</version>
 			</dependency>
+				<dependency>
+				<groupId>rekit</groupId>
+				<artifactId>tests</artifactId>
+				<version>${rekit.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>log4j</groupId>
 				<artifactId>log4j</artifactId>
@@ -338,6 +343,7 @@
 		<module>game</module>
 		<module>basic</module>
 		<module>persistence</module>
+		<module>tests</module>
 	</modules>
 	<groupId>rekit</groupId>
 </project>

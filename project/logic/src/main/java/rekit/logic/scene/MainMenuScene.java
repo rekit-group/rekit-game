@@ -3,10 +3,12 @@ package rekit.logic.scene;
 import java.awt.Desktop;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.function.Function;
 
 import rekit.config.GameConf;
 import rekit.core.CameraTarget;
 import rekit.logic.GameModel;
+import rekit.logic.ILevelScene;
 import rekit.logic.gui.BackgroundElement;
 import rekit.logic.gui.menu.ArcadeLevelItem;
 import rekit.logic.gui.menu.BoolSetting;
@@ -79,8 +81,11 @@ final class MainMenuScene extends Scene {
 		}
 
 		if (GameConf.DEBUG) {
-			MenuActionItem debugScene = new MenuActionItem(this, "TestLevel", () -> this.getModel().switchScene(Scenes.TEST));
-			play.addItem(debugScene);
+			Function<GameModel, ILevelScene> constructor = this.getModel().getTestSceneConstructor();
+			if (constructor != null) {
+				MenuActionItem debugScene = new MenuActionItem(this, "TestLevel", () -> this.getModel().switchScene(constructor));
+				play.addItem(debugScene);
+			}
 		}
 
 		play.addItem(arcade, inf, lod, bossRush);

@@ -1,6 +1,7 @@
 package rekit.logic;
 
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.function.Function;
 
 import rekit.config.GameConf;
 import rekit.core.GameTime;
@@ -80,6 +81,22 @@ public class GameModel implements Model {
 	 */
 	public void switchScene(Scenes s) {
 		this.switchScene(s, new String[0]);
+	}
+
+	/**
+	 * Switch to scene with default parameters.
+	 *
+	 * @param constructor
+	 *            the new scene's constructor.
+	 */
+	public void switchScene(Function<GameModel, ILevelScene> constructor) {
+		IScene nextScene = constructor.apply(this);
+		this.removeFilter();
+		nextScene.init();
+		nextScene.start();
+		this.scene = nextScene;
+		this.state = GameState.INGAME;
+		GameTime.resume();
 	}
 
 	/**
@@ -183,4 +200,15 @@ public class GameModel implements Model {
 
 	}
 
+	private Function<GameModel, ILevelScene> testSceneConstructor = null;
+
+	@Override
+	public void registerTestScene(Function<GameModel, ILevelScene> constructor) {
+		this.testSceneConstructor = constructor;
+	}
+
+	@Override
+	public Function<GameModel, ILevelScene> getTestSceneConstructor() {
+		return this.testSceneConstructor;
+	}
 }

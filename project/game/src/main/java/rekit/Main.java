@@ -13,6 +13,7 @@ import rekit.config.GameConf;
 import rekit.controller.Controller;
 import rekit.gui.View;
 import rekit.logic.Model;
+import rekit.logic.scene.TestScene;
 import rekit.persistence.ModManager;
 import rekit.persistence.level.LevelManager;
 import rekit.util.ReflectUtils;
@@ -50,6 +51,7 @@ public final class Main {
 		// V----> M <----C
 		// ^-------------|
 		Model model = Model.getModel();
+		Main.applyDebug(model);
 		View view = View.getView(model);
 		Controller controller = Controller.getController(model, view);
 
@@ -60,6 +62,19 @@ public final class Main {
 		ThreadUtils.sleep(100);
 		view.start();
 
+	}
+
+	/**
+	 * Apply debug stuff to model ..
+	 *
+	 * @param model
+	 *            the model
+	 */
+	private static void applyDebug(Model model) {
+		if (!GameConf.DEBUG) {
+			return;
+		}
+		model.registerTestScene((m) -> TestScene.create(m));
 	}
 
 	/**

@@ -31,13 +31,7 @@ public enum Scenes {
 	/**
 	 * An boss rush level.
 	 */
-	BOSS_RUSH(BossRushScene.class, BossRushScene::create),
-	/**
-	 * A test scene which can be used in {@link GameConf#DEBUG} context.
-	 * 
-	 * @see TestScene
-	 */
-	TEST(TestScene.class, TestScene::create);
+	BOSS_RUSH(BossRushScene.class, BossRushScene::create);
 	/**
 	 * The scene class.
 	 */
