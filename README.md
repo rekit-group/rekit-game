@@ -67,3 +67,12 @@ Here is a list what can be added via addons:
 | Special blocks | [rekit.logic.gameelements.type.DynamicInanimate](https://fuchss-dominik.github.io/rekit-game/rekit/logic/gameelements/type/DynamicInanimate.html) | [ClimbUpBox](https://github.com/fuchss-dominik/rekit-game/blob/master/project/basic/src/main/java/rekit/logic/gameelements/inanimate/ClimbUpBox.java) |
 | Bosses | [rekit.logic.gameelements.type.Boss](https://fuchss-dominik.github.io/rekit-game/rekit/logic/gameelements/type/Boss.html) | [RocketBoss](https://github.com/fuchss-dominik/rekit-game/blob/master/project/basic/src/main/java/rekit/logic/gameelements/entities/enemies/bosses/rocketboss/RocketBoss.java) |
 | Items | [rekit.logic.gameelements.type.Pickup](https://fuchss-dominik.github.io/rekit-game/rekit/logic/gameelements/type/Pickup.html) | [BluePill](https://github.com/fuchss-dominik/rekit-game/blob/master/project/basic/src/main/java/rekit/logic/gameelements/entities/pickups/BluePill.java) |
+
+## Contibuters
+### Maintainers:
+- @AnJ95
+- @matzebond
+- @fuchss-dominik
+
+### Special thanks to contributors:
+- @Norbert515 
