@@ -13,7 +13,7 @@ import rekit.config.GameConf;
 import rekit.controller.Controller;
 import rekit.gui.View;
 import rekit.logic.Model;
-import rekit.logic.scene.TestScene;
+import rekit.logic.develop.TestScene;
 import rekit.persistence.ModManager;
 import rekit.persistence.level.LevelManager;
 import rekit.util.ReflectUtils;

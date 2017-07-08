@@ -37,9 +37,5 @@
 			<groupId>rekit</groupId>
 			<artifactId>basic</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>rekit</groupId>
-			<artifactId>tests</artifactId>
-		</dependency>
 	</dependencies>
 </project>

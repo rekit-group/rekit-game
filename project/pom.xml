@@ -343,7 +343,6 @@
 		<module>game</module>
 		<module>basic</module>
 		<module>persistence</module>
-		<module>tests</module>
 	</modules>
 	<groupId>rekit</groupId>
 </project>

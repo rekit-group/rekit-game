@@ -1,4 +1,4 @@
-package rekit.logic.scene;
+package rekit.logic.develop;
 
 import java.io.IOException;
 
@@ -10,11 +10,12 @@ import rekit.logic.GameModel;
 import rekit.logic.ILevelScene;
 import rekit.logic.gameelements.GameElement;
 import rekit.logic.gameelements.GameElementFactory;
+import rekit.logic.gameelements.entities.enemies.Warper;
 import rekit.logic.level.LevelFactory;
+import rekit.logic.scene.LevelScene;
 import rekit.persistence.level.LevelDefinition;
 import rekit.persistence.level.LevelType;
 import rekit.primitives.geometry.Vec;
-import rekit.tests.Pizza;
 import rekit.util.LambdaUtil;
 
 /**
@@ -56,9 +57,9 @@ public final class TestScene extends LevelScene {
 	@Override
 	public void start() {
 		super.start();
-		GameElement protoPizza = GameElementFactory.getPrototype("Pizza");
-		Pizza pizza = (Pizza) protoPizza.create(new Vec(12, 4));
+		GameElement warperProto = GameElementFactory.getPrototype("Warper");
+		Warper warper = (Warper) warperProto.create(new Vec(12, 4));
 		// TODO Sth more useful ..
-		this.addGameElement(pizza);
+		this.addGameElement(warper);
 	}
 }
