@@ -2,14 +2,14 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>parent</artifactId>
-	<version>1.1</version>
+	<version>1.1.1</version>
 	<packaging>pom</packaging>
 	<name>ReKiT</name>
 	<prerequisites>
 		<maven>3.0</maven>
 	</prerequisites>
 	<properties>
-		<rekit.version>1.1</rekit.version>
+		<rekit.version>1.1.1</rekit.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
@@ -115,7 +115,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-dependency-plugin</artifactId>
-					<version>3.0.0</version>
+					<version>3.0.1</version>
 					<executions>
 						<execution>
 							<id>copy-dependencies</id>
@@ -159,7 +159,7 @@
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>versions-maven-plugin</artifactId>
-					<version>2.3</version>
+					<version>2.4</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>

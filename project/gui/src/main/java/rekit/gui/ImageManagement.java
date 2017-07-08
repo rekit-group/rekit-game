@@ -77,7 +77,8 @@ public final class ImageManagement {
 	 *
 	 * @param nTry
 	 *            the number of the try
-	 * @param path the path
+	 * @param path
+	 *            the path
 	 * @return hopefully the image
 	 */
 	private static BufferedImage get(final String path, final int nTry) {
@@ -93,11 +94,12 @@ public final class ImageManagement {
 			// Read data to local buffer.
 			ByteArrayInputStream is = new ByteArrayInputStream(IOUtils.toByteArray(icon.getInputStream()));
 			return ImageIO.read(is);
-		} catch (IOException | NullPointerException e) {
+		} catch (IOException | NullPointerException | IllegalStateException e) {
 			GameConf.GAME_LOGGER.debug(e + " (" + path + "), Image does not exist. Try " + nTry);
 			return ImageManagement.get(path, nTry + 1);
 		}
 	}
+
 	/**
 	 * Get the {@link AbstractImage} from the resources by name.<br>
 	 *
