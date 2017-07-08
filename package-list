@@ -5,6 +5,7 @@ rekit.controller.commands
 rekit.core
 rekit.gui
 rekit.logic
+rekit.logic.develop
 rekit.logic.filters
 rekit.logic.gameelements
 rekit.logic.gameelements.entities
