@@ -68,11 +68,14 @@ Here is a list what can be added via addons:
 | Bosses | [rekit.logic.gameelements.type.Boss](https://fuchss-dominik.github.io/rekit-game/rekit/logic/gameelements/type/Boss.html) | [RocketBoss](https://github.com/fuchss-dominik/rekit-game/blob/master/project/basic/src/main/java/rekit/logic/gameelements/entities/enemies/bosses/rocketboss/RocketBoss.java) |
 | Items | [rekit.logic.gameelements.type.Pickup](https://fuchss-dominik.github.io/rekit-game/rekit/logic/gameelements/type/Pickup.html) | [BluePill](https://github.com/fuchss-dominik/rekit-game/blob/master/project/basic/src/main/java/rekit/logic/gameelements/entities/pickups/BluePill.java) |
 
-## Contibuters
+### Known Mods
+- [Sample Mod](https://github.com/fuchss-dominik/rekit-sample-mod)
+
+## Contributors
 ### Maintainers:
-- @AnJ95
-- @matzebond
-- @fuchss-dominik
+- [**@AnJ95**](https://github.com/AnJ95)
+- [**@matzebond**](https://github.com/matzebond)
+- [**@fuchss-dominik**](https://github.com/fuchss-dominik)
 
 ### Special thanks to contributors:
-- @Norbert515 
+- [**@Norbert515**](https://github.com/Norbert515)
