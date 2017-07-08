@@ -4,7 +4,7 @@ if [ "$TRAVIS_REPO_SLUG" == "fuchss-dominik/rekit-game" ] && [ "$TRAVIS_PULL_REQ
 
   echo -e "Publishing JavaDocs ...\n"
   cd project
-  mvn javadoc:aggregate
+  mvn javadoc:aggregate -Pjavadoc
   cd ..
   
   cp -R "gh-pages" $HOME/doc-latest

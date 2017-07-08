@@ -252,7 +252,7 @@
 				<artifactId>basic</artifactId>
 				<version>${rekit.version}</version>
 			</dependency>
-				<dependency>
+			<dependency>
 				<groupId>rekit</groupId>
 				<artifactId>tests</artifactId>
 				<version>${rekit.version}</version>
@@ -334,15 +334,29 @@
 				<profile.folder>build/windows</profile.folder>
 			</properties>
 		</profile>
+		<profile>
+			<id>javadoc</id>
+			<modules>
+				<module>logic</module>
+				<module>global</module>
+				<module>gui</module>
+				<module>control</module>
+				<module>game</module>
+				<module>persistence</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>build</id>
+			<modules>
+				<module>logic</module>
+				<module>global</module>
+				<module>gui</module>
+				<module>control</module>
+				<module>game</module>
+				<module>basic</module>
+				<module>persistence</module>
+			</modules>
+		</profile>
 	</profiles>
-	<modules>
-		<module>logic</module>
-		<module>global</module>
-		<module>gui</module>
-		<module>control</module>
-		<module>game</module>
-		<module>basic</module>
-		<module>persistence</module>
-	</modules>
 	<groupId>rekit</groupId>
 </project>
