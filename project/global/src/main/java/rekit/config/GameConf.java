@@ -200,6 +200,6 @@ public final class GameConf implements Configurable {
 		GameConf.MENU_TEXT = new TextOptions(new Vec(-0.5F, -0.65f), GameConf.MENU_TEXT_SIZE, GameConf.MENU_TEXT_COLOR, GameConf.MENU_TEXT_FONT, Font.PLAIN);
 		GameConf.DEBUG_TEXT_COLOR = new RGBAColor(255, 255, 255);
 		GameConf.HINT_TEXT = GameConf.DEFAULT_TEXT.clone().setHeight(GameConf.GAME_TEXT_SIZE - 5).setColor(GameConf.DEBUG_TEXT_COLOR);
-		GameConf.ABOUT_TEXT = GameConf.HINT_TEXT.clone().setHeight(GameConf.GAME_TEXT_SIZE - 2).setAlignmentLeft(new Vec());
+		GameConf.ABOUT_TEXT = GameConf.HINT_TEXT.clone().setHeight(GameConf.GAME_TEXT_SIZE - 2).setAlignmentLeft(new Vec(0, -0.5F));
 	}
 }
