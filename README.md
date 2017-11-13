@@ -48,34 +48,34 @@ To setup your workspace for viewing or altering the code follow these steps:
 - Import every maven module in this directory (File -> Import -> Maven -> Existing Maven Projects)
 - To compile the project click the run button after opening Main.java in the game module
 
-There are [auto-generated API-Docs](https://fuchss-dominik.github.io/rekit-game/) available.
+There are [auto-generated API-Docs](https://dfuchss.github.io/rekit-game/) available.
 
 
 ## Mods / Addons
 Addons are an easy way to add functionality without understanding the whole code.
 
-Check out this [example project on GitHub](https://github.com/fuchss-dominik/rekit-sample-mod) on how to create an addon.
+Check out this [example project on GitHub](https://github.com/dfuchss/rekit-sample-mod) on how to create an addon.
 
-Also, see this detailed instruction on [adding levels](https://github.com/fuchss-dominik/rekit-game/blob/master/documentation/LEVEL.md).
+Also, see this detailed instruction on [adding levels](https://github.com/dfuchss/rekit-game/blob/master/documentation/LEVEL.md).
 
 Here is a list what can be added via addons:
 
 | Addable Feature | Super class and documentation | Example |
 | ----- | ----- | ----- |
-| Level | - | [Adding levels](https://github.com/fuchss-dominik/rekit-game/blob/master/documentation/LEVEL.md) |
-| Enemies | [rekit.logic.gameelements.type.Enemy](https://fuchss-dominik.github.io/rekit-game/rekit/logic/gameelements/type/Enemy.html) | [Cannon](https://github.com/fuchss-dominik/rekit-game/blob/master/project/basic/src/main/java/rekit/logic/gameelements/entities/enemies/cannon/Cannon.java) |
-| Special blocks | [rekit.logic.gameelements.type.DynamicInanimate](https://fuchss-dominik.github.io/rekit-game/rekit/logic/gameelements/type/DynamicInanimate.html) | [ClimbUpBox](https://github.com/fuchss-dominik/rekit-game/blob/master/project/basic/src/main/java/rekit/logic/gameelements/inanimate/ClimbUpBox.java) |
-| Bosses | [rekit.logic.gameelements.type.Boss](https://fuchss-dominik.github.io/rekit-game/rekit/logic/gameelements/type/Boss.html) | [RocketBoss](https://github.com/fuchss-dominik/rekit-game/blob/master/project/basic/src/main/java/rekit/logic/gameelements/entities/enemies/bosses/rocketboss/RocketBoss.java) |
-| Items | [rekit.logic.gameelements.type.Pickup](https://fuchss-dominik.github.io/rekit-game/rekit/logic/gameelements/type/Pickup.html) | [BluePill](https://github.com/fuchss-dominik/rekit-game/blob/master/project/basic/src/main/java/rekit/logic/gameelements/entities/pickups/BluePill.java) |
+| Level | - | [Adding levels](https://github.com/dfuchss/rekit-game/blob/master/documentation/LEVEL.md) |
+| Enemies | [rekit.logic.gameelements.type.Enemy](https://dfuchss.github.io/rekit-game/rekit/logic/gameelements/type/Enemy.html) | [Cannon](https://github.com/dfuchss/rekit-game/blob/master/project/basic/src/main/java/rekit/logic/gameelements/entities/enemies/cannon/Cannon.java) |
+| Special blocks | [rekit.logic.gameelements.type.DynamicInanimate](https://dfuchss.github.io/rekit-game/rekit/logic/gameelements/type/DynamicInanimate.html) | [ClimbUpBox](https://github.com/dfuchss/rekit-game/blob/master/project/basic/src/main/java/rekit/logic/gameelements/inanimate/ClimbUpBox.java) |
+| Bosses | [rekit.logic.gameelements.type.Boss](https://dfuchss.github.io/rekit-game/rekit/logic/gameelements/type/Boss.html) | [RocketBoss](https://github.com/dfuchss/rekit-game/blob/master/project/basic/src/main/java/rekit/logic/gameelements/entities/enemies/bosses/rocketboss/RocketBoss.java) |
+| Items | [rekit.logic.gameelements.type.Pickup](https://dfuchss.github.io/rekit-game/rekit/logic/gameelements/type/Pickup.html) | [BluePill](https://github.com/dfuchss/rekit-game/blob/master/project/basic/src/main/java/rekit/logic/gameelements/entities/pickups/BluePill.java) |
 
 ### Known Mods
-- [Sample Mod](https://github.com/fuchss-dominik/rekit-sample-mod)
+- [Sample Mod](https://github.com/dfuchss/rekit-sample-mod)
 
 ## Contributors
 ### Maintainers:
 - [**@AnJ95**](https://github.com/AnJ95)
 - [**@matzebond**](https://github.com/matzebond)
-- [**@fuchss-dominik**](https://github.com/fuchss-dominik)
+- [**@dfuchss**](https://github.com/dfuchss)
 
 ### Special thanks to contributors:
 - [**@Norbert515**](https://github.com/Norbert515)
