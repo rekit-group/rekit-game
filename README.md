@@ -1,21 +1,21 @@
 # R&#949;​KiT
 
-[![Build Status](https://travis-ci.org/fuchss-dominik/rekit-game.svg?branch=master)](https://travis-ci.org/fuchss-dominik/rekit-game)
-[![GitHub issues](https://img.shields.io/github/issues/fuchss-dominik/rekit-game.svg?style=square)](https://github.com/fuchss-dominik/rekit-game/issues)
-[![GitHub license](https://img.shields.io/badge/license-GPLv3-blue.svg?style=square)](https://github.com/fuchss-dominik/rekit-game/blob/master/LICENSE.md)
+[![Build Status](https://travis-ci.org/dfuchss/rekit-game.svg?branch=master)](https://travis-ci.org/dfuchss/rekit-game)
+[![GitHub issues](https://img.shields.io/github/issues/dfuchss/rekit-game.svg?style=square)](https://github.com/dfuchss/rekit-game/issues)
+[![GitHub license](https://img.shields.io/badge/license-GPLv3-blue.svg?style=square)](https://github.com/dfuchss/rekit-game/blob/master/LICENSE.md)
 
 R&#949;​KiT is a platform jumper game in Java and [AWT](https://docs.oracle.com/javase/8/docs/api/java/awt/package-summary.html) and has a self-written game engine to understand and modify.
 
 The project is aiming to educate about software design and was created by students of the [Karlsruher Institut für Technologie](https://www.kit.edu/).
 
 ## Getting Started
-To simply play the game, download the latest **ReKiT.jar** on the [releases page](https://github.com/fuchss-dominik/rekit-game/releases) and launch by **double clicking** the jar-file.
+To simply play the game, download the latest **ReKiT.jar** on the [releases page](https://github.com/dfuchss/rekit-game/releases) and launch by **double clicking** the jar-file.
 If double clicking doesn't work, open a terminal and run the command `java -jar <JAR-FILE>` in the correct folder.
 
 ## GameModes
 
 ### Infinite Mode
-The infinite level is randomly assembled from small components that [can be modified](https://github.com/fuchss-dominik/rekit-game/blob/master/project/logic/src/main/resources/levels/infinite.dat) The more varieties through structures and enemies there is, the more random this level becomes!
+The infinite level is randomly assembled from small components that [can be modified](https://github.com/dfuchss/rekit-game/blob/master/project/logic/src/main/resources/levels/infinite.dat) The more varieties through structures and enemies there is, the more random this level becomes!
 
 ![Randomly generated levels and many different enemies and varieties](./graphix/rekitScreenshotInfinite.png)
 
@@ -23,12 +23,12 @@ The infinite level is randomly assembled from small components that [can be modi
 In contrast to the random infinite mode, there is also a set of predesigned levels to master.
 They introduce one special block and feature at a time but will always be challenging!
 
-Levels can also be added via modding as shown in [the example](https://github.com/fuchss-dominik/rekit-sample-mod).
+Levels can also be added via modding as shown in [the example](https://github.com/dfuchss/rekit-sample-mod).
 
 ![New challenges special blocks](./graphix/rekitScreenshotArcade.png)
 
 ### Boss Rush
-The Boss Rush is a quick way to challenge the games bosses, that have [more complex movement and attack patterns](https://github.com/fuchss-dominik/rekit-game/tree/master/project/basic/src/main/java/rekit/logic/gameelements/entities/enemies/bosses/rocketboss) than usual Enemies.
+The Boss Rush is a quick way to challenge the games bosses, that have [more complex movement and attack patterns](https://github.com/dfuchss/rekit-game/tree/master/project/basic/src/main/java/rekit/logic/gameelements/entities/enemies/bosses/rocketboss) than usual Enemies.
 
 ![Unique bosses](./graphix/rekitScreenshotBossRush.png)
 
