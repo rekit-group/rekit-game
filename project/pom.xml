@@ -26,8 +26,12 @@
 			<url>https://jitpack.io</url>
 		</repository>
 		<repository>
-			<id>maven-fuchss</id>
+			<id>maven-rekit</id>
 			<url>https://raw.githubusercontent.com/rekit-group/maven/releases</url>
+		</repository>
+		<repository>
+			<id>maven-fuchss</id>
+			<url>https://raw.githubusercontent.com/dfuchss/maven/releases</url>
 		</repository>
 	</repositories>
 	<pluginRepositories>
