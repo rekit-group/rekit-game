@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ "$TRAVIS_REPO_SLUG" == "dfuchss/rekit-game" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; then
+if [ "$TRAVIS_REPO_SLUG" == "rekit-group/rekit-game" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; then
 
   echo -e "Publishing JavaDocs ...\n"
   cd project
@@ -12,7 +12,7 @@ if [ "$TRAVIS_REPO_SLUG" == "dfuchss/rekit-game" ] && [ "$TRAVIS_PULL_REQUEST" =
   cd $HOME
   git config --global user.email "travis-ci@fuchss.org"
   git config --global user.name "Travis-CI"
-  git clone --quiet --branch=gh-pages https://${GH_TOKEN}@github.com/dfuchss/rekit-game gh-pages > /dev/null
+  git clone --quiet --branch=gh-pages https://${GH_TOKEN}@github.com/rekit-group/rekit-game gh-pages > /dev/null
 
   rm -rf gh-pages/*
   cp -Rf $HOME/doc-latest/* ./gh-pages
