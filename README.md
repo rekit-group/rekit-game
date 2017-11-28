@@ -1,4 +1,4 @@
-# R&#949;?KiT
+# R&#949;KiT
 
 [![Build Status](https://travis-ci.org/rekit-group/rekit-game.svg?branch=master)](https://travis-ci.org/rekit-group/rekit-game)
 [![GitHub issues](https://img.shields.io/github/issues/rekit-group/rekit-game.svg?style=square)](https://github.com/rekit-group/rekit-game/issues)
