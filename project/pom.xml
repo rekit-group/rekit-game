@@ -27,7 +27,7 @@
 		</repository>
 		<repository>
 			<id>maven-fuchss</id>
-			<url>https://raw.githubusercontent.com/dfuchss/maven/releases</url>
+			<url>https://raw.githubusercontent.com/rekit-group/maven/releases</url>
 		</repository>
 	</repositories>
 	<pluginRepositories>
