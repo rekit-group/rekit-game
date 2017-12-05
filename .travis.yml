@@ -4,5 +4,4 @@ jdk:
 before_script: sh -c 'chmod +x scripts/gh-pages.sh'
 script: sh -c 'cd project && mvn test -B && cd ..'
 after_success:
- - scripts/gh-pages.sh
- - bash <(curl -s https://raw.githubusercontent.com/rekit-group/maven/releases/travis/decrypt.sh) && cd $TRAVIS_BUILD_DIR && mvn deploy
+ - bash <(curl -s https://raw.githubusercontent.com/rekit-group/maven/releases/travis/decrypt.sh) && cd $TRAVIS_BUILD_DIR && mvn deploy && scripts/gh-pages.sh
