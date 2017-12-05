@@ -3,7 +3,7 @@
 if [ "$TRAVIS_REPO_SLUG" == "rekit-group/rekit-game" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; then
 
   echo -e "Publishing JavaDocs ...\n"
-  cd project
+  cd $TRAVIS_BUILD_DIR/project
   mvn javadoc:aggregate -Pjavadoc
   cd ..
   
