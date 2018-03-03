@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.function.Function;
 
+import org.fuchss.tools.lambda.LambdaConvert;
+
 import rekit.config.GameConf;
 import rekit.core.CameraTarget;
 import rekit.logic.GameModel;
@@ -22,7 +24,6 @@ import rekit.logic.gui.menu.TextItem;
 import rekit.persistence.DirFileDefinitions;
 import rekit.persistence.level.LevelManager;
 import rekit.primitives.geometry.Vec;
-import rekit.util.LambdaUtil;
 
 /**
  *
@@ -94,7 +95,8 @@ final class MainMenuScene extends Scene {
 		MenuList settings = new MenuList(this, "Settings");
 		settings.addItem(//
 				new BoolSetting(this, "Debug Mode", "DEBUG"), //
-				new MenuActionItem(this, "Open Config", LambdaUtil.tryCatch(() -> Desktop.getDesktop().open(DirFileDefinitions.BASE))) //
+				new MenuActionItem(this, "Open Config",
+						LambdaConvert.wrap(() -> Desktop.getDesktop().open(DirFileDefinitions.BASE), e -> GameConf.GAME_LOGGER.fatal(e.getMessage()))) //
 		);
 
 		// Create about text

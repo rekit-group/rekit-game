@@ -1,5 +1,7 @@
 package rekit.logic.gui.menu;
 
+import org.fuchss.tools.lambda.VoidFunction;
+
 import rekit.logic.IScene;
 import rekit.primitives.geometry.Vec;
 
@@ -12,7 +14,7 @@ public class MenuActionItem extends MenuItem {
 	/**
 	 * The action.
 	 */
-	private final Runnable selectAction;
+	private final VoidFunction selectAction;
 
 	/**
 	 * Create MenuActionItem.
@@ -24,7 +26,7 @@ public class MenuActionItem extends MenuItem {
 	 * @param selectAction
 	 *            the action
 	 */
-	public MenuActionItem(IScene scene, String text, Runnable selectAction) {
+	public MenuActionItem(IScene scene, String text, VoidFunction selectAction) {
 		super(scene, text);
 		this.selectAction = selectAction;
 	}
@@ -41,7 +43,7 @@ public class MenuActionItem extends MenuItem {
 	 * @param selectAction
 	 *            the action
 	 */
-	public MenuActionItem(IScene scene, Vec size, String text, Runnable selectAction) {
+	public MenuActionItem(IScene scene, Vec size, String text, VoidFunction selectAction) {
 		this(scene, text, selectAction);
 		this.size = size;
 	}
@@ -50,7 +52,7 @@ public class MenuActionItem extends MenuItem {
 	public void select() {
 		this.selected = true;
 		this.unselect();
-		this.selectAction.run();
+		this.selectAction.execute();
 
 	}
 }

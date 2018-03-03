@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.fuchss.tools.tuple.Tuple2;
+
 import rekit.config.GameConf;
 import rekit.controller.commands.Command;
 import rekit.controller.commands.CommandSupervisor;
@@ -27,7 +29,6 @@ import rekit.logic.filters.RandomMode;
 import rekit.logic.gameelements.entities.StateEntity;
 import rekit.logic.gui.menu.MenuItem;
 import rekit.primitives.geometry.Direction;
-import rekit.util.tuple.Tuple;
 
 /**
  * This is an implementation of an {@link Controller} of the MVC <br>
@@ -40,7 +41,7 @@ final class ControllerImpl implements Observer, Controller, CommandSupervisor {
 	/**
 	 * Map State, Key-ID --&gt; Command.
 	 */
-	private Map<Tuple<GameState, Integer>, Command> mpCmd;
+	private Map<Tuple2<GameState, Integer>, Command> mpCmd;
 	/**
 	 * The input helper.
 	 */
@@ -75,40 +76,40 @@ final class ControllerImpl implements Observer, Controller, CommandSupervisor {
 	 */
 	private void init() {
 		// Menu
-		this.mpCmd.put(Tuple.create(GameState.MENU, InputHelper.ESCAPE), new MenuCommand(this, MenuDirection.BACK));
-		this.mpCmd.put(Tuple.create(GameState.MENU, InputHelper.ENTER), new MenuCommand(this, MenuDirection.SELECT));
-		this.mpCmd.put(Tuple.create(GameState.MENU, InputHelper.ARROW_UP), new MenuCommand(this, MenuDirection.UP));
-		this.mpCmd.put(Tuple.create(GameState.MENU, InputHelper.ARROW_DOWN), new MenuCommand(this, MenuDirection.DOWN));
-		this.mpCmd.put(Tuple.create(GameState.MENU, InputHelper.ARROW_LEFT), new MenuCommand(this, MenuDirection.LEFT));
-		this.mpCmd.put(Tuple.create(GameState.MENU, InputHelper.ARROW_RIGHT), new MenuCommand(this, MenuDirection.RIGHT));
+		this.mpCmd.put(Tuple2.of(GameState.MENU, InputHelper.ESCAPE), new MenuCommand(this, MenuDirection.BACK));
+		this.mpCmd.put(Tuple2.of(GameState.MENU, InputHelper.ENTER), new MenuCommand(this, MenuDirection.SELECT));
+		this.mpCmd.put(Tuple2.of(GameState.MENU, InputHelper.ARROW_UP), new MenuCommand(this, MenuDirection.UP));
+		this.mpCmd.put(Tuple2.of(GameState.MENU, InputHelper.ARROW_DOWN), new MenuCommand(this, MenuDirection.DOWN));
+		this.mpCmd.put(Tuple2.of(GameState.MENU, InputHelper.ARROW_LEFT), new MenuCommand(this, MenuDirection.LEFT));
+		this.mpCmd.put(Tuple2.of(GameState.MENU, InputHelper.ARROW_RIGHT), new MenuCommand(this, MenuDirection.RIGHT));
 
 		// Game
-		this.mpCmd.put(Tuple.create(GameState.INGAME, InputHelper.ARROW_UP), new JumpCommand(this));
-		this.mpCmd.put(Tuple.create(GameState.INGAME, InputHelper.ARROW_LEFT), new WalkCommand(this, Direction.LEFT));
-		this.mpCmd.put(Tuple.create(GameState.INGAME, InputHelper.ARROW_RIGHT), new WalkCommand(this, Direction.RIGHT));
-		this.mpCmd.put(Tuple.create(GameState.INGAME, InputHelper.ESCAPE), new PlayPauseCommand(this));
+		this.mpCmd.put(Tuple2.of(GameState.INGAME, InputHelper.ARROW_UP), new JumpCommand(this));
+		this.mpCmd.put(Tuple2.of(GameState.INGAME, InputHelper.ARROW_LEFT), new WalkCommand(this, Direction.LEFT));
+		this.mpCmd.put(Tuple2.of(GameState.INGAME, InputHelper.ARROW_RIGHT), new WalkCommand(this, Direction.RIGHT));
+		this.mpCmd.put(Tuple2.of(GameState.INGAME, InputHelper.ESCAPE), new PlayPauseCommand(this));
 
 		// pause menu
-		this.mpCmd.put(Tuple.create(GameState.INGAME_PAUSED, InputHelper.ENTER), new MenuCommand(this, MenuDirection.SELECT));
-		this.mpCmd.put(Tuple.create(GameState.INGAME_PAUSED, InputHelper.ARROW_UP), new MenuCommand(this, MenuDirection.UP));
-		this.mpCmd.put(Tuple.create(GameState.INGAME_PAUSED, InputHelper.ARROW_DOWN), new MenuCommand(this, MenuDirection.DOWN));
-		this.mpCmd.put(Tuple.create(GameState.INGAME_PAUSED, InputHelper.ARROW_LEFT), new MenuCommand(this, MenuDirection.LEFT));
-		this.mpCmd.put(Tuple.create(GameState.INGAME_PAUSED, InputHelper.ARROW_RIGHT), new MenuCommand(this, MenuDirection.RIGHT));
-		this.mpCmd.put(Tuple.create(GameState.INGAME_PAUSED, InputHelper.ESCAPE), new PlayPauseCommand(this));
+		this.mpCmd.put(Tuple2.of(GameState.INGAME_PAUSED, InputHelper.ENTER), new MenuCommand(this, MenuDirection.SELECT));
+		this.mpCmd.put(Tuple2.of(GameState.INGAME_PAUSED, InputHelper.ARROW_UP), new MenuCommand(this, MenuDirection.UP));
+		this.mpCmd.put(Tuple2.of(GameState.INGAME_PAUSED, InputHelper.ARROW_DOWN), new MenuCommand(this, MenuDirection.DOWN));
+		this.mpCmd.put(Tuple2.of(GameState.INGAME_PAUSED, InputHelper.ARROW_LEFT), new MenuCommand(this, MenuDirection.LEFT));
+		this.mpCmd.put(Tuple2.of(GameState.INGAME_PAUSED, InputHelper.ARROW_RIGHT), new MenuCommand(this, MenuDirection.RIGHT));
+		this.mpCmd.put(Tuple2.of(GameState.INGAME_PAUSED, InputHelper.ESCAPE), new PlayPauseCommand(this));
 
 		// end menu
-		this.mpCmd.put(Tuple.create(GameState.INGAME_END, InputHelper.ESCAPE), new MenuCommand(this, MenuDirection.BACK));
-		this.mpCmd.put(Tuple.create(GameState.INGAME_END, InputHelper.ENTER), new MenuCommand(this, MenuDirection.SELECT));
-		this.mpCmd.put(Tuple.create(GameState.INGAME_END, InputHelper.ARROW_UP), new MenuCommand(this, MenuDirection.UP));
-		this.mpCmd.put(Tuple.create(GameState.INGAME_END, InputHelper.ARROW_DOWN), new MenuCommand(this, MenuDirection.DOWN));
-		this.mpCmd.put(Tuple.create(GameState.INGAME_END, InputHelper.ARROW_LEFT), new MenuCommand(this, MenuDirection.LEFT));
-		this.mpCmd.put(Tuple.create(GameState.INGAME_END, InputHelper.ARROW_RIGHT), new MenuCommand(this, MenuDirection.RIGHT));
+		this.mpCmd.put(Tuple2.of(GameState.INGAME_END, InputHelper.ESCAPE), new MenuCommand(this, MenuDirection.BACK));
+		this.mpCmd.put(Tuple2.of(GameState.INGAME_END, InputHelper.ENTER), new MenuCommand(this, MenuDirection.SELECT));
+		this.mpCmd.put(Tuple2.of(GameState.INGAME_END, InputHelper.ARROW_UP), new MenuCommand(this, MenuDirection.UP));
+		this.mpCmd.put(Tuple2.of(GameState.INGAME_END, InputHelper.ARROW_DOWN), new MenuCommand(this, MenuDirection.DOWN));
+		this.mpCmd.put(Tuple2.of(GameState.INGAME_END, InputHelper.ARROW_LEFT), new MenuCommand(this, MenuDirection.LEFT));
+		this.mpCmd.put(Tuple2.of(GameState.INGAME_END, InputHelper.ARROW_RIGHT), new MenuCommand(this, MenuDirection.RIGHT));
 
 		// Filter Commands ... a test ('u', 'i', 'o' and 'p' key)
-		this.mpCmd.put(Tuple.create(null, KeyEvent.VK_U), new FilterCommand(true, this.model, Filter.get(RandomMode.class)));
-		this.mpCmd.put(Tuple.create(null, KeyEvent.VK_I), new FilterCommand(true, this.model, Filter.get(InvertedMode.class)));
-		this.mpCmd.put(Tuple.create(null, KeyEvent.VK_O), new FilterCommand(true, this.model, Filter.get(GrayScaleMode.class)));
-		this.mpCmd.put(Tuple.create(null, KeyEvent.VK_P), new FilterCommand(false, this.model, null));
+		this.mpCmd.put(Tuple2.of(null, KeyEvent.VK_U), new FilterCommand(true, this.model, Filter.get(RandomMode.class)));
+		this.mpCmd.put(Tuple2.of(null, KeyEvent.VK_I), new FilterCommand(true, this.model, Filter.get(InvertedMode.class)));
+		this.mpCmd.put(Tuple2.of(null, KeyEvent.VK_O), new FilterCommand(true, this.model, Filter.get(GrayScaleMode.class)));
+		this.mpCmd.put(Tuple2.of(null, KeyEvent.VK_P), new FilterCommand(false, this.model, null));
 
 	}
 
@@ -122,8 +123,8 @@ final class ControllerImpl implements Observer, Controller, CommandSupervisor {
 	 *            {@code null}
 	 */
 	public void handleEvent(int id, InputMethod inputMethod) {
-		Tuple<GameState, Integer> key = Tuple.create(this.model.getState(), id);
-		Tuple<GameState, Integer> idKey = Tuple.create(null, id);
+		Tuple2<GameState, Integer> key = Tuple2.of(this.model.getState(), id);
+		Tuple2<GameState, Integer> idKey = Tuple2.of(null, id);
 		// return if we do not have a command defined for this key
 		if (this.mpCmd.containsKey(key)) {
 			this.mpCmd.get(key).execute(inputMethod);

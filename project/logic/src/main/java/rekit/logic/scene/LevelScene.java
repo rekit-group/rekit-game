@@ -243,7 +243,7 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 	protected int performEndTasks(boolean won) {
 		TextOptions op = new TextOptions(new Vec(-0.5f, -0.5f), 50, GameConf.GAME_TEXT_COLOR, GameConf.GAME_TEXT_FONT, Font.BOLD, false);
 
-		Text levelText = new Text(this, op).setText("You" + (won ? " won!" : " lost!"));
+		Text levelText = new Text(this, op).setText("You" + (won ? " won!" : " have lost!"));
 		levelText.setPos(CalcUtil.units2pixel(new Vec(GameConf.GRID_W / 2f, GameConf.GRID_H / 2f)));
 		this.addGuiElement(new TimeDecorator(this, levelText, new Timer(2000)));
 		if (won) {

@@ -13,6 +13,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.fuchss.tools.tuple.Tuple2;
+import org.fuchss.tools.tuple.Tuple3;
+
 import rekit.config.GameConf;
 import rekit.core.GameGrid;
 import rekit.logic.filters.Filter;
@@ -21,8 +24,6 @@ import rekit.primitives.geometry.Polygon;
 import rekit.primitives.geometry.Vec;
 import rekit.primitives.image.RGBAColor;
 import rekit.util.CalcUtil;
-import rekit.util.tuple.Triple;
-import rekit.util.tuple.Tuple;
 
 /**
  * This class represents a {@link GameGrid} of the {@link GameView}.
@@ -52,7 +53,7 @@ class GameGridImpl extends GameGrid {
 	/**
 	 * The image cache: (Path, Filter) -&gt; Image.
 	 */
-	private final Map<Tuple<String, Filter>, Image> images = new HashMap<>();
+	private final Map<Tuple2<String, Filter>, Image> images = new HashMap<>();
 
 	/**
 	 * Set the current graphics.
@@ -184,7 +185,7 @@ class GameGridImpl extends GameGrid {
 	 */
 	private void drawImageImpl(Vec pos, Vec size, String imagePath, boolean usefilter) {
 		Image image = null;
-		Tuple<String, Filter> key = Tuple.create(imagePath, usefilter ? this.filter : null);
+		Tuple2<String, Filter> key = Tuple2.of(imagePath, usefilter ? this.filter : null);
 		if (this.images.containsKey(key) && !(this.filter != null && this.filter.changed())) {
 			image = this.images.get(key);
 		} else {
@@ -286,14 +287,14 @@ class GameGridImpl extends GameGrid {
 
 	@Override
 	public void drawRectangle(Vec pos, Vec size, RGBAColor in, boolean inGame, boolean usefilter) {
-		Triple<Vec, Vec, Color> preProcessing = this.preProcessing(pos, size, in, inGame, usefilter);
-		this.drawRectangleImpl(preProcessing.getT(), preProcessing.getU(), preProcessing.getV());
+		Tuple3<Vec, Vec, Color> preProcessing = this.preProcessing(pos, size, in, inGame, usefilter);
+		this.drawRectangleImpl(preProcessing.getFirst(), preProcessing.getSecond(), preProcessing.getThird());
 	}
 
 	@Override
 	public void drawCircle(Vec pos, Vec size, RGBAColor in, boolean inGame, boolean usefilter) {
-		Triple<Vec, Vec, Color> preProcessing = this.preProcessing(pos, size, in, inGame, usefilter);
-		this.drawCircleImpl(preProcessing.getT(), preProcessing.getU(), preProcessing.getV());
+		Tuple3<Vec, Vec, Color> preProcessing = this.preProcessing(pos, size, in, inGame, usefilter);
+		this.drawCircleImpl(preProcessing.getFirst(), preProcessing.getSecond(), preProcessing.getThird());
 	}
 
 	@Override
@@ -315,8 +316,8 @@ class GameGridImpl extends GameGrid {
 
 	@Override
 	public void drawImage(Vec pos, Vec size, String imagePath, boolean inGame, boolean usefilter) {
-		Triple<Vec, Vec, Color> preProcessing = this.preProcessing(pos, size, new RGBAColor(0), inGame, usefilter);
-		this.drawImageImpl(preProcessing.getT(), preProcessing.getU(), imagePath, usefilter);
+		Tuple3<Vec, Vec, Color> preProcessing = this.preProcessing(pos, size, new RGBAColor(0), inGame, usefilter);
+		this.drawImageImpl(preProcessing.getFirst(), preProcessing.getSecond(), imagePath, usefilter);
 	}
 
 	@Override
@@ -326,10 +327,10 @@ class GameGridImpl extends GameGrid {
 
 	@Override
 	public void drawRoundRectangle(Vec pos, Vec size, RGBAColor in, float arcWidth, float arcHeight, boolean inGame, boolean usefilter) {
-		Triple<Vec, Vec, Color> preProcessing = this.preProcessing(pos, size, in, inGame, usefilter);
+		Tuple3<Vec, Vec, Color> preProcessing = this.preProcessing(pos, size, in, inGame, usefilter);
 		int calcArcWidth = inGame ? CalcUtil.units2pixel(arcWidth) : (int) arcWidth;
 		int calcArcHeight = inGame ? CalcUtil.units2pixel(arcHeight) : (int) arcHeight;
-		this.drawRoundRectangleImpl(preProcessing.getT(), preProcessing.getU(), preProcessing.getV(), calcArcWidth, calcArcHeight);
+		this.drawRoundRectangleImpl(preProcessing.getFirst(), preProcessing.getSecond(), preProcessing.getThird(), calcArcWidth, calcArcHeight);
 	}
 
 	@Override
@@ -346,6 +347,7 @@ class GameGridImpl extends GameGrid {
 		// draw line
 		this.graphics.drawLine((int) calcA.x, (int) calcA.y, (int) calcB.x, (int) calcB.y);
 	}
+
 	@Override
 	public void drawPath(Vec startPos, List<Vec> pts, RGBAColor in, int lineWidth, boolean usefilter) {
 		if (pts.size() == 0) {
@@ -367,11 +369,11 @@ class GameGridImpl extends GameGrid {
 		}
 	}
 
-	private Triple<Vec, Vec, Color> preProcessing(Vec pos, Vec size, RGBAColor in, boolean inGame, boolean usefilter) {
+	private Tuple3<Vec, Vec, Color> preProcessing(Vec pos, Vec size, RGBAColor in, boolean inGame, boolean usefilter) {
 		Vec calcPos = this.translate2D(pos, inGame);
 		Vec calcSize = inGame ? CalcUtil.units2pixel(size) : size;
 		RGBAColor col = (!usefilter || this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
-		return Triple.create(calcPos, calcSize, this.calcRGBA(col));
+		return Tuple3.of(calcPos, calcSize, this.calcRGBA(col));
 	}
 
 	/**
@@ -407,7 +409,5 @@ class GameGridImpl extends GameGrid {
 		return new Color(color.red, color.green, color.blue, color.alpha);
 
 	}
-
-
 
 }
