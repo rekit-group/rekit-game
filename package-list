@@ -30,4 +30,3 @@ rekit.primitives.time
 rekit.util
 rekit.util.container
 rekit.util.state
-rekit.util.tuple
