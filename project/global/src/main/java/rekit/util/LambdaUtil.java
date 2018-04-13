@@ -3,7 +3,7 @@ package rekit.util;
 import org.fuchss.tools.lambda.ConsumerWithException;
 import org.fuchss.tools.lambda.FunctionWithException;
 import org.fuchss.tools.lambda.LambdaConvert;
-import org.fuchss.tools.lambda.ProducerWithException;
+import org.fuchss.tools.lambda.SupplierWithException;
 import org.fuchss.tools.lambda.VoidFunctionWithException;
 
 import rekit.config.GameConf;
@@ -66,16 +66,16 @@ public final class LambdaUtil {
 	}
 
 	/**
-	 * Invoke a {@link ProducerWithException}.
+	 * Invoke a {@link SupplierWithException}.
 	 *
 	 * @param in
 	 *            the function
 	 * @param <O>
 	 *            the out type
-	 * @return the return value of the Producer or {@code null} on failure
+	 * @return the return value of the Supplier or {@code null} on failure
 	 */
-	public static <O> O invoke(ProducerWithException<O> in) {
-		return LambdaConvert.wrap(in, e -> GameConf.GAME_LOGGER.fatal(e.getMessage())).produce();
+	public static <O> O invoke(SupplierWithException<O> in) {
+		return LambdaConvert.wrap(in, e -> GameConf.GAME_LOGGER.fatal(e.getMessage())).get();
 	}
 
 }
