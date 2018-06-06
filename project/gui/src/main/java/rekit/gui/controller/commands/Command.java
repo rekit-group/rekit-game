@@ -1,6 +1,6 @@
-package rekit.controller.commands;
+package rekit.gui.controller.commands;
 
-import rekit.controller.Controller;
+import rekit.gui.controller.Controller;
 
 /**
  * This interface defines a command for a {@link Controller}.

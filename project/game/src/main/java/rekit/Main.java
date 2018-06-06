@@ -10,8 +10,8 @@ import org.fuchss.configuration.setters.ResourceBundleSetter;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import rekit.config.GameConf;
-import rekit.controller.Controller;
 import rekit.gui.View;
+import rekit.gui.controller.Controller;
 import rekit.logic.Model;
 import rekit.logic.develop.TestScene;
 import rekit.persistence.ModManager;
@@ -105,7 +105,7 @@ public final class Main {
 	}
 
 	/**
-	 * Visit all Classes which shall be setted.
+	 * Visit all Classes which shall be set.
 	 *
 	 * @param setter
 	 *            the setter

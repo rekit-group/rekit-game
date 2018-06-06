@@ -1,4 +1,4 @@
-package rekit.controller.commands;
+package rekit.gui.controller.commands;
 
 import java.util.function.Consumer;
 

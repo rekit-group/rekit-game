@@ -1,4 +1,4 @@
-package rekit.controller;
+package rekit.gui.controller;
 
 import java.util.ArrayList;
 import java.util.Iterator;

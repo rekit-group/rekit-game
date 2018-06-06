@@ -1,4 +1,4 @@
-package rekit.controller;
+package rekit.gui.controller;
 
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
@@ -8,17 +8,17 @@ import java.util.Map;
 import org.fuchss.tools.tuple.Tuple2;
 
 import rekit.config.GameConf;
-import rekit.controller.commands.Command;
-import rekit.controller.commands.CommandSupervisor;
-import rekit.controller.commands.FilterCommand;
-import rekit.controller.commands.InputMethod;
-import rekit.controller.commands.JumpCommand;
-import rekit.controller.commands.MenuCommand;
-import rekit.controller.commands.MenuDirection;
-import rekit.controller.commands.PlayPauseCommand;
-import rekit.controller.commands.WalkCommand;
 import rekit.gui.InputHelper;
 import rekit.gui.View;
+import rekit.gui.controller.commands.Command;
+import rekit.gui.controller.commands.CommandSupervisor;
+import rekit.gui.controller.commands.FilterCommand;
+import rekit.gui.controller.commands.InputMethod;
+import rekit.gui.controller.commands.JumpCommand;
+import rekit.gui.controller.commands.MenuCommand;
+import rekit.gui.controller.commands.MenuDirection;
+import rekit.gui.controller.commands.PlayPauseCommand;
+import rekit.gui.controller.commands.WalkCommand;
 import rekit.logic.IScene;
 import rekit.logic.Model;
 import rekit.logic.Model.GameState;

@@ -1,7 +1,7 @@
 
-package rekit.controller.commands;
+package rekit.gui.controller.commands;
 
-import rekit.controller.Controller;
+import rekit.gui.controller.Controller;
 import rekit.logic.gameelements.entities.Entity;
 
 /**

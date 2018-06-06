@@ -1,4 +1,4 @@
-package rekit.controller.commands;
+package rekit.gui.controller.commands;
 
 import rekit.logic.gameelements.entities.Entity;
 import rekit.logic.gameelements.entities.StateEntity;

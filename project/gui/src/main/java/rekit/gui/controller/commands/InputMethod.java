@@ -1,4 +1,4 @@
-package rekit.controller.commands;
+package rekit.gui.controller.commands;
 
 /**
  * This enum is used to indicate a press or release state of a key.

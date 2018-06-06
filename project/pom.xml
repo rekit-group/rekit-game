@@ -98,7 +98,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
-					<version>3.0.2</version>
+					<version>3.1.0</version>
 					<configuration>
 						<outputDirectory>${project.build.directory}/${profile.folder}</outputDirectory>
 						<archive>
@@ -115,7 +115,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-dependency-plugin</artifactId>
-					<version>3.0.2</version>
+					<version>3.1.0</version>
 					<executions>
 						<execution>
 							<id>copy-dependencies</id>
@@ -164,12 +164,12 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-clean-plugin</artifactId>
-					<version>3.0.0</version>
+					<version>3.1.0</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>2.10.4</version>
+					<version>3.0.0</version>
 					<configuration>
 						<reportOutputDirectory>..</reportOutputDirectory>
 						<destDir>gh-pages</destDir>
@@ -229,11 +229,6 @@
 			</dependency>
 			<dependency>
 				<groupId>rekit</groupId>
-				<artifactId>control</artifactId>
-				<version>${rekit.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>rekit</groupId>
 				<artifactId>global</artifactId>
 				<version>${rekit.version}</version>
 			</dependency>
@@ -250,11 +245,6 @@
 			<dependency>
 				<groupId>rekit</groupId>
 				<artifactId>basic</artifactId>
-				<version>${rekit.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>rekit</groupId>
-				<artifactId>tests</artifactId>
 				<version>${rekit.version}</version>
 			</dependency>
 			<dependency>
@@ -296,7 +286,7 @@
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-core</artifactId>
-				<version>5.0.5.RELEASE</version>
+				<version>5.0.6.RELEASE</version>
 			</dependency>
 			<dependency>
 				<groupId>net.jafama</groupId>
@@ -345,7 +335,6 @@
 				<module>logic</module>
 				<module>global</module>
 				<module>gui</module>
-				<module>control</module>
 				<module>game</module>
 				<module>persistence</module>
 			</modules>
@@ -356,7 +345,6 @@
 				<module>logic</module>
 				<module>global</module>
 				<module>gui</module>
-				<module>control</module>
 				<module>game</module>
 				<module>basic</module>
 				<module>persistence</module>

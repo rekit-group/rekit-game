@@ -1,4 +1,4 @@
-package rekit.controller;
+package rekit.gui.controller;
 
 /**
  * This interface represents a Observer of the Observer Pattern.

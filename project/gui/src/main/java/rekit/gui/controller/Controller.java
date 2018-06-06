@@ -1,4 +1,4 @@
-package rekit.controller;
+package rekit.gui.controller;
 
 import rekit.gui.View;
 import rekit.logic.Model;
