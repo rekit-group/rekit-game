@@ -261,4 +261,9 @@ public abstract class SubMenu extends MenuItem {
 	 */
 	protected abstract void calcItemPos();
 
+	@Override
+	public boolean hasChildren() {
+		return !this.menuItems.isEmpty();
+	}
+
 }

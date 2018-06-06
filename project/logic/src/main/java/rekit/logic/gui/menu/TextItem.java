@@ -46,4 +46,9 @@ public class TextItem extends MenuItem {
 	public boolean isSelectable() {
 		return false;
 	}
+
+	@Override
+	public boolean hasChildren() {
+		return false;
+	}
 }

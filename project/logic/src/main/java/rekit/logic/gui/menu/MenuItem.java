@@ -180,4 +180,10 @@ public abstract class MenuItem extends GuiElement {
 		return true;
 	}
 
+	/**
+	 * Indicates whether has children.
+	 * 
+	 * @return {@code true} if children are available {@code false} otherwise
+	 */
+	public abstract boolean hasChildren();
 }

@@ -81,22 +81,22 @@ final class MainMenuScene extends Scene {
 			this.addGroup(arcade, group);
 		}
 
-		if (GameConf.DEBUG) {
-			Function<GameModel, ILevelScene> constructor = this.getModel().getTestSceneConstructor();
-			if (constructor != null) {
-				MenuActionItem debugScene = new MenuActionItem(this, "TestLevel", () -> this.getModel().switchScene(constructor));
-				play.addItem(debugScene);
-			}
+		Function<GameModel, ILevelScene> constructor = this.getModel().getTestSceneConstructor();
+		if (GameConf.DEBUG && constructor != null) {
+			MenuActionItem debugScene = new MenuActionItem(this, "TestLevel", () -> this.getModel().switchScene(constructor));
+			play.addItem(debugScene);
 		}
 
-		play.addItem(arcade, inf, lod, bossRush);
+		if (arcade.hasChildren()) {
+			play.addItem(arcade);
+		}
+		play.addItem(inf, lod, bossRush);
 
 		// Create settings menu
 		MenuList settings = new MenuList(this, "Settings");
 		settings.addItem(//
 				new BoolSetting(this, "Debug Mode", "DEBUG"), //
-				new MenuActionItem(this, "Open Config",
-						LambdaConvert.wrap(() -> Desktop.getDesktop().open(DirFileDefinitions.BASE), e -> GameConf.GAME_LOGGER.fatal(e.getMessage()))) //
+				new MenuActionItem(this, "Open Config", LambdaConvert.wrap(() -> Desktop.getDesktop().open(DirFileDefinitions.BASE), e -> GameConf.GAME_LOGGER.fatal(e.getMessage()))) //
 		);
 
 		// Create about text

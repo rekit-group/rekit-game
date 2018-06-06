@@ -53,6 +53,10 @@ public class MenuActionItem extends MenuItem {
 		this.selected = true;
 		this.unselect();
 		this.selectAction.execute();
+	}
 
+	@Override
+	public boolean hasChildren() {
+		return false;
 	}
 }

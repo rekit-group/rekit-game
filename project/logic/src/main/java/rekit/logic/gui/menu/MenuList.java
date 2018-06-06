@@ -11,7 +11,7 @@ import rekit.primitives.geometry.Vec;
 public class MenuList extends SubMenu {
 	/**
 	 * Create a MenuList.
-	 * 
+	 *
 	 * @param scene
 	 *            the scene
 	 * @param text
@@ -54,5 +54,4 @@ public class MenuList extends SubMenu {
 			offset = offset.addY(this.itemSize.y);
 		}
 	}
-
 }

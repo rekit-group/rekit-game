@@ -91,4 +91,8 @@ public final class BoolSetting extends MenuItem {
 		}
 	}
 
+	@Override
+	public boolean hasChildren() {
+		return false;
+	}
 }
