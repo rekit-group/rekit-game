@@ -1,9 +1,9 @@
 rekit
 rekit.config
-rekit.controller
-rekit.controller.commands
 rekit.core
 rekit.gui
+rekit.gui.controller
+rekit.gui.controller.commands
 rekit.logic
 rekit.logic.filters
 rekit.logic.gameelements
