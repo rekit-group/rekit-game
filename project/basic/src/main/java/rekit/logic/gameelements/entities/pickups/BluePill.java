@@ -82,9 +82,9 @@ public final class BluePill extends Pickup implements Configurable {
 	@Override
 	public void perform(GameElement collector) {
 		this.destroy();
-    Player player = this.getScene().getPlayer();
-    player.setInvincible(4000);
-    player.setTemporaryAppearance(f -> this.drawPlayer(f, player), 4000);
+		Player player = this.getScene().getPlayer();
+		player.setInvincible(4000);
+		player.setTemporaryAppearance(f -> this.drawPlayer(f, player), 4000);
 	}
 
 	/**
@@ -104,7 +104,7 @@ public final class BluePill extends Pickup implements Configurable {
 		f.drawRoundRectangle(p.getPos(), p.getSize(), new RGBAColor(148, 172, 236, 180), 0.45F, 0.45F);
 		String src = dir == Direction.RIGHT //
 				? "mrRekt_glasses_right.png" // facing right
-						: "mrRekt_glasses_left.png"; // facing left
+				: "mrRekt_glasses_left.png"; // facing left
 		f.drawImage(p.getPos().addY(-0.025f * p.getVel().y), p.getSize(), src);
 	}
 }

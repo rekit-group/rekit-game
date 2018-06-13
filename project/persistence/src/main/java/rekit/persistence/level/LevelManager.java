@@ -408,7 +408,6 @@ public final class LevelManager {
 	/**
 	 * Save state to {@link #USER_DATA}.
 	 */
-	@SuppressWarnings("resource")
 	private static void saveToFile() {
 		OutputStream levelStream = null;
 		try {
