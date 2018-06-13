@@ -43,10 +43,10 @@ public final class RGBAColor implements Cloneable, Operable<RGBAColor> {
 	 *            the alpha channel
 	 */
 	public RGBAColor(int r, int g, int b, int a) {
-		this.red = r;
-		this.green = g;
-		this.blue = b;
-		this.alpha = a;
+		this.red = Math.min(255, Math.max(0, r));
+		this.green = Math.min(255, Math.max(0, g));
+		this.blue = Math.min(255, Math.max(0, b));
+		this.alpha = Math.min(255, Math.max(0, a));
 	}
 
 	/**
