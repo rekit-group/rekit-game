@@ -1,6 +1,8 @@
 package rekit.gui;
 
 import java.awt.Image;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorConvertOp;
 import java.awt.image.Raster;
@@ -48,10 +50,14 @@ public final class ImageManagement {
 	 *
 	 * @param src
 	 *            the path relative to "/images/"
+	 * @param mirrorX
+	 *            mirror at X-Axis
+	 * @param mirrorY
+	 *            mirror at Y-Axis
 	 *
 	 * @return the Image
 	 */
-	public static Image get(String src) {
+	public static Image get(String src, boolean mirrorX, boolean mirrorY) {
 		if (!ImageManagement.CACHE.containsKey(src)) {
 			synchronized (ImageManagement.class) {
 				if (!ImageManagement.CACHE.containsKey(src)) {
@@ -63,7 +69,33 @@ public final class ImageManagement {
 				}
 			}
 		}
-		return ImageManagement.CACHE.get(src);
+		return ImageManagement.mirror(ImageManagement.CACHE.get(src), mirrorX, mirrorY);
+	}
+
+	private static Image mirror(BufferedImage image, boolean mirrorX, boolean mirrorY) {
+
+		if (!mirrorX && !mirrorY) {
+			return image;
+		}
+
+		AffineTransformOp op = null;
+		BufferedImage result = null;
+
+		if (mirrorX && mirrorY) {
+			AffineTransform tx = AffineTransform.getScaleInstance(-1, -1);
+			tx.translate(-image.getWidth(), -image.getHeight());
+			op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+		} else if (mirrorX) {
+			AffineTransform tx = AffineTransform.getScaleInstance(1, -1);
+			tx.translate(0, -image.getHeight());
+			op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+		} else if (mirrorY) {
+			AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
+			tx.translate(-image.getWidth(), 0);
+			op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+		}
+		result = op.filter(image, null);
+		return result;
 	}
 
 	/**
@@ -105,11 +137,16 @@ public final class ImageManagement {
 	 *
 	 * @param src
 	 *            the path relative to "/images/"
+	 * @param mirrorX
+	 *            mirror at X-Axis
+	 * @param mirrorY
+	 *            mirror at Y-Axis
+	 *
 	 *
 	 * @return the Image
 	 */
-	public static AbstractImage getAsAbstractImage(String src) {
-		BufferedImage image = (BufferedImage) ImageManagement.get(src);
+	public static AbstractImage getAsAbstractImage(String src, boolean mirrorX, boolean mirrorY) {
+		BufferedImage image = (BufferedImage) ImageManagement.get(src, mirrorX, mirrorY);
 		if (image == null) {
 			return null;
 		}

@@ -15,6 +15,7 @@ import java.util.Queue;
 import java.util.TreeMap;
 
 import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 
 import rekit.config.GameConf;
 import rekit.core.GameTime;
@@ -91,8 +92,8 @@ class GameView implements View {
 		this.model = model;
 		// Create window
 		this.frame = new JFrame(GameConf.NAME + " (v." + GameConf.VERSION + ")");
-		this.frame.setIconImage(ImageManagement.get(GameView.ICON_LOCATION));
-		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.frame.setIconImage(ImageManagement.get(GameView.ICON_LOCATION, false, false));
+		this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 		this.frame.setResizable(false);
 		this.frame.setSize(GameConf.PIXEL_W, GameConf.PIXEL_H);
@@ -126,7 +127,6 @@ class GameView implements View {
 		int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
 		frame.setLocation(x, y);
 	}
-
 
 	/**
 	 * Starts the View by periodically invoking renderLoop().

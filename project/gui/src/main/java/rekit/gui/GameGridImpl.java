@@ -12,8 +12,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
-import org.fuchss.tools.tuple.Tuple2;
 import org.fuchss.tools.tuple.Tuple3;
 
 import rekit.config.GameConf;
@@ -51,9 +51,9 @@ class GameGridImpl extends GameGrid {
 	 */
 	private Graphics2D graphics;
 	/**
-	 * The image cache: (Path, Filter) -&gt; Image.
+	 * The image cache: (Path, Filter, etc) -&gt; Image.
 	 */
-	private final Map<Tuple2<String, Filter>, Image> images = new HashMap<>();
+	private final Map<CacheKey, Image> images = new HashMap<>();
 
 	/**
 	 * Set the current graphics.
@@ -74,168 +74,6 @@ class GameGridImpl extends GameGrid {
 	public void setCurrentOffset(float cameraOffsetUnits) {
 		this.cameraOffsetUnits = GameGridImpl.CORRECTION.addX(cameraOffsetUnits);
 		this.cameraOffset = CalcUtil.units2pixel(this.cameraOffsetUnits).scalar(-1, 1);
-	}
-
-	/**
-	 * The implementation of {@link #drawCircle(Vec, Vec, RGBAColor)}.
-	 *
-	 * @param pos
-	 *            same as in base method
-	 * @param size
-	 *            same as in base method
-	 * @param col
-	 *            same as in base method
-	 */
-	private void drawCircleImpl(Vec pos, Vec size, Color col) {
-		this.graphics.setColor(col);
-		Ellipse2D.Float circle = new Ellipse2D.Float(//
-				(pos.x - size.x / 2f), //
-				(pos.y - size.y / 2f), //
-				size.x, size.y);
-
-		this.graphics.fill(circle);
-
-	}
-
-	/**
-	 * The implementation of {@link #drawRectangle(Vec, Vec, RGBAColor)}.
-	 *
-	 * @param pos
-	 *            same as in base method
-	 * @param size
-	 *            same as in base method
-	 * @param col
-	 *            same as in base method
-	 */
-	private void drawRectangleImpl(Vec pos, Vec size, Color col) {
-		this.graphics.setColor(col);
-		this.graphics.fillRect(//
-				(int) (pos.x - size.x / 2f), //
-				(int) (pos.y - size.y / 2f), //
-				(int) size.x, (int) size.y);
-
-	}
-
-	/**
-	 * The implementation of
-	 * {@link #drawRoundRectangle(Vec, Vec, RGBAColor, float, float)}.
-	 *
-	 * @param pos
-	 *            same as in base method
-	 * @param size
-	 *            same as in base method
-	 * @param col
-	 *            same as in base method
-	 * @param arcWidth
-	 *            same as in base method
-	 * @param arcHeight
-	 *            same as in base method
-	 */
-	private void drawRoundRectangleImpl(Vec pos, Vec size, Color col, int arcWidth, int arcHeight) {
-		this.graphics.setColor(col);
-		this.graphics.fillRoundRect(//
-				(int) (pos.x - size.x / 2f), // X
-				(int) (pos.y - size.y / 2f), // Y
-				(int) size.x, (int) size.y, // Size
-				arcWidth, arcHeight); // arc
-
-	}
-
-	/**
-	 * The implementation of {@link #drawPolygon(Polygon, RGBAColor, boolean)}.
-	 *
-	 * @param polygon
-	 *            px-points (x,y),(x,y),...
-	 * @param col
-	 *            same as in base method
-	 * @param fill
-	 *            same as in base method
-	 */
-	private void drawPolygonImpl(int[] polygon, Color col, boolean fill) {
-		this.graphics.setColor(col);
-		// Split in x and y points.
-		int[] xpoints = new int[polygon.length / 2];
-		int[] ypoints = new int[polygon.length / 2];
-		for (int i = 0; i < polygon.length; i += 2) {
-			xpoints[i / 2] = polygon[i];
-			ypoints[i / 2] = polygon[i + 1];
-		}
-
-		java.awt.Polygon toDraw = new java.awt.Polygon(xpoints, ypoints, polygon.length / 2);
-		// draw actual polygon
-		if (fill) {
-			this.graphics.fillPolygon(toDraw);
-		} else {
-			this.graphics.drawPolygon(toDraw);
-		}
-
-	}
-
-	/**
-	 * The implementation of {@link #drawImage(Vec, Vec, String)}.
-	 *
-	 * @param pos
-	 *            same as in base method
-	 * @param size
-	 *            same as in base method
-	 * @param imagePath
-	 *            same as in base method
-	 * @param usefilter
-	 *            indicates whether a filter shall used
-	 */
-	private void drawImageImpl(Vec pos, Vec size, String imagePath, boolean usefilter) {
-		Image image = null;
-		Tuple2<String, Filter> key = Tuple2.of(imagePath, usefilter ? this.filter : null);
-		if (this.images.containsKey(key) && !(this.filter != null && this.filter.changed())) {
-			image = this.images.get(key);
-		} else {
-			image = ImageManagement.get(imagePath);
-			if (this.filter != null && this.filter.isApplyImage()) {
-				image = ImageManagement.toImage(this.filter.apply(ImageManagement.getAsAbstractImage(imagePath)));
-			}
-			this.images.put(key, image);
-			GameConf.GAME_LOGGER.debug("GameGrid: Image Cache Miss: " + key);
-		}
-
-		this.graphics.drawImage(image, // image
-				(int) (pos.x - size.x / 2f), // dstX
-				(int) (pos.y - size.y / 2f), // dstY
-				null);
-
-	}
-
-	/**
-	 * The implementation of
-	 * {@link #drawText(Vec, String, TextOptions, boolean)}.
-	 *
-	 * @param pos
-	 *            same as in base method
-	 * @param text
-	 *            same as in base method
-	 * @param options
-	 *            same as in base method
-	 */
-	private void drawTextImpl(Vec pos, String text, TextOptions options) {
-		// Set color to red and set font
-		RGBAColor in = options.getColor();
-		RGBAColor col = (!options.getUseFilter() || this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
-		this.graphics.setColor(this.calcRGBA(col));
-
-		Font font = new Font(options.getFont(), options.getFontOptions(), options.getHeight());
-		this.graphics.setFont(font);
-		FontMetrics metrics = this.graphics.getFontMetrics(font);
-
-		float x = pos.x;
-		float y = pos.y;
-		float xAlign = options.getAlignment().x;
-		float yAlign = options.getAlignment().y;
-		for (String line : text.split("\n")) {
-			Dimension offset = this.getTextOffset(line, metrics);
-			this.graphics.drawString(line, //
-					(x + xAlign * offset.width), //
-					(y += metrics.getHeight()) + yAlign * offset.height);
-		}
-
 	}
 
 	/**
@@ -280,7 +118,6 @@ class GameGridImpl extends GameGrid {
 		RGBAColor col = (this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
 		this.graphics.setColor(this.calcRGBA(col));
 		this.graphics.fillRect(0, 0, GameConf.PIXEL_W, GameConf.PIXEL_H);
-
 	}
 
 	// Adapt methods (separate world position calculation from drawing)
@@ -310,14 +147,13 @@ class GameGridImpl extends GameGrid {
 			pixelArray[i] = (int) (this.cameraOffset.x + CalcUtil.units2pixel(unitArray[i]));
 			pixelArray[i + 1] = (int) (this.cameraOffset.y + CalcUtil.units2pixel(unitArray[i + 1]));
 		}
-
 		this.drawPolygonImpl(pixelArray, this.calcRGBA(col), fill);
 	}
 
 	@Override
-	public void drawImage(Vec pos, Vec size, String imagePath, boolean inGame, boolean usefilter) {
+	public void drawImage(Vec pos, Vec size, String imagePath, boolean inGame, boolean usefilter, boolean mirrorX, boolean mirrorY) {
 		Tuple3<Vec, Vec, Color> preProcessing = this.preProcessing(pos, size, new RGBAColor(0), inGame, usefilter);
-		this.drawImageImpl(preProcessing.getFirst(), preProcessing.getSecond(), imagePath, usefilter);
+		this.drawImageImpl(preProcessing.getFirst(), preProcessing.getSecond(), imagePath, usefilter, mirrorX, mirrorY);
 	}
 
 	@Override
@@ -407,6 +243,138 @@ class GameGridImpl extends GameGrid {
 	 */
 	private Color calcRGBA(RGBAColor color) {
 		return new Color(color.red, color.green, color.blue, color.alpha);
+	}
+
+	private void drawCircleImpl(Vec pos, Vec size, Color col) {
+		this.graphics.setColor(col);
+		Ellipse2D.Float circle = new Ellipse2D.Float(//
+				(pos.x - size.x / 2f), //
+				(pos.y - size.y / 2f), //
+				size.x, size.y);
+
+		this.graphics.fill(circle);
+
+	}
+
+	private void drawRectangleImpl(Vec pos, Vec size, Color col) {
+		this.graphics.setColor(col);
+		this.graphics.fillRect(//
+				(int) (pos.x - size.x / 2f), //
+				(int) (pos.y - size.y / 2f), //
+				(int) size.x, (int) size.y);
+
+	}
+
+	private void drawRoundRectangleImpl(Vec pos, Vec size, Color col, int arcWidth, int arcHeight) {
+		this.graphics.setColor(col);
+		this.graphics.fillRoundRect(//
+				(int) (pos.x - size.x / 2f), // X
+				(int) (pos.y - size.y / 2f), // Y
+				(int) size.x, (int) size.y, // Size
+				arcWidth, arcHeight); // arc
+
+	}
+
+	private void drawPolygonImpl(int[] polygon, Color col, boolean fill) {
+		this.graphics.setColor(col);
+		// Split in x and y points.
+		int[] xpoints = new int[polygon.length / 2];
+		int[] ypoints = new int[polygon.length / 2];
+		for (int i = 0; i < polygon.length; i += 2) {
+			xpoints[i / 2] = polygon[i];
+			ypoints[i / 2] = polygon[i + 1];
+		}
+
+		java.awt.Polygon toDraw = new java.awt.Polygon(xpoints, ypoints, polygon.length / 2);
+		// draw actual polygon
+		if (fill) {
+			this.graphics.fillPolygon(toDraw);
+		} else {
+			this.graphics.drawPolygon(toDraw);
+		}
+
+	}
+
+	private void drawImageImpl(Vec pos, Vec size, String imagePath, boolean usefilter, boolean mirrorX, boolean mirrorY) {
+		Image image = null;
+		CacheKey key = new CacheKey(imagePath, usefilter ? this.filter : null, mirrorX, mirrorY);
+		if (this.images.containsKey(key) && !(this.filter != null && this.filter.changed())) {
+			image = this.images.get(key);
+		} else {
+			if (this.filter != null && this.filter.isApplyImage()) {
+				image = ImageManagement.toImage(this.filter.apply(ImageManagement.getAsAbstractImage(imagePath, mirrorX, mirrorY)));
+			} else {
+				image = ImageManagement.get(imagePath, mirrorX, mirrorY);
+			}
+			this.images.put(key, image);
+			GameConf.GAME_LOGGER.debug("GameGrid: Image Cache Miss: " + key);
+		}
+
+		this.graphics.drawImage(image, // image
+				(int) (pos.x - size.x / 2f), // dstX
+				(int) (pos.y - size.y / 2f), // dstY
+				null);
+
+	}
+
+	private void drawTextImpl(Vec pos, String text, TextOptions options) {
+		// Set color to red and set font
+		RGBAColor in = options.getColor();
+		RGBAColor col = (!options.getUseFilter() || this.filter == null || !this.filter.isApplyPixel()) ? in : this.filter.apply(in);
+		this.graphics.setColor(this.calcRGBA(col));
+
+		Font font = new Font(options.getFont(), options.getFontOptions(), options.getHeight());
+		this.graphics.setFont(font);
+		FontMetrics metrics = this.graphics.getFontMetrics(font);
+
+		float x = pos.x;
+		float y = pos.y;
+		float xAlign = options.getAlignment().x;
+		float yAlign = options.getAlignment().y;
+		for (String line : text.split("\n")) {
+			Dimension offset = this.getTextOffset(line, metrics);
+			this.graphics.drawString(line, //
+					(x + xAlign * offset.width), //
+					(y += metrics.getHeight()) + yAlign * offset.height);
+		}
+
+	}
+
+	private static final class CacheKey {
+		public final String image;
+		public final Filter filter;
+		public final boolean mirrorX;
+		public final boolean mirrorY;
+
+		public CacheKey(String image, Filter filter, boolean mirrorX, boolean mirrorY) {
+			this.image = image;
+			this.filter = filter;
+			this.mirrorX = mirrorX;
+			this.mirrorY = mirrorY;
+		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + ((this.filter == null) ? 0 : this.filter.hashCode());
+			result = prime * result + ((this.image == null) ? 0 : this.image.hashCode());
+			result = prime * result + (this.mirrorX ? 1231 : 1237);
+			result = prime * result + (this.mirrorY ? 1231 : 1237);
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+			if (obj == null || this.getClass() != obj.getClass()) {
+				return false;
+			}
+			CacheKey other = (CacheKey) obj;
+			return Objects.equals(this.filter, other.filter) && Objects.equals(this.image, other.image) && this.mirrorX == other.mirrorX && this.mirrorY == other.mirrorY;
+		}
 
 	}
 

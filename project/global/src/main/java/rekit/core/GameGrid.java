@@ -115,22 +115,6 @@ public abstract class GameGrid {
 	/////////////////////////////////////////////////////////
 	// Draw Image
 	////////////////////////////////////////////////////////
-	/**
-	 * Draw an image. <br>
-	 * invokes {@link #drawImage(Vec, Vec, String, boolean, boolean)} and set
-	 * ingame and usefilter to {@code true}
-	 *
-	 * @param pos
-	 *            the position
-	 * @param size
-	 *            the size
-	 * @param imagePath
-	 *            the path to the image
-	 */
-	@Ingame
-	public final void drawImage(Vec pos, Vec size, String imagePath) {
-		this.drawImage(pos, size, imagePath, true, true);
-	}
 
 	/**
 	 * Draw a line between two given points with a given lineWidth and a color.
@@ -201,6 +185,23 @@ public abstract class GameGrid {
 	}
 
 	/**
+	 * Draw an image. <br>
+	 * invokes {@link #drawImage(Vec, Vec, String, boolean, boolean)} and set
+	 * ingame and usefilter to {@code true}
+	 *
+	 * @param pos
+	 *            the position
+	 * @param size
+	 *            the size
+	 * @param imagePath
+	 *            the path to the image
+	 */
+	@Ingame
+	public final void drawImage(Vec pos, Vec size, String imagePath) {
+		this.drawImage(pos, size, imagePath, true, true);
+	}
+
+	/**
 	 * Draw an image.
 	 *
 	 * @param pos
@@ -219,7 +220,34 @@ public abstract class GameGrid {
 	 */
 	@Ingame
 	@NonIngame
-	public abstract void drawImage(Vec pos, Vec size, String imagePath, boolean ingame, boolean usefilter);
+	public void drawImage(Vec pos, Vec size, String imagePath, boolean ingame, boolean usefilter) {
+		this.drawImage(pos, size, imagePath, ingame, usefilter, false, false);
+	}
+
+	/**
+	 * Draw an image.
+	 *
+	 * @param pos
+	 *            the position
+	 * @param size
+	 *            the size
+	 * @param imagePath
+	 *            the path to the image
+	 * @param ingame
+	 *            indicates whether it shall drawn as entity of the game
+	 *            (relative to current game progress) or relative to the
+	 *            surrounding frame
+	 * @param usefilter
+	 *            indicates whether a filter (if set) shall applied before
+	 *            drawing
+	 * @param mirrorX
+	 *            mirror image at X-Axis
+	 * @param mirrorY
+	 *            mirror image at Y-Axis
+	 */
+	@Ingame
+	@NonIngame
+	public abstract void drawImage(Vec pos, Vec size, String imagePath, boolean ingame, boolean usefilter, boolean mirrorX, boolean mirrorY);
 
 	/////////////////////////////////////////////////////////
 	// Draw Polygon
