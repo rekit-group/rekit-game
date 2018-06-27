@@ -3,6 +3,9 @@ package rekit.logic;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import org.fuchss.tools.lambda.VoidFunction;
+
+import rekit.config.GameConf;
 import rekit.core.CameraTarget;
 import rekit.core.Team;
 import rekit.logic.gameelements.GameElement;
@@ -190,5 +193,22 @@ public interface IScene {
 	 */
 	default boolean isLevelScene() {
 		return false;
+	}
+
+	/**
+	 * Will invoked if user wants to attack something.
+	 *
+	 * @see GameConf#CONTINUOS_ATTACK
+	 */
+	default void attack() {
+	}
+
+	/**
+	 * The handler of {@link #attack()}.
+	 *
+	 * @param handler
+	 *            the handler or {@code null} to reset
+	 */
+	default void setAttackHandler(VoidFunction handler) {
 	}
 }

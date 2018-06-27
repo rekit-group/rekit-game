@@ -56,6 +56,13 @@ public final class GameConf implements Configurable {
 	public static boolean DEBUG = false;
 
 	/**
+	 * Indicates whether user attacks shall handled as continuous events or a
+	 * single event.
+	 */
+	@NoSet
+	public static boolean CONTINUOS_ATTACK = false;
+
+	/**
 	 * The Name of the Game.
 	 */
 	public static String NAME;

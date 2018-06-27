@@ -119,10 +119,9 @@ public final class Player extends StateEntity implements CameraTarget, Configura
 		this.init();
 	}
 
-	/**
-	 * Initialize the player.
-	 */
+	@Override
 	public void init() {
+		super.init();
 		this.deleteMe = false;
 		this.setPos(this.startPos);
 		this.lives = Player.LIVES;
