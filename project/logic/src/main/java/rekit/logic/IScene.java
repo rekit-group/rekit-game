@@ -198,7 +198,7 @@ public interface IScene {
 	/**
 	 * Will invoked if user wants to attack something.
 	 *
-	 * @see GameConf#CONTINUOS_ATTACK
+	 * @see GameConf#CONTINUOUS_ATTACK
 	 */
 	default void attack() {
 	}

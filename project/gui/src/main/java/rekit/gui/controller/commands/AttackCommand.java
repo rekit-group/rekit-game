@@ -8,7 +8,7 @@ import rekit.logic.IScene;
  * {@link IScene}.
  *
  * @author Dominik Fuchss
- * @see GameConf#CONTINUOS_ATTACK
+ * @see GameConf#CONTINUOUS_ATTACK
  */
 public final class AttackCommand implements Command {
 
@@ -38,7 +38,7 @@ public final class AttackCommand implements Command {
 				this.supervisor.getScene().attack();
 			}
 
-		} else if (this.active && GameConf.CONTINUOS_ATTACK) {
+		} else if (this.active && GameConf.CONTINUOUS_ATTACK) {
 			this.supervisor.getScene().attack();
 		}
 	}

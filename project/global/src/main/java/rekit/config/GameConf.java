@@ -60,7 +60,7 @@ public final class GameConf implements Configurable {
 	 * single event.
 	 */
 	@NoSet
-	public static boolean CONTINUOS_ATTACK = false;
+	public static boolean CONTINUOUS_ATTACK = false;
 
 	/**
 	 * The Name of the Game.
