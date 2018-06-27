@@ -417,6 +417,13 @@ public abstract class GameElement implements Collidable {
 	}
 
 	/**
+	 * (Re-)Initialize the GameElement.
+	 */
+	public void init() {
+		this.lastTime = GameTime.getTime();
+	}
+
+	/**
 	 * Epsilon for {@link #checkCollision(GameElement)}.
 	 */
 	private static final float EPS = 1E-4F;

@@ -10,6 +10,7 @@ import org.fuchss.tools.tuple.Tuple2;
 import rekit.config.GameConf;
 import rekit.gui.InputHelper;
 import rekit.gui.View;
+import rekit.gui.controller.commands.AttackCommand;
 import rekit.gui.controller.commands.Command;
 import rekit.gui.controller.commands.CommandSupervisor;
 import rekit.gui.controller.commands.FilterCommand;
@@ -88,6 +89,7 @@ final class ControllerImpl implements Observer, Controller, CommandSupervisor {
 		this.mpCmd.put(Tuple2.of(GameState.INGAME, InputHelper.ARROW_LEFT), new WalkCommand(this, Direction.LEFT));
 		this.mpCmd.put(Tuple2.of(GameState.INGAME, InputHelper.ARROW_RIGHT), new WalkCommand(this, Direction.RIGHT));
 		this.mpCmd.put(Tuple2.of(GameState.INGAME, InputHelper.ESCAPE), new PlayPauseCommand(this));
+		this.mpCmd.put(Tuple2.of(GameState.INGAME, InputHelper.SPACE), new AttackCommand(this));
 
 		// pause menu
 		this.mpCmd.put(Tuple2.of(GameState.INGAME_PAUSED, InputHelper.ENTER), new MenuCommand(this, MenuDirection.SELECT));
