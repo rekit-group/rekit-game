@@ -34,12 +34,9 @@ public final class AttackCommand implements Command {
 		boolean newActivationState = method == InputMethod.PRESS;
 		if (newActivationState != this.active) {
 			this.active = newActivationState;
-			if (this.active) {
-				this.supervisor.getScene().attack();
-			}
-
+			this.supervisor.getScene().attack(this.active);
 		} else if (this.active && GameConf.CONTINUOUS_ATTACK) {
-			this.supervisor.getScene().attack();
+			this.supervisor.getScene().attack(this.active);
 		}
 	}
 

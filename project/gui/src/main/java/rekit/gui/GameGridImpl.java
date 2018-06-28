@@ -376,6 +376,11 @@ class GameGridImpl extends GameGrid {
 			return Objects.equals(this.filter, other.filter) && Objects.equals(this.image, other.image) && this.mirrorX == other.mirrorX && this.mirrorY == other.mirrorY;
 		}
 
+		@Override
+		public String toString() {
+			return "CacheKey [image=" + this.image + ", filter=" + this.filter + ", mirrorX=" + this.mirrorX + ", mirrorY=" + this.mirrorY + "]";
+		}
+
 	}
 
 }

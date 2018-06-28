@@ -6,8 +6,7 @@ package rekit.logic.scene;
 import java.awt.Font;
 import java.util.HashSet;
 import java.util.Set;
-
-import org.fuchss.tools.lambda.VoidFunction;
+import java.util.function.Consumer;
 
 import rekit.config.GameConf;
 import rekit.core.CameraTarget;
@@ -91,11 +90,11 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 	 */
 	private boolean offsetWildCard;
 	/**
-	 * The handler for {@link #attack()} of the user.
+	 * The handler for {@link #attack(boolean)} of the user.
 	 */
-	private VoidFunction attackHandler = LevelScene.DEFAULT_ATTACK;
+	private Consumer<Boolean> attackHandler = LevelScene.DEFAULT_ATTACK;
 
-	private static final VoidFunction DEFAULT_ATTACK = () -> System.out.println("Great Attack!");
+	private static final Consumer<Boolean> DEFAULT_ATTACK = (a) -> System.out.println("Great Attack! (" + a + ")");
 
 	/**
 	 * Create a new LevelScene.
@@ -368,12 +367,12 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 	}
 
 	@Override
-	public final void attack() {
-		this.attackHandler.execute();
+	public final void attack(boolean active) {
+		this.attackHandler.accept(active);
 	}
 
 	@Override
-	public final void setAttackHandler(VoidFunction handler) {
+	public final void setAttackHandler(Consumer<Boolean> handler) {
 		this.attackHandler = handler == null ? this.attackHandler : handler;
 	}
 
