@@ -55,10 +55,10 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	public Vec(float x, float y) {
 		this(x, y, 0);
 	}
-	
+
 	/**
-	 * Constructor that takes the initial coordinates an saves them.
-	 * Note that only floats are used internally.
+	 * Constructor that takes the initial coordinates an saves them. Note that
+	 * only floats are used internally.
 	 *
 	 * @param x
 	 *            the initial x-component of the vector
@@ -255,6 +255,24 @@ public final class Vec implements Cloneable, Operable<Vec> {
 		return this.rotate(angle, new Vec());
 	}
 
+	/**
+	 * Apply {@link Math#abs(float)} to x and y component and create new vector.
+	 *
+	 * @return the resulting vector
+	 */
+	public Vec abs() {
+		return new Vec(FastMath.abs(this.x), FastMath.abs(this.y), this.z);
+	}
+
+	/**
+	 * Calculate the 2-norm of {@code this} vector.
+	 *
+	 * @return the 2-norm
+	 */
+	public float norm() {
+		return (float) FastMath.sqrt(this.x * this.x + this.y * this.y);
+	}
+
 	@Override
 	public Vec clone() {
 		return new Vec(this.x, this.y, this.z);
@@ -293,15 +311,6 @@ public final class Vec implements Cloneable, Operable<Vec> {
 	@Override
 	public Vec get() {
 		return this;
-	}
-
-	/**
-	 * Apply {@link Math#abs(float)} to x and y component and create new vector.
-	 *
-	 * @return the resulting vector
-	 */
-	public Vec abs() {
-		return new Vec(FastMath.abs(this.x), FastMath.abs(this.y), this.z);
 	}
 
 }
