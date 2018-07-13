@@ -373,7 +373,7 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 
 	@Override
 	public final void setAttackHandler(Consumer<Boolean> handler) {
-		this.attackHandler = handler == null ? this.attackHandler : handler;
+		this.attackHandler = handler == null ? LevelScene.DEFAULT_ATTACK : handler;
 	}
 
 }

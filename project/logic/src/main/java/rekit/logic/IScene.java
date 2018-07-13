@@ -197,7 +197,8 @@ public interface IScene {
 	 * Will invoked if user wants to attack something.
 	 *
 	 * @param active
-	 *            indicates whether attack is active or not
+	 *            indicates whether attack is active or not (this means that the
+	 *            Attack-Key is pressed or not)
 	 * @see GameConf#CONTINUOUS_ATTACK
 	 */
 	default void attack(boolean active) {
@@ -208,6 +209,7 @@ public interface IScene {
 	 *
 	 * @param handler
 	 *            the handler or {@code null} to reset
+	 * @see #attack(boolean)
 	 */
 	default void setAttackHandler(Consumer<Boolean> handler) {
 	}
