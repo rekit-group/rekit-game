@@ -83,7 +83,7 @@ final class MainMenuScene extends Scene {
 
 		Function<GameModel, ILevelScene> constructor = this.getModel().getTestSceneConstructor();
 		if (GameConf.DEBUG && constructor != null) {
-			MenuActionItem debugScene = new MenuActionItem(this, "TestLevel", () -> this.getModel().switchScene(constructor));
+			MenuActionItem debugScene = new MenuActionItem(this, constructor.apply(null).getLevel().getName(), () -> this.getModel().switchScene(constructor));
 			play.addItem(debugScene);
 		}
 
