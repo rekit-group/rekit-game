@@ -94,10 +94,13 @@ public final class GameElementFactory {
 	 *            the y pos
 	 * @param modifiers
 	 *            the optional modifiers
+	 * @return the generated {@link GameElement}
 	 */
-	public static void generate(String id, int x, int y, String... modifiers) {
+	public static GameElement generate(String id, int x, int y, String... modifiers) {
 		GameElement prototype = GameElementFactory.getPrototype(id);
-		GameElementFactory.generate(prototype.create(new Vec(x, y), modifiers));
+		GameElement element = prototype.create(new Vec(x, y), modifiers);
+		GameElementFactory.generate(element);
+		return element;
 
 	}
 
@@ -106,13 +109,14 @@ public final class GameElementFactory {
 	 *
 	 * @param element
 	 *            the element
+	 * @return the generated {@link GameElement}
 	 */
-	public static void generate(GameElement element) {
+	public static GameElement generate(GameElement element) {
 		if (element != null) {
 			// Add GameElement to model
 			GameElementFactory.scene.addGameElement(element);
 		}
-
+		return element;
 	}
 
 	/**
@@ -201,9 +205,10 @@ public final class GameElementFactory {
 	 *            the x pos
 	 * @param y
 	 *            the y pos
+	 * @return the generated {@link GameElement}
 	 */
-	public static void generateDefaultCoin(int x, int y) {
-		GameElementFactory.generate(DefaultCoin.class.getSimpleName(), x, y);
+	public static GameElement generateDefaultCoin(int x, int y) {
+		return GameElementFactory.generate(DefaultCoin.class.getSimpleName(), x, y);
 
 	}
 
@@ -214,8 +219,9 @@ public final class GameElementFactory {
 	 *            the x pos
 	 * @param y
 	 *            the y pos
+	 * @return the generated {@link GameElement}
 	 */
-	public static void generateInanimate(int x, int y) {
-		GameElementFactory.generate(Inanimate.class.getSimpleName(), x, y);
+	public static GameElement generateInanimate(int x, int y) {
+		return GameElementFactory.generate(Inanimate.class.getSimpleName(), x, y);
 	}
 }

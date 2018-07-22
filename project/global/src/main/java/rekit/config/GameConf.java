@@ -108,11 +108,9 @@ public final class GameConf implements Configurable {
 	/**
 	 * Time in milliseconds to wait after each renderLoop, that refreshes all
 	 * graphical elements.
-	 *
-	 * @deprecated maybe we will use {@link Thread#yield()} next time.
 	 */
-	@Deprecated
 	public static int RENDER_DELTA;
+
 	/**
 	 * Time in milliseconds to wait after each logicLoop, that simulates physics
 	 * changes positions, detects collisions, ...

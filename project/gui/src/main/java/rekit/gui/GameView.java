@@ -62,7 +62,7 @@ class GameView implements View {
 	/**
 	 * Amount of points in time to calculate FPS.
 	 */
-	private static final int FPS_COUNTER = 500;
+	private static final int FPS_COUNTER = 100;
 
 	/**
 	 * The Field that manages the graphic context.
@@ -140,10 +140,13 @@ class GameView implements View {
 	 * "Update-Thread" content.
 	 */
 	private void update() {
+		long last = System.currentTimeMillis();
 		while (this.frame.isVisible()) {
+			while (System.currentTimeMillis() - last < GameConf.RENDER_DELTA) {
+				Thread.yield();
+			}
+			last = System.currentTimeMillis();
 			this.renderLoop();
-			Thread.yield();
-			// ThreadUtils.sleep(GameConf.RENDER_DELTA);
 		}
 	}
 
