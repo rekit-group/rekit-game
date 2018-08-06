@@ -19,6 +19,7 @@ import javax.swing.WindowConstants;
 
 import rekit.config.GameConf;
 import rekit.core.GameTime;
+import rekit.core.ShutdownManager;
 import rekit.logic.IScene;
 import rekit.logic.Model;
 import rekit.logic.gameelements.GameElement;
@@ -93,7 +94,7 @@ class GameView implements View {
 		// Create window
 		this.frame = new JFrame(GameConf.NAME + " (v." + GameConf.VERSION + ")");
 		this.frame.setIconImage(ImageManagement.get(GameView.ICON_LOCATION, false, false));
-		this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		this.frame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 
 		this.frame.setResizable(false);
 		this.frame.setSize(GameConf.PIXEL_W, GameConf.PIXEL_H);
@@ -148,6 +149,7 @@ class GameView implements View {
 			last = System.currentTimeMillis();
 			this.renderLoop();
 		}
+		ShutdownManager.shutdown();
 	}
 
 	/**

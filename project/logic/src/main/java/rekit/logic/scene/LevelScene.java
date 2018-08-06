@@ -10,6 +10,7 @@ import java.util.function.Consumer;
 
 import rekit.config.GameConf;
 import rekit.core.CameraTarget;
+import rekit.core.ShutdownManager;
 import rekit.logic.GameModel;
 import rekit.logic.ILevelScene;
 import rekit.logic.filters.GrayScaleMode;
@@ -143,7 +144,7 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 		MenuActionItem resume = new MenuActionItem(this, "Resume", () -> this.togglePause());
 		MenuActionItem restart = new MenuActionItem(this, "Restart", () -> this.restart());
 		MenuActionItem back = new MenuActionItem(this, "Main Menu", () -> this.getModel().switchScene(Scenes.MAIN_MENU, "0.0"));
-		MenuActionItem desktop = new MenuActionItem(this, "Exit Game", () -> System.exit(0));
+		MenuActionItem desktop = new MenuActionItem(this, "Exit Game", () -> ShutdownManager.shutdown());
 
 		this.pauseMenu.addItem(resume, restart, back, desktop);
 		this.pauseMenu.setVisible(false);
@@ -209,7 +210,7 @@ public abstract class LevelScene extends Scene implements ILevelScene {
 		// do this in an FinitLevelScene and InifinitLevelScene (not to current
 		// one a new one)
 		MenuActionItem endBack;
-		MenuActionItem endExit = new MenuActionItem(this, "Exit Game", () -> System.exit(0));
+		MenuActionItem endExit = new MenuActionItem(this, "Exit Game", () -> ShutdownManager.shutdown());
 
 		if (won || this.level.isInfinite()) {
 			String nextLevel = this.level.getLp().getNextLevel();

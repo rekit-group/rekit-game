@@ -45,7 +45,7 @@ public final class LevelFactory {
 	 */
 	public static synchronized Level getBossRushLevel() {
 
-		LevelDefinition brLevel = LevelManager.getLevelById(LevelFactory.getBossRushLevelDefinition().getID());
+		LevelDefinition brLevel = LevelManager.getLevelById(LevelFactory.getBossRushLevelDefinition().getRawData());
 		if (brLevel == null) {
 			brLevel = LevelFactory.getBossRushLevelDefinition();
 			LevelManager.addLevel(brLevel, true);

@@ -1,37 +1,35 @@
 package rekit.persistence.level;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.io.Serializable;
-import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Base64;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Scanner;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.fuchss.obox.OBoxFactory;
+import org.fuchss.obox.port.Configuration;
+import org.fuchss.obox.port.Configuration.Flag;
+import org.fuchss.obox.port.OBoxException;
+import org.fuchss.obox.port.OBoxPort;
+import org.fuchss.obox.port.Session;
+import org.fuchss.obox.port.SessionManager;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import rekit.config.GameConf;
+import rekit.core.ShutdownManager;
 import rekit.persistence.DirFileDefinitions;
 import rekit.persistence.ModManager;
 import rekit.persistence.level.parser.UnexpectedTokenException;
@@ -76,6 +74,8 @@ public final class LevelManager {
 
 	private static int arcadeNum = 0;
 
+	private static Session SESSION;
+
 	/**
 	 * Load levels.
 	 */
@@ -83,10 +83,37 @@ public final class LevelManager {
 		if (LevelManager.initialized) {
 			return;
 		}
+		LevelManager.initDB();
 		LevelManager.initialized = true;
 		LambdaUtil.invoke(LevelManager::loadAllLevels);
 		LevelManager.loadDataFromFile();
 
+	}
+
+	private static void initDB() {
+		OBoxPort obox = OBoxFactory.FACTORY.OBoxPort();
+		Configuration config = obox.configurationBuilder().createConfiguration();
+		try {
+			config.setDriver(org.sqlite.JDBC.class, "jdbc:sqlite:");
+			config.setUri(DirFileDefinitions.USER_DATA_DB.toURI().getPath());
+			config.setUser("");
+			config.setPasswd("");
+			config.setFlag(Flag.CREATE, Flag.MODIFY);
+		} catch (OBoxException e) {
+			e.printStackTrace();
+			return;
+		}
+
+		SessionManager sm = obox.sessionManager();
+		try {
+			LevelManager.SESSION = sm.session(config);
+			LevelManager.SESSION.declareClass(LevelData.class);
+			LevelManager.SESSION.open();
+		} catch (OBoxException e) {
+			return;
+		}
+
+		ShutdownManager.registerObserver(() -> sm.terminate(LevelManager.SESSION));
 	}
 
 	/**
@@ -296,11 +323,11 @@ public final class LevelManager {
 		if (level == null) {
 			return null;
 		}
-		LevelManager.LEVEL_MAP.put(level.getID(), level);
+		LevelManager.LEVEL_MAP.put(level.getRawData(), level);
 		if (reloadUserData) {
 			LevelManager.loadDataFromFile();
 		}
-		return level.getID();
+		return level.getRawData();
 	}
 
 	/**
@@ -318,72 +345,19 @@ public final class LevelManager {
 	 */
 	private static void loadDataFromFile() {
 		try {
-			Scanner scanner = new Scanner(DirFileDefinitions.USER_DATA, Charset.forName("UTF-8").name());
-			while (scanner.hasNextLine()) {
-				String[] levelinfo = scanner.nextLine().split(":");
-				if (levelinfo.length != DataKey.values().length + 1) {
-					continue;
-				}
-				String id = levelinfo[0];
-				LevelDefinition level = LevelManager.findByID(id);
+			Set<LevelData> data = LevelManager.SESSION.getAllObjects(LevelData.class);
+			for (LevelData datum : data) {
+				LevelDefinition level = LevelManager.findByID(datum.data);
 				if (level == null) {
 					continue;
 				}
-				DataKey[] keys = DataKey.values();
-				for (int idx = 1; idx < levelinfo.length; idx++) {
-					level.setData(keys[idx - 1], LevelManager.fromBase64(levelinfo[idx]), false);
-				}
-
+				level.setData(DataKey.HIGH_SCORE, datum.highscore, false);
+				level.setData(DataKey.WON, datum.won, false);
+				level.setData(DataKey.SUCCESS, datum.success, false);
 			}
-			scanner.close();
-		} catch (FileNotFoundException e) {
-			GameConf.GAME_LOGGER.error("Error while opening " + DirFileDefinitions.USER_DATA.getAbsolutePath() + " for scores and saves: FileNotFound");
+		} catch (OBoxException e) {
+			GameConf.GAME_LOGGER.error("Error while opening " + DirFileDefinitions.USER_DATA_DB.getAbsolutePath() + " for scores and saves");
 		}
-	}
-
-	/**
-	 * Convert current state of LevelManager to a representing string.
-	 *
-	 * @return the representing string
-	 */
-	private static String convertToString() {
-		StringBuilder result = new StringBuilder();
-		for (LevelDefinition lvd : LevelManager.LEVEL_MAP.values()) {
-			result.append(lvd.getID());
-			for (DataKey dk : DataKey.values()) {
-				Serializable data = lvd.getData(dk);
-				result.append(":").append(LevelManager.toBase64(data));
-			}
-			result.append("\n");
-		}
-		return result.toString();
-	}
-
-	private static Serializable fromBase64(String s) {
-		try {
-			byte[] data = Base64.getDecoder().decode(s);
-			ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(data));
-			Object o = ois.readObject();
-			ois.close();
-			return (Serializable) o;
-		} catch (IOException | IllegalArgumentException | ClassNotFoundException e) {
-			GameConf.GAME_LOGGER.error(e.getMessage());
-			return null;
-		}
-	}
-
-	private static String toBase64(Serializable o) {
-		try {
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			ObjectOutputStream oos = new ObjectOutputStream(baos);
-			oos.writeObject(o);
-			oos.close();
-			return Base64.getEncoder().encodeToString(baos.toByteArray());
-		} catch (IOException e) {
-			GameConf.GAME_LOGGER.error(e.getMessage());
-			return null;
-		}
-
 	}
 
 	/**
@@ -398,7 +372,7 @@ public final class LevelManager {
 		if (id == null) {
 			return null;
 		}
-		List<LevelDefinition> levels = LevelManager.LEVEL_MAP.values().stream().filter(level -> id.equals(level.getID())).collect(Collectors.toList());
+		List<LevelDefinition> levels = LevelManager.LEVEL_MAP.values().stream().filter(level -> id.equals(level.getRawData())).collect(Collectors.toList());
 		if (levels.isEmpty()) {
 			return null;
 		}
@@ -409,22 +383,31 @@ public final class LevelManager {
 	 * Save state to {@link #USER_DATA}.
 	 */
 	private static void saveToFile() {
-		OutputStream levelStream = null;
-		try {
-			levelStream = new FileOutputStream(DirFileDefinitions.USER_DATA);
-		} catch (IOException e) {
-			GameConf.GAME_LOGGER.error("Error while opening " + DirFileDefinitions.USER_DATA.getAbsolutePath() + " for saving scores and saves: FileNotFound");
+		if (!LevelManager.initialized) {
 			return;
 		}
-		byte[] bytes = LevelManager.convertToString().getBytes(Charset.forName("UTF-8"));
-		try {
-			levelStream.write(bytes);
-			levelStream.flush();
-			levelStream.close();
-		} catch (IOException e) {
-			GameConf.GAME_LOGGER.error("Error while saving " + DirFileDefinitions.USER_DATA.getAbsolutePath() + " for scores and saves: IOException");
-			LambdaUtil.invoke(levelStream::close);
+		for (LevelDefinition ld : LevelManager.LEVEL_MAP.values()) {
+			try {
+				LevelData lvd = new LevelData(ld.getName(), ld.getType().ordinal(), ld.getRawData());
+				Set<LevelData> lvData = LevelManager.SESSION.getObjectsByPrototype(lvd, LevelData.getCompare());
+				if (lvData != null && lvData.size() == 1) {
+					lvd = lvData.iterator().next();
+				}
+				lvd.highscore = (int) ld.getData(DataKey.HIGH_SCORE);
+				lvd.success = (boolean) ld.getData(DataKey.SUCCESS);
+				lvd.won = (boolean) ld.getData(DataKey.WON);
+				LevelManager.SESSION.persist(lvd);
+
+			} catch (OBoxException e) {
+				e.printStackTrace();
+				GameConf.GAME_LOGGER.error("Error while saving " + DirFileDefinitions.USER_DATA_DB.getAbsolutePath() + " for scores and saves");
+			}
 		}
+	}
+
+	@Override
+	protected void finalize() throws Throwable {
+		OBoxFactory.FACTORY.OBoxPort().sessionManager().terminate(LevelManager.SESSION);
 	}
 
 }

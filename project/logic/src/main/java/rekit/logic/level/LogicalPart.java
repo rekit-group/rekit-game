@@ -51,7 +51,7 @@ public final class LogicalPart {
 
 		String group = this.definition.getSetting(SettingKey.GROUP);
 		List<String> levels = LevelManager.getArcadeLevelGroups().get(group);
-		int thatIdx = levels.indexOf(this.definition.getID());
+		int thatIdx = levels.indexOf(this.definition.getRawData());
 		if (thatIdx + 1 >= levels.size()) {
 			return null;
 		}

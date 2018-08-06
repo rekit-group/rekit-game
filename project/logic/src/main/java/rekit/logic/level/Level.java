@@ -24,7 +24,7 @@ public final class Level implements Comparable<Level>, DataKeySetter {
 	/**
 	 * Create Level by its connector (LevelMtx), its {@link StructurePart} and
 	 * {@link LogicalPart}.
-	 * 
+	 *
 	 * @param mtx
 	 *            the connector
 	 * @param sp
@@ -131,7 +131,7 @@ public final class Level implements Comparable<Level>, DataKeySetter {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((this.definition == null) ? 0 : this.definition.getID().hashCode());
+		result = prime * result + ((this.definition == null) ? 0 : this.definition.getRawData().hashCode());
 		return result;
 	}
 
@@ -144,7 +144,7 @@ public final class Level implements Comparable<Level>, DataKeySetter {
 			return false;
 		}
 		Level other = (Level) obj;
-		return this.definition.getID().equals(other.definition.getID());
+		return this.definition.getRawData().equals(other.definition.getRawData());
 	}
 
 	@Override

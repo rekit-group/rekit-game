@@ -38,15 +38,12 @@ public final class DirFileDefinitions {
 	/**
 	 * The global data file for the {@link LevelManager}.
 	 */
-	public static final File USER_DATA = new File(DirFileDefinitions.CONFIG_DIR.getAbsolutePath() + "/user-data.dat");
+	public static final File USER_DATA_DB = new File(DirFileDefinitions.CONFIG_DIR.getAbsolutePath() + "/user-data.db");
 
 	static {
 		DirFileDefinitions.LEVEL_DIR.mkdirs();
 		DirFileDefinitions.CONFIG_DIR.mkdirs();
 		DirFileDefinitions.MODS_DIR.mkdirs();
-		if (!DirFileDefinitions.USER_DATA.exists()) {
-			LambdaUtil.invoke(DirFileDefinitions.USER_DATA::createNewFile);
-		}
 	}
 
 	private static synchronized File getBaseDir() {

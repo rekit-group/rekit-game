@@ -9,6 +9,7 @@ import org.fuchss.tools.lambda.LambdaConvert;
 
 import rekit.config.GameConf;
 import rekit.core.CameraTarget;
+import rekit.core.ShutdownManager;
 import rekit.logic.GameModel;
 import rekit.logic.ILevelScene;
 import rekit.logic.gui.BackgroundElement;
@@ -96,7 +97,8 @@ final class MainMenuScene extends Scene {
 		MenuList settings = new MenuList(this, "Settings");
 		settings.addItem(//
 				new BoolSetting(this, "Debug Mode", "DEBUG"), //
-				new MenuActionItem(this, "Open Config", LambdaConvert.wrap(() -> Desktop.getDesktop().open(DirFileDefinitions.BASE), e -> GameConf.GAME_LOGGER.fatal(e.getMessage()))) //
+				new MenuActionItem(this, "Open Config",
+						LambdaConvert.wrap(() -> Desktop.getDesktop().open(DirFileDefinitions.BASE), e -> GameConf.GAME_LOGGER.fatal(e.getMessage()))) //
 		);
 
 		// Create about text
@@ -104,7 +106,7 @@ final class MainMenuScene extends Scene {
 		about.addItem(new TextItem(this, GameConf.ABOUT));
 
 		// Create exit button
-		MenuActionItem exit = new MenuActionItem(this, "Exit", () -> System.exit(0));
+		MenuActionItem exit = new MenuActionItem(this, "Exit", () -> ShutdownManager.shutdown());
 
 		// Add all elements to menu and focus
 		this.menu.addItem(play, settings, about, exit);

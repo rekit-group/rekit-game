@@ -3,8 +3,6 @@ package rekit.persistence.level;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.nio.charset.Charset;
-import java.security.MessageDigest;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,7 +13,6 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import rekit.config.GameConf;
-import rekit.util.LambdaUtil;
 
 /**
  *
@@ -37,7 +34,7 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 	private SortedMap<String, String> settings = new TreeMap<>();
 	private SortedMap<String, String> bossSettings = new TreeMap<>();
 	private Map<DataKey, Serializable> data = new HashMap<>();
-	private String id = null;
+	private final String rawData;
 
 	/**
 	 * Create a new LevelDefinition by data and type.
@@ -54,6 +51,7 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 		String input = scanner.hasNext() ? scanner.next() : "";
 		scanner.close();
 
+		this.rawData = type + ":::" + input;
 		LevelParser.parseLevel(input, this);
 		this.name = this.calcName();
 		this.arcadeNum = -1;
@@ -95,7 +93,7 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 		if (this.isSettingSet(SettingKey.NAME)) {
 			name = this.getSetting(SettingKey.NAME);
 		}
-		return (name == null ? this.getID() : name);
+		return (name == null ? this.getRawData() : name);
 	}
 
 	/**
@@ -232,39 +230,12 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 	}
 
 	/**
-	 * Get the id of the level.
+	 * Get the data of the level.
 	 *
-	 * @return the id
+	 * @return the data
 	 */
-	public synchronized String getID() {
-		if (this.id != null) {
-			return this.id;
-		}
-		this.id = this.calcID();
-		return this.id;
-
-	}
-
-	private String calcID() {
-		MessageDigest cs = LambdaUtil.invoke(() -> MessageDigest.getInstance("SHA-512"));
-		if (cs == null) {
-			return null;
-		}
-
-		StringBuilder content = new StringBuilder();
-		content.append(this.type);
-		if (this.type == LevelType.Arcade) {
-			this.structures.forEach(struct -> Arrays.stream(struct).forEach(row -> Arrays.stream(row).forEach(elem -> content.append(elem.trim()))));
-			this.aliases.forEach((k, v) -> content.append(k).append(v));
-			this.settings.forEach((k, v) -> content.append(k).append(v));
-			this.bossSettings.forEach((k, v) -> content.append(k).append(v));
-		}
-		cs.update(content.toString().getBytes(Charset.forName("UTF-8")));
-		StringBuffer res = new StringBuffer();
-		for (byte bytes : cs.digest()) {
-			res.append(String.format("%02x", bytes & 0xff));
-		}
-		return res.toString();
+	public String getRawData() {
+		return this.rawData;
 	}
 
 	/**
@@ -355,7 +326,7 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
+		result = prime * result + ((this.rawData == null) ? 0 : this.rawData.hashCode());
 		return result;
 	}
 
@@ -368,7 +339,7 @@ public final class LevelDefinition implements Comparable<LevelDefinition> {
 			return false;
 		}
 		LevelDefinition other = (LevelDefinition) obj;
-		return this.id == null ? other.id == null : this.id.equals(other.id);
+		return this.rawData == null ? other.rawData == null : this.rawData.equals(other.rawData);
 	}
 
 }
