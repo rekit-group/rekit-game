@@ -3,7 +3,6 @@ package rekit.persistence;
 import java.io.File;
 
 import rekit.persistence.level.LevelManager;
-import rekit.util.LambdaUtil;
 
 /**
  * This class contains all Directory and File constants.

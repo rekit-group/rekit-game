@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import org.fuchss.obox.port.OBoxCMP;
+import org.fuchss.objectcasket.port.ObjectCasketCMP;
 
 @Entity
 public final class LevelData {
@@ -36,15 +36,14 @@ public final class LevelData {
 
 	@Override
 	public String toString() {
-		return "LevelData [levelId=" + this.levelId + ", levelName=" + this.levelName + ", levelType=" + this.levelType + ", highscore=" + this.highscore
-				+ ", success=" + this.success + ", won=" + this.won + "]";
+		return "LevelData [levelId=" + this.levelId + ", levelName=" + this.levelName + ", levelType=" + this.levelType + ", highscore=" + this.highscore + ", success=" + this.success + ", won=" + this.won + "]";
 	}
 
-	public static Map<String, OBoxCMP> getCompare() {
-		Map<String, OBoxCMP> res = new HashMap<>();
-		res.put("levelName", OBoxCMP.EQUAL);
-		res.put("levelType", OBoxCMP.EQUAL);
-		res.put("data", OBoxCMP.EQUAL);
+	public static Map<String, ObjectCasketCMP> getCompare() {
+		Map<String, ObjectCasketCMP> res = new HashMap<>();
+		res.put("levelName", ObjectCasketCMP.EQUAL);
+		res.put("levelType", ObjectCasketCMP.EQUAL);
+		res.put("data", ObjectCasketCMP.EQUAL);
 		return res;
 	}
 }

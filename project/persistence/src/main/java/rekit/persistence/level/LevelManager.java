@@ -18,13 +18,12 @@ import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.fuchss.obox.OBoxFactory;
-import org.fuchss.obox.port.Configuration;
-import org.fuchss.obox.port.Configuration.Flag;
-import org.fuchss.obox.port.OBoxException;
-import org.fuchss.obox.port.OBoxPort;
-import org.fuchss.obox.port.Session;
-import org.fuchss.obox.port.SessionManager;
+import org.fuchss.objectcasket.ObjectCasketFactory;
+import org.fuchss.objectcasket.port.Configuration;
+import org.fuchss.objectcasket.port.ObjectCasketException;
+import org.fuchss.objectcasket.port.ObjectCasketPort;
+import org.fuchss.objectcasket.port.Session;
+import org.fuchss.objectcasket.port.SessionManager;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
@@ -91,15 +90,15 @@ public final class LevelManager {
 	}
 
 	private static void initDB() {
-		OBoxPort obox = OBoxFactory.FACTORY.OBoxPort();
+		ObjectCasketPort obox = ObjectCasketFactory.FACTORY.ObjectCasketPort();
 		Configuration config = obox.configurationBuilder().createConfiguration();
 		try {
 			config.setDriver(org.sqlite.JDBC.class, "jdbc:sqlite:");
 			config.setUri(DirFileDefinitions.USER_DATA_DB.toURI().getPath());
 			config.setUser("");
 			config.setPasswd("");
-			config.setFlag(Flag.CREATE, Flag.MODIFY);
-		} catch (OBoxException e) {
+			config.setFlag(Configuration.Flag.CREATE, Configuration.Flag.MODIFY);
+		} catch (ObjectCasketException e) {
 			e.printStackTrace();
 			return;
 		}
@@ -109,7 +108,7 @@ public final class LevelManager {
 			LevelManager.SESSION = sm.session(config);
 			LevelManager.SESSION.declareClass(LevelData.class);
 			LevelManager.SESSION.open();
-		} catch (OBoxException e) {
+		} catch (ObjectCasketException e) {
 			return;
 		}
 
@@ -355,7 +354,7 @@ public final class LevelManager {
 				level.setData(DataKey.WON, datum.won, false);
 				level.setData(DataKey.SUCCESS, datum.success, false);
 			}
-		} catch (OBoxException e) {
+		} catch (ObjectCasketException e) {
 			GameConf.GAME_LOGGER.error("Error while opening " + DirFileDefinitions.USER_DATA_DB.getAbsolutePath() + " for scores and saves");
 		}
 	}
@@ -398,7 +397,7 @@ public final class LevelManager {
 				lvd.won = (boolean) ld.getData(DataKey.WON);
 				LevelManager.SESSION.persist(lvd);
 
-			} catch (OBoxException e) {
+			} catch (ObjectCasketException e) {
 				e.printStackTrace();
 				GameConf.GAME_LOGGER.error("Error while saving " + DirFileDefinitions.USER_DATA_DB.getAbsolutePath() + " for scores and saves");
 			}
@@ -407,7 +406,7 @@ public final class LevelManager {
 
 	@Override
 	protected void finalize() throws Throwable {
-		OBoxFactory.FACTORY.OBoxPort().sessionManager().terminate(LevelManager.SESSION);
+		ObjectCasketFactory.FACTORY.ObjectCasketPort().sessionManager().terminate(LevelManager.SESSION);
 	}
 
 }
