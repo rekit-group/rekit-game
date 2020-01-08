@@ -1,13 +1,10 @@
 package rekit;
 
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.core.config.Configurator;
 import org.fuchss.configuration.Configurable;
 import org.fuchss.configuration.Setter;
-import org.fuchss.configuration.parser.Parser;
 import org.fuchss.configuration.setters.ResourceBundleSetter;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import rekit.config.GameConf;
 import rekit.gui.View;
@@ -41,7 +38,7 @@ public final class Main {
 	 */
 	public static void main(String[] args) {
 		Thread.currentThread().setName("Startup");
-		Main.setLogLevel(GameConf.DEBUG ? Level.ALL : Level.FATAL);
+		Configurator.setRootLevel(GameConf.DEBUG ? Level.ALL : Level.FATAL);
 		GameConf.GAME_LOGGER.debug(ModManager.SYSLOADER.getClass().getSimpleName() + " (Sysloader loaded.)");
 		Main.applyAllConfigs();
 		LevelManager.init();
@@ -75,25 +72,6 @@ public final class Main {
 			return;
 		}
 		model.registerTestScene((m) -> TestScene.create(m));
-	}
-
-	/**
-	 * Set log level for loggers.
-	 *
-	 * @param level
-	 *            the level
-	 */
-	private static void setLogLevel(Level level) {
-		// Initialize Loggers ...
-
-		GameConf.GAME_LOGGER.setLevel(level);
-		Setter.LOGGER.setLevel(level);
-		Parser.LOGGER.setLevel(level);
-		Logger.getLogger(PathMatchingResourcePatternResolver.class).setLevel(level);
-
-		// This is needed as all loggers add an appender to the rootLogger.
-		Logger.getRootLogger().removeAllAppenders();
-		BasicConfigurator.configure();
 	}
 
 	/**

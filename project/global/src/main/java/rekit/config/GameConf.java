@@ -3,7 +3,8 @@ package rekit.config;
 import java.awt.Font;
 import java.util.Random;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.fuchss.configuration.Configurable;
 import org.fuchss.configuration.annotations.AfterSetting;
 import org.fuchss.configuration.annotations.NoSet;
@@ -191,7 +192,7 @@ public final class GameConf implements Configurable {
 	 * The Global GAME_LOGGER.
 	 */
 	@NoSet
-	public static final Logger GAME_LOGGER = Logger.getLogger("@ReKiT");
+	public static final Logger GAME_LOGGER = LogManager.getLogger("@ReKiT");
 
 	/**
 	 * Set values which cannot be loaded by {@link Parser Parsers}.
