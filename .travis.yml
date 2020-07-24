@@ -1,6 +1,6 @@
 language: java
 jdk:
-- oraclejdk9
+- oraclejdk14
 before_script: sh -c 'chmod +x scripts/gh-pages.sh'
 script: sh -c 'cd project && mvn test -B && cd ..'
 after_success:
