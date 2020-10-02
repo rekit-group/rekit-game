@@ -79,3 +79,6 @@ Here is a list what can be added via addons:
 
 ### Special thanks to contributors:
 - [**@Norbert515**](https://github.com/Norbert515)
+
+### how to contribute?
+- if you want to contribute fork this page add changes in this page and then give pull request thanks.
