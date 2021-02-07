@@ -1,7 +1,7 @@
 # R&#949;KiT
 
 [![GitHub issues](https://img.shields.io/github/issues/rekit-group/rekit-game.svg?style=square)](https://github.com/rekit-group/rekit-game/issues)
-[![GitHub license](https://img.shields.io/badge/license-GPLv3-blue.svg?style=square)](https://github.com/rekit-group/rekit-game/blob/master/LICENSE.md)
+[![GitHub license](https://img.shields.io/badge/license-GPLv3-blue.svg?style=square)](https://github.com/rekit-group/rekit-game/blob/main/LICENSE.md)
 
 R&#949;KiT is a platform jumper game in Java and [AWT](https://docs.oracle.com/javase/8/docs/api/java/awt/package-summary.html) and has a self-written game engine to understand and modify.
 
@@ -14,7 +14,7 @@ If double clicking doesn't work, open a terminal and run the command `java -jar 
 ## GameModes
 
 ### Infinite Mode
-The infinite level is randomly assembled from small components that [can be modified](https://github.com/rekit-group/rekit-game/blob/master/project/logic/src/main/resources/levels/infinite.dat) The more varieties through structures and enemies there is, the more random this level becomes!
+The infinite level is randomly assembled from small components that [can be modified](https://github.com/rekit-group/rekit-game/blob/main/project/logic/src/main/resources/levels/infinite.dat) The more varieties through structures and enemies there is, the more random this level becomes!
 
 ![Randomly generated levels and many different enemies and varieties](./graphix/rekitScreenshotInfinite.png)
 
@@ -27,7 +27,7 @@ Levels can also be added via modding as shown in [the example](https://github.co
 ![New challenges special blocks](./graphix/rekitScreenshotArcade.png)
 
 ### Boss Rush
-The Boss Rush is a quick way to challenge the games bosses, that have [more complex movement and attack patterns](https://github.com/rekit-group/rekit-game/tree/master/project/basic/src/main/java/rekit/logic/gameelements/entities/enemies/bosses/rocketboss) than usual Enemies.
+The Boss Rush is a quick way to challenge the games bosses, that have [more complex movement and attack patterns](https://github.com/rekit-group/rekit-game/tree/main/project/basic/src/main/java/rekit/logic/gameelements/entities/enemies/bosses/rocketboss) than usual Enemies.
 
 ![Unique bosses](./graphix/rekitScreenshotBossRush.png)
 
@@ -53,17 +53,17 @@ Addons are an easy way to add functionality without understanding the whole code
 
 Check out this [example project on GitHub](https://github.com/rekit-group/rekit-sample-mod) on how to create an addon.
 
-Also, see this detailed instruction on [adding levels](https://github.com/rekit-group/rekit-game/blob/master/documentation/LEVEL.md).
+Also, see this detailed instruction on [adding levels](https://github.com/rekit-group/rekit-game/blob/main/documentation/LEVEL.md).
 
 Here is a list what can be added via addons:
 
 | Addable Feature | Super class and documentation | Example |
 | ----- | ----- | ----- |
-| Level | - | [Adding levels](https://github.com/rekit-group/rekit-game/blob/master/documentation/LEVEL.md) |
-| Enemies | [rekit.logic.gameelements.type.Enemy](https://rekit-group.github.io/rekit-game/rekit/logic/gameelements/type/Enemy.html) | [Cannon](https://github.com/rekit-group/rekit-game/blob/master/project/basic/src/main/java/rekit/logic/gameelements/entities/enemies/cannon/Cannon.java) |
-| Special blocks | [rekit.logic.gameelements.type.DynamicInanimate](https://rekit-group.github.io/rekit-game/rekit/logic/gameelements/type/DynamicInanimate.html) | [ClimbUpBox](https://github.com/rekit-group/rekit-game/blob/master/project/basic/src/main/java/rekit/logic/gameelements/inanimate/ClimbUpBox.java) |
-| Bosses | [rekit.logic.gameelements.type.Boss](https://rekit-group.github.io/rekit-game/rekit/logic/gameelements/type/Boss.html) | [RocketBoss](https://github.com/rekit-group/rekit-game/blob/master/project/basic/src/main/java/rekit/logic/gameelements/entities/enemies/bosses/rocketboss/RocketBoss.java) |
-| Items | [rekit.logic.gameelements.type.Pickup](https://rekit-group.github.io/rekit-game/rekit/logic/gameelements/type/Pickup.html) | [BluePill](https://github.com/rekit-group/rekit-game/blob/master/project/basic/src/main/java/rekit/logic/gameelements/entities/pickups/BluePill.java) |
+| Level | - | [Adding levels](https://github.com/rekit-group/rekit-game/blob/main/documentation/LEVEL.md) |
+| Enemies | [rekit.logic.gameelements.type.Enemy](https://rekit-group.github.io/rekit-game/rekit/logic/gameelements/type/Enemy.html) | [Cannon](https://github.com/rekit-group/rekit-game/blob/main/project/basic/src/main/java/rekit/logic/gameelements/entities/enemies/cannon/Cannon.java) |
+| Special blocks | [rekit.logic.gameelements.type.DynamicInanimate](https://rekit-group.github.io/rekit-game/rekit/logic/gameelements/type/DynamicInanimate.html) | [ClimbUpBox](https://github.com/rekit-group/rekit-game/blob/main/project/basic/src/main/java/rekit/logic/gameelements/inanimate/ClimbUpBox.java) |
+| Bosses | [rekit.logic.gameelements.type.Boss](https://rekit-group.github.io/rekit-game/rekit/logic/gameelements/type/Boss.html) | [RocketBoss](https://github.com/rekit-group/rekit-game/blob/main/project/basic/src/main/java/rekit/logic/gameelements/entities/enemies/bosses/rocketboss/RocketBoss.java) |
+| Items | [rekit.logic.gameelements.type.Pickup](https://rekit-group.github.io/rekit-game/rekit/logic/gameelements/type/Pickup.html) | [BluePill](https://github.com/rekit-group/rekit-game/blob/main/project/basic/src/main/java/rekit/logic/gameelements/entities/pickups/BluePill.java) |
 
 ### Known Mods
 - [Sample Mod](https://github.com/rekit-group/rekit-sample-mod)
