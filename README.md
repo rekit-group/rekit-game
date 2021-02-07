@@ -1,5 +1,6 @@
 # R&#949;KiT
-
+![Maven Deploy (Dev)](https://github.com/rekit-group/rekit-game/workflows/Maven%20Deploy%20(Dev)/badge.svg)
+![GH Pages Deploy (Dev)](https://github.com/rekit-group/rekit-game/workflows/GH%20Pages%20Deploy%20(Dev)/badge.svg)
 [![GitHub issues](https://img.shields.io/github/issues/rekit-group/rekit-game.svg?style=square)](https://github.com/rekit-group/rekit-game/issues)
 [![GitHub license](https://img.shields.io/badge/license-GPLv3-blue.svg?style=square)](https://github.com/rekit-group/rekit-game/blob/main/LICENSE.md)
 
@@ -47,6 +48,7 @@ To setup your workspace for viewing or altering the code follow these steps:
 - Import every maven module in this directory (File -> Import -> Maven -> Existing Maven Projects)
 - To compile the project click the run button after opening Main.java in the game module
 
+There are [auto-generated API-Docs](https://rekit-group.github.io/rekit-game/) available.
 
 ## Mods / Addons
 Addons are an easy way to add functionality without understanding the whole code.
