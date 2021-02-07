@@ -25,13 +25,6 @@ jobs:
         uses: whelk-io/maven-settings-xml-action@v14
         with:
           servers: '[{ "id": "github", "username": "x-access-token", "password": "${{ secrets.GITHUB_TOKEN }}" }]'
-      
-      - name: Cache Maven Packages
-        uses: actions/cache@v2.1.4
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
                           
       - name: Build Pages
         run: cd project && mvn -B javadoc:aggregate -Pjavadoc
