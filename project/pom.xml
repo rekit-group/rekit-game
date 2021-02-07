@@ -23,6 +23,11 @@
 			<name>GitHub Maven Packages</name>
 			<url>https://nexus.fuchss.org/repository/github/</url>
 		</repository>
+		<repository>
+			<id>github</id>
+			<name>GitHub Apache Maven Packages</name>
+			<url>https://maven.pkg.github.com/rekit-group/rekit-game</url>
+		</repository>
 	</repositories>
 
 	<distributionManagement>
