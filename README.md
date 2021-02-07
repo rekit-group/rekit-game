@@ -1,6 +1,5 @@
 # R&#949;KiT
 
-[![Build Status](https://travis-ci.org/rekit-group/rekit-game.svg?branch=master)](https://travis-ci.org/rekit-group/rekit-game)
 [![GitHub issues](https://img.shields.io/github/issues/rekit-group/rekit-game.svg?style=square)](https://github.com/rekit-group/rekit-game/issues)
 [![GitHub license](https://img.shields.io/badge/license-GPLv3-blue.svg?style=square)](https://github.com/rekit-group/rekit-game/blob/master/LICENSE.md)
 
@@ -48,8 +47,6 @@ To setup your workspace for viewing or altering the code follow these steps:
 - Import every maven module in this directory (File -> Import -> Maven -> Existing Maven Projects)
 - To compile the project click the run button after opening Main.java in the game module
 
-There are [auto-generated API-Docs](https://rekit-group.github.io/rekit-game/) available.
-
 
 ## Mods / Addons
 Addons are an easy way to add functionality without understanding the whole code.
@@ -79,3 +76,4 @@ Here is a list what can be added via addons:
 
 ### Special thanks to contributors:
 - [**@Norbert515**](https://github.com/Norbert515)
+- [**@Flunzmas**](https://github.com/Flunzmas)

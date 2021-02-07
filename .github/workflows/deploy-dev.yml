@@ -1,0 +1,40 @@
+name: Maven Deploy (Dev)
+
+on:
+  push:
+    branches:
+      - 'main' # Build the latest develop-SNAPSHOT
+    paths:
+      - 'project/**/src/**'
+      - 'project/**/pom.xml'
+  
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 15
+          
+      - name: maven-settings-xml-action
+        uses: whelk-io/maven-settings-xml-action@v4
+        with:
+          servers: '[{ "id": "github", "username": "x-access-token", "password": "${{ secrets.GITHUB_TOKEN }}" }]'
+      
+      - name: Cache Maven Packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+                      
+      - name: Verify with Maven
+        run: cd project && mvn -B verify -Pbuild
+      
+      - name: Publish Package
+        run: cd project && mvn -B deploy -Pbuild
