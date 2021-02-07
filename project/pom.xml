@@ -10,7 +10,7 @@
 		<maven>3.0</maven>
 	</prerequisites>
 	<properties>
-		<rekit.version>1.2.3-SNAPSHOT</rekit.version>
+		<rekit.version>${project.version}</rekit.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>15</maven.compiler.source>
 		<maven.compiler.target>15</maven.compiler.target>
@@ -207,6 +207,20 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>2.14.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.14.0</version>
+		</dependency>
+	</dependencies>
+	
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -233,11 +247,6 @@
 				<groupId>rekit</groupId>
 				<artifactId>basic</artifactId>
 				<version>${rekit.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.logging.log4j</groupId>
-				<artifactId>log4j-core</artifactId>
-				<version>2.14.0</version>
 			</dependency>
 			<dependency>
 				<groupId>org.reflections</groupId>
