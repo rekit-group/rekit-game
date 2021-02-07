@@ -25,9 +25,12 @@ jobs:
         uses: whelk-io/maven-settings-xml-action@v14
         with:
           servers: '[{ "id": "github", "username": "x-access-token", "password": "${{ secrets.GITHUB_TOKEN }}" }]'
-                          
+
+      - name: Build and Install Locally
+        run: cd project && mvn -B install -Pbuild
+        
       - name: Build Pages
-        run: cd project && mvn -B javadoc:aggregate -Pjavadoc
+        run: cd project && mvn -B clean javadoc:aggregate -Pjavadoc
       
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@3.7.1
