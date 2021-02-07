@@ -1,5 +1,6 @@
 # R&#949;KiT
-
+![Maven Deploy (Dev)](https://github.com/rekit-group/rekit-game/workflows/Maven%20Deploy%20(Dev)/badge.svg)
+![GH Pages Deploy (Dev)](https://github.com/rekit-group/rekit-game/workflows/GH%20Pages%20Deploy%20(Dev)/badge.svg)
 [![GitHub issues](https://img.shields.io/github/issues/rekit-group/rekit-game.svg?style=square)](https://github.com/rekit-group/rekit-game/issues)
 [![GitHub license](https://img.shields.io/badge/license-GPLv3-blue.svg?style=square)](https://github.com/rekit-group/rekit-game/blob/main/LICENSE.md)
 
