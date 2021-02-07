@@ -11,7 +11,7 @@ updates:
       prefix: "Dependency"
       include: "scope"
   - package-ecosystem: "maven"
-    directory: "/"
+    directory: "/project/"
     schedule:
       interval: "weekly"
       day: "wednesday"
