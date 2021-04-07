@@ -18,7 +18,7 @@ jobs:
         with:
           java-version: 15
       - name: maven-settings-xml-action
-        uses: whelk-io/maven-settings-xml-action@v14
+        uses: whelk-io/maven-settings-xml-action@v15
         with:
           servers: '[{ "id": "github", "username": "x-access-token", "password": "${{ secrets.GITHUB_TOKEN }}" }]'
         
