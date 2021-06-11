@@ -20,7 +20,7 @@ jobs:
           distribution: 'zulu'
           
       - name: maven-settings-xml-action
-        uses: whelk-io/maven-settings-xml-action@v16
+        uses: whelk-io/maven-settings-xml-action@v17
         with:
           servers: '[{ "id": "github", "username": "x-access-token", "password": "${{ secrets.GITHUB_TOKEN }}" }]'
         
