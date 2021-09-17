@@ -19,7 +19,7 @@ jobs:
       
       - uses: actions/setup-java@v2
         with:
-          java-version: 15
+          java-version: 17
           distribution: 'zulu'
           
       - name: maven-settings-xml-action
