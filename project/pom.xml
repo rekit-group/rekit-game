@@ -256,7 +256,7 @@
 			<dependency>
 				<groupId>org.reflections</groupId>
 				<artifactId>reflections</artifactId>
-				<version>0.10</version>
+				<version>0.10.1</version>
 			</dependency>
 			<dependency>
 				<groupId>org.fuchss</groupId>
