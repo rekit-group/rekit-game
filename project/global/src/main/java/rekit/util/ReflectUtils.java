@@ -13,6 +13,7 @@ import java.util.Set;
 import org.reflections.Reflections;
 import org.reflections.util.ClasspathHelper;
 
+import org.reflections.util.ConfigurationBuilder;
 import rekit.config.GameConf;
 
 /**
@@ -78,7 +79,7 @@ public final class ReflectUtils {
 	 * @return a set of the found classes
 	 */
 	public static <T> Set<Class<? extends T>> getClasses(String searchPath, ClassLoader loader, Class<T> type) {
-		return new Reflections(searchPath, ClasspathHelper.classLoaders(loader)).getSubTypesOf(type);
+		return new Reflections(new ConfigurationBuilder().forPackage(searchPath).addClassLoaders(loader)).getSubTypesOf(type);
 	}
 
 	/**
