@@ -1,3 +1,5 @@
+org.fuchss.tools.lambda
+org.fuchss.tools.tuple
 rekit
 rekit.config
 rekit.core
