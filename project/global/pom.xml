@@ -21,9 +21,5 @@
 			<groupId>net.jafama</groupId>
 			<artifactId>jafama</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.fuchss</groupId>
-			<artifactId>java-tools</artifactId>
-		</dependency>
 	</dependencies>
 </project>
