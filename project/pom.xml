@@ -19,11 +19,6 @@
 	</properties>
 	<repositories>
 		<repository>
-			<id>github-packages</id>
-			<name>GitHub Maven Packages</name>
-			<url>https://packages.fuchss.org/github/releases/raw/branch/releases/</url>
-		</repository>
-		<repository>
 			<id>github</id>
 			<name>GitHub Apache Maven Packages</name>
 			<url>https://maven.pkg.github.com/rekit-group/rekit-game</url>
